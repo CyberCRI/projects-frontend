@@ -57,7 +57,10 @@ const pageArray = computed(() => {
   const pages: { value: string | number; current?: boolean }[] = Array.from(
     Array(props.pagination.total.value),
     (_, i) => {
-      return { value: i + 1, current: props.pagination.current.value === i + 1 }
+      return {
+        value: i + 1,
+        current: props.pagination.current.value === i + 1,
+      }
     }
   )
 
@@ -82,6 +85,8 @@ const setPage = (value) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .pagination {
   display: flex;
   align-items: center;

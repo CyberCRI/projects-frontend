@@ -26,6 +26,8 @@ const toggleValue = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .s-switch-input-ctn {
   display: flex;
   align-items: center;
@@ -38,22 +40,22 @@ const toggleValue = () => {
   .s-switch {
     width: 46px;
     height: 25px;
-    padding: $space-2xs;
-    border-radius: $border-radius-l;
+    padding: variables.$space-2xs;
+    border-radius: variables.$border-radius-l;
     box-sizing: border-box;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     will-change: transform;
-    background-color: $mid-gray;
+    background-color: variables.$mid-gray;
 
     .s-control {
       transition: transform 0.3s ease-out;
     }
 
     &.active {
-      background-color: $primary;
+      background-color: variables.$primary;
     }
 
     &.active .s-control {
@@ -62,22 +64,22 @@ const toggleValue = () => {
   }
 
   .s-label {
-    font-size: $font-size-s;
-    color: $primary-dark;
+    font-size: variables.$font-size-s;
+    color: variables.$primary-dark;
     font-weight: bold;
-    margin-bottom: $space-2xs;
-    margin-right: $space-s;
+    margin-bottom: variables.$space-2xs;
+    margin-right: variables.$space-s;
   }
 
   &.black-label .s-label {
-    color: $black;
+    color: variables.$black;
   }
 
   .s-control {
     border-radius: 50%;
     width: 19px;
     height: 19px;
-    background: $almost-white;
+    background: variables.$almost-white;
   }
 }
 </style>

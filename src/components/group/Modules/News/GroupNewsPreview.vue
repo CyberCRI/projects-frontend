@@ -1,9 +1,9 @@
 <template>
   <BaseGroupPreview
     id="news"
-    :title="$t(GroupModuleTitle.news, group.modules.news)"
+    :title="$t(GROUP_MODULE_TITLE.news, group.modules.news)"
     :total="group.modules.news"
-    :icon="GroupModuleIcon.news"
+    :icon="GROUP_MODULE_ICON.news"
     :see-more="{
       name: 'groupNews',
       params: { groupIdOrSlug: group.slug || group.id },
@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 import BaseGroupNewsList from '@/components/group/Modules/News/BaseGroupNewsList.vue'
-import { GroupModuleIcon, GroupModuleTitle } from '@/models/people-group.model'
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
+import { GROUP_MODULE_ICON, GROUP_MODULE_TITLE } from '~/functs/constants'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 
 defineProps<{

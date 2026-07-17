@@ -1,11 +1,19 @@
-<script setup>
-const props = defineProps({
-  fetchEntities: { type: Function, required: true },
-  noEntityLabel: { type: String, required: true },
-  entityIcon: { type: String, required: true },
-  deletableCheck: { type: Function, default: () => null },
-  isLinkable: { type: Boolean, default: false },
-})
+<script setup lang="ts">
+import type { IconImageChoice } from '~/functs/IconImage'
+
+const props = withDefaults(
+  defineProps<{
+    fetchEntities: () => Promise<any>
+    noEntityLabel: string
+    entityIcon: IconImageChoice
+    deletableCheck?: (entity: any) => boolean
+    isLinkable?: boolean
+  }>(),
+  {
+    deletableCheck: () => null,
+    isLinkable: false,
+  }
+)
 
 const emit = defineEmits(['goto-entity', 'show-entity', 'delete-entity', 'edit-entity'])
 
@@ -76,11 +84,13 @@ refresh()
   </ul>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .entity {
   display: flex;
   gap: 1rem;
   padding: 0.6rem;
-  border: 1px solid $primary;
+  border: 1px solid variables.$primary;
   border-radius: 0.6rem;
   justify-content: stretch;
   align-items: center;
@@ -102,7 +112,7 @@ refresh()
 
 .icon svg {
   width: 2rem;
-  fill: $light-gray;
+  fill: variables.$light-gray;
 }
 
 .actions {

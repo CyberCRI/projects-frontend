@@ -61,9 +61,9 @@
 <script setup lang="ts">
 import { capitalize } from '@/functs/string'
 
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
-import type { TranslatedUserModel } from '@/models/user.model'
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import useSkillTexts from '@/composables/useSkillTexts'
 import ToolTip from '@/components/base/ToolTip.vue'
@@ -88,23 +88,25 @@ const hasMoreTags = computed(() => moreSkills.value.length > 0)
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .recommendation-item {
-  padding-inline: $space-m;
+  padding-inline: variables.$space-m;
   cursor: pointer;
 
   &:hover {
-    background: $primary-lighter;
+    background: variables.$primary-lighter;
   }
 }
 
 .recommendation {
-  margin: $space-m 0;
+  margin: variables.$space-m 0;
   display: flex;
   align-items: flex-start;
-  padding: $space-s;
+  padding: variables.$space-s;
 
   &--spacer {
-    padding: $space-s 16px;
+    padding: variables.$space-s 16px;
   }
 }
 
@@ -115,8 +117,8 @@ const hasMoreTags = computed(() => moreSkills.value.length > 0)
   width: 50px;
   height: 50px;
   flex: none;
-  margin-right: $space-s;
-  line-height: $layout-size-l;
+  margin-right: variables.$space-s;
+  line-height: variables.$layout-size-l;
 }
 
 .text-container {
@@ -128,19 +130,19 @@ const hasMoreTags = computed(() => moreSkills.value.length > 0)
 
 .name {
   font-weight: 700;
-  font-size: $font-size-m;
-  color: $primary-dark;
+  font-size: variables.$font-size-m;
+  color: variables.$primary-dark;
 }
 
 .job {
-  font-size: $font-size-s;
-  color: $black;
-  padding-block: $space-xs;
+  font-size: variables.$font-size-s;
+  color: variables.$black;
+  padding-block: variables.$space-xs;
 }
 
 .skill-badge {
-  margin-right: $space-3xs;
-  margin-bottom: $space-3xs;
+  margin-right: variables.$space-3xs;
+  margin-bottom: variables.$space-3xs;
 }
 
 .tag-elt-show-more {
@@ -149,13 +151,13 @@ const hasMoreTags = computed(() => moreSkills.value.length > 0)
 
 .extra-skills-list {
   max-width: 20rem;
-  padding: $space-s;
+  padding: variables.$space-s;
 }
 
 .skills,
 .extra-skills-list {
   display: flex;
-  gap: $space-xs;
+  gap: variables.$space-xs;
   flex-wrap: wrap;
 }
 </style>

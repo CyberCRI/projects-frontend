@@ -18,7 +18,7 @@
         :is-add-mode="!!!selectedItem"
         :selected-item="selectedItem"
         :is-opened="isOpened"
-        :links="resultsLinks"
+        :links="LinksTranslated"
         :post-attachment-files="postAttachmentFiles"
         :patch-attachment-file="patchAttachmentFile"
         :post-attachment-links="postAttachmentLinks"
@@ -32,21 +32,20 @@
 </template>
 
 <script setup lang="ts">
-import type { UserModel } from '~/models/user.model'
+import type { UserModel } from 'shared-projects-frontend/models'
 
 import {
   deleteUserAttachmentLink,
-  getUserAttachmentLink,
   patchUserAttachmentLink,
   postUserAttachmentLink,
-} from '~/api/attachment-links.service'
-import {
   deleteUserAttachmentFile,
-  getUserAttachmentFile,
   patchUserAttachmentFile,
   postUserAttachmentFile,
-} from '~/api/attachment-files.service'
+} from 'shared-projects-frontend/apis'
 
+import { usePermissionUser } from '~/composables/usePermissions/useUserPermissions'
+import { getUserAttachmentFile } from '~/api/v2/attachment-files.service'
+import { getUserAttachmentLinks } from '~/api/v2/attachment-link.service'
 import ResourceDrawer from '~/components/resources/ResourceDrawer.vue'
 import ResourcesTab from '~/components/resources/ResourcesTab.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'
@@ -56,29 +55,33 @@ const props = defineProps<{
   isInEditingMode: boolean
   onProfileEdited: () => void
 }>()
-const { canEditUser } = usePermissions()
-const { translateFiles, translateLinks } = useAutoTranslate()
+const organizationCode = useOrganizationCode()
+const userId = computed(() => props.user.id)
+const { canEditUser } = usePermissionUser(userId)
 const selectedItem = ref(null)
 const isOpened = ref(false)
 
-// paginated limits (add paginated query ?)
-const query = { query: { limit: 500 } }
-
 const {
   status: statusFiles,
-  data: dataFiles,
+  data: filesTranslated,
   refresh: refreshFiles,
-} = getUserAttachmentFile(props.user.id, query)
-const resultsFiles = computed(() => dataFiles.value?.results)
-const filesTranslated = translateFiles(resultsFiles)
+} = getUserAttachmentFile(organizationCode, userId, {
+  // TODO add pagiations buttons (after refacto profile)
+  paginationConfig: {
+    limit: 999,
+  },
+})
 
 const {
   status: statusLinks,
-  data: dataLinks,
+  data: LinksTranslated,
   refresh: refreshLinks,
-} = getUserAttachmentLink(props.user.id, query)
-const resultsLinks = computed(() => dataLinks.value?.results)
-const LinksTranslated = translateLinks(resultsLinks)
+} = getUserAttachmentLinks(organizationCode, userId, {
+  // TODO add pagiations buttons (after refacto profile)
+  paginationConfig: {
+    limit: 999,
+  },
+})
 
 // refresh local links or files + projects (the onProfileEdited)
 const refresh = (refreshFunction: () => Promise<void>) =>

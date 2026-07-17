@@ -1,4 +1,4 @@
-import type { InstructionForm, InstructionInput } from '@/models/instruction.model'
+import type { InstructionForm, InstructionInput } from 'shared-projects-frontend/models'
 import { helpers, required } from '@vuelidate/validators'
 import { NULL_CONTENT } from '~/functs/constants'
 

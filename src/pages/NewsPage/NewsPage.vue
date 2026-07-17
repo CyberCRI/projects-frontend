@@ -47,7 +47,7 @@
     <EditNewsDrawer
       :is-opened="stateModals.edit"
       :news="news"
-      @news-edited="refresh"
+      @news-edited="() => refresh()"
       @close="onCancel"
     />
 
@@ -64,18 +64,19 @@
 </template>
 
 <script setup lang="ts">
+import { usePermissionNews } from '~/composables/usePermissions/useNewsPermissions'
 import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import type { DEFAULT_NEWS_PATATOID } from '@/composables/usePatatoids'
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import type { NewsModel } from 'shared-projects-frontend/models'
+import { deleteNews } from 'shared-projects-frontend/apis'
 import { newsSkeleton } from '@/skeletons/news.skeletons'
 import NewsItem from '@/components/news/NewsItem.vue'
-import type { NewsModel } from '@/models/news.model'
 import useToasterStore from '@/stores/useToaster'
 import { getNews } from '@/api/v2/news.service'
-import { deleteNews } from '@/api/news.service'
 import { html2Text } from '~/functs/tiptap'
 
 const props = defineProps<{
@@ -83,8 +84,6 @@ const props = defineProps<{
 }>()
 
 const toaster = useToasterStore()
-
-const { canEditNews, canDeleteNews } = usePermissions()
 
 const { locale, t } = useNuxtI18n()
 
@@ -98,6 +97,7 @@ const {
 } = getNews(organizationCode, newsId, {
   default: () => newsSkeleton(),
 })
+const { canEditNews, canDeleteNews } = usePermissionNews(computed(() => news.value.id))
 
 const asyncingDelete = ref(false)
 const breadcrumbs = computed(() => [
@@ -108,10 +108,15 @@ const breadcrumbs = computed(() => [
 ])
 
 const publicationDate = computed(() =>
-  new Date(news.value.publication_date).toLocaleDateString(locale.value, { dateStyle: 'full' })
+  new Date(news.value.publication_date).toLocaleDateString(locale.value, {
+    dateStyle: 'full',
+  })
 )
 
-const { stateModals, openModals, closeModals } = useModals({ edit: false, delete: false })
+const { stateModals, openModals, closeModals } = useModals({
+  edit: false,
+  delete: false,
+})
 
 const onConfirmDelete = async () => {
   asyncingDelete.value = true
@@ -137,6 +142,8 @@ useLpiHead2({
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .news-container {
   margin-bottom: 1rem;
   display: flex;
@@ -165,7 +172,7 @@ useLpiHead2({
 
 .news-actions {
   display: flex;
-  gap: $space-s;
+  gap: variables.$space-s;
   height: min-content;
 }
 
@@ -177,11 +184,11 @@ useLpiHead2({
 }
 
 .picture {
-  border-radius: $border-radius-m;
+  border-radius: variables.$border-radius-m;
 }
 
 .page-title {
-  font-size: $font-size-3xl;
+  font-size: variables.$font-size-3xl;
   text-align: left;
 }
 </style>

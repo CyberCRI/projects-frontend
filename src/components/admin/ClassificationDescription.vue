@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TagModel } from '~/models/tag.model'
+import type { TagModel } from 'shared-projects-frontend/models'
 
 import { isEscoClassification } from '~/functs/ClassificationUtils'
 
@@ -22,9 +22,11 @@ const escoLink = computed(
   </p>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .classification-description {
   a {
-    color: $primary-dark;
+    color: variables.$primary-dark;
     font-weight: 700;
 
     &:hover {

@@ -14,15 +14,16 @@
 </template>
 
 <script setup lang="ts">
-import type { UserModel } from '~/models/user.model'
-
-import type { DocumentType } from '~/interfaces/researcher'
+import type { UserModel, ResearcherDocumentType } from 'shared-projects-frontend/models'
 
 import OwnResearcherDocumentsList from '~/components/people/Researcher/OwnResearcherDocumentsList.vue'
 
 const { t } = useNuxtI18n()
 
-const props = defineProps<{ docType: DocumentType; user: UserModel }>()
+const props = defineProps<{
+  docType: ResearcherDocumentType
+  user: UserModel
+}>()
 
 const title = computed(() => t(`me.${props.docType}`))
 const documentEmpty = computed(() => t(`you.no-${props.docType}`))
@@ -30,12 +31,14 @@ const documentsCount = computed(() => props.user.researcher?.documents?.[props.d
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .document-tab {
   .title {
-    font-size: $font-size-l;
+    font-size: variables.$font-size-l;
     font-weight: 700;
-    color: $primary-dark;
-    margin: $space-l 0;
+    color: variables.$primary-dark;
+    margin: variables.$space-l 0;
   }
 }
 

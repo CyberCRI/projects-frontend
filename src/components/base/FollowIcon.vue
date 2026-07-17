@@ -51,6 +51,8 @@ defineEmits<{
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .icon {
   fill: var(--primary-dark);
   cursor: pointer;

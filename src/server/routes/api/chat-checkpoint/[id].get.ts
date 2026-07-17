@@ -42,7 +42,9 @@ export default defineLazyEventHandler(() => {
     // const result = await pool.query(sql, [id])
     // const checkpoints = result.rows
 
-    const config = { configurable: { thread_id: id, organization_code: appApiOrgCode } }
+    const config = {
+      configurable: { thread_id: id, organization_code: appApiOrgCode },
+    }
     const checkpoints = []
 
     for await (const tuple of checkpointer.list(config, { limit: 1 })) {

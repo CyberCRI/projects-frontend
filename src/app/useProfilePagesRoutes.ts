@@ -125,7 +125,10 @@ export default function useProfilePagesRoutes() {
       },
       children: [
         ...profileDisplayTabs,
-        ...profileEditTabs.map((route) => ({ ...route, path: route.path + '/edit' })),
+        ...profileEditTabs.map((route) => ({
+          ...route,
+          path: route.path + '/edit',
+        })),
       ],
     },
     // legacy (path redirects)

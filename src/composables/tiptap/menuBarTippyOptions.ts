@@ -35,7 +35,7 @@ export default function (
               const wrapperBbox = element.getBoundingClientRect()
               const selectionBbox = selection.getBoundingClientRect()
 
-              let topOffset = 0
+              let topOffset: number
 
               if (selectionBbox.top > wrapperBbox.top + wrapperBbox.height) {
                 // si la target est hors conteneur vers le bas,

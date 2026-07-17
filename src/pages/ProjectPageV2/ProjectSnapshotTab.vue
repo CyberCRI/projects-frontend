@@ -58,9 +58,11 @@ import ProjectDescriptionPreview from '@/components/project/modules/ProjectDescr
 import ProjectReviewPreview from '~/components/project/modules/review/ProjectReviewPreview.vue'
 import ProjectGroupsPreview from '~/components/project/modules/Groups/ProjectGroupsPreview.vue'
 import ProjectGoalsPreview from '@/components/project/modules/Goals/ProjectGoalsPreview.vue'
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'
-import type { TranslatedProject } from '@/models/project.model'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import useUsersStore from '~/stores/useUsers'
@@ -70,7 +72,8 @@ const props = defineProps<{
   project: TranslatedProject
 }>()
 
-const { isMember, isAdmin } = usePermissions()
+const { isAdmin } = usePermissions()
+const { isMember } = usePermissionProject(computed(() => props.project.id))
 
 const { isConnected } = useUsersStore()
 
@@ -96,6 +99,8 @@ const {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .project-summary {
   display: flex;
   flex-flow: column;

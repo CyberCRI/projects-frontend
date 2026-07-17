@@ -3,6 +3,8 @@
    License: none (public domain)
 */
 
+@use '~/design/scss/variables';
+
 html,
 body,
 div,
@@ -110,7 +112,7 @@ section {
 }
 
 body {
-  line-height: $line-height-normal;
+  line-height: variables.$line-height-normal;
 }
 
 ol,

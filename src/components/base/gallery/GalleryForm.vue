@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageGalleryForm } from '~/interfaces/gallery'
+import type { ImageGalleryForm } from 'shared-projects-frontend/models'
 
 import GalleryList from '~/components/base/gallery/GalleryList.vue'
 import GalleryItem from '~/components/base/gallery/GalleryItem.vue'
@@ -114,6 +114,8 @@ const submit = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .new-coords {
   text-align: center;
   font-style: italic;
@@ -121,24 +123,24 @@ const submit = () => {
 }
 
 .description-input {
-  margin-top: $space-m;
+  margin-top: variables.$space-m;
 }
 
 .gallery-type-ctn {
-  margin: $space-m 0;
+  margin: variables.$space-m 0;
 
   .gallery-type-label {
-    font-size: $font-size-s;
-    color: $primary-dark;
+    font-size: variables.$font-size-s;
+    color: variables.$primary-dark;
     font-weight: bold;
-    margin-bottom: $space-2xs;
+    margin-bottom: variables.$space-2xs;
   }
 }
 
 .delete-button {
-  color: $white;
-  border-color: $salmon;
-  background: $salmon;
+  color: variables.$white;
+  border-color: variables.$salmon;
+  background: variables.$salmon;
 }
 
 .gallery-length {
@@ -162,26 +164,26 @@ const submit = () => {
     width: 100%;
     height: 100%;
     border-radius: 5px;
-    background-color: color-mix(in srgb, $modal-background, transparent 10%);
+    background-color: color-mix(in srgb, variables.$modal-background, transparent 10%);
 
     & > * {
       margin: auto;
       width: 25%;
 
       &.pending {
-        fill: $primary-lighter;
+        fill: variables.$primary-lighter;
       }
 
       &.success {
-        fill: $primary;
+        fill: variables.$primary;
       }
 
       &.error {
-        fill: $red;
+        fill: variables.$red;
       }
 
       &.warning {
-        fill: $salmon;
+        fill: variables.$salmon;
       }
     }
   }
@@ -189,6 +191,8 @@ const submit = () => {
 </style>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .gallery-image-editor {
   display: flex;
   justify-content: center;
@@ -200,7 +204,7 @@ const submit = () => {
     grid-template-columns: repeat(4, 1fr);
 
     > * {
-      height: pxToRem(130px);
+      height: variables.pxtorem(130px);
     }
   }
 }

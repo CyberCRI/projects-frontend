@@ -121,8 +121,9 @@ const isCurrentTab = (entry: MenuEntry) => {
 }
 </script>
 
-<style scoped lang="scss">
-@import '~/components/base/navigation/navpanel-menu-entry';
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+@use '~/components/base/navigation/navpanel-menu-entry';
 
 menu {
   display: flex;

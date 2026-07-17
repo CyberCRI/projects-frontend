@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { getFormatedVideoSrc } from '~/composables/tiptap/extensions/ExternalVideo'
+import { getFormatedVideoSrc } from 'shared-projects-frontend/lib'
 import DialogModal from '~/components/base/modal/DialogModal.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import { useTipTapVideoForm } from '~/form/tiptap/video'
@@ -63,6 +63,8 @@ const updateVideo = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .video-preview {
   display: flex;
   justify-content: center;

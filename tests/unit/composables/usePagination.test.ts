@@ -1,4 +1,5 @@
-import { usePagination, PaginationResult } from '~/composables/usePagination'
+import type { PaginationResult } from '~/composables/usePagination'
+import { usePagination } from '~/composables/usePagination'
 import { describe, it, expect } from 'vitest'
 
 describe('usePagination', () => {

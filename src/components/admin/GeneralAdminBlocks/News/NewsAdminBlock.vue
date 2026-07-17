@@ -30,7 +30,7 @@
     :is-opened="stateModals.edit"
     :news="selectedNews"
     @close="onCancel"
-    @news-edited="refresh"
+    @news-edited="() => refresh()"
   />
 
   <ConfirmModal
@@ -47,18 +47,18 @@
 <script setup lang="ts">
 import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
 import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
+import type { QueryFilterNews } from 'shared-projects-frontend/models'
 import type LinkButton from '@/components/base/button/LinkButton.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import FetchLoader from '@/components/base/FetchLoader.vue'
-import type { QueryFilterNews } from '@/models/news.model'
+import { deleteNews } from 'shared-projects-frontend/apis'
 import { newsSkeleton } from '~/skeletons/news.skeletons'
 import NewsItem from '@/components/news/NewsItem.vue'
 import { useModals } from '@/composables/useModal'
 import { getAllNews } from '@/api/v2/news.service'
 import useToasterStore from '@/stores/useToaster'
-import { deleteNews } from '@/api/news.service'
 import { defaultNewsForm } from '@/form/news'
 import { nowDate } from '@/functs/date'
 
@@ -67,7 +67,10 @@ const organizationCode = useOrganizationCode()
 
 const { t } = useNuxtI18n()
 
-const { stateModals, openModals, closeModals } = useModals({ edit: false, delete: false })
+const { stateModals, openModals, closeModals } = useModals({
+  edit: false,
+  delete: false,
+})
 const isDeletingNews = ref(false)
 const selectedNews = ref()
 

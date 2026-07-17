@@ -11,10 +11,9 @@
 </template>
 
 <script setup lang="ts" generic="T extends AnyTranslatedLocation">
+import type { AnyTranslatedLocation, TranslatedEventModel } from 'shared-projects-frontend/models'
 import type CardLocationPopUp from '@/components/map/CardLocationPopUp.vue'
-import type { AnyTranslatedLocation } from '@/models/location.model'
 import EventItem from '@/components/event/EventList/EventItem.vue'
-import type { TranslatedEventModel } from '@/models/event.model'
 import { html2Text } from '~/functs/tiptap'
 
 const props = defineProps<{ location: T; event: TranslatedEventModel }>()
@@ -23,6 +22,8 @@ const description = computed(() => html2Text(props.event.$t.content))
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .hide-extra-description {
   // same columns
   grid-template-columns: 1fr !important;

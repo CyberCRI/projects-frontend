@@ -26,6 +26,7 @@ coverage
 
 storybook-static
 report
+.stylelintcache
 
 src/functs/dotatlas.prod.js
 

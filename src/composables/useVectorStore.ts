@@ -36,7 +36,10 @@ export default function useVecorStore() {
     }
 
     return Array.isArray(data)
-      ? data.map((d) => ({ ...d, vectorStoreKey: PROJECTS_DEFAULT_VECTOR_STORE_KEY }))
+      ? data.map((d) => ({
+          ...d,
+          vectorStoreKey: PROJECTS_DEFAULT_VECTOR_STORE_KEY,
+        }))
       : []
   }
 

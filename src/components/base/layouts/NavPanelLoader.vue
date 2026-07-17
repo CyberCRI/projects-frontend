@@ -3,7 +3,9 @@
     <LoaderSimple />
   </div>
 </template>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .navpanel-loader {
   display: flex;
   justify-content: center;

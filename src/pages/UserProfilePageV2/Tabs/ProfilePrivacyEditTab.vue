@@ -113,16 +113,18 @@
     <LoaderSimple v-if="asyncing" class="loader" />
   </div>
 </template>
-<script>
-import { getUser, patchUserPrivacy } from '~/api/people.service.ts'
+<script lang="ts">
+import { getUser, patchUserPrivacy } from 'shared-projects-frontend/apis'
 
+import type { GroupOption } from '~/components/base/button/GroupButton.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 import GroupButton from '~/components/base/button/GroupButton.vue'
 
-import useToasterStore from '~/stores/useToaster.ts'
-import useUsersStore from '~/stores/useUsers.ts'
+import type { PrivacySettings, PrivacyValue } from 'shared-projects-frontend/models'
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
 
-function defaultForm() {
+function defaultForm(): PrivacySettings {
   return {
     publication_status: 'pub',
     profile_picture: 'org',
@@ -188,21 +190,24 @@ export default {
           label: this.$t('profile.edit.privacy.options.hide'),
           iconName: 'EyeSlash',
           value: 'hide',
+          // @ts-expect-error
           rank: 0,
         },
         org: {
           label: this.$t('profile.edit.privacy.options.org'),
           iconName: 'PeopleGroup',
           value: 'org',
+          // @ts-expect-error
           rank: 1,
         },
         pub: {
           label: this.$t('profile.edit.privacy.options.pub'),
           iconName: 'Eye',
           value: 'pub',
+          // @ts-expect-error
           rank: 2,
         },
-      }
+      } satisfies { [key in PrivacyValue]: GroupOption }
     },
     settingsList() {
       return Object.values(this.optionsMap)
@@ -229,15 +234,6 @@ export default {
     },
   },
   methods: {
-    redirectToProfile() {
-      // if (this.isSelf) this.$router.push({ name: 'ProfileBio' })
-      // else
-      //   this.$router.push({
-      //     name: 'ProfileBioOther',
-      //     params: { userId: this.user.id },
-      //   })
-    },
-
     async save() {
       this.asyncing = true
       try {
@@ -250,8 +246,6 @@ export default {
         this.$emit('profile-edited')
 
         this.toaster.pushSuccess(this.$t('profile.edit.privacy.save-success'))
-
-        this.redirectToProfile()
       } catch (error) {
         this.toaster.pushError(`${this.$t('profile.edit.privacy.save-error')} (${error})`)
         console.error(error)
@@ -302,11 +296,12 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-@import './profile-form';
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+@use '~/pages/UserProfilePageV2/Tabs/profile-form';
 
 .profile-edit-privacy {
-  margin-top: $space-xl;
+  margin-top: variables.$space-xl;
   position: relative;
 
   &.frozen {
@@ -326,7 +321,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: $border-width-s solid $lighter-gray;
+  border-bottom: variables.$border-width-s solid variables.$lighter-gray;
 
   .wording {
     flex-grow: 1;
@@ -334,8 +329,8 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: $space-unit;
-    padding: $space-l 0;
+    gap: variables.$space-unit;
+    padding: variables.$space-l 0;
 
     &.vertical {
       flex-direction: column;
@@ -348,15 +343,15 @@ export default {
     }
 
     label {
-      font-size: $font-size-l;
+      font-size: variables.$font-size-l;
       font-weight: 500;
-      line-height: $line-height-squashed;
+      line-height: variables.$line-height-squashed;
     }
 
     .notice {
-      font-size: $font-size-m;
+      font-size: variables.$font-size-m;
       font-weight: 400;
-      line-height: $line-height-squashed;
+      line-height: variables.$line-height-squashed;
     }
   }
 

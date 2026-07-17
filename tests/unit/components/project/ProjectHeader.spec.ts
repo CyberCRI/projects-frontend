@@ -1,7 +1,7 @@
-import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
-import { OrganizationOutput } from '~/models/organization.model'
+import type { OrganizationOutput } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
@@ -31,7 +31,7 @@ describe('ProjectHeader.vue', () => {
   it('should render component', () => {
     const wrapper = lpiShallowMount(ProjectHeaderV2, {
       props: {
-        project: ProjectOutputFactory.generate(),
+        project: TranslatedProjectFactory.generate(),
       },
       stubs: {
         TagsList: {

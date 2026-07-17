@@ -11,13 +11,15 @@
 </template>
 
 <script setup lang="ts">
+import type { AnyTranslatedLocation, TranslatedNews } from 'shared-projects-frontend/models'
 import type CardLocationPopUp from '@/components/map/CardLocationPopUp.vue'
-import type { AnyTranslatedLocation } from '@/models/location.model'
 import { DEFAULT_NEWS_PATATOID } from '@/composables/usePatatoids'
-import type { TranslatedNews } from '@/models/news.model'
 import { html2Text } from '~/functs/tiptap'
 
-const props = defineProps<{ location: AnyTranslatedLocation; news: TranslatedNews }>()
+const props = defineProps<{
+  location: AnyTranslatedLocation
+  news: TranslatedNews
+}>()
 
 const description = computed(() => html2Text(props.news.$t.content))
 </script>

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import CodeBlock from '~/components/base/form/CodeBlock.vue'
 import useUsersStore from '@/stores/useUsers'
 const usersStore = useUsersStore()
@@ -37,6 +37,8 @@ const fetchPrompt = async () => {
   </EntityAdminShow>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   display: flex;
   justify-content: center;

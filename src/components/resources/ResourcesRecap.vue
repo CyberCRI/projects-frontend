@@ -42,13 +42,15 @@ const redirect = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .resources-recap .resources-ctn {
   display: flex;
   align-items: stretch;
   justify-content: space-evenly;
   flex-direction: column;
-  padding: $space-l 0;
-  border-radius: $border-radius-l;
+  padding: variables.$space-l 0;
+  border-radius: variables.$border-radius-l;
   background: transparent;
 
   .section-header {
@@ -58,7 +60,7 @@ const redirect = () => {
   .resources-block {
     display: grid;
     grid-template-columns: repeat(auto-fill, 200px);
-    gap: $space-l;
+    gap: variables.$space-l;
     justify-content: space-between;
   }
 }

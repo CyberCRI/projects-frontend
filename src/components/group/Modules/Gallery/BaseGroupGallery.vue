@@ -44,11 +44,9 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
+import type { TranslatedPeopleGroupModel, ImageGalleryForm } from 'shared-projects-frontend/models'
 
-import type { ImageGalleryForm } from '~/interfaces/gallery'
-
-import { deleteGroupGallery, postGroupGallery } from '~/api/groups.service'
+import { deleteGroupGallery, postGroupGallery } from 'shared-projects-frontend/apis'
 import { getGroupGallery } from '~/api/v2/group.service'
 
 import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
@@ -171,6 +169,8 @@ const closeForm = () => {
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .edit-btn {
   align-self: end;
 }

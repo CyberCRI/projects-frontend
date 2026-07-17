@@ -3,12 +3,11 @@ import type { InternalModelValue } from '@vuepic/vue-datepicker'
 import { VueDatePicker } from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 
-import type { LpiDate } from '~/interfaces/utils'
-
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import DisplayDate from '~/components/base/DisplayDate.vue'
 
 import { dateWithoutHours, mergeTime, sanitizeDate } from '~/functs/date'
+import type { LpiDate } from '~/interfaces/utils'
 import * as LocalesDateFns from 'date-fns/locale'
 
 const { locale } = useNuxtI18n()
@@ -322,6 +321,8 @@ const resetTime = () => {
 </template>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .custom-vue-picker {
   display: flex;
   justify-content: center;

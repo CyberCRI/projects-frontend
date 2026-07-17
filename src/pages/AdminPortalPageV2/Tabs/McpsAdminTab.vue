@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const addEntityIsOpen = ref(false)
 const entityToDelete = ref('')
 

@@ -33,10 +33,10 @@
 </template>
 
 <script setup lang="ts">
-import { checkExpiredToken } from '~/api/auth/keycloakUtils'
 import useKeycloak from '~/api/auth/keycloak'
 
 import AppToastList from '~/components/app/AppToastList.vue'
+import { checkExpiredToken } from '~/api/auth/keycloakUtils'
 import LpiHeader from '~/components/app/LpiHeader.vue'
 import LpiFooter from '~/components/app/LpiFooter.vue'
 
@@ -45,7 +45,7 @@ import useUsersStore from '~/stores/useUsers'
 
 import { fixTiptapTableHeight } from '~/composables/tiptap/editorUtils'
 
-useRuntimeHook('app:error', (error) => {
+useRuntimeHook('app:error', (error: null) => {
   console.error('app:error', error)
 })
 
@@ -116,7 +116,7 @@ const onFocus = () => {
 
 onResize(fixTiptapTableHeight)
 
-onMounted(() => {
+onClientMounted(() => {
   // handle multiple tabs browsing for auth
   window.addEventListener('focus', onFocus)
 
@@ -144,7 +144,7 @@ onMounted(() => {
   }
 })
 
-onBeforeUnmount(() => {
+onClientBeforeUnmounted(() => {
   // this.$refs.scrollview.removeEventListener('scroll', this.setDarkTopbar)
   window.removeEventListener('focus', onFocus)
   if (window?.lpiSharedWorker) {
@@ -152,8 +152,10 @@ onBeforeUnmount(() => {
   }
 })
 </script>
+
 <style lang="scss">
-@import '~/design/scss/main';
+@use '~/design/scss/variables';
+@use '~/design/scss/main';
 
 #APP {
   display: flex;
@@ -202,10 +204,10 @@ onBeforeUnmount(() => {
   display: inline-flex;
   gap: 0.6rem;
   align-items: center;
-  background-color: $white;
-  border: 3px solid $primary-dark;
+  background-color: variables.$white;
+  border: 3px solid variables.$primary-dark;
   border-radius: 50px;
-  color: $primary-dark;
+  color: variables.$primary-dark;
   font-weight: bold;
   box-shadow: 4px 4px 6px 2px rgb(0 0 0 / 10%);
   padding: 0.5rem 1rem;
@@ -213,7 +215,7 @@ onBeforeUnmount(() => {
   font-size: 1.2rem;
   white-space: nowrap;
 
-  @media screen and (max-width: $med-tablet) {
+  @media screen and (max-width: variables.$med-tablet) {
     top: calc(100vh - 6rem);
     top: calc(100dvh - 6rem);
     left: calc(100dvw - 2rem);
@@ -223,7 +225,7 @@ onBeforeUnmount(() => {
   .chatbot-icon {
     width: 1.5rem;
     height: 1.5rem;
-    fill: $primary-dark;
+    fill: variables.$primary-dark;
     border-radius: 50%;
     transform-origin: center;
     animation-name: pulse-scale;
@@ -232,7 +234,7 @@ onBeforeUnmount(() => {
     animation-iteration-count: 2;
     animation-delay: 2s;
 
-    @media screen and (max-width: $med-tablet) {
+    @media screen and (max-width: variables.$med-tablet) {
       width: 1rem;
       height: 1rem;
     }

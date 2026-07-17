@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { patchBlogEntry, postBlogEntry, postBlogEntryImage } from '~/api/blogentries.service'
+import { patchBlogEntry, postBlogEntry, postBlogEntryImage } from 'shared-projects-frontend/apis'
 
 import TipTapCollaborativeEditor from '~/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
@@ -11,13 +11,17 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
-import type { BlogEntryForm, BlogEntryModel } from '~/models/blog-entry.model'
-import { getFirstTextNotEmpty, roomKeyFromParams } from '~/functs/tiptap'
+import type {
+  BlogEntryForm,
+  BlogEntryModel,
+  TranslatedProject,
+  ImageModel,
+} from 'shared-projects-frontend/models'
+import type { ProviderParams } from 'shared-projects-frontend/interfaces'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
-import type { ProviderParams } from '~/interfaces/colaboratives'
-import type { TranslatedProject } from '~/models/project.model'
+import { roomKeyFromParams } from 'shared-projects-frontend/lib'
 import { defaultBlogForm, useBlogEntryForm } from '~/form/blog'
-import type { ImageModel } from '~/models/image.model'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
 import { isNil } from 'es-toolkit'
@@ -80,7 +84,9 @@ const close = () => {
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
-const { form, isValid, errors, cleanedData, reset } = useBlogEntryForm({ lazy: true })
+const { form, isValid, errors, cleanedData, reset } = useBlogEntryForm({
+  lazy: true,
+})
 watch(
   () => [props.blog, props.isOpened, props.project],
   () => reset(defaultLocalForm()),
@@ -254,16 +260,18 @@ const checkClose = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .blog-drawer {
   height: 100%;
 
   :deep(.drawer__main) {
-    gap: $space-unit;
+    gap: variables.$space-unit;
   }
 
   .content-editor {
     flex-grow: 1;
-    min-height: pxToRem(300px);
+    min-height: variables.pxtorem(300px);
   }
 }
 

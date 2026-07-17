@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ProjectCategoryModel } from '~/models/project-category.model'
+import type { ProjectCategoryModel } from 'shared-projects-frontend/models'
 
 import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
 import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
@@ -165,7 +165,7 @@ watch(
     </div>
     <div class="child-list">
       <Sortable
-        :list="category.children as ProjectCategoryModel[]"
+        :list="category.children"
         :options="dragOptions"
         group="categories"
         tag="ul"
@@ -192,13 +192,16 @@ watch(
     </div>
   </li>
 </template>
+
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .top-list {
   flex-grow: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: solid $lighter-gray 1px;
+  border-bottom: solid variables.$lighter-gray 1px;
 }
 
 .sub-list {
@@ -234,7 +237,7 @@ li {
 }
 
 .child-list {
-  padding-left: pxToRem(35px);
+  padding-left: variables.pxtorem(35px);
 }
 
 .nested-list {
@@ -243,33 +246,33 @@ li {
 }
 
 .icon-td {
-  width: pxToRem(25px);
+  width: variables.pxtorem(25px);
   padding: 7px;
 }
 
 .name {
-  padding: $space-unit;
+  padding: variables.$space-unit;
 }
 
 .green-color {
-  fill: $primary-dark;
+  fill: variables.$primary-dark;
 }
 
 .grey-color {
-  fill: $lighter-gray;
+  fill: variables.$lighter-gray;
 }
 
 .green-text {
-  color: $primary-dark;
+  color: variables.$primary-dark;
 }
 
 .black-text {
-  color: $almost-black;
+  color: variables.$almost-black;
   font-weight: 400;
 }
 
 .category-ghost {
-  background-color: $primary-lighter;
+  background-color: variables.$primary-lighter;
 }
 
 .flip-list-move {
@@ -283,7 +286,7 @@ li {
   svg {
     width: 1.2em;
     height: 1.2em;
-    fill: $mid-gray;
+    fill: variables.$mid-gray;
   }
 }
 </style>

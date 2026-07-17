@@ -25,9 +25,9 @@
 import SeeMoreArrow from '~/components/base/button/SeeMoreArrow.vue'
 import SkillItem from '~/components/people/skill/SkillItem.vue'
 
-import useUsersStore from '~/stores/useUsers.ts'
+import useUsersStore from '~/stores/useUsers'
 
-import useSkillTexts from '~/composables/useSkillTexts.ts'
+import useSkillTexts from '~/composables/useSkillTexts'
 
 export default {
   name: 'SkillSummary',
@@ -91,24 +91,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .skill-summary {
   display: flex;
   flex-direction: column;
-  background: $primary-lighter;
+  background: variables.$primary-lighter;
   padding: 24px;
-  border-radius: $border-radius-l;
+  border-radius: variables.$border-radius-l;
 
   .skill-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: $space-l;
+    margin-bottom: variables.$space-l;
   }
 
   .title {
-    font-size: $font-size-l;
+    font-size: variables.$font-size-l;
     font-weight: 700;
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 
   .skills {
@@ -119,7 +121,7 @@ export default {
 }
 
 .empty-field {
-  color: $mid-gray;
+  color: variables.$mid-gray;
   font-weight: 700;
 }
 </style>

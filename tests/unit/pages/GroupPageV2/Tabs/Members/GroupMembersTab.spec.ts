@@ -10,18 +10,12 @@ import { flushPromises } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
 describe('GroupProjectsTab', () => {
-  const orgaCode = useOrganizationCode()
-
   it('Render', async () => {
+    const orgaCode = useOrganizationCode()
     const group = groupTranslatedFactory.generate()
     registerEndpoint(`organization/${orgaCode}/people-group/${group.id}/member/`, () => {
       return PaginationsFactory.generate({
-        results: [
-          GroupMemberFactory.generate(),
-          GroupMemberFactory.generate(),
-          GroupMemberFactory.generate(),
-          GroupMemberFactory.generate(),
-        ],
+        results: GroupMemberFactory.generateMany(4),
       })
     })
 
@@ -37,6 +31,7 @@ describe('GroupProjectsTab', () => {
   })
 
   it('Error fetch', async () => {
+    const orgaCode = useOrganizationCode()
     const group = groupTranslatedFactory.generate()
     registerEndpoint(`organization/${orgaCode}/people-group/${group.id}/member/`, () => {
       throw createError({ statusCode: 500 })
@@ -48,7 +43,6 @@ describe('GroupProjectsTab', () => {
       },
     })
 
-    // @ts-expect-error TS2349
     await expect.poll(() => wrapper.text()).includes('An error occured')
   })
 })

@@ -1,5 +1,5 @@
+import type { TranslatedBlogEntry } from 'shared-projects-frontend/models'
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
-import type { TranslatedBlogEntry } from '~/models/blog-entry.model'
 
 export default async function addBlogLimitWarningFactory(
   blogEntries: TranslatedBlogEntry[],
@@ -11,7 +11,10 @@ export default async function addBlogLimitWarningFactory(
   if (entryCount > MAX_BLOG_ENTRIES) {
     limitedWarning = /* HTML */ `
       <span class="blog-limited-warning">
-        ${t('pdf.blog-entries-limited-warning', { count: MAX_BLOG_ENTRIES, total: entryCount })}
+        ${t('pdf.blog-entries-limited-warning', {
+          count: MAX_BLOG_ENTRIES,
+          total: entryCount,
+        })}
       </span>
     `
   }

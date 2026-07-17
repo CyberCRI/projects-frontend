@@ -40,7 +40,7 @@ import IconImage from '~/components/base/media/IconImage.vue'
 import BasicCard from '~/components/base/BasicCard.vue'
 
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
-import type { UserModel } from '~/models/user.model'
+import type { UserModel } from 'shared-projects-frontend/models'
 import type { RouteLocationRaw } from 'vue-router'
 
 const props = withDefaults(
@@ -75,6 +75,8 @@ const userAction = (event) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .picture {
   border-radius: 100%;
 }
@@ -84,11 +86,11 @@ const userAction = (event) => {
 }
 
 .badge {
-  border-bottom: 1px solid $primary-dark;
+  border-bottom: 1px solid variables.$primary-dark;
   color: black;
   font-weight: 400;
-  font-size: $font-size-s;
-  margin-top: $space-s;
-  padding: $space-2xs 0;
+  font-size: variables.$font-size-s;
+  margin-top: variables.$space-s;
+  padding: variables.$space-2xs 0;
 }
 </style>

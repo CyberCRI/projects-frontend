@@ -115,10 +115,8 @@ import type {
   QueryFilterDocument,
   Relators,
   ResearcherDocumentAnalytics,
-  TranslatedDocument,
-} from '~/interfaces/researcher'
-
-import { sanitizeResearcherDocumentAnalyticsYears } from '~/api/sanitizes/researcher'
+  TranslatedResearcherDocument,
+} from 'shared-projects-frontend/models'
 
 import ResearcherDocumentSimilars from '~/components/people/Researcher/ResearcherDocumentSimilars.vue'
 import ResearcherDocument from '~/components/people/Researcher/ResearcherDocument.vue'
@@ -127,11 +125,12 @@ import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV
 import type { Pagination as PaginationType } from '~/composables/usePagination'
 import { useQuery } from '~/composables/useQuery'
 
+import { sanitizeResearcherDocumentAnalyticsYears } from '~/api/sanitizes/researcher'
 import { isNil } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
-    documents: TranslatedDocument[]
+    documents: TranslatedResearcherDocument[]
     documentsAnalytics: ResearcherDocumentAnalytics
     pagination?: PaginationType
     preview?: boolean
@@ -144,7 +143,7 @@ const { t } = useNuxtI18n()
 const { count: paginationCount } = props.pagination
 
 // when we click to "show similars documents"
-const documentSelected = ref<TranslatedDocument>()
+const documentSelected = ref<TranslatedResearcherDocument>()
 
 const SORTING_RESULTS = {
   publication_date: t('common.order-asc'),
@@ -217,6 +216,8 @@ const documentsRoleInfos = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 $profile-documents: 1rem;
 
 .profile-documents-container {
@@ -252,7 +253,7 @@ $profile-documents: 1rem;
   }
 }
 
-@media screen and (width <=pxToRem(1000px)) {
+@media screen and (width <=variables.pxtorem(1000px)) {
   .profile-info-container {
     display: flex;
     flex-direction: column;
@@ -302,7 +303,7 @@ $profile-documents: 1rem;
 
   width: 12.5px;
   display: inline-block;
-  background-color: $primary-dark;
+  background-color: variables.$primary-dark;
   height: calc((var(--max-bar-height) * (var(--bar-count) / 100) + var(--min-bar-height)) * 1px);
   transition: all 0.4s;
   transform-origin: bottom;
@@ -352,7 +353,7 @@ $profile-documents: 1rem;
   align-items: baseline;
   font-weight: bold;
 
-  @media screen and (width <=pxToRem(1000px)) {
+  @media screen and (width <=variables.pxtorem(1000px)) {
     justify-content: center;
   }
 }
@@ -377,7 +378,7 @@ $profile-documents: 1rem;
 
     &:hover,
     &.selected {
-      background-color: $primary-dark;
+      background-color: variables.$primary-dark;
       color: white;
 
       & :first-child {
@@ -391,7 +392,7 @@ $profile-documents: 1rem;
   }
 
   & :first-child {
-    color: $primary-dark;
+    color: variables.$primary-dark;
     font-size: 2rem;
   }
 

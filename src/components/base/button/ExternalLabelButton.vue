@@ -58,15 +58,17 @@ const is = computed(() => (props.to ? NuxtLink : 'button'))
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .external-btn {
   display: inline-flex;
   flex-direction: row;
-  gap: $space-s;
+  gap: variables.$space-s;
   align-items: center;
   justify-content: center;
   border: none;
   background: transparent;
-  color: $primary-dark;
+  color: variables.$primary-dark;
   cursor: pointer;
 
   &.reversed {
@@ -84,9 +86,9 @@ const is = computed(() => (props.to ? NuxtLink : 'button'))
   }
 
   .label {
-    font-size: $font-size-s;
+    font-size: variables.$font-size-s;
     font-weight: 400;
-    color: $primary-dark;
+    color: variables.$primary-dark;
     text-align: center;
   }
 
@@ -94,19 +96,19 @@ const is = computed(() => (props.to ? NuxtLink : 'button'))
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: $font-size-2xs;
-    padding: $space-s;
+    font-size: variables.$font-size-2xs;
+    padding: variables.$space-s;
     height: 7px;
     width: 7px;
     box-sizing: border-box;
-    background: $primary-dark;
-    color: $white;
+    background: variables.$primary-dark;
+    color: variables.$white;
     border-radius: 50%;
     position: absolute;
     left: 50%;
     top: 0;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       right: 400px; // TODO: ???
     }
   }
@@ -118,14 +120,14 @@ const is = computed(() => (props.to ? NuxtLink : 'button'))
   .btn {
     width: var(--external-button-outer-size, 2rem);
     height: var(--external-button-outer-size, 2rem);
-    color: $primary-dark;
-    fill: $primary-dark;
+    color: variables.$primary-dark;
+    fill: variables.$primary-dark;
   }
 
   &.has-border {
     .over-button {
-      border: $border-width-m solid $primary-dark;
-      border-radius: $border-radius-50;
+      border: variables.$border-width-m solid variables.$primary-dark;
+      border-radius: variables.$border-radius-50;
       width: var(--external-button-outer-size, 2rem);
       height: var(--external-button-outer-size, 2rem);
     }
@@ -156,7 +158,7 @@ const is = computed(() => (props.to ? NuxtLink : 'button'))
 
     &:hover {
       border-radius: 8px;
-      background-color: $primary-light !important;
+      background-color: variables.$primary-light !important;
 
       svg {
         transform: translateZ(0) scale(1.1);

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reportAbuse, reportBug } from '~/api/report.service'
+import { reportAbuse, reportBug } from 'shared-projects-frontend/apis'
 
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
@@ -21,8 +21,12 @@ const { t } = useNuxtI18n()
 
 const usersStore = useUsersStore()
 
-const { stateModals, closeModals, openModals, closeAllModals } = useModals({ saveChange: false })
-const { form, isValid, errors, cleanedData, reset } = useReportForm({ lazy: true })
+const { stateModals, closeModals, openModals, closeAllModals } = useModals({
+  saveChange: false,
+})
+const { form, isValid, errors, cleanedData, reset } = useReportForm({
+  lazy: true,
+})
 // auto add title from message content
 watchEffect(() => {
   form.value.title = cropIfTooLong(form.value.message, 10)

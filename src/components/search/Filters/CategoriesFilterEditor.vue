@@ -24,7 +24,7 @@
 <script>
 import CategoryPicker from '~/components/category/CategoryPicker.vue'
 
-import useProjectCategories from '~/stores/useProjectCategories.ts'
+import useProjectCategories from '~/stores/useProjectCategories'
 
 export default {
   name: 'CategoriesFilterEditor',
@@ -125,7 +125,9 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .filter-categories {
   display: flex;
   justify-content: stretch;

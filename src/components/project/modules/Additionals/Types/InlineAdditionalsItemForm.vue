@@ -11,19 +11,20 @@ import type {
   ProjectTabItemForm,
   TranslatedProjectTab,
   TranslatedProjectTabItem,
-} from '~/models/projects-tabs.model'
+  TranslatedProject,
+  ImageModel,
+} from 'shared-projects-frontend/models'
 import {
   createProjectTabItem,
   createProjectTabItemImage,
   updateProjectTabItem,
-} from '~/api/project-tabs.service'
+} from 'shared-projects-frontend/apis'
 import { defaultProjectTabItemForm, useProjectTabItemForm } from '~/form/project-tabs'
-import { getFirstTextNotEmpty, roomKeyFromParams } from '~/functs/tiptap'
+import type { ProviderParams } from 'shared-projects-frontend/interfaces'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
-import type { ProviderParams } from '~/interfaces/colaboratives'
-import type { TranslatedProject } from '~/models/project.model'
+import { roomKeyFromParams } from 'shared-projects-frontend/lib'
 import FormPanel from '~/components/base/FormPanel.vue'
-import type { ImageModel } from '~/models/image.model'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
 import { isNil } from 'es-toolkit'
@@ -248,16 +249,18 @@ const checkClose = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .blog-drawer {
   height: 100%;
 
   :deep(.drawer__main) {
-    gap: $space-unit;
+    gap: variables.$space-unit;
   }
 
   .content-editor {
     flex-grow: 1;
-    min-height: pxToRem(300px);
+    min-height: variables.pxtorem(300px);
   }
 }
 

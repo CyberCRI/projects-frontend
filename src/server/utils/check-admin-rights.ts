@@ -1,6 +1,8 @@
-import type { OrganizationModel } from '~/models/organization.model'
-import type { UserModel } from '~/models/user.model'
+import { getUser as globalGetUser, getOrganizationByCode } from 'shared-projects-frontend/apis'
+import { isAdmin, isSuperAdmin, userRights } from 'shared-projects-frontend/lib'
+import type { OrganizationModel } from 'shared-projects-frontend/models'
 
+// TODO: add parseToken/jwt in shared-project-backend
 export function parseJwt(token) {
   try {
     const base64Url = token.split('.')[1]
@@ -20,93 +22,62 @@ export function parseJwt(token) {
 
     return JSON.parse(jsonPayload)
   } catch (error) {
-    throw new Error(`Failed to parse JWT: ${error.message}`)
+    throw new Error(`Failed to parse JWT: ${error.message}`, { cause: error })
   }
 }
 
 export function getKeycloakIdFromToken(tokenHeader) {
-  let kcId = null
   try {
-    const jwt = parseJwt(tokenHeader)
-    kcId = jwt.sub
-  } catch (err) {
-    console.error(err)
+    return parseJwt(tokenHeader).sub
+  } catch {
     throw createError({
       statusCode: 400,
       statusMessage: 'bad_request',
       message: 'Malformed token.',
     })
   }
-
-  return kcId
 }
 
 export async function getOrg(event): Promise<OrganizationModel | null> {
   const runtimeConfig = useRuntimeConfig()
   const orgCode = runtimeConfig.public.appApiOrgCode
   const tokenHeader = getRequestHeader(event, 'authorization') || ''
-  let org
-  try {
-    const baseUrl = runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/'
-    org = await $fetch(`${baseUrl}/organization/${orgCode}/`, {
-      headers: { Authorization: tokenHeader },
-    })
-  } catch (e) {
+
+  return getOrganizationByCode(orgCode, {
+    headers: { Authorization: tokenHeader },
+  }).catch((e) => {
     throw createError({
       statusCode: 401,
       statusMessage: 'no_org',
       message: 'Could not retrieve org: ' + e.toString(),
     })
-  }
-  return org
-}
-
-export async function getUserByKeycloakId(kcId, tokenHeader): Promise<UserModel | null> {
-  let user = null
-  try {
-    const runtimeConfig = useRuntimeConfig()
-    const baseUrl = runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/'
-    user = await $fetch(`${baseUrl}/user/${kcId}/`, {
-      headers: { Authorization: tokenHeader },
-    })
-  } catch (e) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: 'no_user',
-      message: 'Could not retrieve user: ' + e.toString(),
-    })
-  }
-
-  return user
-}
-
-export function isSuperAdmin(user) {
-  return !!user?.is_superuser
-}
-export function isAdmin(user, orgId) {
-  return (user.roles || []).some((role) => role === `organization:#${orgId}:admins`)
+  })
 }
 
 export async function getUser(event) {
   const tokenHeader = getRequestHeader(event, 'authorization') || ''
   const kcId = getKeycloakIdFromToken(tokenHeader)
-  const user = await getUserByKeycloakId(kcId, tokenHeader)
-  return user
+
+  return globalGetUser(kcId, {
+    headers: { Authorization: tokenHeader },
+  }).catch((e) => {
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'no_user',
+      message: 'Could not retrieve user: ' + e.toString(),
+    })
+  })
 }
 
 export default async function checkAdminRights(event) {
+  const organization = await getOrg(event)
+
   const user = await getUser(event)
-  if (!user) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: 'Unauthorized',
-      message: 'You must authenticate to access this resource.',
-    })
-  }
-  const org = await getOrg(event)
-  const orgId = org?.id
-  const superAdmin = isSuperAdmin(user)
-  const admin = isAdmin(user, orgId)
+  const rights = userRights(user)
+
+  const superAdmin = isSuperAdmin(rights)
+  const admin = isAdmin(rights, organization.id)
+
   if (!superAdmin && !admin) {
     throw createError({
       statusCode: 403,

@@ -1,11 +1,10 @@
-// @vitest-environment happy-dom
 import {
   createRandomString,
   getRefreshTokenInterval,
   cleanLocalStorage,
 } from '~/api/auth/keycloakUtils'
 
-import { afterAll, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 describe('KeycloakUtils', () => {
   it('createRandomString', () => {
@@ -32,9 +31,5 @@ describe('KeycloakUtils', () => {
 
     cleanLocalStorage()
     expect(localStorage.getItem('SESSION_TOKEN')).toBeNull()
-  })
-
-  afterAll(() => {
-    vi.resetAllMocks()
   })
 })

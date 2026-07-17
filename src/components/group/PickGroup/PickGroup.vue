@@ -30,12 +30,13 @@
   </div>
 </template>
 
-<script>
-import { searchGroups } from '~/api/search.service'
+<script lang="ts">
+import { searchGroups } from 'shared-projects-frontend/apis'
 
 import GroupsElementRadio from '~/components/group/GroupsElement/GroupsElementRadio.vue'
 import SearchInput from '~/components/base/form/SearchInput.vue'
 
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
 
 export default {
@@ -50,7 +51,7 @@ export default {
       default: null,
     },
     groups: {
-      type: Array,
+      type: Array as PropType<TranslatedPeopleGroupModel[]>,
       default: () => [],
     },
 
@@ -188,6 +189,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .search-section {
   margin-block: 1rem;
   flex-shrink: 0;

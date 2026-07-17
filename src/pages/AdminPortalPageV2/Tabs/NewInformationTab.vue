@@ -20,6 +20,8 @@ import NewsAdminBlock from '~/components/admin/GeneralAdminBlocks/News/NewsAdmin
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .information-tab {
   display: flex;
   flex-direction: column;

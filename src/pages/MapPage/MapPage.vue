@@ -22,7 +22,9 @@ import { useLpiHead2 } from '~/composables/useLpiHead'
 const organizationCode = useOrganizationCode()
 const { t } = useNuxtI18n()
 
-const { isLoading, data } = getLocations(organizationCode)
+const { isLoading, data } = getLocations(organizationCode, {
+  default: () => [],
+})
 
 const isEmpty = computed(() => (data.value?.length ?? 0) === 0)
 
@@ -41,9 +43,11 @@ useLpiHead2({
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 #projects-map {
-  height: calc(100vh - $navbar-height);
-  margin-top: $navbar-height;
+  height: calc(100vh - variables.$navbar-height);
+  margin-top: variables.$navbar-height;
   position: relative;
   touch-action: none;
 
@@ -63,19 +67,19 @@ useLpiHead2({
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: $zindex-fixed;
+    z-index: variables.$zindex-fixed;
 
     svg {
-      margin: 0 auto $space-m;
+      margin: 0 auto variables.$space-m;
     }
   }
 
   .empty-map {
     display: inline-block;
-    background-color: $primary-light;
-    border-radius: $border-radius-l;
-    padding: $space-l;
-    font-size: $font-size-xl;
+    background-color: variables.$primary-light;
+    border-radius: variables.$border-radius-l;
+    padding: variables.$space-l;
+    font-size: variables.$font-size-xl;
     text-align: center;
     position: absolute;
     top: 50%;
@@ -86,12 +90,12 @@ useLpiHead2({
   }
 
   .icon {
-    width: pxToRem(18px);
-    height: pxToRem(18px);
+    width: variables.pxtorem(18px);
+    height: variables.pxtorem(18px);
 
     &--close {
-      background: $primary-dark;
-      fill: $white;
+      background: variables.$primary-dark;
+      fill: variables.$white;
       border-radius: 50%;
     }
   }

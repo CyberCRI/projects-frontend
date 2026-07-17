@@ -1,4 +1,4 @@
-import type { MentoringContactForm } from '@/models/mentoring.model'
+import type { MentoringContactForm } from 'shared-projects-frontend/models'
 
 export const defaultMentoringForm = (): MentoringContactForm => ({
   title: '',

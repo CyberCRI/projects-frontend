@@ -113,18 +113,20 @@ const closeFocusedOrModeFilter = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .icon-back {
   cursor: pointer;
-  margin-right: $space-m;
+  margin-right: variables.$space-m;
 
   svg {
-    fill: $primary-dark;
+    fill: variables.$primary-dark;
     width: 24px;
   }
 }
 
 .filter-wrapper {
-  border-bottom: $border-width-s solid $primary;
+  border-bottom: variables.$border-width-s solid variables.$primary;
 
   &:last-child {
     border-bottom: none;

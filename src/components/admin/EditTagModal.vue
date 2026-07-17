@@ -2,7 +2,7 @@
 import { helpers, required } from '@vuelidate/validators'
 import useValidate from '@vuelidate/core'
 
-import { postClassificationTag, putClassificationTag } from '~/api/tag-classification.service'
+import { postClassificationTag, putClassificationTag } from 'shared-projects-frontend/apis'
 
 import FieldErrors from '~/components/base/form/FieldErrors.vue'
 import CharCounter from '~/components/base/form/CharCounter.vue'
@@ -12,9 +12,8 @@ import TextInput from '~/components/base/form/TextInput.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
-import type { TagClassificationModel } from '~/models/tagclassification.model'
+import type { TagClassificationModel, TagModel } from 'shared-projects-frontend/models'
 import LpiButton from '../base/button/LpiButton.vue'
-import type { TagModel } from '~/models/tag.model'
 import { defaultTagForm } from '~/form/tag'
 
 const { t } = useNuxtI18n()
@@ -192,6 +191,8 @@ async function saveTag() {
   </BaseModal>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .form-section + .form-section {
   margin-top: 1.5rem;
 }

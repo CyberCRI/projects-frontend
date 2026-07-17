@@ -1,8 +1,7 @@
 <script setup lang="ts" generic="T extends AnyTranslatedLocation">
+import type { AnyTranslatedLocation, LocationType } from 'shared-projects-frontend/models'
 import LocationTypeComponent from '@/components/map/LocationType.vue'
-import type { AnyTranslatedLocation } from '@/models/location.model'
 import IconImage from '@/components/base/media/IconImage.vue'
-import type { LocationType } from '@/models/types'
 import { groupBy } from 'es-toolkit'
 
 const { stateModal, toggleModal, closeModal } = useModal()
@@ -61,6 +60,8 @@ watchEffect(() => emit('update', toRaw(query)))
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .menu-header {
   display: flex;
   align-items: center;

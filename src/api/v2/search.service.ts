@@ -8,12 +8,17 @@ import type {
   TranslatedSearchResultGroup,
   TranslatedSearchResultProject,
   TranslatedSearchResultUser,
-} from '~/models/search.model'
-import { searchAll, searchGroups, searchProjects, searchUser } from '~/api/search.service'
-import { getOrgClassificationTags } from '~/api/tag-classification.service'
+  OrganizationModel,
+} from 'shared-projects-frontend/models'
+import {
+  searchAll,
+  searchGroups,
+  searchProjects,
+  searchUser,
+  getOrgClassificationTags,
+} from 'shared-projects-frontend/apis'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import type { OrganizationModel } from '@/models/organization.model'
-import type { RefOrRaw } from '@/interfaces/utils'
+import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}

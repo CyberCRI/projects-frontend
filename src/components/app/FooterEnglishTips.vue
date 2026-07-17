@@ -18,12 +18,14 @@ import ToolTip from '~/components/base/ToolTip.vue'
 withDefaults(defineProps<{ itemTitle?: string }>(), { itemTitle: 'page' })
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .tos-tooltip-content {
   max-width: 20rem;
   padding: 1rem;
 
   a {
-    color: $white;
+    color: variables.$white;
     text-decoration: underline;
   }
 }

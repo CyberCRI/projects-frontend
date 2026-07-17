@@ -14,15 +14,15 @@ import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
+import type { CollaborativeUser, ProviderParams } from 'shared-projects-frontend/interfaces'
 import TipTapEditorMenus from '~/components/base/form/TextEditor/TipTapEditorMenus.vue'
 import { emitsDefinitions, PropsDefault, useTipTap } from '~/composables/tiptap'
-import { ClearHistoryWS } from '~/composables/tiptap/extensions/ClearHistoryWS'
 import { onClientMounted, onClientUnmounted } from '~/composables/onClient'
-import type { ProviderParams } from '~/interfaces/colaboratives'
-import { getExtensions } from '~/composables/tiptap/options'
-import type { CollaborativeUser } from '~/interfaces/tiptap'
 import { useRuntimeConfig } from '#imports'
 import { randomInt } from 'es-toolkit'
+
+import { ClearHistoryWS } from '~/composables/tiptap/extensions/ClearHistoryWS'
+import { getExtensions } from '~/composables/tiptap/extensions/all'
 
 const runtimeConfig = useRuntimeConfig()
 const { t } = useNuxtI18n()

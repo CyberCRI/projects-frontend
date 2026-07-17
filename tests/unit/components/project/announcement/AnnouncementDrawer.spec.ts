@@ -3,7 +3,6 @@ import { TranslatedAnnouncementFactory } from '~~/tests/factories/announcement.f
 import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { describe, expect, it } from 'vitest'
-import waitForExpect from 'wait-for-expect'
 
 describe('AnnouncementDrawer.vue', () => {
   it('should render component', () => {

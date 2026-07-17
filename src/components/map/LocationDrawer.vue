@@ -10,7 +10,9 @@
     >
       <div v-if="editable" class="top">
         <div v-if="!formMode">
-          <p v-if="GEOCODING_ENABLED" class="notice">{{ $t('geocoding.choose-method') }}</p>
+          <p v-if="GEOCODING_ENABLED" class="notice">
+            {{ $t('geocoding.choose-method') }}
+          </p>
           <div class="buttons-line">
             <LpiButton
               :label="
@@ -66,7 +68,11 @@
           </div>
           <div v-else>
             <p class="notice">
-              {{ $t('geocoding.found-number', { number: suggestedLocations.length }) }}
+              {{
+                $t('geocoding.found-number', {
+                  number: suggestedLocations.length,
+                })
+              }}
             </p>
             <p class="notice">{{ $t('geocoding.pick-location') }}</p>
 
@@ -114,12 +120,11 @@
 import type {
   AnyTranslatedLocation,
   LocationForm as LocationFormType,
-} from '@/models/location.model'
-import type BaseDrawer from '@/components/base/BaseDrawer.vue'
-import { useSuggestLocations } from '@/api/geocoding.service'
+  LocationType,
+} from 'shared-projects-frontend/models'
+import { useSuggestLocations } from '~/api/geocoding.service'
 import GeneralMap from '@/components/map/GeneralMap.vue'
-import type { Geocoding } from '@/interfaces/maps'
-import type { LocationType } from '@/models/types'
+import type { Geocoding } from '~/interfaces/maps'
 import useToasterStore from '@/stores/useToaster'
 
 const props = withDefaults(
@@ -162,7 +167,6 @@ const formMode = ref<'click' | 'form'>()
 const form = ref(null)
 
 const openEditModal = (location) => {
-  console.log('icic')
   form.value = location
   showForm.value = true
 }
@@ -228,11 +232,13 @@ const onSubmit = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .top {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  margin-bottom: $space-l;
+  margin-bottom: variables.$space-l;
 
   & > div {
     width: 100%;
@@ -242,7 +248,7 @@ const onSubmit = () => {
 
 .location-map-ctn {
   height: 500px;
-  border-radius: $border-radius-l;
+  border-radius: variables.$border-radius-l;
   overflow: hidden;
 
   .leaflet-container {
@@ -271,7 +277,7 @@ const onSubmit = () => {
 
 .input-field,
 .notice {
-  margin-bottom: $space-l;
+  margin-bottom: variables.$space-l;
 }
 
 .notice {

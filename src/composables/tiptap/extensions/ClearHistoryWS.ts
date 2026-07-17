@@ -1,8 +1,6 @@
-import type { RawCommands } from '@tiptap/core'
 import { Extension } from '@tiptap/core'
 
 import { yUndoPluginKey } from 'y-prosemirror'
-import type { UndoManager } from 'yjs'
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -17,7 +15,7 @@ declare module '@tiptap/core' {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export const ClearHistoryWS = Extension.create<{}>({
-  name: 'clearhistoryws',
+  name: 'clear-history-ws',
 
   priority: 1000,
 
@@ -27,7 +25,7 @@ export const ClearHistoryWS = Extension.create<{}>({
 
   onCreate() {
     if (
-      this.editor.extensionManager.extensions.find(
+      !this.editor.extensionManager.extensions.find(
         (extension) => extension.name === 'collaboration'
       )
     ) {
@@ -41,10 +39,10 @@ export const ClearHistoryWS = Extension.create<{}>({
         () =>
         ({ tr, state }) => {
           tr.setMeta('preventDispatch', true)
-          const undoManager: UndoManager = yUndoPluginKey.getState(state).undoManager
-          undoManager.clear()
+          const undoManager = yUndoPluginKey.getState(state)?.undoManager
+          undoManager?.clear()
           return true
         },
-    } as Partial<RawCommands>
+    }
   },
 })

@@ -1,5 +1,5 @@
+import type { TranslatedBlogEntry } from 'shared-projects-frontend/models'
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
-import type { TranslatedBlogEntry } from '~/models/blog-entry.model'
 import { formatDate } from '~/functs/date'
 
 export default async function addBlogSectionFactory(blogEntries: TranslatedBlogEntry[]) {

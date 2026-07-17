@@ -1,33 +1,10 @@
 {
-  "extends": [
-    "stylelint-config-standard",
-    "stylelint-config-standard-scss",
-    "stylelint-config-recommended-vue/scss"
-  ],
+  "plugins": ["stylelint-scss"],
+  "extends": ["stylelint-config-standard-scss", "stylelint-config-recommended-vue/scss"],
   "rules": {
     "no-descending-specificity": null,
-    "selector-pseudo-class-no-unknown": [
-      true,
-      {
-        "ignorePseudoClasses": ["deep"]
-      }
-    ],
-    "function-name-case": [
-      "lower",
-      {
-        "ignoreFunctions": ["pxToRem"]
-      }
-    ],
-    "at-rule-no-unknown": [
-      true,
-      {
-        "ignoreAtRules": ["function", "return", "extend"]
-      }
-    ],
-
     "scss/operator-no-unspaced": null,
     "scss/at-rule-no-unknown": true,
-
     "selector-class-pattern": null,
     "selector-id-pattern": null,
     "declaration-block-single-line-max-declarations": null,
@@ -37,7 +14,6 @@
     "scss/double-slash-comment-whitespace-inside": null,
     "scss/dollar-variable-pattern": null,
     "scss/at-function-pattern": null,
-    "scss/at-import-no-partial-leading-underscore": null,
     "custom-property-pattern": null
   }
 }

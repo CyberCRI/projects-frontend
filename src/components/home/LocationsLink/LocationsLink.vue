@@ -18,21 +18,23 @@ const locationButtonHover = ref(false)
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .locations-link {
-  margin-top: $space-l;
+  margin-top: variables.$space-l;
   display: flex;
   align-items: center;
   justify-content: space-around;
   flex-wrap: wrap;
-  padding: $space-l $space-s;
-  border-radius: $border-radius-8;
-  border: $border-width-s solid $primary-dark;
-  background-image: url('#{$PUBLIC_BINARIES_PREFIX}/map-images/map-link-background.png');
+  padding: variables.$space-l variables.$space-s;
+  border-radius: variables.$border-radius-8;
+  border: variables.$border-width-s solid variables.$primary-dark;
+  background-image: url('#{variables.$PUBLIC_BINARIES_PREFIX}/map-images/map-link-background.png');
   background-size: 100%;
   background-position: center;
   transition: all 0.3s ease-in-out;
 
-  @media screen and (max-width: $max-mobile) {
+  @media screen and (max-width: variables.$max-mobile) {
     background-size: cover;
   }
 

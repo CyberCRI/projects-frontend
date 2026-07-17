@@ -1,5 +1,5 @@
 import { email, helpers, required, url } from '@vuelidate/validators'
-import type { ReportForm } from '~/models/report.model'
+import type { ReportForm } from 'shared-projects-frontend/models'
 
 export const defaultReportForm = (): ReportForm => {
   return {
@@ -34,5 +34,9 @@ export const useReportForm = (options = {}) => {
     },
   }))
 
-  return useForm<ReportForm>({ default: defaultReportForm(), rules, ...options })
+  return useForm<ReportForm>({
+    default: defaultReportForm(),
+    rules,
+    ...options,
+  })
 }

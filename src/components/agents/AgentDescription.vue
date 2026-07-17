@@ -7,10 +7,12 @@ defineProps({ agent: { type: Object, required: true } })
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .agent-description {
-  border-left: 3px solid $primary-dark;
-  border-right: 3px solid $primary-dark;
+  border-left: 3px solid variables.$primary-dark;
+  border-right: 3px solid variables.$primary-dark;
   padding: 1rem;
-  background-color: $primary-lighter;
+  background-color: variables.$primary-lighter;
 }
 </style>

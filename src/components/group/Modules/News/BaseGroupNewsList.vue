@@ -43,11 +43,14 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
-import type { QueryFilterNews, TranslatedNews } from '~/models/news.model'
+import type {
+  QueryFilterNews,
+  TranslatedNews,
+  TranslatedPeopleGroupModel,
+} from 'shared-projects-frontend/models'
 
+import { deleteNews } from 'shared-projects-frontend/apis'
 import { getGroupNews } from '~/api/v2/group.service'
-import { deleteNews } from '~/api/news.service'
 
 import EditNewsDrawer from '~/components/news/EditNewsDrawer/EditNewsDrawer.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'
@@ -78,7 +81,10 @@ const props = withDefaults(
 const { t } = useNuxtI18n()
 
 const selectedNews = ref<any>()
-const { stateModals, openModals, closeModals } = useModals({ delete: false, edit: false })
+const { stateModals, openModals, closeModals } = useModals({
+  delete: false,
+  edit: false,
+})
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group?.id)

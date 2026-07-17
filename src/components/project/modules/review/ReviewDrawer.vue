@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { patchReview, postReview } from '~/api/reviews.service'
+import { patchReview, postReview, patchProject } from 'shared-projects-frontend/apis'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
@@ -10,10 +10,14 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
-import type { ReviewForm, ReviewModel, TranslatedReview } from '~/models/review.model'
+import type {
+  ReviewForm,
+  ReviewModel,
+  TranslatedReview,
+  ProjectForm,
+  TranslatedProject,
+} from 'shared-projects-frontend/models'
 import { defaultProjectReviewForm, useProjectReviewForm } from '~/form/review'
-import type { ProjectForm, TranslatedProject } from '~/models/project.model'
-import { patchProject } from '~/api/projects.service'
 import { formEqual } from '~/form/base'
 
 const props = withDefaults(
@@ -58,9 +62,13 @@ const toaster = useToasterStore()
 const { t } = useNuxtI18n()
 
 const asyncing = ref(false)
-const { stateModals, closeModals, openModals } = useModals({ saveChange: false })
+const { stateModals, closeModals, openModals } = useModals({
+  saveChange: false,
+})
 
-const { form, isValid, errors, cleanedData, reset } = useProjectReviewForm({ lazy: true })
+const { form, isValid, errors, cleanedData, reset } = useProjectReviewForm({
+  lazy: true,
+})
 
 const isFormEqual = useBlockNavigation(
   () => !props.isOpened || formEqual(form.value, defaultLocalForm(), { html: ['description'] })
@@ -181,6 +189,8 @@ const onClose = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .list-container {
   gap: 2rem;
 }

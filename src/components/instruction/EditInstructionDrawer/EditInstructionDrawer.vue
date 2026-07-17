@@ -19,9 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import type { InstructionInput, InstructionModel } from '~/models/instruction.model'
+import type { InstructionInput, InstructionModel } from 'shared-projects-frontend/models'
 
-import { createInstruction, putInstruction } from '~/api/instruction.service'
+import { createInstruction, putInstruction } from 'shared-projects-frontend/apis'
 
 import InstructionForm from '~/components/instruction/InstructionForm/InstructionForm.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'

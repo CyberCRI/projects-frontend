@@ -79,10 +79,14 @@
                 <dt>{{ $t('header.views') }}</dt>
                 <dd>{{ project?.views }}</dd>
                 <dt>{{ $t('header.creation') }}</dt>
-                <dd v-if="project.created_at">{{ $d(new Date(project.created_at)) }}</dd>
+                <dd v-if="project.created_at">
+                  {{ $d(new Date(project.created_at)) }}
+                </dd>
 
                 <dt>{{ $t('header.update') }}</dt>
-                <dd v-if="project.updated_at">{{ $d(new Date(project.updated_at)) }}</dd>
+                <dd v-if="project.updated_at">
+                  {{ $d(new Date(project.updated_at)) }}
+                </dd>
               </dl>
             </template>
             <span class="navpanel-menu-link" data-test="project-infos">
@@ -121,15 +125,16 @@
 </template>
 
 <script setup lang="ts">
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import ProjectsNavSimilar from '~/components/project/Nav/ProjectsNavSimilar.vue'
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
+import { duplicateProject, patchProject } from 'shared-projects-frontend/apis'
 import { useProjectFollow } from '~/composables/project/useProjectFollow'
-import { duplicateProject, patchProject } from '~/api/projects.service'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import ProjectPDFModal from '~/components/project/ProjectPDFModal.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import ReportDrawer from '~/components/drawer/ReportDrawer.vue'
 import { projectSkeleton } from '~/skeletons/project.skeletons'
-import type { TranslatedProject } from '@/models/project.model'
 import { factoriesSkeleton } from '~/skeletons/base.skeletons'
 import { getProjectSimilars } from '~/api/v2/project.service'
 import FetchLoader from '~/components/base/FetchLoader.vue'
@@ -174,7 +179,7 @@ const organizationCode = useOrganizationCode()
 const project = computed(() => props.project)
 const projectId = computed(() => project.value.id)
 
-const { canEditProject, isOrgUser } = usePermissions()
+const { canEditProject } = usePermissionProject(projectId)
 const { isFollowing, toggleFollow } = useProjectFollow(project)
 
 const LIMIT_SIMILARS = 5
@@ -198,7 +203,7 @@ const actionMenu = computed(
       {
         icon: 'Copy' as IconImageChoice,
         key: 'duplicate',
-        condition: canEditProject.value || isOrgUser.value,
+        condition: canEditProject.value,
         label: t('project.duplicate.label'),
         isAddAction: true,
         addModal: 'duplicate',
@@ -267,7 +272,8 @@ const onDuplicate = () => {
 </script>
 
 <style lang="scss" scoped>
-@import '~/components/base/navigation/navpanel-menu-entry';
+@use '~/design/scss/variables';
+@use '~/components/base/navigation/navpanel-menu-entry';
 
 .edit-btn-ctn {
   padding-bottom: 1rem;

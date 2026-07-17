@@ -120,15 +120,17 @@ onClientUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 $slide-duration: 400ms;
 
 .background {
-  z-index: $zindex-drawer;
+  z-index: variables.$zindex-drawer;
   position: fixed;
   inset: 0;
   height: 100vh;
   width: 100vw;
-  background-color: $modal-background;
+  background-color: variables.$modal-background;
   opacity: 0.3;
 
   &.background-appear-enter-active {
@@ -148,9 +150,9 @@ $slide-duration: 400ms;
 }
 
 .drawer {
-  z-index: $zindex-drawer;
-  background: $white;
-  border-left: $border-width-s solid $primary-dark;
+  z-index: variables.$zindex-drawer;
+  background: variables.$white;
+  border-left: variables.$border-width-s solid variables.$primary-dark;
   border-right: none;
   width: 90vw;
   display: flex;
@@ -164,7 +166,7 @@ $slide-duration: 400ms;
   transform: translateX(0);
 
   .drawer__main {
-    padding: 0 $space-l $space-xl;
+    padding: 0 variables.$space-l variables.$space-xl;
     overflow: auto;
     overflow-x: hidden;
     flex-grow: 1;
@@ -188,21 +190,21 @@ $slide-duration: 400ms;
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
-    gap: $space-m;
-    padding: $space-l;
+    gap: variables.$space-m;
+    padding: variables.$space-l;
 
     .selected-card {
-      background-color: $primary-lighter;
+      background-color: variables.$primary-lighter;
     }
   }
 
   .small > & {
-    width: pxToRem(450px);
+    width: variables.pxtorem(450px);
     max-width: 100vw;
   }
 
   .medium > & {
-    width: pxToRem(850px);
+    width: variables.pxtorem(850px);
     max-width: 100vw;
   }
 
@@ -213,7 +215,7 @@ $slide-duration: 400ms;
 
   .transparent > &,
   .transparent > &__footer {
-    background-color: color-mix(in srgb, $modal-background, transparent 10%);
+    background-color: color-mix(in srgb, variables.$modal-background, transparent 10%);
   }
 
   &__header {
@@ -222,7 +224,7 @@ $slide-duration: 400ms;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 $space-l;
+    padding: 0 variables.$space-l;
 
     &.scrolled {
       box-shadow: 0 2px 5px rgb(190 190 190 / 50%);
@@ -234,18 +236,18 @@ $slide-duration: 400ms;
     width: 100%;
     display: flex;
     justify-content: center;
-    border-top: $border-width-s solid $lighter-gray;
-    color: $primary-dark;
+    border-top: variables.$border-width-s solid variables.$lighter-gray;
+    color: variables.$primary-dark;
     font-weight: 700;
-    padding-top: $space-l;
-    padding-bottom: $space-l;
+    padding-top: variables.$space-l;
+    padding-bottom: variables.$space-l;
     position: sticky;
     bottom: 0;
-    background: $white;
-    gap: $space-l;
+    background: variables.$white;
+    gap: variables.$space-l;
 
     .transparent > & {
-      background-color: color-mix(in srgb, $modal-background, transparent 10%);
+      background-color: color-mix(in srgb, variables.$modal-background, transparent 10%);
       color: white;
     }
 
@@ -261,8 +263,8 @@ $slide-duration: 400ms;
   align-items: center;
 
   .header__title {
-    font-size: $font-size-2xl;
-    color: $black;
+    font-size: variables.$font-size-2xl;
+    color: variables.$black;
 
     .transparent & {
       color: white;

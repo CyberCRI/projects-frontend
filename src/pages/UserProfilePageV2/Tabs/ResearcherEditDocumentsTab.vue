@@ -17,17 +17,20 @@
     documents editions not form projects
     need to add iframe to show sovisuplus
 */
+import type { ResearcherDocumentType } from 'shared-projects-frontend/models'
 import SvgWarning from '~/assets/svg/warning.svg'
 
 const { t } = useNuxtI18n()
 
-const props = defineProps<{ docType: string }>()
+const props = defineProps<{ docType: ResearcherDocumentType }>()
 
 const title = computed(() => t(`me.${props.docType}`))
 const notEditable = computed(() => t(`profile.edit.${props.docType}.no-editable`))
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .profile-documents {
   border-radius: 5px;
   padding: 0.2rem;
@@ -38,8 +41,8 @@ const notEditable = computed(() => t(`profile.edit.${props.docType}.no-editable`
   border-radius: 20px;
   padding: 1rem;
   margin-top: 1rem;
-  background-color: $salmon;
-  color: rgba(0 0 0 / 80%);
+  background-color: variables.$salmon;
+  color: rgb(0 0 0 / 80%);
   font-style: italic;
 
   svg {

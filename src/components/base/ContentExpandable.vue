@@ -41,7 +41,13 @@ const props = withDefaults(
     seeLessLabel?: string
     hideSeeMore?: boolean
   }>(),
-  { opened: null, description: null, seeMoreLabel: null, seeLessLabel: null, hideSeeMore: false }
+  {
+    opened: null,
+    description: null,
+    seeMoreLabel: null,
+    seeLessLabel: null,
+    hideSeeMore: false,
+  }
 )
 
 const emit = defineEmits<{
@@ -89,6 +95,8 @@ watchEffect(() => emit('expanded', !showLess.value))
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .no-border {
   border: 0 !important;
 }
@@ -122,7 +130,7 @@ watchEffect(() => emit('expanded', !showLess.value))
 .outer {
   .toggle {
     color: var(--primary-dark);
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
     cursor: pointer;
     font-weight: 400;
     text-decoration: underline;

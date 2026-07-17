@@ -28,7 +28,7 @@
   />
 </template>
 <script setup lang="ts">
-import { addFeaturedProject, removeFeaturedProject } from '~/api/organizations.service'
+import { addFeaturedProject, removeFeaturedProject } from 'shared-projects-frontend/apis'
 import { getFeaturedProjects } from '~/api/v2/organizations.service'
 import { projectSkeleton } from '~/skeletons/project.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
@@ -64,7 +64,9 @@ const onPickProjects = async (projects) => {
     const toAdd = picked.filter((p) => !current.includes(p))
     const toRemove = current.filter((p) => !picked.includes(p))
 
-    await addFeaturedProject(organizationCode, { featured_projects_ids: toAdd })
+    await addFeaturedProject(organizationCode, {
+      featured_projects_ids: toAdd,
+    })
     await removeFeaturedProject(organizationCode, {
       featured_projects_ids: toRemove,
     })

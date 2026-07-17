@@ -31,6 +31,8 @@ const closeAfterClick = () => nextTick(() => closeModal())
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 $padding: 1rem;
 
 .menu-tip {
@@ -47,8 +49,8 @@ $padding: 1rem;
 .menu-content {
   padding: 1rem;
   padding-right: 3rem;
-  background-color: $white;
-  border: $border-width-s solid $primary-dark;
+  background-color: variables.$white;
+  border: variables.$border-width-s solid variables.$primary-dark;
   position: absolute;
   top: -1rem;
   right: -1rem;

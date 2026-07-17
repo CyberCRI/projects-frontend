@@ -1,9 +1,11 @@
-.legal-page {
-  color: $black;
+@use 'variables';
 
-  @media screen and (min-width: $max-tablet) {
+.legal-page {
+  color: variables.$black;
+
+  @media screen and (min-width: variables.$max-tablet) {
     .legal-notices {
-      margin-top: calc(90px + $navbar-height);
+      margin-top: calc(90px + variables.$navbar-height);
     }
   }
 
@@ -16,51 +18,51 @@
   }
 
   section {
-    border-radius: $border-radius-l;
-    background: $primary-lighter;
-    padding: $space-l;
-    margin-top: $space-xl;
-    margin-bottom: $space-xl;
+    border-radius: variables.$border-radius-l;
+    background: variables.$primary-lighter;
+    padding: variables.$space-l;
+    margin-top: variables.$space-xl;
+    margin-bottom: variables.$space-xl;
 
     h2 {
       text-transform: uppercase;
-      font-size: $font-size-2xl;
+      font-size: variables.$font-size-2xl;
       font-weight: 700;
-      margin: $space-xl auto;
+      margin: variables.$space-xl auto;
     }
 
     h3 {
-      font-size: $font-size-2xl;
+      font-size: variables.$font-size-2xl;
       font-weight: 700;
-      margin-bottom: $space-m;
+      margin-bottom: variables.$space-m;
     }
 
     h4 {
-      font-size: $font-size-2xl;
+      font-size: variables.$font-size-2xl;
       font-weight: 500;
-      margin-bottom: $space-s;
+      margin-bottom: variables.$space-s;
     }
 
     h5 {
-      font-size: $font-size-2xl;
-      margin-bottom: $space-xs;
+      font-size: variables.$font-size-2xl;
+      margin-bottom: variables.$space-xs;
     }
 
     p {
-      margin: $space-l 0;
+      margin: variables.$space-l 0;
     }
 
     a {
-      color: $black;
+      color: variables.$black;
     }
 
     ol {
-      margin-left: $space-xl;
+      margin-left: variables.$space-xl;
       list-style-type: auto;
     }
 
     ul {
-      margin-left: $space-xl;
+      margin-left: variables.$space-xl;
       list-style-type: disc;
     }
 
@@ -94,7 +96,7 @@
     }
 
     h4 {
-      font-size: $font-size-xl;
+      font-size: variables.$font-size-xl;
     }
 
     th {
@@ -114,9 +116,9 @@
   }
 
   .last-updated {
-    font-size: $font-size-s;
+    font-size: variables.$font-size-s;
     text-align: right;
     font-style: italic;
-    margin-block: $space-l;
+    margin-block: variables.$space-l;
   }
 }

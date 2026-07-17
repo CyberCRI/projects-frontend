@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import RecommendationBlock from '@/components/search/Recommendations/RecommendationBlock.vue'
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
 const organizationsStore = useOrganizationsStore()
 const usersStore = useUsersStore()
 const router = useRouter()
 
-const { canCreateProject } = usePermissions()
+const { canCreateProject } = usePermissionProject(null)
 
 const organization = computed(() => organizationsStore.current)
 const loggedIn = computed(() => usersStore.isConnected)
@@ -68,18 +69,20 @@ useLpiHead2({})
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .search-input-container {
   display: flex;
-  padding-top: $space-l;
-  padding-bottom: $space-l;
-  border-radius: $border-radius-17;
+  padding-top: variables.$space-l;
+  padding-bottom: variables.$space-l;
+  border-radius: variables.$border-radius-17;
   flex-direction: row;
   position: relative; // higher than home category dropdown and buttons and suggestions
   z-index: 10;
 
-  @media (min-width: $min-desktop) {
-    padding-left: $space-2xl;
-    padding-right: $space-2xl;
+  @media (min-width: variables.$min-desktop) {
+    padding-left: variables.$space-2xl;
+    padding-right: variables.$space-2xl;
   }
 }
 
@@ -89,26 +92,26 @@ useLpiHead2({})
 }
 
 .search-options {
-  padding-top: $space-unit;
+  padding-top: variables.$space-unit;
 }
 
 .bottom-page {
   display: flex;
-  margin-bottom: $space-l;
-  border-radius: $border-radius-17;
+  margin-bottom: variables.$space-l;
+  border-radius: variables.$border-radius-17;
   flex-direction: column;
-  gap: $space-2xl;
+  gap: variables.$space-2xl;
 
-  @media (min-width: $min-desktop) {
+  @media (min-width: variables.$min-desktop) {
     flex-direction: row;
     align-items: flex-start;
   }
 }
 
 .projects-and-people {
-  margin-bottom: $space-xl;
+  margin-bottom: variables.$space-xl;
 
-  @media (min-width: $min-desktop) {
+  @media (min-width: variables.$min-desktop) {
     flex-basis: 35%;
     margin-bottom: 0;
     flex-shrink: 0;
@@ -118,34 +121,34 @@ useLpiHead2({})
   }
 
   button {
-    background-color: $white;
+    background-color: variables.$white;
     cursor: pointer;
   }
 
   .categories {
-    border: 1px solid $lighter-gray;
-    border-radius: $border-radius-s;
-    height: pxToRem(50px);
+    border: 1px solid variables.$lighter-gray;
+    border-radius: variables.$border-radius-s;
+    height: variables.pxtorem(50px);
     display: flex;
     justify-content: space-between;
-    padding-inline: $space-m;
+    padding-inline: variables.$space-m;
     align-items: center;
     width: 100%;
 
-    @media (min-width: $min-desktop) {
-      margin-top: $space-l;
+    @media (min-width: variables.$min-desktop) {
+      margin-top: variables.$space-l;
     }
 
     .categories-btn {
-      color: $primary-dark;
-      font-size: $font-size-m;
+      color: variables.$primary-dark;
+      font-size: variables.$font-size-m;
       font-weight: 700;
     }
 
     .caret {
-      margin-left: $space-l;
-      fill: $primary-dark;
-      width: pxToRem(20px);
+      margin-left: variables.$space-l;
+      fill: variables.$primary-dark;
+      width: variables.pxtorem(20px);
     }
   }
 }
@@ -153,12 +156,12 @@ useLpiHead2({})
 .all-news {
   height: fit-content;
 
-  @media (min-width: $min-desktop) {
+  @media (min-width: variables.$min-desktop) {
     flex-basis: 65%;
   }
 
   .select-news {
-    height: $layout-size-2xl;
+    height: variables.$layout-size-2xl;
   }
 
   .news {

@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
+import type { TranslatedPeopleGroupModel, TranslatedProject } from 'shared-projects-frontend/models'
 
 import { getGroupProject } from '~/api/v2/group.service'
 
 import ProjectPreview from '~/components/project/ProjectPreview.vue'
 
 import ProjectSelectDrawer from '~/components/drawer/Project/ProjectSelectDrawer.vue'
-import { postGroupProjects, removeGroupProject } from '~/api/groups.service'
+import { postGroupProjects, removeGroupProject } from 'shared-projects-frontend/apis'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { refreshGroupData } from '~/composables/groups/refreshGroup'
 import { projectSkeleton } from '~/skeletons/project.skeletons'
-import type { TranslatedProject } from '~/models/project.model'
 
 const props = withDefaults(
   defineProps<{

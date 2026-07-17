@@ -1,9 +1,9 @@
 <template>
   <BaseGroupPreview
     id="locations"
-    :title="$t(GroupModuleTitle.locations, group.modules.locations)"
+    :title="$t(GROUP_MODULE_TITLE.locations, group.modules.locations)"
     :total="group.modules.locations"
-    :icon="GroupModuleIcon.locations"
+    :icon="GROUP_MODULE_ICON.locations"
     :see-more="{
       name: 'groupLocations',
       params: { groupIdOrSlug: group.slug || group.id },
@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 import GroupLocationBase from '@/components/group/Modules/Locations/GroupLocationBase.vue'
-import { GroupModuleIcon, GroupModuleTitle } from '@/models/people-group.model'
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
+import { GROUP_MODULE_ICON, GROUP_MODULE_TITLE } from '~/functs/constants'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 
 defineProps<{ group: TranslatedPeopleGroupModel }>()

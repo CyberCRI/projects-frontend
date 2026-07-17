@@ -1,4 +1,4 @@
-import type { ProjectTab } from '~/models/projects-tabs.model'
+import type { ProjectTab } from 'shared-projects-frontend/models'
 import type { IconTabImageChoice } from '~/functs/IconImage'
 import { DEFAULT_ICONS_TABS } from '~/functs/constants'
 import { ICONS_TABS } from '~/functs/IconImage'
@@ -14,7 +14,7 @@ import { ICONS_TABS } from '~/functs/IconImage'
  * @exports
  */
 export const safeProjectIconTab = (
-  icon: ProjectTab['icon'],
+  icon: IconTabImageChoice,
   type: ProjectTab['type']
 ): IconTabImageChoice => {
   // if icon exists in iCONS_TABS, is ok

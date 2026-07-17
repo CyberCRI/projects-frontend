@@ -53,10 +53,8 @@
     <LpiLoader v-else class="loading" type="simple" />
   </div>
 </template>
-<script>
-import { getAllInstructions } from '~/api/instruction.service'
-import { searchProjects } from '~/api/search.service'
-import { getAllEvents } from '~/api/event.service'
+<script lang="ts">
+import { getAllInstructions, searchProjects, getAllEvents } from 'shared-projects-frontend/apis'
 
 import InstructionSummaryBlock from '~/components/home/SummaryCards/InstructionSummaryBlock.vue'
 import ProjectSummaryBlock from '~/components/home/SummaryCards/ProjectSummaryBlock.vue'
@@ -64,9 +62,15 @@ import EventSummaryBlock from '~/components/home/SummaryCards/EventSummaryBlock.
 import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useUsersStore from '~/stores/useUsers.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useUsersStore from '~/stores/useUsers'
 
+import type {
+  QueryFilterEvent,
+  QueryFilterInstruction,
+  QueryFilterSearch,
+} from 'shared-projects-frontend/models'
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { nowDate } from '~/functs/date'
 
 export default {
@@ -97,7 +101,7 @@ export default {
     const summaryMaxInstructions = ref(1)
     const isLoading = ref(true)
 
-    const { canCreateProject } = usePermissions()
+    const { canCreateProject } = usePermissionProject(null)
     return {
       organizationsStore,
       usersStore,
@@ -170,9 +174,9 @@ export default {
         limit: 3,
         ordering: '-last_update',
         members: [this.usersStore.id],
-        member_role: ['owners', 'members', 'reviewers'],
+        // member_role: ['owners', 'members', 'reviewers'].join(','),
         organizations: [this.organizationsStore.current.code],
-      }
+      } satisfies QueryFilterSearch
       const response = await searchProjects('', { query })
       this.originalProject = response.results.map((result) => result.project)
     },
@@ -182,7 +186,7 @@ export default {
         ordering: 'start_date',
         from_date: nowDate().toISOString(),
         limit: this.summaryMaxEvents,
-      }
+      } satisfies QueryFilterEvent
       this.originalEvents = (
         await getAllEvents(this.organizationsStore.current?.code, {
           query,
@@ -195,36 +199,40 @@ export default {
         ordering: '-publication_date',
         to_date: nowDate().toISOString(),
         limit: 1,
-      }
+      } satisfies QueryFilterInstruction
       this.originalInstructions = (
-        await getAllInstructions(this.organizationsStore.current?.code, { query })
+        await getAllInstructions(this.organizationsStore.current?.code, {
+          query,
+        })
       ).results
     },
   },
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .title-container {
-  margin-top: $space-3xl;
-  margin-bottom: $space-l;
+  margin-top: variables.$space-3xl;
+  margin-bottom: variables.$space-l;
 }
 
 .loading {
   display: flex;
   justify-content: center;
-  padding-top: $space-l;
+  padding-top: variables.$space-l;
 }
 
 .main-title {
   font-weight: 700;
-  font-size: $font-size-xl;
+  font-size: variables.$font-size-xl;
   text-align: center;
 
-  @media (min-width: $min-tablet) {
-    padding-top: $space-m;
+  @media (min-width: variables.$min-tablet) {
+    padding-top: variables.$space-m;
     font-weight: 700;
-    font-size: $font-size-4xl;
-    line-height: $line-height-squashed;
+    font-size: variables.$font-size-4xl;
+    line-height: variables.$line-height-squashed;
     text-align: center;
   }
 }
@@ -233,12 +241,12 @@ export default {
   padding-inline: 0;
 
   .summary-container {
-    background-color: $primary-lighter;
+    background-color: variables.$primary-lighter;
 
-    @media screen and (min-width: $min-tablet) {
-      padding: $space-l;
+    @media screen and (min-width: variables.$min-tablet) {
+      padding: variables.$space-l;
       display: flex;
-      gap: $space-unit;
+      gap: variables.$space-unit;
       align-items: stretch;
 
       & > :deep(*) {
@@ -252,6 +260,6 @@ export default {
 .empty-dashboard {
   display: flex;
   justify-content: center;
-  padding: $space-l 0;
+  padding: variables.$space-l 0;
 }
 </style>

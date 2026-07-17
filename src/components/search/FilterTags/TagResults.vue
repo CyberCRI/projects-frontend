@@ -13,7 +13,9 @@
     />
     <div
       v-if="showPreSearchList"
-      :style="{ visibility: (!isLoading && pagination.total > 1 && 'visible') || 'hidden' }"
+      :style="{
+        visibility: (!isLoading && pagination.total > 1 && 'visible') || 'hidden',
+      }"
       class="pagination-container"
     >
       <PaginationButtons
@@ -27,14 +29,12 @@
 </template>
 
 <script>
-import { getOrgClassificationTags } from '~/api/tag-classification.service'
+import { clientAPI, getOrgClassificationTags } from 'shared-projects-frontend/apis'
 
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-
-import useAPI from '~/composables/useAPI.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 import TagSearchResults from './TagSearchResults.vue'
 import { debounce } from 'es-toolkit'
@@ -166,7 +166,7 @@ export default {
 
     async onClickPagination(requestedPage) {
       this.isLoading = true
-      const apiReq = await useAPI(requestedPage, {})
+      const apiReq = await clientAPI(requestedPage, {})
       this.request = apiReq
       this.isLoading = false
       // const el = document.querySelector('.group-user-selection .search-section')
@@ -177,6 +177,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .search-mode-ctn {
   position: relative;
   width: 100%;

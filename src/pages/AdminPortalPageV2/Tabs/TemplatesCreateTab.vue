@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { postTemplate, postTemplateImage } from '~/api/templates.service'
+import { postTemplate, postTemplateImage } from 'shared-projects-frontend/apis'
 
 import TemplateForm from '~/components/templates/TemplateForm.vue'
 import LayoutTab from '~/components/admin/LayoutTab.vue'
@@ -43,6 +43,8 @@ const saveImageTemplate = (file) => postTemplateImage(organizationCode, -1, file
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .form-actions {
   display: flex;
   justify-content: center;

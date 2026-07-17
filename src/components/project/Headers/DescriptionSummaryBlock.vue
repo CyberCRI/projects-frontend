@@ -136,56 +136,58 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .separator {
-  border: 1px solid $primary-dark;
-  width: pxToRem(50px);
+  border: 1px solid variables.$primary-dark;
+  width: variables.pxtorem(50px);
   margin-bottom: 16px;
 
   &--margin {
-    margin-left: $space-m;
+    margin-left: variables.$space-m;
   }
 }
 
 .H1 {
   font-weight: 700;
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
 }
 
 .H2 {
-  margin-left: $space-m;
+  margin-left: variables.$space-m;
   font-weight: 500;
-  font-size: $font-size-s;
+  font-size: variables.$font-size-s;
 }
 
 li:not(:last-of-type) {
-  margin-bottom: pxToRem(16px);
+  margin-bottom: variables.pxtorem(16px);
 }
 
 li {
   cursor: pointer;
   transition: color 0.2s ease-in-out;
-  line-height: $line-height-tight;
+  line-height: variables.$line-height-tight;
 
   &:hover {
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 
   a {
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 
   p {
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 }
 
 li > p {
   display: flex;
   justify-content: space-between;
-  padding: 0 $space-m;
+  padding: 0 variables.$space-m;
 
   .item-date {
-    margin-left: $space-s;
+    margin-left: variables.$space-s;
   }
 
   &.current {

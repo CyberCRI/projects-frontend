@@ -32,12 +32,14 @@ const facebookShare = () =>
 const linkedinShare = () =>
   window?.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url.value}`)
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .share-ctn {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: $space-m;
+  gap: variables.$space-m;
   z-index: 1;
   flex-grow: 1;
   flex-shrink: 1;

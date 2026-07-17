@@ -94,12 +94,14 @@ const emit = defineEmits(['edit', 'add', 'see', 'delete'])
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .top-list {
   flex-grow: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: solid $lighter-gray 1px;
+  border-bottom: solid variables.$lighter-gray 1px;
 }
 
 .sub-list {
@@ -127,20 +129,20 @@ li {
 }
 
 .icon-td {
-  width: pxToRem(25px);
+  width: variables.pxtorem(25px);
   padding: 7px;
 }
 
 .name {
-  padding: $space-unit;
+  padding: variables.$space-unit;
 }
 
 .grey-color {
-  fill: $lighter-gray;
+  fill: variables.$lighter-gray;
 }
 
 .black-text {
-  color: $almost-black;
+  color: variables.$almost-black;
   font-weight: 400;
 }
 </style>

@@ -3,8 +3,12 @@ import {
   deleteProjectAttachmentFile,
   patchProjectAttachmentFile,
   postProjectAttachmentFiles,
-} from '~/api/attachment-files.service'
-import type { TranslatedAttachmentFile } from '~/models/attachment-file.model'
+} from 'shared-projects-frontend/apis'
+import type {
+  TranslatedAttachmentFile,
+  TranslatedProject,
+  AttachmentForm,
+} from 'shared-projects-frontend/models'
 import { attachementFileSkeletons } from '~/skeletons/attachements.skeletons'
 import { getProjectAttachmentFiles } from '~/api/v2/attachment-files.service'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
@@ -14,8 +18,6 @@ import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
-import type { AttachmentForm } from '~/models/attachment.model'
-import type { TranslatedProject } from '@/models/project.model'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 
@@ -187,24 +189,26 @@ const onSubmit = (form: AttachmentForm) => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .resource-container {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-m;
-  padding: $space-m 0;
+  gap: variables.$space-m;
+  padding: variables.$space-m 0;
 
   &:empty {
     display: none;
   }
 
   > div {
-    width: calc(33% - $space-m);
+    width: calc(33% - variables.$space-m);
 
-    @media screen and (max-width: $max-tablet) {
-      width: calc(50% - $space-m);
+    @media screen and (max-width: variables.$max-tablet) {
+      width: calc(50% - variables.$space-m);
     }
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       width: 100%;
     }
   }

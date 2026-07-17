@@ -1,5 +1,5 @@
-import { IconMapLocationType } from '@/functs/maps'
-import type { LocationType } from '@/models/types'
+import type { LocationType } from 'shared-projects-frontend/models'
+import { LOCATION_TYPE_ICON } from '~/functs/constants'
 import { ICONS } from '@/functs/IconImage'
 import * as L from 'leaflet'
 
@@ -23,7 +23,7 @@ export const createClusterIcons = (cluster) => {
     const container = document.createElement('div')
     container.className = `cluster-element ${LocationType}`
     container.title = t(`location.${LocationType}`)
-    const icon = ICONS[IconMapLocationType(LocationType as LocationType)]
+    const icon = ICONS[LOCATION_TYPE_ICON[LocationType as LocationType] || 'Alert']
     container.innerHTML = `
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="location-icon">${icon}</svg>
       <span>${count}</span>

@@ -44,11 +44,13 @@ const { locale } = useNuxtI18n()
   </Transition>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .errors-tiptap {
   width: 100%;
   transition: all 0.2s;
-  border-radius: $border-radius-l;
-  border: $border-width-s solid $primary;
+  border-radius: variables.$border-radius-l;
+  border: variables.$border-width-s solid variables.$primary;
   border-top: none;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
@@ -61,8 +63,8 @@ const { locale } = useNuxtI18n()
 
 .editor {
   overflow: hidden;
-  border-radius: $border-radius-l;
-  border: $border-width-s solid var(--primary);
+  border-radius: variables.$border-radius-l;
+  border: variables.$border-width-s solid var(--primary);
   display: flex;
   flex-flow: column nowrap;
 

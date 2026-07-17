@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 // import useToasterStore from '@/stores/useToaster'
 // import useUsersStore from '@/stores/useUsers'
 
@@ -24,6 +24,8 @@ const showDocumentTitle = ref('')
   />
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .actions {
   display: flex;
   justify-content: flex-end;

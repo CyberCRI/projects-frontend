@@ -34,6 +34,8 @@ useLpiHead2({
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .main-ctn {
   display: flex;
   flex-direction: column;

@@ -14,21 +14,23 @@ withDefaults(defineProps<{ title?: string }>(), { title: '' })
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .stat-card {
-  border: $border-width-l solid $primary-dark;
-  border-radius: $border-radius-l;
-  background: $white;
+  border: variables.$border-width-l solid variables.$primary-dark;
+  border-radius: variables.$border-radius-l;
+  background: variables.$white;
 
   .stat-header {
-    border-bottom: 3px solid $primary-dark;
-    padding: $space-m $space-l;
-    font-size: $font-size-m;
+    border-bottom: 3px solid variables.$primary-dark;
+    padding: variables.$space-m variables.$space-l;
+    font-size: variables.$font-size-m;
     font-weight: 700;
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 
   .chart-ctn {
-    padding: $space-m $space-l;
+    padding: variables.$space-m variables.$space-l;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LocationType } from '@/models/types'
+import type { LocationType } from 'shared-projects-frontend/models'
 
 withDefaults(defineProps<{ locationType: LocationType; editable?: boolean }>(), {
   editable: false,
@@ -24,6 +24,8 @@ const emit = defineEmits<{
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .map-pointer {
   --height-line: 35px;
 
@@ -33,23 +35,20 @@ const emit = defineEmits<{
   margin-top: calc(((var(--height-line) * 2) - 12px) * -1);
 
   .badge {
-    background: $white;
+    background: variables.$white;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: $space-m $space-m $space-m $space-2xs;
+    padding: variables.$space-m variables.$space-m variables.$space-m variables.$space-2xs;
     height: 34px;
     box-sizing: border-box;
-    border: $border-width-m solid $primary-dark;
-    border-radius: $border-radius-l;
+    border: variables.$border-width-m solid variables.$primary-dark;
+    border-radius: variables.$border-radius-l;
     cursor: pointer;
     transition:
       height 0.15s ease-in-out,
       width 0.15s ease-in-out;
-
-    & {
-      border-color: var(--location-color);
-    }
+    border-color: var(--location-color);
   }
 }
 

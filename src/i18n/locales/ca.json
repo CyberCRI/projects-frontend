@@ -1768,7 +1768,8 @@
         "invalid-image": "Fitxer no acceptat, ha de ser una imatge vàlida.",
         "required-image": "Es requereix un fitxer",
         "required": "Es requereix un fitxer",
-        "delete": "Esborra el fitxer"
+        "delete": "Esborra el fitxer",
+        "delete-image": "Elimina imatge"
       }
     },
     "link": {
@@ -2421,7 +2422,9 @@
       "reviewed": "Ha estat revisada",
       "reviewed-sub": "Quan el vostre projecte està preparat per revisar, se us notificarà quan el revisador del projecte ha enviat la seva revisió",
       "reply": "Respon al vostre comentari",
-      "reply-sub": "Ser notificat quan algú respon al teu comentari"
+      "reply-sub": "Ser notificat quan algú respon al teu comentari",
+      "announcement-has-new-application": "Aplicació anunciada",
+      "announcement-has-new-application-sub": "Tingueu en compte quan els anuncis tenen una aplicació nova"
     },
     "follow": {
       "title": "Notificació següent",

@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProject } from '~/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 
 import ProjectFollowIcon from '~/components/project/ProjectFollowIcon.vue'
 import TagsList from '~/components/tags/TagsList.vue'
@@ -77,6 +77,8 @@ const lastUpdated = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .project-preview {
   display: grid;
   grid-template-columns: 1fr 87px;
@@ -121,7 +123,7 @@ const lastUpdated = computed(() => {
   }
 
   .icon {
-    width: pxToRem(30px);
+    width: variables.pxtorem(30px);
   }
 }
 

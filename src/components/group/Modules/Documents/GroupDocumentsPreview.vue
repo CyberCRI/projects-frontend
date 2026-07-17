@@ -1,13 +1,13 @@
 <template>
   <BaseGroupPreview
     :id="documentType"
-    :title="$t(GroupModuleTitle[documentType], group.modules[documentType])"
+    :title="$t(GROUP_MODULE_TITLE[documentType], group.modules[documentType])"
     :total="group.modules[documentType]"
     :see-more="{
       name: routeName,
       params: { groupIdOrSlug: group.slug || group.id },
     }"
-    :icon="GroupModuleIcon[documentType]"
+    :icon="GROUP_MODULE_ICON[documentType]"
   >
     <template #content>
       <GroupResearcherDocumentsList
@@ -21,14 +21,16 @@
 </template>
 
 <script setup lang="ts">
+import type {
+  TranslatedPeopleGroupModel,
+  ResearcherDocumentType,
+} from 'shared-projects-frontend/models'
 import GroupResearcherDocumentsList from '@/components/people/Researcher/GroupResearcherDocumentsList.vue'
-import { GroupModuleIcon, GroupModuleTitle } from '@/models/people-group.model'
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
+import { GROUP_MODULE_ICON, GROUP_MODULE_TITLE } from '~/functs/constants'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
-import type { DocumentType } from '@/interfaces/researcher'
 
 const props = defineProps<{
-  documentType: DocumentType
+  documentType: ResearcherDocumentType
   group: TranslatedPeopleGroupModel
 }>()
 

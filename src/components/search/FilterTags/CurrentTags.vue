@@ -19,8 +19,8 @@
 <script setup lang="ts">
 import FilterValue from '~/components/search/Filters/FilterValue.vue'
 
+import type { TagModel } from 'shared-projects-frontend/models'
 import useTagTexts from '~/composables/useTagTexts'
-import type { TagModel } from '~/models/tag.model'
 
 withDefaults(
   defineProps<{
@@ -41,26 +41,28 @@ const removeTag = (tag) => emit('remove-tag', tag)
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .current-tags-ctn {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-s;
+  gap: variables.$space-s;
   align-items: center;
 }
 
 .clear-selection {
   text-transform: uppercase;
-  color: $primary-dark;
-  margin-bottom: pxToRem(24px);
+  color: variables.$primary-dark;
+  margin-bottom: variables.pxtorem(24px);
   text-align: center;
   font-weight: 700;
-  font-size: $font-size-2xs;
+  font-size: variables.$font-size-2xs;
   cursor: pointer;
 
   svg {
-    height: $layout-size-xs;
-    fill: $primary-dark;
-    margin-right: $space-s;
+    height: variables.$layout-size-xs;
+    fill: variables.$primary-dark;
+    margin-right: variables.$space-s;
   }
 }
 </style>

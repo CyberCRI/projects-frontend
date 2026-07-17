@@ -70,20 +70,22 @@ const filteredNames = computed(() => {
 })
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .filter-button {
   display: flex;
-  gap: $space-m;
+  gap: variables.$space-m;
   align-items: center;
-  background: $white;
-  border: $border-width-s solid $primary;
-  padding: $space-s;
+  background: variables.$white;
+  border: variables.$border-width-s solid variables.$primary;
+  padding: variables.$space-s;
   height: min-content;
   box-sizing: border-box;
-  border-radius: $border-radius-l;
+  border-radius: variables.$border-radius-l;
   text-transform: uppercase;
-  font-size: $font-size-s;
-  color: $primary-dark;
-  line-height: $line-height-squashed;
+  font-size: variables.$font-size-s;
+  color: variables.$primary-dark;
+  line-height: variables.$line-height-squashed;
   cursor: pointer;
 
   &:hover {
@@ -92,7 +94,7 @@ const filteredNames = computed(() => {
 
   &.is-selected {
     font-weight: 700;
-    border: $border-width-s solid $primary-dark;
+    border: variables.$border-width-s solid variables.$primary-dark;
   }
 
   &.is-hidden {
@@ -101,7 +103,7 @@ const filteredNames = computed(() => {
 
   &.is-unused {
     background: transparent;
-    border: $border-width-s solid $primary;
+    border: variables.$border-width-s solid variables.$primary;
   }
 
   .icon-ctn {

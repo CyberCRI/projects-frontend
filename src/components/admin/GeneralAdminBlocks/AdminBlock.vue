@@ -35,8 +35,10 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .admin-block {
-  padding: $space-2xl 0;
+  padding: variables.$space-2xl 0;
   position: relative;
 }
 
@@ -49,7 +51,7 @@ withDefaults(
   top: 0;
   left: 0;
   right: 66%;
-  border-top: $border-width-s solid $primary;
+  border-top: variables.$border-width-s solid variables.$primary;
 }
 
 .admin-block ~ .admin-block::before {
@@ -57,7 +59,7 @@ withDefaults(
   @include block-separator;
 }
 
-@media (max-width: $min-desktop) {
+@media (max-width: variables.$min-desktop) {
   /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
   :global(.admin-section ~ .admin-section > .admin-block::before) {
     /* stylelint-disable-next-line  at-rule-no-unknown */
@@ -67,12 +69,12 @@ withDefaults(
 
 .admin-block-header,
 .admin-block-content {
-  padding-bottom: $space-unit;
+  padding-bottom: variables.$space-unit;
 }
 
 .admin-block-header {
   display: flex;
-  gap: $space-unit;
+  gap: variables.$space-unit;
   align-items: flex-start;
   justify-content: space-between;
 }
@@ -86,6 +88,6 @@ withDefaults(
 .loader {
   display: flex;
   justify-content: center;
-  padding: $space-l 0;
+  padding: variables.$space-l 0;
 }
 </style>

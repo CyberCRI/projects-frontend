@@ -54,8 +54,10 @@ const setGroupList = (groupId) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .list-body {
-  padding: $space-2xs $space-m;
+  padding: variables.$space-2xs variables.$space-m;
 
   .header {
     display: inline-flex;
@@ -63,17 +65,17 @@ const setGroupList = (groupId) => {
   }
 
   .icon {
-    fill: $primary-dark;
-    width: pxToRem(20px);
+    fill: variables.$primary-dark;
+    width: variables.pxtorem(20px);
   }
 }
 
 .list-label {
-  font-size: $font-size-s;
+  font-size: variables.$font-size-s;
 
   &--has-children {
     font-weight: 700;
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 }
 </style>

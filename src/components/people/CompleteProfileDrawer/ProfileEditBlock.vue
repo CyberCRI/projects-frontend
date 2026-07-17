@@ -19,14 +19,16 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .profile-edit-block {
-  padding: pxToRem(43px) pxToRem(63px);
-  border-radius: pxToRem(21px);
-  border: $border-width-m solid $lighter-gray;
+  padding: variables.pxtorem(43px) variables.pxtorem(63px);
+  border-radius: variables.pxtorem(21px);
+  border: variables.$border-width-m solid variables.$lighter-gray;
 }
 
 .section-title {
-  font-size: $font-size-2xl;
+  font-size: variables.$font-size-2xl;
   font-weight: 700;
   margin-bottom: 41px;
 }

@@ -1853,7 +1853,8 @@
         "invalid-image": "Fichier non pris en charge, doit être une image valide.",
         "required-image": "Un fichier est requis",
         "required": "Un fichier est requis",
-        "delete": "Supprimer le fichier"
+        "delete": "Supprimer le fichier",
+        "delete-image": "Supprimer l'image"
       }
     },
     "link": {
@@ -2506,7 +2507,9 @@
       "reviewed": "Révision faite",
       "reviewed-sub": "Être notifié quand une révision est envoyée sur votre projet",
       "reply": "Réponse aux commentaires",
-      "reply-sub": "Être notifié quand une réponse à votre commentaire est faite"
+      "reply-sub": "Être notifié quand une réponse à votre commentaire est faite",
+      "announcement-has-new-application": "Annonces Demande",
+      "announcement-has-new-application-sub": "Être avisé lorsque les annonces ont une nouvelle demande"
     },
     "follow": {
       "title": "Notifications de suivi",

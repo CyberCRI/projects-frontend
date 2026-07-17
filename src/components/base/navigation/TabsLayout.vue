@@ -242,6 +242,8 @@ const layoutTabs = debounce(
   42
 )
 
+onUnmounted(() => layoutTabs.cancel())
+
 const closeTabList = () => {
   showTabList.value = false
 }
@@ -261,6 +263,8 @@ provide('tabsLayoutSelectTab', selectTab)
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .tabs {
   position: relative;
 
@@ -277,23 +281,23 @@ provide('tabsLayoutSelectTab', selectTab)
       justify-content: flex-end;
     }
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       flex-flow: column;
       align-items: stretch;
     }
 
     &.border {
       // room for border radius of content
-      padding-left: pxToRem(51px);
-      padding-right: pxToRem(51px);
+      padding-left: variables.pxtorem(51px);
+      padding-right: variables.pxtorem(51px);
       box-sizing: border-box;
     }
 
     .tab-nav,
     .tab-nav-ctn {
-      flex-basis: $layout-size-4xl;
-      width: $layout-size-4xl;
-      fill: $primary-dark;
+      flex-basis: variables.$layout-size-4xl;
+      width: variables.$layout-size-4xl;
+      fill: variables.$primary-dark;
       flex-shrink: 0;
 
       &.tab-nav-mobile {
@@ -305,7 +309,7 @@ provide('tabsLayoutSelectTab', selectTab)
         display: none;
       }
 
-      @media screen and (min-width: $min-tablet) {
+      @media screen and (min-width: variables.$min-tablet) {
         &.tab-nav-mobile {
           display: none;
         }
@@ -321,7 +325,7 @@ provide('tabsLayoutSelectTab', selectTab)
       justify-content: space-between;
       width: 100%;
 
-      @media screen and (min-width: $min-tablet) {
+      @media screen and (min-width: variables.$min-tablet) {
         display: inline-block;
         width: auto;
       }
@@ -337,7 +341,7 @@ provide('tabsLayoutSelectTab', selectTab)
       padding-top: 2px; // room for the tab upper border not to be cropped
       margin-bottom: -1px; // merge with content top border if it has some (admin, carousel)
 
-      // same as border-bottom: $border-width-s solid $primary;
+      // same as border-bottom: variables.$border-width-s solid $primary;
       // but with a background-image so it passes under the child tab element
       background: transparent
         url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2NguL38PwAE4wKCsDeq2gAAAABJRU5ErkJggg==')
@@ -347,7 +351,7 @@ provide('tabsLayoutSelectTab', selectTab)
         display: flex;
         align-items: flex-end;
         justify-content: flex-start;
-        padding-top: pxToRem(4px); // room for the tab upper border not to be cropped
+        padding-top: variables.pxtorem(4px); // room for the tab upper border not to be cropped
 
         .mobile-tab-ctn {
           width: 100%;
@@ -355,7 +359,7 @@ provide('tabsLayoutSelectTab', selectTab)
           justify-content: space-between;
 
           .more-btn {
-            margin-right: $space-m;
+            margin-right: variables.$space-m;
           }
         }
       }
@@ -364,39 +368,39 @@ provide('tabsLayoutSelectTab', selectTab)
         position: absolute;
         right: 0;
         top: 0;
-        background-color: $primary-dark;
-        color: $white;
+        background-color: variables.$primary-dark;
+        color: variables.$white;
         box-shadow: 0 4px 4px rgb(0 0 0 / 15%);
         border-radius: 8px;
         padding: 24px;
         z-index: 110;
 
-        @media screen and (max-width: $min-tablet) {
+        @media screen and (max-width: variables.$min-tablet) {
           width: 87%;
         }
 
         .item {
           font-style: normal;
           font-weight: 500;
-          font-size: $font-size-m;
-          line-height: $line-height-compact;
+          font-size: variables.$font-size-m;
+          line-height: variables.$line-height-compact;
           display: flex;
           align-items: center;
           text-transform: uppercase;
-          color: $white;
+          color: variables.$white;
           padding: 8px;
           cursor: pointer;
 
           &-selected {
-            background-color: $primary;
-            color: $primary-dark;
+            background-color: variables.$primary;
+            color: variables.$primary-dark;
             border-radius: 8px;
           }
         }
 
         .pellet {
-          background: $primary;
-          border: 4px solid $primary;
+          background: variables.$primary;
+          border: 4px solid variables.$primary;
           border-radius: 50%;
           margin-right: 12px;
         }
@@ -404,7 +408,7 @@ provide('tabsLayoutSelectTab', selectTab)
         .close-icon {
           position: absolute;
           width: 24px;
-          fill: $white;
+          fill: variables.$white;
           right: 4px;
           top: 4px;
           cursor: pointer;
@@ -412,7 +416,7 @@ provide('tabsLayoutSelectTab', selectTab)
 
         .icon {
           width: 16px;
-          fill: $primary-dark;
+          fill: variables.$primary-dark;
           margin-right: 12px;
         }
       }
@@ -421,14 +425,14 @@ provide('tabsLayoutSelectTab', selectTab)
     .btn-ctn {
       display: flex;
       align-items: center;
-      margin-left: $space-m;
+      margin-left: variables.$space-m;
       margin-bottom: 0;
 
       &:empty {
         display: none;
       }
 
-      @media screen and (max-width: $min-tablet) {
+      @media screen and (max-width: variables.$min-tablet) {
         order: -1;
         flex-basis: 100%;
         flex-shrink: 0;
@@ -437,17 +441,17 @@ provide('tabsLayoutSelectTab', selectTab)
       }
 
       .more-btn {
-        margin-right: pxToRem(16px);
+        margin-right: variables.pxtorem(16px);
       }
     }
 
     .tab {
       text-transform: uppercase;
-      padding: 9px $space-l;
+      padding: 9px variables.$space-l;
       cursor: pointer;
-      color: $primary-dark;
+      color: variables.$primary-dark;
       font-weight: bold;
-      font-size: $font-size-m;
+      font-size: variables.$font-size-m;
       box-sizing: border-box;
       user-select: none; // avoid text selection while clicking on tab
       transition: transform 0.3s ease-in-out;
@@ -464,13 +468,13 @@ provide('tabsLayoutSelectTab', selectTab)
       }
 
       &.selected {
-        background: $primary-lighter;
-        border-left: $border-width-s solid $primary;
-        border-top: $border-width-s solid $primary;
-        border-right: $border-width-s solid $primary;
-        border-top-left-radius: $border-radius-l;
-        border-top-right-radius: $border-radius-l;
-        border-bottom: $border-width-s solid $primary-lighter; // mask parent pseudo border-bottom with background color
+        background: variables.$primary-lighter;
+        border-left: variables.$border-width-s solid variables.$primary;
+        border-top: variables.$border-width-s solid variables.$primary;
+        border-right: variables.$border-width-s solid variables.$primary;
+        border-top-left-radius: variables.$border-radius-l;
+        border-top-right-radius: variables.$border-radius-l;
+        border-bottom: variables.$border-width-s solid variables.$primary-lighter; // mask parent pseudo border-bottom with background color
 
         &:hover {
           transform: none;
@@ -483,9 +487,9 @@ provide('tabsLayoutSelectTab', selectTab)
     border-radius: unset;
 
     &.border {
-      border: $border-width-s solid $primary;
+      border: variables.$border-width-s solid variables.$primary;
       overflow: hidden;
-      border-radius: $border-radius-l;
+      border-radius: variables.$border-radius-l;
     }
   }
 }

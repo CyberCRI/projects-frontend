@@ -117,11 +117,13 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .modal-backdrop {
-  z-index: $zindex-modal-backdrop;
+  z-index: variables.$zindex-modal-backdrop;
   position: fixed;
   inset: 0;
-  background: $modal-background;
+  background: variables.$modal-background;
 }
 
 .modal-wrapper {
@@ -134,10 +136,10 @@ onBeforeUnmount(() => {
   justify-content: center;
 
   &.full-screen {
-    top: $navbar-height;
+    top: variables.$navbar-height;
     left: 0;
     width: 100vw;
-    height: calc(100vh - $navbar-height);
+    height: calc(100vh - variables.$navbar-height);
     transform: unset;
 
     .modal {
@@ -147,19 +149,19 @@ onBeforeUnmount(() => {
 }
 
 .modal {
-  z-index: $zindex-modal;
+  z-index: variables.$zindex-modal;
   flex-grow: 1;
   position: relative;
   display: flex;
   flex-direction: column;
-  background: $white;
+  background: variables.$white;
   overflow: hidden;
-  color: $almost-black;
-  border-radius: $border-radius-s;
+  color: variables.$almost-black;
+  border-radius: variables.$border-radius-s;
   max-width: clamp(320px, 90%, 760px);
-  margin: $space-s;
+  margin: variables.$space-s;
   max-height: calc(100vh - 32px);
-  padding-top: $space-l;
+  padding-top: variables.$space-l;
   box-shadow: 0 0 6px 0 rgb(0 0 0 / 15%);
 }
 
@@ -189,31 +191,31 @@ onBeforeUnmount(() => {
 .modal-footer {
   display: flex;
   place-content: space-between center;
-  padding: $space-l;
+  padding: variables.$space-l;
 
   button {
     cursor: pointer;
   }
 }
 
-@media screen and (min-width: $min-tablet) {
+@media screen and (min-width: variables.$min-tablet) {
   .modal-body {
     max-height: 800px;
   }
 }
 
 .modal-header {
-  background-color: $white;
+  background-color: variables.$white;
   display: flex;
   justify-content: stretch;
   align-items: center;
-  padding: 0 $border-radius-l;
+  padding: 0 variables.$border-radius-l;
   box-sizing: border-box;
   position: relative;
 
   .header-title {
     flex-grow: 1;
-    font-size: $font-size-2xl;
+    font-size: variables.$font-size-2xl;
     font-weight: bold;
     text-align: center;
   }
@@ -237,9 +239,9 @@ onBeforeUnmount(() => {
   transition: opacity 0.5s ease;
 }
 
-@media (min-width: $min-tablet) {
+@media (min-width: variables.$min-tablet) {
   .modal {
-    max-height: calc(100vh - #{$space-2xl});
+    max-height: calc(100vh - #{variables.$space-2xl});
     position: relative;
 
     &.small {

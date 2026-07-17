@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageModel, ImageVariations } from '~/models/image.model'
+import type { ImageModel, ImageVariations } from 'shared-projects-frontend/models'
 
 import GalleryItem from '~/components/base/gallery/GalleryItem.vue'
 
@@ -37,6 +37,8 @@ defineEmits<{
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .gallery-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -45,14 +47,14 @@ defineEmits<{
   height: 100%;
 
   > * {
-    height: pxToRem(130px);
+    height: variables.pxtorem(130px);
   }
 
-  @media screen and (min-width: $min-desktop) {
+  @media screen and (min-width: variables.$min-desktop) {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     grid-template-columns: 1fr 1fr;
   }
 }

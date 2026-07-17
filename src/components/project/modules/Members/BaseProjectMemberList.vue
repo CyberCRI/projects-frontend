@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { addProjectMembers, deleteProjectMembers } from '~/api/project-members.service'
+import type {
+  TranslatedProjectMember,
+  ProjectMemberRoleType,
+  TranslatedUserModel,
+  TranslatedProject,
+} from 'shared-projects-frontend/models'
+import { addProjectMembers, deleteProjectMembers } from 'shared-projects-frontend/apis'
 import UserProfileDrawer from '~/components/drawer/User/UserProfileDrawer.vue'
 import UserSelectDrawer from '~/components/drawer/User/UserSelectDrawer.vue'
-import type { TranslatedProjectMember } from '~/models/project-member.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import CardInlineUser from '~/components/drawer/User/CardInlineUser.vue'
@@ -10,13 +15,10 @@ import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { projectMemberSkeleton } from '~/skeletons/project.skeletons'
 import RolesDrawer from '~/components/drawer/Role/RolesDrawer.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
-import type { TranslatedProject } from '@/models/project.model'
-import type { TranslatedUserModel } from '~/models/user.model'
 import type UserCard from '~/components/people/UserCard.vue'
 import { getProjectMembers } from '@/api/v2/project.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { PROJECTS_MEMBERS_ROLES } from '~/functs/constants'
-import type { ProjectMemberRoleType } from '~/models/types'
 import CardEditor from '~/components/base/CardEditor.vue'
 import { roleI18n } from '~/functs/rolesUtils'
 import { groupBy } from 'es-toolkit'
@@ -233,6 +235,8 @@ const onDeleteConfirm = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .teams {
   display: flex;
   flex-direction: column;

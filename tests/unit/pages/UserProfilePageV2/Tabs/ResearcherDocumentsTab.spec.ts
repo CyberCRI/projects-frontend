@@ -2,6 +2,7 @@ import ResearcherDocumentsTab from '~/pages/UserProfilePageV2/Tabs/ResearcherDoc
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
 import { DocumentFactory, ResearcherFactory } from '~~/tests/factories/researcher.factory'
+import type { ResearcherDocumentType } from 'shared-projects-frontend/models'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
@@ -15,7 +16,7 @@ describe('ResearcherDocumentsTab.vue', () => {
     })
     const props = {
       user,
-      docType: 'publications',
+      docType: 'publications' satisfies ResearcherDocumentType as ResearcherDocumentType,
     }
     const organizationCode = useOrganizationCode()
 

@@ -37,12 +37,14 @@ defineEmits<{ 'redirect-button-clicked': [] }>()
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .section-header-ctn {
   display: flex;
   align-items: flex-end;
-  color: $primary-dark;
-  fill: $primary-dark;
-  margin-bottom: $space-m;
+  color: variables.$primary-dark;
+  fill: variables.$primary-dark;
+  margin-bottom: variables.$space-m;
 
   .section-header {
     display: flex;
@@ -50,12 +52,12 @@ defineEmits<{ 'redirect-button-clicked': [] }>()
     font-weight: 700;
 
     > span {
-      font-size: $font-size-l;
+      font-size: variables.$font-size-l;
     }
   }
 
   .section-button {
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
   }
 }
 </style>

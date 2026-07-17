@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { TranslatedProject, TranslatedReview } from 'shared-projects-frontend/models'
 import ReviewDrawer from '~/components/project/modules/review/ReviewDrawer.vue'
 import ReviewItem from '~/components/project/modules/review/ReviewItem.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
@@ -7,11 +8,9 @@ import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { projectReviewsSkeleton } from '~/skeletons/reviews.skeletons'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import type FetchLoader from '@/components/base/FetchLoader.vue'
-import type { TranslatedProject } from '@/models/project.model'
-import type { TranslatedReview } from '~/models/review.model'
+import { deleteReview } from 'shared-projects-frontend/apis'
 import { getProjectReviews } from '~/api/v2/reviews.service'
 import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
-import { deleteReview } from '~/api/reviews.service'
 
 const props = withDefaults(
   defineProps<{
@@ -109,6 +108,7 @@ const onDeleteConfirm = () => {
       <ReviewItem
         v-for="review in reviews"
         :key="review.id"
+        :project="project"
         :review="review"
         :editable="editable"
         @delete="onDelete(review)"
@@ -134,11 +134,13 @@ const onDeleteConfirm = () => {
     @cancel="cancel"
     @confirm="onDeleteConfirm"
   >
-    <ReviewItem :review="selectedReview" />
+    <ReviewItem :project="project" :review="selectedReview" />
   </ConfirmModal>
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .review-warning {
   margin: 1rem auto;
 }

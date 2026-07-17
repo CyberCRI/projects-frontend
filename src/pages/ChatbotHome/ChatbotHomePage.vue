@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 // import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
 import useUsersStore from '@/stores/useUsers'
@@ -27,11 +27,13 @@ const options = {
 
 const { translateAgents } = useAutoTranslate()
 const key = computed(() => `frontend-agents`)
-const getAgents = () =>
-  useAsyncAPI(key, () => $fetch('/api/chatbot', options), {
+const { /*status,*/ isLoading, data: agents /*error,*/ /*refresh*/ } = useAsyncAPI(
+  key,
+  () => $fetch('/api/chatbot', options),
+  {
     translate: (data) => translateAgents(data),
-  })
-const { /*status,*/ isLoading, data: agents /*error,*/ /*refresh*/ } = await getAgents()
+  }
+)
 
 // const url = `/api/chatbot`
 // const { data, status } = useFetch(url, { ...options })
@@ -91,6 +93,8 @@ useLpiHead2({
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .agent-list {
   display: flex;
   flex-flow: column;
@@ -101,7 +105,7 @@ useLpiHead2({
 .intro {
   margin: 3rem auto;
   padding: 1rem;
-  background-color: $primary-lighter;
+  background-color: variables.$primary-lighter;
   border-radius: 1rem;
   max-width: 28rem;
   font-size: 1.2em;
@@ -112,7 +116,7 @@ useLpiHead2({
   flex-flow: row;
   gap: 1rem;
   padding: 1rem;
-  border: 1px solid $primary-dark;
+  border: 1px solid variables.$primary-dark;
   border-radius: 0.5rem;
 }
 
@@ -121,7 +125,7 @@ useLpiHead2({
 
   .agent-face {
     width: 5rem;
-    fill: $yellow;
+    fill: variables.$yellow;
   }
 }
 
@@ -129,7 +133,7 @@ useLpiHead2({
   flex-grow: 1;
 
   .title {
-    color: $primary-dark;
+    color: variables.$primary-dark;
     font-size: 1.3rem;
     font-weight: bold;
   }

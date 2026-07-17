@@ -2,8 +2,9 @@ import type {
   PeopleGroupIdOrSlug,
   QueryFilterGroup,
   QueryFilterGroupHierarchy,
-} from '@/models/people-group.model'
-import type { OrganizationModel } from '~/models/organization.model'
+  OrganizationModel,
+  TranslatedGroupMember,
+} from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
@@ -18,13 +19,12 @@ import {
   getGroupEvent as fetchGroupEvent,
   getGroupGallery as fetchGroupGallery,
   getGroupNews as fetchGroupNews,
-} from '~/api/groups.service'
+} from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
 import useAsyncPaginationAPI from '~/composables/useAsyncPaginationAPI'
 import useAsyncAPI from '~/composables/useAsyncAPI'
 
-import type { TranslatedGroupMember } from '~/models/group.model'
 import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}
@@ -43,7 +43,10 @@ export const getGroup = (
   return useAsyncAPI(
     key,
     ({ config }) =>
-      fetchGetGroup(unref(organizationCode), unref(groupId), { ...DEFAULT_CONFIG, ...config }),
+      fetchGetGroup(unref(organizationCode), unref(groupId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
     {
       translate: translateGroup,
       watch: onlyRefs([organizationCode, groupId]),
@@ -62,7 +65,10 @@ export const getHierarchyGroups = (
   return useAsyncAPI(
     key,
     ({ config }) =>
-      fetchGetHierarchyGroups(unref(organizationCode), { ...DEFAULT_CONFIG, ...config }),
+      fetchGetHierarchyGroups(unref(organizationCode), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
     {
       translate: translateGroup,
       watch: onlyRefs([organizationCode]),

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import useUsersStore from '@/stores/useUsers'
 const usersStore = useUsersStore()
 let headers = {}
@@ -31,8 +31,10 @@ const countAgents = (s) => s.skillContents.reduce((acc, sc) => acc + sc.agents?.
   </EntityAdminList>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .title {
   font-size: 1.2rem;
-  color: $primary-dark;
+  color: variables.$primary-dark;
 }
 </style>

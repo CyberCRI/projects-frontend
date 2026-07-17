@@ -1,4 +1,4 @@
-import type { Prisma, PrismaClient } from '~~/prisma-chatbot-db/generated/prisma/client.ts'
+import type { Prisma, PrismaClient } from '~~/prisma-chatbot-db/generated/prisma/client'
 
 type PrismaTx = Omit<
   PrismaClient,

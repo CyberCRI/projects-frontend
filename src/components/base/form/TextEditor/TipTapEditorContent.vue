@@ -36,6 +36,8 @@ const dataTest = computed(() =>
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .content-wrapper {
   display: flex;
   flex-grow: 1;
@@ -43,21 +45,21 @@ const dataTest = computed(() =>
 }
 
 .editor-content {
-  color: $black;
+  color: variables.$black;
   padding: 8px;
   overflow-y: auto;
   min-height: 100px;
   flex-grow: 1;
-  margin-right: $space-2xs;
+  margin-right: variables.$space-2xs;
 
   .ProseMirror {
     outline: none;
     padding: 30px;
     border: none;
-    background: $primary-lighter;
+    background: variables.$primary-lighter;
 
     & * {
-      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
     }
   }
 
@@ -76,8 +78,8 @@ const dataTest = computed(() =>
     position: relative;
     margin-left: -1px;
     margin-right: -1px;
-    border-left: 1px solid $almost-black;
-    border-right: 1px solid $almost-black;
+    border-left: 1px solid variables.$almost-black;
+    border-right: 1px solid variables.$almost-black;
     word-break: normal;
     pointer-events: none;
   }
@@ -88,12 +90,12 @@ const dataTest = computed(() =>
     position: absolute;
     top: -1em;
     left: -1px;
-    font-size: $font-size-2xs;
+    font-size: variables.$font-size-2xs;
     font-style: normal;
     font-weight: 600;
-    line-height: $line-height-tight;
+    line-height: variables.$line-height-tight;
     user-select: none;
-    color: $white;
+    color: variables.$white;
     padding: 0.1rem 0.3rem;
     border-radius: 3px 3px 3px 0;
     white-space: nowrap;
@@ -106,7 +108,7 @@ const dataTest = computed(() =>
   }
 
   .editor .selectedCell {
-    outline: $primary dashed 1px;
+    outline: variables.$primary dashed 1px;
   }
 
   .editor * {
@@ -120,12 +122,12 @@ const dataTest = computed(() =>
   }
 
   .editor th {
-    background-color: $almost-black;
-    color: $white;
+    background-color: variables.$almost-black;
+    color: variables.$white;
   }
 
   .editor-frozen .ProseMirror {
-    background-color: $almost-white;
+    background-color: variables.$almost-white;
   }
 }
 </style>

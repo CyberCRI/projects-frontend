@@ -1,13 +1,14 @@
 import ProfileGroupsTab from '~/pages/UserProfilePageV2/Tabs/ProfileGroupsTab.vue'
-import { UserFactory } from '~~/tests/factories/user.factory'
+import { userTranslatedFactory } from '~~/tests/factories/user.factory'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { OrganizationOutput } from '~/models/organization.model'
+import type { OrganizationOutput } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import pinia from '~/stores'
-vi.mock('~/api/groups.service', () => ({
+vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
+  ...(await orginalImporter()),
   getGroup: vi.fn().mockResolvedValue({ results: {} }),
 }))
 
@@ -18,7 +19,9 @@ describe('ProfileGroupsTab', () => {
   })
 
   it('should render ProfileGroupsTab component', () => {
-    const wrapper = lpiShallowMount(ProfileGroupsTab, { props: { user: UserFactory.generate() } })
+    const wrapper = lpiShallowMount(ProfileGroupsTab, {
+      props: { user: userTranslatedFactory.generate() },
+    })
 
     expect(wrapper.exists()).toBeTruthy()
   })

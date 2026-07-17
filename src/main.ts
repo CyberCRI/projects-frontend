@@ -1,11 +1,15 @@
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 import initOrganization from './app/initOrganization'
+import { initializeClientApi } from '~/config/apis'
 import quickLogin from '~/app/quickLogin'
 import initSentry from '~/app/initSentry'
 //import initApp from '~/app/initApp'
 //import initAnalytics from '~/app/initAnalytics'
 import initUser from '~/app/initUser'
 import analytics from '~/analytics'
+
+// initialize client apis with projects-frontend options/config
+initializeClientApi()
 
 if (import.meta.client) {
   // quick redirect to keycloak login if url says so

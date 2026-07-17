@@ -3,9 +3,9 @@
   lang="ts"
   generic="Item extends { id: number | string; role?: string }, Role extends Roles"
 >
+import type { Roles } from 'shared-projects-frontend/models'
 import { roleHelpI18n, roleI18n } from '~/functs/rolesUtils'
 import TableInfo from '~/components/base/TableInfo.vue'
-import type { Roles } from '~/models/types'
 import { remToPx } from '~/functs/style'
 import { isEqual } from 'es-toolkit'
 
@@ -30,7 +30,9 @@ const emit = defineEmits<{
   update: [RoleUser]
 }>()
 
-const { stateModals, closeModals, openModals } = useModals({ saveChange: false })
+const { stateModals, closeModals, openModals } = useModals({
+  saveChange: false,
+})
 
 const rolesValue = ref<RoleUser>()
 
@@ -122,6 +124,8 @@ const checkClose = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .member-item {
   display: grid;
   grid-template-columns: 1fr 1fr;

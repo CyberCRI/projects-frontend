@@ -10,8 +10,11 @@ import {
   patchProject,
   patchProjectHeader,
   postProjectHeader,
-} from '~/api/projects.service'
-import type { ProjectForm as ProjectFormType, TranslatedProject } from '~/models/project.model'
+} from 'shared-projects-frontend/apis'
+import type {
+  ProjectForm as ProjectFormType,
+  TranslatedProject,
+} from 'shared-projects-frontend/models'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
 import ProjectForm from '~/components/project/ProjectForm.vue'
@@ -58,9 +61,10 @@ const onSubmit = (form: ProjectFormType) => {
       imageSizesFormData(formData, form.imageSizes)
       // delete old file if is changed
       if (
-        !(form.file instanceof File) &&
-        props.project.header_image?.id != form.file?.id &&
-        props.project.header_image?.id
+        (!(form.file instanceof File) &&
+          props.project.header_image?.id != form.file?.id &&
+          props.project.header_image?.id) ||
+        (form.file instanceof File && props.project.header_image?.id)
       ) {
         await deleteProjectHeader(props.project.id, props.project.header_image.id)
       }

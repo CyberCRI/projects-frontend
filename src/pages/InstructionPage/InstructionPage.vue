@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import type { InstructionId } from '~/models/instruction.model'
+import type { InstructionId } from 'shared-projects-frontend/models'
 
+import { deleteInstruction } from 'shared-projects-frontend/apis'
 import { getInstruction } from '~/api/v2/instruction.service'
-import { deleteInstruction } from '~/api/instruction.service'
 
 import FetchLoader from '~/components/base/FetchLoader.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
+import { usePermissionInstruction } from '~/composables/usePermissions/useInstructionPermissions'
 import { instructionSkeleton } from '~/skeletons/instructions.skeletons'
 import { html2Text } from '~/functs/tiptap'
 import { formatDate } from '~/functs/date'
@@ -17,7 +18,6 @@ const props = defineProps<{
 }>()
 
 const { t, locale } = useNuxtI18n()
-const { canEditInstruction, canDeleteInstruction } = usePermissions()
 const toaster = useToasterStore()
 const router = useRouter()
 
@@ -42,6 +42,10 @@ const {
 } = getInstruction(organizationCode, instructionId, {
   default: () => instructionSkeleton(),
 })
+
+const { canEditInstruction, canDeleteInstruction } = usePermissionInstruction(
+  computed(() => instruction.value.id)
+)
 
 const publicationDate = computed(() => {
   if (!instruction.value?.publication_date) {
@@ -123,13 +127,15 @@ watchEffect(() => {
   />
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .instruction-header {
   margin-top: 70px;
   margin-bottom: 3rem;
 }
 
 .page-title {
-  font-size: $font-size-3xl;
+  font-size: variables.$font-size-3xl;
   margin: 1rem 0;
 }
 
@@ -143,7 +149,7 @@ watchEffect(() => {
 
 .intruction-actions {
   display: flex;
-  gap: $space-s;
+  gap: variables.$space-s;
   justify-content: flex-end;
 }
 </style>

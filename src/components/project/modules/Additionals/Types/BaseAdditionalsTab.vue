@@ -3,13 +3,15 @@ import type {
   ProjectTabForm,
   TranslatedProjectTab,
   TranslatedProjectTabItem,
-} from '~/models/projects-tabs.model'
-import { deleteProjectTab, updateProjectTab } from '~/api/project-tabs.service'
+  TranslatedProject,
+} from 'shared-projects-frontend/models'
+import { deleteProjectTab, updateProjectTab } from 'shared-projects-frontend/apis'
+import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
 import { refreshProjectTabs } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import ContentExpandable from '~/components/base/ContentExpandable.vue'
-import type { TranslatedProject } from '@/models/project.model'
 import LpiButton from '~/components/base/button/LpiButton.vue'
+import HelpField from '~/components/base/form/HelpField.vue'
 import TabForm from '~/components/tabs/TabForm.vue'
 import { textIsEmpty } from '~/functs/tiptap'
 import analytics from '~/analytics'
@@ -105,13 +107,15 @@ const onConfirmDeleteTab = () => {
       />
     </BaseModuleHeader>
 
-    <ContentExpandable
-      v-if="!textIsEmpty(tab.$t.description) && !stateModals.editTab"
-      key="description"
-      class="description-info"
-      :description="tab.$t.description"
-      :height-limit="300"
-    />
+    <HelpField class="description-info">
+      <ContentExpandable
+        v-if="!textIsEmpty(tab.$t.description) && !stateModals.editTab"
+        key="description"
+        :height-limit="300"
+      >
+        <TipTapOutput :content="tab.$t.description" />
+      </ContentExpandable>
+    </HelpField>
     <ContentExpandable
       v-if="editable"
       :height-limit="0"
@@ -153,7 +157,12 @@ const onConfirmDeleteTab = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .description-info {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 0.5rem;
   padding: 1rem;
   border-radius: 4px;
   border: 2px solid color-mix(in srgb, var(--primary-dark), transparent 85%);

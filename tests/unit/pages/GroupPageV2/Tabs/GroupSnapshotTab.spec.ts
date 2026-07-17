@@ -15,18 +15,14 @@ import GroupEventPreview from '~/components/group/Modules/Event/GroupEventPrevie
 import GroupSubPreview from '~/components/group/Modules/GroupSub/GroupSubPreview.vue'
 import GroupNewsPreview from '~/components/group/Modules/News/GroupNewsPreview.vue'
 import { groupTranslatedFactory } from '~~/tests/factories/group.factory'
-import OrganizationTagFactory from '~~/tests/factories/tag.factory'
 import { groupSkeleton } from '~/skeletons/group.skeletons'
+import TagFactory from '~~/tests/factories/tag.factory'
 
 describe('GroupSnapshotTab', () => {
   it('display modules', async () => {
     const group = groupTranslatedFactory.generate(groupSkeleton())
     group.sdgs = [1, 2, 3, 4, 5]
-    group.tags = [
-      OrganizationTagFactory.generate(),
-      OrganizationTagFactory.generate(),
-      OrganizationTagFactory.generate(),
-    ]
+    group.tags = [TagFactory.generate(), TagFactory.generate(), TagFactory.generate()]
     group.$t.description = ''
 
     const wrapper = lpiShallowMount(GroupSnapshotTab, {

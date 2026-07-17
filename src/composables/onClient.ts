@@ -12,7 +12,7 @@ export const onClient = <T, Args extends any[]>(
   fallback: ((...args: Args) => T) | T = undefined
 ) => {
   return (...args: Args): T => {
-    if (import.meta.client) {
+    if (import.meta.client && typeof window !== 'undefined' && typeof document !== 'undefined') {
       return callback(...args)
     } else if (typeof fallback === 'function') {
       // @ts-expect-error ignore error
@@ -49,4 +49,18 @@ export const onClientMounted = (callback: () => void) => {
  */
 export const onClientUnmounted = (callback: () => void) => {
   onUnmounted(onClient(callback))
+}
+
+/**
+ * run onBeforeUnmount only if we are in client mode
+ *
+ * @function
+ * @name onClientBeforeUnmounted
+ * @kind variable
+ * @param {() => void} callback
+ * @returns {void}
+ * @exports
+ */
+export const onClientBeforeUnmounted = (callback: () => void) => {
+  onBeforeUnmount(onClient(callback))
 }

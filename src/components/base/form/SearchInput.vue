@@ -83,6 +83,8 @@ const acceptSuggestion = (suggestion: string) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .search-input-ctn {
   position: relative;
   cursor: pointer;
@@ -94,13 +96,13 @@ const acceptSuggestion = (suggestion: string) => {
   margin-top: 3px;
 
   .search-input {
-    border-radius: $border-radius-l;
-    background: $white;
-    border: $border-width-s solid var(--primary);
-    color: $black;
-    padding: 11px $space-xl 10px; // 11 + 1 px border
-    font-size: $font-size-m;
-    width: pxToRem(350px);
+    border-radius: variables.$border-radius-l;
+    background: variables.$white;
+    border: variables.$border-width-s solid var(--primary);
+    color: variables.$black;
+    padding: 11px variables.$space-xl 10px; // 11 + 1 px border
+    font-size: variables.$font-size-m;
+    width: variables.pxtorem(350px);
     max-width: 100%;
     box-sizing: border-box;
 
@@ -130,23 +132,23 @@ const acceptSuggestion = (suggestion: string) => {
   }
 
   .left-icon {
-    left: $layout-size-s;
-    height: $layout-size-l;
-    width: $layout-size-l;
+    left: variables.$layout-size-s;
+    height: variables.$layout-size-l;
+    width: variables.$layout-size-l;
     pointer-events: none;
   }
 
   .right-icon {
-    right: $layout-size-s;
+    right: variables.$layout-size-s;
     display: inline-block;
-    width: $layout-size-s;
-    height: $layout-size-s;
-    background: $primary-dark;
-    border: $border-width-m solid var(--primary-dark);
+    width: variables.$layout-size-s;
+    height: variables.$layout-size-s;
+    background: variables.$primary-dark;
+    border: variables.$border-width-m solid var(--primary-dark);
     border-radius: 100%;
 
     svg {
-      width: $layout-size-s;
+      width: variables.$layout-size-s;
       fill: var(--white);
       position: absolute;
       top: 50%;
@@ -163,14 +165,14 @@ const acceptSuggestion = (suggestion: string) => {
     right: 0;
     max-height: 10rem;
     background-color: var(--white);
-    border: $border-width-s solid var(--primary);
-    border-radius: $border-radius-l;
+    border: variables.$border-width-s solid var(--primary);
+    border-radius: variables.$border-radius-l;
     display: flex;
     flex-flow: column nowrap;
 
     .suggestions-label {
-      font-size: $font-size-m;
-      padding: 0.5rem $border-radius-l;
+      font-size: variables.$font-size-m;
+      padding: 0.5rem variables.$border-radius-l;
       text-align: center;
       font-weight: normal;
     }
@@ -181,7 +183,7 @@ const acceptSuggestion = (suggestion: string) => {
     }
 
     li {
-      padding: 0.5rem $border-radius-l;
+      padding: 0.5rem variables.$border-radius-l;
       cursor: pointer;
 
       &:hover {

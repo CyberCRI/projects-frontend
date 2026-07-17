@@ -43,6 +43,8 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .language-filter {
   width: 100%;
   display: flex;

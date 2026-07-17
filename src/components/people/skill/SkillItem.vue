@@ -34,6 +34,8 @@ withDefaults(
 const isOpen = ref(false)
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .skill {
   width: 100%;
 
@@ -66,23 +68,23 @@ const isOpen = ref(false)
     text-transform: capitalize;
   }
 
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
   font-weight: 400;
-  color: $black;
+  color: variables.$black;
 }
 
 .summary-content:hover {
   .chevron {
-    fill: $primary-dark;
+    fill: variables.$primary-dark;
   }
 
   .skill-title {
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 }
 
 .no-description .chevron {
-  fill: $light-gray;
+  fill: variables.$light-gray;
 }
 
 .steps {
@@ -94,9 +96,9 @@ const isOpen = ref(false)
 }
 
 .description {
-  font-size: $font-size-s;
+  font-size: variables.$font-size-s;
   padding-left: 1rem;
-  border-left: 1px solid $light-gray;
+  border-left: 1px solid variables.$light-gray;
   align-self: flex-start;
 }
 

@@ -20,8 +20,8 @@
 import FilterValue from '~/components/search/Filters/FilterValue.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
+import type { TagModel } from 'shared-projects-frontend/models'
 import useTagTexts from '~/composables/useTagTexts'
-import type { TagModel } from '~/models/tag.model'
 
 const props = withDefaults(
   defineProps<{
@@ -51,17 +51,19 @@ const addTag = (tag) => emit('add-tag', tag)
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .suggested-tags-ctn {
-  background: $primary-lighter;
-  border-radius: $border-radius-xs;
-  padding: $space-m;
+  background: variables.$primary-lighter;
+  border-radius: variables.$border-radius-xs;
+  padding: variables.$space-m;
   display: flex;
   flex-wrap: wrap;
-  gap: $space-s;
+  gap: variables.$space-s;
 }
 
 .loader-ctn {
-  padding: $space-m;
+  padding: variables.$space-m;
   display: flex;
   justify-content: center;
   align-items: center;

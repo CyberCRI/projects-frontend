@@ -51,7 +51,10 @@ export default {
       croppedHtml: this.html,
       style: {},
       // limit recalculation on resize
-      debouncedCompute: debounce(this.compute, 200, { leading: false, trailing: true }),
+      debouncedCompute: debounce(this.compute, 200, {
+        leading: false,
+        trailing: true,
+      }),
     }
   },
 
@@ -207,7 +210,10 @@ export default {
       }
       this.computing = false
       // inform parent component of the new height
-      this.$emit('computed', { height: inner.height, croppedHtml: this.croppedHtml })
+      this.$emit('computed', {
+        height: inner.height,
+        croppedHtml: this.croppedHtml,
+      })
     },
 
     async traverseNode(root, outer) {
@@ -303,6 +309,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .outer {
   position: relative;
   flex-shrink: 0;

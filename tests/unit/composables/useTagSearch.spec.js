@@ -1,30 +1,27 @@
-import { getAllOrgClassifications } from '~/api/tag-classification.service'
-import useOrganizationsStore from '~/stores/useOrganizations'
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import useTagSearch from '~/composables/useTagSearch.ts'
 
-vi.mock('~/stores/useOrganizations')
-vi.mock('~/api/tag-classification.service', () => ({
+import { OrganizationFactory } from '~~/tests/factories/organization.factory'
+import { getAllOrgClassifications } from 'shared-projects-frontend/apis'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useTagSearch from '~/composables/useTagSearch'
+
+vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
+  ...(await orginalImporter()),
   getAllOrgClassifications: vi
     .fn()
-    .mockResolvedValue({ count: 1, results: [{ id: 1, title: 'test' }] }),
-  getOrgClassificationTags: vi
-    .fn()
-    .mockResolvedValue({ count: 1, results: [{ id: 1, title: 'test' }] }),
+    .mockResolvedValue(PaginationsFactory.generate({ results: [{ id: 1, title: 'test' }] })),
+  getOrgClassificationTags: vi.fn().mockResolvedValue({ results: [{ id: 1, title: 'test' }] }),
 }))
 
 describe('useTagSearch', () => {
-  let organizationsStoreMock
-
   beforeEach(() => {
-    organizationsStoreMock = {
-      current: {
-        code: 'org-code',
-        default_skills_tags: ['skill1', 'skill2'],
-        default_projects_tags: ['project1', 'project2'],
-      },
-    }
-    useOrganizationsStore.mockReturnValue(organizationsStoreMock)
+    const organizationStore = useOrganizationsStore()
+    organizationStore._current = OrganizationFactory.generate({
+      code: 'org-code',
+      default_skills_tags: ['skill1', 'skill2'],
+      default_projects_tags: ['project1', 'project2'],
+    })
   })
 
   describe('organizationTags', () => {

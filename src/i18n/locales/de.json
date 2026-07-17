@@ -1768,7 +1768,8 @@
         "invalid-image": "Nicht unterstützte Datei, muss ein gültiges Bild sein.",
         "required-image": "Eine Datei ist erforderlich",
         "required": "Eine Datei ist erforderlich",
-        "delete": "Löschen der Datei"
+        "delete": "Löschen der Datei",
+        "delete-image": "Bild entfernen"
       }
     },
     "link": {
@@ -2421,7 +2422,9 @@
       "reviewed": "wurde geprüft",
       "reviewed-sub": "Wenn Ihr Projekt zur Überprüfung bereit ist, werden Sie benachrichtigt, wenn der Prüfer Ihres Projekts seine Überprüfung vorgelegt hat",
       "reply": "Antwort auf Ihren Kommentar",
-      "reply-sub": "Benachrichtigen, wenn jemand auf Ihren Kommentar antwortet"
+      "reply-sub": "Benachrichtigen, wenn jemand auf Ihren Kommentar antwortet",
+      "announcement-has-new-application": "Ankündigungen",
+      "announcement-has-new-application-sub": "Benachrichtigt werden, wenn Ankündigungen einen neuen Antrag haben"
     },
     "follow": {
       "title": "Folgen Sie der Meldung",

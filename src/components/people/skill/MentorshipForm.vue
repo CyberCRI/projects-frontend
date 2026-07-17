@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { UserSkillModel } from 'shared-projects-frontend/models'
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
-import type { UserSkillModel } from '~/models/user.model'
 
 const model = defineModel<Partial<UserSkillModel>>()
 
@@ -48,9 +48,11 @@ watchEffect(() => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .buttons-group {
   display: flex;
-  gap: $space-unit;
+  gap: variables.$space-unit;
 
   > * {
     flex-basis: 50%;
@@ -58,6 +60,6 @@ watchEffect(() => {
 }
 
 .form-group + .form-group {
-  margin-top: $space-unit;
+  margin-top: variables.$space-unit;
 }
 </style>

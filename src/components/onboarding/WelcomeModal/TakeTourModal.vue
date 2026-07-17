@@ -13,7 +13,14 @@
           class="video"
           :src="videoSrc"
           frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allow="
+            accelerometer;
+            autoplay;
+            clipboard-write;
+            encrypted-media;
+            gyroscope;
+            picture-in-picture;
+          "
           allowfullscreen
         />
       </div>
@@ -52,7 +59,9 @@ onMounted(() => {
   onboardingTrap('take_tour', false)
 })
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .portal-logo-ctn {
   text-align: center;
 }
@@ -64,24 +73,24 @@ onMounted(() => {
 .welcome-title {
   text-align: center;
   font-weight: 700;
-  font-size: $font-size-3xl;
-  line-height: $line-height-tight;
-  margin-bottom: pxToRem(56px);
+  font-size: variables.$font-size-3xl;
+  line-height: variables.$line-height-tight;
+  margin-bottom: variables.pxtorem(56px);
 }
 
 .notice {
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
 }
 
 .footer {
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: $space-l;
+  gap: variables.$space-l;
 }
 
 .link {
-  color: $primary-dark;
+  color: variables.$primary-dark;
   text-decoration: underline;
   font-weight: 700;
 

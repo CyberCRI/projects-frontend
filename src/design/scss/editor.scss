@@ -1,3 +1,5 @@
+@use 'variables';
+
 .tiptap-output,
 .publication-content,
 .description-content,
@@ -28,7 +30,7 @@
       &,
       & > * {
         font-family: monospace;
-        font-size: $font-size-m;
+        font-size: variables.$font-size-m;
         tab-size: 2;
       }
     }
@@ -303,7 +305,8 @@
     max-width: calc(100%);
     overflow-x: auto;
     position: relative;
-    word-break: break-word;
+    word-break: normal;
+    overflow-wrap: break-word;
 
     table.auto-width {
       width: auto;
@@ -323,15 +326,15 @@
     width: fit-content;
 
     th {
-      background-color: $almost-white;
-      padding: $space-s $space-m;
-      color: $almost-black;
+      background-color: variables.$almost-white;
+      padding: variables.$space-s variables.$space-m;
+      color: variables.$almost-black;
       font-weight: bold;
     }
 
     td,
     th {
-      border: 1px solid $lighter-gray !important;
+      border: 1px solid variables.$lighter-gray !important;
       min-width: 1em;
       padding: 3px 5px;
       vertical-align: top;
@@ -341,8 +344,8 @@
     }
 
     td {
-      border: 1px solid $lighter-gray;
-      padding: $space-m calc(2 * $space-s);
+      border: 1px solid variables.$lighter-gray;
+      padding: variables.$space-m calc(2 * variables.$space-s);
     }
 
     > * {
@@ -380,7 +383,7 @@
   }
 
   a {
-    color: $primary-dark !important;
+    color: variables.$primary-dark !important;
     cursor: pointer;
     text-decoration: none;
     overflow-wrap: break-word;
@@ -391,36 +394,36 @@
   }
 
   h1 {
-    font-size: $font-size-2xl;
+    font-size: variables.$font-size-2xl;
     font-weight: 700;
-    margin-bottom: $space-l;
-    margin-top: $space-m;
-    line-height: $line-height-tight;
+    margin-bottom: variables.$space-l;
+    margin-top: variables.$space-m;
+    line-height: variables.$line-height-tight;
   }
 
   h2 {
-    font-size: $font-size-xl;
+    font-size: variables.$font-size-xl;
     font-weight: 700;
-    margin-bottom: $space-m;
-    line-height: $line-height-tight;
+    margin-bottom: variables.$space-m;
+    line-height: variables.$line-height-tight;
   }
 
   h3 {
-    font-size: $font-size-l;
+    font-size: variables.$font-size-l;
     font-weight: 700;
     letter-spacing: 0;
-    margin-bottom: $space-m;
-    line-height: $line-height-tight;
+    margin-bottom: variables.$space-m;
+    line-height: variables.$line-height-tight;
   }
 
   h4 {
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
     font-weight: 700;
-    line-height: $line-height-tight;
+    line-height: variables.$line-height-tight;
   }
 
   p {
-    margin-bottom: $space-s;
+    margin-bottom: variables.$space-s;
   }
 
   u {
@@ -434,9 +437,9 @@
   blockquote {
     margin: 20px 0;
     font-style: italic;
-    border-left: 4px solid $primary-dark;
+    border-left: 4px solid variables.$primary-dark;
     padding-left: 20px;
-    color: $almost-black;
+    color: variables.$almost-black;
   }
 
   img {
@@ -488,7 +491,7 @@
   }
 
   > * {
-    margin-bottom: $space-m;
+    margin-bottom: variables.$space-m;
   }
 }
 
@@ -525,7 +528,7 @@ table .custom-video-ctn {
 
 .ProseMirror-focused .ProseMirror-selectednode .custom-video-wrapper::after {
   color: white;
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
   text-align: center;
   padding: 15%;
   background-color: rgb(0 0 0 / 50%);
@@ -594,36 +597,36 @@ table .custom-video-ctn {
 
 .content--open {
   h1 {
-    font-size: $font-size-2xl;
+    font-size: variables.$font-size-2xl;
     font-weight: 700;
-    line-height: $line-height-tight;
+    line-height: variables.$line-height-tight;
     margin-bottom: 8px;
   }
 
   h2 {
-    font-size: $font-size-xl;
+    font-size: variables.$font-size-xl;
     font-weight: 700;
-    line-height: $line-height-tight;
+    line-height: variables.$line-height-tight;
     margin-bottom: 8px;
   }
 
   h3 {
-    font-size: $font-size-l;
+    font-size: variables.$font-size-l;
     font-weight: 700;
-    line-height: $line-height-tight;
+    line-height: variables.$line-height-tight;
     letter-spacing: 0;
     margin-bottom: 8px;
   }
 
   h4 {
-    font-size: $font-size-s;
+    font-size: variables.$font-size-s;
     font-weight: 700;
-    line-height: $line-height-tight;
+    line-height: variables.$line-height-tight;
     margin-bottom: 8px;
   }
 
   p {
-    font-size: $font-size-s;
+    font-size: variables.$font-size-s;
     margin-bottom: 1.5rem;
   }
 }

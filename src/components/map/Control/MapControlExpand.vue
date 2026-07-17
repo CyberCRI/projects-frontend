@@ -12,6 +12,8 @@ const onExpand = () => emit('expand')
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .expand-container {
   display: flex;
   justify-content: center;

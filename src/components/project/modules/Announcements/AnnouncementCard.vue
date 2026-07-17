@@ -56,8 +56,8 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedAnnouncement } from '@/models/announcement.model'
-import type { TranslatedProject } from '@/models/project.model'
+import type { TranslatedAnnouncement, TranslatedProject } from 'shared-projects-frontend/models'
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { usePatatoid } from '@/composables/usePatatoids'
 import type { RouteLocationRaw } from 'vue-router'
@@ -90,7 +90,7 @@ const is = computed(() => (props.to ? NuxtLink : 'div'))
 
 const projectActual = computed(() => props.project ?? props.announcement.project)
 
-const { canEditProject } = usePermissions()
+const { canEditProject } = usePermissionProject(computed(() => props.project.id))
 
 const projectImage = computed(() => {
   return `url(${projectActual.value?.header_image?.variations?.small}), url(${usePatatoid(1)})`
@@ -98,16 +98,18 @@ const projectImage = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 $annoucement-picto-size: 72px;
-$annoucement-padding: pxToRem(20px);
+$annoucement-padding: variables.pxtorem(20px);
 
 .announcement-wrapper {
   width: 100%;
 
   .announcement-card {
     position: relative;
-    border: $border-width-s solid var(--primary);
-    border-radius: $border-radius-m;
+    border: variables.$border-width-s solid var(--primary);
+    border-radius: variables.$border-radius-m;
     width: 100%;
     height: 480px;
     background: var(--white);
@@ -130,7 +132,7 @@ $annoucement-padding: pxToRem(20px);
 
     .announcement-header {
       color: var(--primary-dark);
-      font-size: $font-size-s;
+      font-size: variables.$font-size-s;
       font-weight: 700;
       text-transform: uppercase;
       flex-shrink: 0;
@@ -139,7 +141,7 @@ $annoucement-padding: pxToRem(20px);
       .dot {
         position: relative;
         top: -2px;
-        padding: 0 $space-s;
+        padding: 0 variables.$space-s;
       }
     }
 
@@ -147,25 +149,26 @@ $annoucement-padding: pxToRem(20px);
       display: flex;
       flex-flow: column nowrap;
       justify-content: flex-start;
-      padding-top: $space-l;
+      padding-top: variables.$space-l;
 
       .announcement-title,
       .description {
         overflow: hidden;
         text-overflow: ellipsis;
-        word-break: break-word;
+        word-break: normal;
+        overflow-wrap: break-word;
         display: -webkit-box;
         -webkit-box-orient: vertical;
       }
 
       .announcement-title {
-        font-size: $font-size-l;
+        font-size: variables.$font-size-l;
         font-weight: 500;
         -webkit-line-clamp: 3;
       }
 
       .description {
-        font-size: $font-size-m;
+        font-size: variables.$font-size-m;
         -webkit-line-clamp: 6;
       }
     }
@@ -181,15 +184,15 @@ $annoucement-padding: pxToRem(20px);
       background-color: transparent;
       color: var(--primary-dark);
       font-weight: 700;
-      font-size: $font-size-m;
+      font-size: variables.$font-size-m;
       text-transform: capitalize;
       padding: 0;
       display: flex;
       align-items: flex-start;
 
       .icon {
-        width: $layout-size-l;
-        padding-right: $space-xs;
+        width: variables.$layout-size-l;
+        padding-right: variables.$space-xs;
         display: inline-block;
 
         svg {
@@ -202,26 +205,26 @@ $annoucement-padding: pxToRem(20px);
       flex: 0 0 0;
       display: flex;
       background-color: var(--primary-lighter);
-      border-bottom-left-radius: $border-radius-m;
-      border-bottom-right-radius: $border-radius-m;
+      border-bottom-left-radius: variables.$border-radius-m;
+      border-bottom-right-radius: variables.$border-radius-m;
 
       .project-label {
         text-transform: uppercase;
         color: var(--primary-dark);
-        font-size: $font-size-2xs;
+        font-size: variables.$font-size-2xs;
         font-weight: bold;
         margin: 0;
-        padding-bottom: $space-s;
+        padding-bottom: variables.$space-s;
       }
 
       .picto {
-        width: pxToRem($annoucement-picto-size);
-        flex-basis: pxToRem($annoucement-picto-size);
+        width: variables.pxtorem($annoucement-picto-size);
+        flex-basis: variables.pxtorem($annoucement-picto-size);
         flex-shrink: 0;
-        height: pxToRem($annoucement-picto-size);
+        height: variables.pxtorem($annoucement-picto-size);
         background-position: center center;
         background-size: cover;
-        border-radius: $border-radius-xs;
+        border-radius: variables.$border-radius-xs;
       }
 
       .text {
@@ -242,7 +245,8 @@ $annoucement-padding: pxToRem(20px);
         -webkit-line-clamp: 2;
         overflow: hidden;
         text-overflow: ellipsis;
-        word-break: break-word;
+        word-break: normal;
+        overflow-wrap: break-word;
         display: -webkit-box;
         -webkit-box-orient: vertical;
       }

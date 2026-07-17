@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageModel, ImageVariations } from '~/models/image.model'
+import type { ImageModel, ImageVariations } from 'shared-projects-frontend/models'
 
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
@@ -56,6 +56,8 @@ const src = computed(() => {
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .gallery-img-button {
   cursor: pointer;
   width: 100%;

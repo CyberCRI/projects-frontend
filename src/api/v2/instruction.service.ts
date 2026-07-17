@@ -1,12 +1,15 @@
-import type { InstructionId, QueryFilterInstruction } from '~/models/instruction.model'
-import type { OrganizationModel } from '~/models/organization.model'
+import type {
+  InstructionId,
+  QueryFilterInstruction,
+  OrganizationModel,
+} from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
 import {
   getAllInstructions as fetchAllInstructions,
   getInstruction as fetchInstruction,
-} from '~/api/instruction.service'
+} from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
 import { onlyRefs } from '~/functs/onlyRefs'

@@ -1,9 +1,13 @@
-import { SORBOBOT_EXTRA, sorbobotIsEnabled } from '../sorbobot/sorbobot-tool'
-import { searchAll, searchProjects, searchUser } from '~/api/search.service'
+import {
+  searchAll,
+  searchProjects,
+  searchUser,
+  getAllTagsById,
+} from 'shared-projects-frontend/apis'
+import { SORBOBOT_EXTRA, sorbobotIsEnabled } from '~/mcp-server/sorbobot/sorbobot-tool'
 import { mapPeopleGroupPreview, mapUserPreview } from './people-tool'
-import { getAllTagsById } from '~/api/tag-classification.service'
-import type { Config } from '~/api/tag-classification.service'
 import { mcpOptions, orgCode, resultFromTool } from './base'
+import type { Config } from 'shared-projects-frontend/apis'
 import type { TypeMcpServer } from '~/interfaces/mcp'
 import { mapProjectPreview } from './project-tool'
 import { z } from 'zod'
@@ -26,7 +30,9 @@ export default (server: TypeMcpServer) => {
     {
       title: 'Search Tool',
       description: `Search on the platform for projects, people profile (user) and groups (of users) related to a query. ${sorbobotIsEnabled ? SORBOBOT_EXTRA : ''}`,
-      inputSchema: { queryTerms: z.string().describe('The search query terms') },
+      inputSchema: {
+        queryTerms: z.string().describe('The search query terms'),
+      },
     },
     resultFromTool(({ queryTerms }, extras) => {
       const opts = mcpOptions(extras)

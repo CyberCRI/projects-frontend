@@ -11,7 +11,10 @@
         <NuxtLink
           v-if="author.user?.slug"
           class="profile-document-contributor"
-          :to="{ name: 'ProfileOtherUser', params: { userId: author.user.slug } }"
+          :to="{
+            name: 'ProfileOtherUser',
+            params: { userId: author.user.slug },
+          }"
         >
           <strong>{{ author.display_name }}</strong>
         </NuxtLink>
@@ -56,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedDocument } from '~/interfaces/researcher'
+import type { TranslatedResearcherDocument } from 'shared-projects-frontend/models'
 
 import IdentifierLink from '~/components/people/Researcher/IdentifierLink.vue'
 import SeeMoreArrow from '~/components/base/button/SeeMoreArrow.vue'
@@ -68,7 +71,7 @@ const emit = defineEmits(['similar'])
 
 withDefaults(
   defineProps<{
-    document: TranslatedDocument
+    document: TranslatedResearcherDocument
     docType: string
     preview?: boolean
     similar?: boolean
@@ -78,13 +81,15 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .icon-container {
   display: flex;
   align-items: center;
   justify-content: start;
   gap: 0.4rem;
   font-weight: 700;
-  color: $primary;
+  color: variables.$primary;
   text-transform: capitalize;
   letter-spacing: -0.1;
 }
@@ -103,7 +108,7 @@ withDefaults(
 
 // if is a link, add correct color and underline
 a.profile-document-contributor {
-  color: $primary-dark;
+  color: variables.$primary-dark;
   text-decoration: underline;
 }
 

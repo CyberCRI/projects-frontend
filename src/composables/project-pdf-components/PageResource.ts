@@ -1,9 +1,8 @@
 import addResourceSectionFactory from '~/composables/project-pdf-components/addResourceSectionFactory'
-import { getProjectAttachmentLinks } from '~/api/attachment-links.service'
-import { getProjectAttachmentFiles } from '~/api/attachment-files.service'
+import { getProjectAttachmentLinks, getProjectAttachmentFiles } from 'shared-projects-frontend/apis'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
-import type { TranslatedProject } from '~/models/project.model'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
 
 export default async function addPageResourceFactory(project: TranslatedProject) {

@@ -77,11 +77,13 @@ refresh()
   </FetchLoader>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .document {
   display: flex;
   gap: 1rem;
   padding: 0.6rem;
-  border: 1px solid $primary;
+  border: 1px solid variables.$primary;
   border-radius: 0.6rem;
   justify-content: stretch;
   align-items: center;
@@ -100,17 +102,17 @@ refresh()
 .title {
   flex-grow: 1;
   font-size: 1.2rem;
-  color: $primary-dark;
+  color: variables.$primary-dark;
 }
 
 .chunk-count {
   font-weight: normal;
-  color: $light-gray;
+  color: variables.$light-gray;
 }
 
 .icon svg {
   width: 2rem;
-  fill: $light-gray;
+  fill: variables.$light-gray;
 }
 
 .actions {

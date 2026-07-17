@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProjectCategory } from '~/models/project-category.model'
+import type { TranslatedProjectCategory } from 'shared-projects-frontend/models'
 
 defineProps<{
   category: TranslatedProjectCategory
@@ -24,10 +24,12 @@ const emit = defineEmits(['choose-category'])
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .drop-down-menu-item-content {
-  color: $primary-dark;
-  padding: $space-m $space-s;
-  font-size: $font-size-s;
+  color: variables.$primary-dark;
+  padding: variables.$space-m variables.$space-s;
+  font-size: variables.$font-size-s;
   display: flex;
   align-items: center;
   font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
@@ -41,16 +43,16 @@ const emit = defineEmits(['choose-category'])
   .label {
     transform-origin: left center;
     font-weight: 400;
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
   }
 
   &.selected {
-    background-color: $primary-light;
-    color: rgba($primary-dark, 0.7);
+    background-color: variables.$primary-light;
+    color: rgba(variables.$primary-dark, 0.7);
   }
 
   &:hover {
-    background-color: $primary-light;
+    background-color: variables.$primary-light;
     transform: translateZ(0) scaleX(1.1);
   }
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { TranslatedGroupMember } from 'shared-projects-frontend/models'
 import BaseCardInline from '~/components/drawer/BaseCardInline.vue'
-import type { TranslatedGroupMember } from '~/models/group.model'
 import { capitalize } from '~/functs/string'
 
 const props = defineProps<{

@@ -1,4 +1,4 @@
-import type { AnnouncementApplyForm, AnnouncementForm } from '~/models/announcement.model'
+import type { AnnouncementApplyForm, AnnouncementForm } from 'shared-projects-frontend/models'
 import { helpers, required, email } from '@vuelidate/validators'
 import { NULL_CONTENT } from '~/functs/constants'
 import { requiredContent } from '~/form/base'
@@ -26,7 +26,11 @@ export const useAnnouncementForm = (options = {}) => {
     },
   }))
 
-  return useForm<AnnouncementForm>({ default: defaultAnnouncementForm(), rules, ...options })
+  return useForm<AnnouncementForm>({
+    default: defaultAnnouncementForm(),
+    rules,
+    ...options,
+  })
 }
 
 export const defaultAnnouncementReplyForm = (): AnnouncementApplyForm => {

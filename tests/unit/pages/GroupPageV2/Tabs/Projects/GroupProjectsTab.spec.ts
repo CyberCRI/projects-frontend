@@ -6,21 +6,20 @@ import { groupTranslatedFactory } from '~~/tests/factories/group.factory'
 import ProjectPreview from '~/components/project/ProjectPreview.vue'
 import { ProjectFactory } from '~~/tests/factories/project.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('GroupProjectsTab', () => {
-  const orgaCode = useOrganizationCode()
+  let orgaCode
+
+  beforeEach(() => {
+    orgaCode = useOrganizationCode()
+  })
 
   it('Render', async () => {
     const group = groupTranslatedFactory.generate()
     registerEndpoint(`organization/${orgaCode}/people-group/${group.id}/project/`, () => {
       return PaginationsFactory.generate({
-        results: [
-          ProjectFactory.generate(),
-          ProjectFactory.generate(),
-          ProjectFactory.generate(),
-          ProjectFactory.generate(),
-        ],
+        results: ProjectFactory.generateMany(4),
       })
     })
 
@@ -46,7 +45,6 @@ describe('GroupProjectsTab', () => {
       },
     })
 
-    // @ts-expect-error TS2349
     await expect.poll(() => wrapper.text()).includes('An error occured')
   })
 })

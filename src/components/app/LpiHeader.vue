@@ -52,6 +52,9 @@
             'projectPrivateExchangeEdit',
             'projectAnnouncementsEdit',
             'ProjectSettingsEdit',
+            'projectAdditionals',
+            'projectAdditionalsEdit',
+            'projectAdditionalsCreate',
           ]"
           :to="{ name: 'Categories' }"
         />
@@ -112,7 +115,7 @@
           @click="logInUser()"
         />
         <HeaderDropDown
-          v-else-if="isOrgAdmin || isFacilitator || isSuperAdmin"
+          v-else-if="isAdmin || isFacilitator || isSuperAdmin"
           :label="loginName"
           :menu-items="userMenu"
           :rounded-icon="true"
@@ -148,7 +151,10 @@
         />
 
         <LinkButton
-          :class="{ 'header__open-icon': !isNavOpen, 'header__close-icon': isNavOpen }"
+          :class="{
+            'header__open-icon': !isNavOpen,
+            'header__close-icon': isNavOpen,
+          }"
           :data-test="isNavOpen ? 'close-menu-button' : 'open-menu-button'"
           :btn-icon="isNavOpen ? 'Close' : 'BarsStaggered'"
           class="header__mobile-btn"
@@ -185,9 +191,8 @@
 </template>
 
 <script>
+import { getAnnouncements, patchUser } from 'shared-projects-frontend/apis'
 import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
-import { getAnnouncements } from '~/api/announcements.service'
-import { patchUser } from '~/api/people.service.ts'
 
 import HeaderItemList from '~/components/base/navigation/HeaderItemList.vue'
 import HeaderDropDown from '~/components/base/navigation/HeaderDropDown.vue'
@@ -199,10 +204,11 @@ import ContactDrawer from '~/components/app/ContactDrawer.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import BadgeItem from '~/components/base/BadgeItem.vue'
 
-import useProjectCategories from '~/stores/useProjectCategories.ts'
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useUsersStore from '~/stores/useUsers.ts'
+import useProjectCategories from '~/stores/useProjectCategories'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useUsersStore from '~/stores/useUsers'
 
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import { nowDate } from '~/functs/date'
 
 export default {
@@ -225,7 +231,7 @@ export default {
     const projectCategoriesStore = useProjectCategories()
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
-    const { isAdmin, isFacilitator, isSuperAdmin, isOrgAdmin } = usePermissions()
+    const { isAdmin, isFacilitator, isSuperAdmin } = usePermissions()
     const { locale, setLocale } = useNuxtI18n()
     const { isAutoTranslateActivated } = useAutoTranslate()
     return {
@@ -236,7 +242,6 @@ export default {
       isAdmin,
       isFacilitator,
       isSuperAdmin,
-      isOrgAdmin,
       locale,
       isAutoTranslateActivated,
       setLocale,
@@ -493,7 +498,7 @@ export default {
 
     AdminLabel() {
       if (this.isSuperAdmin) return 'super admin'
-      if (this.isOrgAdmin) return 'org admin'
+      if (this.isAdmin) return 'org admin'
       if (this.isFacilitator) return 'facilitator'
       return ''
     },
@@ -607,23 +612,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .header {
   position: fixed;
   width: 100%;
-  height: $navbar-height;
+  height: variables.$navbar-height;
   top: 0;
   left: 0;
-  background-color: $white;
+  background-color: variables.$white;
   display: flex;
-  z-index: $zindex-navbar;
+  z-index: variables.$zindex-navbar;
 
   .header__directory {
     display: flex;
   }
 
   .header__container {
-    padding-top: $space-m;
-    padding-bottom: $space-m;
+    padding-top: variables.$space-m;
+    padding-bottom: variables.$space-m;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -646,32 +653,32 @@ export default {
   }
 
   .user-badge {
-    margin-right: $space-s;
+    margin-right: variables.$space-s;
     font-weight: 700;
-    font-size: $font-size-xs;
+    font-size: variables.$font-size-xs;
   }
 
   .header__mobile-nav {
     height: 100vh;
     width: 98%;
-    background: $primary-dark;
+    background: variables.$primary-dark;
     position: absolute;
     right: 0;
     padding: 0;
-    border-top-left-radius: $border-radius-l;
-    border-bottom-left-radius: $border-radius-l;
+    border-top-left-radius: variables.$border-radius-l;
+    border-bottom-left-radius: variables.$border-radius-l;
     overflow-x: scroll;
 
     .nav-container {
       text-transform: uppercase;
-      color: $white;
-      margin-left: $space-2xl;
-      margin-right: $space-2xl;
+      color: variables.$white;
+      margin-left: variables.$space-2xl;
+      margin-right: variables.$space-2xl;
 
       .title {
         font-weight: 700;
-        font-size: $font-size-2xl;
-        padding-top: calc($navbar-height + $space-m);
+        font-size: variables.$font-size-2xl;
+        padding-top: calc(variables.$navbar-height + variables.$space-m);
         margin-left: 8px;
       }
     }
@@ -681,62 +688,62 @@ export default {
       z-index: 10;
       right: 1rem;
       top: 1rem;
-      width: $layout-size-2xl;
-      height: $layout-size-2xl;
-      fill: $white;
+      width: variables.$layout-size-2xl;
+      height: variables.$layout-size-2xl;
+      fill: variables.$white;
       cursor: pointer;
     }
   }
 
   .header__link {
-    color: $white;
+    color: variables.$white;
     text-transform: uppercase;
     cursor: pointer;
 
     &:visited {
-      color: $white;
+      color: variables.$white;
     }
   }
 
   .header__list-item {
-    padding: $space-xs 0;
+    padding: variables.$space-xs 0;
     text-align: start;
     font-weight: 700;
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
 
     &:first-child {
-      padding-top: pxToRem(40px);
+      padding-top: variables.pxtorem(40px);
     }
   }
 
   .header__logo {
-    height: pxToRem(25px);
+    height: variables.pxtorem(25px);
   }
 
   .header__arrows {
-    width: pxToRem(42px);
-    fill: $primary-dark;
+    width: variables.pxtorem(42px);
+    fill: variables.$primary-dark;
 
     &--nav-open {
       svg {
-        fill: $white !important;
+        fill: variables.$white !important;
       }
     }
   }
 }
 
 .lang-switch .current {
-  color: $white;
+  color: variables.$white;
   text-transform: uppercase;
   text-decoration: underline;
-  margin-right: $space-m;
+  margin-right: variables.$space-m;
   display: inline-block;
 }
 
 .header__arrows--nav-open,
 .header__close-icon {
   svg {
-    fill: $white !important;
+    fill: variables.$white !important;
   }
 }
 
@@ -754,10 +761,10 @@ export default {
 }
 
 a:visited {
-  color: $white;
+  color: variables.$white;
 }
 
-@media (min-width: pxToRem(1200px)) {
+@media (min-width: variables.pxtorem(1200px)) {
   .header {
     position: fixed;
 
@@ -779,18 +786,18 @@ a:visited {
 
     .header__button {
       text-transform: uppercase;
-      margin-top: $space-2xs;
+      margin-top: variables.$space-2xs;
     }
 
     .header__logo {
-      height: pxToRem(40px);
+      height: variables.pxtorem(40px);
     }
   }
 
   .header__arrows--nav-open,
   .header__close-icon {
     svg {
-      fill: $white !important;
+      fill: variables.$white !important;
     }
   }
 }

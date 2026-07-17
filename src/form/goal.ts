@@ -1,5 +1,5 @@
+import type { GoalForm } from 'shared-projects-frontend/models'
 import { helpers, required } from '@vuelidate/validators'
-import type { GoalForm } from '@/models/goal.model'
 import { NULL_CONTENT } from '~/functs/constants'
 import { requiredContent } from '~/form/base'
 

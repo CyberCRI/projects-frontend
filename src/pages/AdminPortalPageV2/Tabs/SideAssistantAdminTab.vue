@@ -50,7 +50,10 @@ refreshSideAgent()
 
 const assistantOptions = computed(() => [
   { label: t('side-assistant.default'), value: 0 },
-  ...(entityList.value || []).map((agent) => ({ label: agent.title, value: agent.id })),
+  ...(entityList.value || []).map((agent) => ({
+    label: agent.title,
+    value: agent.id,
+  })),
 ])
 
 const isSaving = ref(false)
@@ -97,6 +100,8 @@ async function submit() {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   display: flex;
   justify-content: center;
@@ -108,7 +113,7 @@ async function submit() {
 }
 
 .form-section-title {
-  color: $primary-dark;
+  color: variables.$primary-dark;
   font-size: 1.3em;
   padding-block: 1rem;
 }

@@ -37,13 +37,12 @@
 <script setup lang="ts" generic="T extends AnyLocation">
 import ContainerMapControl from '@/components/map/Control/ContainerMapControl.vue'
 import MarkerLocationsDynamic from '@/components/map/MarkerLocationsDynamic.vue'
+import type { LocationType, AnyLocation } from 'shared-projects-frontend/models'
 import MapControlExpand from '@/components/map/Control/MapControlExpand.vue'
 import MapControlZoom from '@/components/map/Control/MapControlZoom.vue'
 import MarkerLocations from '@/components/map/MarkerLocations.vue'
 import type { ExposeMap } from '@/components/map/BaseMap.vue'
-import type { AnyLocation } from '@/models/location.model'
 import BaseMap from '@/components/map/BaseMap.vue'
-import type { LocationType } from '@/models/types'
 
 const props = withDefaults(
   defineProps<{
@@ -91,7 +90,10 @@ const filters = ref<{
 const mapRef = useTemplateRef('map')
 const centerMap = () => mapRef.value.centerMap()
 const map = computed(() => toRaw(mapRef.value.map))
-defineExpose<{ map: ComputedRef<ExposeMap['map']>; centerMap: ExposeMap['centerMap'] }>({
+defineExpose<{
+  map: ComputedRef<ExposeMap['map']>
+  centerMap: ExposeMap['centerMap']
+}>({
   centerMap,
   map,
 })
@@ -133,6 +135,8 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .leaflet-map {
   transition: filter 1s ease;
   overflow: hidden;

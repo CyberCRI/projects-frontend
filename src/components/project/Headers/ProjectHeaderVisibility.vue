@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import InfoSentence from '~/components/project/Headers/InfoSentence.vue'
-import type { TranslatedProject } from '@/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import type { IconImageChoice } from '@/functs/IconImage'
 
 const props = defineProps<{
@@ -43,10 +43,12 @@ const visibility = computed<{ icon: IconImageChoice; title: string }>(() => {
 })
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .visibility {
   font-weight: 700;
   font-size: 14px;
-  line-height: $line-height-compact;
-  color: $primary-dark;
+  line-height: variables.$line-height-compact;
+  color: variables.$primary-dark;
 }
 </style>

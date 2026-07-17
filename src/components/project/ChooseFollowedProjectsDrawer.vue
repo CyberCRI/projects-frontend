@@ -103,12 +103,14 @@ const close = () => emit('close')
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .clear {
-  font-size: $font-size-s;
-  color: $primary-dark;
+  font-size: variables.$font-size-s;
+  color: variables.$primary-dark;
   font-weight: 700;
   text-decoration: underline;
-  margin-left: $space-l;
+  margin-left: variables.$space-l;
   cursor: pointer;
 }
 
@@ -116,32 +118,32 @@ const close = () => emit('close')
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-  gap: $space-m;
-  padding-inline: $space-l;
-  padding-bottom: $space-l;
+  gap: variables.$space-m;
+  padding-inline: variables.$space-l;
+  padding-bottom: variables.$space-l;
 
   .selected-card {
-    background-color: $primary-lighter;
+    background-color: variables.$primary-lighter;
   }
 }
 
 .show-more {
   display: flex;
   justify-content: center;
-  margin: $space-l 0;
+  margin: variables.$space-l 0;
 }
 
 .project-placeholder {
-  height: $card_height;
-  width: $card_width;
-  border: $border-width-s solid $lighter-gray;
-  border-radius: $border-radius-m;
+  height: variables.$card_height;
+  width: variables.$card_width;
+  border: variables.$border-width-s solid variables.$lighter-gray;
+  border-radius: variables.$border-radius-m;
 
   .content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: $space-m $space-m 0 $space-m;
+    padding: variables.$space-m variables.$space-m 0 variables.$space-m;
     height: 100%;
   }
 
@@ -150,13 +152,13 @@ const close = () => emit('close')
 
     $picture-width: 86px;
 
-    width: pxToRem($picture-width);
-    height: pxToRem($picture-width);
-    border-radius: $border-radius-xs;
+    width: variables.pxtorem($picture-width);
+    height: variables.pxtorem($picture-width);
+    border-radius: variables.$border-radius-xs;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    background-color: $lighter-gray;
+    background-color: variables.$lighter-gray;
     box-shadow: 0 0 2px rgb(0 0 0 / 15%);
   }
 }

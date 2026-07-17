@@ -1,8 +1,8 @@
 import type { SorbobotAuthor, SorbobotResponseData } from '~/mcp-server/sorbobot/sorbobot-api'
+import type { HarvesterType } from 'shared-projects-frontend/models'
+import { searchResearcher } from 'shared-projects-frontend/apis'
 import { mcpOptions, resultFromTool } from '../projects/base'
 import SorbobotAPI from '~/mcp-server/sorbobot/sorbobot-api'
-import type { HarvesterType } from '~/interfaces/researcher'
-import { searchResearcher } from '~/api/crisalid.service'
 import type { TypeMcpServer } from '~/interfaces/mcp'
 import { z } from 'zod'
 
@@ -101,7 +101,9 @@ export default (server: TypeMcpServer) => {
       title: 'Research, researchers, experts and science topics and publication finder',
       description:
         'Get a list of researchers and their research papers based on a query. Also get a list of research topics. Use this tool in priority if it is relevant to the user question.',
-      inputSchema: { queryPrompt: z.string().describe('The research query prompt') },
+      inputSchema: {
+        queryPrompt: z.string().describe('The research query prompt'),
+      },
       outputSchema: {
         researchers: z.array(z.object({}).describe('A researcher object')),
         research_topics: z.array(z.string().describe('A research topic')),
@@ -110,21 +112,19 @@ export default (server: TypeMcpServer) => {
     resultFromTool(async ({ queryPrompt }, extras) => {
       const sorbobotApi = new SorbobotAPI(sorbobotApiToken, sorbobotApiUrl)
 
-      let results = { researchers: [], research_topics: [] }
-
       try {
         await sorbobotApi.init()
         const sorbobotResults = await sorbobotApi.query(queryPrompt)
         const researchers = await resolveResearcherProfile(sorbobotResults?.authors || {}, extras)
-        results = {
+        return {
           researchers: researchers,
           research_topics: sorbobotRewriteTopics(sorbobotResults.search_results),
         }
+      } catch {
+        return { researchers: [], research_topics: [] }
       } finally {
         await sorbobotApi.close()
       }
-
-      return results
     })
   )
 }

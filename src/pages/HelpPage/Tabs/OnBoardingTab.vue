@@ -19,7 +19,9 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .on-boarding-page {
-  margin: $layout-size-2xl;
+  margin: variables.$layout-size-2xl;
 }
 </style>

@@ -51,10 +51,12 @@ const is = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .basic-card {
   display: flex;
   position: relative;
-  background: $white;
+  background: variables.$white;
   overflow: hidden;
 
   .card-inner {
@@ -65,10 +67,10 @@ const is = computed(() => {
   &.card {
     flex-direction: column;
     justify-content: space-between;
-    height: $card_height;
-    width: $card_width;
-    border: $border-width-s solid var(--primary);
-    border-radius: $border-radius-m;
+    height: variables.$card_height;
+    width: variables.$card_width;
+    border: variables.$border-width-s solid var(--primary);
+    border-radius: variables.$border-radius-m;
     text-align: center;
 
     .card-inner {
@@ -84,7 +86,7 @@ const is = computed(() => {
 
   &.list {
     flex-direction: row;
-    border-bottom: $border-width-s solid var(--primary);
+    border-bottom: variables.$border-width-s solid var(--primary);
 
     .card-inner {
       flex-flow: row;
@@ -96,9 +98,9 @@ const is = computed(() => {
   $picture-width: 90px;
 
   display: flex;
-  width: pxToRem($picture-width);
-  height: pxToRem($picture-width);
-  border-radius: $border-radius-xs;
+  width: variables.pxtorem($picture-width);
+  height: variables.pxtorem($picture-width);
+  border-radius: variables.$border-radius-xs;
   box-shadow: 0 0 2px rgb(0 0 0 / 15%);
   flex-shrink: 0;
 }
@@ -107,21 +109,21 @@ const is = computed(() => {
   :deep(.picture-user) {
     $picture-width: 110px;
 
-    width: pxToRem($picture-width);
-    height: pxToRem($picture-width);
+    width: variables.pxtorem($picture-width);
+    height: variables.pxtorem($picture-width);
   }
 
   :deep(.picture-project) {
     $picture-width: 86px;
 
-    width: pxToRem($picture-width);
-    height: pxToRem($picture-width);
+    width: variables.pxtorem($picture-width);
+    height: variables.pxtorem($picture-width);
   }
 
   :deep(.picture-group) {
     border-radius: 50%;
-    width: pxToRem(90px);
-    height: pxToRem(90px);
+    width: variables.pxtorem(90px);
+    height: variables.pxtorem(90px);
   }
 }
 
@@ -131,8 +133,8 @@ const is = computed(() => {
   :deep(.picture-group) {
     $picture-width: 80px;
 
-    width: pxToRem($picture-width);
-    height: pxToRem($picture-width);
+    width: variables.pxtorem($picture-width);
+    height: variables.pxtorem($picture-width);
   }
 
   :deep(.picture-group) {
@@ -141,10 +143,10 @@ const is = computed(() => {
 }
 
 :deep(.card-title) {
-  margin-top: $space-s;
+  margin-top: variables.$space-s;
   font-weight: 700;
-  font-size: $font-size-m;
-  line-height: $line-height-compact;
+  font-size: variables.$font-size-m;
+  line-height: variables.$line-height-compact;
   width: 100%;
 
   &::first-letter {
@@ -154,10 +156,10 @@ const is = computed(() => {
 
 :deep(.card-type) {
   font-weight: 700;
-  font-size: $font-size-xs;
+  font-size: variables.$font-size-xs;
   text-transform: uppercase;
-  color: $primary;
-  margin-top: $space-s;
+  color: variables.$primary;
+  margin-top: variables.$space-s;
 }
 
 :deep(.content) {
@@ -168,7 +170,7 @@ const is = computed(() => {
 .card :deep(.content) {
   flex-direction: column;
   align-items: center;
-  padding: $space-m $space-m 0 $space-m;
+  padding: variables.$space-m variables.$space-m 0 variables.$space-m;
   height: 100%;
 }
 
@@ -185,7 +187,8 @@ const is = computed(() => {
   align-items: start;
   text-align: start;
   display: block;
-  word-break: break-word;
+  word-break: normal;
+  overflow-wrap: break-word;
   overflow: hidden auto;
 }
 
@@ -195,7 +198,8 @@ const is = computed(() => {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  word-break: break-word;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .list :deep(.text-limit) {
@@ -204,14 +208,14 @@ const is = computed(() => {
 }
 
 :deep(.description) {
-  margin-top: $space-m;
-  font-size: $font-size-s;
+  margin-top: variables.$space-m;
+  font-size: variables.$font-size-s;
   width: 100%;
 }
 
 :deep(.card-description) {
-  margin-top: $space-xs;
-  font-size: $font-size-s;
+  margin-top: variables.$space-xs;
+  font-size: variables.$font-size-s;
 }
 
 :deep(.action-right-wrapper),
@@ -220,7 +224,7 @@ const is = computed(() => {
   top: 12px;
   display: flex;
   flex-flow: column nowrap;
-  gap: $space-m;
+  gap: variables.$space-m;
 
   // don't block click on card despite we are not a child of it and absolutely positioned above
   // (however this doesnt prevent click on icons, see .icon.passive below for that)
@@ -250,7 +254,7 @@ const is = computed(() => {
 :deep(.icon) {
   width: 24px;
   height: 24px;
-  fill: $primary-dark;
+  fill: variables.$primary-dark;
   cursor: pointer;
   pointer-events: auto; // overide passive wrapper
 
@@ -269,6 +273,6 @@ const is = computed(() => {
 }
 
 :deep(.link-button) {
-  font-size: $font-size-s;
+  font-size: variables.$font-size-s;
 }
 </style>

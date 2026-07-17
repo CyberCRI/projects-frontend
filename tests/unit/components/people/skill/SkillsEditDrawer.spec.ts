@@ -1,17 +1,15 @@
 import SkillsEditDrawer from '~/components/people/skill/SkillsEditDrawer.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
 
-import { OrganizationOutput } from '~/models/organization.model'
+import type { OrganizationOutput } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import pinia from '~/stores'
 
+import { userTranslatedFactory } from '~~/tests/factories/user.factory'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('~/api/people.service.ts', () => ({
+vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
+  ...(await orginalImporter()),
   postUserSkill: vi.fn().mockResolvedValue({}),
-}))
-
-vi.mock('~/api/tag-classification.service', () => ({
   getOrgClassificationTags: vi
     .fn()
     .mockResolvedValue({ results: [{ id: 1 }, { id: 2 }, { id: 3 }] }),
@@ -43,7 +41,7 @@ describe('SkillsEditDrawer.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    const organizationsStore = useOrganizationsStore(pinia)
+    const organizationsStore = useOrganizationsStore()
     organizationsStore._current = {
       code: 'test',
       tags: [],
@@ -62,7 +60,7 @@ describe('SkillsEditDrawer.vue', () => {
       props: {
         isOpen: true,
         type: 'skills',
-        user: { id: 1, skills: [] },
+        user: userTranslatedFactory.generate({ id: 1, skills: [] }),
         searchAllMode: true,
       },
     })

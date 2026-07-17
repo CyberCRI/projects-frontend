@@ -1,45 +1,38 @@
 import ProfileProjectTab from '~/pages/UserProfilePageV2/Tabs/ProfileProjectTab.vue'
-import { UserFactory } from '~~/tests/factories/user.factory'
+import { userTranslatedFactory } from '~~/tests/factories/user.factory'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { flushPromises } from '@vue/test-utils'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import useUsersStore from '~/stores/useUsers'
-import pinia from '~/stores'
 
-import usePeopleGroupsStore from '~/stores/usePeopleGroups'
-import useProjectsStore from '~/stores/useProjects'
+import { OrganizationFactory } from '~~/tests/factories/organization.factory'
 
-import { OrganizationOutput } from '~/models/organization.model'
-
-vi.mock('~/api/follows.service', () => ({
+vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
+  ...(await orginalImporter()),
   getUserFollows: vi.fn().mockResolvedValue({ results: [] }),
 }))
 
 describe('ProfileProjectTab', () => {
   let usersStore
   beforeEach(() => {
-    usersStore = useUsersStore(pinia)
-    usersStore.id = 123
-    usersStore.userFromApi = {}
-    usersStore.permissions = {}
-    usersStore.isConnected = true
-    usersStore.getUser = vi.fn()
-    const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore._current = { id: 'TEST' } as unknown as OrganizationOutput
-    usePeopleGroupsStore(pinia)
-    useProjectsStore(pinia)
+    usersStore = useUsersStore()
+    usersStore.userFromApi = usersStore.userFromToken = userTranslatedFactory.generate({ id: 123 })
+    const organizationsStore = useOrganizationsStore()
+    organizationsStore._current = OrganizationFactory.generate()
   })
 
   it('should render ProfileProjectTab component', () => {
-    const wrapper = lpiShallowMount(ProfileProjectTab, { props: { user: UserFactory.generate() } })
+    const wrapper = lpiShallowMount(ProfileProjectTab, {
+      props: { user: userTranslatedFactory.generate() },
+    })
 
     expect(wrapper.exists()).toBeTruthy()
   })
 
   it('should display 3 project lists', async () => {
-    const user = UserFactory.generate()
+    const user = userTranslatedFactory.generate()
     const wrapper = lpiShallowMount(ProfileProjectTab, { props: { user } })
 
     await flushPromises()
@@ -47,19 +40,25 @@ describe('ProfileProjectTab', () => {
   })
 
   it('should not display a create project button if not on self profile', async () => {
-    const user = UserFactory.generate()
+    const user = userTranslatedFactory.generate()
     const wrapper = lpiShallowMount(ProfileProjectTab, { props: { user } })
+    const organizationsStore = useOrganizationsStore()
+
+    await flushPromises()
+    expect(wrapper.find('.create-project').exists()).toBe(false)
+
+    user.roles.push(`organization:#${organizationsStore.current.id}:viewers`)
+    usersStore.userFromApi = usersStore.userFromToken = user
 
     await flushPromises()
     expect(wrapper.find('.create-project').exists()).toBe(false)
   })
 
   it('should display a create project button if on self profile and has persimission', async () => {
-    const id = 123
-    const user: any = UserFactory.generate()
-    user.id = id
-
-    usersStore.id = id
+    const user = userTranslatedFactory.generate({ id: 123 })
+    const organizationsStore = useOrganizationsStore()
+    user.roles.push(`organization:#${organizationsStore.current.id}:members`)
+    usersStore.userFromApi = usersStore.userFromToken = user
     const wrapper = lpiShallowMount(ProfileProjectTab, { props: { user } })
 
     await flushPromises()

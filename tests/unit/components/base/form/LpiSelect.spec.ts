@@ -32,7 +32,6 @@ describe('LpiSelect.vue', () => {
 
   it('should emit event on select change', async () => {
     const wrapper = lpiMount(LpiSelect, { props })
-    const vm: any = wrapper.vm
 
     // click on elements options
     wrapper.find<HTMLElement>(`[data-test='options-test']`).element.click()

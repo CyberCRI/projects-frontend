@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { deleteClassificationTag, getOrgClassificationTags } from '~/api/tag-classification.service'
+import {
+  clientAPI,
+  deleteClassificationTag,
+  getOrgClassificationTags,
+} from 'shared-projects-frontend/apis'
 
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
@@ -12,9 +16,8 @@ import EditTagModal from '~/components/admin/EditTagModal.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
-import type { TagClassificationModel } from '~/models/tagclassification.model'
+import type { TagClassificationModel } from 'shared-projects-frontend/models'
 import useTagTexts from '~/composables/useTagTexts'
-import useAPI from '~/composables/useAPI'
 import { debounce } from 'es-toolkit'
 
 const { t } = useNuxtI18n()
@@ -51,13 +54,17 @@ const deleteTag = async () => {
       tagToDelete.value.id
     )
     toaster.pushSuccess(
-      t('admin.classification.tag-delete.success', { tagName: tagToDelete.value.title })
+      t('admin.classification.tag-delete.success', {
+        tagName: tagToDelete.value.title,
+      })
     )
     reloadClassification()
   } catch (e) {
     console.error(e)
     toaster.pushError(
-      t('admin.classification.tag-delete.error', { tagName: tagToDelete.value.title })
+      t('admin.classification.tag-delete.error', {
+        tagName: tagToDelete.value.title,
+      })
     )
   } finally {
     isDeletingTag.value = false
@@ -115,7 +122,11 @@ const getTags = debounce(async function () {
       organizationsStore.current.code,
       props.classification.id,
       {
-        query: { search: search.value, ordering: 'title', limit: props.pageLimit },
+        query: {
+          search: search.value,
+          ordering: 'title',
+          limit: props.pageLimit,
+        },
       }
     )
     request.value = apiReq
@@ -161,7 +172,7 @@ const pagination = computed(() => {
 
 const onClickPagination = async (requestedPage) => {
   isLoading.value = true
-  const tagResults = await useAPI(requestedPage, {})
+  const tagResults = await clientAPI(requestedPage, {})
   request.value = tagResults
   isLoading.value = false
   // const el = document.querySelector('.group-user-selection .search-section')
@@ -243,7 +254,9 @@ watch(() => [props.classification, search.value], getTags, { immediate: true })
     </table>
     <div
       v-if="pagination.total > 1"
-      :style="{ visibility: (!isLoading && pagination.total > 1 && 'visible') || 'hidden' }"
+      :style="{
+        visibility: (!isLoading && pagination.total > 1 && 'visible') || 'hidden',
+      }"
       class="pagination-container"
     >
       <PaginationButtons
@@ -278,8 +291,10 @@ watch(() => [props.classification, search.value], getTags, { immediate: true })
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .classification-title {
-  font-size: $font-size-l;
+  font-size: variables.$font-size-l;
   margin-bottom: 1rem;
   text-align: center;
   justify-content: center;
@@ -319,7 +334,7 @@ strong {
 
   thead,
   tbody tr {
-    border-bottom: $border-width-s solid $mid-gray;
+    border-bottom: variables.$border-width-s solid variables.$mid-gray;
   }
 
   th {
@@ -329,7 +344,7 @@ strong {
 
   td,
   th {
-    padding: $space-m;
+    padding: variables.$space-m;
   }
 
   td.loader-td {
@@ -338,7 +353,7 @@ strong {
 
   .actions {
     display: flex;
-    gap: $space-s;
+    gap: variables.$space-s;
   }
 }
 

@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import { patchProject, postProjectImage } from 'shared-projects-frontend/apis'
 import { defaultProjectForm, useProjectDescriptionForm } from '~/form/project'
 import { refreshProjectData } from '~/composables/project/refreshProject'
-import { getFirstTextNotEmpty, roomKeyFromParams } from '~/functs/tiptap'
-import { patchProject, postProjectImage } from '~/api/projects.service'
+import type { ProviderParams } from 'shared-projects-frontend/interfaces'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
-import type { ProviderParams } from '~/interfaces/colaboratives'
-import type { TranslatedProject } from '~/models/project.model'
+import { roomKeyFromParams } from 'shared-projects-frontend/lib'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import FormPanel from '~/components/base/FormPanel.vue'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import { formEqual } from '~/form/base'
 import { pick } from 'es-toolkit'
 

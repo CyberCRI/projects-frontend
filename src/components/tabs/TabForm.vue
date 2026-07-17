@@ -1,21 +1,23 @@
 <script setup lang="ts">
+import type {
+  TranslatedProject,
+  ProjectTabForm,
+  ProjectTabType,
+  ImageModel,
+} from 'shared-projects-frontend/models'
 import { defaultProjectTabForm, useProjectTabForm } from '~/form/project-tabs'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
+import { createProjectTabImage } from 'shared-projects-frontend/apis'
 import GroupButton from '~/components/base/button/GroupButton.vue'
-import type { ProjectTabForm } from '~/models/projects-tabs.model'
-import { createProjectTabImage } from '~/api/project-tabs.service'
 import IconDrawer from '~/components/drawer/Icon/IconDrawer.vue'
-import type { TranslatedProject } from '~/models/project.model'
 import IconImage from '~/components/base/media/IconImage.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import HelpField from '~/components/base/form/HelpField.vue'
 import type { IconTabImageChoice } from '~/functs/IconImage'
 import FormPanel from '~/components/base/FormPanel.vue'
 import { DEFAULT_ICONS_TABS } from '~/functs/constants'
-import type { ImageModel } from '~/models/image.model'
 import { safeProjectIconTab } from '~/functs/projects'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'
-import type { ProjectTabType } from '~/models/types'
 import { ICONS_TABS } from '~/functs/IconImage'
 import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
@@ -194,6 +196,8 @@ const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .tab-icon {
   display: inline-block;
   width: 3rem;

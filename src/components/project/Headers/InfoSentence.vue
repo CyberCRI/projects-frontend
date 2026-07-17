@@ -71,7 +71,7 @@
 
 <script setup lang="ts">
 // TODO need to change this whole things (wtf components)
-import type { TagModel } from '~/models/tag.model'
+import type { TagModel } from 'shared-projects-frontend/models'
 
 import IconImage from '~/components/base/media/IconImage.vue'
 import TagsList from '~/components/tags/TagsList.vue'
@@ -126,15 +126,17 @@ const iconSrc = computed(() => usePublicURL(props.data.icon || ''))
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .info-sentence {
   display: flex;
   align-items: center;
 
   span,
   a {
-    font-size: $font-size-s;
+    font-size: variables.$font-size-s;
     font-weight: 400;
-    color: $primary-dark;
+    color: variables.$primary-dark;
     align-self: center;
   }
 
@@ -154,7 +156,7 @@ const iconSrc = computed(() => usePublicURL(props.data.icon || ''))
 
   &.black {
     span {
-      color: $black;
+      color: variables.$black;
     }
   }
 
@@ -205,22 +207,22 @@ const iconSrc = computed(() => usePublicURL(props.data.icon || ''))
   }
 
   .icon {
-    margin-right: $space-s;
-    height: pxToRem(25px);
-    fill: $primary-dark;
+    margin-right: variables.$space-s;
+    height: variables.pxtorem(25px);
+    fill: variables.$primary-dark;
   }
 
   .title-badge {
-    background-color: $primary-dark;
+    background-color: variables.$primary-dark;
     color: white;
   }
 
   .badge {
-    margin-right: $space-xs;
+    margin-right: variables.$space-xs;
   }
 }
 
-@media screen and (max-width: $max-mobile) {
+@media screen and (max-width: variables.$max-mobile) {
   .info-sentence {
     flex-direction: column;
     align-items: flex-start;

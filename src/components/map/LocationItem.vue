@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AnyTranslatedLocation } from '~/models/location.model'
+import type { AnyTranslatedLocation } from 'shared-projects-frontend/models'
 
 import LocationType from '~/components/map/LocationType.vue'
 
@@ -66,10 +66,12 @@ const description = computed(() =>
 )
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .location-list-item {
   display: flex;
-  background-color: $primary-lighter;
+  background-color: variables.$primary-lighter;
   border-radius: 0.8rem;
   padding: 0.5em;
   align-items: flex-start;

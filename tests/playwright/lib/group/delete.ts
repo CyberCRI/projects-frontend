@@ -1,6 +1,6 @@
 import { ensureNavPanelIOpened } from '~~/tests/playwright/lib/utils/nav-panel'
 import { LogLevel, Logger } from '~~/tests/playwright/logger'
-import { Page } from '@playwright/test'
+import type { Page } from '@playwright/test'
 
 const logger = new Logger(LogLevel.Debug)
 

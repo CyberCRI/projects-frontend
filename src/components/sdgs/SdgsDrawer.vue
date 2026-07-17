@@ -33,7 +33,9 @@ const props = withDefaults(
   }
 )
 
-const { stateModals, closeModals, openModals } = useModals({ saveChange: false })
+const { stateModals, closeModals, openModals } = useModals({
+  saveChange: false,
+})
 
 const model = defineModel<number[]>()
 const tmpModel = ref([...model.value])

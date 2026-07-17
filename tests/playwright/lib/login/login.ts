@@ -1,6 +1,7 @@
 import { LogLevel, Logger } from '~~/tests/playwright/logger'
-import { Page, expect } from '@playwright/test'
-import { User } from '@sentry/vue'
+import type { Page } from '@playwright/test'
+import { expect } from '@playwright/test'
+import type { User } from '@sentry/vue'
 import { delay } from 'es-toolkit'
 
 const logger = new Logger(LogLevel.Debug)

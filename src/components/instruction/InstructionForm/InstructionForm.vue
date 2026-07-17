@@ -59,8 +59,8 @@
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import { defaultInstructionForm, useInstructionForm } from '~/form/instruction'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import { postOrganizationImage } from '@/api/organizations.service'
-import type { InstructionForm } from '@/models/instruction.model'
+import type { InstructionForm } from 'shared-projects-frontend/models'
+import { postOrganizationImage } from 'shared-projects-frontend/apis'
 import IconImage from '@/components/base/media/IconImage.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import DateField from '@/components/base/form/DateField.vue'
@@ -83,9 +83,13 @@ const defaultLocalForm = () => {
   return newForm
 }
 
-const model = defineModel<InstructionForm>({ default: defaultInstructionForm() })
+const model = defineModel<InstructionForm>({
+  default: defaultInstructionForm,
+})
 
-const { form, isValid, errors, cleanedData, reset } = useInstructionForm({ lazy: true })
+const { form, isValid, errors, cleanedData, reset } = useInstructionForm({
+  lazy: true,
+})
 watch(
   () => props.instruction,
   () => reset(defaultLocalForm()),
@@ -114,25 +118,27 @@ const saveOrganizationImage = (file) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .input-field {
-  margin: $space-l;
-  margin-bottom: $space-xs;
+  margin: variables.$space-l;
+  margin-bottom: variables.$space-xs;
 }
 
 .content-editor {
   flex-grow: 1;
-  min-height: pxToRem(300px);
+  min-height: variables.pxtorem(300px);
 }
 
 .date-preview {
-  margin-left: $space-l;
+  margin-left: variables.$space-l;
   display: inline-block;
   font-size: 1.2rem;
   font-weight: 700;
 }
 
 .img-ctn {
-  margin-bottom: $space-xl;
+  margin-bottom: variables.$space-xl;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -143,19 +149,19 @@ const saveOrganizationImage = (file) => {
 }
 
 .form-section + .form-section {
-  margin-top: $space-xl;
+  margin-top: variables.$space-xl;
 }
 
 label {
   font-size: 0.875rem;
   font-weight: bold;
-  color: $black;
+  color: variables.$black;
   display: block;
 }
 
 label,
 .notice {
-  margin-bottom: $space-l !important;
+  margin-bottom: variables.$space-l !important;
 }
 
 // TODO fix cleanly
@@ -165,21 +171,21 @@ label,
 }
 
 .date-btn {
-  padding: $space-s;
-  background-color: $white;
-  border: $border-width-s solid $primary-dark;
-  border-radius: $border-radius-s;
+  padding: variables.$space-s;
+  background-color: variables.$white;
+  border: variables.$border-width-s solid variables.$primary-dark;
+  border-radius: variables.$border-radius-s;
   vertical-align: middle;
   display: inline-flex;
   align-items: center;
-  gap: $space-m;
-  color: $primary-dark;
+  gap: variables.$space-m;
+  color: variables.$primary-dark;
   font-weight: 700;
   cursor: pointer;
 
   .icon {
-    width: $layout-size-2xl;
-    fill: $primary-dark;
+    width: variables.$layout-size-2xl;
+    fill: variables.$primary-dark;
   }
 }
 </style>

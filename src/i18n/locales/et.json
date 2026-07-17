@@ -1768,7 +1768,8 @@
         "invalid-image": "Toetamata fail peab olema korrektne pilt.",
         "required-image": "Vajalik on fail",
         "required": "Vajalik on fail",
-        "delete": "Kustuta fail"
+        "delete": "Kustuta fail",
+        "delete-image": "Eemalda pilt"
       }
     },
     "link": {
@@ -2421,7 +2422,9 @@
       "reviewed": "On läbi vaadatud",
       "reviewed-sub": "Kui teie projekt on läbivaatamiseks valmis, teavitage sellest, kui teie projekti ülevaataja on oma ülevaate esitanud.",
       "reply": "Vasta oma kommentaarile",
-      "reply-sub": "Andke teada, kui keegi teie kommentaarile vastab"
+      "reply-sub": "Andke teada, kui keegi teie kommentaarile vastab",
+      "announcement-has-new-application": "Teadaannete rakendus",
+      "announcement-has-new-application-sub": "Teatage, kui teated on uue taotluse saanud"
     },
     "follow": {
       "title": "Järgi teatist",

@@ -1,10 +1,10 @@
 import { createFactory } from 'faker-create-factory'
 
-import {
+import type {
   ProjectCategoryCreateInput,
   ProjectCategoryOutput,
   ProjectCategoryPatchInput,
-} from '~/models/project-category.model'
+} from 'shared-projects-frontend/models'
 import { OrganizationOutputFactory } from './organization.factory'
 import TemplateFactory from './template.factory'
 import BaseFactory from './base.factory'

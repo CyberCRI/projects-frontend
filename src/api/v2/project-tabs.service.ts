@@ -1,4 +1,11 @@
-import type { OrganizationModel } from '~/models/organization.model'
+import type {
+  OrganizationModel,
+  ProjectTab,
+  ProjectTabItem,
+  QueryFilterProjectTab,
+  QueryFilterProjectTabItem,
+  ProjectSlugOrId,
+} from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
@@ -9,14 +16,7 @@ import {
   getProjectTab as fetchProjectTab,
   getAllProjectTabItem as fetchAllProjectTabItem,
   getProjectTabItem as fetchProjectTabItem,
-} from '~/api/project-tabs.service'
-import type {
-  ProjectTab,
-  ProjectTabItem,
-  QueryFilterProjectTab,
-  QueryFilterProjectTabItem,
-} from '~/models/projects-tabs.model'
-import type { ProjectSlugOrId } from '~/models/project.model'
+} from 'shared-projects-frontend/apis'
 import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}

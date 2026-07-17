@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { deleteInstruction } from '~/api/instruction.service'
+import { deleteInstruction } from 'shared-projects-frontend/apis'
 
 import EditInstructionDrawer from '~/components/instruction/EditInstructionDrawer/EditInstructionDrawer.vue'
 import BaseListSummaryBlock from '~/components/home/SummaryCards/BaseListSummaryBlock.vue'
@@ -49,7 +49,7 @@ import InstructionItem from '~/components/home/SummaryCards/InstructionItem.vue'
 import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 
-import type { TranslatedInstruction } from '~/models/instruction.model'
+import type { TranslatedInstruction } from 'shared-projects-frontend/models'
 import useToasterStore from '~/stores/useToaster'
 
 withDefaults(

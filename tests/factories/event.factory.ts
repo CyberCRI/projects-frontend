@@ -1,5 +1,5 @@
+import type { EventModel } from 'shared-projects-frontend/models'
 import { createFactory } from 'faker-create-factory'
-import { EventModel } from '~/models/event.model'
 import BaseFactory from './base.factory'
 
 export const EventFactory = createFactory<EventModel>((faker) => ({

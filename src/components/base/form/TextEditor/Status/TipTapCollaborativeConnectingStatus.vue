@@ -42,6 +42,8 @@ const riskAck = ref(false)
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .not-synced {
   padding: 20px;
 

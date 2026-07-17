@@ -133,9 +133,9 @@ import {
   patchUserPicture,
   postUser,
   postUserPicture,
-} from '~/api/people.service'
-import { resetUserPassword } from '~/api/people.service.ts'
-import { getOrgUnits } from '~/api/google.service'
+  getOrgUnits,
+  resetUserPassword,
+} from 'shared-projects-frontend/apis'
 
 import AccountGroupsForm from '~/components/people/Account/AccountGroupsForm.vue'
 import OtherOrgUserCard from '~/components/people/Account/OtherOrgUserCard.vue'
@@ -149,15 +149,15 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import LpiSelect from '~/components/base/form/LpiSelect.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
 
 import {
   imageSizesFormData,
   imageSizesFormDataPost,
   pictureApiToImageSizes,
-} from '~/functs/imageSizesUtils.ts'
-import { VALID_NAME_REGEX } from '~/functs/constants.ts'
+} from '~/functs/imageSizesUtils'
+import { VALID_NAME_REGEX } from '~/functs/constants'
 import { roleI18n } from '~/functs/rolesUtils'
 
 export default {
@@ -348,7 +348,7 @@ export default {
   methods: {
     async resetPassword() {
       try {
-        await resetUserPassword(this.selectedUser.id)
+        await resetUserPassword(this.organization.code, this.selectedUser.id)
         this.toaster.pushSuccess(this.$t('account.password-reset.success'))
       } catch (error) {
         this.toaster.pushError(`${this.$t('account.password-reset.error')} (${error})`)
@@ -486,7 +486,7 @@ export default {
 
           imageSizesFormDataPost(formData, this.form.imageSizes)
 
-          await postUser(formData)
+          await postUser(this.organization.code, formData)
 
           this.toaster.pushSuccess(this.$t('account.create-success'))
         } else {
@@ -539,19 +539,21 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .form-ctn {
-  padding: $space-l 0;
+  padding: variables.$space-l 0;
 
   .label {
     font-weight: 500;
-    font-size: $font-size-m;
-    padding-bottom: $space-m;
+    font-size: variables.$font-size-m;
+    padding-bottom: variables.$space-m;
   }
 
   .role-options-ctn {
     display: inline-flex;
-    margin-top: $space-l;
+    margin-top: variables.$space-l;
   }
 
   .password-btn-ctn {
@@ -573,8 +575,8 @@ export default {
   }
 
   .spacer {
-    margin-top: $space-xl;
-    border-bottom: $border-width-s solid $lighter-gray;
+    margin-top: variables.$space-xl;
+    border-bottom: variables.$border-width-s solid variables.$lighter-gray;
   }
 }
 
@@ -583,48 +585,48 @@ export default {
   width: 100%;
   display: flex;
   justify-content: center;
-  border-top: $border-width-s solid $lighter-gray;
-  color: $primary-dark;
+  border-top: variables.$border-width-s solid variables.$lighter-gray;
+  color: variables.$primary-dark;
   font-weight: 700;
-  padding-top: $space-l;
-  padding-bottom: $space-l;
+  padding-top: variables.$space-l;
+  padding-bottom: variables.$space-l;
   position: sticky;
   bottom: 0;
-  background: $white;
+  background: variables.$white;
 
   button ~ button {
-    margin-left: $space-m;
+    margin-left: variables.$space-m;
     text-transform: capitalize;
   }
 }
 
 .invite-notice,
 .other-org-user-card {
-  margin: $space-l 0;
+  margin: variables.$space-l 0;
 }
 
 .checkbox-item {
-  border: 1px solid $primary-dark;
-  padding: $space-m;
-  margin: $space-s pxToRem(16px) $space-s 0;
-  border-radius: $border-radius-xs;
+  border: 1px solid variables.$primary-dark;
+  padding: variables.$space-m;
+  margin: variables.$space-s variables.pxtorem(16px) variables.$space-s 0;
+  border-radius: variables.$border-radius-xs;
   display: flex;
   align-items: center;
   text-align: right;
   width: max-content;
 
   &:hover {
-    background-color: $primary-lighter;
+    background-color: variables.$primary-lighter;
   }
 
   > label {
     font-weight: 700;
-    font-size: $font-size-m;
-    line-height: $line-height-tight;
-    color: $primary-dark;
+    font-size: variables.$font-size-m;
+    line-height: variables.$line-height-tight;
+    color: variables.$primary-dark;
     margin: 0;
     cursor: pointer;
-    margin-left: $space-s;
+    margin-left: variables.$space-s;
   }
 }
 </style>

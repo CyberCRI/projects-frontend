@@ -1,9 +1,9 @@
-import type { OrganizationModel } from '~/models/organization.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
+import { getNewsfeed as fetchNewsfeed } from 'shared-projects-frontend/apis'
 import type { UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
-import { getNewsfeed as fetchNewsfeed } from '~/api/newsfeed.service'
 
 import { onlyRefs } from '~/functs/onlyRefs'
 

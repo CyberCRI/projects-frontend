@@ -25,14 +25,7 @@ withDefaults(
     size?: string
     simpleText?: boolean
     colors?:
-      | 'primary-light'
-      | 'primary-dark'
-      | 'green'
-      | 'salmon'
-      | 'ok'
-      | 'warning'
-      | 'disabled'
-      | ''
+      'primary-light' | 'primary-dark' | 'green' | 'salmon' | 'ok' | 'warning' | 'disabled' | ''
   }>(),
   {
     iconName: null,
@@ -44,12 +37,14 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .badge {
   display: inline-flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  border-radius: $border-radius-l;
+  border-radius: variables.$border-radius-l;
   box-sizing: content-box;
   white-space: nowrap;
 
@@ -57,7 +52,7 @@ withDefaults(
     background-color: var(--primary-light);
 
     .label {
-      color: $primary-dark;
+      color: variables.$primary-dark;
     }
   }
 
@@ -65,7 +60,7 @@ withDefaults(
     background-color: var(--primary-dark);
 
     .label {
-      color: $white;
+      color: variables.$white;
     }
   }
 
@@ -73,7 +68,7 @@ withDefaults(
     background-color: transparent;
 
     .label {
-      color: $primary-dark;
+      color: variables.$primary-dark;
     }
   }
 
@@ -82,25 +77,25 @@ withDefaults(
     background-color: var(--primary);
 
     .label {
-      color: $black;
+      color: variables.$black;
     }
   }
 
   &.salmon,
   &.warning {
-    background-color: $salmon;
+    background-color: variables.$salmon;
 
     .label {
-      color: $black;
+      color: variables.$black;
     }
   }
 
   &.grey,
   &.disabled {
-    background-color: $almost-white;
+    background-color: variables.$almost-white;
 
     .label {
-      color: $mid-gray;
+      color: variables.$mid-gray;
     }
   }
 
@@ -111,48 +106,48 @@ withDefaults(
   }
 
   &.is-open-tab {
-    border-radius: $border-radius-m $border-radius-m 0 0;
-    background-color: $white;
-    border: $border-width-s solid var(--primary);
-    border-bottom: $border-width-s solid $white;
+    border-radius: variables.$border-radius-m variables.$border-radius-m 0 0;
+    background-color: variables.$white;
+    border: variables.$border-width-s solid var(--primary);
+    border-bottom: variables.$border-width-s solid variables.$white;
     box-sizing: border-box;
   }
 }
 
 .small {
-  font-size: $font-size-2xs;
+  font-size: variables.$font-size-2xs;
 
   > * {
     height: 11px;
-    padding: pxToRem(4px) pxToRem(8px);
+    padding: variables.pxtorem(4px) variables.pxtorem(8px);
   }
 
   &.has-icon {
     .icon-container {
-      padding-right: pxToRem(4px);
+      padding-right: variables.pxtorem(4px);
     }
 
     .label {
-      padding-left: pxToRem(4px);
+      padding-left: variables.pxtorem(4px);
     }
   }
 }
 
 .big {
-  font-size: $font-size-xs;
+  font-size: variables.$font-size-xs;
 
   > * {
     height: 14px;
-    padding: pxToRem(6px) pxToRem(12px);
+    padding: variables.pxtorem(6px) variables.pxtorem(12px);
   }
 
   &.has-icon {
     .icon-container {
-      padding-right: pxToRem(6px);
+      padding-right: variables.pxtorem(6px);
     }
 
     .label {
-      padding-left: pxToRem(6px);
+      padding-left: variables.pxtorem(6px);
     }
   }
 }

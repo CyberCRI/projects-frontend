@@ -6,12 +6,12 @@ import {
   DEFAULT_LANGUAGE,
   DEFAULT_TAB,
   DEFAULT_THEME,
-} from '~/composables/tiptap/extensions/LpiCodeBlock'
+  lowlight,
+} from 'shared-projects-frontend/lib'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
 import GroupButton from '~/components/base/button/GroupButton.vue'
 import LpiSelect from '~/components/base/form/LpiSelect.vue'
 import CodeBlock from '~/components/base/form/CodeBlock.vue'
-import lowlight from '~/functs/lowlight'
 
 const props = defineProps(nodeViewProps)
 const { t } = useNuxtI18n()
@@ -30,8 +30,16 @@ const optionsLanguages = computed(() => {
 const optionsThemes = computed(
   () =>
     [
-      { value: 'light', title: t('multieditor.code.theme.light'), iconName: 'Sun' },
-      { value: 'dark', title: t('multieditor.code.theme.dark'), iconName: 'Moon' },
+      {
+        value: 'light',
+        title: t('multieditor.code.theme.light'),
+        iconName: 'Sun',
+      },
+      {
+        value: 'dark',
+        title: t('multieditor.code.theme.dark'),
+        iconName: 'Moon',
+      },
     ] satisfies GroupOption[]
 )
 
@@ -120,6 +128,8 @@ watch(tab, (neo, old) => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .code-menu-bar {
   display: flex;
   gap: 1rem;

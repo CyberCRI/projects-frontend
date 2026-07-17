@@ -1,12 +1,11 @@
 <script setup lang="ts">
+import type { QueryFilterSearch, TranslatedTag } from 'shared-projects-frontend/models'
 import type { DrawerSearchProps } from '~/components/drawer/BaseDrawerSearch.vue'
 import BaseDrawerSearch from '~/components/drawer/BaseDrawerSearch.vue'
 import CardInlineTag from '~/components/drawer/Tag/CardInlineTag.vue'
 import { factoryPagination } from '~/skeletons/base.skeletons'
-import type { QueryFilterSearch } from '~/models/search.model'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import { tagSkeleton } from '~/skeletons/project.skeletons'
-import type { TranslatedTag } from '~/models/tag.model'
 import { getSearchTag } from '~/api/v2/search.service'
 
 const props = withDefaults(

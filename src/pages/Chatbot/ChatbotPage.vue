@@ -280,7 +280,7 @@ useLpiHead2({
 
         <ContextActionButton action-icon="ChevronDown" @click="scrollToBottom" />
       </div>
-      <a name="chat-conversation-top"></a>
+      <a name="chat-conversation-top" />
       <ClientOnly>
         <div v-if="showConversationList">
           Conversations:
@@ -318,17 +318,19 @@ useLpiHead2({
           @on-component-render="toConversationEnd"
         />
       </ClientOnly>
-      <a name="chat-conversation-bottom"></a>
+      <a name="chat-conversation-bottom" />
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .preview-mode {
   display: flex;
   gap: 1rem;
   justify-content: center;
   text-align: center;
-  color: $salmon;
+  color: variables.$salmon;
 
   svg {
     fill: currentcolor;
@@ -341,7 +343,7 @@ useLpiHead2({
 }
 
 .login-notice {
-  background-color: $primary-lighter;
+  background-color: variables.$primary-lighter;
   padding: 1rem;
   border-radius: 1rem;
   text-align: center;

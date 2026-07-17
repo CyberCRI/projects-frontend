@@ -39,22 +39,24 @@ const toggle = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .filter-wrapper {
-  border-bottom: 1px solid $primary;
+  border-bottom: 1px solid variables.$primary;
 }
 
 .filter-wrapper .header {
   font-weight: 500;
-  font-size: $font-size-s;
-  line-height: $line-height-tight;
+  font-size: variables.$font-size-s;
+  line-height: variables.$line-height-tight;
   display: flex;
   align-items: center;
-  margin-top: pxToRem(16px);
-  color: $almost-black;
+  margin-top: variables.pxtorem(16px);
+  color: variables.$almost-black;
   justify-content: flex-start;
 
   &.empty {
-    margin-bottom: pxToRem(16px);
+    margin-bottom: variables.pxtorem(16px);
   }
 
   &.toggleable {
@@ -70,11 +72,11 @@ const toggle = () => {
 
 .filter-wrapper .body {
   border-top: 0;
-  margin: pxToRem(16px) 0;
+  margin: variables.pxtorem(16px) 0;
 }
 
 .filter-wrapper .body-inner {
-  margin: $space-s 0;
+  margin: variables.$space-s 0;
   overflow-wrap: break-word;
 }
 </style>

@@ -1,4 +1,4 @@
-import { patchUser } from '~/api/people.service'
+import { patchUser } from 'shared-projects-frontend/apis'
 
 import useUsersStore from '~/stores/useUsers'
 

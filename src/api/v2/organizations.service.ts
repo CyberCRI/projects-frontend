@@ -1,10 +1,10 @@
 import {
   getFeaturedProjects as fetchFeaturedProjects,
   getOrganizations as fetchOrganizations,
-} from '@/api/organizations.service'
+} from 'shared-projects-frontend/apis'
+import type { OrganizationModel } from 'shared-projects-frontend/models'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import type { OrganizationModel } from '@/models/organization.model'
-import type { RefOrRaw } from '@/interfaces/utils'
+import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}

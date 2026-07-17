@@ -95,8 +95,7 @@
 import { helpers, required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 
-import type { EventForm } from '~/models/event.model'
-import type { LocationType } from '~/models/types'
+import type { LocationType, EventForm } from 'shared-projects-frontend/models'
 
 import MultiGroupPicker from '~/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
@@ -117,7 +116,7 @@ withDefaults(
   }
 )
 const { t } = useNuxtI18n()
-const model = defineModel<EventForm>({ default: defaultEventForm() })
+const model = defineModel<EventForm>({ default: defaultEventForm })
 const emit = defineEmits<{
   invalid: [boolean]
 }>()
@@ -203,6 +202,8 @@ const updateLocation = (location) => {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .list-container {
   gap: 2rem;
 }

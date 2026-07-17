@@ -10,12 +10,20 @@
         : null
     "
     class="event"
-    :class="{ editable: editable && (canEditEvent || canDeleteEvent), 'scale-hover': !props.is }"
+    :class="{
+      editable: editable && (canEditEvent || canDeleteEvent),
+      'scale-hover': !props.is,
+    }"
   >
     <time class="date skeletons-background" :datetime="displayDate.toISOString()">
       <template v-if="!isToday">
         <span class="month-day">
-          {{ displayDate.toLocaleDateString(locale, { month: 'long', day: '2-digit' }) }}
+          {{
+            displayDate.toLocaleDateString(locale, {
+              month: 'long',
+              day: '2-digit',
+            })
+          }}
         </span>
         <span class="year">
           {{ displayDate.getFullYear() }}
@@ -89,7 +97,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedEventModel } from '~/models/event.model'
+import type { TranslatedEventModel } from 'shared-projects-frontend/models'
 
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 import ContentExpandable from '~/components/base/ContentExpandable.vue'
@@ -99,6 +107,7 @@ import DisplayDate from '~/components/base/DisplayDate.vue'
 
 import { useIntervalNow } from '~/composables/useDate'
 
+import { usePermissionEvent } from '~/composables/usePermissions/useEventPermissions'
 import { dateWithoutHours, sanitizeDate } from '~/functs/date'
 import { html2Text } from '~/functs/tiptap'
 
@@ -131,7 +140,8 @@ const emit = defineEmits<{
   edit: [TranslatedEventModel]
   location: [TranslatedEventModel]
 }>()
-const { canEditEvent, canDeleteEvent } = usePermissions()
+
+const { canEditEvent, canDeleteEvent } = usePermissionEvent(computed(() => props.event.id))
 
 const { locale } = useNuxtI18n()
 
@@ -168,10 +178,12 @@ const editEvent = (event) => emit('edit', event)
 const locationEvent = (event) => emit('location', event)
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .event {
   display: grid;
   grid-template-columns: auto 4fr auto;
-  gap: $space-l;
+  gap: variables.$space-l;
   position: relative;
 
   &.editable {
@@ -186,7 +198,7 @@ const locationEvent = (event) => emit('location', event)
     justify-content: center;
     padding: 0.5rem;
     color: black;
-    border-radius: $border-radius-m;
+    border-radius: variables.$border-radius-m;
     height: fit-content;
 
     .month-day {
@@ -210,8 +222,8 @@ const locationEvent = (event) => emit('location', event)
   vertical-align: middle;
   padding: 0.4rem;
   fill: var(--primary);
-  width: pxToRem(24px);
-  height: pxToRem(24px);
+  width: variables.pxtorem(24px);
+  height: variables.pxtorem(24px);
 }
 
 .title {

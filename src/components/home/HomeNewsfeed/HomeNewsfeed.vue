@@ -34,23 +34,25 @@ const { status, data: newsFeed } = getNewsfeed(organizationCode, {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loading {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: $space-xl;
-  margin-bottom: $space-m;
+  margin-top: variables.$space-xl;
+  margin-bottom: variables.$space-m;
 }
 
 .home-news-container {
   display: flex;
   flex-direction: column;
   place-content: center center;
-  gap: $space-l;
+  gap: variables.$space-l;
 }
 
 .see-all {
-  margin-top: $space-l;
+  margin-top: variables.$space-l;
   display: flex;
   justify-content: center;
 }

@@ -5,7 +5,9 @@ export default function useViewportWidth() {
   const isTablet = ref(false)
   const isDesktop = ref(false)
 
-  onMediaChange('(max-width: 414px)', (matches) => (isMobile.value = matches), { immediate: true })
+  onMediaChange('(max-width: 414px)', (matches) => (isMobile.value = matches), {
+    immediate: true,
+  })
   onMediaChange(
     '(min-width: 414px) and (max-width: 1024px)',
     (matches) => (isTablet.value = matches),

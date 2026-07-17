@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
   fetchEntity: { type: Function, required: true },
   entityTitle: { type: String, required: true },
@@ -40,6 +40,8 @@ load()
   </ConfirmModal>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   display: flex;
   justify-content: center;

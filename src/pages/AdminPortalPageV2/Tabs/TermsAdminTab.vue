@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { patchTermsAndConditions } from '~/api/organizations.service'
+import { patchTermsAndConditions } from 'shared-projects-frontend/apis'
 import { NULL_CONTENT } from '~/functs/constants'
 
 import useOrganizations from '~/stores/useOrganizations'
@@ -89,7 +89,9 @@ const canSave = computed(
     </template>
   </div>
 </template>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   display: flex;
   justify-content: center;
@@ -102,8 +104,8 @@ const canSave = computed(
   margin-bottom: 1rem;
   padding: 1rem;
   text-align: center;
-  background-color: $primary-lighter;
-  border-radius: $border-radius-m;
+  background-color: variables.$primary-lighter;
+  border-radius: variables.$border-radius-m;
 }
 
 .actions {

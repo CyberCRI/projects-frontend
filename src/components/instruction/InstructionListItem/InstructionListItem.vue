@@ -28,12 +28,13 @@
   </NuxtLink>
 </template>
 <script setup lang="ts">
-import type { TranslatedInstruction } from '~/models/instruction.model'
+import type { TranslatedInstruction } from 'shared-projects-frontend/models'
 
+import { usePermissionInstruction } from '~/composables/usePermissions/useInstructionPermissions'
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
 
-defineProps<{ instruction: TranslatedInstruction }>()
+const props = defineProps<{ instruction: TranslatedInstruction }>()
 
 const { t } = useNuxtI18n()
 const emit = defineEmits<{
@@ -41,10 +42,14 @@ const emit = defineEmits<{
   'edit-instruction': [TranslatedInstruction]
 }>()
 
-const { canEditInstruction, canDeleteInstruction } = usePermissions()
+const { canEditInstruction, canDeleteInstruction } = usePermissionInstruction(
+  computed(() => props.instruction.id)
+)
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .instruction-list-item {
   --instruction-dimension: 13rem;
 
@@ -54,7 +59,7 @@ const { canEditInstruction, canDeleteInstruction } = usePermissions()
   gap: 1rem;
   height: var(--instruction-dimension);
   padding: 1rem;
-  border: $border-width-s solid $lighter-gray;
+  border: variables.$border-width-s solid variables.$lighter-gray;
   border-radius: 1rem;
 }
 
@@ -66,7 +71,7 @@ const { canEditInstruction, canDeleteInstruction } = usePermissions()
 }
 
 .instruction-title {
-  font-size: $font-size-xl;
+  font-size: variables.$font-size-xl;
 }
 
 .context-action {
@@ -84,22 +89,22 @@ const { canEditInstruction, canDeleteInstruction } = usePermissions()
   overflow: hidden;
 
   h1 {
-    font-size: $font-size-2xl;
+    font-size: variables.$font-size-2xl;
     font-weight: 700;
   }
 
   h2 {
-    font-size: $font-size-xl;
+    font-size: variables.$font-size-xl;
     font-weight: 500;
   }
 
   h3 {
-    font-size: $font-size-l;
+    font-size: variables.$font-size-l;
     font-weight: 500;
   }
 
   h4 {
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
     font-weight: 500;
   }
 }

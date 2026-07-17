@@ -4,8 +4,10 @@ import type {
   ProjectGroupRoleType,
   ProjectMemberRoleType,
   ProjectTabType,
-} from '~/models/types'
-import type { IconTabImageChoice } from '~/functs/IconImage'
+  PeopleGroupModulesKeys,
+  ProjectModuleExtra,
+} from 'shared-projects-frontend/models'
+import type { IconImageChoice, IconTabImageChoice } from '~/functs/IconImage'
 
 export const RESOURCE_PROJECT_CATEGORY = [
   'inspired-by',
@@ -169,6 +171,7 @@ export const PROJECTS_MEMBERS_ROLES: ProjectMemberRoleType[] = ['owners', 'membe
 export const GROUP_MEMBERS_ROLES: GroupMemberRoleType[] = ['leaders', 'managers', 'members']
 
 export const PROJECT_LOCATIONS_TYPES: LocationType[] = ['address', 'impact', 'team']
+export const GROUP_LOCATIONS_TYPES: LocationType[] = ['address']
 
 // bytes
 export const MAX_FILE_SIZE = Math.round(10 * 1024 * 1024)
@@ -202,7 +205,95 @@ export const DEFAULT_COLOR_TIPTAP = [
 
 // tabs
 
-export const DEFAULT_ICONS_TABS: { [key in ProjectTabType]: IconTabImageChoice } = {
+export const DEFAULT_ICONS_TABS: {
+  [key in ProjectTabType]: IconTabImageChoice
+} = {
   blog: 'NewsLine',
   text: 'Briefcase',
+}
+
+export const PROJECT_MODULE_ICON: {
+  [key in ProjectModuleExtra]: IconImageChoice
+} = {
+  announcements: 'BullhornOutline',
+  blogs: 'NewsLine',
+  goals: 'TimerLine',
+  members: 'Users',
+  similars: 'Briefcase',
+  locations: 'Map',
+  links: 'Paperclip',
+  files: 'Globe',
+  resources: 'Globe',
+  linked_projects: 'LinkRotated',
+  comments: 'ChatBubble',
+  groups: 'PeopleGroup',
+  reviews: 'Feedback',
+  messages: 'ChatBubble',
+  tabs: 'Tab',
+}
+
+export const PROJECT_MODULE_TITLE: { [key in ProjectModuleExtra]: string } = {
+  announcements: 'home.announcements',
+  blogs: 'blog.title',
+  goals: 'goal.goals',
+  members: 'team.team',
+  similars: 'project.similars',
+  locations: 'project.add-to-project.location',
+  files: 'project.files',
+  links: 'project.links',
+
+  resources: 'resource.resources',
+
+  linked_projects: 'project.linked-projects',
+  comments: 'comment.comments',
+  groups: 'project.groups',
+  reviews: 'project.reviews',
+  messages: 'comment.private-exchange.tab',
+  tabs: 'tab.tab.label',
+}
+
+// groups
+export const GROUP_MODULE_ICON: {
+  [key in PeopleGroupModulesKeys]: IconImageChoice
+} = {
+  conferences: 'Article',
+  featured_projects: 'Briefcase',
+  publications: 'Article',
+  members: 'Users',
+  similars: 'PeopleGroup',
+  subgroups: 'nodeTree',
+  locations: 'Map',
+  gallery: 'Gallery',
+  news: 'NewsLine',
+  event: 'Calendar',
+}
+
+export const GROUP_MODULE_TITLE: { [key in PeopleGroupModulesKeys]: string } = {
+  conferences: 'group.conferences',
+  featured_projects: 'group.projects',
+  publications: 'group.publications',
+  members: 'group.members',
+  similars: 'group.similars',
+  subgroups: 'group.subgroups',
+  locations: 'group.locations',
+  gallery: 'gallery.pictures',
+  news: 'group.news',
+  event: 'group.event',
+}
+
+// location
+export const LOCATION_TYPE_ICON: { [key in LocationType]: IconImageChoice } = {
+  impact: 'Sun',
+  team: 'Users',
+  address: 'Home',
+  news: 'NewsLine',
+  event: 'Calendar',
+}
+
+export const LOCATION_TYPE_TITLE: { [key in LocationType]: string } = {
+  impact: 'location.impact',
+  team: 'location.team',
+  address: 'location.address',
+  news: 'location.news',
+  event: 'location.event',
 }

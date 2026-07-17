@@ -37,7 +37,7 @@
 import type {
   PeopleGroupModulesKeys,
   TranslatedPeopleGroupModel,
-} from '@/models/people-group.model'
+} from 'shared-projects-frontend/models'
 
 import GroupDescriptionPreview from '~/components/group/Modules/Extras/GroupDescriptionPreview.vue'
 import GroupDocumentsPreview from '~/components/group/Modules/Documents/GroupDocumentsPreview.vue'
@@ -68,6 +68,8 @@ const modulesRecap = difference(GROUPS_KEYS, IGNORED_KEYS)
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .group-modules-list {
   display: flex;
   flex-direction: column;
@@ -85,7 +87,7 @@ const modulesRecap = difference(GROUPS_KEYS, IGNORED_KEYS)
   grid-template-columns: 1fr;
 }
 
-@media screen and (max-width: $min-desktop) {
+@media screen and (max-width: variables.$min-desktop) {
   .group-infos {
     grid-template-columns: 1fr;
   }

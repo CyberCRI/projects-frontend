@@ -6,7 +6,9 @@ import { useLpiHead2 } from '~/composables/useLpiHead'
 import { factoriesSkeleton } from '~/skeletons/base.skeletons'
 import { groupSkeleton } from '~/skeletons/group.skeletons'
 
-const props = withDefaults(defineProps<{ groupIdOrSlug?: string }>(), { groupIdOrSlug: '' })
+const props = withDefaults(defineProps<{ groupIdOrSlug?: string }>(), {
+  groupIdOrSlug: '',
+})
 const organizationCode = useOrganizationCode()
 
 const { searchFromQuery } = useSearch('groups')
@@ -119,21 +121,23 @@ useLpiHead2({
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .groups-layout {
   .btn-ctn {
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin: $space-2xl 0;
+    margin: variables.$space-2xl 0;
   }
 
   .title-ctn {
     display: inline-flex;
     flex-direction: column;
-    margin-bottom: $space-xl;
+    margin-bottom: variables.$space-xl;
     width: 100%;
 
-    @media screen and (min-width: $min-tablet) {
+    @media screen and (min-width: variables.$min-tablet) {
       flex-direction: row;
     }
   }
@@ -147,14 +151,14 @@ useLpiHead2({
 
 .current-group {
   font-weight: 700;
-  font-size: $font-size-l;
-  color: $primary-dark;
+  font-size: variables.$font-size-l;
+  color: variables.$primary-dark;
   display: inline-flex;
 
   .current-group-skeleton {
-    height: $layout-size-l;
-    border-radius: $border-radius-m;
-    margin-right: $layout-size-s;
+    height: variables.$layout-size-l;
+    border-radius: variables.$border-radius-m;
+    margin-right: variables.$layout-size-s;
   }
 }
 </style>

@@ -60,8 +60,8 @@
 
 <script setup lang="ts">
 import { defaultContactForm, useContactForm } from '@/form/contact'
+import { contactUs } from 'shared-projects-frontend/apis'
 import useToasterStore from '@/stores/useToaster'
-import { contactUs } from '@/api/report.service'
 
 import TextInput from '~/components/base/form/TextInput.vue'
 import Recaptcha from '~/components/base/form/Recaptcha.vue'
@@ -97,7 +97,9 @@ watch(
   { immediate: true }
 )
 
-const { stateModals, closeModals, openModals, closeAllModals } = useModals({ saveChange: false })
+const { stateModals, closeModals, openModals, closeAllModals } = useModals({
+  saveChange: false,
+})
 
 const isFormEqual = computed(() =>
   formEqual(form.value, defaultLocalForm(), { exclude: ['recaptcha'] })

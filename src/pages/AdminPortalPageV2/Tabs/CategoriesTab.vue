@@ -85,7 +85,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {
   createProjectCategory,
   deleteProjectCategory,
@@ -93,7 +93,7 @@ import {
   patchProjectCategory,
   patchProjectCategoryBackground,
   postProjectCategoryBackground,
-} from '~/api/project-categories.service'
+} from 'shared-projects-frontend/apis'
 
 import CategoryAdminElement from '~/components/category/CategoryAdminElement.vue'
 import CategoryDrawer from '~/components/category/CategoryDrawer.vue'
@@ -103,12 +103,12 @@ import LinkButton from '~/components/base/button/LinkButton.vue'
 import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
 
-import useProjectCategories from '~/stores/useProjectCategories.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import useProjectCategories from '~/stores/useProjectCategories'
+import useToasterStore from '~/stores/useToaster'
 
-import useOrganizationCode from '~/composables/useOrganizationCode.ts'
+import useOrganizationCode from '~/composables/useOrganizationCode'
 
-import { imageSizesFormData } from '~/functs/imageSizesUtils.ts'
+import { imageSizesFormData } from '~/functs/imageSizesUtils'
 import { Sortable } from 'sortablejs-vue3'
 import { toRaw } from 'vue'
 
@@ -233,7 +233,9 @@ export default {
               parent: newParentId,
             })
           } else if (index != child.order_index) {
-            return await patchProjectCategory(organizationCode, child.id, { order_index: index })
+            return await patchProjectCategory(organizationCode, child.id, {
+              order_index: index,
+            })
           } else return Promise.resolve()
         })
         // update old parent children if necessary
@@ -321,16 +323,19 @@ export default {
         templates_ids: category.templates.map((el) => el.id),
       }
       delete data.imageSizes
-      let categoryId = category.id
-      if (!categoryId) {
-        const newCategory = await createProjectCategory(organizationCode, data)
-        categoryId = newCategory.id
+
+      if (!this.editedCategory?.id) {
+        this.editedCategory = await createProjectCategory(organizationCode, data)
       } else {
         // edit catgeory
-        await patchProjectCategory(organizationCode, categoryId, data)
+        this.editedCategory = await patchProjectCategory(
+          organizationCode,
+          this.editedCategory.id,
+          data
+        )
       }
       await this.setImage(
-        categoryId,
+        this.editedCategory.id,
         this.editedCategory.background_image,
         category.background_image,
         category.imageSizes
@@ -341,7 +346,9 @@ export default {
         await Promise.all(
           category.children.map(async (child, index) => {
             if (index != child.order_index)
-              return await patchProjectCategory(organizationCode, child.id, { order_index: index })
+              return await patchProjectCategory(organizationCode, child.id, {
+                order_index: index,
+              })
             else return Promise.resolve()
           })
         )
@@ -349,7 +356,7 @@ export default {
         await this.projectCategoriesStore.getAllProjectCategories()
         this.toaster.pushSuccess(this.$t('toasts.category-update.success'))
       } catch (error) {
-        this.toaster.pushError(`${this.$t('toasts.category-update.error')} (${error})`)
+        this.toaster.pushError(this.$t('toasts.category-update.error'))
         console.error(error)
       } finally {
         this.closeCategoryDrawer()
@@ -357,7 +364,10 @@ export default {
     },
 
     goToCategory(category) {
-      this.$router.push({ name: 'Category', params: { slugOrId: category.slug || category.id } })
+      this.$router.push({
+        name: 'Category',
+        params: { slugOrId: category.slug || category.id },
+      })
     },
 
     close() {
@@ -391,17 +401,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .categories-tab {
   .header {
     display: flex;
     align-items: flex-start;
-    gap: $space-2xl;
+    gap: variables.$space-2xl;
 
     .notices {
       flex-basis: 75%;
 
       p + p {
-        margin-top: $space-m;
+        margin-top: variables.$space-m;
       }
     }
 
@@ -413,12 +425,12 @@ export default {
   }
 
   > button {
-    margin: 0 auto $space-l;
+    margin: 0 auto variables.$space-l;
   }
 
   svg {
     width: 24px;
-    fill: $white;
+    fill: variables.$white;
   }
 
   .icon-tip {
@@ -426,7 +438,7 @@ export default {
     height: 1.2em;
     display: inline-block;
     vertical-align: bottom;
-    fill: $primary-dark;
+    fill: variables.$primary-dark;
   }
 
   .categories-container {
@@ -434,9 +446,9 @@ export default {
     width: 30rem;
     display: flex;
     flex-wrap: wrap;
-    gap: $space-l;
+    gap: variables.$space-l;
     justify-content: stretch;
-    padding: $space-m;
+    padding: variables.$space-m;
 
     > ul {
       flex-grow: 1;
@@ -445,7 +457,7 @@ export default {
 }
 
 .category-ghost {
-  background-color: $primary-lighter;
+  background-color: variables.$primary-lighter;
 }
 
 .flip-list-move {

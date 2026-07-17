@@ -134,7 +134,8 @@ watch(open, (neo) => {
         const menuBbox = menu.getBoundingClientRect()
         const wrapperBbox = dropDownRef.value.getBoundingClientRect()
         // round corner if drop down is wider than wrapper plus border radius
-        roundCorner.value = menuBbox.width > wrapperBbox.width + 6 /* $border-radius-s: 6px;*/
+        roundCorner.value =
+          menuBbox.width > wrapperBbox.width + 6 /* variables.$border-radius-s: 6px;*/
         // clamp corner if drop down is wider than wrapper but not enough to have round corner
         clampCorner.value = menuBbox.width > wrapperBbox.width && !roundCorner.value
       }
@@ -162,6 +163,8 @@ const menuAction = (item) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .header-drop-down {
   position: relative;
 
@@ -171,58 +174,58 @@ const menuAction = (item) => {
   }
 
   .caret {
-    margin-left: $space-s;
+    margin-left: variables.$space-s;
   }
 
   .caret svg {
-    fill: $primary-dark;
+    fill: variables.$primary-dark;
     width: 100%;
   }
 
   &.is-open .caret svg {
-    fill: $white;
+    fill: variables.$white;
   }
 
   .drop-down-toggle {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: $space-m $space-l;
+    padding: variables.$space-m variables.$space-l;
     font-weight: 700;
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
     transition: 0.15s all ease-in-out;
     cursor: pointer;
     will-change: transform;
     overflow: hidden;
-    height: pxToRem(56px);
-    color: $primary-dark;
+    height: variables.pxtorem(56px);
+    color: variables.$primary-dark;
     text-transform: uppercase;
-    border-top-left-radius: $border-radius-s;
-    border-top-right-radius: $border-radius-s;
+    border-top-left-radius: variables.$border-radius-s;
+    border-top-right-radius: variables.$border-radius-s;
 
     .icon {
-      fill: $primary-dark;
-      margin-right: $space-s;
-      width: pxToRem(18px);
+      fill: variables.$primary-dark;
+      margin-right: variables.$space-s;
+      width: variables.pxtorem(18px);
 
       &.rounded {
-        fill: $white;
-        background-color: $primary-dark;
-        border-radius: pxToRem(9px);
+        fill: variables.$white;
+        background-color: variables.$primary-dark;
+        border-radius: variables.pxtorem(9px);
       }
     }
   }
 
   &.is-open .drop-down-toggle {
-    background-color: $primary-dark;
-    color: $white;
+    background-color: variables.$primary-dark;
+    color: variables.$white;
 
     .icon {
-      fill: $white;
+      fill: variables.$white;
 
       &.rounded {
-        fill: $primary-dark;
-        background-color: $white;
+        fill: variables.$primary-dark;
+        background-color: variables.$white;
       }
     }
   }
@@ -242,40 +245,40 @@ const menuAction = (item) => {
   }
 
   .drop-down-menu {
-    background-color: $primary-dark;
-    padding-bottom: $border-radius-l;
-    border-bottom-left-radius: $border-radius-l;
-    border-bottom-right-radius: $border-radius-l;
-    max-height: pxToRem(450px);
+    background-color: variables.$primary-dark;
+    padding-bottom: variables.$border-radius-l;
+    border-bottom-left-radius: variables.$border-radius-l;
+    border-bottom-right-radius: variables.$border-radius-l;
+    max-height: variables.pxtorem(450px);
 
     &.round-corner {
-      border-top-left-radius: $border-radius-s;
+      border-top-left-radius: variables.$border-radius-s;
     }
 
     .drop-down-menu-item {
-      padding: 0 $space-l;
+      padding: 0 variables.$space-l;
       position: relative;
 
       .drop-down-menu-item-content {
-        color: $white;
-        padding: $space-m 0;
+        color: variables.$white;
+        padding: variables.$space-m 0;
         font-weight: 700;
-        font-size: $font-size-s;
+        font-size: variables.$font-size-s;
         display: flex;
         align-items: center;
 
         .menu-icon {
           &.left-icon {
-            margin-right: $space-s;
+            margin-right: variables.$space-s;
           }
 
           &.right-icon {
-            margin-left: $space-s;
+            margin-left: variables.$space-s;
           }
 
           svg {
-            width: pxToRem(16px);
-            fill: $white;
+            width: variables.pxtorem(16px);
+            fill: variables.$white;
             transform-origin: right center;
           }
         }
@@ -295,12 +298,12 @@ const menuAction = (item) => {
       &:hover {
         .drop-down-menu-item-content {
           .label {
-            color: $primary-light;
+            color: variables.$primary-light;
             transform: translateZ(0) scaleX(1.1);
           }
 
           svg {
-            fill: $primary-light;
+            fill: variables.$primary-light;
             transform: translateZ(0) scale(1.35);
           }
         }
@@ -320,16 +323,17 @@ const menuAction = (item) => {
       display: none;
       left: 100%;
       top: 5px;
-      background: $primary-dark;
-      border-radius: $border-radius-s $border-radius-s $border-radius-l $border-radius-l;
+      background: variables.$primary-dark;
+      border-radius: variables.$border-radius-s variables.$border-radius-s
+        variables.$border-radius-l variables.$border-radius-l;
       padding-bottom: 21px;
-      color: $white;
+      color: variables.$white;
       overflow-y: auto;
     }
 
     &.has-separator {
       .drop-down-menu-item ~ .drop-down-menu-item {
-        border-top: $border-width-m solid $white;
+        border-top: variables.$border-width-m solid variables.$white;
       }
     }
 
@@ -341,7 +345,7 @@ const menuAction = (item) => {
       margin-left: auto;
       margin-right: auto;
       width: max-content;
-      margin-top: $space-l;
+      margin-top: variables.$space-l;
     }
   }
 }
@@ -372,9 +376,9 @@ const menuAction = (item) => {
     position: absolute;
     left: 0;
     right: 0;
-    height: pxToRem(6px);
-    background-color: $primary-dark;
-    bottom: pxToRem(-6px);
+    height: variables.pxtorem(6px);
+    background-color: variables.$primary-dark;
+    bottom: variables.pxtorem(-6px);
     transform: translateZ(0) scale(0);
     transition: transform 0.15s ease-in-out;
   }

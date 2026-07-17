@@ -9,14 +9,14 @@ import {
   patchGroupHeader,
   postGroup,
   postGroupHeader,
-} from '~/api/groups.service'
+} from 'shared-projects-frontend/apis'
 
-import usePeopleGroupsStore from '~/stores/usePeopleGroups'
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
 import { useLpiHead2 } from '~/composables/useLpiHead'
 
+import { usePermissionGroup } from '~/composables/usePermissions/useGroupPermissions'
 import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { refreshGroupData } from '~/composables/groups/refreshGroup'
 import type { AsyncDataRequestStatus } from 'nuxt/app'
@@ -45,10 +45,12 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'reload-group'])
 const toaster = useToasterStore()
-const peopleGroupsStore = usePeopleGroupsStore()
+const groupData = ref(null)
+
 const organizationCode = useOrganizationCode()
 const usersStore = useUsersStore()
-const { canCreateGroup, canEditGroup } = usePermissions()
+
+const { canCreateGroup, canEditGroup } = usePermissionGroup(computed(() => groupData.value?.id))
 const route = useRoute()
 const router = useRouter()
 const { t } = useNuxtI18n()
@@ -76,7 +78,6 @@ const form = ref({
 const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)
 
 const isSaving = ref(false)
-const groupData = ref(null)
 
 const rules = computed(() => ({
   form: {
@@ -102,6 +103,7 @@ const rules = computed(() => ({
 const v$ = useValidate(rules, { form })
 
 const formIsInvalid = computed(() => v$.value.$invalid)
+
 const isEdit = computed(() => !!props.groupIdOrSlug)
 // use group's org code if availabe
 // to allow edition of groups on the meta portal (PROJ-1032)
@@ -136,9 +138,10 @@ const updateHeader = async (groupId) => {
     !isEqual(form.value.imageSizes, pictureApiToImageSizes(groupData.value?.header_image))
   ) {
     if (
-      !(form.value.header_image instanceof File) &&
-      groupData.value?.header_image?.id != form.value.header_image?.id &&
-      groupData.value?.header_image?.id
+      (!(form.value.header_image instanceof File) &&
+        groupData.value?.header_image?.id != form.value.header_image?.id &&
+        groupData.value?.header_image?.id) ||
+      (form.value.header_image instanceof File && groupData.value?.header_image?.id)
     ) {
       await deleteGroupHeader(orgCode.value, groupId, groupData.value.header_image.id)
     }
@@ -207,6 +210,7 @@ const createGroup = async () => {
     const payload = buildPayload()
 
     const newGroup = await postGroup(orgCode.value, payload)
+    groupData.value = newGroup
     const newGroupId = newGroup.slug || newGroup.id
 
     // save header
@@ -221,10 +225,13 @@ const createGroup = async () => {
     router.push(
       props.postCreateRouteFactory
         ? props.postCreateRouteFactory(newGroup.slug || newGroup.id)
-        : { name: 'Group', params: { groupIdOrSlug: newGroup.slug || newGroup.id } }
+        : {
+            name: 'Group',
+            params: { groupIdOrSlug: newGroup.slug || newGroup.id },
+          }
     )
   } catch (error) {
-    toaster.pushError(`${t('toasts.group-create.error')} (${error})`)
+    toaster.pushError(t('toasts.group-create.error'))
     console.error(error)
   } finally {
     isSaving.value = false
@@ -284,7 +291,6 @@ const status = ref<AsyncDataRequestStatus>('pending')
 onBeforeMount(async () => {
   stopEditWatcher()
   if (!props.groupIdOrSlug) {
-    peopleGroupsStore.currentId = null
     // check right to create (if no grouip id passed) or edit (if group id passed)
     // and 404 if not allowed
     if (!canCreateGroup.value) {
@@ -296,8 +302,8 @@ onBeforeMount(async () => {
     // general data
     try {
       const originalGroupData = await getGroup(orgCode.value, props.groupIdOrSlug)
-      // now we can get the real id (not slug)
-      peopleGroupsStore.currentId = originalGroupData.id
+      groupData.value = originalGroupData
+
       if (!canEditGroup.value) {
         router.push({
           name: 'Group',
@@ -306,7 +312,6 @@ onBeforeMount(async () => {
         return
       }
 
-      groupData.value = originalGroupData
       form.value.name = originalGroupData.name
       form.value.description = originalGroupData.description
       form.value.short_description = originalGroupData.short_description
@@ -388,6 +393,8 @@ useLpiHead2({
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .create-group {
   width: 100%;
   box-sizing: border-box;
@@ -397,30 +404,30 @@ useLpiHead2({
 }
 
 .header {
-  margin-top: pxToRem(110px);
-  margin-bottom: $space-xl;
+  margin-top: variables.pxtorem(110px);
+  margin-bottom: variables.$space-xl;
 
   h1 {
-    font-size: $font-size-5xl;
+    font-size: variables.$font-size-5xl;
     font-weight: 700;
     text-align: center;
   }
 
   p {
-    font-size: $font-size-m;
-    margin: $space-xl 0;
+    font-size: variables.$font-size-m;
+    margin: variables.$space-xl 0;
   }
 
   .help-link {
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 }
 
 .actions {
   display: flex;
   justify-content: center;
-  gap: $space-xl;
-  margin-top: $space-m;
-  margin-bottom: $space-xl;
+  gap: variables.$space-xl;
+  margin-top: variables.$space-m;
+  margin-bottom: variables.$space-xl;
 }
 </style>

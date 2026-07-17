@@ -88,10 +88,12 @@ const submit = () => {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .modal-footer {
   display: flex;
-  gap: $space-l;
+  gap: variables.$space-l;
 }
 
 .modal-body {

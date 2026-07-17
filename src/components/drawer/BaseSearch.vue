@@ -70,6 +70,8 @@ const onDelete = () => (search.value = '')
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .results {
   margin-top: 1rem;
 }

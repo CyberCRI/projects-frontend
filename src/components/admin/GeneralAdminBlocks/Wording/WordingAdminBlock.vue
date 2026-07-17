@@ -64,9 +64,11 @@ const reloadOrganization = () => {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .sub-container {
   position: relative;
-  padding: $space-m 0;
+  padding: variables.$space-m 0;
 
   &::after {
     content: '';
@@ -75,15 +77,15 @@ const reloadOrganization = () => {
     left: 0;
     width: 6rem;
     height: 1px;
-    border-bottom: $border-width-s solid $lighter-gray;
+    border-bottom: variables.$border-width-s solid variables.$lighter-gray;
   }
 
   .sub-title,
   .sub-field {
-    font-size: $font-size-m;
-    color: $black;
+    font-size: variables.$font-size-m;
+    color: variables.$black;
     font-weight: normal;
-    margin: $space-m 0;
+    margin: variables.$space-m 0;
   }
 
   .sub-title {

@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedUserModel } from '~/models/user.model'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import useUsersStore from '~/stores/useUsers'
 
 const props = defineProps<{
@@ -50,8 +50,10 @@ const noDescription = computed(() => (isCurrentUser.value ? t('me.no-bio') : t('
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .empty-field {
-  color: $mid-gray;
+  color: variables.$mid-gray;
   font-weight: 700;
 }
 
@@ -62,31 +64,31 @@ const noDescription = computed(() => (isCurrentUser.value ? t('me.no-bio') : t('
 }
 
 .subtitle {
-  font-size: $font-size-l;
+  font-size: variables.$font-size-l;
   font-weight: 700;
-  color: $primary-dark;
+  color: variables.$primary-dark;
 }
 
 .user-descriptions {
-  padding: $space-l;
+  padding: variables.$space-l;
   padding-left: 0;
 
   &.limited {
-    @media all and (min-width: $max-tablet) {
-      border: $border-width-s solid $primary;
-      border-radius: $border-radius-l;
+    @media all and (min-width: variables.$max-tablet) {
+      border: variables.$border-width-s solid variables.$primary;
+      border-radius: variables.$border-radius-l;
     }
   }
 
   .description-content {
-    margin-bottom: $space-l;
+    margin-bottom: variables.$space-l;
   }
 
   :deep(.title) {
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
     font-weight: 700;
-    color: $primary-dark;
-    margin-bottom: $space-l;
+    color: variables.$primary-dark;
+    margin-bottom: variables.$space-l;
   }
 }
 </style>

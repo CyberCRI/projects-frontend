@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends AnyLocation">
 import type { MarkerDynamicInfo } from '@/components/map/MarkerLocationsDynamic.vue'
-import type { AnyLocation } from '@/models/location.model'
+import type { AnyLocation } from 'shared-projects-frontend/models'
 
 const props = withDefaults(
   defineProps<{
@@ -46,6 +46,8 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .suggestion-info {
   text-align: center;
   display: flex;

@@ -1,19 +1,21 @@
 <script setup lang="ts">
-import { addProjectMembers, deleteProjectMembers } from '~/api/project-members.service'
+import type {
+  TranslatedPeopleGroupModel,
+  ProjectGroupRoleType,
+  TranslatedProject,
+} from 'shared-projects-frontend/models'
+import { addProjectMembers, deleteProjectMembers } from 'shared-projects-frontend/apis'
 import GroupSelectDrawer from '~/components/drawer/Group/GroupSelectDrawer.vue'
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
 import CardInlineGroup from '~/components/drawer/Group/CardInlineGroup.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import RolesDrawer from '~/components/drawer/Role/RolesDrawer.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
-import type { TranslatedProject } from '@/models/project.model'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { groupSkeleton } from '~/skeletons/group.skeletons'
 import { getProjectGroups } from '~/api/v2/project.service'
-import type { ProjectGroupRoleType } from '~/models/types'
 import CardEditor from '~/components/base/CardEditor.vue'
 import { PROJECTS_GROUP_ROLES } from '~/functs/constants'
 import GroupCard from '~/components/group/GroupCard.vue'
@@ -226,6 +228,8 @@ const onDeleteConfirm = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .teams {
   display: flex;
   flex-direction: column;

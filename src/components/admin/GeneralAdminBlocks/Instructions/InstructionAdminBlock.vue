@@ -41,9 +41,9 @@
 
 <script setup lang="ts">
 import { instructionSkeleton } from '~/skeletons/instructions.skeletons'
+import { deleteInstruction } from 'shared-projects-frontend/apis'
 import { getAllInstructions } from '@/api/v2/instruction.service'
 import { factoryPagination } from '~/skeletons/base.skeletons'
-import { deleteInstruction } from '@/api/instruction.service'
 import { defaultInstructionForm } from '@/form/instruction'
 import useToasterStore from '@/stores/useToaster'
 

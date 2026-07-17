@@ -4,13 +4,12 @@ import GroupButton from '@/components/base/button/GroupButton.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 
-import { createProjectGoal, patchProjectGoal } from '@/api/goals.service'
+import type { TranslatedProject, GoalModel } from 'shared-projects-frontend/models'
+import { createProjectGoal, patchProjectGoal } from 'shared-projects-frontend/apis'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
-import type { TranslatedProject } from '@/models/project.model'
 import DateField from '@/components/base/form/DateField.vue'
 import { defaultGoalForm, useGoalForm } from '@/form/goal'
 import { getFirstTextNotEmpty } from '@/functs/tiptap'
-import type { GoalModel } from '@/models/goal.model'
 import { fullYearDateFormat } from '@/functs/date'
 import useToasterStore from '@/stores/useToaster'
 import { formEqual } from '~/form/base'
@@ -63,9 +62,13 @@ const defaultLocalForm = () => {
   return newForm
 }
 
-const { stateModals, closeModals, openModals } = useModals({ saveChange: false })
+const { stateModals, closeModals, openModals } = useModals({
+  saveChange: false,
+})
 
-const { form, isValid, errors, cleanedData, reset } = useGoalForm({ lazy: true })
+const { form, isValid, errors, cleanedData, reset } = useGoalForm({
+  lazy: true,
+})
 watch(
   () => [props.goal, props.isOpened, props.project],
   () => reset(defaultLocalForm()),

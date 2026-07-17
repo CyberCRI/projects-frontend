@@ -1,10 +1,14 @@
-import { getProjectMessages as fetchgProjectMessages } from '@/api/project-messages.service'
+import type {
+  QueryFilterComments,
+  OrganizationModel,
+  ProjectSlugOrId,
+} from 'shared-projects-frontend/models'
+import {
+  getProjectMessages as fetchgProjectMessages,
+  getComments,
+} from 'shared-projects-frontend/apis'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import type { OrganizationModel } from '@/models/organization.model'
-import type { QueryFilterComments } from '@/models/comment.model'
-import type { ProjectSlugOrId } from '@/models/project.model'
-import { getComments } from '@/api/comments.service'
-import type { RefOrRaw } from '@/interfaces/utils'
+import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}

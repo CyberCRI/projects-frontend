@@ -1,22 +1,24 @@
+@use '~/design/scss/variables';
+
 .form-group,
 .form-actions {
   & ~ .form-group,
   & ~ .form-actions {
-    padding-top: $space-l;
+    padding-top: variables.$space-l;
   }
 }
 
 .form-separator {
-  margin-top: $space-l;
+  margin-top: variables.$space-l;
   padding: 0;
-  border: $border-width-s solid $lighter-gray;
+  border: variables.$border-width-s solid variables.$lighter-gray;
 }
 
 .form-actions {
   display: flex;
   justify-content: center;
-  padding-bottom: $space-l;
-  gap: $space-m;
+  padding-bottom: variables.$space-l;
+  gap: variables.$space-m;
 }
 
 .form-group {
@@ -28,27 +30,27 @@
 
   label {
     display: inline-block;
-    font-size: $font-size-s;
+    font-size: variables.$font-size-s;
     font-weight: bold;
-    margin-bottom: $space-m;
-    color: $black;
+    margin-bottom: variables.$space-m;
+    color: variables.$black;
 
     &.large-space {
-      margin-bottom: $space-l;
+      margin-bottom: variables.$space-l;
     }
   }
 
   .editor {
-    margin-top: $space-m;
+    margin-top: variables.$space-m;
   }
 
   .notice {
-    margin-bottom: $space-m;
+    margin-bottom: variables.$space-m;
   }
 }
 
 .error-message {
-  color: $red;
-  margin-top: $space-xs;
-  font-size: $font-size-s;
+  color: variables.$red;
+  margin-top: variables.$space-xs;
+  font-size: variables.$font-size-s;
 }

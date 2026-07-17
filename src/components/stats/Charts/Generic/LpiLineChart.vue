@@ -27,13 +27,15 @@ const { lineChartProps } = useLineChart({
   options: props.options,
 })
 
-onResize(
-  debounce(() => {
-    // Adapt chart's size to window
-    useLineChart({
-      chartData: props.chartData,
-      options: props.options,
-    })
-  }, 300)
-)
+const debounceInit = debounce(() => {
+  // Adapt chart's size to window
+  useLineChart({
+    chartData: props.chartData,
+    options: props.options,
+  })
+}, 300)
+
+onResize(debounceInit)
+
+onUnmounted(() => debounceInit.cancel())
 </script>

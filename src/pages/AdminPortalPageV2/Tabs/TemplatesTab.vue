@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { deleteTemplate } from '~/api/templates.service'
+import { deleteTemplate } from 'shared-projects-frontend/apis'
 
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import AdminList from '~/components/admin/AdminListItem.vue'
@@ -69,10 +69,12 @@ const confirmDelete = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .list {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-l;
+  gap: variables.$space-l;
   justify-content: stretch;
 
   ul {

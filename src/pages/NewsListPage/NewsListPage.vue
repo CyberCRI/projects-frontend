@@ -23,7 +23,7 @@
           v-for="news in allNews"
           :key="news.title"
           :news="news"
-          :editable="editable"
+          editable
           @edit="onEdit"
           @delete="onDelete"
         />
@@ -35,7 +35,7 @@
     <EditNewsDrawer
       :is-opened="stateModals.edit"
       :news="selectedNews"
-      @news-edited="refresh"
+      @news-edited="() => refresh()"
       @close="onCancel"
     />
 
@@ -52,10 +52,10 @@
 </template>
 
 <script setup lang="ts">
-import type { QueryFilterNews } from '~/models/news.model'
+import type { QueryFilterNews } from 'shared-projects-frontend/models'
 
+import { deleteNews } from 'shared-projects-frontend/apis'
 import { getAllNews } from '~/api/v2/news.service'
-import { deleteNews } from '~/api/news.service'
 
 import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
 import EditNewsDrawer from '~/components/news/EditNewsDrawer/EditNewsDrawer.vue'
@@ -65,6 +65,7 @@ import NewsItem from '~/components/news/NewsItem.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
+import { usePermissionNews } from '~/composables/usePermissions/useNewsPermissions'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import { newsSkeleton } from '~/skeletons/news.skeletons'
 
@@ -72,8 +73,7 @@ const organizationCode = useOrganizationCode()
 const asyncingDelete = ref(false)
 const toaster = useToasterStore()
 const { t } = useNuxtI18n()
-const { canEditNews, canDeleteNews, canCreateNews } = usePermissions()
-const editable = computed(() => canEditNews.value || canDeleteNews.value)
+
 const selectedNews = ref()
 
 const { query } = useQuery<QueryFilterNews>({
@@ -93,7 +93,12 @@ const {
   default: () => factoryPagination(newsSkeleton, LIMIT),
 })
 
-const { stateModals, openModals, closeModals } = useModals({ edit: false, delete: false })
+const { canCreateNews } = usePermissionNews(null)
+
+const { stateModals, openModals, closeModals } = useModals({
+  edit: false,
+  delete: false,
+})
 
 const onEdit = (news) => {
   selectedNews.value = news
@@ -131,8 +136,10 @@ useLpiHead2({
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .page-title {
-  margin-bottom: $space-2xl;
+  margin-bottom: variables.$space-2xl;
 }
 
 .create-news-button-ctn {

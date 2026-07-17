@@ -1,10 +1,12 @@
 <script setup>
-import useUsersStore from '@/stores/useUsers.ts'
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
+import useUsersStore from '@/stores/useUsers'
 // import { shuffle } from 'es-toolkit'
 import analytics from '@/analytics'
 import 'deep-chat'
 
 const { isAdmin } = usePermissions()
+
 const { t } = useI18n()
 const router = useRouter()
 const props = defineProps({
@@ -510,6 +512,8 @@ async function exportConversation() {
   />
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .action-bar {
   display: flex;
   justify-content: flex-end;

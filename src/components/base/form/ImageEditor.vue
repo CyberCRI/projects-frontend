@@ -5,15 +5,15 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import { usePublicURL } from '~/composables/usePublic'
 
-import { fileToImageModel, type ImageSizeConverted } from '~/functs/imageSizesUtils'
-import type { ImageModel, ImageVariations } from '~/models/image.model'
-import { getFileFromURL } from '~/api/utils.service'
+import type { ImageModel, ImageSize, ImageVariations } from 'shared-projects-frontend/models'
+import { fileToImageModel } from '~/functs/imageSizesUtils'
+import { getFileFromURL } from '~/api/utils'
 
 const { t } = useNuxtI18n()
 
 const props = withDefaults(
   defineProps<{
-    imageSizes?: ImageSizeConverted
+    imageSizes?: ImageSize
     picture?: File | ImageModel
     defaultPicture: string | string[]
     pictureAlt?: string
@@ -44,7 +44,7 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'update:imageSizes': [ImageSizeConverted]
+  'update:imageSizes': [ImageSize]
   'update:picture': [File | null]
 }>()
 
@@ -108,7 +108,6 @@ const saveImageSizes = () => {
 const nextDefaultPicture = async () => {
   if (defaultPictureURL.value.length) {
     defaultPictureIndex.value = (defaultPictureIndex.value + 1) % defaultPictureURL.value.length
-    console.log(defaultPictureIndex.value, defaultPictureURL.value[defaultPictureIndex.value])
     setImage(await getFileFromURL(defaultPictureURL.value[defaultPictureIndex.value]))
   }
 }
@@ -155,7 +154,7 @@ const nextDefaultPicture = async () => {
       <LpiButton
         v-if="picture && !disableDelete"
         btn-icon="TrashCanOutline"
-        :label="$t('resource.file.form.delete')"
+        :label="$t('resource.file.form.delete-image')"
         @click.prevent="onDelete"
       />
 
@@ -192,11 +191,13 @@ const nextDefaultPicture = async () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .img-inner {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: $space-m;
+  gap: variables.$space-m;
 
   .img-preview,
   .img-actions {
@@ -207,13 +208,13 @@ const nextDefaultPicture = async () => {
   .img-actions {
     display: flex;
     flex-flow: column;
-    gap: $space-m;
+    gap: variables.$space-m;
     justify-content: center;
     align-items: flex-start;
   }
 
   .img-preview {
-    border: $border-width-s solid var(--primary);
+    border: variables.$border-width-s solid var(--primary);
     background-color: var(--white);
     overflow: hidden;
   }

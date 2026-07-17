@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { patchTemplate, postTemplateImage } from '~/api/templates.service'
+import { patchTemplate, postTemplateImage } from 'shared-projects-frontend/apis'
 
 import TemplateForm from '~/components/templates/TemplateForm.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'
@@ -54,6 +54,8 @@ const saveImageTemplate = (file) => postTemplateImage(organizationCode, template
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .form-actions {
   display: flex;
   justify-content: center;

@@ -20,13 +20,15 @@ defineProps<{ category: any }>()
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .drop-down-menu-item {
   position: relative;
 
   .drop-down-menu-item-content {
-    color: $primary-dark;
-    padding: $space-m $space-s;
-    font-size: $font-size-s;
+    color: variables.$primary-dark;
+    padding: variables.$space-m variables.$space-s;
+    font-size: variables.$font-size-s;
     display: flex;
     align-items: center;
     font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
@@ -35,12 +37,12 @@ defineProps<{ category: any }>()
       transform-origin: left center;
       transition: transform 200ms ease-in-out;
       font-weight: 400;
-      font-size: $font-size-m;
+      font-size: variables.$font-size-m;
       transform: translateZ(0);
     }
 
     &:hover {
-      background-color: $primary-light;
+      background-color: variables.$primary-light;
 
       .label {
         transform: translateZ(0) scaleX(1.1);

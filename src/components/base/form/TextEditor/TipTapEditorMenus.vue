@@ -2,9 +2,9 @@
 import EditorModalVideo from './Custom/Video/EditorModalVideo.vue'
 import EditorModalImage from './Custom/Image/EditorModalImage.vue'
 import EditorModalColor from './Custom/Color/EditorModalColor.vue'
+import type { ImageModel } from 'shared-projects-frontend/models'
 import EditorModalLink from './Custom/Link/EditorModalLink.vue'
 import type { PropsDefinitions } from '~/composables/tiptap'
-import type { ImageModel } from '~/models/image.model'
 import type { Editor } from '@tiptap/vue-3'
 
 withDefaults(
@@ -78,14 +78,16 @@ const { stateModals, closeModals, openAndCloseAll } = useModals({
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .editor-header {
-  background: $white;
-  color: $primary-dark;
+  background: variables.$white;
+  color: variables.$primary-dark;
   display: flex;
   padding: 5px 20px;
   width: 100%;
   justify-content: space-between;
-  border-bottom: $border-width-s solid $primary;
+  border-bottom: variables.$border-width-s solid variables.$primary;
   box-sizing: border-box;
 
   .icons {
@@ -93,7 +95,7 @@ const { stateModals, closeModals, openAndCloseAll } = useModals({
     display: flex;
 
     .menu-item {
-      color: $primary-dark;
+      color: variables.$primary-dark;
     }
   }
 }

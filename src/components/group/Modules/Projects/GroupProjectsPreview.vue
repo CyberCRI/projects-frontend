@@ -1,9 +1,9 @@
 <template>
   <BaseGroupPreview
     id="featured_projects"
-    :title="$t(GroupModuleTitle.featured_projects, group.modules.featured_projects)"
+    :title="$t(GROUP_MODULE_TITLE.featured_projects, group.modules.featured_projects)"
     :total="group.modules.featured_projects"
-    :icon="GroupModuleIcon.featured_projects"
+    :icon="GROUP_MODULE_ICON.featured_projects"
     :see-more="{
       name: 'groupProjects',
       params: { groupIdOrSlug: group.slug || group.id },
@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 import BaseGroupProjectsList from '@/components/group/Modules/Projects/BaseGroupProjectsList.vue'
-import { GroupModuleIcon, GroupModuleTitle } from '@/models/people-group.model'
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
+import { GROUP_MODULE_ICON, GROUP_MODULE_TITLE } from '~/functs/constants'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 
 defineProps<{
@@ -27,6 +27,8 @@ defineProps<{
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .project-list {
   display: flex;
   flex-direction: column;

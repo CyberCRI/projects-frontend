@@ -2,7 +2,7 @@
   <BaseGroupPreview
     id="similars"
     ref="similars"
-    :title="$t(GroupModuleTitle.similars, group.modules.similars)"
+    :title="$t(GROUP_MODULE_TITLE.similars, group.modules.similars)"
     :total="group.modules.similars"
   >
     <template #header>
@@ -31,14 +31,14 @@
 
 <script setup lang="ts">
 import GroupSimilarDrawer from '@/components/group/Modules/Extras/GroupSimilarDrawer.vue'
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 import { maxSkeleton, factoryPagination } from '@/skeletons/base.skeletons'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
-import { GroupModuleTitle } from '@/models/people-group.model'
 import { groupSkeleton } from '@/skeletons/group.skeletons'
 import GroupCard from '@/components/group/GroupCard.vue'
 import { getGroupSimilar } from '@/api/v2/group.service'
+import { GROUP_MODULE_TITLE } from '~/functs/constants'
 import { onMediaChange } from '@/composables/onResize'
 
 const props = withDefaults(defineProps<{ group: TranslatedPeopleGroupModel; limit?: number }>(), {
@@ -82,6 +82,8 @@ onMediaChange(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .group-similars {
   .group-similars-list {
     display: flex;
@@ -97,7 +99,7 @@ onMediaChange(
   }
 }
 
-@media screen and (min-width: $min-desktop) {
+@media screen and (min-width: variables.$min-desktop) {
   #similars:not(:only-child) {
     .see-more-btn {
       padding: 0 !important;

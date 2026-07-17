@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 defineProps({ document: { type: Object, required: true } })
 const model = defineModel({ type: Object, required: true })
 </script>
@@ -10,6 +10,8 @@ const model = defineModel({ type: Object, required: true })
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .agent-document-picker {
   display: flex;
   align-items: center;

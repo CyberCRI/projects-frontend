@@ -1,4 +1,4 @@
-import type { ProjectMessageForm } from '~/models/project-message.model'
+import type { ProjectMessageForm } from 'shared-projects-frontend/models'
 import { NULL_CONTENT } from '~/functs/constants'
 import { helpers } from '@vuelidate/validators'
 import { requiredContent } from '~/form/base'
@@ -20,5 +20,9 @@ export const useProjectMessageForm = (options = {}) => {
     },
   }))
 
-  return useForm<ProjectMessageForm>({ default: defaultProjectMessageForm(), rules, ...options })
+  return useForm<ProjectMessageForm>({
+    default: defaultProjectMessageForm(),
+    rules,
+    ...options,
+  })
 }

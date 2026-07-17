@@ -208,7 +208,10 @@ export default {
       ),
       showExtraTags: false,
       straightCorner: false,
-      onResizeLayoutTagsBis: debounce(this.layoutTagsBis, 42, { leading: false, trailing: true }),
+      onResizeLayoutTagsBis: debounce(this.layoutTagsBis, 42, {
+        leading: false,
+        trailing: true,
+      }),
     }
   },
 
@@ -363,6 +366,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .wrapper {
   position: relative;
   height: 1.5rem; // must be taller thatn tag-elt, see BadgeItem.vue, or will break layoutTagsBis()
@@ -371,25 +376,25 @@ export default {
     margin: 0;
     display: flex;
     flex-wrap: nowrap;
-    gap: $space-xs;
+    gap: variables.$space-xs;
     height: 1.5rem; // must be taller thatn tag-elt, see BadgeItem.vue, or will break layoutTagsBis()
   }
 }
 
 .extra-tags {
-  margin-top: -$border-width-s;
+  margin-top: -(variables.$border-width-s);
   position: absolute;
   top: 100%;
   right: 0;
   left: 0;
-  background-color: $white;
-  border: $border-width-s solid var(--primary);
-  border-radius: $border-radius-m;
-  padding: $space-m;
+  background-color: variables.$white;
+  border: variables.$border-width-s solid var(--primary);
+  border-radius: variables.$border-radius-m;
+  padding: variables.$space-m;
   z-index: 1;
   display: flex;
   flex-wrap: wrap;
-  gap: $space-s;
+  gap: variables.$space-s;
   width: min-content;
 
   &.straight-corner {

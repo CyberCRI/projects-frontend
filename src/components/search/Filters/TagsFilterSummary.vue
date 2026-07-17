@@ -7,9 +7,9 @@
 
 <script setup lang="ts">
 import CurrentTags from '~/components/search/FilterTags/CurrentTags.vue'
-import type { TagModel } from '~/models/tag.model'
+import type { TagModel } from 'shared-projects-frontend/models'
 
-const model = defineModel<TagModel[]>({ default: [] })
+const model = defineModel<TagModel[]>({ default: () => [] })
 
 const removeTag = (tag) => {
   model.value = model.value.filter((element) => element.id !== tag.id)

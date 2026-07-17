@@ -16,15 +16,17 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProject } from '@/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 
 defineProps<{
   project: TranslatedProject
 }>()
 </script>
 
-<style scoped lang="scss">
-$sdg-size: pxToRem(38px);
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
+$sdg-size: variables.pxtorem(38px);
 
 .sdg-link {
   width: $sdg-size;
@@ -45,8 +47,8 @@ $sdg-size: pxToRem(38px);
 .sdg-list {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-xs;
-  row-gap: $space-m;
+  gap: variables.$space-xs;
+  row-gap: variables.$space-m;
 }
 
 .sdg-enter-active,

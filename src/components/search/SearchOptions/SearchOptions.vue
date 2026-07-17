@@ -91,9 +91,11 @@ defineExpose({ clearSelectedFilters })
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .search-block {
   margin: 0;
-  padding: $space-m 0;
+  padding: variables.$space-m 0;
   width: 100%;
   flex-grow: 1;
 }
@@ -110,7 +112,7 @@ defineExpose({ clearSelectedFilters })
     flex-direction: column;
     align-items: center;
 
-    @media (min-width: $min-tablet) {
+    @media (min-width: variables.$min-tablet) {
       flex-direction: row;
       width: 100%;
       justify-content: center;
@@ -119,14 +121,14 @@ defineExpose({ clearSelectedFilters })
 }
 
 .search-input {
-  margin-bottom: $space-m;
-  width: pxToRem(600px); // drop is 250px so 350 + 250 = 600
+  margin-bottom: variables.$space-m;
+  width: variables.pxtorem(600px); // drop is 250px so 350 + 250 = 600
 
-  @media (max-width: $min-tablet) {
+  @media (max-width: variables.$min-tablet) {
     width: 100%;
   }
 
-  @media (min-width: $min-tablet) {
+  @media (min-width: variables.$min-tablet) {
     margin-bottom: 0;
   }
 }

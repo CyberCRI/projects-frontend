@@ -94,20 +94,22 @@ const removeColor = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .button-delete {
-  color: $white;
-  background: $salmon;
+  color: variables.$white;
+  background: variables.$salmon;
 }
 
 .inter-title {
   text-align: center;
-  margin-bottom: $space-m;
-  margin-top: $space-xl;
+  margin-bottom: variables.$space-m;
+  margin-top: variables.$space-xl;
 }
 
 .swatches {
   display: flex;
-  gap: $space-m;
+  gap: variables.$space-m;
   justify-content: center;
 }
 
@@ -120,8 +122,8 @@ const removeColor = () => {
 .swatch,
 [type='color'] {
   display: inline-block;
-  width: $layout-size-3xl;
-  height: $layout-size-3xl;
+  width: variables.$layout-size-3xl;
+  height: variables.$layout-size-3xl;
   border: 2px solid transparent;
   background: none;
   padding: 2px;

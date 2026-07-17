@@ -58,6 +58,8 @@ const toggle = () => emit('toggled', props.sdgId)
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 /* We use box-shadow to mimic borders
 ** so when a filter is selected
 ** the other do not move due the pixel diff
@@ -65,18 +67,18 @@ const toggle = () => emit('toggled', props.sdgId)
 
 .sdg {
   display: inline-block;
-  width: pxToRem(96px);
-  height: pxToRem(96px);
-  border-radius: $border-radius-xs;
+  width: variables.pxtorem(96px);
+  height: variables.pxtorem(96px);
+  border-radius: variables.$border-radius-xs;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
   cursor: pointer;
-  box-shadow: 0 0 0 $border-width-l $primary-dark;
+  box-shadow: 0 0 0 variables.$border-width-l variables.$primary-dark;
   position: relative;
 
   &.short {
-    border-radius: $border-radius-l;
+    border-radius: variables.$border-radius-l;
   }
 
   .img {
@@ -93,14 +95,14 @@ const toggle = () => emit('toggled', props.sdgId)
 
   .check-icon {
     position: absolute;
-    width: pxToRem(20px);
-    height: pxToRem(20px);
+    width: variables.pxtorem(20px);
+    height: variables.pxtorem(20px);
     top: -14px;
     right: 8px;
-    fill: $primary-dark;
+    fill: variables.$primary-dark;
     background: white;
-    border: $border-width-s solid $primary-dark;
-    border-radius: $border-radius-50;
+    border: variables.$border-width-s solid variables.$primary-dark;
+    border-radius: variables.$border-radius-50;
   }
 }
 </style>

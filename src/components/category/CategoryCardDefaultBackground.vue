@@ -863,6 +863,8 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .category-card-image .category-card-svg {
   display: block;
 }

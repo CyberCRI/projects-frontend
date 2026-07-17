@@ -1,4 +1,4 @@
-import type { AnyProject } from '~/models/project.model'
+import type { AnyProject } from 'shared-projects-frontend/models'
 import followUtils from '~/functs/followUtils'
 import useUsersStore from '~/stores/useUsers'
 

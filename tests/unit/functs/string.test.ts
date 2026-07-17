@@ -1,7 +1,7 @@
 import { cropIfTooLong } from '~/functs/string'
 import { describe, expect, it } from 'vitest'
 
-describe('string.ts', () => {
+describe('string', () => {
   it('cropIfTooLong', () => {
     expect(cropIfTooLong(undefined, 5)).toEqual('')
     expect(cropIfTooLong(null, 5)).toEqual('')

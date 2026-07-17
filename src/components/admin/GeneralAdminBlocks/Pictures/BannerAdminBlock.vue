@@ -19,7 +19,7 @@ import {
   postOrganisationBanner,
   patchOrganisationBanner,
   deleteOrganisationBanner,
-} from '@/api/organizations.service'
+} from 'shared-projects-frontend/apis'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils'
 import { DEFAULT_IMAGE_PATATOID } from '@/composables/usePatatoids'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
@@ -60,27 +60,23 @@ const setBanner = async (file) => {
 }
 
 const resizeBanner = async (imageSizes) => {
-  if (!imageSizes) return
+  if (!imageSizes || isEqual(imageSizes, pictureApiToImageSizes(organization.value.banner_image)))
+    return
 
-  if (!isEqual(imageSizes, pictureApiToImageSizes(organization.value.banner_image))) {
-    const formData = new FormData()
-    imageSizesFormData(formData, imageSizes)
-    try {
-      if (organization.value.banner_image?.id) {
-        await patchOrganisationBanner(
-          organizationCode,
-          organization.value.banner_image.id,
-          formData
-        )
-      }
-      toaster.pushSuccess(t('admin.portal.general.banner-edit.success'))
+  const formData = new FormData()
+  imageSizesFormData(formData, imageSizes)
 
-      await organizationsStore.getCurrentOrganization(organizationCode)
-    } catch (error) {
-      console.error(error)
-
-      toaster.pushError(t('admin.portal.general.banner-edit.error'))
+  try {
+    if (organization.value.banner_image?.id) {
+      await patchOrganisationBanner(organizationCode, organization.value.banner_image.id, formData)
     }
+    toaster.pushSuccess(t('admin.portal.general.banner-edit.success'))
+
+    await organizationsStore.getCurrentOrganization(organizationCode)
+  } catch (error) {
+    console.error(error)
+
+    toaster.pushError(t('admin.portal.general.banner-edit.error'))
   }
 }
 </script>

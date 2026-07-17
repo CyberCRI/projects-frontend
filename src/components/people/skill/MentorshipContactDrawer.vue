@@ -59,13 +59,13 @@
 </template>
 
 <script setup lang="ts">
-import { askMentorship, offerMentorship } from '@/api/mentorship.service'
+import { askMentorship, offerMentorship } from 'shared-projects-frontend/apis'
+import type { SkillModel } from 'shared-projects-frontend/models'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { email, helpers, required } from '@vuelidate/validators'
 import TextInput from '@/components/base/form/TextInput.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { defaultMentoringForm } from '@/form/mentorship'
-import type { SkillModel } from '@/models/skill.model'
 import useToasterStore from '@/stores/useToaster'
 import useUsersStore from '@/stores/useUsers'
 import useValidate from '@vuelidate/core'
@@ -161,22 +161,24 @@ const confirm = async () => {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .title {
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
   font-weight: bold;
-  margin: $space-m 0;
+  margin: variables.$space-m 0;
 }
 
 .save-button {
-  margin: $space-l 0;
+  margin: variables.$space-l 0;
 }
 
 .form-input {
-  margin-bottom: $space-l;
+  margin-bottom: variables.$space-l;
 }
 
 .notice {
-  margin: $space-m 0;
+  margin: variables.$space-m 0;
 }
 </style>

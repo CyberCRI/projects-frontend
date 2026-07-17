@@ -2,22 +2,20 @@ import CompleteProfileStep1 from '~/components/people/CompleteProfileDrawer/Comp
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import useUsersStore from '~/stores/useUsers'
-import pinia from '~/stores'
 
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { UserFactory } from '~~/tests/factories/user.factory'
+import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('CompleteProfileStep1.vue', () => {
   let wrapper
   let defaultParams
 
   beforeEach(() => {
-    const usersStore = useUsersStore(pinia)
-    usersStore.$patch({
-      id: 123,
-      userFromApi: {},
-      permissions: {},
-      getUser: vi.fn(),
-    } as any)
+    const usersStore = useUsersStore()
+    const user = UserFactory.generate({ id: 123 })
+    registerEndpoint(`user/${user.id}/`, () => user)
+    usersStore.userFromApi = usersStore.userFromToken = user
     defaultParams = {}
   })
   it('should render component', () => {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BaseProjectFiles from '~/components/project/modules/Resources/BaseProjectFiles.vue'
 import BaseProjectLink from '~/components/project/modules/Resources/BaseProjectLink.vue'
-import type { TranslatedProject } from '@/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 
 withDefaults(
   defineProps<{

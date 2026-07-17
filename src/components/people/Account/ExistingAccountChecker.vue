@@ -39,9 +39,9 @@
 import { email as emailValidator, helpers, required } from '@vuelidate/validators'
 import useValidate from '@vuelidate/core'
 
-import type { UserModel } from '~/models/user.model'
+import type { UserModel } from 'shared-projects-frontend/models'
 
-import { searchPeopleByExactMail } from '~/api/people.service'
+import { searchPeopleByExactMail } from 'shared-projects-frontend/apis'
 
 import AccountFormTitleBlock from '~/components/people/Account/AccountFormTitleBlock.vue'
 import FieldErrors from '~/components/base/form/FieldErrors.vue'
@@ -96,17 +96,19 @@ const searchUser = async () => {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .account-layout {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   margin: 0 auto;
-  width: pxToRem(500px);
+  width: variables.pxtorem(500px);
 }
 
 .input-field {
-  padding: $space-2xs 0;
+  padding: variables.$space-2xs 0;
 }
 
 .footer {
@@ -114,16 +116,16 @@ const searchUser = async () => {
   width: 100%;
   display: flex;
   justify-content: center;
-  color: $primary-dark;
+  color: variables.$primary-dark;
   font-weight: 700;
-  padding-top: $space-l;
-  padding-bottom: $space-l;
+  padding-top: variables.$space-l;
+  padding-bottom: variables.$space-l;
   position: sticky;
   bottom: 0;
-  background: $white;
+  background: variables.$white;
 
   button ~ button {
-    margin-left: $space-m;
+    margin-left: variables.$space-m;
     text-transform: capitalize;
   }
 }

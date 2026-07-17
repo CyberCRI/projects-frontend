@@ -97,7 +97,7 @@ import ImageInput from '~/components/base/form/ImageInput.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import useToasterStore from '~/stores/useToaster.ts'
+import useToasterStore from '~/stores/useToaster'
 
 import { removePrefix } from '~/functs/utils'
 import analytics from '~/analytics'
@@ -412,12 +412,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .resource-modal {
-  padding: $space-l;
+  padding: variables.$space-l;
 
   .text-input {
     padding: 0;
-    padding-bottom: $space-xs;
+    padding-bottom: variables.$space-xs;
   }
 
   .select-resource {
@@ -427,7 +429,7 @@ export default {
     align-items: stretch;
 
     .button-select {
-      margin: $space-l;
+      margin: variables.$space-l;
     }
   }
 }

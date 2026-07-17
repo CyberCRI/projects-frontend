@@ -1,9 +1,9 @@
 import addGoalsSectionFactory from '~/composables/project-pdf-components/addGoalsSectionFactory'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
-import type { TranslatedProject } from '~/models/project.model'
+import { getProjectGoals } from 'shared-projects-frontend/apis'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
-import { getProjectGoals } from '~/api/goals.service'
 
 export default async function addGoalsSection(project: TranslatedProject) {
   const { t } = useNuxtI18n()

@@ -38,13 +38,15 @@ withDefaults(
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .menu-item {
   color: var(--primary-dark);
   border: none;
   background-color: transparent;
-  border-radius: $border-radius-s;
-  padding: pxToRem(4px);
-  margin-right: $space-2xs;
+  border-radius: variables.$border-radius-s;
+  padding: variables.pxtorem(4px);
+  margin-right: variables.$space-2xs;
   height: 1.75rem;
   width: auto;
 

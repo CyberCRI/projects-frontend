@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageModel } from '~/models/image.model'
+import type { ImageModel } from 'shared-projects-frontend/models'
 
 import GalleryItem from '~/components/base/gallery/GalleryItem.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
@@ -131,9 +131,11 @@ const next = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .gallery-switch {
   display: grid;
-  grid-template-columns: pxToRem(40px) 1fr pxToRem(40px);
+  grid-template-columns: variables.pxtorem(40px) 1fr variables.pxtorem(40px);
   margin: 0 auto;
   width: 100%;
   height: calc(100% - 64px);

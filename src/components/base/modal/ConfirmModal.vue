@@ -50,6 +50,8 @@ defineEmits<{
 const attrs = useAttrs()
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .confirm-modal {
   position: absolute;
 }

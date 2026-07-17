@@ -1,10 +1,13 @@
 <template>
   <BaseGroupPreview
     id="members"
-    :title="$t(GroupModuleTitle.members, group.modules.members)"
+    :title="$t(GROUP_MODULE_TITLE.members, group.modules.members)"
     :total="group.modules.members"
-    :icon="GroupModuleIcon.members"
-    :see-more="{ name: 'groupMembers', params: { groupIdOrSlug: group.slug || group.id } }"
+    :icon="GROUP_MODULE_ICON.members"
+    :see-more="{
+      name: 'groupMembers',
+      params: { groupIdOrSlug: group.slug || group.id },
+    }"
   >
     <template #content>
       <BaseGroupMembersList
@@ -20,8 +23,8 @@
 
 <script setup lang="ts">
 import BaseGroupMembersList from '@/components/group/Modules/Members/BaseGroupMembersList.vue'
-import { GroupModuleIcon, GroupModuleTitle } from '@/models/people-group.model'
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
+import { GROUP_MODULE_ICON, GROUP_MODULE_TITLE } from '~/functs/constants'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 
 defineProps<{

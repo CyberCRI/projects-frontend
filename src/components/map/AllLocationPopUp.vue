@@ -1,18 +1,20 @@
 <script setup lang="ts">
+import type {
+  TranslatedPeopleGroupModel,
+  TranslatedEventModel,
+  TranslatedProject,
+  LocationGeneral,
+  TranslatedNews,
+} from 'shared-projects-frontend/models'
 import ProjectLocationPopUp from '~/components/project/modules/Locations/ProjectLocationPopUp.vue'
 import GroupLocationPopUp from '@/components/group/Map/GroupLocationPopUp.vue'
 import LocationEventPopUp from '@/components/event/map/LocationEventPopUp.vue'
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
 import LocationNewsPopUp from '@/components/news/map/LocationNewsPopUp.vue'
-import type { TranslatedEventModel } from '@/models/event.model'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
-import type { TranslatedProject } from '@/models/project.model'
 import LocationPopUp from '@/components/map/LocationPopUp.vue'
 import { groupSkeleton } from '@/skeletons/group.skeletons'
 import { eventSkeleton } from '@/skeletons/event.skeletons'
 import { newsSkeleton } from '@/skeletons/news.skeletons'
-import type { TranslatedNews } from '@/models/news.model'
-import type { LocationGeneral } from '@/interfaces/maps'
 import { getProject } from '@/api/v2/projects.service'
 import { getGroup } from '@/api/v2/group.service'
 import { getEvent } from '@/api/v2/event.service'

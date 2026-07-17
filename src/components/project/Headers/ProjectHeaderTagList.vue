@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProject } from '@/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import TagsList from '@/components/tags/TagsList.vue'
 
 defineProps<{
@@ -23,12 +23,14 @@ defineProps<{
 }>()
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .tag-ctn-skeleton {
   margin: 0;
   display: flex;
   flex-wrap: nowrap;
-  gap: $space-2xs;
+  gap: variables.$space-2xs;
   overflow: hidden;
 }
 </style>

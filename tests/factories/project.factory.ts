@@ -1,28 +1,23 @@
 import { createFactory } from 'faker-create-factory'
 
-import {
+import type {
   LinkedProject,
   ProjectModel,
   ProjectOutput,
   TranslatedProject,
-} from '~/models/project.model'
+} from 'shared-projects-frontend/models'
 import { ProjectCategoryOutputFactory } from './project-category.factory'
-import { ProjectTeamOutputFactory } from './project-member.factory'
 import { OrganizationOutputFactory } from './organization.factory'
 import { AttachmentLinkFactory } from './attachment-link.factory'
 import { AttachmentFileFactory } from './attachment-file.factory'
 import { TemplateFactory } from './template.factory'
 import BlogEntryFactory from './blog-entry.factory'
-import { CommentFactory } from './comment.factory'
 import LocationFactory from './location.factory'
-import locationFactory from './location.factory'
 import { ReviewFactory } from './review.factory'
 import { ImageFactory } from './image.factory'
 import { GoalFactory } from './goal.factory'
 import { BaseFactory } from './base.factory'
 import TagFactory from './tag.factory'
-import SdgFactory from './sdg.factory'
-import { fa } from 'zod/v4/locales'
 
 export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   ...BaseFactory.generate(),
@@ -36,7 +31,7 @@ export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   is_shareable: faker.datatype.boolean(),
   purpose: faker.lorem.sentence(),
   language: 'fr',
-  locations: locationFactory.generateMany(2),
+  locations: LocationFactory.generateMany(2),
   publication_status: 'public',
   life_status: 'running',
   reviews: ReviewFactory.generateMany(2),

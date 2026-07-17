@@ -2,32 +2,34 @@ import type {
   TranslatedEventLocation,
   TranslatedLocation,
   TranslatedNewsLocation,
-} from '@/models/location.model'
-import type {
   GeneralLocationPeopleGroup,
   TranslatedPeopleGroupModel,
-} from '@/models/people-group.model'
-import type { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
-import type { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
-import type { TranslatedProjectTab, TranslatedProjectTabItem } from '~/models/projects-tabs.model'
-import type { TranslatedLinkedProject, TranslatedProject } from '@/models/project.model'
-import type { TranslatedProjectCategory } from '~/models/project-category.model'
-import type { TranslatedProjectMessage } from '@/models/project-message.model'
-import type { TranslatedOrganizationModel } from '@/models/organization.model'
-import type { TranslatedAnnouncement } from '@/models/announcement.model'
-import type { TranslatedInstruction } from '@/models/instruction.model'
-import type { TranslatedBlogEntry } from '@/models/blog-entry.model'
-import type { TranslatedTemplate } from '~/models/template.model'
-import type { TranslatedNewsfeed } from '@/models/newsfeed.model'
-import type { TranslatedDocument } from '@/interfaces/researcher'
-import type { TranslatedEventModel } from '@/models/event.model'
-import type { TranslatedComment } from '@/models/comment.model'
-import type { TranslatedUserModel } from '@/models/user.model'
-import type { TranslatedReview } from '~/models/review.model'
+  AttachmentLinkModel,
+  TranslatedAttachmentLink,
+  AttachmentFileModel,
+  TranslatedAttachmentFile,
+  TranslatedProjectTab,
+  TranslatedProjectTabItem,
+  TranslatedLinkedProject,
+  TranslatedProject,
+  TranslatedProjectCategory,
+  TranslatedProjectMessage,
+  TranslatedOrganizationModel,
+  TranslatedAnnouncement,
+  TranslatedInstruction,
+  TranslatedBlogEntry,
+  TranslatedTemplate,
+  TranslatedNewsfeed,
+  TranslatedResearcherDocument,
+  TranslatedEventModel,
+  TranslatedComment,
+  TranslatedUserModel,
+  TranslatedReview,
+  TranslatedNews,
+  TranslatedGoal,
+  TranslatedTag,
+} from 'shared-projects-frontend/models'
 import type { TranslatedAgent } from '~/models/agent.model'
-import type { TranslatedNews } from '@/models/news.model'
-import type { TranslatedGoal } from '@/models/goal.model'
-import type { TranslatedTag } from '~/models/tag.model'
 import type { RefOrRaw } from '~/interfaces/utils'
 
 export default function useAutoTranslate() {
@@ -394,9 +396,9 @@ export default function useAutoTranslate() {
   */
 
   const translateResearcherDocument = (data) =>
-    translateEntity<TranslatedDocument>(data, ['title', 'description'])
+    translateEntity<TranslatedResearcherDocument>(data, ['title', 'description'])
   const translateResearcherDocuments = (datas) =>
-    translateEntities<TranslatedDocument>(datas, translateResearcherDocument)
+    translateEntities<TranslatedResearcherDocument>(datas, translateResearcherDocument)
 
   /*
     project tabs

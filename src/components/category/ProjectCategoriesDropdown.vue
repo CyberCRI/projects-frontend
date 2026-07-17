@@ -47,6 +47,8 @@ defineExpose({ close })
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .project-categories-dropdown {
   position: relative;
 
@@ -57,26 +59,26 @@ defineExpose({ close })
 }
 
 .categories {
-  border: 1px solid $lighter-gray;
-  border-radius: $border-radius-s;
-  height: pxToRem(50px);
+  border: 1px solid variables.$lighter-gray;
+  border-radius: variables.$border-radius-s;
+  height: variables.pxtorem(50px);
   display: flex;
   justify-content: space-between;
-  padding-inline: $space-m;
+  padding-inline: variables.$space-m;
   align-items: center;
   width: 100%;
   background-color: transparent;
 
   .categories-btn {
-    color: $primary-dark;
-    font-size: $font-size-m;
+    color: variables.$primary-dark;
+    font-size: variables.$font-size-m;
     font-weight: 700;
   }
 
   .caret {
-    margin-left: $space-l;
-    fill: $primary-dark;
-    width: pxToRem(20px);
+    margin-left: variables.$space-l;
+    fill: variables.$primary-dark;
+    width: variables.pxtorem(20px);
   }
 }
 
@@ -121,14 +123,14 @@ defineExpose({ close })
 }
 
 .drop-down-menu {
-  background-color: $white;
+  background-color: variables.$white;
   border-width: 0 1px 1px;
   border-style: solid;
-  border-color: $lighter-gray;
-  border-bottom-left-radius: $border-radius-xs;
-  border-bottom-right-radius: $border-radius-xs;
-  max-height: pxToRem(450px);
-  padding: $space-s $space-xs;
+  border-color: variables.$lighter-gray;
+  border-bottom-left-radius: variables.$border-radius-xs;
+  border-bottom-right-radius: variables.$border-radius-xs;
+  max-height: variables.pxtorem(450px);
+  padding: variables.$space-s variables.$space-xs;
   transition: 0.15s all ease-in-out;
   cursor: pointer;
   will-change: transform;

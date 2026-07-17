@@ -1,4 +1,4 @@
-import type { BlogEntryForm } from '~/models/blog-entry.model'
+import type { BlogEntryForm } from 'shared-projects-frontend/models'
 import { helpers, required } from '@vuelidate/validators'
 import { NULL_CONTENT } from '~/functs/constants'
 import { requiredContent } from '~/form/base'
@@ -24,5 +24,9 @@ export const useBlogEntryForm = (options = {}) => {
     },
   }))
 
-  return useForm<BlogEntryForm>({ default: defaultBlogForm(), rules, ...options })
+  return useForm<BlogEntryForm>({
+    default: defaultBlogForm(),
+    rules,
+    ...options,
+  })
 }

@@ -5,8 +5,6 @@ import useKeycloak from '~/api/auth/keycloak'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useProjectsStore from '~/stores/useProjects'
 
-import useAPI from '~/composables/useAPI'
-
 import { useRuntimeConfig } from '#imports'
 
 // TODO fix this in uxt sever side (windows is undefined)
@@ -32,12 +30,18 @@ const DASHBOARD_URL = import.meta.client
  *  that asks for a new accessToken before it is expired.
  */
 
+export const redirect = (url: string) => {
+  window.location.href = url
+}
+
 export async function goToKeycloakLoginPage(): Promise<void> {
   const keycloak = useKeycloak()
   const runtimeConfig = useRuntimeConfig()
   const organizationsStore = useOrganizationsStore()
+
   keycloak.codeVerifier.generate()
   keycloak.appSecret.generate()
+
   const currentUrl = new URL(keycloak.getCurrentUrl())
   const url = new URL(
     `${runtimeConfig.public.appKeycloakUrl}/realms/${
@@ -70,7 +74,7 @@ export async function goToKeycloakLoginPage(): Promise<void> {
     })
   )
 
-  window.location.href = url.href
+  redirect(url.href)
 }
 
 function cleanUpKeycloak() {
@@ -122,22 +126,26 @@ export function logoutFromKeycloak(): void {
   const runtimeConfig = useRuntimeConfig()
   const redirectUri = getLogoutRedirectUri()
   cleanUpKeycloak()
-  window.location.href = `${runtimeConfig.public.appKeycloakUrl}/realms/${
-    runtimeConfig.public.appKeycloakRealm
-  }/protocol/openid-connect/logout?post_logout_redirect_uri=${redirectUri}&id_token_hint=${localStorage.getItem(
-    'ID_TOKEN'
-  )}`
+  redirect(
+    `${runtimeConfig.public.appKeycloakUrl}/realms/${
+      runtimeConfig.public.appKeycloakRealm
+    }/protocol/openid-connect/logout?post_logout_redirect_uri=${redirectUri}&id_token_hint=${localStorage.getItem(
+      'ID_TOKEN'
+    )}`
+  )
 }
 
 export function logoutFromKeycloakWithError(): void {
   const runtimeConfig = useRuntimeConfig()
   const redirectUri = getLogoutRedirectUri()
   cleanUpKeycloak()
-  window.location.href = `${runtimeConfig.public.appKeycloakUrl}/realms/${
-    runtimeConfig.public.appKeycloakRealm
-  }/protocol/openid-connect/logout?post_logout_redirect_uri=${redirectUri}&id_token_hint=${localStorage.getItem(
-    'ID_TOKEN'
-  )}&login-error=true`
+  redirect(
+    `${runtimeConfig.public.appKeycloakUrl}/realms/${
+      runtimeConfig.public.appKeycloakRealm
+    }/protocol/openid-connect/logout?post_logout_redirect_uri=${redirectUri}&id_token_hint=${localStorage.getItem(
+      'ID_TOKEN'
+    )}&login-error=true`
+  )
 }
 
 export async function refreshAccessToken(): Promise<any> {
@@ -146,8 +154,7 @@ export async function refreshAccessToken(): Promise<any> {
   const as = await keycloak.as.get()
   const client = keycloak.client.get()
   const response = await oauth.refreshTokenGrantRequest(as, client, token.replace('JWT' + ' ', ''))
-  const result: oauth.TokenEndpointResponse | oauth.OAuth2Error =
-    await oauth.processRefreshTokenResponse(as, client, response)
+  const result = await oauth.processRefreshTokenResponse(as, client, response)
   const payload = await keycloak.processKeycloakResponse(result)
   return {
     expires_in: payload.expires_in,
@@ -157,14 +164,4 @@ export async function refreshAccessToken(): Promise<any> {
     parsedToken: { ...payload.parsedToken },
     id_token: payload.id_token,
   }
-}
-
-export async function getNotifications(id) {
-  // TODO: should getNotificationsSetting
-  return await useAPI(`notifications-setting/${id}/`, {})
-}
-
-export async function patchNotifications({ id, payload }) {
-  // TODO: should patchNotificationsSetting
-  return await useAPI(`notifications-setting/${id}/`, { body: payload, method: 'PATCH' })
 }

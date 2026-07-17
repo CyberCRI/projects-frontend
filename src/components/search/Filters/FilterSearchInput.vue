@@ -20,18 +20,20 @@ defineEmits<{ enter: [] }>()
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .filter-search-input-ctn {
   position: relative;
   cursor: pointer;
   width: 100%;
 
   .search-input {
-    background: $white;
-    border: $border-width-s solid $light-gray;
-    border-radius: $border-radius-xs;
-    color: $black;
-    padding: $space-s;
-    font-size: $font-size-m;
+    background: variables.$white;
+    border: variables.$border-width-s solid variables.$light-gray;
+    border-radius: variables.$border-radius-xs;
+    color: variables.$black;
+    padding: variables.$space-s;
+    font-size: variables.$font-size-m;
     width: 100%;
     box-sizing: border-box;
 
@@ -41,7 +43,7 @@ defineEmits<{ enter: [] }>()
     }
 
     &::placeholder {
-      color: $light-gray;
+      color: variables.$light-gray;
     }
   }
 }

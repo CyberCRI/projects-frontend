@@ -1,11 +1,10 @@
 <script setup lang="ts">
+import type { TranslatedPeopleGroupModel, QueryFilterSearch } from 'shared-projects-frontend/models'
 import type { DrawerSearchProps } from '~/components/drawer/BaseDrawerSearch.vue'
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
 import CardInlineGroup from '~/components/drawer/Group/CardInlineGroup.vue'
 import BaseDrawerSearch from '~/components/drawer/BaseDrawerSearch.vue'
 import { searchGroupSkeleton } from '~/skeletons/search.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
-import type { QueryFilterSearch } from '~/models/search.model'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import { getSearchGroup } from '~/api/v2/search.service'
 

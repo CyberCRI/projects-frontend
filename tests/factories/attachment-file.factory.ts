@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { AttachmentFileModel } from '~/models/attachment-file.model'
+import type { AttachmentFileModel } from 'shared-projects-frontend/models'
 import BaseFactory from './base.factory'
 
 export const AttachmentFileFactory = createFactory<AttachmentFileModel>((faker) => ({

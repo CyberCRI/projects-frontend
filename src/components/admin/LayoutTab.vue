@@ -29,6 +29,8 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .layout-tab {
   .title {
     font-style: normal;
@@ -42,7 +44,7 @@ withDefaults(
   .header {
     display: flex;
     align-items: end;
-    gap: $space-2xl;
+    gap: variables.$space-2xl;
 
     .notices:not(:only-child) {
       flex-basis: 75%;
@@ -50,7 +52,7 @@ withDefaults(
 
     .notices {
       p + p {
-        margin-top: $space-m;
+        margin-top: variables.$space-m;
       }
     }
 
@@ -62,12 +64,12 @@ withDefaults(
   }
 
   > button {
-    margin: 0 auto $space-l;
+    margin: 0 auto variables.$space-l;
   }
 
   svg {
     width: 24px;
-    fill: $white;
+    fill: variables.$white;
   }
 
   .icon-tip {
@@ -75,16 +77,16 @@ withDefaults(
     height: 1.2em;
     display: inline-block;
     vertical-align: bottom;
-    fill: $primary-dark;
+    fill: variables.$primary-dark;
   }
 }
 
 .layout-container {
   margin: 0 auto;
-  padding: $space-m;
+  padding: variables.$space-m;
 }
 
-@media screen and (max-width: $min-desktop) {
+@media screen and (max-width: variables.$min-desktop) {
   .header {
     flex-direction: column;
   }

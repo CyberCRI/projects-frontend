@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type UserPresenceCard from '~/components/base/form/TextEditor/Utils/UserPresenceCard.vue'
-import type { CollaborativeUser } from '~/interfaces/tiptap'
+import type { CollaborativeUser } from 'shared-projects-frontend/interfaces'
 import type { WebSocketStatus } from '@hocuspocus/provider'
 
 defineProps<{
@@ -27,16 +27,18 @@ defineProps<{
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .editor-socket {
   align-items: center;
-  background: $primary-lighter;
+  background: variables.$primary-lighter;
   display: flex;
   justify-content: space-between;
 }
 
 .editor-status {
   align-items: center;
-  color: $white;
+  color: variables.$white;
   display: flex;
   justify-content: space-between;
   padding: 5px 20px;

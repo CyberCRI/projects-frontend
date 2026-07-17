@@ -1,15 +1,20 @@
 <script setup lang="ts">
+import {
+  deleteProjectMembersSelf,
+  deleteProject,
+  patchProject,
+} from 'shared-projects-frontend/apis'
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
 import { refreshProjectData } from '~/composables/project/refreshProject'
-import { deleteProjectMembersSelf } from '~/api/project-members.service'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
-import { deleteProject, patchProject } from '~/api/projects.service'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
 import { getOrganizations } from '~/api/v2/organizations.service'
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
-import type { TranslatedProject } from '~/models/project.model'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import { DEFAULT_ORGANIZATION_CODE } from '~/functs/constants'
@@ -39,8 +44,10 @@ const { stateModals, openModals, closeModals, closeAllModals } = useModals({
   report: false,
   saveChange: false,
 })
-const { canDestroyProject, canEditProject, isMember, isOwner, isOrgAdmin, isAdmin, canAddReview } =
-  usePermissions()
+
+const { isAdmin } = usePermissions()
+const { canDeleteProject, canCreateReview, canEditProject, isMember, isOwner } =
+  usePermissionProject(computed(() => props.project.id))
 
 const { isMobile } = useViewportWidth()
 
@@ -98,7 +105,7 @@ const isFormEqual = useBlockNavigation(() => {
 // removeOrganization
 const updateOrganisation = (orgCode: string, state: boolean) => {
   if (state) {
-    form.value.organizations_codes.push(orgCode)
+    form.value.organizations_codes = [...form.value.organizations_codes, orgCode]
   } else {
     form.value.organizations_codes = form.value.organizations_codes.filter((c) => c !== orgCode)
   }
@@ -139,7 +146,7 @@ const lifeStatusOptions = computed(() => {
   ]
   if (
     props.project.modules.members > 0 &&
-    (isOwner.value || isOrgAdmin.value || isAdmin.value || canAddReview.value)
+    (isOwner.value || isAdmin.value || canCreateReview.value)
   ) {
     opts.push({
       value: 'toreview',
@@ -182,7 +189,7 @@ const { data: organizations } = getOrganizations({
 })
 
 const disableLastOrg = (org) =>
-  projectOrganizationCodes.value.length === 1 && projectOrganizationCodes.value[0] === org.code
+  form.value.organizations_codes.length === 1 && form.value.organizations_codes[0] === org.code
 
 const selectedOrgLinks = computed(() => {
   return organizations.value
@@ -298,7 +305,7 @@ const checkClose = () => {
             />
           </Section>
           <Section
-            v-if="canAddReview && project.life_status === 'toreview'"
+            v-if="canCreateReview && project.life_status === 'toreview'"
             class="skeletons-background"
             :title="$t('project.reviews')"
           >
@@ -311,7 +318,7 @@ const checkClose = () => {
 
           <!-- this section only for admin -->
           <Section
-            v-if="organizations?.length && (isOrgAdmin || isAdmin)"
+            v-if="organizations?.length && isAdmin"
             class="skeletons-background"
             :title="$t('project.org-settings.title')"
           >
@@ -360,7 +367,7 @@ const checkClose = () => {
           </template>
           <div class="list-container">
             <LpiButton
-              v-if="canDestroyProject"
+              v-if="canDeleteProject"
               :label="$t('project.destroy')"
               class="button"
               color="red"
@@ -420,6 +427,8 @@ const checkClose = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .section-red {
   background-color: var(--gray);
   border: none;
@@ -431,7 +440,7 @@ const checkClose = () => {
 
 .organization-ctn {
   flex-wrap: wrap;
-  gap: $space-m;
+  gap: variables.$space-m;
   margin: 1rem 0;
 }
 

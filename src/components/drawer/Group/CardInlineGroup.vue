@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 import BaseCardInline from '~/components/drawer/BaseCardInline.vue'
 
 defineProps<{

@@ -23,8 +23,10 @@ const usersStore = useUsersStore()
 const logInUser = () => goToKeycloakLoginPage()
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .notice {
-  font-size: $font-size-l;
+  font-size: variables.$font-size-l;
   text-align: center;
   margin-bottom: 1rem;
 }

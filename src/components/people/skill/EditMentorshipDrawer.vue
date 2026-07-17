@@ -2,7 +2,7 @@
 import MentorshipForm from '~/components/people/skill/MentorshipForm.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import type { UserSkillModel } from '~/models/user.model'
+import type { UserSkillModel } from 'shared-projects-frontend/models'
 import useSkillTexts from '~/composables/useSkillTexts'
 
 const emit = defineEmits(['close', 'update-mentorship'])
@@ -40,7 +40,11 @@ const skillTexts = useSkillTexts()
     :confirm-action-name="$t('common.confirm')"
     :confirm-action-disabled="false"
     :is-opened="isOpened"
-    :title="$t('profile.edit.skills.mentorship.edit', { skill: skillTexts.title(skill) })"
+    :title="
+      $t('profile.edit.skills.mentorship.edit', {
+        skill: skillTexts.title(skill),
+      })
+    "
     class="medium"
     @close="$emit('close')"
     @confirm="saveMentorship"

@@ -48,12 +48,11 @@ const deleteLink = () => {
 }
 
 onMounted(() => {
-  const href = props.editor.getAttributes('link').href
+  const href: string = props.editor.getAttributes('link').href || ''
   const { to, from } = props.editor.view.state.selection
   const text = props.editor.state.doc.textBetween(from, to)
 
   mode.value = href ? 'edit' : 'add'
-
   reset({
     href,
     text,
@@ -110,6 +109,8 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .button-delete {
   color: var(--white);
   background: var(--salmon);

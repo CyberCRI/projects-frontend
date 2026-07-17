@@ -64,7 +64,7 @@ const loadAssistant = async () => {
         agent.value = sideAssistant.agent
         hasUserContext.value = agent.value.useProfileData
       } else {
-        CHAT_ENDPOINT.value = ref(DEFAULT_ENDPOINT)
+        CHAT_ENDPOINT.value = DEFAULT_ENDPOINT
         agent.value = DEFAULT_AGENT_FACTORY()
         hasUserContext.value = true
       }
@@ -174,11 +174,13 @@ function onSuggestButtonClick(message) {
         @start-conversation="startConversation"
         @close="$emit('close')"
         @conversation-restarted="onConversationRestarted"
-      ></ChatbotUi>
+      />
     </template>
   </BaseDrawer>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   display: flex;
   justify-content: center;
@@ -187,12 +189,12 @@ function onSuggestButtonClick(message) {
 
 .ice-breakers {
   h4 {
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 
   margin: 1rem;
   padding: 1rem;
-  border: 1px $primary-light solid;
+  border: 1px variables.$primary-light solid;
   border-radius: 10px;
 }
 

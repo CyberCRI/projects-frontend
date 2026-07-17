@@ -106,7 +106,7 @@ import ToolTip from '~/components/base/ToolTip.vue'
 
 import useSkillTexts from '~/composables/useSkillTexts'
 
-import type { UserSkillModel } from '~/models/user.model'
+import type { UserSkillModel } from 'shared-projects-frontend/models'
 
 const props = withDefaults(
   defineProps<{
@@ -168,19 +168,21 @@ const escapeComment = (text) => {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .skill {
   width: 100%;
-  border-bottom: $border-width-s solid $lighter-gray;
-  padding: $space-l 0;
+  border-bottom: variables.$border-width-s solid variables.$lighter-gray;
+  padding: variables.$space-l 0;
 
   .skill-content {
     display: flex;
     flex-flow: row nowrap;
     justify-content: stretch;
-    gap: $space-unit;
+    gap: variables.$space-unit;
     align-items: center;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       flex-flow: column nowrap;
       align-items: flex-start;
     }
@@ -212,9 +214,9 @@ const escapeComment = (text) => {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: $space-m;
+    gap: variables.$space-m;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       .container {
         padding-left: 0 !important;
       }
@@ -226,7 +228,7 @@ const escapeComment = (text) => {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: $space-m;
+    gap: variables.$space-m;
   }
 
   .actions {
@@ -242,7 +244,7 @@ const escapeComment = (text) => {
   .skill-level,
   .mentorship,
   .actions {
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       padding-left: 1rem;
     }
   }
@@ -250,11 +252,11 @@ const escapeComment = (text) => {
 
 .skill-name:hover {
   .chevron {
-    fill: $primary-dark;
+    fill: variables.$primary-dark;
   }
 
   .skill-title {
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 }
 
@@ -275,23 +277,23 @@ const escapeComment = (text) => {
     text-transform: capitalize;
   }
 
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
   font-weight: 400;
-  color: $black;
+  color: variables.$black;
 }
 
 .summary-content:hover {
   .chevron {
-    fill: $primary-dark;
+    fill: variables.$primary-dark;
   }
 
   .skill-title {
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 }
 
 .no-description .chevron {
-  fill: $light-gray;
+  fill: variables.$light-gray;
 }
 
 .steps {
@@ -303,21 +305,21 @@ const escapeComment = (text) => {
 }
 
 .description {
-  font-size: $font-size-s;
-  padding-top: $space-m;
+  font-size: variables.$font-size-s;
+  padding-top: variables.$space-m;
   padding-left: 1rem;
-  border-left: 1px solid $light-gray;
+  border-left: 1px solid variables.$light-gray;
   align-self: flex-start;
 
-  @media screen and (min-width: $max-tablet) {
+  @media screen and (min-width: variables.$max-tablet) {
     padding-right: calc(60%);
-    margin-right: #{4 * $space-m};
+    margin-right: #{4 * variables.$space-m};
   }
 
   &.mobile {
     display: none;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       display: block;
     }
   }
@@ -325,7 +327,7 @@ const escapeComment = (text) => {
   &.desktop {
     display: block;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       display: none;
     }
   }
@@ -375,7 +377,7 @@ const escapeComment = (text) => {
 .mentorship-asked {
   font-style: italic;
   font-weight: 400;
-  color: $primary-dark;
+  color: variables.$primary-dark;
 }
 
 .mentorship-loading {

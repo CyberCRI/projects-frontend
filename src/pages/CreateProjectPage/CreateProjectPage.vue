@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { ProjectForm as ProjectFormType } from 'shared-projects-frontend/models'
 import ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
-import type { ProjectForm as ProjectFormType } from '~/models/project.model'
-import { postProject, postProjectHeader } from '~/api/projects.service'
+import { postProject, postProjectHeader } from 'shared-projects-frontend/apis'
 import ProjectForm from '~/components/project/ProjectForm.vue'
 import { imageSizesFormData } from '~/functs/imageSizesUtils'
 import { useProjectTemplatesForm } from '~/form/project'
@@ -119,7 +119,9 @@ const updateForm = (f) => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .help-link {
-  color: $primary-dark;
+  color: variables.$primary-dark;
 }
 </style>

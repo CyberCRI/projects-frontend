@@ -33,7 +33,9 @@ const emit = defineEmits<{
 }>()
 
 const search = defineModel<string>('search', { default: '' })
-const { stateModals, openModals, closeModals } = useModals({ saveChange: false })
+const { stateModals, openModals, closeModals } = useModals({
+  saveChange: false,
+})
 
 const selectedItems = ref<Item[]>([]) as Ref<Item[]>
 
@@ -185,6 +187,8 @@ watch(
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .list-flow-container {
   justify-content: space-around;
 }

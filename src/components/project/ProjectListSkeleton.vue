@@ -29,16 +29,18 @@ withDefaults(defineProps<{ limit?: number; minGap?: number; mode?: 'card' | 'lis
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .card-list {
-  margin-top: $space-xl;
+  margin-top: variables.$space-xl;
 
   .skeleton-card {
-    border-color: $almost-white !important;
+    border-color: variables.$almost-white !important;
     pointer-events: none;
   }
 
   &.card .skeleton-text {
-    padding-top: $space-m;
+    padding-top: variables.$space-m;
     width: 100%;
     align-items: center;
   }
@@ -57,10 +59,10 @@ withDefaults(defineProps<{ limit?: number; minGap?: number; mode?: 'card' | 'lis
   }
 
   .image-placeholder {
-    width: pxToRem(90px);
-    height: pxToRem(90px);
-    background: $lighter-gray;
-    margin-bottom: $space-l;
+    width: variables.pxtorem(90px);
+    height: variables.pxtorem(90px);
+    background: variables.$lighter-gray;
+    margin-bottom: variables.$space-l;
     border-radius: 50%;
     animation: skeleton-loading 1s linear infinite alternate;
   }
@@ -70,10 +72,10 @@ withDefaults(defineProps<{ limit?: number; minGap?: number; mode?: 'card' | 'lis
   }
 
   .text-placeholder {
-    background: $lighter-gray;
-    border-radius: $border-radius-xs;
+    background: variables.$lighter-gray;
+    border-radius: variables.$border-radius-xs;
     width: 80%;
-    height: pxToRem(16px);
+    height: variables.pxtorem(16px);
     animation: skeleton-loading 1s linear infinite alternate;
   }
 
@@ -84,11 +86,11 @@ withDefaults(defineProps<{ limit?: number; minGap?: number; mode?: 'card' | 'lis
   }
 
   .subtext {
-    margin-bottom: $space-s;
+    margin-bottom: variables.$space-s;
   }
 
   .footer {
-    margin-top: $space-l;
+    margin-top: variables.$space-l;
   }
 }
 </style>

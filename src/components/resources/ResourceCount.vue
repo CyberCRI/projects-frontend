@@ -33,10 +33,12 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .resource-count {
   cursor: pointer;
-  border: $border-width-s solid var(--primary);
-  border-radius: $border-radius-m;
+  border: variables.$border-width-s solid var(--primary);
+  border-radius: variables.$border-radius-m;
   overflow: hidden;
   width: 150px;
   transition: 0.3s background-color ease-in-out;
@@ -50,14 +52,14 @@ withDefaults(
   }
 
   .icon-ctn {
-    padding: $space-m 0;
+    padding: variables.$space-m 0;
 
     .resource-type {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: $font-size-s;
+      font-size: variables.$font-size-s;
       font-weight: bold;
       color: var(--black);
       text-align: center;
@@ -66,7 +68,7 @@ withDefaults(
         height: 50px;
         width: 50px;
         fill: var(--primary-dark);
-        margin-bottom: $space-s;
+        margin-bottom: variables.$space-s;
       }
     }
   }
@@ -78,8 +80,8 @@ withDefaults(
     align-items: center;
     font-weight: bold;
     color: var(--white);
-    padding: $space-s 0;
-    font-size: $font-size-2xl;
+    padding: variables.$space-s 0;
+    font-size: variables.$font-size-2xl;
   }
 }
 </style>

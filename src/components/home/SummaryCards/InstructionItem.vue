@@ -27,12 +27,13 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedInstruction } from '~/models/instruction.model'
+import type { TranslatedInstruction } from 'shared-projects-frontend/models'
 
+import { usePermissionInstruction } from '~/composables/usePermissions/useInstructionPermissions'
 import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
 import HtmlLimiter from '~/components/base/HtmlLimiter.vue'
 
-defineProps<{
+const props = defineProps<{
   instruction: TranslatedInstruction
 }>()
 
@@ -41,7 +42,10 @@ defineEmits<{
   'edit-instruction': [TranslatedInstruction]
 }>()
 
-const { canEditInstruction, canDeleteInstruction } = usePermissions()
+const { canEditInstruction, canDeleteInstruction } = usePermissionInstruction(
+  computed(() => props.instruction.id)
+)
+
 const style = ref({})
 
 const computeLayout = () => {
@@ -51,7 +55,9 @@ const layoutComputed = (event) => {
   style.value = { height: event.height + 'px' }
 }
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .instruction-item {
   --instruction-dimension: 15rem;
 
@@ -70,8 +76,8 @@ const layoutComputed = (event) => {
 }
 
 .instruction-title {
-  font-size: $font-size-xl;
-  color: $primary-dark;
+  font-size: variables.$font-size-xl;
+  color: variables.$primary-dark;
 }
 
 .instruction-excerpt {
@@ -82,27 +88,27 @@ const layoutComputed = (event) => {
   overflow: hidden;
 
   h1 {
-    font-size: $font-size-2xl;
+    font-size: variables.$font-size-2xl;
     font-weight: 700;
   }
 
   h2 {
-    font-size: $font-size-xl;
+    font-size: variables.$font-size-xl;
     font-weight: 500;
   }
 
   h3 {
-    font-size: $font-size-l;
+    font-size: variables.$font-size-l;
     font-weight: 500;
   }
 
   h4 {
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
     font-weight: 500;
   }
 
   * {
-    color: $primary-dark !important;
+    color: variables.$primary-dark !important;
   }
 }
 </style>

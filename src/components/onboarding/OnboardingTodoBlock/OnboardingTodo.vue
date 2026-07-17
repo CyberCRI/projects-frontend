@@ -25,15 +25,17 @@ withDefaults(
 )
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .onboarding-todo {
   appearance: none;
   flex-basis: 25%;
   display: flex;
   align-items: center;
-  gap: $space-m;
-  background-color: $white;
-  padding: $space-m $space-unit;
-  border: $blue solid $border-width-s;
+  gap: variables.$space-m;
+  background-color: variables.$white;
+  padding: variables.$space-m variables.$space-unit;
+  border: variables.$blue solid variables.$border-width-s;
   border-radius: 4rem;
   cursor: pointer;
   transition: 0.2s all ease-in-out;
@@ -51,18 +53,18 @@ withDefaults(
 
   &.done {
     pointer-events: none;
-    background-color: $almost-white;
+    background-color: variables.$almost-white;
     cursor: default;
   }
 }
 
 .todo-label {
   font-weight: 700;
-  font-size: $font-size-m;
-  color: $primary-dark;
+  font-size: variables.$font-size-m;
+  color: variables.$primary-dark;
 }
 
-$checkbox-size: pxToRem(20px);
+$checkbox-size: variables.pxtorem(20px);
 
 .loader {
   height: $checkbox-size;
@@ -73,20 +75,20 @@ $checkbox-size: pxToRem(20px);
   margin-left: auto;
   width: $checkbox-size;
   height: $checkbox-size;
-  border: $border-width-m solid $primary-dark;
-  border-radius: $border-radius-xs;
+  border: variables.$border-width-m solid variables.$primary-dark;
+  border-radius: variables.$border-radius-xs;
   flex-shrink: 0;
-  background-color: $white;
+  background-color: variables.$white;
 
   .checkmark {
     display: none;
     object-fit: contain;
-    fill: $white;
+    fill: variables.$white;
   }
 }
 
 .done .toto-state {
-  background-color: $primary-dark;
+  background-color: variables.$primary-dark;
 
   .checkmark {
     display: inline-block;

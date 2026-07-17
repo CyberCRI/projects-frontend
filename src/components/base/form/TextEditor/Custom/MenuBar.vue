@@ -264,10 +264,12 @@ const items = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .divider {
   width: 2px;
   height: 1.25rem;
-  background: $black;
+  background: variables.$black;
   opacity: 0.1;
   margin-left: 0.5rem;
   margin-right: 0.75rem;
@@ -280,7 +282,7 @@ const items = computed(() => {
 }
 
 .b-tooltip.is-primary .tooltip-content {
-  color: $black !important;
+  color: variables.$black !important;
   left: unset !important;
   width: auto !important;
 }
