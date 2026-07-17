@@ -97,7 +97,7 @@ import ImageInput from '~/components/base/form/ImageInput.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import useToasterStore from '~/stores/useToaster.ts'
+import useToasterStore from '~/stores/useToaster'
 
 import { removePrefix } from '~/functs/utils'
 import analytics from '~/analytics'

@@ -64,7 +64,7 @@ const loadAssistant = async () => {
         agent.value = sideAssistant.agent
         hasUserContext.value = agent.value.useProfileData
       } else {
-        CHAT_ENDPOINT.value = ref(DEFAULT_ENDPOINT)
+        CHAT_ENDPOINT.value = DEFAULT_ENDPOINT
         agent.value = DEFAULT_AGENT_FACTORY()
         hasUserContext.value = true
       }

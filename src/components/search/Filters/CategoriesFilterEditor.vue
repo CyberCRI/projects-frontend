@@ -24,7 +24,7 @@
 <script>
 import CategoryPicker from '~/components/category/CategoryPicker.vue'
 
-import useProjectCategories from '~/stores/useProjectCategories.ts'
+import useProjectCategories from '~/stores/useProjectCategories'
 
 export default {
   name: 'CategoriesFilterEditor',

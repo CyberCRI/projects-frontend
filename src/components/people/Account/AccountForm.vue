@@ -149,15 +149,15 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import LpiSelect from '~/components/base/form/LpiSelect.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
 
 import {
   imageSizesFormData,
   imageSizesFormDataPost,
   pictureApiToImageSizes,
-} from '~/functs/imageSizesUtils.ts'
-import { VALID_NAME_REGEX } from '~/functs/constants.ts'
+} from '~/functs/imageSizesUtils'
+import { VALID_NAME_REGEX } from '~/functs/constants'
 import { roleI18n } from '~/functs/rolesUtils'
 
 export default {

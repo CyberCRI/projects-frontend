@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
   fetchEntity: { type: Function, required: true },
   entityTitle: { type: String, required: true },

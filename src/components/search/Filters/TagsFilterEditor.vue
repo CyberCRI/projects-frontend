@@ -78,7 +78,7 @@ import TagResults from '~/components/search/FilterTags/TagResults.vue'
 import LpiSelect from '~/components/base/form/LpiSelect.vue'
 
 import NothingHere from '~/components/base/NothingHere.vue'
-import useTagSearch from '~/composables/useTagSearch.ts'
+import useTagSearch from '~/composables/useTagSearch'
 
 export default {
   name: 'TagsFilterEditor',

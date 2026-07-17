@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { helpers, required } from '@vuelidate/validators'
 import useToasterStore from '@/stores/useToaster'
@@ -23,7 +23,7 @@ const emit = defineEmits(['close', 'entity-created', 'entity-updated'])
 
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
-const defaultForm = (skill) => ({
+const defaultForm = (skill?) => ({
   title: skill?.title ?? '',
   description: md2html(skill?.description ?? ''),
   content: md2html(skill?.skillContents?.length ? skill.skillContents[0].content : ''),

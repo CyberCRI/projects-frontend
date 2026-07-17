@@ -1,4 +1,4 @@
-import type { PrismaClient } from '~~/prisma-chatbot-db/generated/prisma/client.ts'
+import type { PrismaClient } from '~~/prisma-chatbot-db/generated/prisma/client'
 import findSafeAgentSlug from '~/server/utils/find-safe-agent-slug'
 import { describe, it, expect, vi } from 'vitest'
 

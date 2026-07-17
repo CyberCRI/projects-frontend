@@ -34,7 +34,7 @@ import { clientAPI, getOrgClassificationTags } from 'shared-projects-frontend/ap
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 import TagSearchResults from './TagSearchResults.vue'
 import { debounce } from 'es-toolkit'

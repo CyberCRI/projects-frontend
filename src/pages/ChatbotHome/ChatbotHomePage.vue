@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 // import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
 import useUsersStore from '@/stores/useUsers'
@@ -27,11 +27,13 @@ const options = {
 
 const { translateAgents } = useAutoTranslate()
 const key = computed(() => `frontend-agents`)
-const getAgents = () =>
-  useAsyncAPI(key, () => $fetch('/api/chatbot', options), {
+const { /*status,*/ isLoading, data: agents /*error,*/ /*refresh*/ } = useAsyncAPI(
+  key,
+  () => $fetch('/api/chatbot', options),
+  {
     translate: (data) => translateAgents(data),
-  })
-const { /*status,*/ isLoading, data: agents /*error,*/ /*refresh*/ } = await getAgents()
+  }
+)
 
 // const url = `/api/chatbot`
 // const { data, status } = useFetch(url, { ...options })

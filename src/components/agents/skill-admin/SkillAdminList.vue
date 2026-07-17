@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import useUsersStore from '@/stores/useUsers'
 const usersStore = useUsersStore()
 let headers = {}

@@ -219,11 +219,11 @@ import {
 
 import SdgList from '~/components/sdgs/SdgList.vue'
 
-import useToasterStore from '~/stores/useToaster.ts'
-import useUsersStore from '~/stores/useUsers.ts'
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
 
-import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
-import { VALID_NAME_REGEX } from '~/functs/constants.ts'
+import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import { VALID_NAME_REGEX } from '~/functs/constants'
 import { isEqual } from 'es-toolkit'
 
 function defaultForm() {

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 
 const emit = defineEmits(['show-document', 'delete-document', 'edit-document'])

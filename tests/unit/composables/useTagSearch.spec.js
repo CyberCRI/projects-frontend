@@ -4,7 +4,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { OrganizationFactory } from '~~/tests/factories/organization.factory'
 import { getAllOrgClassifications } from 'shared-projects-frontend/apis'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import useTagSearch from '~/composables/useTagSearch.ts'
+import useTagSearch from '~/composables/useTagSearch'
 
 vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
   ...(await orginalImporter()),

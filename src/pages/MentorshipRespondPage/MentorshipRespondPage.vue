@@ -82,9 +82,9 @@
 <script>
 import { getMentorshipDetails, respondMentorship } from 'shared-projects-frontend/apis'
 
-import useUsersStore from '~/stores/useUsers.ts'
+import useUsersStore from '~/stores/useUsers'
 
-import useSkillTexts from '~/composables/useSkillTexts.ts'
+import useSkillTexts from '~/composables/useSkillTexts'
 
 export default {
   name: 'MentorshipRespondPage',

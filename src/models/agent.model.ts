@@ -1,4 +1,4 @@
-import type { Agent } from '~~/prisma-chatbot-db/generated/prisma/client.ts'
+import type { Agent } from '~~/prisma-chatbot-db/generated/prisma/client'
 import type { Translated } from 'shared-projects-frontend/interfaces'
 
 export type AgentModel = Agent

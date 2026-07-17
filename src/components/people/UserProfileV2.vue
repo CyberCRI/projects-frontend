@@ -52,7 +52,7 @@
 <script>
 import { getUser } from 'shared-projects-frontend/apis'
 
-import useUsersStore from '~/stores/useUsers.ts'
+import useUsersStore from '~/stores/useUsers'
 
 import ProfileSummaryTab from '~/pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'
 import { usePermissionUser } from '~/composables/usePermissions/useUserPermissions'

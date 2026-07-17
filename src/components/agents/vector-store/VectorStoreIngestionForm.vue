@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import useToasterStore from '@/stores/useToaster'
 import useUsersStore from '@/stores/useUsers'

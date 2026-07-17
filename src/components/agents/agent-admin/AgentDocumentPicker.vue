@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 defineProps({ document: { type: Object, required: true } })
 const model = defineModel({ type: Object, required: true })
 </script>

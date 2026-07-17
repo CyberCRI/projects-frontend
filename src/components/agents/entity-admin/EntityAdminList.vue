@@ -1,11 +1,19 @@
-<script setup>
-const props = defineProps({
-  fetchEntities: { type: Function, required: true },
-  noEntityLabel: { type: String, required: true },
-  entityIcon: { type: String, required: true },
-  deletableCheck: { type: Function, default: () => null },
-  isLinkable: { type: Boolean, default: false },
-})
+<script setup lang="ts">
+import type { IconImageChoice } from '~/functs/IconImage'
+
+const props = withDefaults(
+  defineProps<{
+    fetchEntities: () => Promise<any>
+    noEntityLabel: string
+    entityIcon: IconImageChoice
+    deletableCheck?: (entity: any) => boolean
+    isLinkable?: boolean
+  }>(),
+  {
+    deletableCheck: () => null,
+    isLinkable: false,
+  }
+)
 
 const emit = defineEmits(['goto-entity', 'show-entity', 'delete-entity', 'edit-entity'])
 

@@ -25,9 +25,9 @@
 import SeeMoreArrow from '~/components/base/button/SeeMoreArrow.vue'
 import SkillItem from '~/components/people/skill/SkillItem.vue'
 
-import useUsersStore from '~/stores/useUsers.ts'
+import useUsersStore from '~/stores/useUsers'
 
-import useSkillTexts from '~/composables/useSkillTexts.ts'
+import useSkillTexts from '~/composables/useSkillTexts'
 
 export default {
   name: 'SkillSummary',

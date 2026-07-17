@@ -1,4 +1,5 @@
 <script setup>
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import useUsersStore from '@/stores/useUsers'
 // import { shuffle } from 'es-toolkit'
 import analytics from '@/analytics'

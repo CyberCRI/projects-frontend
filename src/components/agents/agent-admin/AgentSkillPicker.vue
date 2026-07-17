@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const props = defineProps({ skill: { type: Object, required: true } })
 
 const emit = defineEmits(['update:modelValue'])
