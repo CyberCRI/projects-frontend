@@ -99,7 +99,12 @@ const setSliderStyle = onClient(() => {
   }
 })
 
-onResize(debounce(setSliderStyle, 100), { immediate: true })
+const debounceSetSliderStyle = debounce(setSliderStyle, 100)
+onUnmounted(() => {
+  debounceSetSliderStyle.cancel()
+})
+
+onResize(debounceSetSliderStyle, { immediate: true })
 watch(model, () => setSliderStyle(), { immediate: true })
 </script>
 

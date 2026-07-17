@@ -36,10 +36,11 @@ const { barChartProps, update } = useBarChart({
   options: dataOptions,
 })
 
-onResize(
-  debounce(() => {
-    // Adapt chart's size to window
-    update()
-  }, 300)
-)
+const debounceInit = debounce(() => {
+  // Adapt chart's size to window
+  update()
+}, 300)
+
+onResize(debounceInit)
+onUnmounted(() => debounceInit.cancel())
 </script>

@@ -242,6 +242,8 @@ const layoutTabs = debounce(
   42
 )
 
+onUnmounted(() => layoutTabs.cancel())
+
 const closeTabList = () => {
   showTabList.value = false
 }

@@ -2,6 +2,10 @@ import MockComponent from '~~/tests/helpers/MockComponent.vue'
 
 import { afterEach, vi } from 'vitest'
 
+process.on('unhandledRejection', (e) => {
+  console.error(e)
+})
+
 vi.mock('vue3-popper', () => ({
   default: {
     name: 'Popper',

@@ -25,7 +25,7 @@ import { pick } from 'es-toolkit'
 
 // fix undefined localStorage on sever
 let _localStorage = null
-if (import.meta.client) _localStorage = window.localStorage
+if (import.meta.client && typeof window !== 'undefined') _localStorage = window.localStorage
 const localStorage = _localStorage
 
 export interface UsersState {

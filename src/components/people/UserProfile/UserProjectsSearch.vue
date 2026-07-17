@@ -97,6 +97,8 @@ const loadProjects = debounce(async (specificPageIndex = null) => {
   updateProjectList(response)
 }, 40)
 
+onUnmounted(() => loadProjects.cancel())
+
 const updateProjectList = (response) => {
   if (!response) return
   updatePagination(response)
