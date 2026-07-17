@@ -75,7 +75,7 @@ export default defineVitestConfig({
         `[Vue warn]: Directive "t" has already been registered in target app.`,
         `<Suspense> is an experimental feature and its API will likely change.`,
       ]
-      return !IGNORED_LOG.includes(msg.trim())
+      return !IGNORED_LOG.find((text) => msg.includes(text))
     },
     server: {
       deps: {
