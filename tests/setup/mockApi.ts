@@ -1,17 +1,11 @@
-import { PaginationsFactory } from '../tests/factories/paginations.factory'
-import { initializeClientApi } from '../src/config/apis'
+import { PaginationsFactory } from '../factories/paginations.factory'
+import { initializeClientApi } from '../../src/config/apis'
 import createFetchMock from 'vitest-fetch-mock'
-import { onlyOnce, isNuxtReady } from './utils'
-import { vi } from 'vitest'
+import { vi, beforeAll } from 'vitest'
 
-beforeEach(
-  onlyOnce(() => {
-    if (isNuxtReady()) {
-      initializeClientApi()
-      return true
-    }
-  })
-)
+beforeAll(() => {
+  initializeClientApi()
+})
 
 // add global options and $fetch
 

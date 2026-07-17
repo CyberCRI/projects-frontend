@@ -13,7 +13,6 @@ vi.mock('~/api/auth/keycloakUtils', () => ({
 vi.mock('~/api/auth/auth.serice')
 
 beforeEach(() => {
-  vi.resetModules()
   const originalLocation = window.location
   delete window.location
   // @ts-expect-error
@@ -47,7 +46,6 @@ describe.skip('Keycloak | codeChallenge', () => {
 describe.skip('Keycloak | loginIfValidState', () => {
   let usersStore
   beforeEach(() => {
-    vi.resetModules()
     usersStore = useUsersStore(pinia)
     useToasterStore(pinia)
   })
@@ -59,7 +57,7 @@ describe.skip('Keycloak | loginIfValidState', () => {
       '?state=%7B%22fromURL%22%3A%22http%3A%2F%2Flocalhost%3A8080%2Fdashboard%22%2C%22appSecret%22%3A%22jbag28ih70g882jgie94f9b8ig8i5hg8ha36g6713e5ab19fd5daai9cg1c96e11%22%7D&session_state=92768ca7-f045-41bd-989d-214729a20980&code=8852d144-8a51-430f-89c3-1774d4cf182c.92768ca7-f045-41bd-989d-214729a20980.69a45ad1-d2c0-4b43-8d61-a3688206d2f3'
     const searchParams = new URLSearchParams(search)
 
-    vi.useFakeTimers()
+    vi.useRealTimers()
     const dateNowSpy = vi.spyOn(Date, 'now').mockReturnValue(1577836800 * 1000)
     vi.spyOn(usersStore, 'logIn')
     vi.spyOn(keycloak.codeVerifier, 'get').mockReturnValue('123')
@@ -85,7 +83,7 @@ describe.skip('Keycloak | loginIfValidState', () => {
       '?state=%7B%22fromURL%22%3A%22http%3A%2F%2Flocalhost%3A8080%2Fdashboard%22%2C%22appSecret%22%3A%22jbag28ih70g882jgie94f9b8ig8i5hg8ha36g6713e5ab19fd5daai9cg1c96e11%22%7D&session_state=92768ca7-f045-41bd-989d-214729a20980&code=8852d144-8a51-430f-89c3-1774d4cf182c.92768ca7-f045-41bd-989d-214729a20980.69a45ad1-d2c0-4b43-8d61-a3688206d2f3'
     const searchParams = new URLSearchParams(search)
 
-    vi.useFakeTimers()
+    vi.useRealTimers()
     const dateNowSpy = vi.spyOn(Date, 'now').mockReturnValue(1577836800 * 1000)
     vi.spyOn(usersStore, 'logIn')
 

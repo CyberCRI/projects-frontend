@@ -30,10 +30,15 @@ const DASHBOARD_URL = import.meta.client
  *  that asks for a new accessToken before it is expired.
  */
 
+export const redirect = (url: string) => {
+  window.location.href = url
+}
+
 export async function goToKeycloakLoginPage(): Promise<void> {
   const keycloak = useKeycloak()
   const runtimeConfig = useRuntimeConfig()
   const organizationsStore = useOrganizationsStore()
+
   keycloak.codeVerifier.generate()
   keycloak.appSecret.generate()
 
@@ -69,7 +74,7 @@ export async function goToKeycloakLoginPage(): Promise<void> {
     })
   )
 
-  window.location.href = url.href
+  redirect(url.href)
 }
 
 function cleanUpKeycloak() {
@@ -121,22 +126,26 @@ export function logoutFromKeycloak(): void {
   const runtimeConfig = useRuntimeConfig()
   const redirectUri = getLogoutRedirectUri()
   cleanUpKeycloak()
-  window.location.href = `${runtimeConfig.public.appKeycloakUrl}/realms/${
-    runtimeConfig.public.appKeycloakRealm
-  }/protocol/openid-connect/logout?post_logout_redirect_uri=${redirectUri}&id_token_hint=${localStorage.getItem(
-    'ID_TOKEN'
-  )}`
+  redirect(
+    `${runtimeConfig.public.appKeycloakUrl}/realms/${
+      runtimeConfig.public.appKeycloakRealm
+    }/protocol/openid-connect/logout?post_logout_redirect_uri=${redirectUri}&id_token_hint=${localStorage.getItem(
+      'ID_TOKEN'
+    )}`
+  )
 }
 
 export function logoutFromKeycloakWithError(): void {
   const runtimeConfig = useRuntimeConfig()
   const redirectUri = getLogoutRedirectUri()
   cleanUpKeycloak()
-  window.location.href = `${runtimeConfig.public.appKeycloakUrl}/realms/${
-    runtimeConfig.public.appKeycloakRealm
-  }/protocol/openid-connect/logout?post_logout_redirect_uri=${redirectUri}&id_token_hint=${localStorage.getItem(
-    'ID_TOKEN'
-  )}&login-error=true`
+  redirect(
+    `${runtimeConfig.public.appKeycloakUrl}/realms/${
+      runtimeConfig.public.appKeycloakRealm
+    }/protocol/openid-connect/logout?post_logout_redirect_uri=${redirectUri}&id_token_hint=${localStorage.getItem(
+      'ID_TOKEN'
+    )}&login-error=true`
+  )
 }
 
 export async function refreshAccessToken(): Promise<any> {

@@ -1,8 +1,4 @@
-import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest'
-
-import type { OrganizationOutput } from 'shared-projects-frontend/models'
-import useOrganizationsStore from '~/stores/useOrganizations'
-import pinia from '~/stores'
+import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const mockUseKeycloack = {
   getCurrentUrl: vi.fn().mockReturnValue('https://localhost:8080/dashboard'),
@@ -25,9 +21,10 @@ const mockUseKeycloack = {
     get: vi.fn().mockReturnValue({ client_id: '123' }),
   },
 }
+
 vi.mock('~/api/auth/keycloak', () => {
   return {
-    default: () => mockUseKeycloack,
+    default: vi.fn().mockImplementation(() => mockUseKeycloack),
   }
 })
 
@@ -39,52 +36,38 @@ declare global {
 
 describe('auth.service', () => {
   // Do this to test code that uses .env
-  const OLD_ENV = process.env
-  beforeEach(() => {
-    vi.resetModules() // Most important - it clears the cache
-    process.env = { ...OLD_ENV } // Make a copy
+  beforeAll(() => {
     window.happyDOM.setURL('https://localhost:3000')
-    const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore._current = { code: '123' } as unknown as OrganizationOutput
   })
-  afterAll(() => {
-    process.env = OLD_ENV // Restore old environment
+
+  beforeEach(() => {
+    vi.resetModules()
   })
 
   it('goToKeycloakLoginPage', async () => {
-    delete window.location
-    window.location = {
-      pathname: '',
-    } as any
-    const setHrefSpy = vi.fn()
-    Object.defineProperty(window.location, 'href', {
-      set: setHrefSpy,
-    })
-
+    const oldHref = window.location.href
     const { goToKeycloakLoginPage } = await import('~/api/auth/auth.service')
+
     await goToKeycloakLoginPage()
 
     expect(mockUseKeycloack.codeVerifier.generate).toHaveBeenCalled()
     expect(mockUseKeycloack.appSecret.generate).toHaveBeenCalled()
     expect(mockUseKeycloack.codeChallenge.get).toHaveBeenCalled()
-    expect(setHrefSpy).toHaveBeenCalled()
+    // href are changed
+    expect(window.location.href).not.toBe(oldHref)
+    expect(window.location.href).toBeTruthy()
   })
 
   it('logoutFromKeycloak', async () => {
-    // Delete and recreate window.location setter to be able to spy its call
-    delete window.location
-    window.location = {} as any
-    const setHrefSpy = vi.fn()
-    Object.defineProperty(window.location, 'href', {
-      set: setHrefSpy,
-    })
-
+    const oldHref = window.location.href
     const { logoutFromKeycloak } = await import('~/api/auth/auth.service')
 
-    logoutFromKeycloak()
+    await logoutFromKeycloak()
     expect(mockUseKeycloack.codeVerifier.remove).toHaveBeenCalled()
     expect(mockUseKeycloack.appSecret.remove).toHaveBeenCalled()
     expect(mockUseKeycloack.refreshTokenLoop.stop).toHaveBeenCalled()
-    expect(setHrefSpy).toHaveBeenCalled()
+    // href are changed
+    expect(window.location.href).not.toBe(oldHref)
+    expect(window.location.href).toBeTruthy()
   })
 })

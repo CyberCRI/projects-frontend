@@ -1,6 +1,6 @@
 import type { PrismaClient } from '~~/prisma-chatbot-db/generated/prisma/client.ts'
 import agentFindBySlug from '~/server/utils/agent-find-by-slug'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -56,10 +56,6 @@ function asTx(mock: TxMock): PrismaClient | PrismaTx {
 // ---------------------------------------------------------------------------
 
 describe('agentFindBySlug', () => {
-  beforeEach(() => {
-    vi.clearAllMocks()
-  })
-
   // ── Alias path ────────────────────────────────────────────────────────────
 
   describe('when a slug alias exists', () => {

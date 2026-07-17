@@ -1,5 +1,4 @@
 import MockComponent from '~~/tests/helpers/MockComponent.vue'
-import { flushPromises } from '@vue/test-utils'
 
 import { afterEach, vi } from 'vitest'
 
@@ -37,6 +36,7 @@ vi.spyOn(console, 'warn').mockImplementation((text: string) => {
   }
 })
 
-afterEach(async () => {
-  await flushPromises() // Wait for all pending promises to resolve
+afterEach(() => {
+  vi.resetModules()
+  vi.clearAllMocks()
 })

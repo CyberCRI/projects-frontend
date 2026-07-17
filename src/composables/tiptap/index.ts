@@ -1,23 +1,6 @@
 import type { ImageModelCreated } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
 
-// this is needed to module overide in tiptap commands (only for typescript)
-import '@tiptap/extension-ordered-list'
-import '@tiptap/extension-bullet-list'
-import '@tiptap/extension-text-style'
-import '@tiptap/extension-text-align'
-import '@tiptap/extension-table-cell'
-import '@tiptap/extension-blockquote'
-import '@tiptap/extension-underline'
-import '@tiptap/extension-table-row'
-import '@tiptap/extension-list-item'
-import '@tiptap/extension-heading'
-import '@tiptap/extension-italic'
-import '@tiptap/extension-table'
-import '@tiptap/extension-color'
-import '@tiptap/extension-bold'
-import '@tiptap/starter-kit'
-
 import { getExtensions } from '~/composables/tiptap/extensions/all'
 import type { ErrorObject } from '@vuelidate/core'
 import type { EditorOptions } from '@tiptap/vue-3'

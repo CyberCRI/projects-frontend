@@ -6,11 +6,23 @@
     "verbatimModuleSyntax": false,
     "types": [
       "grecaptcha",
-      "@tiptap/extension-table",
-      "@tiptap/starter-kit",
       "@tiptap/extension-link",
+      "shared-projects-frontend/lib",
+      "@tiptap/extension-ordered-list",
+      "@tiptap/extension-bullet-list",
+      "@tiptap/extension-text-style",
       "@tiptap/extension-text-align",
-      "shared-projects-frontend"
+      "@tiptap/extension-table-cell",
+      "@tiptap/extension-blockquote",
+      "@tiptap/extension-underline",
+      "@tiptap/extension-table-row",
+      "@tiptap/extension-list-item",
+      "@tiptap/extension-heading",
+      "@tiptap/extension-italic",
+      "@tiptap/extension-table",
+      "@tiptap/extension-color",
+      "@tiptap/extension-bold",
+      "@tiptap/starter-kit"
     ]
   }
 }

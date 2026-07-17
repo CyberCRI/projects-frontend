@@ -17,7 +17,7 @@ const mockSearch = vi
 describe('TagResults', () => {
   beforeEach(() => {
     // tell vitest we use mocked time
-    vi.useFakeTimers()
+    vi.useRealTimers()
   })
 
   afterEach(() => {

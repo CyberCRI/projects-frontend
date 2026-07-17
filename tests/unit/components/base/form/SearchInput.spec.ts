@@ -1,7 +1,6 @@
 import SearchInput from '~/components/base/form/SearchInput.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
 
-import { flushPromises } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
 describe('SearchInput.vue', () => {
@@ -29,8 +28,9 @@ describe('SearchInput.vue', () => {
   it('emits input event', async () => {
     const wrapper = lpiMount(SearchInput)
 
-    wrapper.find('input').setValue('test')
-    await flushPromises()
-    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+    await wrapper.find('input').setValue('test')
+
+    // poll it (modelvlaue is debounced)
+    expect.poll(() => expect(wrapper.emitted('update:modelValue')).toBeTruthy())
   })
 })

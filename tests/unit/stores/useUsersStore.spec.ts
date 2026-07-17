@@ -39,7 +39,6 @@ describe('Store module | users | init', () => {
   let usersStore
 
   beforeEach(async () => {
-    vi.resetModules()
     pinia = createPinia()
     setActivePinia(pinia)
     localStorage.clear()
@@ -107,7 +106,6 @@ describe('Store module | users | getters', () => {
   let usersStore
 
   beforeEach(async () => {
-    vi.resetModules()
     pinia = createPinia()
     setActivePinia(pinia)
     localStorage.clear()
@@ -361,7 +359,6 @@ describe('Store module | users | actions', () => {
   let usersStore
 
   beforeEach(async () => {
-    vi.resetModules()
     pinia = createPinia()
     setActivePinia(pinia)
     localStorage.clear()
@@ -516,7 +513,6 @@ describe('Store module | users | mutations', () => {
   let usersStore
 
   beforeEach(async () => {
-    vi.resetModules()
     pinia = createPinia()
     setActivePinia(pinia)
     localStorage.clear()

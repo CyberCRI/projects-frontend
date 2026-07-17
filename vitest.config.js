@@ -76,17 +76,15 @@ export default defineVitestConfig({
     environment: 'nuxt',
     hookTimeout: 30_000,
     setupFiles: [
-      './.vitest/setup.ts',
-      // './.vitest/setupVitest.ts',
-      './.vitest/setEnvVars.ts',
-      './.vitest/mockMixpanel.ts',
-      './.vitest/mockApi.ts',
-      './.vitest/mockOauth.ts',
-      './.vitest/mockPatatoids.ts',
+      './tests/setup/setup.ts',
+      './tests/setup/setEnvVars.ts',
+      './tests/setup/mockMixpanel.ts',
+      './tests/setup/mockApi.ts',
+      './tests/setup/mockOauth.ts',
+      './tests/setup/mockPatatoids.ts',
     ],
     environmentOptions: {
       nuxt: {
-        // rootDir: fileURLToPath(new URL('./playground', import.meta.url)),
         domEnvironment: 'happy-dom', // 'happy-dom' (default) or 'jsdom'
         overrides: {
           // other Nuxt config you want to pass

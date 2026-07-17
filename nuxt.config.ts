@@ -93,25 +93,6 @@ export default defineNuxtConfig({
     },
   },
   vite: {
-    plugins: [
-      {
-        // Vitest 2.x bundles Vite 5 internally. Nuxt 3.19+ uses this.environment.name
-        // (Vite 6 Environment API) in nuxt:resolve-bare-imports (enforce:'post').
-        // When this.environment is undefined (Vite 5 context), that plugin throws a
-        // plain object that tinypool serialises as "[object Object]" → "Unknown Error".
-        // Intercept optional-peer-dep virtual IDs before Nuxt's post-plugin runs so the
-        // crash is never reached. Safe in production: Vite 6 has this.environment, and
-        // optional deps that are missing should produce empty modules anyway.
-        name: 'fix-vite5-optional-peer-dep',
-        enforce: 'pre' as const,
-        resolveId(id: string) {
-          if (id.startsWith('__vite-optional-peer-dep:')) return '\0' + id
-        },
-        load(id: string) {
-          if (id.startsWith('\0__vite-optional-peer-dep:')) return ''
-        },
-      },
-    ],
     resolve: {
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
       // Force all prosemirror packages to resolve to a single instance.
@@ -120,6 +101,39 @@ export default defineNuxtConfig({
       // rest of the app uses the top-level v1.4.3. Both create keyless plugins
       // (new Plugin({})) that each get key "plugin$1" from their counter — a
       // collision that causes "Adding different instances of a keyed plugin".
+      dedupe: [
+        'prosemirror-state',
+        'prosemirror-model',
+        'prosemirror-view',
+        'prosemirror-transform',
+
+        '@tiptap/core',
+        '@tiptap/extension-blockquote',
+        '@tiptap/extension-bold',
+        '@tiptap/extension-bullet-list',
+        '@tiptap/extension-code-block',
+        '@tiptap/extension-code-block-lowlight',
+        '@tiptap/extension-collaboration',
+        '@tiptap/extension-collaboration-cursor',
+        '@tiptap/extension-color',
+        '@tiptap/extension-heading',
+        '@tiptap/extension-image',
+        '@tiptap/extension-italic',
+        '@tiptap/extension-link',
+        '@tiptap/extension-list-item',
+        '@tiptap/extension-ordered-list',
+        '@tiptap/extension-table',
+        '@tiptap/extension-table-cell',
+        '@tiptap/extension-table-header',
+        '@tiptap/extension-table-row',
+        '@tiptap/extension-text-align',
+        '@tiptap/extension-text-style',
+        '@tiptap/extension-underline',
+        '@tiptap/html',
+        '@tiptap/pm',
+        '@tiptap/starter-kit',
+        '@tiptap/vue-3',
+      ],
     },
     css: {
       preprocessorOptions: {

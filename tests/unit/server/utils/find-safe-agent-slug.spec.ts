@@ -1,6 +1,6 @@
 import type { PrismaClient } from '~~/prisma-chatbot-db/generated/prisma/client.ts'
 import findSafeAgentSlug from '~/server/utils/find-safe-agent-slug'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -70,10 +70,6 @@ const ORG_CODE = 'org-abc'
 // ---------------------------------------------------------------------------
 
 describe('findSafeAgentSlug', () => {
-  beforeEach(() => {
-    vi.clearAllMocks()
-  })
-
   // ── Happy path ────────────────────────────────────────────────────────────
 
   it('returns the slug unchanged when it is not used by any alias or agent', async () => {

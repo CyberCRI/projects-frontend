@@ -1,10 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-
-import type { OrganizationOutput } from 'shared-projects-frontend/models'
-import useOrganizationsStore from '~/stores/useOrganizations'
-import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
-import { flushPromises } from '@vue/test-utils'
-import type { Router } from 'vue-router'
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const checkExpiredToken = vi.fn()
 const cleanLocalStorage = vi.fn()
@@ -32,11 +26,20 @@ vi.mock('~/api/auth/auth.service', async (origi) => {
   }
 })
 
+import { OrganizationFactory } from '~~/tests/factories/organization.factory'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import { flushPromises } from '@vue/test-utils'
+import type { Router } from 'vue-router'
+
 describe('On tab focus', () => {
+  beforeAll(() => {
+    const organizationsStore = useOrganizationsStore()
+    organizationsStore._current = OrganizationFactory.generate()
+  })
+
   beforeEach(() => {
     vi.resetModules()
-    const organizationsStore = useOrganizationsStore()
-    organizationsStore._current = { code: '123' } as OrganizationOutput
   })
 
   const localeMount = async () => {
@@ -57,7 +60,6 @@ describe('On tab focus', () => {
 
   afterEach(() => {
     localStorage.clear()
-    vi.clearAllMocks()
   })
 
   it('logout if token has expired', async () => {

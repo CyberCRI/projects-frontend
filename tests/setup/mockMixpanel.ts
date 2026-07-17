@@ -1,4 +1,3 @@
-import Mixpanel from 'mixpanel-browser'
 import { vi } from 'vitest'
 // fix unhnadled rejection due to invalid url
 vi.mock('mixpanel-browser', async (importOriginal) => {
