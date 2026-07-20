@@ -2,7 +2,7 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 import type { RefOrRaw } from '~/interfaces/utils'
 
 import { canEditUser as globalCanEditUser } from 'shared-projects-frontend/lib'
-import type { UserModel } from 'shared-projects-frontend/models'
+import type { UserSlugOrId } from 'shared-projects-frontend/models'
 import useUsersStore from '~/stores/useUsers'
 
 /**
@@ -15,7 +15,7 @@ import useUsersStore from '~/stores/useUsers'
  * @returns {{ canCreateUser: globalThis.ComputedRef<boolean>; canEditUser: globalThis.ComputedRef<boolean>; canDeleteUser: globalThis.ComputedRef<boolean>; }}
  * @exports
  */
-export const usePermissionUser = (userId: RefOrRaw<UserModel['id'] | null>) => {
+export const usePermissionUser = (userId: RefOrRaw<UserSlugOrId | null>) => {
   const organizationStore = useOrganizationsStore()
   const userStore = useUsersStore()
 
@@ -27,6 +27,7 @@ export const usePermissionUser = (userId: RefOrRaw<UserModel['id'] | null>) => {
   const canEditUser = computed(() => {
     return (
       permissions.value &&
+      // @ts-expect-error internalUserId is number or string
       (globalCanEditUser(userStore.rights, organizationStore.current.id, internalUserId.value) ||
         isSelf.value)
     )

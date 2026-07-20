@@ -7,6 +7,7 @@ import {
   canEditComment as globalCanEditComment,
   canEditReview as globalCanEditReview,
   canEditProject as globalCanEditProject,
+  canCreateProject as globalCanCreateProject,
   isMember as globalIsMember,
   isOwner as globalIsOwner,
   isViewer,
@@ -36,8 +37,12 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
   const permissions = computed(() => internalProjectId.value && userStore.isConnected)
 
   const canCreateProject = computed(() => {
-    // TODO fix this permissions
-    return userStore.isConnected && !isViewer(userStore.rights, organizationStore.current.id)
+    return (
+      userStore.isConnected &&
+      (globalCanCreateProject(userStore.rights, organizationStore.current.id) ||
+        // TODO legacy permissions ?
+        !isViewer(userStore.rights, organizationStore.current.id))
+    )
   })
 
   const canEditProject = computed(() => {
