@@ -84,6 +84,7 @@ const props = defineProps<{
 }>()
 
 const toaster = useToasterStore()
+const router = useRouter()
 
 const { locale, t } = useNuxtI18n()
 
@@ -118,19 +119,23 @@ const { stateModals, openModals, closeModals } = useModals({
   delete: false,
 })
 
-const onConfirmDelete = async () => {
+const onConfirmDelete = () => {
   asyncingDelete.value = true
-  try {
-    await deleteNews(organizationCode, news.value.id)
-    toaster.pushSuccess(t('news.delete.success'))
-    refresh()
-  } catch (err) {
-    toaster.pushError(`${t('news.delete.error')} (${err})`)
-    console.error(err)
-  } finally {
-    asyncingDelete.value = false
-    onCancel()
-  }
+  return deleteNews(organizationCode, news.value.id)
+    .then(() => {
+      toaster.pushSuccess(t('news.delete.success'))
+      router.push({
+        name: 'NewsListPage',
+      })
+    })
+    .catch((err) => {
+      toaster.pushError(t('news.delete.error'))
+      console.error(err)
+    })
+    .finally(() => {
+      asyncingDelete.value = false
+      onCancel()
+    })
 }
 
 const onCancel = () => closeModals('delete', 'edit')
