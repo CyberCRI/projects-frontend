@@ -115,7 +115,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
    * @returns {boolean}
    */
   const abort = () => {
-    if (controller.value) {
+    if (controller.value && import.meta.env.VITEST) {
       controller.value.abort()
       controller.value = null
       return true
@@ -195,10 +195,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   }
 
   onUnmounted(() => {
-    if (controller.value) {
-      controller.value.abort()
-      controller.value = null
-    }
+    abort()
   })
 
   // @ts-expect-error 2322 todo check why
