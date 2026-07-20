@@ -90,7 +90,10 @@ export const usePagination = (
   // you can change page directly
   const setPage = (pageValue: number) => {
     if (pageValue < 1 || pageValue > total.value) {
-      console.error(`You can't change page to ${pageValue}`)
+      // ignore log for "first" page
+      if (pageValue !== 1) {
+        console.error(`You can't change page to ${pageValue}`)
+      }
       return false
     }
     if (pageValue === current.value) {
