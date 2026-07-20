@@ -135,6 +135,7 @@ const checkSubmit = () => {
   <BaseModuleTab :title="project.$t.title">
     <FormPanel
       :confirm-action-disabled="!isValid || (!inSoloMode && !socketReady) || isFormEqual"
+      :asyncing="asyncing"
       @close="checkClose"
       @confirm="checkSubmit"
     >
