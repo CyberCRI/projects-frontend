@@ -233,13 +233,13 @@ const notificationRoute = computed<RouteLocationRaw>(() => {
 }
 
 .img-container {
-  border-radius: 50%;
-  background-size: cover;
-  background-position: top center;
-  width: 50px;
-  height: 50px;
-  flex: none;
-  margin-right: variables.$space-s;
+  border-radius: 50% !important;
+  background-size: cover !important;
+  background-position: top center !important;
+  width: 50px !important;
+  height: 50px !important;
+  flex: none !important;
+  margin-right: variables.$space-s !important;
 }
 
 .icon {
