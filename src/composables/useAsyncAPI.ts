@@ -4,11 +4,12 @@ import type { ClientAPIOptions } from 'shared-projects-frontend/apis'
 import { withQuery } from '~/functs/query'
 import { isNil } from 'es-toolkit'
 
+type AsyncHandlerParameters = Parameters<Parameters<typeof useAsyncData>['1']>[0]
 type AsyncHandler = {
-  ctx?: Parameters<Parameters<typeof useAsyncData>['1']>[0]
+  ctx?: AsyncHandlerParameters
   config: {
     query?: any
-    signal?: AbortController['signal']
+    signal?: AbortSignal
   }
 }
 
@@ -102,39 +103,14 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     return parentKey
   })
 
-  // signal for aborting
-  const controller = ref<AbortController | null>(new AbortController())
-
-  /**
-   * abort existing request (with signal)
-   *
-   * @function
-   * @name abort
-   * @kind variable
-   * @memberof useAsyncAPI
-   * @returns {boolean}
-   */
-  const abort = () => {
-    if (controller.value && import.meta.env.VITEST) {
-      controller.value.abort()
-      controller.value = null
-      return true
-    }
-    return false
-  }
-
   const { status, data, ...res } = useAsyncData<ResDataT, unknown, DataT>(
     key,
-    () => {
+    (_, { signal }) => {
       if (!checkArgs.value) {
         return null
       }
 
-      // clean exsisting fetch, and create new controller
-      abort()
-      controller.value = new AbortController()
-
-      const conf = { signal: controller.value.signal } as AsyncHandler['config']
+      const conf: AsyncHandler['config'] = { signal }
       if (params[2].query) {
         conf.query = unref(params[2].query)
       } else {
@@ -160,7 +136,6 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     isLoading,
     data: dataWrapped,
     key,
-    abort,
   }
 
   if (immediate) {
@@ -193,10 +168,6 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
       }
     })
   }
-
-  onUnmounted(() => {
-    abort()
-  })
 
   // @ts-expect-error 2322 todo check why
   return results
