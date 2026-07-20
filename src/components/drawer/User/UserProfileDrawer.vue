@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { UserModel } from 'shared-projects-frontend/models'
+import type { UserSlugOrId } from 'shared-projects-frontend/models'
 
 withDefaults(
   defineProps<{
     isOpened: boolean
-    userId?: UserModel['id']
+    userId?: UserSlugOrId
   }>(),
   { userId: null }
 )
