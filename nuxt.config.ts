@@ -3,7 +3,14 @@ import path from 'node:path'
 import fs from 'node:fs'
 
 // Determine the environment file
-const customEnvFile = process.env.ENV_FILE ? `.env.${process.env.ENV_FILE}` : '.env'
+const customEnvFile = import.meta.env.ENV_FILE ? `.env.${import.meta.env.ENV_FILE}` : '.env'
+
+const alias = {}
+const sharedPackageOverride = import.meta.env.IMPORT_SHARED_PACKAGE_OVERRIDE
+if (sharedPackageOverride) {
+  alias['shared-projects-frontend'] = path.join(__dirname, sharedPackageOverride)
+  console.log('Overriding shared package imports:', sharedPackageOverride)
+}
 
 // not load env when we are in tests
 if (fs.existsSync(customEnvFile) && import.meta.env.VITEST !== 'true') {
@@ -94,6 +101,7 @@ export default defineNuxtConfig({
   },
   vite: {
     resolve: {
+      alias, // See also 'nitro' section
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
       // Force all prosemirror packages to resolve to a single instance.
       // prosemirror-dropcursor and prosemirror-gapcursor ship their own nested
@@ -133,6 +141,25 @@ export default defineNuxtConfig({
         '@tiptap/pm',
         '@tiptap/starter-kit',
         '@tiptap/vue-3',
+        'shared-projects-frontend',
+        'ofetch',
+      ],
+    },
+    optimizeDeps: {
+      // Vite can only "discover" deps as it crawls sources,
+      // packages that get imported conditionally, dynamically, or deep inside client-only components/plugins
+      // often get missed on the first pass
+      // hence those annoying .'new dependencies optimized' that trigger page reloads when developing
+      include: [
+        '@hocuspocus/provider',
+        '@tiptap/extension-collaboration-cursor',
+        '@tiptap/extension-collaboration',
+        'qrcode',
+        'y-prosemirror',
+        'leaflet',
+        'leaflet.markercluster',
+        '@vuepic/vue-datepicker',
+        'date-fns/locale',
       ],
     },
     css: {
@@ -234,6 +261,9 @@ export default defineNuxtConfig({
 
   nitro: {
     minify: import.meta.dev,
+    // Nuxt's top-level alias mostly affects Vite (client + SSR bundling of app code),
+    // but Nitro has its own alias resolution for server routes/middleware.
+    alias,
   },
 
   app: {
