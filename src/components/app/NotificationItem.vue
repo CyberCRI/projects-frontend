@@ -6,10 +6,10 @@
     }"
     class="notification"
     tabindex="0"
-    @click="$emit('navigated', notification)"
+    @click="notificationRoute && $emit('navigated', notification)"
   >
     <component
-      :is="notificationRoute ? 'NuxtLink' : 'div'"
+      :is="notificationRoute ? NuxtLink : 'div'"
       :to="notificationRoute"
       class="notification-link"
     >

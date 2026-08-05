@@ -3405,7 +3405,7 @@
     "tab": {
       "delete-confirm": "Voulez-vous vraiment supprimer cet onglet ? tout le contenu sera supprimé.",
       "delete": "Supprimer l'onglet",
-      "add": "Nouvelle onglet",
+      "add": "Nouvel onglet",
       "edit": "Modifier l'onglet",
       "title": "Création d'onglets",
       "label": "onglet | Tables"

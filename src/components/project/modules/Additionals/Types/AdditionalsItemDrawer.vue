@@ -28,7 +28,13 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <BaseDrawer :is-opened="isOpened" :title="$t('tab.item.title')" no-footer class="blog-drawer">
+  <BaseDrawer
+    :is-opened="isOpened"
+    :title="$t('tab.item.title')"
+    no-footer
+    class="blog-drawer"
+    @close="emit('close')"
+  >
     <InlineAdditionalsItemForm
       v-if="isOpened"
       :project="project"

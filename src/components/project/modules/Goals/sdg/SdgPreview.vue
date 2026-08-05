@@ -63,8 +63,8 @@ const SDG_LOGO_HEADER = 'https://sdgs.un.org/themes/custom/porto/assets/goals/gl
   height: 100%;
   display: flex;
   align-items: center;
+  border: 1px solid var(--primary);
   border-radius: 20px;
-  background-color: var(--gray-darker);
 
   @media screen and (max-width: variables.$min-tablet) {
     width: 100%;
@@ -79,10 +79,6 @@ const SDG_LOGO_HEADER = 'https://sdgs.un.org/themes/custom/porto/assets/goals/gl
 
     @media screen and (max-width: variables.$min-tablet) {
       width: 140px;
-    }
-
-    img {
-      background-color: var(--gray-darker) !important;
     }
   }
 }
