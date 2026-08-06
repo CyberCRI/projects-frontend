@@ -116,6 +116,9 @@
         </ul>
         <ul class="footer-links">
           <li class="list-item">
+            <a target="_blank" :href="aboutProjectsLink">{{ $t('footer.about-projects') }}</a>
+          </li>
+          <li class="list-item">
             <a @click.prevent="reportBugOpen = true">{{ $t('report.bug') }}</a>
           </li>
           <li class="list-item">
@@ -178,6 +181,10 @@ const appVersion = computed(() => runtimeConfig.public.appVersion)
 const isConnected = computed(() => usersStore.isConnected)
 const approveTermIsActive = computed(() => !!usersStore.userFromApi)
 const showOnboardingScreen = computed(() => organizationsStore.current?.onboarding_enabled)
+
+const aboutProjectsLink = computed(
+  () => `https://discover.projects.learningplanetinstitute.org/${locale.value === 'fr' ? '' : 'en'}`
+)
 </script>
 
 <style lang="scss" scoped>

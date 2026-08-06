@@ -929,7 +929,8 @@
     "madeBy": "wird von",
     "sourceText": "Siehe Quellcode",
     "pca": "Kontinuitätsplan (PCA)",
-    "pssi": "Sicherheitsplan (PSSI)"
+    "pssi": "Sicherheitsplan (PSSI)",
+    "about-projects": "Über Projects"
   },
   "goal": {
     "add": "ein Ziel hinzufügen",

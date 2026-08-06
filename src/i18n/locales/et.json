@@ -929,7 +929,8 @@
     "madeBy": "tehtud",
     "sourceText": "Vaata lähtekoodi",
     "pca": "Järjepidevuse kava",
-    "pssi": "Turvaplaan (PSSI)"
+    "pssi": "Turvaplaan (PSSI)",
+    "about-projects": "Projects-ist"
   },
   "goal": {
     "add": "Lisa eesmärk",
