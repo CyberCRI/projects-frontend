@@ -929,7 +929,8 @@
     "madeBy": "is gemaakt door",
     "sourceText": "Zie de broncode",
     "pca": "Continuïteitsplan (PCA)",
-    "pssi": "Beveiligingsplan (PSSI)"
+    "pssi": "Beveiligingsplan (PSSI)",
+    "about-projects": "Over Projects"
   },
   "goal": {
     "add": "Doel toevoegen",

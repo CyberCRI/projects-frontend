@@ -929,7 +929,8 @@
     "madeBy": "està fet per",
     "sourceText": "Mireu el codi font",
     "pca": "Planificació de continuitat (PCPA)",
-    "pssi": "Planificació de seguretat (PSSI)"
+    "pssi": "Planificació de seguretat (PSSI)",
+    "about-projects": "Sobre   Projects"
   },
   "goal": {
     "add": "Afegeix un objectiu",
