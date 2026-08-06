@@ -1,21 +1,17 @@
 import type { ClientAPIOptions } from 'shared-projects-frontend/apis'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import type { InferSchema, ToolCallback } from '~/interfaces/mcp'
-import { tokenMap } from '~/server/routes/api/chat-stream'
 
 const runtimeConfig = useRuntimeConfig()
 export const orgCode = runtimeConfig.public.appApiOrgCode
 
 export function getUserToken(extras) {
-  const convesrationId = (extras.requestInfo.headers['authorization'] || '').replace('Bearer ', '')
-  traceMcp('Tool Getting user token for conversationId', convesrationId)
-  const tokenEntry = tokenMap.get(convesrationId)
-  if (tokenEntry) {
-    traceMcp('MCP tool found token for conversationId', tokenEntry.token.substring(0, 6) + '...')
-    return tokenEntry.token
-  } else {
-    traceMcp('MCP tool no token found for conversationId', convesrationId)
+  const token = (extras.requestInfo.headers['authorization'] || '').replace('Bearer ', '')
+  if (token) {
+    traceMcp('MCP tool user token has token ', token.substring(0, 6) + '...')
+    return token
   }
+  traceMcp('MCP tool user has no token')
   return null
 }
 

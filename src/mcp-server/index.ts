@@ -1,11 +1,11 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-
 import registerOrganizationTool from './projects/organization-tool'
 import registerInstructionTool from './projects/instruction-tool'
 import registerSorbobotTool from './sorbobot/sorbobot-tool'
 import registerProjectTool from './projects/project-tool'
 import registerSearchTool from './projects/search-tool'
 import registerPeopleTool from './projects/people-tool'
+import registerLoginTool from './projects/login-tool'
 import registerEventTool from './projects/event-tool'
 import type { TypeMcpServer } from '~/interfaces/mcp'
 import registerNewsTool from './projects/news-tool'
@@ -30,6 +30,8 @@ function createMCPServer() {
   //   'sorbobotApiToken',
   //   !!sorbobotApiToken
   // )
+
+  registerLoginTool(server)
 
   registerSorbobotTool(server)
 
