@@ -6,7 +6,9 @@ export default defineLazyEventHandler(() => {
     // TODO: use root url ('/') ???
     return {
       resource: appMcpServerUrl,
-      authorization_servers: [`${appKeycloakUrl}/realms/${appKeycloakRealm}`],
+      authorization_servers: [
+        `${appKeycloakUrl}/realms/${appKeycloakRealm}/.well-known/openid-configuration`,
+      ],
     }
   })
 })
