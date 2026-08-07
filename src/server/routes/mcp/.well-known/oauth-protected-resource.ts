@@ -1,9 +1,12 @@
 export default defineLazyEventHandler(() => {
   const { appMcpServerUrl } = useRuntimeConfig()
-  const { appKeycloakUrl } = useRuntimeConfig().public
+  const { appKeycloakUrl, appKeycloakRealm } = useRuntimeConfig().public
 
   return defineEventHandler(async () => {
     // TODO: use root url ('/') ???
-    return { resource: appMcpServerUrl, authorization_servers: [appKeycloakUrl] }
+    return {
+      resource: appMcpServerUrl,
+      authorization_servers: [`${appKeycloakUrl}/realms/${appKeycloakRealm}`],
+    }
   })
 })
