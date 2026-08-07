@@ -1,10 +1,26 @@
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
-
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
+import { usePublicURL } from '~/composables/usePublic'
 import createMCPServer from '~/mcp-server'
-
 export default defineEventHandler(async (event) => {
   const { req, res } = event.node
+
+  const { authed } = getQuery(event)
+  const token = getRequestHeader(event, 'authorization') || ''
+
+  if (authed && !token) {
+    setResponseStatus(event, 401)
+    setHeader(
+      event,
+      'WWW-Authenticate',
+      `Bearer resource_metadata="${usePublicURL('/mcp/.well-known/oauth-protected-resource')}"`
+    )
+
+    return {
+      statusCode: 401,
+      message: 'Unauthorized',
+    }
+  }
 
   //   const eventStream = createEventStream(event)
   // Create a new transport for each request to prevent request ID collisions
@@ -42,6 +58,7 @@ export default defineEventHandler(async (event) => {
 
   await mcpServer.connect(transport)
   await transport.handleRequest(req, res)
+
   // return transport.handleRequest(req, res)
   // get res body
   //   return eventStream.send()
