@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     setHeader(
       event,
       'WWW-Authenticate',
-      `Bearer resource_metadata="${appMcpServerUrl}/mcp/.well-known/oauth-protected-resource'"`
+      `Bearer resource_metadata="${appMcpServerUrl}/.well-known/oauth-protected-resource'"`
     )
 
     return {
