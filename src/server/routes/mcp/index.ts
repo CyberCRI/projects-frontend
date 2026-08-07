@@ -3,8 +3,6 @@ import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import createMCPServer from '~/mcp-server'
 
-import { AuthRequiredError } from '@/mcp-server/projects/login-tool'
-
 export default defineEventHandler(async (event) => {
   const { req, res } = event.node
 
@@ -42,25 +40,8 @@ export default defineEventHandler(async (event) => {
   //     //       transport.close()
   //   })
 
-  try {
-    await mcpServer.connect(transport)
-    await transport.handleRequest(req, res)
-  } catch (err) {
-    if (err instanceof AuthRequiredError && !res.headersSent) {
-      setResponseStatus(event, 401)
-      setHeader(
-        event,
-        'WWW-Authenticate',
-        `Bearer resource_metadata="${usePublicURL('/mcp/.well-known/oauth-protected-resource')}"`
-      )
-
-      return {
-        statusCode: 401,
-        message: 'Unauthorized',
-      }
-    }
-    throw err
-  }
+  await mcpServer.connect(transport)
+  await transport.handleRequest(req, res)
   // return transport.handleRequest(req, res)
   // get res body
   //   return eventStream.send()

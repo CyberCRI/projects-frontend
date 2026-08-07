@@ -1,8 +1,6 @@
 import type { TypeMcpServer } from '~/interfaces/mcp'
 import { getUserToken } from './base'
 
-export class AuthRequiredError extends Error {}
-
 export default (server: TypeMcpServer) => {
   // Add an search tool
   server.registerTool(
@@ -12,8 +10,16 @@ export default (server: TypeMcpServer) => {
       description:
         'Allow the user to login to unlock extra data. If this tool is present, always first propose the user to use it.',
     },
-    (_, extras) => {
-      if (!getUserToken(extras)) throw new AuthRequiredError()
+    (extras) => {
+      if (!getUserToken(extras))
+        return {
+          content: [
+            {
+              type: 'text',
+              text: 'Use the PRM document (/.well-known/oauth-protected-resource) to authenticate the user.',
+            },
+          ],
+        }
       return {
         content: [
           { type: 'text', text: 'User is authenticated, do not use the login tool again.' },

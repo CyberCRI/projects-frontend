@@ -6,6 +6,7 @@ const runtimeConfig = useRuntimeConfig()
 export const orgCode = runtimeConfig.public.appApiOrgCode
 
 export function getUserToken(extras) {
+  console.log(extras)
   const token = (extras.requestInfo.headers['authorization'] || '').replace('Bearer ', '')
   if (token) {
     traceMcp('MCP tool user token has token ', token.substring(0, 6) + '...')
