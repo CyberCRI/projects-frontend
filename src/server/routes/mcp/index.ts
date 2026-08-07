@@ -1,8 +1,8 @@
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
-import { usePublicURL } from '~/composables/usePublic'
 import createMCPServer from '~/mcp-server'
 export default defineEventHandler(async (event) => {
+  const { appMcpServerUrl } = useRuntimeConfig()
   const { req, res } = event.node
 
   const { authed } = getQuery(event)
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     setHeader(
       event,
       'WWW-Authenticate',
-      `Bearer resource_metadata="${usePublicURL('/mcp/.well-known/oauth-protected-resource')}"`
+      `Bearer resource_metadata="${appMcpServerUrl}/mcp/.well-known/oauth-protected-resource'"`
     )
 
     return {
