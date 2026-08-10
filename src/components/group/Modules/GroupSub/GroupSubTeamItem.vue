@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 
 import BaseGroupMembersList from '~/components/group/Modules/Members/BaseGroupMembersList.vue'
 import GroupRecapPreview from '~/components/group/Modules/Extras/GroupRecapPreview.vue'
@@ -58,6 +58,8 @@ const onMouseout = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .no-transform:not(.shadow-box-transform) {
   transform: unset !important;
 }
@@ -67,11 +69,11 @@ const onMouseout = () => {
   grid-template-rows: 1fr;
   width: 100%;
   gap: 1rem;
-  min-height: pxToRem(80px);
+  min-height: variables.pxtorem(80px);
 
   .subgroup-header {
     padding: 0 1.5rem;
-    background-color: color-mix(in srgb, $primary, transparent 90%);
+    background-color: color-mix(in srgb, variables.$primary, transparent 90%);
     display: flex;
     justify-content: space-between;
     align-items: center;

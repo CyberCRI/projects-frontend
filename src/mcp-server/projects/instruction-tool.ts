@@ -1,5 +1,5 @@
-import { getAllInstructions, getInstruction } from '~/api/instruction.service'
-import type { InstructionModel } from '~/models/instruction.model'
+import { getAllInstructions, getInstruction } from 'shared-projects-frontend/apis'
+import type { InstructionModel } from 'shared-projects-frontend/models'
 import { mcpOptions, orgCode, resultFromTool } from './base'
 import type { TypeMcpServer } from '~/interfaces/mcp'
 import { pick } from 'es-toolkit'
@@ -33,7 +33,9 @@ export default (server: TypeMcpServer) => {
       title: 'Instruction data',
       description:
         'Get an instruction article. Use the instructions-list tool to get instruction ids.',
-      inputSchema: { slugOrId: z.string().describe('The slug or id of the instruction article') },
+      inputSchema: {
+        slugOrId: z.string().describe('The slug or id of the instruction article'),
+      },
     },
     resultFromTool(({ slugOrId }, extras) => {
       const opts = mcpOptions(extras)

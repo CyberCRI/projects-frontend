@@ -1,6 +1,6 @@
 import { maxLength, required } from '@vuelidate/validators'
 
-import type { LocationForm } from '~/models/location.model'
+import type { LocationForm } from 'shared-projects-frontend/models'
 
 import useForm from '~/composables/useForm'
 
@@ -24,5 +24,9 @@ const RULES = {
 }
 
 export const useLocationForm = (options) => {
-  return useForm<LocationForm>({ default: clone(DEFAULT_FORM), rules: clone(RULES), ...options })
+  return useForm<LocationForm>({
+    default: clone(DEFAULT_FORM),
+    rules: clone(RULES),
+    ...options,
+  })
 }

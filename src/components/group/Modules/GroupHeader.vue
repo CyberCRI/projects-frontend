@@ -102,8 +102,8 @@
 
 <script setup lang="ts">
 import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.vue'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 import UserProfileDrawer from '~/components/drawer/User/UserProfileDrawer.vue'
-import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 import { DEFAULT_GROUP_PATATOID } from '@/composables/usePatatoids'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'
@@ -149,7 +149,7 @@ const groupVisibilityIcon = computed(() =>
 )
 
 const hasLinks = computed(() => {
-  return props.group.locations.length
+  return props.group.locations.length || props.group.email
 })
 const hasExtras = computed(() => {
   return props.group.sdgs.length || hasLinks.value
@@ -173,11 +173,13 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .group-info-container {
   display: grid;
   grid-template-columns: 240px 1fr;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     grid-template-columns: unset;
     grid-template-rows: 240px 1fr;
   }
@@ -201,7 +203,7 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   width: 100%;
   height: auto;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     width: auto;
     height: 100%;
   }
@@ -209,15 +211,15 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 
 .group-visibility {
   font-weight: 700;
-  font-size: $font-size-xs;
-  color: $primary-dark;
+  font-size: variables.$font-size-xs;
+  color: variables.$primary-dark;
   display: flex;
   align-items: center;
 
   .icon svg {
-    fill: $primary-dark;
-    width: $layout-size-xl;
-    height: $layout-size-m;
+    fill: variables.$primary-dark;
+    width: variables.$layout-size-xl;
+    height: variables.$layout-size-m;
   }
 }
 
@@ -229,7 +231,7 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   display: grid;
   grid-template-columns: 1fr 1fr;
 
-  @media screen and (max-width: $min-desktop) {
+  @media screen and (max-width: variables.$min-desktop) {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
@@ -248,7 +250,7 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   gap: 0.2rem;
   overflow: hidden;
 
-  @media screen and (max-width: $min-desktop) {
+  @media screen and (max-width: variables.$min-desktop) {
     flex-direction: column;
     gap: 0.5rem;
     justify-content: start;
@@ -262,7 +264,7 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   align-items: center;
   flex-wrap: wrap;
 
-  @media screen and (max-width: $min-desktop) {
+  @media screen and (max-width: variables.$min-desktop) {
     justify-content: flex-start;
   }
 }

@@ -912,7 +912,10 @@
       "description": "Das Beschreibungsfeld ist erforderlich"
     },
     "templates": "Vorlagen",
-    "quit-without-saving-title": "Nicht zu retten?"
+    "quit-without-saving-title": "Nicht zu retten?",
+    "recaptcha": {
+      "required": "Recaptcha ist erforderlich."
+    }
   },
   "footer": {
     "contact": "Kontaktieren Sie uns",
@@ -926,7 +929,8 @@
     "madeBy": "wird von",
     "sourceText": "Siehe Quellcode",
     "pca": "Kontinuitätsplan (PCA)",
-    "pssi": "Sicherheitsplan (PSSI)"
+    "pssi": "Sicherheitsplan (PSSI)",
+    "about-projects": "Über Projects"
   },
   "goal": {
     "add": "ein Ziel hinzufügen",
@@ -1764,7 +1768,9 @@
         "too-big": "Die Datei ist zu groß (max: {maxSize}Mb)",
         "invalid-image": "Nicht unterstützte Datei, muss ein gültiges Bild sein.",
         "required-image": "Eine Datei ist erforderlich",
-        "required": "Eine Datei ist erforderlich"
+        "required": "Eine Datei ist erforderlich",
+        "delete": "Löschen der Datei",
+        "delete-image": "Bild entfernen"
       }
     },
     "link": {
@@ -2429,7 +2435,9 @@
       "reviewed": "wurde geprüft",
       "reviewed-sub": "Wenn Ihr Projekt zur Überprüfung bereit ist, werden Sie benachrichtigt, wenn der Prüfer Ihres Projekts seine Überprüfung vorgelegt hat",
       "reply": "Antwort auf Ihren Kommentar",
-      "reply-sub": "Benachrichtigen, wenn jemand auf Ihren Kommentar antwortet"
+      "reply-sub": "Benachrichtigen, wenn jemand auf Ihren Kommentar antwortet",
+      "announcement-has-new-application": "Ankündigungen",
+      "announcement-has-new-application-sub": "Benachrichtigt werden, wenn Ankündigungen einen neuen Antrag haben"
     },
     "follow": {
       "title": "Folgen Sie der Meldung",
@@ -3424,13 +3432,15 @@
     },
     "form": {
       "title": {
-        "label": "Titel"
+        "label": "Titel",
+        "required": "Der Titel ist erforderlich."
       },
       "description": {
         "label": "Warenbezeichnung"
       },
       "icon": {
-        "label": "Icon"
+        "label": "Icon",
+        "select": "Wählen Sie Icon"
       },
       "show_preview": {
         "label": "Vorschau in der Zusammenfassungsseite anzeigen."
@@ -3446,6 +3456,10 @@
           "label": "Blog",
           "help": "der Inhalt ist Liste für Blogeintrag."
         }
+      },
+      "content": {
+        "label": "Inhalt",
+        "required": "Der Inhalt ist erforderlich."
       }
     },
     "toasts": {

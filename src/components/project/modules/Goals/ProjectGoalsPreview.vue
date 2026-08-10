@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import BaseProjectGoalList from '~/components/project/modules/Goals/BaseProjectGoalList.vue'
-import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
+import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
-import type { TranslatedProject } from '@/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 
 defineProps<{ project: TranslatedProject }>()
 </script>
 
 <template>
   <BaseModulePreview
-    :title="$t(ProjectModuleTitle.goals)"
-    :icon="ProjectModuleIcon.goals"
+    :title="$t(PROJECT_MODULE_TITLE.goals)"
+    :icon="PROJECT_MODULE_ICON.goals"
     :total="project.modules.goals"
     :see-more="{
       name: 'projectGoals',

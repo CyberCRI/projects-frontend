@@ -15,14 +15,16 @@ import DefaultSkillsAdmin from '~/components/admin/DefaultSkillsAdmin.vue'
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .block-container {
-  padding: $space-l;
-  background: $white;
-  border-radius: $border-radius-l;
-  border: $border-width-s solid $primary;
+  padding: variables.$space-l;
+  background: variables.$white;
+  border-radius: variables.$border-radius-l;
+  border: variables.$border-width-s solid variables.$primary;
 }
 
 .block-container ~ .block-container {
-  margin-top: $space-l;
+  margin-top: variables.$space-l;
 }
 </style>

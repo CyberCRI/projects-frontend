@@ -1,4 +1,4 @@
-import type { ImageModel, ImageVariations } from '~/models/image.model'
+import type { ImageModel, ImageVariations } from 'shared-projects-frontend/models'
 
 export default function useImageAndDimensions(
   imageData: ImageModel | null,

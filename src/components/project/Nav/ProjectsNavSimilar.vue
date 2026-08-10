@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProject } from '~/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import { isNil } from 'es-toolkit'
 
 const props = withDefaults(
@@ -35,6 +35,8 @@ const projectsSliced = computed(() =>
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .similar-projects {
   border: 1px solid var(--lighter-gray);
   border-radius: 1rem;
@@ -44,13 +46,13 @@ const projectsSliced = computed(() =>
   gap: 0.5rem;
 
   .group-section-title {
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
     font-weight: 700;
     margin-bottom: 0;
   }
 
   .hint {
-    font-size: $font-size-s;
+    font-size: variables.$font-size-s;
     font-weight: 400;
   }
 

@@ -1,12 +1,11 @@
-import type { OrganizationModel } from '~/models/organization.model'
+import type { OrganizationModel, TranslatedLocationGeneral } from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
-import { getLocations as fetchGetLocations } from '~/api/locations.service'
+import { getLocations as fetchGetLocations } from 'shared-projects-frontend/apis'
 
 import useAsyncAPI from '~/composables/useAsyncAPI'
 
-import type { TranslatedLocationGeneral } from '~/interfaces/maps'
 import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}
@@ -20,7 +19,11 @@ export const getLocations = (
 
   return useAsyncAPI(
     key,
-    ({ config }) => fetchGetLocations(unref(organizationCode), { ...DEFAULT_CONFIG, ...config }),
+    ({ config }) =>
+      fetchGetLocations(unref(organizationCode), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
     {
       watch: onlyRefs([organizationCode]),
       translate: (data) => translateLocations<TranslatedLocationGeneral>(data),

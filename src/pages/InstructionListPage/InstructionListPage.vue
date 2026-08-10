@@ -1,19 +1,22 @@
 <script setup lang="ts">
-import type { QueryFilterInstruction } from '~/models/instruction.model'
+import type { QueryFilterInstruction } from 'shared-projects-frontend/models'
 
+import { deleteInstruction } from 'shared-projects-frontend/apis'
 import { getAllInstructions } from '~/api/v2/instruction.service'
-import { deleteInstruction } from '~/api/instruction.service'
 
 import FetchLoader from '~/components/base/FetchLoader.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
+import { usePermissionInstruction } from '~/composables/usePermissions/useInstructionPermissions'
 import { instructionSkeleton } from '~/skeletons/instructions.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import { nowDate } from '~/functs/date'
 
 const toaster = useToasterStore()
-const { canCreateInstruction, canEditInstruction, canDeleteInstruction } = usePermissions()
+
+const { canCreateInstruction, canEditInstruction, canDeleteInstruction } =
+  usePermissionInstruction(null)
 const { t } = useNuxtI18n()
 
 const editedInstruction = ref(null)
@@ -115,8 +118,10 @@ useLpiHead2({
   />
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .page-title {
-  margin-bottom: $space-2xl;
+  margin-bottom: variables.$space-2xl;
 }
 
 .create-instruction-button {

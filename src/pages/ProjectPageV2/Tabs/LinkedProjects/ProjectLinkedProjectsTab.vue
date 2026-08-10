@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import BaseLinkedProjects from '@/components/project/modules/LinkedProjects/BaseLinkedProjects.vue'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
-import type { TranslatedProject } from '@/models/project.model'
-import { ProjectModuleTitle } from '@/models/project.model'
+import { PROJECT_MODULE_TITLE } from '~/functs/constants'
 
 const props = withDefaults(
   defineProps<{
@@ -17,7 +17,7 @@ const countElement = computed<number>(() => props.project.modules?.linked_projec
 
 <template>
   <BaseModuleTab
-    :title="$t(ProjectModuleTitle.linked_projects, countElement)"
+    :title="$t(PROJECT_MODULE_TITLE.linked_projects, countElement)"
     :count="countElement"
   >
     <BaseLinkedProjects :project="project" :editable="editable" />

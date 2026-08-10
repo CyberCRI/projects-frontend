@@ -912,7 +912,10 @@
       "description": "El campo de descripción es necesario"
     },
     "templates": "Plantillas",
-    "quit-without-saving-title": "¿Dejar de salvar?"
+    "quit-without-saving-title": "¿Dejar de salvar?",
+    "recaptcha": {
+      "required": "Recaptcha es necesaria."
+    }
   },
   "footer": {
     "contact": "Contacta con nosotros",
@@ -926,7 +929,8 @@
     "madeBy": "es hecho por",
     "sourceText": "Ver el código fuente",
     "pca": "Plan de continuidad (PCA)",
-    "pssi": "Plan de seguridad (PSSI)"
+    "pssi": "Plan de seguridad (PSSI)",
+    "about-projects": "Acerca de Projects"
   },
   "goal": {
     "add": "añadir un objetivo",
@@ -1764,7 +1768,9 @@
         "too-big": "El archivo es demasiado grande (max: {maxSize}Mb)",
         "invalid-image": "Archivo sin soporte, necesita ser una imagen válida.",
         "required-image": "Se requiere un archivo",
-        "required": "Se requiere un archivo"
+        "required": "Se requiere un archivo",
+        "delete": "Borrar el archivo",
+        "delete-image": "Eliminar imagen"
       }
     },
     "link": {
@@ -2429,7 +2435,9 @@
       "reviewed": "Has been reviewed",
       "reviewed-sub": "Cuando su proyecto esté listo para su revisión, sea notificado cuando el revisor de su proyecto haya presentado su revisión",
       "reply": "Responder a su comentario",
-      "reply-sub": "Ser notificado cuando alguien responde a su comentario"
+      "reply-sub": "Ser notificado cuando alguien responde a su comentario",
+      "announcement-has-new-application": "Anuncios Aplicación",
+      "announcement-has-new-application-sub": "Ser notificado cuando los anuncios tienen una nueva aplicación"
     },
     "follow": {
       "title": "Notificación de seguimiento",
@@ -3424,13 +3432,15 @@
     },
     "form": {
       "title": {
-        "label": "Título"
+        "label": "Título",
+        "required": "Se requiere el título."
       },
       "description": {
         "label": "Descripción"
       },
       "icon": {
-        "label": "Icon"
+        "label": "Icon",
+        "select": "Seleccione Icon"
       },
       "show_preview": {
         "label": "Mostrar vista previa en la página sumaria."
@@ -3446,6 +3456,10 @@
           "label": "blog",
           "help": "el Contenido es lista para la entrada del blog."
         }
+      },
+      "content": {
+        "label": "Índice",
+        "required": "El contenido es necesario."
       }
     },
     "toasts": {

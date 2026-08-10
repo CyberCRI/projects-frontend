@@ -4,8 +4,8 @@ import ProjectLinkedProjectsTab from '~/pages/ProjectPageV2/Tabs/LinkedProjects/
 import { LinkedProjectFactory, TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 describe('ProjectLinkedProjectsTab.vue', () => {
   it('should render component', async () => {

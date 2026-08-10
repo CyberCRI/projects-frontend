@@ -70,7 +70,7 @@ const query = ref({
 const url = computed(() => `/api/chatbot/${props.agentSlug}`)
 // const { data, status, error } = useFetch(url, { ...options, query: { limit: LIMIT } }) // query is used for conversation only and would retrigger the full chat relaod
 
-const key = computed(() => `frontend-agents`)
+const key = computed(() => `chatbot-${props.agentSlug}`)
 const getAgent = () => useAsyncAPI(key, () => $fetch(url.value, options))
 const { /*status,*/ isLoading: agentIsLoading, data, error /*refresh*/ } = getAgent()
 const agent = computed(() => data.value?.agent && translateAgent(data.value?.agent).value)
@@ -121,7 +121,7 @@ function getPreviousMessages() {
 }
 
 watch(conversationId, (neo, old) => {
-  if (neo != old) {
+  if (neo && neo != old) {
     renderTriggeredBy.value = 'conversation-change'
     more.value = null
     query.value = {
@@ -131,13 +131,12 @@ watch(conversationId, (neo, old) => {
   }
 })
 
-const { data: conversationData, status: conversationStatus } = await useFetch(
-  () =>
-    (props.agentSlug &&
-      conversationId.value &&
-      `/api/chatbot/${props.agentSlug}/conversation/${conversationId.value}`) ||
-    null,
-  { ...options, query }
+const { data: conversationData, status: conversationStatus } = useFetch(
+  () => `/api/chatbot/${props.agentSlug}/conversation/${conversationId.value}`,
+  {
+    ...options,
+    query,
+  }
 )
 
 const isLoadingConversation = computed(() => conversationStatus.value == 'pending')
@@ -281,7 +280,7 @@ useLpiHead2({
 
         <ContextActionButton action-icon="ChevronDown" @click="scrollToBottom" />
       </div>
-      <a name="chat-conversation-top"></a>
+      <a name="chat-conversation-top" />
       <ClientOnly>
         <div v-if="showConversationList">
           Conversations:
@@ -319,17 +318,19 @@ useLpiHead2({
           @on-component-render="toConversationEnd"
         />
       </ClientOnly>
-      <a name="chat-conversation-bottom"></a>
+      <a name="chat-conversation-bottom" />
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .preview-mode {
   display: flex;
   gap: 1rem;
   justify-content: center;
   text-align: center;
-  color: $salmon;
+  color: variables.$salmon;
 
   svg {
     fill: currentcolor;
@@ -342,7 +343,7 @@ useLpiHead2({
 }
 
 .login-notice {
-  background-color: $primary-lighter;
+  background-color: variables.$primary-lighter;
   padding: 1rem;
   border-radius: 1rem;
   text-align: center;

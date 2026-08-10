@@ -2,7 +2,10 @@
   <NuxtLink
     class="category-card shadow-box"
     :style="{ width: IMAGE_WIDTH }"
-    :to="{ name: 'Category', params: { slugOrId: category.slug || category.id } }"
+    :to="{
+      name: 'Category',
+      params: { slugOrId: category.slug || category.id },
+    }"
   >
     <CategoryCardImage
       :background-color="category.background_color"
@@ -18,7 +21,7 @@
         <h3 class="title">
           {{
             // @ts-expect-error TS2339 (translate category or not transalted ?)
-            capitalize(category.$t?.name ?? category.name)
+            category.$t?.name ?? category.name
           }}
         </h3>
         <CategoryFollowButton :category-id="category.id" @click.stop.prevent="" />
@@ -38,15 +41,16 @@
 import type {
   ProjectCategoryModel,
   TranslatedProjectCategory,
-} from '~/models/project-category.model'
+} from 'shared-projects-frontend/models'
 
 import CategoryCardImage from '~/components/category/CategoryCardImage.vue'
 
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
-import { capitalize } from '~/functs/string'
 
 // TODO: many components use this withtout translated Category
-const props = defineProps<{ category: ProjectCategoryModel | TranslatedProjectCategory }>()
+const props = defineProps<{
+  category: ProjectCategoryModel | TranslatedProjectCategory
+}>()
 
 const IMAGE_WIDTH = '288px'
 const IMAGE_HEIGHT = '76px'
@@ -61,11 +65,13 @@ const imageSizes = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .category-card {
   position: relative;
   cursor: pointer;
-  border: $border-width-s solid $primary;
-  border-radius: $border-radius-m;
+  border: variables.$border-width-s solid variables.$primary;
+  border-radius: variables.$border-radius-m;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -77,12 +83,12 @@ const imageSizes = computed(() => {
   }
 
   .title-description-ctn {
-    padding: $space-s $space-m $space-m $space-l;
+    padding: variables.$space-s variables.$space-m variables.$space-m variables.$space-l;
 
     .title-ctn {
       display: flex;
       justify-content: space-between;
-      gap: $space-m;
+      gap: variables.$space-m;
       align-items: flex-start;
     }
 
@@ -90,22 +96,22 @@ const imageSizes = computed(() => {
       overflow: hidden;
       text-overflow: ellipsis;
       font-weight: 700;
-      font-size: $font-size-2xl;
-      line-height: $line-height-tight;
-      background: $white;
-      color: $black;
-      border-bottom-left-radius: $border-radius-m;
-      border-bottom-right-radius: $border-radius-m;
+      font-size: variables.$font-size-2xl;
+      line-height: variables.$line-height-tight;
+      background: variables.$white;
+      color: variables.$black;
+      border-bottom-left-radius: variables.$border-radius-m;
+      border-bottom-right-radius: variables.$border-radius-m;
       flex-grow: 1;
     }
 
     .description {
-      margin-top: pxToRem(16px);
+      margin-top: variables.pxtorem(16px);
       font-weight: 400;
-      font-size: $font-size-m;
-      color: $black;
-      border-bottom-left-radius: $border-radius-m;
-      border-bottom-right-radius: $border-radius-m;
+      font-size: variables.$font-size-m;
+      color: variables.$black;
+      border-bottom-left-radius: variables.$border-radius-m;
+      border-bottom-right-radius: variables.$border-radius-m;
       -webkit-line-clamp: 3;
       display: -webkit-box;
       -webkit-box-orient: vertical;

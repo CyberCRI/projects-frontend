@@ -65,8 +65,10 @@ import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
 
-import type { TranslatedAttachmentLink } from '~/models/attachment-link.model'
-import type { TranslatedAttachmentFile } from '~/models/attachment-file.model'
+import type {
+  TranslatedAttachmentLink,
+  TranslatedAttachmentFile,
+} from 'shared-projects-frontend/models'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { getMimeFromType } from '~/functs/imageSizesUtils'
 import useToasterStore from '~/stores/useToaster'
@@ -75,8 +77,8 @@ const props = withDefaults(
   defineProps<{
     fileResources?: TranslatedAttachmentFile[]
     linkResources?: TranslatedAttachmentLink[]
-    deleteAttachmentLink: (item: TranslatedAttachmentFile) => Promise<undefined>
-    deleteAttachmentFile: (item: TranslatedAttachmentLink) => Promise<undefined>
+    deleteAttachmentLink: (item: TranslatedAttachmentFile) => Promise<unknown>
+    deleteAttachmentFile: (item: TranslatedAttachmentLink) => Promise<unknown>
     editable?: boolean
     permissions?: boolean
   }>(),
@@ -152,6 +154,8 @@ const deleteResource = async (resource, type) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .actions-ctn {
   position: absolute;
   top: -20px;
@@ -159,7 +163,7 @@ const deleteResource = async (resource, type) => {
   display: flex;
 
   button:last-of-type {
-    margin-left: $space-s;
+    margin-left: variables.$space-s;
   }
 }
 
@@ -167,22 +171,22 @@ const deleteResource = async (resource, type) => {
   .resource-ctn {
     display: flex;
     flex-wrap: wrap;
-    gap: $space-m;
-    padding: $space-l 0;
+    gap: variables.$space-m;
+    padding: variables.$space-l 0;
 
     > div {
-      width: calc(33% - $space-m);
+      width: calc(33% - variables.$space-m);
     }
   }
 
   .link-header {
-    margin-top: $space-l;
+    margin-top: variables.$space-l;
   }
 
   .category-title {
-    color: $primary-dark;
+    color: variables.$primary-dark;
     text-transform: uppercase;
-    font-size: $font-size-xs;
+    font-size: variables.$font-size-xs;
     font-weight: 700;
   }
 }
@@ -190,18 +194,18 @@ const deleteResource = async (resource, type) => {
 .add-resource {
   display: flex;
   justify-content: flex-end;
-  padding: $space-l 0;
+  padding: variables.$space-l 0;
 }
 
-@media screen and (max-width: $max-tablet) {
+@media screen and (max-width: variables.$max-tablet) {
   .project-resources .resource-ctn {
     > div {
-      width: calc(50% - $space-m);
+      width: calc(50% - variables.$space-m);
     }
   }
 }
 
-@media screen and (max-width: $min-tablet) {
+@media screen and (max-width: variables.$min-tablet) {
   .project-resources .resource-ctn {
     > div {
       width: 100%;

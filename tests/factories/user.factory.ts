@@ -1,6 +1,11 @@
 import { createFactory } from 'faker-create-factory'
 
-import { UserModel, UserFromJWTModel } from '~/models/user.model'
+import type {
+  UserModel,
+  UserFromJWTModel,
+  TranslatedUserModel,
+} from 'shared-projects-frontend/models'
+import { groupTranslatedFactory } from '~~/tests/factories/group.factory'
 
 export const UserFactory = createFactory<UserModel>((faker) => ({
   id: faker.datatype.number(),
@@ -61,6 +66,19 @@ export const UserFactory = createFactory<UserModel>((faker) => ({
   twitter: null,
   website: null,
 }))
+
+export const userTranslatedFactory = createFactory<TranslatedUserModel>(() => {
+  const user = UserFactory.generate()
+  return {
+    ...user,
+    $t: {
+      description: user.description,
+      job: user.job,
+      short_description: user.short_description,
+    },
+    people_groups: groupTranslatedFactory.generateMany(user.people_groups?.length || 0),
+  }
+})
 
 export const UserFromJWTFactory = createFactory<UserFromJWTModel>((faker) => ({
   id: faker.datatype.uuid(),

@@ -1,4 +1,8 @@
-import type { Document, Identifier, ResearcherDocumentAnalytics } from '~/interfaces/researcher'
+import type {
+  ResearcherDocument,
+  ResearcherIdentifier,
+  ResearcherDocumentAnalytics,
+} from 'shared-projects-frontend/models'
 
 import { factoriesSkeleton } from '~/skeletons/base.skeletons'
 import { randomInt } from 'es-toolkit'
@@ -28,13 +32,17 @@ export const documentAnalyticsSkeleton = (
   ...def,
 })
 
-export const identifierSkeleton = (def?: Partial<Identifier>): Omit<Identifier, 'id'> => ({
+export const identifierSkeleton = (
+  def?: Partial<ResearcherIdentifier>
+): Omit<ResearcherIdentifier, 'id'> => ({
   value: 'lorem',
   harvester: 'hal',
   ...def,
 })
 
-export const researchDocumentSkeleton = (def?: Partial<Document>): Omit<Document, 'id'> => ({
+export const researchDocumentSkeleton = (
+  def?: Partial<ResearcherDocument>
+): Omit<ResearcherDocument, 'id'> => ({
   title: 'Ipsum nostrud officia dolor esse exercitation mollit.',
   description: 'Ipsum nostrud officia dolor esse exercitation mollit.',
   document_type: 'Book',

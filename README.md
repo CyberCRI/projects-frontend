@@ -3,6 +3,7 @@
 ![https://projects.directory.com](https://api.projects.lp-i.org/static/projects_logo.png)
 
 - [Projects](#projects)
+  - [Shared-Projects-Frontend](https://github.com/CyberCRI/shared-projects-frontend)
   - [Stack](#stack)
   - [Team tools](#team-tools)
   - [Getting started](#getting-started)
@@ -14,6 +15,7 @@
   - [Typescript](#typescript)
   - [Backend Endpoints and Schemas](#backend-endpoints-and-schemas)
   - [Environments](#environments)
+  - [Agents Environments](./README-AGENTS.md)
 - [License](#license)
 
 

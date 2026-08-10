@@ -47,7 +47,9 @@ const toggle = (element) => {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .filter-editor {
   display: flex;
   justify-content: stretch;
@@ -71,12 +73,12 @@ li {
 }
 
 .name {
-  padding: $space-unit;
+  padding: variables.$space-unit;
   text-wrap: wrap;
 }
 
 .icon-td {
-  width: pxToRem(25px);
+  width: variables.pxtorem(25px);
   padding: 7px;
 }
 
@@ -90,23 +92,23 @@ li {
 }
 
 .grey-color {
-  fill: $lighter-gray;
+  fill: variables.$lighter-gray;
 }
 
 .black-text {
-  color: $almost-black;
+  color: variables.$almost-black;
   font-weight: 400;
 }
 
 input[type='checkbox'] {
   appearance: none;
-  background-color: $white;
+  background-color: variables.$white;
   margin: 0;
   font: inherit;
-  width: pxToRem(20px);
-  height: pxToRem(20px);
-  border: $border-width-s solid $primary-dark;
-  border-radius: $border-radius-xs;
+  width: variables.pxtorem(20px);
+  height: variables.pxtorem(20px);
+  border: variables.$border-width-s solid variables.$primary-dark;
+  border-radius: variables.$border-radius-xs;
   transform: translateY(-0.075em);
   display: grid;
   place-content: center;
@@ -115,11 +117,11 @@ input[type='checkbox'] {
 
 input[type='checkbox']::before {
   content: '';
-  width: pxToRem(12px);
-  height: pxToRem(12px);
+  width: variables.pxtorem(12px);
+  height: variables.pxtorem(12px);
   transform: translateZ(0) scale(0);
   transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em $primary-dark;
+  box-shadow: inset 1em 1em variables.$primary-dark;
 }
 
 input[type='checkbox']:checked::before {

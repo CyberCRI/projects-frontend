@@ -36,6 +36,8 @@ onActivated(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .help-page {
   display: flex;
   flex-flow: column nowrap;
@@ -55,7 +57,7 @@ iframe {
   height: calc(100vh - 100px);
 }
 
-@media screen and (min-width: $max-tablet) {
+@media screen and (min-width: variables.$max-tablet) {
   iframe {
     width: 100%;
 

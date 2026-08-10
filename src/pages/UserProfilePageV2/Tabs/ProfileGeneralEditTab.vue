@@ -210,15 +210,20 @@
 import { email, helpers, required, url } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 
-import { patchUser, patchUserPicture, postUserPicture } from '~/api/people.service.ts'
+import {
+  patchUser,
+  patchUserPicture,
+  postUserPicture,
+  deleteUserPicture,
+} from 'shared-projects-frontend/apis'
 
 import SdgList from '~/components/sdgs/SdgList.vue'
 
-import useToasterStore from '~/stores/useToaster.ts'
-import useUsersStore from '~/stores/useUsers.ts'
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
 
-import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
-import { VALID_NAME_REGEX } from '~/functs/constants.ts'
+import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import { VALID_NAME_REGEX } from '~/functs/constants'
 import { isEqual } from 'es-toolkit'
 
 function defaultForm() {
@@ -377,6 +382,13 @@ export default {
               this.form.picture != this.user.profile_picture?.url ||
               !isEqual(this.form.imageSizes, pictureApiToImageSizes(this.user.profile_picture))
             ) {
+              if (
+                this.form.picture?.id !== this.user.profile_picture?.id &&
+                this.user.profile_picture?.id
+              ) {
+                await deleteUserPicture(this.user.id, this.user.profile_picture.id)
+              }
+
               const formData = new FormData()
               imageSizesFormData(formData, this.form.imageSizes)
 
@@ -387,7 +399,7 @@ export default {
                 // TODO: make this in POST when backend allows it
                 formData.delete('file')
                 await patchUserPicture(this.user.id, picture_id, formData)
-              } else if (this.user.profile_picture && this.user.profile_picture.id) {
+              } else if (this.form.picture) {
                 await patchUserPicture(this.user.id, this.user.profile_picture.id, formData)
               }
             }
@@ -456,11 +468,12 @@ export default {
   },
 }
 </script>
-<style scoped lang="scss">
-@import './profile-form';
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+@use '~/pages/UserProfilePageV2/Tabs/profile-form';
 
 .img-ctn {
-  margin-bottom: $space-xl;
+  margin-bottom: variables.$space-xl;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -480,7 +493,7 @@ export default {
   display: inline-flex;
   font-weight: bold;
   text-decoration: underline;
-  color: $primary-dark;
+  color: variables.$primary-dark;
   cursor: pointer;
 }
 </style>

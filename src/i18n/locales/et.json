@@ -912,7 +912,10 @@
       "description": "Kirjeldusväli on nõutav"
     },
     "templates": "Mallid",
-    "quit-without-saving-title": "Lõpetad säästmata?"
+    "quit-without-saving-title": "Lõpetad säästmata?",
+    "recaptcha": {
+      "required": "Recaptcha on vajalik."
+    }
   },
   "footer": {
     "contact": "Võta meiega ühendust",
@@ -926,7 +929,8 @@
     "madeBy": "tehtud",
     "sourceText": "Vaata lähtekoodi",
     "pca": "Järjepidevuse kava",
-    "pssi": "Turvaplaan (PSSI)"
+    "pssi": "Turvaplaan (PSSI)",
+    "about-projects": "Projects-ist"
   },
   "goal": {
     "add": "Lisa eesmärk",
@@ -1764,7 +1768,9 @@
         "too-big": "Fail on liiga suur (maksimaalselt: {maxSize}Mb)",
         "invalid-image": "Toetamata fail peab olema korrektne pilt.",
         "required-image": "Vajalik on fail",
-        "required": "Vajalik on fail"
+        "required": "Vajalik on fail",
+        "delete": "Kustuta fail",
+        "delete-image": "Eemalda pilt"
       }
     },
     "link": {
@@ -2429,7 +2435,9 @@
       "reviewed": "On läbi vaadatud",
       "reviewed-sub": "Kui teie projekt on läbivaatamiseks valmis, teavitage sellest, kui teie projekti ülevaataja on oma ülevaate esitanud.",
       "reply": "Vasta oma kommentaarile",
-      "reply-sub": "Andke teada, kui keegi teie kommentaarile vastab"
+      "reply-sub": "Andke teada, kui keegi teie kommentaarile vastab",
+      "announcement-has-new-application": "Teadaannete rakendus",
+      "announcement-has-new-application-sub": "Teatage, kui teated on uue taotluse saanud"
     },
     "follow": {
       "title": "Järgi teatist",
@@ -3424,13 +3432,15 @@
     },
     "form": {
       "title": {
-        "label": "Pealkiri"
+        "label": "Pealkiri",
+        "required": "Pealkiri on vajalik."
       },
       "description": {
         "label": "Kirjeldus"
       },
       "icon": {
-        "label": "Icon"
+        "label": "Icon",
+        "select": "Vali ikoon"
       },
       "show_preview": {
         "label": "Eelvaatluse näitamine kokkuvõtteleheküljel."
@@ -3446,6 +3456,10 @@
           "label": "blogi",
           "help": "Sisu on blogi sissekannete nimekiri."
         }
+      },
+      "content": {
+        "label": "Sisu",
+        "required": "Vajalik on sisu."
       }
     },
     "toasts": {

@@ -1,7 +1,11 @@
-import type { OrganizationModel } from '@/models/organization.model'
-import { getProject as fetchProject } from '@/api/projects.service'
-import type { ProjectSlugOrId } from '@/models/project.model'
-import type { RefOrRaw } from '@/interfaces/utils'
+import type {
+  QueryFilterProject,
+  OrganizationModel,
+  ProjectSlugOrId,
+} from 'shared-projects-frontend/models'
+import { getProject as fetchProject } from 'shared-projects-frontend/apis'
+import type { UseAsyncApiConfig } from '~/api/v2/base.service'
+import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}
@@ -9,7 +13,7 @@ const DEFAULT_CONFIG = {}
 export const getProject = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   projectId: RefOrRaw<ProjectSlugOrId>,
-  config = {}
+  config: UseAsyncApiConfig<QueryFilterProject> = {}
 ) => {
   const { translateProject } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::project::${unref(projectId)}`)

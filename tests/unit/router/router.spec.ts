@@ -1,12 +1,9 @@
-import waitForExpect from 'wait-for-expect'
 import analytics from '~/analytics'
 
 import { describe, expect, it, vi } from 'vitest'
 
 vi.mock('~/analytics')
-
 vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
-
 vi.mock('~/router/routes', () => ({
   default: [
     // not used anymore, maybe later ? see routes.ts
@@ -33,12 +30,12 @@ vi.unmock('~/router/index')
 
 analytics.page.viewed = vi.fn(() => {})
 
-describe.skip('Router redirections on routes requiring auth', () => {
+describe('Router redirections on routes requiring auth', () => {
   it('should redirect user with organization trying to access auth-required route to /dashboard', async () => {
     const router = useRouter()
     router.push('/restricted').catch(() => {})
 
-    await waitForExpect(() => {
+    await expect.poll(() => {
       expect(router.currentRoute.value.path).toEqual('/dashboard')
     })
   })
@@ -52,7 +49,7 @@ describe.skip('Router redirections on routes requiring auth', () => {
 
   //     router.push('/restricted').catch(() => {})
 
-  //     await waitForExpect(() => {
+  //     await expect.poll(() => {
   //         expect(router.currentRoute.value.path).toEqual('/discover')
   //     })
 

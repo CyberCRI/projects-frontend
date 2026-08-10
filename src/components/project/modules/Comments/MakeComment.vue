@@ -34,8 +34,10 @@ import {
   patchProjectMessage,
   postProjectMessage,
   postProjectMessageImage,
-} from '~/api/project-messages.service'
-import { patchComment, postComment, postCommentImage } from '~/api/comments.service'
+  patchComment,
+  postComment,
+  postCommentImage,
+} from 'shared-projects-frontend/apis'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
@@ -45,14 +47,17 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
+import type {
+  ProjectMessageModel,
+  TranslatedProject,
+  CommentModel,
+  ImageModel,
+} from 'shared-projects-frontend/models'
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { defaultProjectMessageForm, useProjectMessageForm } from '~/form/messages'
-import type { ProjectMessageModel } from '~/models/project-message.model'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
-import type { TranslatedProject } from '~/models/project.model'
-import type { CommentModel } from '~/models/comment.model'
-import type { ImageModel } from '~/models/image.model'
-import { getFirstTextNotEmpty } from '~/functs/string'
-import { isEqual } from 'es-toolkit'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
+import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
 
 const props = withDefaults(
@@ -80,7 +85,7 @@ const emit = defineEmits<{
 
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
-const { canCreateComments } = usePermissions()
+const { canCreateComment } = usePermissionProject(computed(() => props.project.id))
 
 const { t } = useNuxtI18n()
 
@@ -105,7 +110,9 @@ const defaultLocalForm = () => {
 
 const asyncing = ref(false)
 
-const { form, isValid, errors, reset } = useProjectMessageForm({ default: defaultLocalForm() })
+const { form, isValid, errors, reset } = useProjectMessageForm({
+  default: defaultLocalForm(),
+})
 watch(
   () => [props.project, props.originalComment, props.repliedComment],
   () => reset(defaultLocalForm()),
@@ -114,8 +121,12 @@ watch(
     deep: true,
   }
 )
-const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
-const canSubmitComment = computed(() => !isFormEqual.value && canCreateComments.value)
+const isFormEqual = useBlockNavigation(() =>
+  formEqual(form.value, defaultLocalForm(), {
+    html: ['content'],
+  })
+)
+const canSubmitComment = computed(() => !isFormEqual.value && canCreateComment.value)
 
 const scrollToNewComment = (comment) => {
   document.getElementById(comment.id)?.scrollIntoView({
@@ -209,17 +220,19 @@ const saveCommentImage = (file: File) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .make-comment {
   .action {
     display: flex;
-    gap: $space-m;
+    gap: variables.$space-m;
     justify-content: flex-end;
-    margin-top: $space-m;
+    margin-top: variables.$space-m;
   }
 
   .no-account {
-    background-color: $almost-white;
-    padding: $space-m;
+    background-color: variables.$almost-white;
+    padding: variables.$space-m;
     display: flex;
     align-items: center;
     justify-content: space-between;

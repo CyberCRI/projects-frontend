@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
+import type { Stats } from 'shared-projects-frontend/models'
 import { CHART_COLORS, SDGS } from '~/functs/constants'
 import LpiBarChart from './Generic/LpiBarChart.vue'
-import type { Stats } from '~/api/stats.service'
 
 const props = withDefaults(
   defineProps<{
@@ -63,6 +63,8 @@ const formattedData = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .container {
   width: 100%;
   height: 100%;

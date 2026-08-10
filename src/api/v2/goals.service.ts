@@ -1,8 +1,7 @@
-import { getProjectGoals as fetchProjectGoals } from '@/api/goals.service'
+import type { OrganizationModel, ProjectSlugOrId } from 'shared-projects-frontend/models'
+import { getProjectGoals as fetchProjectGoals } from 'shared-projects-frontend/apis'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import type { OrganizationModel } from '@/models/organization.model'
-import type { ProjectSlugOrId } from '@/models/project.model'
-import type { RefOrRaw } from '@/interfaces/utils'
+import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}

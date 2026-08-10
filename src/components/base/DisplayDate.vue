@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import type { LpiDate } from '~/interfaces/utils'
-
 import EmptyLabel from '~/components/base/EmptyLabel.vue'
 
 import { dateWithoutHours, formatDateTime, formatTime } from '~/functs/date'
+import type { LpiDate } from '~/interfaces/utils'
 
 const props = withDefaults(
   defineProps<{
@@ -98,6 +97,8 @@ const haveEndDate = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .date-preview {
   align-self: center;
   display: inline-block;

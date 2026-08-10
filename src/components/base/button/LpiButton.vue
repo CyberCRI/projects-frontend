@@ -56,6 +56,8 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .lpi-button {
   --color: v-bind(`var(--${color}) `);
   --text-color: v-bind(`var(--${textColor}) `);
@@ -64,11 +66,11 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  border: $border-width-s solid var(--color);
-  border-radius: $border-radius-50;
+  border: variables.$border-width-s solid var(--color);
+  border-radius: variables.$border-radius-50;
   font-weight: 700;
-  font-size: $font-size-m;
-  line-height: $line-height-tight;
+  font-size: variables.$font-size-m;
+  line-height: variables.$line-height-tight;
   transition: 0.15s all ease-in-out;
   cursor: pointer;
   will-change: transform;
@@ -76,9 +78,9 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
   background: var(--color);
   color: var(--text-color);
   height: 35px;
-  padding: $space-s $space-l;
+  padding: variables.$space-s variables.$space-l;
   box-sizing: border-box;
-  gap: $space-s;
+  gap: variables.$space-s;
 
   &.reversed-order {
     flex-flow: row-reverse nowrap;
@@ -97,7 +99,7 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
 
     &.white-bg {
       // temp fix class used is ProjectDescriptionTab. TODO: fix cleanly while refactoring this component
-      background-color: $white;
+      background-color: variables.$white;
     }
   }
 
@@ -112,7 +114,7 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
   }
 
   &.squarish {
-    border-radius: $border-radius-s;
+    border-radius: variables.$border-radius-s;
   }
 
   &.unpad {

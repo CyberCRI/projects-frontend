@@ -1,9 +1,9 @@
 <template>
   <BaseGroupPreview
     id="event"
-    :title="$t(GroupModuleTitle.event, group.modules.event)"
+    :title="$t(GROUP_MODULE_TITLE.event, group.modules.event)"
     :total="group.modules.event"
-    :icon="GroupModuleIcon.event"
+    :icon="GROUP_MODULE_ICON.event"
     :see-more="{
       name: 'groupEvent',
       params: { groupIdOrSlug: group.slug || group.id },
@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 import BaseGroupEventList from '@/components/group/Modules/Event/BaseGroupEventList.vue'
-import { GroupModuleIcon, GroupModuleTitle } from '@/models/invitation.model'
-import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
+import { GROUP_MODULE_ICON, GROUP_MODULE_TITLE } from '~/functs/constants'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 
 defineProps<{

@@ -1,7 +1,10 @@
 <template>
   <NuxtLink
     class="featured-project-admin-list-item"
-    :to="{ name: 'pageProject', params: { slugOrId: project.slug || project.id } }"
+    :to="{
+      name: 'pageProject',
+      params: { slugOrId: project.slug || project.id },
+    }"
   >
     <div class="project-image">
       <CroppedApiImage
@@ -21,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProject } from '~/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 
@@ -31,15 +34,17 @@ defineProps<{
   project: TranslatedProject
 }>()
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .featured-project-admin-list-item {
   display: flex;
-  gap: $space-unit;
+  gap: variables.$space-unit;
   justify-content: flex-start;
   align-items: flex-start;
 
   &:hover {
-    background-color: $primary-lighter;
+    background-color: variables.$primary-lighter;
   }
 
   .project-image {
@@ -54,7 +59,7 @@ defineProps<{
   }
 
   .title {
-    color: $primary-dark;
+    color: variables.$primary-dark;
     font-weight: 700;
     text-overflow: ellipsis;
 
@@ -63,13 +68,13 @@ defineProps<{
     overflow: hidden;
     max-width: 32rem;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       max-width: 15rem;
     }
   }
 
   & + .featured-project-admin-list-item {
-    margin-top: $space-unit;
+    margin-top: variables.$space-unit;
   }
 }
 </style>

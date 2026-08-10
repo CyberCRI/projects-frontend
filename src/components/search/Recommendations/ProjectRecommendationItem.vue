@@ -29,8 +29,8 @@
 
 <script setup lang="ts" generic="">
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
-import type { TranslatedProject } from '@/models/project.model'
 
 type TranslatedProjectRecomended = TranslatedProject & {
   isFeatured?: boolean
@@ -42,34 +42,36 @@ defineProps<{
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .recommendation-item {
-  padding-inline: $space-m;
+  padding-inline: variables.$space-m;
   cursor: pointer;
 
   &:hover {
-    background: $primary-lighter;
+    background: variables.$primary-lighter;
   }
 }
 
 .recommendation {
-  margin: $space-m 0;
+  margin: variables.$space-m 0;
   display: flex;
   align-items: center;
-  padding: $space-s;
+  padding: variables.$space-s;
 
   &--spacer {
-    padding: $space-s 16px;
+    padding: variables.$space-s 16px;
   }
 }
 
 .img-container {
-  border-radius: $border-radius-s;
-  background-size: cover;
-  background-position: top center;
-  width: 50px;
-  height: 50px;
-  flex: none;
-  margin-right: $space-s;
+  border-radius: variables.$border-radius-s !important;
+  background-size: cover !important;
+  background-position: top center !important;
+  width: 50px !important;
+  height: 50px !important;
+  flex: none !important;
+  margin-right: variables.$space-s !important;
 }
 
 .text-container {
@@ -81,13 +83,13 @@ defineProps<{
 
 .project-title {
   font-weight: 700;
-  font-size: $font-size-m;
-  color: $primary-dark;
-  line-height: $line-height-tight;
+  font-size: variables.$font-size-m;
+  color: variables.$primary-dark;
+  line-height: variables.$line-height-tight;
 }
 
 .is-featured {
-  font-size: $font-size-s;
-  color: $primary-dark;
+  font-size: variables.$font-size-s;
+  color: variables.$primary-dark;
 }
 </style>

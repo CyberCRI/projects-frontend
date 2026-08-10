@@ -2,22 +2,18 @@
   <RevealableClamped
     is="h4"
     class="purpose-block skeletons-text"
-    :text-content="capitalizedPurpose"
+    :text-content="project.$t.purpose"
     :line-number="3"
     :style-limited="STYLE_LIMITED"
     :style-full="STYLE_FULL"
   />
 </template>
 <script setup lang="ts">
-import type { TranslatedProject } from '~/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 
-import { capitalize } from '~/functs/string'
-
-const props = defineProps<{
+defineProps<{
   project: TranslatedProject
 }>()
-
-const capitalizedPurpose = computed(() => capitalize(props.project.$t.purpose))
 
 const STYLE_LIMITED = Object.freeze({
   fontWeight: 400,

@@ -2,8 +2,8 @@ import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
 import ProjectDescriptionTab from '~/pages/ProjectPageV2/Tabs/Description/ProjectDescriptionTab.vue'
 import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
-import { describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 describe('ProjectDescriptionTab.vue', () => {
   it('should render component', async () => {
@@ -12,9 +12,6 @@ describe('ProjectDescriptionTab.vue', () => {
 
     const wrapper = await lpiMountSuspended(ProjectDescriptionTab, {
       props,
-      provide: {
-        projectLayoutProjectPatched: vi.fn(),
-      },
     })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)

@@ -1,17 +1,17 @@
 import SkillsFilterEditor from '~/components/search/Filters/SkillsFilterEditor.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
-import waitForExpect from 'wait-for-expect'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 import pinia from '~/stores'
 
-import { OrganizationOutput } from '~/models/organization.model'
+import type { OrganizationOutput } from 'shared-projects-frontend/models'
 
-import { getOrgClassificationTags } from '~/api/tag-classification.service'
+import { getOrgClassificationTags } from 'shared-projects-frontend/apis'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 
-vi.mock('~/api/tag-classification.service', () => ({
+vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
+  ...(await orginalImporter()),
   getOrgClassificationTags: vi
     .fn()
     .mockResolvedValue({ results: [{ id: 1 }, { id: 2 }, { id: 3 }] }),
@@ -73,7 +73,7 @@ describe('SkillsFilterEditor', () => {
   it('should fetch  skills', async () => {
     wrapper = lpiMount(SkillsFilterEditor, defaultParams)
     wrapper.vm.selectedClassificationId = 123
-    await waitForExpect(() => {
+    await expect.poll(() => {
       expect(getOrgClassificationTags).toHaveBeenCalled()
     })
   })
@@ -112,7 +112,7 @@ describe('SkillsFilterEditor', () => {
   //     vm.search += 'b'
   //     expect(vm.isAddMode).toBe(true)
   //     vm.search += 'c'
-  //     await waitForExpect(() => {
+  //     await expect.poll(() => {
   //         expect(vm.isAddMode).toBe(false)
   //     })
   // })

@@ -15,7 +15,9 @@
             <template #default="cardListSlotProps">
               <GroupCard
                 v-if="cardListSlotProps.item"
-                :class="{ 'is-other-org': groupIsOtherOrg(cardListSlotProps.item) }"
+                :class="{
+                  'is-other-org': groupIsOtherOrg(cardListSlotProps.item),
+                }"
                 :group="cardListSlotProps.item"
                 @navigated-away="emit('close')"
                 @click.capture="cancelIfOtherOrg($event, cardListSlotProps.item)"
@@ -52,7 +54,7 @@ import EmptyCard from '~/components/people/UserProfile/EmptyCard.vue'
 import GroupCard from '~/components/group/GroupCard.vue'
 import CardList from '~/components/base/CardList.vue'
 
-import type { TranslatedUserModel } from '~/models/user.model'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import useUsersStore from '~/stores/useUsers'
 
 const props = defineProps<{
@@ -86,9 +88,11 @@ const cancelIfOtherOrg = (evt, group) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .groups-tab {
   .loader {
-    padding: $space-3xl 0;
+    padding: variables.$space-3xl 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -96,10 +100,10 @@ const cancelIfOtherOrg = (evt, group) => {
   }
 
   .title {
-    font-size: $font-size-l;
+    font-size: variables.$font-size-l;
     font-weight: 700;
-    color: $primary-dark;
-    margin: $space-l 0;
+    color: variables.$primary-dark;
+    margin: variables.$space-l 0;
   }
 
   .pagination-container {

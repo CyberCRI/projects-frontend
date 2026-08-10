@@ -26,17 +26,19 @@ defineProps<{
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
 
   tbody tr {
-    border-bottom: $border-width-s solid var(--mid-gray);
+    border-bottom: variables.$border-width-s solid var(--mid-gray);
   }
 
   td {
-    padding: $space-m;
+    padding: variables.$space-m;
   }
 }
 </style>

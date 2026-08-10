@@ -4,27 +4,31 @@ import {
   getProjectGroups,
   getProjectMembers,
   getProjectSimilars,
-} from '~/api/projects.service'
+  getProjectAttachmentLinks,
+  getProjectAttachmentFiles,
+  getBlogEntries,
+  getBlogEntry,
+  getProjectAnnouncements,
+  getProjectLocations,
+  getProjectGoals,
+  getReviews,
+} from 'shared-projects-frontend/apis'
+import type {
+  ProjectModel,
+  ProjectModulesKeys,
+  ProjectCategoryModel,
+  AttachmentLinkModel,
+  AttachmentFileModel,
+  AnnouncementModel,
+  BlogEntryModel,
+  LocationModel,
+  ReviewModel,
+  GoalModel,
+} from 'shared-projects-frontend/models'
 import { mapPeopleGroupPreview, mapUserPreview } from '~/mcp-server/projects/people-tool'
-import type { ProjectModel, ProjectModulesKeys } from '~/models/project.model'
-import type { ProjectCategoryModel } from '~/models/project-category.model'
-import { getProjectAttachmentLinks } from '~/api/attachment-links.service'
-import { getProjectAttachmentFiles } from '~/api/attachment-files.service'
-import type { AttachmentLinkModel } from '~/models/attachment-link.model'
-import type { AttachmentFileModel } from '~/models/attachment-file.model'
 import { addIfExists, tagMapPreview } from '~/mcp-server/projects/utils'
-import { getBlogEntries, getBlogEntry } from '~/api/blogentries.service'
-import { getProjectAnnouncements } from '~/api/announcements.service'
-import type { AnnouncementModel } from '~/models/announcement.model'
-import type { BlogEntryModel } from '~/models/blog-entry.model'
-import { getProjectLocations } from '~/api/locations.service'
-import type { LocationModel } from '~/models/location.model'
 import { mcpOptions, orgCode, resultFromTool } from './base'
-import type { ReviewModel } from '~/models/review.model'
-import { getProjectGoals } from '~/api/goals.service'
 import type { TypeMcpServer } from '~/interfaces/mcp'
-import type { GoalModel } from '~/models/goal.model'
-import { getReviews } from '~/api/reviews.service'
 import { mapSDG } from './sdg-tool'
 import { pick } from 'es-toolkit'
 import { z } from 'zod'
@@ -90,7 +94,9 @@ export default (server: TypeMcpServer) => {
     {
       title: 'Project general data',
       description: `Get main general data (description, goals, blog entries, members...) about a project given its id or slug. ${FETCH_PROJECT_SLUG_OR_ID}`,
-      inputSchema: { idOrSlug: z.string().describe('The id or slug of the project') },
+      inputSchema: {
+        idOrSlug: z.string().describe('The id or slug of the project'),
+      },
     },
     resultFromTool(async ({ idOrSlug }, extras) => {
       const opts = mcpOptions(extras)
@@ -167,7 +173,9 @@ export default (server: TypeMcpServer) => {
     {
       title: 'Project similar projects',
       description: `Get projects that are similar to the one given by its id or slug.   ${FETCH_PROJECT_SLUG_OR_ID}`,
-      inputSchema: { idOrSlug: z.string().describe('The id or slug of the project') },
+      inputSchema: {
+        idOrSlug: z.string().describe('The id or slug of the project'),
+      },
     },
     resultFromTool(({ idOrSlug }, extras) => {
       const opts = mcpOptions(extras)
@@ -186,7 +194,9 @@ export default (server: TypeMcpServer) => {
     {
       title: 'Project blog entries',
       description: `Get main blog entries about a project given its id or slug. ${FETCH_PROJECT_SLUG_OR_ID}`,
-      inputSchema: { idOrSlug: z.string().describe('The id or slug of the project') },
+      inputSchema: {
+        idOrSlug: z.string().describe('The id or slug of the project'),
+      },
     },
     resultFromTool(({ idOrSlug }, extras) => {
       const opts = mcpOptions(extras)

@@ -21,9 +21,11 @@ withDefaults(
   </h2>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .sub-page-title {
-  color: $primary-dark;
-  font-size: $font-size-4xl;
+  color: variables.$primary-dark;
+  font-size: variables.$font-size-4xl;
   justify-content: flex-start;
   align-items: center;
   display: flex;
@@ -35,7 +37,7 @@ withDefaults(
   .icon svg {
     width: 1.2em;
     height: 1.2em;
-    fill: $primary-dark;
+    fill: variables.$primary-dark;
   }
 }
 </style>

@@ -1,11 +1,11 @@
 import { createFactory } from 'faker-create-factory'
 
-import {
+import type {
   ImageInput,
   ImageOrganizationInput,
   ImageTemplateInput,
   ImageModel,
-} from '~/models/image.model'
+} from 'shared-projects-frontend/models'
 
 import BaseFactory from './base.factory'
 

@@ -53,7 +53,9 @@ export default {
       })
 
       if (this.total - this.current > 2)
-        pages.splice(this.current + 1, this.total - this.current - 2, { value: '...' })
+        pages.splice(this.current + 1, this.total - this.current - 2, {
+          value: '...',
+        })
       if (this.current > 3) pages.splice(1, this.current - 3, { value: '...' })
 
       return pages
@@ -76,38 +78,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .pagination {
   display: flex;
   align-items: center;
 
   li {
-    fill: $primary-dark;
-    color: $primary-dark;
+    fill: variables.$primary-dark;
+    color: variables.$primary-dark;
     font-weight: bold;
-    font-size: $font-size-xs;
+    font-size: variables.$font-size-xs;
     cursor: pointer;
     transition: color 0.15s ease-in-out;
     display: flex;
     align-items: center;
 
     &:not(last-of-type) {
-      margin-right: $space-xl;
+      margin-right: variables.$space-xl;
     }
 
     &.current {
-      background: $primary-light;
-      padding: $space-xs $space-m;
-      border-radius: $border-radius-l;
+      background: variables.$primary-light;
+      padding: variables.$space-xs variables.$space-m;
+      border-radius: variables.$border-radius-l;
     }
 
     &:not(.current, .ellipsis):hover {
-      color: $primary;
-      fill: $primary;
+      color: variables.$primary;
+      fill: variables.$primary;
     }
 
     &:not(.current, .ellipsis):active {
-      color: $black;
-      fill: $black;
+      color: variables.$black;
+      fill: variables.$black;
     }
   }
 

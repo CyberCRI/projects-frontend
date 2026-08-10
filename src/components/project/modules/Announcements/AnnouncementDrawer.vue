@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { patchAnnouncement, postAnnouncement } from '~/api/announcements.service'
+import { patchAnnouncement, postAnnouncement } from 'shared-projects-frontend/apis'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
@@ -10,14 +10,17 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
-import type { AnnouncementModel, TranslatedAnnouncement } from '~/models/announcement.model'
+import type {
+  AnnouncementModel,
+  TranslatedAnnouncement,
+  TranslatedProject,
+} from 'shared-projects-frontend/models'
 import { defaultAnnouncementForm, useAnnouncementForm } from '~/form/annoucement'
 import FieldErrors from '~/components/base/form/FieldErrors.vue'
-import type { TranslatedProject } from '~/models/project.model'
-import { getFirstTextNotEmpty } from '~/functs/string'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import Field from '~/components/base/form/Field.vue'
 import { fullYearDateFormat } from '~/functs/date'
-import { isEqual } from 'es-toolkit'
+import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
 
 const props = withDefaults(
@@ -62,7 +65,9 @@ const defaultLocalForm = () => {
 const { isValid, errors, form, reset } = useAnnouncementForm({
   default: defaultLocalForm(),
 })
-const { stateModals, closeModals, openModals } = useModals({ saveChange: false })
+const { stateModals, closeModals, openModals } = useModals({
+  saveChange: false,
+})
 
 const asyncing = ref(false)
 
@@ -97,7 +102,9 @@ const selectedTypeDescription = computed(() => {
   return t(`recruit.type.${form.value.type}.description`)
 })
 
-const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
+const isFormEqual = computed(() =>
+  formEqual(form.value, defaultLocalForm(), { html: ['description'] })
+)
 
 watch(
   () => [props.announcement, props.isOpened, props.project],
@@ -221,6 +228,8 @@ const submit = async () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .announcement-type {
   opacity: 0.7;
   padding: 1rem 0;

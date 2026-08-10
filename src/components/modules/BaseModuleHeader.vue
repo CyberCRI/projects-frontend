@@ -51,6 +51,8 @@ defineEmits<{
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .header-container {
   display: grid;
   align-items: center;

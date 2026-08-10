@@ -46,7 +46,7 @@ watchEffect(() => {
 .divider-title {
   text-align: center;
   font-size: 1.5rem;
-  color: $primary-dark;
+  color: var(--primary-dark);
 
   &::before,
   &::after {
@@ -55,7 +55,7 @@ watchEffect(() => {
     display: inline-block;
     width: 3rem;
     height: 0.07rem;
-    background-color: $primary-dark;
+    background-color: var(--primary-dark);
     border-radius: 40px;
   }
 }

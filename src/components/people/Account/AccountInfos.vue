@@ -73,9 +73,11 @@ const updateForm = (fieldName, fieldValue) => {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .label {
   font-weight: 500;
-  font-size: $font-size-m;
-  padding-bottom: $space-m;
+  font-size: variables.$font-size-m;
+  padding-bottom: variables.$space-m;
 }
 </style>

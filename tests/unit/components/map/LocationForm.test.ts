@@ -6,10 +6,10 @@ import { describe, expect, it } from 'vitest'
 
 describe('LocationForm', () => {
   it('should render LocationForm component', () => {
-    const modelValue = ref({
+    const modelValue = {
       lat: 55,
       lng: 66,
-    })
+    }
     const props = {
       modelValue,
     }
@@ -19,8 +19,7 @@ describe('LocationForm', () => {
   })
 
   it('invalid LocationType', async () => {
-    let wrapper
-    wrapper = lpiMount(LocationForm, {
+    const wrapper = lpiMount(LocationForm, {
       props: {
         modelValue: {
           lat: 55,

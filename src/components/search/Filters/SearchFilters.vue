@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { getProjectCategory } from '~/api/project-categories.service'
-import { getAllTagsById } from '~/api/tag-classification.service'
+import { getProjectCategory, getAllTagsById } from 'shared-projects-frontend/apis'
 
 import useContextualFilters, {
   ALL_FILTERS_MODE,
@@ -41,9 +40,8 @@ const props = defineProps({
   },
 })
 
-const selectedSection = defineModel('selectedSection', {
-  type: String,
-  default: () => ALL_SECTION_KEY,
+const selectedSection = defineModel<string>('selectedSection', {
+  default: ALL_SECTION_KEY,
 })
 
 const selectedFilters = ref(defaultFilters())
@@ -170,13 +168,15 @@ watch(() => props.search, hydrateFilters)
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .add-filter {
-  margin-top: $space-l;
+  margin-top: variables.$space-l;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: $space-m;
+  gap: variables.$space-m;
 }
 
 .filters-drawer {

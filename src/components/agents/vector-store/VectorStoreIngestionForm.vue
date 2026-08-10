@@ -1,4 +1,5 @@
-<script setup>
+<script setup lang="ts">
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import useToasterStore from '@/stores/useToaster'
 import useUsersStore from '@/stores/useUsers'
 
@@ -129,7 +130,9 @@ const submit = async () => {
         :disabled="isEdit"
         @change="titleExists = false"
       />
-      <p v-if="titleExists" class="error">{{ $t('vector-store.title-exists') }}</p>
+      <p v-if="titleExists" class="error">
+        {{ $t('vector-store.title-exists') }}
+      </p>
     </div>
     <div class="form-section">
       <LpiCheckbox
@@ -151,8 +154,10 @@ const submit = async () => {
   </BaseDrawer>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .error {
-  color: $salmon;
+  color: variables.$salmon;
 }
 
 .form-section ~ .form-section {

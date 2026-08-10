@@ -27,21 +27,23 @@ const toggleSdg = (sdgId) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .sdg-filter-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: pxToRem(16px);
+  gap: variables.pxtorem(16px);
   justify-items: center;
   margin-top: 1rem;
 }
 
-@media screen and (min-width: $max-mobile) {
+@media screen and (min-width: variables.$max-mobile) {
   .sdg-filter-container {
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
-@media screen and (min-width: $min-tablet) {
+@media screen and (min-width: variables.$min-tablet) {
   .sdg-filter-container {
     grid-template-columns: 1fr 1fr 1fr;
   }

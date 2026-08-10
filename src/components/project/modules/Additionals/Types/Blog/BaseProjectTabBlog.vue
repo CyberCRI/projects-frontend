@@ -1,15 +1,18 @@
 <script setup lang="ts">
+import type {
+  TranslatedProjectTab,
+  TranslatedProjectTabItem,
+  TranslatedBlogEntry,
+  TranslatedProject,
+} from 'shared-projects-frontend/models'
 import AdditionalsItemDrawer from '~/components/project/modules/Additionals/Types/AdditionalsItemDrawer.vue'
 import BaseAdditionalsTab from '~/components/project/modules/Additionals/Types/BaseAdditionalsTab.vue'
-import type { TranslatedProjectTab, TranslatedProjectTabItem } from '~/models/projects-tabs.model'
 import BlogEntry from '~/components/project/modules/BlogEntries/BlogEntry.vue'
 import { projectTabItemSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { refreshProjectTabs } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { getAllProjectTabItem } from '~/api/v2/project-tabs.service'
-import type { TranslatedBlogEntry } from '~/models/blog-entry.model'
-import { deleteProjectTabItem } from '~/api/project-tabs.service'
-import type { TranslatedProject } from '@/models/project.model'
+import { deleteProjectTabItem } from 'shared-projects-frontend/apis'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import analytics from '~/analytics'
@@ -130,7 +133,10 @@ watchEffect(() => {
             preview
               ? {
                   name: 'projectAdditionals',
-                  params: { slugOrId: project.slug || project.id, tabId: tab.id },
+                  params: {
+                    slugOrId: project.slug || project.id,
+                    tabId: tab.id,
+                  },
                   hash: `#item:${item.id}`,
                 }
               : null

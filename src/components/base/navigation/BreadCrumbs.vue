@@ -41,38 +41,40 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .breadcrumbs {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap;
-  gap: $space-2xs;
-  padding: $space-unit 0;
+  gap: variables.$space-2xs;
+  padding: variables.$space-unit 0;
 
   .item {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-wrap: wrap;
-    gap: $space-2xs;
+    gap: variables.$space-2xs;
 
     &-link {
-      color: $primary-dark;
-      font-size: $font-size-s;
+      color: variables.$primary-dark;
+      font-size: variables.$font-size-s;
       font-weight: 400;
     }
 
     &-icon svg {
-      fill: $primary-dark;
-      width: $layout-size-xl;
-      height: $layout-size-m;
+      fill: variables.$primary-dark;
+      width: variables.$layout-size-xl;
+      height: variables.$layout-size-m;
     }
   }
 
   .home-icon svg {
-    fill: $primary-dark;
-    width: $layout-size-xl;
-    height: $layout-size-m;
+    fill: variables.$primary-dark;
+    width: variables.$layout-size-xl;
+    height: variables.$layout-size-m;
   }
 }
 </style>

@@ -1,4 +1,4 @@
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 
 export const refreshGroupData = <T extends TranslatedPeopleGroupModel | TranslatedPeopleGroupModel>(
   group: T

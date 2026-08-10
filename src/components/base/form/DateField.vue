@@ -71,38 +71,40 @@ const dateExist = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .date-btn {
-  padding: $space-s;
-  background-color: $white;
-  border: $border-width-s solid $primary-dark;
+  padding: variables.$space-s;
+  background-color: variables.$white;
+  border: variables.$border-width-s solid variables.$primary-dark;
   vertical-align: middle;
   display: inline-flex;
   align-items: center;
-  gap: $space-m;
-  color: $primary-dark;
+  gap: variables.$space-m;
+  color: variables.$primary-dark;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
 
   .icon {
-    width: $layout-size-2xl;
-    fill: $primary-dark;
+    width: variables.$layout-size-2xl;
+    fill: variables.$primary-dark;
   }
 
   &:not(.clear-btn) {
-    border-top-left-radius: $border-radius-s;
-    border-bottom-left-radius: $border-radius-s;
+    border-top-left-radius: variables.$border-radius-s;
+    border-bottom-left-radius: variables.$border-radius-s;
   }
 
   &:has(~ .clear-btn.no-date) {
-    border-top-right-radius: $border-radius-s;
-    border-bottom-right-radius: $border-radius-s;
+    border-top-right-radius: variables.$border-radius-s;
+    border-bottom-right-radius: variables.$border-radius-s;
   }
 
   &.clear-btn {
     background-color: var(--primary-dark);
-    border-top-right-radius: $border-radius-s;
-    border-bottom-right-radius: $border-radius-s;
+    border-top-right-radius: variables.$border-radius-s;
+    border-bottom-right-radius: variables.$border-radius-s;
 
     .icon {
       fill: var(--white);
@@ -124,14 +126,14 @@ const dateExist = computed(() => {
 }
 
 label {
-  font-size: $font-size-s;
+  font-size: variables.$font-size-s;
   font-weight: 700;
-  color: $black;
+  color: variables.$black;
   display: block;
 }
 
 label,
 .notice {
-  margin-bottom: $space-l !important;
+  margin-bottom: variables.$space-l !important;
 }
 </style>

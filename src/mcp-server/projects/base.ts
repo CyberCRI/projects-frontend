@@ -1,3 +1,4 @@
+import type { ClientAPIOptions } from 'shared-projects-frontend/apis'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import type { InferSchema, ToolCallback } from '~/interfaces/mcp'
 import { tokenMap } from '~/server/routes/api/chat-stream'
@@ -18,7 +19,7 @@ export function getUserToken(extras) {
   return null
 }
 
-export function mcpOptions(extras: any = {}): UseApiOptions {
+export function mcpOptions(extras: any = {}): ClientAPIOptions {
   const accessToken = getUserToken(extras)
   if (!accessToken) {
     return {}
@@ -54,7 +55,11 @@ export const resultFromTool = <InputSchema, OutputSchema>(
 
     return {
       content: [{ type: 'text', text: JSON.stringify(output) }],
-      structuredContent: output,
+      // TODO: reconsider this 'structuredContent' option
+      // format issue - too long to fix for now, so just removed it
+      // (some need {results: ...}) some dont)
+      // anyway it desnt sem reallu useful for us and consume more token
+      // structuredContent: output,
     }
   }
 }

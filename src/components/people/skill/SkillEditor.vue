@@ -5,14 +5,16 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import ToolTip from '~/components/base/ToolTip.vue'
 
+import type { UserSkillModel } from 'shared-projects-frontend/models'
 import useSkillLevels from '~/composables/useSkillLevels'
-import type { UserSkillModel } from '~/models/user.model'
 import useSkillTexts from '~/composables/useSkillTexts'
+
+export type SkillType = 'skills' | 'hobbies'
 
 const props = withDefaults(
   defineProps<{
     skill: UserSkillModel
-    type: 'skills' | 'hobbies'
+    type: SkillType
     scrollIntoView?: boolean
     noMentorship?: boolean
   }>(),
@@ -167,23 +169,25 @@ function onUpdateMentorship(mentorship) {
     />
   </div>
 </template>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .entry {
   display: flex;
   flex-flow: row nowrap;
   justify-content: stretch;
-  gap: $space-unit;
+  gap: variables.$space-unit;
   align-items: center;
-  border-bottom: $border-width-s solid $lighter-gray;
-  padding: $space-l 0;
+  border-bottom: variables.$border-width-s solid variables.$lighter-gray;
+  padding: variables.$space-l 0;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     flex-flow: column nowrap;
     align-items: flex-start;
   }
 
   &:last-child {
-    border-bottom: $border-width-s solid $lighter-gray;
+    border-bottom: variables.$border-width-s solid variables.$lighter-gray;
   }
 
   .skill-name {
@@ -197,7 +201,7 @@ function onUpdateMentorship(mentorship) {
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    gap: $space-m;
+    gap: variables.$space-m;
     flex: 1 0 40%;
 
     .level {
@@ -205,26 +209,26 @@ function onUpdateMentorship(mentorship) {
       flex-flow: row nowrap;
       justify-content: flex-start;
       align-items: center;
-      gap: $space-s;
+      gap: variables.$space-s;
       margin: 0;
-      font-size: $font-size-m;
-      border: $border-width-s solid $primary-dark;
-      border-radius: $border-radius-s;
+      font-size: variables.$font-size-m;
+      border: variables.$border-width-s solid variables.$primary-dark;
+      border-radius: variables.$border-radius-s;
       position: relative;
-      padding: $space-2xs $space-s;
+      padding: variables.$space-2xs variables.$space-s;
       cursor: pointer;
 
       .level-name {
-        color: $primary-dark;
+        color: variables.$primary-dark;
         font-weight: 400;
       }
 
       &.active {
-        background-color: $primary-dark;
+        background-color: variables.$primary-dark;
         cursor: default;
 
         .level-name {
-          color: $white;
+          color: variables.$white;
           font-weight: 700;
         }
       }
@@ -237,12 +241,12 @@ function onUpdateMentorship(mentorship) {
       /*
             input[type='radio'] {
                 appearance: none;
-                background-color: $white;
+                background-color: variables.$white;
                 margin: 0;
                 font: inherit;
                 width: $layout-size-l;
                 height: $layout-size-l;
-                border: $border-width-s solid $primary-dark;
+                border: variables.$border-width-s solid variables.$primary-dark;
                 border-radius: 100%;
                 transform: translateY(-0.075em);
                 display: inline-block;
@@ -260,7 +264,7 @@ function onUpdateMentorship(mentorship) {
                 left: 50%;
                 transform: translate(-50%, -50%) scale(0);
                 transition: 120ms transform ease-in-out;
-                box-shadow: inset 1em 1em $primary-dark;
+                box-shadow: inset 1em 1em variables.$primary-dark;
                 border-radius: 100%;
             }
 
@@ -274,19 +278,19 @@ function onUpdateMentorship(mentorship) {
   .mentorship {
     flex-basis: 30%;
     display: flex;
-    gap: $space-unit;
+    gap: variables.$space-unit;
     justify-content: center;
   }
 
   .delete-action,
   .edit-action {
-    flex-basis: $layout-size-l;
+    flex-basis: variables.$layout-size-l;
     flex-shrink: 0;
 
     .delete-icon {
-      width: $layout-size-l;
-      height: $layout-size-l;
-      fill: $primary-dark;
+      width: variables.$layout-size-l;
+      height: variables.$layout-size-l;
+      fill: variables.$primary-dark;
       display: inline-block;
       vertical-align: middle;
       cursor: pointer;
@@ -295,7 +299,7 @@ function onUpdateMentorship(mentorship) {
     &.mobile {
       display: none;
 
-      @media screen and (max-width: $min-tablet) {
+      @media screen and (max-width: variables.$min-tablet) {
         display: block;
       }
     }
@@ -303,14 +307,14 @@ function onUpdateMentorship(mentorship) {
     &.desktop {
       display: block;
 
-      @media screen and (max-width: $min-tablet) {
+      @media screen and (max-width: variables.$min-tablet) {
         display: none;
       }
     }
   }
 }
 
-@media screen and (max-width: $min-tablet) {
+@media screen and (max-width: variables.$min-tablet) {
   .entry {
     flex-wrap: wrap;
 
@@ -322,7 +326,7 @@ function onUpdateMentorship(mentorship) {
       display: flex;
       justify-content: stretch;
       align-items: center;
-      gap: $space-unit;
+      gap: variables.$space-unit;
 
       span {
         flex-grow: 1;
@@ -331,7 +335,7 @@ function onUpdateMentorship(mentorship) {
   }
 }
 
-@media screen and (max-width: $max-mobile) {
+@media screen and (max-width: variables.$max-mobile) {
   .entry {
     flex-direction: column;
 

@@ -83,11 +83,13 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .card-list {
   justify-content: space-between;
 }
 
 .card-container {
-  margin: $space-xl 0;
+  margin: variables.$space-xl 0;
 }
 </style>

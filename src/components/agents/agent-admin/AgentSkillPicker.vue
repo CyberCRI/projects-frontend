@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const props = defineProps({ skill: { type: Object, required: true } })
 
 const emit = defineEmits(['update:modelValue'])
@@ -50,6 +50,8 @@ const onChange = () => {
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .agent-skill-picker {
   border: 1px solid #ccc;
   border-radius: 4px;

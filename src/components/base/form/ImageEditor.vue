@@ -5,15 +5,15 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import { usePublicURL } from '~/composables/usePublic'
 
-import { fileToImageModel, type ImageSizes } from '~/functs/imageSizesUtils'
-import type { ImageModel, ImageVariations } from '~/models/image.model'
-import { getFileFromURL } from '~/api/utils.service'
+import type { ImageModel, ImageSize, ImageVariations } from 'shared-projects-frontend/models'
+import { fileToImageModel } from '~/functs/imageSizesUtils'
+import { getFileFromURL } from '~/api/utils'
 
 const { t } = useNuxtI18n()
 
 const props = withDefaults(
   defineProps<{
-    imageSizes?: ImageSizes
+    imageSizes?: ImageSize
     picture?: File | ImageModel
     defaultPicture: string | string[]
     pictureAlt?: string
@@ -25,6 +25,8 @@ const props = withDefaults(
     maxSizeMb?: number
     variation?: ImageVariations
     dontResizeOnChange?: boolean
+
+    disableDelete?: boolean
   }>(),
   {
     imageSizes: null,
@@ -37,12 +39,13 @@ const props = withDefaults(
     maxSizeMb: null,
     variation: 'large',
     dontResizeOnChange: false,
+    disableDelete: false,
   }
 )
 
 const emit = defineEmits<{
-  'update:imageSizes': [ImageSizes]
-  'update:picture': [File]
+  'update:imageSizes': [ImageSize]
+  'update:picture': [File | null]
 }>()
 
 const { stateModals, openModals, closeModals } = useModals({ resizer: false })
@@ -56,12 +59,17 @@ const defaultPictureURL = computed(() => {
 
 const defaultPictureIndex = ref(0)
 
+const defaultPatatoid = ref()
+onMounted(async () => (defaultPatatoid.value = await getFileFromURL(defaultPictureURL.value[0])))
+
 const displayedImage = computed(() => {
   let image: ImageModel
   if (props.picture instanceof File) {
     image = fileToImageModel(props.picture)
-  } else {
+  } else if (props.picture) {
     image = props.picture
+  } else if (defaultPatatoid.value) {
+    image = fileToImageModel(defaultPatatoid.value)
   }
 
   if (props.imageSizes) {
@@ -73,7 +81,7 @@ const displayedImage = computed(() => {
   return image
 })
 
-const setImage = (image: File) => {
+const setImage = (image: File | null) => {
   emit('update:picture', image)
   // reinit image cropping data
   // weird bug : cant emits several event in the same tick
@@ -86,6 +94,8 @@ const onUploadImage = (image) => {
     openModals('resizer')
   }
 }
+
+const onDelete = () => setImage(null)
 
 const imageResizerRef = useTemplateRef('imageResizer')
 const saveImageSizes = () => {
@@ -101,13 +111,6 @@ const nextDefaultPicture = async () => {
     setImage(await getFileFromURL(defaultPictureURL.value[defaultPictureIndex.value]))
   }
 }
-
-// safe check image (if not set, set first default pictures)
-watchEffect(async () => {
-  if (!props.picture) {
-    setImage(await getFileFromURL(defaultPictureURL.value[0]))
-  }
-})
 </script>
 
 <template>
@@ -149,7 +152,14 @@ watchEffect(async () => {
       />
 
       <LpiButton
-        v-if="!noResize"
+        v-if="picture && !disableDelete"
+        btn-icon="TrashCanOutline"
+        :label="$t('resource.file.form.delete-image')"
+        @click.prevent="onDelete"
+      />
+
+      <LpiButton
+        v-if="!noResize && picture"
         v-disable-focus="disabled"
         :label="$t('project.form.resize-image')"
         btn-icon="CropFree"
@@ -181,11 +191,13 @@ watchEffect(async () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .img-inner {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: $space-m;
+  gap: variables.$space-m;
 
   .img-preview,
   .img-actions {
@@ -196,13 +208,13 @@ watchEffect(async () => {
   .img-actions {
     display: flex;
     flex-flow: column;
-    gap: $space-m;
+    gap: variables.$space-m;
     justify-content: center;
     align-items: flex-start;
   }
 
   .img-preview {
-    border: $border-width-s solid var(--primary);
+    border: variables.$border-width-s solid var(--primary);
     background-color: var(--white);
     overflow: hidden;
   }

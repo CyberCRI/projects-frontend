@@ -34,15 +34,15 @@
 </template>
 
 <script setup lang="ts">
+import { deleteEvent } from 'shared-projects-frontend/apis'
 import { getEvent } from '~/api/v2/event.service'
-import { deleteEvent } from '~/api/event.service'
 
 import BreadCrumbs from '~/components/base/navigation/BreadCrumbs.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
 import { eventSkeleton } from '~/skeletons/event.skeletons'
-import { html2Text } from '~/functs/string'
+import { html2Text } from '~/functs/tiptap'
 
 const props = defineProps<{ eventId: number | string }>()
 

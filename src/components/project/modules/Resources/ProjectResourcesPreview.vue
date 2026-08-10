@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import BaseProjectResources from '~/components/project/modules/Resources/BaseProjectResources.vue'
-import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
+import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
-import type { TranslatedProject } from '@/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 
 const props = defineProps<{ project: TranslatedProject }>()
 
@@ -11,8 +11,8 @@ const resources = computed(() => props.project.modules.links + props.project.mod
 
 <template>
   <BaseModulePreview
-    :title="$t(ProjectModuleTitle.resources)"
-    :icon="ProjectModuleIcon.links"
+    :title="$t(PROJECT_MODULE_TITLE.resources)"
+    :icon="PROJECT_MODULE_ICON.links"
     :total="resources"
     :see-more="{
       name: 'projectResources',
@@ -28,6 +28,8 @@ const resources = computed(() => props.project.modules.links + props.project.mod
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .resources-list {
   display: flex;
   gap: 1rem;

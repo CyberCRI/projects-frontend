@@ -1,7 +1,7 @@
 import { required } from '@vuelidate/validators'
 import { clone } from 'es-toolkit'
 
-import type { ImageGalleryForm } from '~/interfaces/gallery'
+import type { ImageGalleryForm } from 'shared-projects-frontend/models'
 
 import useForm from '~/composables/useForm'
 

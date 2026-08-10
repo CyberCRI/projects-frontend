@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { applyAnnouncement } from '~/api/announcements.service'
+import { applyAnnouncement } from 'shared-projects-frontend/apis'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
@@ -7,13 +7,12 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
+import type { TranslatedAnnouncement, TranslatedProject } from 'shared-projects-frontend/models'
 import { defaultAnnouncementReplyForm, useAnnouncementReplyForm } from '~/form/annoucement'
-import type { TranslatedAnnouncement } from '~/models/announcement.model'
-import type { TranslatedProject } from '~/models/project.model'
 import Recaptcha from '~/components/base/form/Recaptcha.vue'
 import Field from '~/components/base/form/Field.vue'
 import useUsersStore from '~/stores/useUsers'
-import { isEqual, omit } from 'es-toolkit'
+import { formEqual } from '~/form/base'
 
 const props = withDefaults(
   defineProps<{
@@ -63,7 +62,9 @@ const defaultLocalForm = () => {
   return newForm
 }
 
-const { form, errors, isValid, cleanedData, reset } = useAnnouncementReplyForm({ lazy: true })
+const { form, errors, isValid, cleanedData, reset } = useAnnouncementReplyForm({
+  lazy: true,
+})
 
 watch(
   () => [props.isOpened, props.announcement, props.project],
@@ -77,7 +78,7 @@ const close = () => {
 }
 
 const isFormEqual = computed(() =>
-  isEqual(omit(form.value, ['recaptcha']), omit(defaultLocalForm(), ['recaptcha']))
+  formEqual(form.value, defaultLocalForm(), { exclude: ['recaptcha'] })
 )
 
 const checkClose = () => {
@@ -101,7 +102,7 @@ const onApplyAnnouncement = () => {
       toaster.pushSuccess(t('project.apply-succes'))
       close()
     })
-    .catch(() => toaster.pushSuccess(t('project.apply-error')))
+    .catch(() => toaster.pushError(t('project.apply-error')))
     .finally(() => (asyncing.value = false))
 }
 </script>
@@ -149,7 +150,7 @@ const onApplyAnnouncement = () => {
         />
       </Field>
 
-      <Recaptcha v-model="form.recaptcha" />
+      <Recaptcha v-model="form.recaptcha" :errors="errors.recaptcha" />
     </div>
 
     <!-- drawer/modal -->
@@ -164,9 +165,11 @@ const onApplyAnnouncement = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .reply-to {
-  margin-bottom: $space-m;
+  margin-bottom: variables.$space-m;
   text-align: center;
-  font-size: $font-size-l;
+  font-size: variables.$font-size-l;
 }
 </style>

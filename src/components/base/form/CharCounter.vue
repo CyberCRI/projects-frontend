@@ -20,13 +20,15 @@ const maxReached = computed(() => currentLength.value >= props.maxLength)
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .char-counter {
   font-size: 0.75rem;
-  color: $mid-gray;
+  color: variables.$mid-gray;
   text-align: right;
 
   &.is-at-max {
-    color: $red;
+    color: variables.$red;
   }
 }
 </style>

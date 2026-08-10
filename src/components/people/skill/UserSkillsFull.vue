@@ -38,8 +38,8 @@
 <script setup lang="ts">
 import SkillLevelTip from '~/components/people/skill/SkillLevelTip.vue'
 import SkillItemFull from '~/components/people/skill/SkillItemFull.vue'
+import type { UserSkillModel } from 'shared-projects-frontend/models'
 import LinkButton from '~/components/base/button/LinkButton.vue'
-import type { UserSkillModel } from '~/models/user.model'
 
 withDefaults(
   defineProps<{
@@ -63,24 +63,26 @@ const emit = defineEmits(['reload-mentorship'])
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .skill-columns-header {
   display: flex;
   justify-content: stretch;
-  gap: $space-unit;
+  gap: variables.$space-unit;
   align-items: center;
-  padding-bottom: $space-l;
-  border-bottom: $border-width-s solid $primary;
+  padding-bottom: variables.$space-l;
+  border-bottom: variables.$border-width-s solid variables.$primary;
 
   .column-label {
     font-weight: 700;
     text-transform: uppercase;
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 
   .skill-name {
     flex-basis: 30%;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       flex-basis: 100%;
       text-align: center;
     }
@@ -92,7 +94,7 @@ const emit = defineEmits(['reload-mentorship'])
     align-items: center;
     justify-content: center;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       display: none;
     }
   }
@@ -102,7 +104,7 @@ const emit = defineEmits(['reload-mentorship'])
     justify-content: center;
     flex-basis: 25%;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       display: none;
     }
   }

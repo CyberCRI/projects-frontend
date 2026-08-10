@@ -4,13 +4,13 @@
   </div>
 </template>
 <script setup lang="ts">
+import type { ImageSize } from 'shared-projects-frontend/models'
 import { IMAGES_SIZES_DEFAULTS } from '~/functs/imageSizesUtils'
-import type { ImageSizes } from '~/functs/imageSizesUtils'
 import type { StyleValue } from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    imageSizes?: ImageSizes
+    imageSizes?: ImageSize
     src?: string
     alt?: string
     contain?: boolean
@@ -37,11 +37,11 @@ const imageStyles = computed<StyleValue>(() => {
   // create "fake" image size to use the same imageStyle for every pictures
   const imageSizes = props.imageSizes || IMAGES_SIZES_DEFAULTS
   return {
-    width: props.ratio >= imageSizes.naturalRatio ? '100%' : 'auto',
-    height: props.ratio < imageSizes.naturalRatio ? '100%' : 'auto',
+    width: props.ratio >= imageSizes.natural_ratio ? '100%' : 'auto',
+    height: props.ratio < imageSizes.natural_ratio ? '100%' : 'auto',
     objectFit: 'unset',
     objectPosition: 'unset',
-    transform: `translateZ(0)  scale(${imageSizes.scaleX}, ${imageSizes.scaleY}) translate(${imageSizes.left}%, ${imageSizes.top}%)`,
+    transform: `translateZ(0)  scale(${imageSizes.scale_x}, ${imageSizes.scale_y}) translate(${imageSizes.left}%, ${imageSizes.top}%)`,
     position: 'absolute',
     top: 0,
     left: 0,
@@ -70,7 +70,8 @@ onMounted(() => {
 })
 </script>
 <style lang="scss" scoped>
-@import '~/design/scss/skeletons';
+@use '~/design/scss/variables';
+@use '~/design/scss/skeletons';
 
 .cropped-image {
   // higher specificity to override BasicCard styles
@@ -87,7 +88,7 @@ onMounted(() => {
     width: 100%;
     object-fit: cover;
     object-position: center;
-    background-color: $white; // request of Wien University for transparent images
+    background-color: variables.$white; // request of Wien University for transparent images
     flex-grow: 1;
     flex-basis: 0; // so image take minimum space possible to cover conbtainer
   }

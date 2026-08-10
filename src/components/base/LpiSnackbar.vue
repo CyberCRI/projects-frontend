@@ -35,46 +35,48 @@ const close = () => emit('close')
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .snackbar {
-  padding: $space-m;
-  border-radius: $border-radius-s;
+  padding: variables.$space-m;
+  border-radius: variables.$border-radius-s;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: $black;
+  color: variables.$black;
   box-shadow: 0 4px 4px rgb(0 0 0 / 15%);
-  max-width: pxToRem(740px);
+  max-width: variables.pxtorem(740px);
 
   &.success,
   &.info {
-    background: $primary-light;
+    background: variables.$primary-light;
   }
 
   &.error {
-    background: $salmon;
+    background: variables.$salmon;
   }
 
   &.warning {
-    background: $yellow;
+    background: variables.$yellow;
   }
 
   .left-icon {
-    margin-right: $space-m;
-    height: $layout-size-xl;
-    fill: $black;
+    margin-right: variables.$space-m;
+    height: variables.$layout-size-xl;
+    fill: variables.$black;
   }
 
   .text {
     margin-right: auto;
-    font-size: $font-size-xs;
+    font-size: variables.$font-size-xs;
     font-weight: bold;
   }
 
   .close-icon {
     cursor: pointer;
     margin-left: 10px;
-    height: $layout-size-xl;
-    fill: $black;
+    height: variables.$layout-size-xl;
+    fill: variables.$black;
   }
 }
 </style>

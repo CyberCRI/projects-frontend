@@ -3,6 +3,6 @@ declare global {
   interface Window {
     lpiSharedWorker?: SharedWorker
     handleChatClick?: (evt: Event) => void
-    grecaptcha?: any
+    grecaptcha: ReCaptchaV2.ReCaptcha
   }
 }

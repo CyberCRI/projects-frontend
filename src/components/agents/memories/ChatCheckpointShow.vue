@@ -32,7 +32,7 @@ refresh()
     :title="documentTitle"
     :asyncing="isAsyncing"
     no-second-button
-    cancel-button-label="common.close"
+    :cancel-button-label="$t('common.close')"
     @cancel="close"
     @confirm="close"
   >
@@ -44,7 +44,9 @@ refresh()
         <h4 class="chunk-header">Checkpoint {{ i + 1 }}/{{ checkpoints.length }}</h4>
         <div v-for="message in checkpoint.messages" :key="message.kwargs.id">
           <div v-if="showMessage(message)" class="message">
-            <h5 class="message-header">{{ message.id[message.id.length - 1] }}</h5>
+            <h5 class="message-header">
+              {{ message.id[message.id.length - 1] }}
+            </h5>
             <pre v-if="message.kwargs.content">{{ message.kwargs.content }}</pre>
             <div v-if="message.kwargs.tool_calls?.length">
               <ul>
@@ -65,18 +67,20 @@ refresh()
   </ConfirmModal>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .chunk {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
 .chunk ~ .chunk {
-  border-top: 1px solid $light-gray;
+  border-top: 1px solid variables.$light-gray;
 }
 
 .chunk-header {
   text-align: center;
-  color: $light-gray;
+  color: variables.$light-gray;
   font-style: italic;
   font-weight: normal;
 }
@@ -94,8 +98,8 @@ refresh()
 .message-header {
   width: auto;
   padding: 0.4rem;
-  background-color: $primary-lighter;
-  border-bottom: 1px solid $primary-dark;
+  background-color: variables.$primary-lighter;
+  border-bottom: 1px solid variables.$primary-dark;
   text-align: center;
 }
 </style>

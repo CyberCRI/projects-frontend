@@ -29,10 +29,13 @@ const props = withDefaults(defineProps<DrawerSearchProps<Item>>(), {
 const emit = defineEmits<{
   close: []
   confirm: [Item[]]
+  search: []
 }>()
 
 const search = defineModel<string>('search', { default: '' })
-const { stateModals, openModals, closeModals } = useModals({ saveChange: false })
+const { stateModals, openModals, closeModals } = useModals({
+  saveChange: false,
+})
 
 const selectedItems = ref<Item[]>([]) as Ref<Item[]>
 
@@ -100,6 +103,26 @@ const labelMaxSelected = computed(() => {
   }
   return `(${selectedItems.value.length}/${props.maxSelected})`
 })
+
+// reset search when drawer change state
+watch(
+  () => props.isOpened,
+  () => (search.value = ''),
+  { immediate: true }
+)
+
+// trigger when search change, and if drawer is opened emit event
+watch(
+  () => [search.value, props.isOpened],
+  () => {
+    if (props.isOpened) {
+      // reset page to first if search vlaue changes
+      props.pagination?.first()
+      emit('search')
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
@@ -164,6 +187,8 @@ const labelMaxSelected = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .list-flow-container {
   justify-content: space-around;
 }

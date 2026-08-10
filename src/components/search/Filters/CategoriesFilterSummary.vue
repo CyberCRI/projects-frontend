@@ -14,18 +14,20 @@
 <script setup lang="ts">
 import FilterValue from '~/components/search/Filters/FilterValue.vue'
 
-const model = defineModel<any[]>({ default: [] })
+const model = defineModel<any[]>({ default: () => [] })
 
 const removeCategory = (category) => {
   model.value = model.value.filter((cat) => cat.id !== category.id)
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .filter-categories-selected,
 .filter-categories-suggestions {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-2xs;
+  gap: variables.$space-2xs;
 }
 </style>

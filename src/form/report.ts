@@ -1,5 +1,5 @@
 import { email, helpers, required, url } from '@vuelidate/validators'
-import type { ReportForm } from '~/models/report.model'
+import type { ReportForm } from 'shared-projects-frontend/models'
 
 export const defaultReportForm = (): ReportForm => {
   return {
@@ -7,6 +7,7 @@ export const defaultReportForm = (): ReportForm => {
     message: '',
     url: '',
     reported_by: null,
+    recaptcha: null,
   }
 }
 
@@ -28,7 +29,14 @@ export const useReportForm = (options = {}) => {
     title: {
       required: helpers.withMessage(t('form.report.title'), required),
     },
+    recaptcha: {
+      required: helpers.withMessage(t('form.recaptcha.required'), required),
+    },
   }))
 
-  return useForm<ReportForm>({ default: defaultReportForm(), rules, ...options })
+  return useForm<ReportForm>({
+    default: defaultReportForm(),
+    rules,
+    ...options,
+  })
 }

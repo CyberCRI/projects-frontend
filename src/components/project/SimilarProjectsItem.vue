@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProject } from '~/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 
@@ -34,21 +34,23 @@ defineProps<{
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .similar-project {
   display: flex;
   align-items: center;
   cursor: pointer;
 
   .cropped-image {
-    margin-right: $space-s;
+    margin-right: variables.$space-s;
     flex: 0 0 72px;
     height: 72px;
-    border-radius: $border-radius-xs;
+    border-radius: variables.$border-radius-xs;
   }
 
   p {
-    color: var(--similar-project-text-color, $white);
-    font-size: $font-size-s;
+    color: var(--similar-project-text-color, variables.$white);
+    font-size: variables.$font-size-s;
     font-weight: 400;
   }
 }

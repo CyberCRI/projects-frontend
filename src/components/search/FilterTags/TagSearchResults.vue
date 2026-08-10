@@ -60,6 +60,8 @@ const tagClicked = (tag) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .search-results {
   .back-btn {
     margin-left: auto;
@@ -68,20 +70,20 @@ const tagClicked = (tag) => {
   .no-result {
     width: 100%;
     text-align: center;
-    font-size: $font-size-l;
-    padding-top: $space-2xl;
+    font-size: variables.$font-size-l;
+    padding-top: variables.$space-2xl;
     font-style: italic;
-    color: $mid-gray;
+    color: variables.$mid-gray;
   }
 
   .search-results-ctn {
     width: 100%;
     display: flex;
     flex-flow: column wrap;
-    gap: $space-m;
+    gap: variables.$space-m;
     align-items: stretch;
-    padding-top: $space-l;
-    padding-bottom: $space-l;
+    padding-top: variables.$space-l;
+    padding-bottom: variables.$space-l;
     box-sizing: border-box;
 
     .tag-result {

@@ -16,6 +16,8 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .container {
   width: 100%;
   height: 100%;

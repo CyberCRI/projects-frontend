@@ -912,7 +912,10 @@
       "description": "Le champ description est obligatoire"
     },
     "templates": "Modèles",
-    "quit-without-saving-title": "Quitter sans enregistrer ?"
+    "quit-without-saving-title": "Quitter sans enregistrer ?",
+    "recaptcha": {
+      "required": "Recaptcha est nécessaire."
+    }
   },
   "footer": {
     "contact": "Contactez-nous",
@@ -926,7 +929,8 @@
     "madeBy": "créée par",
     "sourceText": "Voir le code source",
     "pca": "Plan de continuité (PCA)",
-    "pssi": "Plan de Sécurité (PSSI)"
+    "pssi": "Plan de Sécurité (PSSI)",
+    "about-projects": "À propos de Projects"
   },
   "goal": {
     "add": "Ajouter un objectif",
@@ -1753,7 +1757,7 @@
     "copy": "(copie)",
     "nothing": "Il n'y a rien ici...",
     "tag-warning": "NB: Si un utilisateur change la langue de votre portail, les tags qui possèdent des traductions dans Wikipedia seront traduits. Les autres seront affichés en priorité en anglais et sinon dans la langue originale.",
-    "description": "Désignation des marchandises",
+    "description": "Description",
     "duplicate": {
       "title": "Voulez-vous vraiment reproduire ce projet ?",
       "help": "Le projet sera cloné sans membres.",
@@ -1849,7 +1853,9 @@
         "too-big": "Le fichier est trop grand (max: {maxSize}Mb)",
         "invalid-image": "Fichier non pris en charge, doit être une image valide.",
         "required-image": "Un fichier est requis",
-        "required": "Un fichier est requis"
+        "required": "Un fichier est requis",
+        "delete": "Supprimer le fichier",
+        "delete-image": "Supprimer l'image"
       }
     },
     "link": {
@@ -2514,7 +2520,9 @@
       "reviewed": "Révision faite",
       "reviewed-sub": "Être notifié quand une révision est envoyée sur votre projet",
       "reply": "Réponse aux commentaires",
-      "reply-sub": "Être notifié quand une réponse à votre commentaire est faite"
+      "reply-sub": "Être notifié quand une réponse à votre commentaire est faite",
+      "announcement-has-new-application": "Annonces Demande",
+      "announcement-has-new-application-sub": "Être avisé lorsque les annonces ont une nouvelle demande"
     },
     "follow": {
       "title": "Notifications de suivi",
@@ -3410,7 +3418,7 @@
     "tab": {
       "delete-confirm": "Voulez-vous vraiment supprimer cet onglet ? tout le contenu sera supprimé.",
       "delete": "Supprimer l'onglet",
-      "add": "Ajouter un nouvel onglet.",
+      "add": "Nouvel onglet",
       "edit": "Modifier l'onglet",
       "title": "Création d'onglets",
       "label": "onglet | Tables"
@@ -3424,13 +3432,15 @@
     },
     "form": {
       "title": {
-        "label": "Titre"
+        "label": "Titre",
+        "required": "Le titre est requis."
       },
       "description": {
-        "label": "Désignation des marchandises"
+        "label": "Description"
       },
       "icon": {
-        "label": "Icône"
+        "label": "Icône",
+        "select": "Sélectionner une icône"
       },
       "show_preview": {
         "label": "Afficher l'aperçu dans la page de résumé."
@@ -3446,6 +3456,10 @@
           "label": "blog",
           "help": "le Contenu est la liste pour l'entrée de blog."
         }
+      },
+      "content": {
+        "label": "Contenu",
+        "required": "Le contenu est requis."
       }
     },
     "toasts": {

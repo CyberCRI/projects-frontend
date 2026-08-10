@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedUserModel } from '~/models/user.model'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
 import { getUserMentorship } from '~/api/v2/mentoring.service'
 
@@ -93,7 +93,9 @@ const noSkillLabel = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .section + .section {
-  margin-top: $space-xl;
+  margin-top: variables.$space-xl;
 }
 </style>

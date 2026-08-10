@@ -1,6 +1,6 @@
-import type { HarvesterType, Identifier } from '~/interfaces/researcher'
+import type { HarvesterType, ResearcherIdentifier } from 'shared-projects-frontend/models'
 
-const cleanIdentifier = (identifier: Identifier): Identifier => {
+const cleanIdentifier = (identifier: ResearcherIdentifier): ResearcherIdentifier => {
   const newIdentifier = { ...identifier }
   newIdentifier.harvester = newIdentifier.harvester.toLocaleLowerCase() as HarvesterType
   // some value starts with http or start with harvester name like
@@ -18,11 +18,11 @@ const cleanIdentifier = (identifier: Identifier): Identifier => {
  * @function
  * @name documentHarvesterToUrl
  * @kind variable
- * @param {Identifier} identifier
+ * @param {ResearcherIdentifier} identifier
  * @returns {String}
  * @exports
  */
-export const documentHarvesterToUrl = (identifier: Identifier): string | null => {
+export const documentHarvesterToUrl = (identifier: ResearcherIdentifier): string | null => {
   const newIdentifier = cleanIdentifier(identifier)
   if (newIdentifier.value.startsWith('http')) {
     return newIdentifier.value
@@ -72,7 +72,7 @@ export const documentHarvesterToUrl = (identifier: Identifier): string | null =>
  * @returns {string}
  * @exports
  */
-export const researcherHarvesterToUrl = (identifier: Identifier): string | null => {
+export const researcherHarvesterToUrl = (identifier: ResearcherIdentifier): string | null => {
   const newIdentifier = cleanIdentifier(identifier)
   if (newIdentifier.value.startsWith('http')) {
     return newIdentifier.value

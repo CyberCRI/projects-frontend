@@ -1,4 +1,4 @@
-import { ReviewModel, ReviewModelInput } from '~/models/review.model'
+import type { ReviewModel } from 'shared-projects-frontend/models'
 import { createFactory } from 'faker-create-factory'
 import { UserFactory } from './user.factory'
 import BaseFactory from './base.factory'
@@ -11,10 +11,4 @@ export const ReviewFactory = createFactory<ReviewModel>((faker) => ({
   reviewer: UserFactory.generate(),
   created_at: faker.datatype.datetime().toISOString(),
   updated_at: faker.datatype.datetime().toISOString(),
-}))
-
-export const ReviewInputFactory = createFactory<ReviewModelInput>((faker) => ({
-  ...ReviewFactory.generate(),
-  reviewer_id: faker.datatype.uuid(),
-  project_id: faker.datatype.uuid(),
 }))

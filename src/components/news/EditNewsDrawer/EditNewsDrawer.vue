@@ -18,151 +18,151 @@
     />
   </BaseDrawer>
 </template>
-<script>
-import { createNews, patchNews, patchNewsHeader, postNewsHeader } from '~/api/news.service.ts'
+
+<script setup lang="ts">
+import {
+  createNews,
+  deleteNewsHeader,
+  patchNews,
+  patchNewsHeader,
+  postNewsHeader,
+} from 'shared-projects-frontend/apis'
 
 import NewsForm from '~/components/news/NewsForm/NewsForm.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
 
-import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
+import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import type { NewsModel, TranslatedNews } from 'shared-projects-frontend/models'
 
-export default {
-  name: 'EditNewsDrawer',
+const props = withDefaults(
+  defineProps<{
+    news?: TranslatedNews
+    isOpened?: boolean
+    selectedGroup?: boolean
+  }>(),
+  {
+    news: null,
+    isOpened: false,
+    selectedGroup: true,
+  }
+)
 
-  components: {
-    BaseDrawer,
-    NewsForm,
-  },
+const emit = defineEmits<{
+  close: []
+  'news-edited': [NewsModel]
+}>()
 
-  props: {
-    news: {
-      type: [Object, null],
-      default: null,
-    },
-    isOpened: {
-      type: Boolean,
-      required: true,
-    },
-    selectedGroup: {
-      type: Boolean,
-      default: true,
-    },
-  },
+const toaster = useToasterStore()
+const organizationsStore = useOrganizationsStore()
 
-  emits: ['close', 'news-edited'],
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
+const form = ref(null)
+const asyncing = ref(false)
+const invalid = ref(false)
+
+const { t } = useNuxtI18n()
+
+watch(
+  () => props.news,
+  () => {
+    if (props.news) {
+      form.value = {
+        ...props.news,
+        publication_date: props.news.publication_date
+          ? new Date(props.news.publication_date)
+          : null,
+        header_image: props.news.header_image || null,
+        imageSizes: pictureApiToImageSizes(props.news.header_image),
+        people_groups: Array.isArray(props.news.people_groups)
+          ? props.news.people_groups.reduce((acc, groupId) => {
+              acc[groupId as unknown as number] = true
+              return acc
+            }, {})
+          : props.news.people_groups,
+      }
     }
   },
+  { immediate: true }
+)
 
-  data() {
-    return {
-      form: null,
-      asyncing: false,
-      invalid: false,
+const cancel = () => emit('close')
+
+const newsFormRef = useTemplateRef('newsForm')
+
+const saveNews = async () => {
+  const isValid = await newsFormRef.value.v$.$validate()
+  if (!isValid) {
+    return
+  }
+  asyncing.value = true
+
+  try {
+    const payload = {
+      ...form.value,
+      header_image: form.value.header_image,
+      publication_date: form.value.publication_date.toISOString(),
+      people_groups: Object.entries(form.value.people_groups)
+        .filter(([, value]) => value)
+        .map(([id]) => id),
     }
-  },
+    const payloadNews = { ...payload }
+    delete payloadNews.imageSizes
+    delete payloadNews.header_image
+    let savedNews: NewsModel
 
-  watch: {
-    news: {
-      handler(news) {
-        if (news)
-          this.form = {
-            ...news,
-            publication_date: news.publication_date ? new Date(news.publication_date) : null,
-            header_image: news.header_image || null,
-            imageSizes: pictureApiToImageSizes(news.header_image),
-            people_groups: news.people_groups.reduce
-              ? news.people_groups.reduce((acc, groupId) => {
-                  acc[groupId] = true
-                  return acc
-                }, {})
-              : news.people_groups,
-          }
-      },
-      immediate: true,
-    },
-  },
+    if (props.news.id) {
+      savedNews = await patchNews(organizationsStore.current?.code, props.news.id, payloadNews)
+    } else {
+      savedNews = await createNews(organizationsStore.current?.code, payloadNews)
+    }
 
-  methods: {
-    cancel() {
-      this.$emit('close')
-    },
-    async saveNews() {
-      const isValid = await this.$refs.newsForm.v$.$validate()
-      if (!isValid) {
-        return
-      }
-      this.asyncing = true
+    const formData = new FormData()
+    if (form.value.imageSizes) imageSizesFormData(formData, form.value.imageSizes)
 
-      try {
-        const payload = {
-          ...this.form,
-          header_image: this.form.header_image,
-          publication_date: this.form.publication_date.toISOString(),
-          people_groups: Object.entries(this.form.people_groups)
-            .filter(([, value]) => value)
-            .map(([id]) => id),
-        }
-        const payloadNews = { ...payload }
-        delete payloadNews.imageSizes
-        delete payloadNews.header_image
-        let savedNews
+    if (
+      savedNews?.header_image?.id !== form.value.header_image?.id &&
+      savedNews?.header_image?.id
+    ) {
+      await deleteNewsHeader(
+        organizationsStore.current?.code,
+        savedNews.id,
+        savedNews.header_image.id
+      )
+    }
 
-        if (this.news.id) {
-          savedNews = await patchNews(
-            this.organizationsStore.current?.code,
-            this.news.id,
-            payloadNews
-          )
-        } else {
-          savedNews = await createNews(this.organizationsStore.current?.code, payloadNews)
-        }
+    if (payload.header_image instanceof File) {
+      const formData = new FormData()
 
-        const formData = new FormData()
-        if (this.form.imageSizes) imageSizesFormData(formData, this.form.imageSizes)
-
-        if (payload.header_image instanceof File) {
-          const formData = new FormData()
-
-          formData.append('file', this.form['header_image'], this.form['header_image'].name)
-          if (this.form.imageSizes) imageSizesFormData(formData, this.form.imageSizes)
-          payload.header_image_id = (
-            await postNewsHeader(this.organizationsStore.current?.code, savedNews.id, formData)
-          ).id
-          formData.delete('file')
-          await patchNewsHeader(
-            this.organizationsStore.current?.code,
-            savedNews.id,
-            payload.header_image_id,
-            formData
-          )
-        } else if (savedNews.header_image?.id) {
-          await patchNewsHeader(
-            this.organizationsStore.current?.code,
-            this.news.id,
-            this.news.header_image.id,
-            formData
-          )
-        }
-
-        this.$emit('news-edited', savedNews)
-        this.toaster.pushSuccess(this.$t('news.save.success'))
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('news.save.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.asyncing = false
-        this.$emit('close')
-      }
-    },
-  },
+      formData.append('file', form.value['header_image'], form.value['header_image'].name)
+      if (form.value.imageSizes) imageSizesFormData(formData, form.value.imageSizes)
+      payload.header_image_id = (
+        await postNewsHeader(organizationsStore.current?.code, savedNews.id, formData)
+      ).id
+      formData.delete('file')
+      await patchNewsHeader(
+        organizationsStore.current?.code,
+        savedNews.id,
+        payload.header_image_id,
+        formData
+      )
+    } else if (form.value.header_image?.id) {
+      await patchNewsHeader(
+        organizationsStore.current?.code,
+        props.news.id,
+        props.news.header_image.id,
+        formData
+      )
+    }
+    emit('news-edited', savedNews)
+    toaster.pushSuccess(t('news.save.success'))
+  } catch (err) {
+    toaster.pushError(t('news.save.error'))
+    console.error(err)
+  } finally {
+    asyncing.value = false
+    emit('close')
+  }
 }
 </script>

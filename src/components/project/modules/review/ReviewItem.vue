@@ -2,13 +2,15 @@
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 
+import type { TranslatedProject, TranslatedReview } from 'shared-projects-frontend/models'
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
-import type { TranslatedReview } from '~/models/review.model'
 import useUsersStore from '~/stores/useUsers'
 import { formatDate } from '~/functs/date'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
+    project: TranslatedProject
     review: TranslatedReview
     editable?: boolean
   }>(),
@@ -23,7 +25,7 @@ defineEmits<{
 }>()
 
 const { locale } = useNuxtI18n()
-const { canDestroyReview, canAddReview } = usePermissions()
+const { canDeleteReview, canCreateReview } = usePermissionProject(computed(() => props.project.id))
 const userStore = useUsersStore()
 </script>
 
@@ -32,8 +34,8 @@ const userStore = useUsersStore()
     <div class="actions">
       <ContextActionMenuInline
         v-if="editable"
-        :can-delete="canDestroyReview && review.reviewer.id === userStore.id"
-        :can-edit="canAddReview && review.reviewer.id === userStore.id"
+        :can-delete="canDeleteReview && review.reviewer.id === userStore.id"
+        :can-edit="canCreateReview && review.reviewer.id === userStore.id"
         @delete="$emit('delete')"
         @edit="$emit('edit')"
       />
@@ -66,12 +68,14 @@ const userStore = useUsersStore()
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .review {
   background: var(--white);
-  border-radius: $border-radius-l;
-  padding: $space-l;
+  border-radius: variables.$border-radius-l;
+  padding: variables.$space-l;
   color: var(--black);
-  border: $border-width-s solid var(--primary-dark);
+  border: variables.$border-width-s solid var(--primary-dark);
   box-sizing: border-box;
   position: relative;
 
@@ -83,7 +87,7 @@ const userStore = useUsersStore()
     flex-shrink: 0;
 
     .delete-btn + .edit-btn {
-      margin-left: $space-m;
+      margin-left: variables.$space-m;
     }
   }
 
@@ -91,12 +95,12 @@ const userStore = useUsersStore()
     display: flex;
     align-items: center;
     color: var(--primary-dark);
-    margin-bottom: $space-m;
-    gap: $space-m;
+    margin-bottom: variables.$space-m;
+    gap: variables.$space-m;
 
     .image {
-      width: pxToRem(40px);
-      height: pxToRem(40px);
+      width: variables.pxtorem(40px);
+      height: variables.pxtorem(40px);
       display: inline-block;
       border-radius: 50%;
     }
@@ -105,8 +109,8 @@ const userStore = useUsersStore()
   .review-content {
     .title {
       color: var(--primary-dark);
-      margin-bottom: $space-m;
-      font-size: $font-size-l;
+      margin-bottom: variables.$space-m;
+      font-size: variables.$font-size-l;
     }
   }
 }

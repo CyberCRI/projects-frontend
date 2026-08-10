@@ -1,6 +1,6 @@
 import { usePublicURL } from '~/composables/usePublic'
 
-import { getFileFromURL } from '~/api/utils.service'
+import { getFileFromURL } from '~/api/utils'
 import { range } from 'es-toolkit'
 
 const urlPatatoid = (index: string | number) => {

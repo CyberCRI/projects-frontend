@@ -76,14 +76,15 @@
   </LayoutTab>
 </template>
 
-<script>
+<script lang="ts">
 import {
   createProjectCategory,
   deleteProjectCategory,
+  deleteProjectCategoryBackground,
   patchProjectCategory,
   patchProjectCategoryBackground,
   postProjectCategoryBackground,
-} from '~/api/project-categories.service'
+} from 'shared-projects-frontend/apis'
 
 import CategoryAdminElement from '~/components/category/CategoryAdminElement.vue'
 import CategoryDrawer from '~/components/category/CategoryDrawer.vue'
@@ -92,12 +93,12 @@ import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
 
-import useProjectCategories from '~/stores/useProjectCategories.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import useProjectCategories from '~/stores/useProjectCategories'
+import useToasterStore from '~/stores/useToaster'
 
-import useOrganizationCode from '~/composables/useOrganizationCode.ts'
+import useOrganizationCode from '~/composables/useOrganizationCode'
 
-import { imageSizesFormData } from '~/functs/imageSizesUtils.ts'
+import { imageSizesFormData } from '~/functs/imageSizesUtils'
 import LayoutTab from '~/components/admin/LayoutTab.vue'
 import { Sortable } from 'sortablejs-vue3'
 import { toRaw } from 'vue'
@@ -223,7 +224,9 @@ export default {
               parent: newParentId,
             })
           } else if (index != child.order_index) {
-            return await patchProjectCategory(organizationCode, child.id, { order_index: index })
+            return await patchProjectCategory(organizationCode, child.id, {
+              order_index: index,
+            })
           } else return Promise.resolve()
         })
         // update old parent children if necessary
@@ -259,7 +262,7 @@ export default {
 
     editCategory(category) {
       this.editedCategory = category
-      this.parentCategory = category.parent
+      this.parentCategory = (category.hierarchy || []).at(-1)?.id
       this.categoryDrawerOpened = true
     },
 
@@ -269,26 +272,39 @@ export default {
       this.categoryDrawerOpened = false
     },
 
-    async setImage(data, id, imageSizes, imageId) {
+    async setImage(categoryId, oldImage, newImage, imageSizes) {
       const organizationCode = useOrganizationCode()
-      if (data.background_image instanceof File && id) {
+      let imageId = newImage?.id
+
+      if (oldImage?.id !== imageId && oldImage?.id) {
+        await deleteProjectCategoryBackground(organizationCode, {
+          category_id: categoryId,
+          id: oldImage.id,
+        })
+      }
+
+      if (newImage instanceof File) {
         const formData = new FormData()
-        formData.append('file', data.background_image, data.background_image.name)
-        const res = await postProjectCategoryBackground(organizationCode, { id, body: formData })
+        formData.append('file', newImage, newImage.name)
+        const res = await postProjectCategoryBackground(organizationCode, {
+          id: categoryId,
+          body: formData,
+        })
         imageId = res.id
       }
-      if (imageSizes && id) {
-        delete data.background_image
+      if (imageSizes && imageId) {
         const formData = new FormData()
         imageSizesFormData(formData, imageSizes)
-        await patchProjectCategoryBackground(organizationCode, { id, imageId, body: formData })
+        await patchProjectCategoryBackground(organizationCode, {
+          id: categoryId,
+          imageId,
+          body: formData,
+        })
       }
     },
 
     async submitCategory(category) {
       const organizationCode = useOrganizationCode()
-      const imageSizes = category.imageSizes || null
-      const imageId = category.background_image?.id || null
       const data = {
         ...category,
         // some category have tags for historical reasons
@@ -298,22 +314,32 @@ export default {
         templates_ids: category.templates.map((el) => el.id),
       }
       delete data.imageSizes
-      let categoryId = category.id
-      if (!categoryId) {
-        const newCategory = await createProjectCategory(organizationCode, data)
-        categoryId = newCategory.id
+
+      if (!this.editedCategory?.id) {
+        this.editedCategory = await createProjectCategory(organizationCode, data)
       } else {
         // edit catgeory
-        await patchProjectCategory(organizationCode, categoryId, data)
+        this.editedCategory = await patchProjectCategory(
+          organizationCode,
+          this.editedCategory.id,
+          data
+        )
       }
-      await this.setImage(data, categoryId, imageSizes, imageId)
+      await this.setImage(
+        this.editedCategory.id,
+        this.editedCategory.background_image,
+        category.background_image,
+        category.imageSizes
+      )
 
       try {
         // Update order index of children
         await Promise.all(
           category.children.map(async (child, index) => {
             if (index != child.order_index)
-              return await patchProjectCategory(organizationCode, child.id, { order_index: index })
+              return await patchProjectCategory(organizationCode, child.id, {
+                order_index: index,
+              })
             else return Promise.resolve()
           })
         )
@@ -321,7 +347,7 @@ export default {
         await this.projectCategoriesStore.getAllProjectCategories()
         this.toaster.pushSuccess(this.$t('toasts.category-update.success'))
       } catch (error) {
-        this.toaster.pushError(`${this.$t('toasts.category-update.error')} (${error})`)
+        this.toaster.pushError(this.$t('toasts.category-update.error'))
         console.error(error)
       } finally {
         this.closeCategoryDrawer()
@@ -329,7 +355,10 @@ export default {
     },
 
     goToCategory(category) {
-      this.$router.push({ name: 'Category', params: { slugOrId: category.slug || category.id } })
+      this.$router.push({
+        name: 'Category',
+        params: { slugOrId: category.slug || category.id },
+      })
     },
 
     close() {
@@ -363,17 +392,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .categories-tab {
   .header {
     display: flex;
     align-items: flex-start;
-    gap: $space-2xl;
+    gap: variables.$space-2xl;
 
     .notices {
       flex-basis: 75%;
 
       p + p {
-        margin-top: $space-m;
+        margin-top: variables.$space-m;
       }
     }
 
@@ -385,12 +416,12 @@ export default {
   }
 
   > button {
-    margin: 0 auto $space-l;
+    margin: 0 auto variables.$space-l;
   }
 
   svg {
     width: 24px;
-    fill: $white;
+    fill: variables.$white;
   }
 
   .icon-tip {
@@ -398,7 +429,7 @@ export default {
     height: 1.2em;
     display: inline-block;
     vertical-align: bottom;
-    fill: $primary-dark;
+    fill: variables.$primary-dark;
   }
 
   .categories-container {
@@ -406,9 +437,9 @@ export default {
     width: 30rem;
     display: flex;
     flex-wrap: wrap;
-    gap: $space-l;
+    gap: variables.$space-l;
     justify-content: stretch;
-    padding: $space-m;
+    padding: variables.$space-m;
 
     > ul {
       flex-grow: 1;
@@ -417,7 +448,7 @@ export default {
 }
 
 .category-ghost {
-  background-color: $primary-lighter;
+  background-color: variables.$primary-lighter;
 }
 
 .flip-list-move {

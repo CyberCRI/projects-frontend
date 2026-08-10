@@ -15,7 +15,9 @@
               <template #default="cardListSlotProps">
                 <GroupCard
                   v-if="cardListSlotProps.item"
-                  :class="{ 'is-other-org': groupIsOtherOrg(cardListSlotProps.item) }"
+                  :class="{
+                    'is-other-org': groupIsOtherOrg(cardListSlotProps.item),
+                  }"
                   :group="cardListSlotProps.item"
                   @click.capture="cancelIfOtherOrg($event, cardListSlotProps.item)"
                 />
@@ -44,7 +46,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { TranslatedUserModel } from '~/models/user.model'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 import ListPaginator from '~/components/base/navigation/ListPaginator.vue'
@@ -69,8 +71,9 @@ const cancelIfOtherOrg = (evt, group) => {
   }
 }
 </script>
-<style scoped lang="scss">
-@import './profile-form';
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+@use '~/pages/UserProfilePageV2/Tabs/profile-form';
 
 .pagination-container {
   width: 100%;

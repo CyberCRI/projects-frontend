@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import ProjectLocationBase from '@/components/project/modules/Locations/ProjectLocationBase.vue'
-import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
-import type { TranslatedProject } from '@/models/project.model'
+import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 
 defineProps<{ project: TranslatedProject }>()
 </script>
 
 <template>
   <BaseModulePreview
-    :title="$t(ProjectModuleTitle.locations)"
-    :icon="ProjectModuleIcon.locations"
+    :title="$t(PROJECT_MODULE_TITLE.locations)"
+    :icon="PROJECT_MODULE_ICON.locations"
     :total="project.modules.locations"
     :see-more="{
       name: 'ProjectLocations',

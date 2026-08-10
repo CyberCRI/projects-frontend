@@ -1,4 +1,4 @@
-import type { AttachmentForm } from '~/models/attachment.model'
+import type { AttachmentForm } from 'shared-projects-frontend/models'
 import { helpers, required } from '@vuelidate/validators'
 import { maxFileSize, urlCheck } from '~/form/base'
 import type { RefOrRaw } from '~/interfaces/utils'
@@ -54,5 +54,10 @@ export const useAttachmentForm = (type: RefOrRaw<'file' | 'link'>, options = {})
     return cleanedData
   }
 
-  return useForm<AttachmentForm>({ default: defaultAttachmentForm(), rules, onClean, ...options })
+  return useForm<AttachmentForm>({
+    default: defaultAttachmentForm(),
+    rules,
+    onClean,
+    ...options,
+  })
 }

@@ -1,53 +1,19 @@
-import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import TagChart from '~/components/stats/Charts/TagChart.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
+import type { Stats } from 'shared-projects-frontend/models'
+import TagFactory from '~~/tests/factories/tag.factory'
 import { describe, expect, it } from 'vitest'
-
-const stats = [
-  {
-    name_fr: 'éducation',
-    project_count: 284,
-  },
-  {
-    name_fr: 'brouillon',
-    project_count: 254,
-  },
-  {
-    name_fr: 'biologie',
-    project_count: 214,
-  },
-  {
-    name_fr: 'science',
-    project_count: 194,
-  },
-  {
-    name_fr: 'écologie',
-    project_count: 174,
-  },
-  {
-    name_fr: 'relecture',
-    project_count: 154,
-  },
-  {
-    name_fr: 'mathématiques',
-    project_count: 134,
-  },
-  {
-    name_fr: 'sciences participatives',
-    project_count: 124,
-  },
-  {
-    name_fr: 'développement durable',
-    project_count: 104,
-  },
-  {
-    name_fr: 'vulgarisation',
-    project_count: 84,
-  },
-]
-
 describe('TagChart.vue', () => {
   it('should render component', () => {
+    const stats: Stats['top_tags'] = TagFactory.generateMany(10).map((tag) => {
+      return {
+        ...tag,
+        project_count: 284,
+        projects: ['1', '2', '3', '4'],
+      }
+    })
+
     const wrapper = lpiShallowMount(TagChart, {
       props: {
         stats,

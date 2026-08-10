@@ -912,7 +912,10 @@
       "description": "Cal el camp de descripció"
     },
     "templates": "Plantilles",
-    "quit-without-saving-title": "Surto sense desar?"
+    "quit-without-saving-title": "Surto sense desar?",
+    "recaptcha": {
+      "required": "Cal reconquerir."
+    }
   },
   "footer": {
     "contact": "Contacta amb nosaltres",
@@ -926,7 +929,8 @@
     "madeBy": "està fet per",
     "sourceText": "Mireu el codi font",
     "pca": "Planificació de continuitat (PCPA)",
-    "pssi": "Planificació de seguretat (PSSI)"
+    "pssi": "Planificació de seguretat (PSSI)",
+    "about-projects": "Sobre   Projects"
   },
   "goal": {
     "add": "Afegeix un objectiu",
@@ -1764,7 +1768,9 @@
         "too-big": "El fitxer és massa gran (màx. {maxSize}Mb)",
         "invalid-image": "Fitxer no acceptat, ha de ser una imatge vàlida.",
         "required-image": "Es requereix un fitxer",
-        "required": "Es requereix un fitxer"
+        "required": "Es requereix un fitxer",
+        "delete": "Esborra el fitxer",
+        "delete-image": "Elimina imatge"
       }
     },
     "link": {
@@ -2429,7 +2435,9 @@
       "reviewed": "Ha estat revisada",
       "reviewed-sub": "Quan el vostre projecte està preparat per revisar, se us notificarà quan el revisador del projecte ha enviat la seva revisió",
       "reply": "Respon al vostre comentari",
-      "reply-sub": "Ser notificat quan algú respon al teu comentari"
+      "reply-sub": "Ser notificat quan algú respon al teu comentari",
+      "announcement-has-new-application": "Aplicació anunciada",
+      "announcement-has-new-application-sub": "Tingueu en compte quan els anuncis tenen una aplicació nova"
     },
     "follow": {
       "title": "Notificació següent",
@@ -3424,13 +3432,15 @@
     },
     "form": {
       "title": {
-        "label": "Títol"
+        "label": "Títol",
+        "required": "Es requereix el títol."
       },
       "description": {
         "label": "Descripció"
       },
       "icon": {
-        "label": "Icona"
+        "label": "Icona",
+        "select": "Selecció d' icona"
       },
       "show_preview": {
         "label": "Mostra la vista prèvia en la pàgina de resum."
@@ -3446,6 +3456,10 @@
           "label": "blog",
           "help": "La llista de continguts és per a l' entrada del bloc."
         }
+      },
+      "content": {
+        "label": "Contingut",
+        "required": "Es requereix el contingut."
       }
     },
     "toasts": {

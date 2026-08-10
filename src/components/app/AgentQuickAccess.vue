@@ -35,12 +35,14 @@ withDefaults(
   </details>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .special-agents-access {
   text-align: right;
   margin-bottom: 1rem;
 
   summary {
-    color: $primary-dark;
+    color: variables.$primary-dark;
     font-size: 1.2em;
     cursor: pointer;
     font-weight: bold;

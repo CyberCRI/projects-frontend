@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import BaseCardInline from '~/components/drawer/BaseCardInline.vue'
-import type { TranslatedProject } from '~/models/project.model'
 
 defineProps<{
   project: TranslatedProject

@@ -25,14 +25,16 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .tag-label {
   display: inline-block;
-  background: $white;
-  border: $border-width-s solid $primary;
-  border-radius: $border-radius-l;
-  padding: $space-s $space-m;
-  color: $primary-dark;
-  font-size: $font-size-m;
+  background: variables.$white;
+  border: variables.$border-width-s solid variables.$primary;
+  border-radius: variables.$border-radius-l;
+  padding: variables.$space-s variables.$space-m;
+  color: variables.$primary-dark;
+  font-size: variables.$font-size-m;
 }
 
 .tag-header {
@@ -43,7 +45,7 @@ withDefaults(
 
 .classification {
   font-size: 0.7em;
-  color: $mid-gray;
+  color: variables.$mid-gray;
 }
 
 .tag-name {

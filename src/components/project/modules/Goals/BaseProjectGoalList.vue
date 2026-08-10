@@ -65,20 +65,19 @@
 
 <script setup lang="ts">
 import GoalSummaryItem from '~/components/project/modules/Goals/GoalSummaryItem.vue'
+import { deleteProjectGoal, patchProject } from 'shared-projects-frontend/apis'
 import SdgPreview from '~/components/project/modules/Goals/sdg/SdgPreview.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import GoalDrawer from '~/components/project/modules/Goals/GoalDrawer.vue'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import GoalItem from '~/components/project/modules/Goals/GoalItem.vue'
-import type { TranslatedProject } from '@/models/project.model'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { goalSkeletons } from '@/skeletons/goals.skeletons'
 import SdgsDrawer from '~/components/sdgs/SdgsDrawer.vue'
 import { getProjectGoals } from '~/api/v2/goals.service'
-import { deleteProjectGoal } from '~/api/goals.service'
-import { patchProject } from '~/api/projects.service'
 
 const props = withDefaults(
   defineProps<{
@@ -157,7 +156,7 @@ const onDeleteConfirm = () => {
       toaster.pushSuccess(t('toasts.goal.success'))
       fullRefresh()
     })
-    .catch(() => toaster.pushSuccess(t('toasts.goal.error')))
+    .catch(() => toaster.pushError(t('toasts.goal.error')))
     .finally(() => cancel())
 }
 
@@ -175,6 +174,8 @@ const onUpdateSdgs = (sdgs: number[]) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .list-container.goal-editable {
   gap: 1.5rem;
   margin-top: 1.5rem;

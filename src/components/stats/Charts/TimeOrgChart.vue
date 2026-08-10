@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Stats } from 'shared-projects-frontend/models'
 import type LpiLineChart from './Generic/LpiLineChart.vue'
-import type { Stats } from '~/api/stats.service'
 
 const props = withDefaults(
   defineProps<{
@@ -42,7 +42,10 @@ const formatedDates = computed(() => {
 
 const newFormatDates = computed(() => {
   const dates = formatedDates.value
-  const formater = new Intl.DateTimeFormat(locale.value, { month: 'long', year: 'numeric' })
+  const formater = new Intl.DateTimeFormat(locale.value, {
+    month: 'long',
+    year: 'numeric',
+  })
   return dates.map((date) => formater.format(date))
 })
 
@@ -90,6 +93,8 @@ const formattedData = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .container {
   width: 100%;
 }

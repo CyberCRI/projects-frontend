@@ -20,8 +20,10 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .skeleton {
-  border-radius: $border-radius-m;
+  border-radius: variables.$border-radius-m;
   animation: skeleton-loading 1s linear infinite alternate;
 }
 </style>

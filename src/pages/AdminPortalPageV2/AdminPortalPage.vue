@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import useOrganizationsStore from '~/stores/useOrganizations'
 
 const organizationsStore = useOrganizationsStore()

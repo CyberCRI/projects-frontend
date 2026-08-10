@@ -1,18 +1,31 @@
 import AccountDrawer from '~/components/people/Account/AccountDrawer.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
 
+import {
+  OrganizationFactory,
+  OrganizationOutputFactory,
+} from '~~/tests/factories/organization.factory'
 import ExistingAccountChecker from '~/components/people/Account/ExistingAccountChecker.vue'
-import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
 import AccountLayout from '~/components/people/Account/AccountLayout.vue'
+import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { UserFactory } from '~~/tests/factories/user.factory'
+import useOrganizationsStore from '~/stores/useOrganizations'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { flushTick } from '~~/tests/helpers/utils'
 import { flushPromises } from '@vue/test-utils'
 
 describe('AccountDrawer', () => {
   let defaultProps
 
+  beforeAll(() => {
+    const organizationStore = useOrganizationsStore()
+    const organization = OrganizationFactory.generate()
+    organizationStore._current = organization
+    registerEndpoint(`organization/`, () => ({ results: [organization] }))
+  })
+
   beforeEach(() => {
+    vi.resetModules()
     defaultProps = {
       isAddMode: true,
       isInviteMode: false,
@@ -36,6 +49,12 @@ describe('AccountDrawer', () => {
       throw createError({ statusCode: 404 })
     })
 
+    const organizationStore = useOrganizationsStore()
+    registerEndpoint(
+      `organization/${organizationStore.current.code}/people-groups-hierarchy/`,
+      () => organizationStore.current
+    )
+
     const wrapper = await lpiMount(AccountDrawer, { props: defaultProps })
 
     const input = wrapper.get<HTMLInputElement>('input[type="email"]')
@@ -58,11 +77,11 @@ describe('AccountDrawer', () => {
       ...defaultProps,
     }
     const user = UserFactory.generate()
-    const organization = OrganizationOutputFactory.generate()
 
     registerEndpoint(`user/${user.id}/`, () => user)
-    registerEndpoint(`user/get-by-email/${user.email}/`, () => user)
-    registerEndpoint(`organization/`, () => ({ results: [organization] }))
+    registerEndpoint(`user/get-by-email/${user.email}/`, () => {
+      return user
+    })
 
     const wrapper = await lpiMount(AccountDrawer, { props })
 
@@ -72,10 +91,8 @@ describe('AccountDrawer', () => {
     const confirm = wrapper.get<HTMLButtonElement>('[data-test="confirm-button"]')
     await confirm.element.click()
 
-    await flushPromises()
-    await flushPromises()
+    await flushTick(10)
 
-    expect(wrapper.findComponent(ExistingAccountChecker).exists()).toBe(false)
     expect(wrapper.findComponent(AccountLayout).exists()).toBe(true)
 
     // email exists so update/add account

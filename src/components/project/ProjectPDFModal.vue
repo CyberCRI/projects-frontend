@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ProjectModuleTitle, type TranslatedProject } from '~/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import { DEFAULT_PDF_OPTIONS } from '~/composables/useProjectToPdf'
+import { PROJECT_MODULE_TITLE } from '~/functs/constants'
 
 const props = defineProps<{
   project: TranslatedProject
@@ -52,7 +53,11 @@ const modules = computed(() => ({
         <template v-for="(value, name) in form">
           <!-- hide choices if project a empty modules values -->
           <li v-if="modules[name] > 0" :key="name">
-            <LpiCheckbox v-model="form[name]" :label="$t(ProjectModuleTitle[name], 10)" as-button />
+            <LpiCheckbox
+              v-model="form[name]"
+              :label="$t(PROJECT_MODULE_TITLE[name], 10)"
+              as-button
+            />
           </li>
         </template>
       </ul>
@@ -61,6 +66,8 @@ const modules = computed(() => ({
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .asyncing {
   opacity: 0.7;
 }

@@ -24,7 +24,10 @@
             <SeeMoreArrow
               v-if="documentsCount.publications > DOCUMENTS_LIMIT"
               data-test="see-more"
-              :to="{ name: 'ResearcherPublicationsOther', params: { userId: user.id } }"
+              :to="{
+                name: 'ResearcherPublicationsOther',
+                params: { userId: user.id },
+              }"
             />
           </div>
           <OwnResearcherDocumentsList
@@ -46,7 +49,10 @@
             <SeeMoreArrow
               v-if="documentsCount.conferences > DOCUMENTS_LIMIT"
               data-test="see-more"
-              :to="{ name: 'ResearcherConferencesOther', params: { userId: user.id } }"
+              :to="{
+                name: 'ResearcherConferencesOther',
+                params: { userId: user.id },
+              }"
             />
           </div>
           <OwnResearcherDocumentsList
@@ -162,7 +168,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedUserModel } from '~/models/user.model'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
 import OwnResearcherDocumentsList from '~/components/people/Researcher/OwnResearcherDocumentsList.vue'
 import UserProjectsSearch from '~/components/people/UserProfile/UserProjectsSearch.vue'
@@ -213,10 +219,12 @@ const goToProfileProjects = () => selectTab(2)
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .unboxed {
   border: 0 none !important;
   border-radius: 0 !important;
-  padding: $space-l 0 !important;
+  padding: variables.$space-l 0 !important;
   background: transparent !important;
 }
 
@@ -234,7 +242,7 @@ const goToProfileProjects = () => selectTab(2)
   }
 
   .user-description {
-    margin-top: $space-42;
+    margin-top: variables.$space-42;
   }
 
   .lists {
@@ -246,9 +254,9 @@ const goToProfileProjects = () => selectTab(2)
   }
 }
 
-@media screen and (max-width: $max-tablet) {
+@media screen and (max-width: variables.$max-tablet) {
   .profile-summary {
-    padding: $space-s;
+    padding: variables.$space-s;
 
     .skills-mobile {
       display: block;
@@ -265,11 +273,11 @@ const goToProfileProjects = () => selectTab(2)
     .left {
       width: 100%;
       margin-right: 0;
-      margin-bottom: $space-l;
+      margin-bottom: variables.$space-l;
     }
 
     .lists {
-      padding: 0 $layout-size-2xs;
+      padding: 0 variables.$layout-size-2xs;
     }
   }
 }
@@ -278,19 +286,19 @@ const goToProfileProjects = () => selectTab(2)
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin: $space-2xl 0 $space-l 0;
+  margin: variables.$space-2xl 0 variables.$space-l 0;
 
   .title {
-    font-size: $font-size-l;
+    font-size: variables.$font-size-l;
     font-weight: 700;
-    color: $primary-dark;
+    color: variables.$primary-dark;
     margin: 0;
   }
 }
 
 .empty-field {
-  padding-top: $space-l;
-  color: $mid-gray;
+  padding-top: variables.$space-l;
+  color: variables.$mid-gray;
   font-weight: 700;
 }
 </style>

@@ -1,8 +1,8 @@
-import type { OrganizationModel } from '~/models/organization.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
-import { getUserMentorship as fetchUserMentorship } from '~/api/mentorship.service'
+import { getUserMentorship as fetchUserMentorship } from 'shared-projects-frontend/apis'
 import type { UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
 import { onlyRefs } from '~/functs/onlyRefs'

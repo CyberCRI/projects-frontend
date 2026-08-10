@@ -6,8 +6,8 @@
 
 <script setup lang="ts">
 import BaseDescription from '~/components/modules/Abstract/BaseDescription.vue'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
-import type { TranslatedProject } from '~/models/project.model'
 
 defineProps<{
   project: TranslatedProject
@@ -15,12 +15,14 @@ defineProps<{
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .description-content {
-  background: $white;
-  padding: $space-l 0;
+  background: variables.$white;
+  padding: variables.$space-l 0;
   padding-top: 0;
   overflow-wrap: break-word;
-  color: $almost-black;
+  color: variables.$almost-black;
   flex-grow: 1;
   overflow: auto;
 }

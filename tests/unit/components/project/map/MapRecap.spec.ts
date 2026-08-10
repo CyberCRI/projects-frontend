@@ -1,6 +1,6 @@
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import { beforeEach, describe, expect, it } from 'vitest'
 import GeneralMap from '@/components/map/GeneralMap.vue'
 import useProjectsStore from '~/stores/useProjects'
 import pinia from '~/stores'

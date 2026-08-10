@@ -11,14 +11,16 @@
 <script setup lang="ts">
 import UserRecommendationItem from '@/components/search/Recommendations/UserRecommendationItem.vue'
 import BaseRecommendationList from '@/components/search/Recommendations/BaseRecommendationList.vue'
-import type { TranslatedUserModel } from '@/models/user.model'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
 defineProps<{
   users: TranslatedUserModel[]
 }>()
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .notice {
-  padding: 0 $space-l;
+  padding: 0 variables.$space-l;
 }
 </style>

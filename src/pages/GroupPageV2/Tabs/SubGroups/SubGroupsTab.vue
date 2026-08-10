@@ -1,18 +1,18 @@
 <template>
   <BaseModuleTab
     id="subgroups"
-    :title="$t(GroupModuleTitle.subgroups, group.modules.subgroups)"
+    :title="$t(GROUP_MODULE_TITLE.subgroups, group.modules.subgroups)"
     :count="group.modules.subgroups"
-    :icon="GroupModuleIcon.subgroups"
+    :icon="GROUP_MODULE_ICON.subgroups"
   >
     <GroupSubList :group="group" />
   </BaseModuleTab>
 </template>
 
 <script setup lang="ts">
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 import GroupSubList from '@/components/group/Modules/GroupSub/GroupSubList.vue'
-import { GroupModuleIcon, GroupModuleTitle } from '@/models/invitation.model'
-import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { GROUP_MODULE_ICON, GROUP_MODULE_TITLE } from '~/functs/constants'
 
 defineProps<{ group: TranslatedPeopleGroupModel }>()
 </script>

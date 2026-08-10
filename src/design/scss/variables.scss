@@ -1,3 +1,6 @@
+// NUXT
+$PUBLIC_BINARIES_PREFIX: '/public-assets';
+
 // LAYOUT
 $navbar-height: 50px;
 
@@ -88,7 +91,7 @@ $border-width-m: 2px;
 $border-width-l: 3px;
 
 // PX => REM
-@function pxToRem($size) {
+@function pxtorem($size) {
   @return calc($size / 16px * 1rem);
 }
 
@@ -111,8 +114,8 @@ $zindex-modal-backdrop: 9990000;
 $zindex-toast: 500000;
 
 // CARDS
-$card_width: pxToRem(184px);
-$card_height: pxToRem(260px);
+$card_width: pxtorem(184px);
+$card_height: pxtorem(260px);
 
 // LOCATION
 $location-impact: $primary;

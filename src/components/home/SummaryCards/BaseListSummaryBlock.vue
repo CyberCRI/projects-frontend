@@ -43,19 +43,21 @@ const nbColsText = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .summary-block {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: stretch;
-  padding-inline: $space-xs;
+  padding-inline: variables.$space-xs;
 }
 
 .uppercase-title {
-  font-size: $font-size-xs;
+  font-size: variables.$font-size-xs;
   font-weight: normal;
   text-transform: uppercase;
-  margin-top: $space-l;
+  margin-top: variables.$space-l;
 }
 
 .no-col-wrapper {
@@ -67,18 +69,18 @@ const nbColsText = computed(() => {
 .column-wrapper {
   box-sizing: border-box;
   width: 100%;
-  background-color: $white;
-  border: $border-width-s solid $primary-dark;
-  border-radius: $border-radius-s;
+  background-color: variables.$white;
+  border: variables.$border-width-s solid variables.$primary-dark;
+  border-radius: variables.$border-radius-s;
   display: flex;
   flex-direction: column;
-  margin-block: $space-s;
-  padding: $space-m;
-  gap: $space-m;
+  margin-block: variables.$space-s;
+  padding: variables.$space-m;
+  gap: variables.$space-m;
   flex-grow: 1;
 }
 
-@media screen and (min-width: $min-tablet) {
+@media screen and (min-width: variables.$min-tablet) {
   .inlined {
     align-items: center;
 
@@ -89,17 +91,17 @@ const nbColsText = computed(() => {
 }
 
 .top-title {
-  font-size: $font-size-xs;
+  font-size: variables.$font-size-xs;
   font-weight: 400;
   text-transform: uppercase;
-  padding-top: $space-m;
+  padding-top: variables.$space-m;
 }
 
 .items-line {
   display: flex;
   flex-direction: column;
   width: auto;
-  gap: $space-m;
+  gap: variables.$space-m;
   flex-grow: 1;
 
   &:empty {
@@ -120,17 +122,17 @@ const nbColsText = computed(() => {
   width: 100%;
 }
 
-@media screen and (min-width: $min-tablet) {
+@media screen and (min-width: variables.$min-tablet) {
   .uppercase-title {
     margin-top: 0;
-    margin-right: $space-l;
+    margin-right: variables.$space-l;
   }
 
   .one-col-wrapper,
   .two-col-wrapper {
     &.inlined {
       flex-direction: row !important;
-      padding-inline: $space-xl;
+      padding-inline: variables.$space-xl;
     }
   }
 
@@ -144,7 +146,7 @@ const nbColsText = computed(() => {
     }
 
     &.three-col-wrapper .column-wrapper {
-      margin-top: $space-m;
+      margin-top: variables.$space-m;
     }
 
     .items-line {

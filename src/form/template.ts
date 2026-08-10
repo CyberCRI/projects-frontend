@@ -2,7 +2,7 @@ import { required } from '@vuelidate/validators'
 
 import useForm from '~/composables/useForm'
 
-import type { TemplateForm } from '~/models/template.model'
+import type { TemplateForm } from 'shared-projects-frontend/models'
 import { NULL_CONTENT } from '~/functs/constants'
 
 export const defaultTemplateForm = (): TemplateForm => ({
@@ -13,6 +13,7 @@ export const defaultTemplateForm = (): TemplateForm => ({
   project_description: NULL_CONTENT,
   project_purpose: '',
   project_tags: [],
+  project_categories_ids: [],
 
   blogentry_title: '',
   blogentry_content: NULL_CONTENT,

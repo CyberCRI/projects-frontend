@@ -124,7 +124,7 @@
 </template>
 
 <script setup lang="ts">
-import type { UserModel } from '~/models/user.model'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
 import useProjectCategories from '~/stores/useProjectCategories'
 import useUsersStore from '~/stores/useUsers'
@@ -133,7 +133,7 @@ const PROJECTS_LIMIT = 12
 const PROJECTS_COLUMNS = 4
 
 defineProps<{
-  user: UserModel
+  user: TranslatedUserModel
 }>()
 
 defineEmits<{
@@ -158,8 +158,9 @@ const closeFollowProjectDrawer = () => {
 }
 </script>
 
-<style scoped lang="scss">
-@import './profile-form';
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+@use '~/pages/UserProfilePageV2/Tabs/profile-form';
 
 .category-list-wrapper {
   display: flex;

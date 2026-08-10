@@ -3,14 +3,15 @@ import type {
   FollowInput,
   FollowOutput,
   UnfollowCategoryInput,
-} from '~/models/follow.model'
+} from 'shared-projects-frontend/models'
 
 import {
   deleteProjectCategoryFollow,
-  // getProjectCategoriesFollow,
   postProjectCategoryFollow,
-} from '~/api/project-categories.service'
-import { deleteFollow, postFollow, postFollowMany } from '~/api/follows.service'
+  deleteFollow,
+  postFollow,
+  postFollowMany,
+} from 'shared-projects-frontend/apis'
 
 import analytics from '~/analytics'
 

@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import type { TranslatedProjectCategory } from '~/models/project-category.model'
-import type { TemplateModel } from '~/models/template.model'
-import type { ProjectForm } from '~/models/project.model'
+import type {
+  TranslatedProjectCategory,
+  TemplateModel,
+  ProjectForm,
+} from 'shared-projects-frontend/models'
+import { getTemplate } from 'shared-projects-frontend/apis'
 import { useProjectTemplatesForm } from '~/form/project'
-import { getTemplate } from '~/api/templates.service'
 import Field from '~/components/base/form/Field.vue'
 import useToasterStore from '~/stores/useToaster'
 import { useOrganizationCode } from '#imports'
@@ -95,6 +97,8 @@ const onChangeCategories = async (categorie: TranslatedProjectCategory) => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .template-field {
   margin-top: 1rem;
 }

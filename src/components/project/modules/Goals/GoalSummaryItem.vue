@@ -31,8 +31,7 @@
 
 <script setup lang="ts">
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
-import type { TranslatedProject } from '~/models/project.model'
-import type { TranslatedGoal } from '@/models/goal.model'
+import type { TranslatedProject, TranslatedGoal } from 'shared-projects-frontend/models'
 import { formatDate } from '@/functs/date'
 
 const props = withDefaults(
@@ -65,30 +64,32 @@ const deadlineAt = computed(() =>
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .goal {
   position: relative;
   display: flex;
-  border-radius: $border-radius-m;
-  border: $border-width-s solid var(--primary-dark);
+  border-radius: variables.$border-radius-m;
+  border: variables.$border-width-s solid var(--primary-dark);
   color: var(--primary-dark);
   font-weight: bold;
   background: var(--primary-lighter);
   overflow: hidden;
 
   > div {
-    padding: $space-xs;
+    padding: variables.$space-xs;
   }
 
   .status-ctn {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-right: $border-width-s solid var(--primary-dark);
+    border-right: variables.$border-width-s solid var(--primary-dark);
     flex: 0 0 10em;
 
     svg {
-      width: pxToRem(10px);
-      height: pxToRem(10px);
+      width: variables.pxtorem(10px);
+      height: variables.pxtorem(10px);
     }
 
     &.completed {
@@ -111,7 +112,7 @@ const deadlineAt = computed(() =>
 
   .goal-title {
     text-transform: uppercase;
-    font-size: $font-size-2xs;
+    font-size: variables.$font-size-2xs;
     display: flex;
     align-items: center;
     width: 100%;
@@ -119,11 +120,11 @@ const deadlineAt = computed(() =>
   }
 
   .deadline {
-    font-size: $font-size-xs;
+    font-size: variables.$font-size-xs;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-left: $border-width-s solid var(--primary-dark);
+    border-left: variables.$border-width-s solid var(--primary-dark);
   }
 }
 

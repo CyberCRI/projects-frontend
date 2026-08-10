@@ -52,15 +52,14 @@
 </template>
 
 <script setup lang="ts">
+import type { LocationForm, LocationType } from 'shared-projects-frontend/models'
 import type { GroupOption } from '@/components/base/button/GroupButton.vue'
 import GroupButton from '@/components/base/button/GroupButton.vue'
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
-import type { LocationForm } from '@/models/location.model'
 import GeneralMap from '~/components/map/GeneralMap.vue'
-import { IconMapLocationType } from '~/functs/maps'
-import type { LocationType } from '@/models/types'
+import { LOCATION_TYPE_ICON } from '~/functs/constants'
 import { useLocationForm } from '@/form/location'
 
 const props = withDefaults(
@@ -83,27 +82,27 @@ const locationTypeOptions = computed(() => {
     {
       value: 'team',
       label: t('location.team'),
-      iconName: IconMapLocationType('team'),
+      iconName: LOCATION_TYPE_ICON.team,
     },
     {
       value: 'impact',
       label: t('location.impact'),
-      iconName: IconMapLocationType('impact'),
+      iconName: LOCATION_TYPE_ICON.impact,
     },
     {
       value: 'address',
       label: t('location.address'),
-      iconName: IconMapLocationType('address'),
+      iconName: LOCATION_TYPE_ICON.address,
     },
     {
       value: 'news',
       label: t('location.news'),
-      iconName: IconMapLocationType('news'),
+      iconName: LOCATION_TYPE_ICON.news,
     },
     {
       value: 'event',
       label: t('location.event'),
-      iconName: IconMapLocationType('event'),
+      iconName: LOCATION_TYPE_ICON.event,
     },
   ]
   if (props.locationTypes) {
@@ -156,6 +155,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .new-coords {
   text-align: center;
   font-style: italic;
@@ -163,24 +164,24 @@ onMounted(() => {
 }
 
 .description-input {
-  margin-top: $space-m;
+  margin-top: variables.$space-m;
 }
 
 .location-type-ctn {
-  margin: $space-m 0;
+  margin: variables.$space-m 0;
 
   .location-type-label {
-    font-size: $font-size-s;
-    color: $primary-dark;
+    font-size: variables.$font-size-s;
+    color: variables.$primary-dark;
     font-weight: bold;
-    margin-bottom: $space-2xs;
+    margin-bottom: variables.$space-2xs;
   }
 }
 
 .delete-button {
-  color: $white;
-  border-color: $salmon;
-  background: $salmon;
+  color: variables.$white;
+  border-color: variables.$salmon;
+  background: variables.$salmon;
 }
 </style>
 

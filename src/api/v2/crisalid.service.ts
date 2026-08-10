@@ -1,7 +1,11 @@
-import type { OrganizationModel } from '~/models/organization.model'
-import type { PeopleGroupIdOrSlug } from '~/models/invitation.model'
+import type {
+  PeopleGroupIdOrSlug,
+  OrganizationModel,
+  ResearcherDocument,
+  ResearcherDocumentType,
+  Researcher,
+} from 'shared-projects-frontend/models'
 
-import type { Document, DocumentType, Researcher } from '~/interfaces/researcher'
 import type { RefOrRaw } from '~/interfaces/utils'
 
 import {
@@ -10,7 +14,7 @@ import {
   getOwnResearchDocument as fetchOwnResearchDocument,
   getOwnResearchDocumentAnalytics as fetchOwnResearchDocumentAnalytics,
   getResearchDocumentSimilars as fetchResearchDocumentSimilars,
-} from '~/api/crisalid.service'
+} from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
 import useAsyncPaginationAPI from '~/composables/useAsyncPaginationAPI'
@@ -26,7 +30,7 @@ type ConfigPagination = UseAsyncPaginationApiConfig
 export const getOwnResearchDocument = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   researcherId: RefOrRaw<Researcher['id']>,
-  documenType: DocumentType,
+  documenType: ResearcherDocumentType,
   config: ConfigPagination = {}
 ) => {
   const { translateResearcherDocuments } = useAutoTranslate()
@@ -52,7 +56,7 @@ export const getOwnResearchDocument = (
 export const getGroupResearchDocument = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  documenType: DocumentType,
+  documenType: ResearcherDocumentType,
   config: ConfigPagination = {}
 ) => {
   const { translateResearcherDocuments } = useAutoTranslate()
@@ -76,7 +80,7 @@ export const getGroupResearchDocument = (
 export const getOwnResearchDocumentAnalytics = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   researcherId: RefOrRaw<Researcher['id']>,
-  documenType: DocumentType,
+  documenType: ResearcherDocumentType,
   config: Config = {}
 ) => {
   const key = computed(
@@ -106,7 +110,7 @@ export const getOwnResearchDocumentAnalytics = (
 export const getGroupResearchDocumentAnalytics = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  documenType: DocumentType,
+  documenType: ResearcherDocumentType,
   config: Config = {}
 ) => {
   const key = computed(
@@ -134,7 +138,7 @@ export const getGroupResearchDocumentAnalytics = (
 
 export const getResearchDocumentSimilars = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  documentId: RefOrRaw<Document['id']>,
+  documentId: RefOrRaw<ResearcherDocument['id']>,
   config: ConfigPagination = {}
 ) => {
   const { translateResearcherDocuments } = useAutoTranslate()

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { patchBlogEntry, postBlogEntry, postBlogEntryImage } from '~/api/blogentries.service'
+import { patchBlogEntry, postBlogEntry, postBlogEntryImage } from 'shared-projects-frontend/apis'
 
 import TipTapCollaborativeEditor from '~/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
@@ -11,14 +11,20 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
-import type { BlogEntryForm, BlogEntryModel } from '~/models/blog-entry.model'
+import type {
+  BlogEntryForm,
+  BlogEntryModel,
+  TranslatedProject,
+  ImageModel,
+} from 'shared-projects-frontend/models'
+import type { ProviderParams } from 'shared-projects-frontend/interfaces'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
-import type { TranslatedProject } from '~/models/project.model'
+import { roomKeyFromParams } from 'shared-projects-frontend/lib'
 import { defaultBlogForm, useBlogEntryForm } from '~/form/blog'
-import type { ImageModel } from '~/models/image.model'
-import { getFirstTextNotEmpty } from '~/functs/string'
-import { isEqual, isNil } from 'es-toolkit'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
+import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
+import { isNil } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
@@ -78,19 +84,22 @@ const close = () => {
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
-const { form, isValid, errors, cleanedData, reset } = useBlogEntryForm({ lazy: true })
+const { form, isValid, errors, cleanedData, reset } = useBlogEntryForm({
+  lazy: true,
+})
 watch(
   () => [props.blog, props.isOpened, props.project],
   () => reset(defaultLocalForm()),
   { immediate: true, deep: true }
 )
 const isFormEqual = useBlockNavigation(
-  () => !props.isOpened || isEqual(form.value, defaultLocalForm())
+  () => !props.isOpened || formEqual(form.value, defaultLocalForm(), { html: ['content'] })
 )
 
 const asyncing = ref(false)
 
-const providerParams = computed(() => ({
+const providerParams = computed<ProviderParams>(() => ({
+  type: 'project-blog',
   blogId: props.blog?.id ?? null,
   projectId: props.project.id,
   organizationId: organizationsStore.current.id,
@@ -100,7 +109,7 @@ const inOfflineMode = ref(false)
 
 const isCreated = computed(() => isNil(props.blog?.id) || inOfflineMode.value)
 
-const room = computed(() => (props.blog?.id ? `blog_${props.blog.id}` : null))
+const room = computed(() => roomKeyFromParams(providerParams.value))
 
 const handleImage = (img: ImageModel) => {
   console.log(img)
@@ -209,7 +218,7 @@ const checkClose = () => {
         @image="handleImage"
       />
       <TipTapCollaborativeEditor
-        v-else
+        v-else-if="room"
         ref="tiptapEditor"
         v-model="form.content"
         :room="room"
@@ -251,16 +260,18 @@ const checkClose = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .blog-drawer {
   height: 100%;
 
   :deep(.drawer__main) {
-    gap: $space-unit;
+    gap: variables.$space-unit;
   }
 
   .content-editor {
     flex-grow: 1;
-    min-height: pxToRem(300px);
+    min-height: variables.pxtorem(300px);
   }
 }
 

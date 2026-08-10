@@ -1,31 +1,28 @@
 <script setup lang="ts">
+import { HocuspocusProvider, WebSocketStatus } from '@hocuspocus/provider'
 import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
+import type { onStatusParameters } from '@hocuspocus/provider'
 import Collaboration from '@tiptap/extension-collaboration'
-import { HocuspocusProvider } from '@hocuspocus/provider'
 import { Editor } from '@tiptap/vue-3'
 
-import TipTapCollaborativeReconnectionStatus from '~/components/base/form/TextEditor/TipTapCollaborativeReconnectionStatus.vue'
-import TipTapCollaborativeConnectingStatus from '~/components/base/form/TextEditor/TipTapCollaborativeConnectingStatus.vue'
-import TipTapCollaborativeConnectedStatus from '~/components/base/form/TextEditor/TipTapCollaborativeConnectedStatus.vue'
-import {
-  PropsDefault,
-  emitsDefinitions,
-  useTipTap,
-} from '~/components/base/form/TextEditor/useTipTap'
 import TipTapEditorContainer from '~/components/base/form/TextEditor/TipTapEditorContainer.vue'
 import TipTapEditorContent from '~/components/base/form/TextEditor/TipTapEditorContent.vue'
-import type { PropsDefinitions } from '~/components/base/form/TextEditor/useTipTap'
-import TipTapModals from '~/components/base/form/TextEditor/TipTapModals.vue'
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import type { PropsDefinitions } from '~/composables/tiptap'
 import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
 
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
+import type { CollaborativeUser, ProviderParams } from 'shared-projects-frontend/interfaces'
+import TipTapEditorMenus from '~/components/base/form/TextEditor/TipTapEditorMenus.vue'
+import { emitsDefinitions, PropsDefault, useTipTap } from '~/composables/tiptap'
 import { onClientMounted, onClientUnmounted } from '~/composables/onClient'
-import { ClearHistoryWS } from './tiptap-extensions/ClearHistoryWS'
 import { useRuntimeConfig } from '#imports'
 import { randomInt } from 'es-toolkit'
+
+import { ClearHistoryWS } from '~/composables/tiptap/extensions/ClearHistoryWS'
+import { getExtensions } from '~/composables/tiptap/extensions/all'
 
 const runtimeConfig = useRuntimeConfig()
 const { t } = useNuxtI18n()
@@ -46,7 +43,7 @@ const props = withDefaults(
     PropsDefinitions & {
       room: string
       color?: string
-      providerParams?: any
+      providerParams: ProviderParams
     }
   >(),
   {
@@ -58,7 +55,6 @@ const props = withDefaults(
       const lightness = randomInt(20, 60) // neither too dark nor too light
       return `hsl(${hue}deg ${saturation}% ${lightness}%)`
     },
-    providerParams: null,
   }
 )
 
@@ -69,7 +65,6 @@ const {
   editorInited,
   appendTranslationsStyle,
   destroyEditor,
-  getExtensions,
   initialContent,
   resetContent,
   onBlur,
@@ -85,7 +80,7 @@ const {
 const provider = ref(null)
 // TODO ref ?
 const sockerserver = runtimeConfig.public.appWssHost
-const status = ref('offline')
+const status = ref<onStatusParameters['status'] | 'offline'>('offline')
 const online = ref(navigator.onLine)
 const synced = ref(false) // current sync status
 const firstSync = ref(false) // was synced at least once
@@ -121,16 +116,11 @@ function fallbackToSoloMode() {
 }
 
 function getCollaborativeExtensions() {
-  const exts = getExtensions({ disableHistory: true })
-
-  exts.push(
-    // @ts-expect-error ignore error (TODO)
+  return [
+    ...getExtensions({ history: false }),
     Collaboration.configure({
       document: toRaw(provider.value.document),
-    })
-  )
-  exts.push(
-    // @ts-expect-error ignore error (TODO)
+    }),
     CollaborationCursor.configure({
       provider: toRaw(provider.value),
       user: {
@@ -138,13 +128,10 @@ function getCollaborativeExtensions() {
         color: props.color,
         pid: user.value.id,
         profile_picture: user.value.profile_picture,
-      },
-    })
-  )
-  // @ts-expect-error ignore error (TODO)
-  exts.push(ClearHistoryWS.configure({}))
-
-  return exts
+      } satisfies CollaborativeUser,
+    }),
+    ClearHistoryWS.configure({}),
+  ]
 }
 
 const getCollaborativeContent = () => {
@@ -166,12 +153,7 @@ function initCollaborativeEditor() {
   initialContent.value = props.modelValue
   editorInited.value = true
 
-  status.value = 'connecting'
-  // this.ydoc = new Y.Doc()
-
-  const providerParams = {
-    ...props.providerParams,
-  }
+  status.value = WebSocketStatus.Connecting
 
   // there's no way in provide to detect failure if server is not reached at least once
   // so we use a simple timeout that check if the connection was ever open
@@ -188,14 +170,15 @@ function initCollaborativeEditor() {
     url: sockerserver,
     name: props.room,
     token: accessToken.value,
-    parameters: providerParams,
+    parameters: props.providerParams,
     onOpen: () => {
       cnxOpen.value = true
       // clear "unconnectable" timeout
       if (cnxTimer.value) clearTimeout(cnxTimer.value)
     },
-    onAuthenticationFailed: () => {
+    onAuthenticationFailed: (data) => {
       emit('unauthorized')
+      console.error(data)
       toaster.pushError(t('multieditor.unauthorized'))
     },
     // it tell us if server is down or not
@@ -256,7 +239,7 @@ function handleDisconnection() {
   disconnectionGrace.value = true
   disconnectionGraceTimeout.value = setTimeout(() => {
     disconnectionGrace.value = false
-    editor.value.setEditable(false)
+    editor.value?.setEditable(false)
   }, DISCONNECTION_GRACE_DURATION)
 }
 
@@ -333,7 +316,7 @@ defineExpose({
         :users="editor.storage.collaborationCursor.users"
       />
 
-      <TipTapModals
+      <TipTapEditorMenus
         v-if="editor"
         :editor="editor"
         :mode="mode"
@@ -369,13 +352,6 @@ defineExpose({
 
 <!--SCOPED TO FIX BUG ON DEFAULT EDITOR, UN-SCOPE IF NEEDED LATER-->
 <style lang="scss" scoped>
-// TODO dead code ???
-// .connecting,
-// .disconnected {
-//     padding: 20px;
-//     text-align: center;
-// }
-
 .solo-mode-warning {
   margin: 0 auto 1rem;
 }

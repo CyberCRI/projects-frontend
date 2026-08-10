@@ -31,7 +31,7 @@ import PageStickyHead from '~/components/base/navigation/PageStickyHead.vue'
 import PageIndex from '~/components/base/navigation/PageIndex.vue'
 import NothingHere from '~/components/base/NothingHere.vue'
 import { onClient } from '~/composables/onClient'
-import { textIsEmpty } from '~/functs/string'
+import { textIsEmpty } from '~/functs/tiptap'
 
 const props = defineProps<{
   title: string
@@ -79,12 +79,14 @@ const scrollToSection = onClient((targetId) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .description-content {
-  background: $white;
-  padding: $space-l 0;
+  background: variables.$white;
+  padding: variables.$space-l 0;
   padding-top: 0;
   overflow-wrap: break-word;
-  color: $almost-black;
+  color: variables.$almost-black;
   flex-grow: 1;
   overflow: auto;
 }

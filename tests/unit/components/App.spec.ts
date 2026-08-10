@@ -1,46 +1,50 @@
-import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
-import App from '~/app.vue'
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { OrganizationOutput } from '~/models/organization.model'
+import { OrganizationFactory } from '~~/tests/factories/organization.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { checkExpiredToken } from '~/api/auth/keycloakUtils'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { flushPromises } from '@vue/test-utils'
-import { Router } from 'vue-router'
-import type { Mock } from 'vitest'
-// issue with webcrypto, so mock so offending import
-import pinia from '~/stores'
+import type { Router } from 'vue-router'
+
+const checkExpiredToken = vi.fn()
+const cleanLocalStorage = vi.fn()
+const getRefreshTokenInterval = vi.fn().mockReturnValue(1)
 
 vi.mock('~/api/auth/keycloakUtils', () => {
   return {
-    checkExpiredToken: vi.fn(),
-    cleanLocalStorage: vi.fn(),
-    getRefreshTokenInterval: vi.fn().mockReturnValue(1),
+    checkExpiredToken,
+    cleanLocalStorage,
+    getRefreshTokenInterval,
   }
 })
 
-vi.mock('~/api/auth/auth.service', () => {
+vi.mock('~/api/auth/auth.service', async (origi) => {
   return {
-    refreshAccessToken: vi.fn(() =>
-      Promise.resolve({
-        access_token: 'access',
-        refresh_token: 'refresh',
-        refresh_token_exp: 1,
-        parsedToken: {},
-        fromURL: 'url',
-        id_token: 'id',
-      })
-    ),
+    ...(await origi()),
+    refreshAccessToken: vi.fn().mockImplementation(() => ({
+      access_token: 'access',
+      refresh_token: 'refresh',
+      refresh_token_exp: 1,
+      parsedToken: {},
+      fromURL: 'url',
+      id_token: 'id',
+    })),
   }
 })
 
 describe('On tab focus', () => {
-  beforeEach(() => {
-    const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore._current = { code: '123' } as OrganizationOutput
+  beforeAll(() => {
+    const organizationsStore = useOrganizationsStore()
+    organizationsStore._current = OrganizationFactory.generate()
   })
 
-  const localeMount = () => {
+  beforeEach(() => {
+    vi.resetModules()
+  })
+
+  const localeMount = async () => {
+    const App = (await import('~/app.vue')).default
+
     const wrapper = lpiShallowMount(App, {
       stubs: { NuxtLink: true, NuxtPage: true },
     })
@@ -56,16 +60,16 @@ describe('On tab focus', () => {
 
   afterEach(() => {
     localStorage.clear()
-    vi.clearAllMocks()
   })
 
   it('logout if token has expired', async () => {
-    const { wrapper, router, usersStore } = localeMount()
+    const { wrapper, router, usersStore } = await localeMount()
 
+    vi.spyOn(usersStore, 'resetUser')
     vi.spyOn(router, 'push')
-    ;(checkExpiredToken as Mock).mockImplementation(() => true)
+    checkExpiredToken.mockImplementation(() => true)
 
-    // token in both
+    // // token in both
     usersStore.accessToken = 'access'
     localStorage.setItem('ACCESS_TOKEN', 'eyJhbGciOiJSUz')
     window.dispatchEvent(new Event('focus'))
@@ -81,7 +85,8 @@ describe('On tab focus', () => {
   })
 
   it('logout if logged in but has no more user token', async () => {
-    const { wrapper, router, usersStore } = localeMount()
+    const { wrapper, router, usersStore } = await localeMount()
+    vi.spyOn(usersStore, 'resetUser')
     vi.spyOn(router, 'push')
 
     // token in store
@@ -99,8 +104,8 @@ describe('On tab focus', () => {
   })
 
   it('do not logout if not logged in', async () => {
-    const { wrapper, router, usersStore } = localeMount()
-
+    const { wrapper, router, usersStore } = await localeMount()
+    vi.spyOn(usersStore, 'resetUser')
     vi.spyOn(router, 'push')
 
     // not token in store and no in local storage

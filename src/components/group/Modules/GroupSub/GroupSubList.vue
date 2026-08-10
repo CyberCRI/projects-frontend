@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 
 import { getSubGroup } from '~/api/v2/group.service'
 
@@ -52,6 +52,8 @@ const {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .subgroup-list {
   display: flex;
   flex-direction: column;

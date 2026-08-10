@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
   fetchEntity: { type: Function, required: true },
   entityTitle: { type: String, required: true },
@@ -29,7 +29,7 @@ load()
     :title="entityTitle"
     :asyncing="isAsyncing"
     no-second-button
-    cancel-button-label="common.close"
+    :cancel-button-label="$t('common.close')"
     @cancel="close"
     @confirm="close"
   >
@@ -40,6 +40,8 @@ load()
   </ConfirmModal>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   display: flex;
   justify-content: center;

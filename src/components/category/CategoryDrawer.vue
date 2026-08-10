@@ -94,21 +94,31 @@
             @upload-image="showNewImage"
           />
 
-          <LinkButton
-            v-if="displayedImage"
-            :label="$t('project.form.resize-image')"
-            btn-icon="CropFree"
-            data-test="resize-image-button"
-            @click="showImageResizer = true"
-          />
+          <template v-if="displayedImage?.variations">
+            <LpiButton
+              btn-icon="TrashCanOutline"
+              :label="$t('resource.file.form.delete')"
+              @click.prevent="deleteImage"
+            />
+
+            <LinkButton
+              :image="displayedImage?.variations?.large"
+              :label="$t('project.form.resize-image')"
+              btn-icon="CropFree"
+              data-test="resize-image-button"
+              @click="showImageResizer = true"
+            />
+          </template>
         </div>
 
         <BaseModal v-if="showImageResizer" @close="showImageResizer = false">
-          <template #header-title>Reframe image</template>
+          <template #header-title>
+            {{ $t('project.form.resize-image') }}
+          </template>
           <template #content>
             <LazyImageResizer
               ref="imageResizer"
-              :image="displayedImage"
+              :image="displayedImage?.variations?.large"
               :image-sizes="category.imageSizes"
               :ratio="PICTURE_RATIO"
               from-center
@@ -130,7 +140,7 @@
       >
         <div class="category-previewer">
           <CategoryCardImage
-            :url="displayedImage"
+            :url="displayedImage?.variations?.large"
             :background-color="category.background_color || '#FFF'"
             image-height="150px"
             image-width="100%"
@@ -259,8 +269,8 @@ import Drawer from '~/components/base/BaseDrawer.vue'
 
 import useOrganizationCode from '~/composables/useOrganizationCode'
 
-import type { ProjectCategoryForm, ProjectCategoryModel } from '~/models/project-category.model'
-import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import type { ProjectCategoryForm, ProjectCategoryModel } from 'shared-projects-frontend/models'
+import { fileToImageModel, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { defaultProjectCategoryForm } from '~/form/category'
 import { getTemplates } from '~/api/v2/templates.service'
 import { LazyImageResizer } from '#components'
@@ -284,7 +294,7 @@ const emits = defineEmits(['close-modal', 'submit-category'])
 const organizationCode = useOrganizationCode()
 const { data: templates, status } = getTemplates(organizationCode)
 
-const category = ref({
+const category = ref<ProjectCategoryForm>({
   ...defaultProjectCategoryForm(),
   ...props.editedCategory,
   parent: props.parentCategory,
@@ -295,7 +305,6 @@ const bgImage = category.value.background_image
 category.value.imageSizes = (bgImage && pictureApiToImageSizes(bgImage)) || null
 
 const router = useRouter()
-const displayedImage = ref(null)
 const asyncing = ref(false)
 const PICTURE_RATIO = 16 / 9
 const showImageResizer = ref(false)
@@ -312,16 +321,6 @@ const setColor = (color: Payload) => {
   category.value.background_color = color.hex
 }
 
-// not using computed
-// beacuse can also be set from a file object in form
-watch(
-  () => category.value.background_image,
-  (val) => {
-    displayedImage.value = val && val.variations ? val.variations.small : null
-  },
-  { immediate: true }
-)
-
 const imageResizer = useTemplateRef('imageResizer')
 const saveImageSizes = () => {
   category.value.imageSizes = imageResizer.value.imageSizes
@@ -334,20 +333,25 @@ const onReorder = (event) => {
   category.value.children.splice(newIndex, 0, movedChild)
 }
 
+const deleteImage = () => {
+  category.value.imageSizes = null
+  category.value.background_image = null
+}
+
 const closeModal = () => {
   emits('close-modal')
 }
 
-const showNewImage = (image) => {
-  const newImage = image
-
-  const fileReader = new FileReader()
-  fileReader.readAsDataURL(newImage)
-
-  fileReader.onload = (fileReaderEvent) => {
-    displayedImage.value = fileReaderEvent.target.result
+// convert File to imageModel (only for display)
+const displayedImage = computed(() => {
+  if (category.value.background_image instanceof File) {
+    return fileToImageModel(category.value.background_image)
   }
-  category.value.imageSizes = null // reset image framing
+  return category.value.background_image
+})
+
+const showNewImage = (image) => {
+  category.value.imageSizes = null
   category.value.background_image = image
 }
 
@@ -358,12 +362,17 @@ const submitCategory = () => {
 
 const templateNavigate = (template) => {
   // redirect to template editor
-  const route = router.resolve({ name: 'templatesEdit', params: { id: template.id } })
+  const route = router.resolve({
+    name: 'templatesEdit',
+    params: { id: template.id },
+  })
   window.open(route.href, '_blank')
 }
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .category-modal {
   .color-block {
     width: 50%;
@@ -372,26 +381,26 @@ const templateNavigate = (template) => {
     align-items: center;
 
     &:first-of-type {
-      margin-right: $space-s;
+      margin-right: variables.$space-s;
     }
   }
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     .color-block {
       width: 100%;
 
       &:first-of-type {
-        margin-bottom: $space-l;
+        margin-bottom: variables.$space-l;
       }
     }
   }
 
   .snackbar {
-    margin-bottom: $space-m;
+    margin-bottom: variables.$space-m;
   }
 
   .projects-btn {
-    margin-bottom: $space-m;
+    margin-bottom: variables.$space-m;
   }
 
   .project-list {
@@ -404,7 +413,7 @@ const templateNavigate = (template) => {
     width: 100%;
     background-size: cover;
     background-position: 50%;
-    border-radius: $border-radius-m;
+    border-radius: variables.$border-radius-m;
 
     .category-preview-name {
       position: absolute;
@@ -412,21 +421,21 @@ const templateNavigate = (template) => {
       left: 50%;
       transform: translate(-50%, -50%);
       text-transform: uppercase;
-      font-size: $font-size-m;
+      font-size: variables.$font-size-m;
       font-weight: 700;
       display: inline-block;
       flex-direction: column;
       align-items: center;
-      padding: $space-m;
+      padding: variables.$space-m;
       background: rgb(255 255 255 / 75%);
-      border-radius: $border-radius-s;
+      border-radius: variables.$border-radius-s;
     }
   }
 
   .preview-block {
     .page-preview {
       position: relative;
-      border-radius: $border-radius-m;
+      border-radius: variables.$border-radius-m;
       overflow: hidden;
 
       .text-container {
@@ -456,15 +465,15 @@ const templateNavigate = (template) => {
   width: 100%;
   max-width: 100%;
   height: 150px;
-  border-radius: $border-radius-m;
+  border-radius: variables.$border-radius-m;
   background-size: cover;
   background-position: center;
 }
 
 .notice {
-  font-size: $font-size-s;
-  color: $almost-black;
-  margin-bottom: $space-m;
+  font-size: variables.$font-size-s;
+  color: variables.$almost-black;
+  margin-bottom: variables.$space-m;
 }
 
 .reviewer-tip {
@@ -476,36 +485,36 @@ const templateNavigate = (template) => {
 .radio-group {
   display: flex;
   align-items: center;
-  gap: $space-xs;
-  margin-bottom: $space-l;
+  gap: variables.$space-xs;
+  margin-bottom: variables.$space-l;
 
   .radio-group-title {
-    padding-left: $space-s;
-    font-size: $font-size-m;
+    padding-left: variables.$space-s;
+    font-size: variables.$font-size-m;
     font-weight: 500;
-    color: $almost-black;
+    color: variables.$almost-black;
   }
 }
 
 .category-form {
   display: flex;
   flex-direction: column;
-  gap: $space-l;
+  gap: variables.$space-l;
 }
 
 .no-child {
   font-style: italic;
-  color: $mid-gray;
+  color: variables.$mid-gray;
 }
 
 .category-child {
   display: flex;
   align-items: center;
-  gap: $space-m;
+  gap: variables.$space-m;
   padding: 0.4rem;
   border-radius: 0.4rem;
-  margin-block: $space-s;
-  border: $border-width-s solid $light-gray;
+  margin-block: variables.$space-s;
+  border: variables.$border-width-s solid variables.$light-gray;
   cursor: move;
 
   // make text unselectable
@@ -517,13 +526,13 @@ const templateNavigate = (template) => {
     svg {
       width: 1.2em;
       height: 1.2em;
-      fill: $mid-gray;
+      fill: variables.$mid-gray;
     }
   }
 }
 
 .child-ghost {
-  background-color: $primary-lighter;
+  background-color: variables.$primary-lighter;
 }
 
 .flip-list-move {
@@ -542,13 +551,13 @@ const templateNavigate = (template) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: $space-xl;
+  gap: variables.$space-xl;
 }
 
 .template-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-s;
+  gap: variables.$space-s;
 }
 
 .title-templates {

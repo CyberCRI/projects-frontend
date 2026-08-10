@@ -27,11 +27,13 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .recommendation-list {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-block: $space-m;
+  margin-block: variables.$space-m;
 }
 
 .recommendation-list-container {
@@ -39,6 +41,6 @@ withDefaults(
 }
 
 .more {
-  margin-block: $space-s;
+  margin-block: variables.$space-s;
 }
 </style>

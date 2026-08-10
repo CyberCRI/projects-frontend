@@ -18,19 +18,19 @@
           :label="$t('profile.edit.skills.skills.add-item')"
           btn-icon="Plus"
           data-test="initial-add-skills-button"
-          @click="openDrawer('skills', 'add')"
+          @click="openDrawer('skills')"
         />
         <LpiButton
           :label="$t('profile.edit.skills.hobbies.add-item')"
           btn-icon="Plus"
           data-test="initial-add-hobbies-button"
-          @click="openDrawer('hobbies', 'add')"
+          @click="openDrawer('hobbies')"
         />
       </div>
     </div>
     <div v-else class="following-screen">
       <div
-        v-for="key in ['skills', 'hobbies']"
+        v-for="key in ['skills', 'hobbies'] satisfies SkillType[]"
         :key="key"
         :class="key"
         class="following-screen-inner"
@@ -83,12 +83,14 @@
           </div>
         </template>
         <div v-else class="add-action">
-          <p class="intro">{{ $t(`profile.edit.skills.${key}.nothing-yet`) }}</p>
+          <p class="intro">
+            {{ $t(`profile.edit.skills.${key}.nothing-yet`) }}
+          </p>
           <LpiButton
             :label="$t(`profile.edit.skills.${key}.add-item`)"
             btn-icon="Plus"
             :data-test="`initial-add-${key}-button`"
-            @click="openDrawer(key, 'add')"
+            @click="openDrawer(key)"
           />
         </div>
       </div>
@@ -104,166 +106,149 @@
   />
 </template>
 
-<script>
-import { deleteUserSkill, patchUserSkill } from '~/api/people.service.ts'
+<script setup lang="ts">
+import { deleteUserSkill, patchUserSkill } from 'shared-projects-frontend/apis'
+import type { SkillType } from '~/components/people/skill/SkillEditor.vue'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
-import useToasterStore from '~/stores/useToaster.ts'
+import useToasterStore from '~/stores/useToaster'
 
-export default {
-  name: 'ProfileSkillsEditTab',
+const props = defineProps<{
+  user: TranslatedUserModel
+}>()
 
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
+const emit = defineEmits<{
+  edited: []
+  'profile-edited': []
+}>()
 
-  emits: ['edited', 'profile-edited'],
+const { t } = useNuxtI18n()
 
-  setup() {
-    const skillTexts = useSkillTexts()
-    const toaster = useToasterStore()
-    // const usersStore = useUsersStore()
-    const { skillLevels, clampLevel } = useSkillLevels()
-    return { skillTexts, toaster, skillLevels, clampLevel }
-  },
-  data() {
-    return {
-      drawerType: 'skills', // skills | hobbies
-      drawerMode: 'add', // add | edit
-      drawerIsOpen: false,
-      lastAddedTalent: null,
-    }
-  },
-  computed: {
-    isInitial() {
-      return (
-        !this.user ||
-        ((!this.skills || this.skills.length === 0) && (!this.hobbies || this.hobbies.length === 0))
-      )
-    },
-    allSkills() {
-      return this.user.skills || []
-    },
-    skills() {
-      return [
-        ...(this.allSkills || [])
-          .filter((s) => s.type === 'skill')
-          .sort(this.skillTexts.compareTitles),
-      ]
-    },
-    hobbies() {
-      return (this.allSkills || [])
-        .filter((s) => s.type === 'hobby')
-        .sort(this.skillTexts.compareTitles)
-    },
+const skillTexts = useSkillTexts()
+const toaster = useToasterStore()
+const { clampLevel } = useSkillLevels()
 
-    // isSelf() {
-    //   const connectedUser = this.usersStore.userFromApi
-    //   return connectedUser && this.user.id === connectedUser.id
-    // },
+const drawerType = ref<SkillType>('skills')
+const drawerMode = ref<'add' | 'edit'>('add')
+const drawerIsOpen = ref(false)
+const lastAddedTalent = ref(null)
 
-    // profileSkillLink() {
-    //   return {
-    //     name: 'ProfileSkills' + (this.isSelf ? '' : 'Other'),
-    //     params: this.isSelf ? {} : { userId: this.user.slug || this.user.id },
-    //   }
-    // },
-  },
+const allSkills = computed(() => props.user.skills || [])
 
-  methods: {
-    reloadUser() {
-      this.$emit('profile-edited')
-    },
-    onSkillAdded(newSkill) {
-      this.lastAddedTalent = newSkill.id
-      this.reloadUser()
-    },
-    async setTalentLevel(type, talent, newLevel) {
-      if (this.clampLevel(talent.level) !== newLevel) {
-        try {
-          await patchUserSkill(this.user.id, talent.id, {
-            ...talent,
-            level: newLevel,
-            tag: talent.tag.id,
-          })
-          this.toaster.pushSuccess(
-            this.$t(`profile.edit.skills.${type}.edit-success`, {
-              name: this.skillTexts.title(talent),
-            })
-          )
-          this.reloadUser()
-        } catch (error) {
-          console.error(error)
-          this.toaster.pushError(this.$t('profile.edit.skills.save-error'))
-        }
-      }
-    },
+const skills = computed(() => {
+  return [
+    ...(allSkills.value || []).filter((s) => s.type === 'skill').sort(skillTexts.compareTitles),
+  ]
+})
 
-    async updateMentorship(type, data, talent) {
-      try {
-        await patchUserSkill(this.user.id, data.id, {
-          ...data,
+const hobbies = computed(() => {
+  return (allSkills.value || []).filter((s) => s.type === 'hobby').sort(skillTexts.compareTitles)
+})
+
+const isInitial = computed(() => {
+  return (
+    !props.user ||
+    ((!skills.value || skills.value.length === 0) && (!hobbies.value || hobbies.value.length === 0))
+  )
+})
+
+const reloadUser = () => emit('profile-edited')
+
+const onSkillAdded = (newSkill) => {
+  lastAddedTalent.value = newSkill.id
+  reloadUser()
+}
+
+const setTalentLevel = async (type, talent, newLevel) => {
+  if (clampLevel(talent.level) !== newLevel) {
+    try {
+      await patchUserSkill(props.user.id, talent.id, {
+        ...talent,
+        level: newLevel,
+        tag: talent.tag.id,
+      })
+      toaster.pushSuccess(
+        t(`profile.edit.skills.${type}.edit-success`, {
+          name: skillTexts.title(talent),
         })
-        this.toaster.pushSuccess(
-          this.$t(`profile.edit.skills.${type}.edit-success`, {
-            name: this.skillTexts.title(talent),
-          })
-        )
-        this.reloadUser()
-      } catch (error) {
-        console.error(error)
-        this.toaster.pushError(this.$t('profile.edit.skills.save-error'))
-      }
-    },
-    async removeTalent(type, talent) {
-      try {
-        await deleteUserSkill(this.user.id, talent.id)
-        this.toaster.pushSuccess(
-          this.$t(`profile.edit.skills.${type}.delete-success`, {
-            name: this.skillTexts.title(talent),
-          })
-        )
-        this.reloadUser()
-      } catch (error) {
-        console.error(error)
-        this.toaster.pushError(this.$t('profile.edit.skills.save-error'))
-      }
-    },
+      )
+      reloadUser()
+    } catch (error) {
+      console.error(error)
+      toaster.pushError(t('profile.edit.skills.save-error'))
+    }
+  }
+}
 
-    openDrawer(type) {
-      this.drawerType = type
-      this.drawerIsOpen = true
-    },
-    closeDrawer() {
-      this.drawerIsOpen = false
-      this.$emit('edited')
-    },
+const updateMentorship = async (type, data, talent) => {
+  try {
+    await patchUserSkill(props.user.id, data.id, {
+      ...data,
+    })
+    toaster.pushSuccess(
+      t(`profile.edit.skills.${type}.edit-success`, {
+        name: skillTexts.title(talent),
+      })
+    )
+    reloadUser()
+  } catch (error) {
+    console.error(error)
+    toaster.pushError(t('profile.edit.skills.save-error'))
+  }
+}
 
-    getSkillOfType(type) {
-      if (type == 'skills') return this.skills
-      else return this.hobbies
-    },
-  },
+const removeTalent = async (type, talent) => {
+  try {
+    await deleteUserSkill(props.user.id, talent.id)
+    toaster.pushSuccess(
+      t(`profile.edit.skills.${type}.delete-success`, {
+        name: skillTexts.title(talent),
+      })
+    )
+    reloadUser()
+  } catch (error) {
+    console.error(error)
+    toaster.pushError(t('profile.edit.skills.save-error'))
+  }
+}
+
+const openDrawer = (type: SkillType) => {
+  drawerType.value = type
+  drawerIsOpen.value = true
+}
+
+const closeDrawer = () => {
+  drawerIsOpen.value = false
+  emit('edited')
+}
+
+const getSkillOfType = (type: SkillType) => {
+  switch (type) {
+    case 'hobbies':
+      return hobbies.value
+    case 'skills':
+      return skills.value
+  }
 }
 </script>
-<style scoped lang="scss">
-@import './profile-form';
+
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+@use '~/pages/UserProfilePageV2/Tabs/profile-form';
 
 .initial-screen {
   .intro {
-    margin-top: $space-xl;
+    margin-top: variables.$space-xl;
     text-align: center;
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
   }
 
   .actions {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: $space-unit;
-    margin-top: $space-xl;
+    gap: variables.$space-unit;
+    margin-top: variables.$space-xl;
   }
 }
 
@@ -271,11 +256,11 @@ export default {
   .following-screen-inner + .following-screen-inner {
     padding-top: 2rem;
     margin-top: 2rem;
-    border-top: $border-width-s solid $primary;
+    border-top: variables.$border-width-s solid variables.$primary;
   }
 
   .actions {
-    margin-top: $space-xl;
+    margin-top: variables.$space-xl;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -286,52 +271,52 @@ export default {
       margin-bottom: 1.4rem;
     }
 
-    margin-top: $space-xl;
+    margin-top: variables.$space-xl;
   }
 
   .skill-list {
-    margin-top: $space-xl;
-    background-color: $primary-lighter;
-    padding: $space-l pxToRem(17px);
+    margin-top: variables.$space-xl;
+    background-color: variables.$primary-lighter;
+    padding: variables.$space-l variables.pxtorem(17px);
     display: flex;
     flex-flow: column nowrap;
-    gap: $space-m;
-    border-radius: $border-radius-l;
+    gap: variables.$space-m;
+    border-radius: variables.$border-radius-l;
   }
 }
 
 .talent-title {
-  font-size: $font-size-l;
+  font-size: variables.$font-size-l;
   font-weight: 700;
-  color: $primary-dark;
-  margin-top: $space-l;
-  margin-bottom: $space-m;
+  color: variables.$primary-dark;
+  margin-top: variables.$space-l;
+  margin-bottom: variables.$space-m;
   text-align: center;
 }
 
 .level-editor-list {
-  margin-top: $space-xl;
+  margin-top: variables.$space-xl;
   position: relative;
 }
 
 .skill-columns-header {
   display: flex;
   justify-content: stretch;
-  gap: $space-unit;
+  gap: variables.$space-unit;
   align-items: center;
-  padding-bottom: $space-l;
-  border-bottom: $border-width-s solid $primary;
+  padding-bottom: variables.$space-l;
+  border-bottom: variables.$border-width-s solid variables.$primary;
 
   .column-label {
     font-weight: 700;
     text-transform: uppercase;
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 
   .skill-name {
     flex-basis: 30%;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       flex-basis: 100%;
       text-align: center;
     }
@@ -343,7 +328,7 @@ export default {
     align-items: center;
     justify-content: center;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       display: none;
     }
   }
@@ -353,7 +338,7 @@ export default {
     justify-content: center;
     flex-basis: 30%;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       display: none;
     }
   }
@@ -361,18 +346,11 @@ export default {
   .delete-action,
   .edit-action {
     flex-shrink: 0;
-    flex-basis: $layout-size-l;
+    flex-basis: variables.$layout-size-l;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       display: none;
     }
   }
 }
-
-// .header {
-//   padding-top: $space-m;
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: center;
-// }
 </style>

@@ -27,5 +27,9 @@ const RULES = {
 }
 
 export const useChatForm = (options: OptionsForm<ChatForm, ChatForm> = {}) => {
-  return useForm({ default: clone(DEFAULT_FORM), rules: clone(RULES), ...options })
+  return useForm({
+    default: clone(DEFAULT_FORM),
+    rules: clone(RULES),
+    ...options,
+  })
 }

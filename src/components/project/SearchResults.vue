@@ -14,16 +14,21 @@
   </div>
 </template>
 
-<script>
-import { searchAll, searchGroups, searchProjects, searchUser } from '~/api/search.service'
+<script lang="ts">
+import {
+  clientAPI,
+  searchAll,
+  searchGroups,
+  searchProjects,
+  searchUser,
+} from 'shared-projects-frontend/apis'
 
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
-import useAPI from '~/composables/useAPI.ts'
-
-import { searchEquals } from '~/functs/search.ts'
+import type { QueryFilterSearch } from 'shared-projects-frontend/models'
+import { searchEquals } from '~/functs/search'
 import { debounce, omit } from 'es-toolkit'
 
 export default {
@@ -110,21 +115,21 @@ export default {
       this.$emit('loading', true)
     },
 
-    loadProjects: debounce(async function (specificPageIndex = null) {
+    privateLoadProjects: async function (specificPageIndex = null) {
       if (!import.meta.client) return
-      const query = {
-        ...omit(this.search, ['search']),
+
+      const query: QueryFilterSearch = {
+        ...omit(this.search, ['search', 'page']),
         organizations: [this.organizationsStore.current.code],
       }
       const search = this.search.search
 
       // if we forced a page (on page load only)
       // manually compute offset
-      const page = parseInt(query.page || 1)
+      const page = parseInt(this.search.page || 1)
       if (page > 1) {
         query['offset'] = (page - 1) * query.limit
       }
-      delete query.page
 
       // memoize request order
       // to only update with response to the last one
@@ -135,7 +140,7 @@ export default {
       // Get projects and update project list
       let response
       if (specificPageIndex) {
-        response = await useAPI(specificPageIndex, {})
+        response = await clientAPI(specificPageIndex, {})
       } else if (this.mode === 'projects') {
         response = await searchProjects(search, { query })
       } else if (this.mode === 'groups') {
@@ -148,6 +153,10 @@ export default {
       // update with the ltest request result
       // to fix concurrency issue when multiple request fired
       if (response && localRequest === this.lastRequest) this.updateProjectList(response)
+    },
+
+    loadProjects: debounce(function (this: any, specificPageIndex = null) {
+      return this.privateLoadProjects(specificPageIndex)
     }, 500),
 
     updateProjectList(response) {
@@ -173,9 +182,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .project-list-pagination {
-  padding-top: $space-l;
-  padding-bottom: $space-2xl;
+  padding-top: variables.$space-l;
+  padding-bottom: variables.$space-2xl;
   display: flex;
   justify-content: center;
   align-items: center;

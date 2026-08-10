@@ -2,8 +2,8 @@ import type { RefOrRaw } from '~/interfaces/utils'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 
+import type { ImageModel } from 'shared-projects-frontend/models'
 import { usePublicURL } from '~/composables/usePublic'
-import type { ImageModel } from '~/models/image.model'
 import useNuxtI18n from '~/composables/useNuxtI18n'
 
 const useLpiHead = (url, _title, _description, image, dimensions = null) => {
@@ -16,9 +16,7 @@ const useLpiHead = (url, _title, _description, image, dimensions = null) => {
   let imgMimeType = 'image/jpeg'
   if (image) {
     try {
-      const imgUrl = new URL(image)
-      const imgPath = imgUrl.pathname
-      const imgExt = imgPath.split('.').pop().toLowerCase()
+      const imgExt = image.split('.').pop().toLowerCase()
       if (imgExt == 'png') imgMimeType = 'image/png'
       if (imgExt == 'webp') imgMimeType = 'image/webp'
     } catch (err) {

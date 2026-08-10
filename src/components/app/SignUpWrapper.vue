@@ -38,10 +38,12 @@ const orgLogoStyle = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-$form-max-width: pxToRem(326px);
-$form-horizontal-padding: pxToRem(62px);
-$column-gap: $space-2xl;
-$container-horizontal-padding: $space-xl;
+@use '~/design/scss/variables';
+
+$form-max-width: variables.pxtorem(326px);
+$form-horizontal-padding: variables.pxtorem(62px);
+$column-gap: variables.$space-2xl;
+$container-horizontal-padding: variables.$space-xl;
 $form-max-total-width: $form-max-width + 2 * $form-horizontal-padding;
 
 /* stylelint-disable-next-line  scss/operator-no-newline-after */
@@ -49,20 +51,20 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
   $container-horizontal-padding;
 
 .title {
-  font-size: $font-size-2xl;
-  margin-bottom: $space-l;
+  font-size: variables.$font-size-2xl;
+  margin-bottom: variables.$space-l;
   text-align: center;
 }
 
 .sign-up-wrapper {
   display: flex;
   gap: $column-gap;
-  margin: $navbar-height auto;
+  margin: variables.$navbar-height auto;
   flex-flow: column nowrap;
-  padding: $space-xl $space-l;
+  padding: variables.$space-xl variables.$space-l;
 
   @media all and (min-width: $min-width-horizontal-layout) {
-    padding: $space-xl $container-horizontal-padding;
+    padding: variables.$space-xl $container-horizontal-padding;
     width: 100%;
     max-width: $min-width-horizontal-layout;
     flex-flow: row nowrap;
@@ -90,19 +92,19 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
 
 .box {
   width: 100%;
-  padding: pxToRem(40px) 0;
+  padding: variables.pxtorem(40px) 0;
   box-sizing: border-box;
 
   @media all and (min-width: $min-width-horizontal-layout) {
     max-width: $form-max-total-width;
-    padding: pxToRem(40px) $form-horizontal-padding;
+    padding: variables.pxtorem(40px) $form-horizontal-padding;
     box-shadow: 0 0 6px 0 #00000026;
-    border-radius: $border-radius-m;
+    border-radius: variables.$border-radius-m;
   }
 }
 
 :deep(.confirm-message) {
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
 
   @media all and (max-width: $min-width-horizontal-layout) {
     max-width: 30rem;
@@ -110,10 +112,10 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
 }
 
 .separator {
-  margin: $space-l auto;
+  margin: variables.$space-l auto;
   width: 50%;
   padding: 0;
-  border: $border-width-s solid $lighter-gray;
+  border: variables.$border-width-s solid variables.$lighter-gray;
 }
 
 .projects-logo-ctn,
@@ -139,7 +141,7 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
 }
 
 .directory-logo {
-  width: pxToRem(200px);
+  width: variables.pxtorem(200px);
   height: auto;
 }
 </style>

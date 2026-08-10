@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import CurrentTags from '~/components/search/FilterTags/CurrentTags.vue'
 
-const model = defineModel<any[]>({ default: [] })
+const model = defineModel<any[]>({ default: () => [] })
 const skills = ref([])
 
 watch(
@@ -33,11 +33,13 @@ const removeSkill = (skill) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .tag-search-title {
   text-align: center;
-  font-size: $font-size-2xl;
+  font-size: variables.$font-size-2xl;
   font-weight: 700;
-  margin: pxToRem(46px) auto;
+  margin: variables.pxtorem(46px) auto;
 }
 
 .search-input-ctn {
@@ -46,6 +48,8 @@ const removeSkill = (skill) => {
 </style>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .input-ctn {
   width: 100%;
 
@@ -67,9 +71,9 @@ const removeSkill = (skill) => {
 }
 
 .tag-search-label {
-  font-size: $font-size-m;
-  color: $primary-dark;
+  font-size: variables.$font-size-m;
+  color: variables.$primary-dark;
   font-weight: 700;
-  margin: 0 0 $space-s $space-l;
+  margin: 0 0 variables.$space-s variables.$space-l;
 }
 </style>

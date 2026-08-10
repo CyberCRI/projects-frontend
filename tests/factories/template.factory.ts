@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { TemplateForm, TemplateModel } from '~/models/template.model'
+import type { TemplateForm, TemplateModel } from 'shared-projects-frontend/models'
 import { OrganizationFactory } from './organization.factory'
 import { ImageFactory } from './image.factory'
 import BaseFactory from './base.factory'
@@ -27,9 +27,10 @@ export const TemplateFactory = createFactory<TemplateModel>((faker) => ({
   project_title: faker.datatype.string(),
 }))
 
-export const TemplateFormFactory = createFactory<TemplateForm>((faker) => ({
+export const TemplateInputFactory = createFactory<TemplateForm>(() => ({
   ...BaseFactory.generate(),
   ...TemplateFactory.generate(),
+  project_categories_ids: [],
 }))
 
 export default TemplateFactory

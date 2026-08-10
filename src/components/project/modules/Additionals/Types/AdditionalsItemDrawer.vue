@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
+import type {
+  TranslatedProjectTab,
+  TranslatedProjectTabItem,
+  TranslatedProject,
+} from 'shared-projects-frontend/models'
 import InlineAdditionalsItemForm from '~/components/project/modules/Additionals/Types/InlineAdditionalsItemForm.vue'
-import type { TranslatedProjectTab, TranslatedProjectTabItem } from '~/models/projects-tabs.model'
-import type { TranslatedProject } from '~/models/project.model'
 
 withDefaults(
   defineProps<{
@@ -25,7 +28,13 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <BaseDrawer :is-opened="isOpened" :title="$t('tab.item.title')" no-footer class="blog-drawer">
+  <BaseDrawer
+    :is-opened="isOpened"
+    :title="$t('tab.item.title')"
+    no-footer
+    class="blog-drawer"
+    @close="emit('close')"
+  >
     <InlineAdditionalsItemForm
       v-if="isOpened"
       :project="project"
@@ -38,16 +47,18 @@ const emit = defineEmits<{
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .blog-drawer {
   height: 100%;
 
   :deep(.drawer__main) {
-    gap: $space-unit;
+    gap: variables.$space-unit;
   }
 
   .content-editor {
     flex-grow: 1;
-    min-height: pxToRem(300px);
+    min-height: variables.pxtorem(300px);
   }
 }
 

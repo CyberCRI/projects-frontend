@@ -45,7 +45,10 @@ function getPreviousMessages() {
 }
 
 function fetchAll() {
-  return useFetch(`/api/chat-conversation/${props.documentTitle}`, { headers, query })
+  return useFetch(`/api/chat-conversation/${props.documentTitle}`, {
+    headers,
+    query,
+  })
 }
 const { data, status /* , error */, refresh } = fetchAll()
 const isAsyncing = computed(() => status.value === 'pending')
@@ -140,18 +143,20 @@ refresh()
   </ConfirmModal>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .chunk {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
 .chunk ~ .chunk {
-  border-top: 1px solid $light-gray;
+  border-top: 1px solid variables.$light-gray;
 }
 
 .chunk-header {
   text-align: center;
-  color: $light-gray;
+  color: variables.$light-gray;
   font-style: italic;
   font-weight: normal;
 }
@@ -169,8 +174,8 @@ refresh()
 .message-header {
   width: auto;
   padding: 0.4rem;
-  background-color: $primary-lighter;
-  border-bottom: 1px solid $primary-dark;
+  background-color: variables.$primary-lighter;
+  border-bottom: 1px solid variables.$primary-dark;
   text-align: center;
 }
 
@@ -178,8 +183,8 @@ summary {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  color: $primary-dark;
-  background-color: $primary-lighter;
+  color: variables.$primary-dark;
+  background-color: variables.$primary-lighter;
   font-size: 1.16em;
 
   em {

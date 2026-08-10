@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedDocument } from '~/interfaces/researcher'
+import type { TranslatedResearcherDocument } from 'shared-projects-frontend/models'
 
 import { getResearchDocumentSimilars } from '~/api/v2/crisalid.service'
 
@@ -43,7 +43,7 @@ defineOptions({ name: 'ResearcherDocumentSimilars' })
 const { t } = useNuxtI18n()
 const emit = defineEmits(['close'])
 const props = defineProps<{
-  document?: TranslatedDocument
+  document?: TranslatedResearcherDocument
   docType: string
 }>()
 
@@ -67,6 +67,8 @@ const havePagination = computed(() => pagination.canNext.value || pagination.can
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 $profile-documents: 1rem;
 
 .documents-list-similars > *:not(:last-child)::after {

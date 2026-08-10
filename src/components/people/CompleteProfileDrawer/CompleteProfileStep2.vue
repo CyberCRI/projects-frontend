@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { getUser } from '~/api/people.service'
+import { getUser } from 'shared-projects-frontend/apis'
 
 import ProfileEditBlock from '~/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
@@ -60,6 +60,8 @@ const save = async () => {
 defineExpose({ save })
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   flex-grow: 1;
   display: flex;

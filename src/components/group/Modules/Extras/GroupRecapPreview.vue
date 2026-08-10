@@ -20,8 +20,11 @@
 </template>
 
 <script setup lang="ts">
-import type { PeopleGroupModulesKeys, TranslatedPeopleGroupModel } from '~/models/invitation.model'
-import { GroupModuleIcon, GroupModuleTitle } from '~/models/invitation.model'
+import type {
+  PeopleGroupModulesKeys,
+  TranslatedPeopleGroupModel,
+} from 'shared-projects-frontend/models'
+import { GROUP_MODULE_ICON, GROUP_MODULE_TITLE } from '~/functs/constants'
 
 import { scrollToHash } from '~/composables/useScrollToTab'
 
@@ -53,9 +56,9 @@ const modulesArray = computed(() => {
         .map(([name, count]) => {
           const obj = {
             key: name,
-            name: props.noTitle ? '' : t(GroupModuleTitle[name], count),
+            name: props.noTitle ? '' : t(GROUP_MODULE_TITLE[name], count),
             count,
-            icon: GroupModuleIcon[name],
+            icon: GROUP_MODULE_ICON[name],
           }
           return obj
         })
@@ -68,6 +71,8 @@ const modulesArray = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .group-recap {
   display: flex;
   align-items: center;
@@ -80,7 +85,7 @@ const modulesArray = computed(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: $primary-dark;
+  color: variables.$primary-dark;
   gap: 0.4rem;
   cursor: pointer;
   border-radius: 10px;
@@ -88,7 +93,7 @@ const modulesArray = computed(() => {
 
   svg {
     width: 25px;
-    fill: $primary;
+    fill: variables.$primary;
   }
 }
 

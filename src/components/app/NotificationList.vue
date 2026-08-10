@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { getNotifications } from '~/api/notifications.service'
+import { clientAPI, getNotifications } from 'shared-projects-frontend/apis'
 
 import NotificationItem from '~/components/app/NotificationItem.vue'
 import LpiButton from '~/components//base/button/LpiButton.vue'
@@ -45,9 +45,9 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useUsersStore from '~/stores/useUsers'
 
-import useAPI from '~/composables/useAPI'
-
-const props = withDefaults(defineProps<{ isOpened?: boolean }>(), { isOpened: false })
+const props = withDefaults(defineProps<{ isOpened?: boolean }>(), {
+  isOpened: false,
+})
 
 defineEmits<{ close: [] }>()
 const usersStore = useUsersStore()
@@ -60,6 +60,8 @@ const isLoading = ref(false)
 const isLoadingMore = ref(false)
 const nextPage = ref(null)
 
+const organizationCode = useOrganizationCode()
+
 watchEffect(() => {
   if (props.isOpened) {
     localGetNotifications()
@@ -69,7 +71,7 @@ watchEffect(() => {
 const localGetNotifications = async () => {
   isLoading.value = true
   try {
-    const result = await getNotifications({ limit: 20 })
+    const result = await getNotifications({ limit: 20 }, organizationCode)
     notifications.value = result.results
     nextPage.value = result.next
     usersStore.notificationsCount = 0
@@ -83,7 +85,7 @@ const localGetNotifications = async () => {
 const loadNextPage = async () => {
   if (nextPage.value) {
     isLoadingMore.value = true
-    const result = await useAPI(nextPage.value, {})
+    const result = await clientAPI<PaginationResult<any>>(nextPage.value, {})
     notifications.value.push(...result.results)
     nextPage.value = result.next
     isLoadingMore.value = false
@@ -92,6 +94,8 @@ const loadNextPage = async () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loading {
   display: flex;
   flex-direction: column;
@@ -105,7 +109,7 @@ const loadNextPage = async () => {
   align-items: center;
   margin-top: 50%;
   font-weight: 700;
-  color: $primary-dark;
+  color: variables.$primary-dark;
   font-size: 20px;
 }
 

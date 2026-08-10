@@ -1,12 +1,12 @@
 import { createFactory } from 'faker-create-factory'
 
-import { SdgOutput } from '~/models/sdg.model'
-import BaseFactory from './base.factory'
+import type { SdgModel } from 'shared-projects-frontend/models'
+import { SDGS } from '~/functs/constants'
 
-const SdgFactory = createFactory<SdgOutput>((faker) => ({
-  ...BaseFactory.generate(),
-  id: faker.datatype.number(),
-  background_color: faker.datatype.string(),
-}))
+const SdgFactory = createFactory<SdgModel>((faker) => {
+  const num = faker.datatype.number(SDGS.length - 1)
+
+  return structuredClone(SDGS[num])
+})
 
 export default SdgFactory

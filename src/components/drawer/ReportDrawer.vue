@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { reportAbuse, reportBug } from '~/api/report.service'
+import { reportAbuse, reportBug } from 'shared-projects-frontend/apis'
 
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import { defaultReportForm, useReportForm } from '~/form/report'
-import FormPanel from '~/components/base/FormPanel.vue'
-import Field from '~/components/base/form/Field.vue'
 import useToasterStore from '~/stores/useToaster'
 import { cropIfTooLong } from '~/functs/string'
 import useUsersStore from '~/stores/useUsers'
-import { isEqual } from 'es-toolkit'
+import { formEqual } from '~/form/base'
 
 const props = withDefaults(defineProps<{ type: 'abuse' | 'bug'; isOpened?: boolean }>(), {
   isOpened: false,
@@ -23,8 +21,12 @@ const { t } = useNuxtI18n()
 
 const usersStore = useUsersStore()
 
-const { stateModals, closeModals, openModals, closeAllModals } = useModals({ saveChange: false })
-const { form, isValid, errors, cleanedData, reset } = useReportForm({ lazy: true })
+const { stateModals, closeModals, openModals, closeAllModals } = useModals({
+  saveChange: false,
+})
+const { form, isValid, errors, cleanedData, reset } = useReportForm({
+  lazy: true,
+})
 // auto add title from message content
 watchEffect(() => {
   form.value.title = cropIfTooLong(form.value.message, 10)
@@ -46,7 +48,9 @@ const defaultLocalForm = () => ({
   reported_by: usersStore.user?.email || '',
 })
 
-const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
+const isFormEqual = computed(() => {
+  return formEqual(form.value, defaultLocalForm(), { exclude: ['recaptcha'] })
+})
 
 const checkClose = () => {
   if (isFormEqual.value) {
@@ -101,27 +105,27 @@ const submit = async () => {
     @close="checkClose"
     @confirm="submit"
   >
-    <FormPanel no-footer>
-      <div class="list-container">
-        <Field :label="$t('form.email-contact')" required>
-          <TextInput
-            v-model="form.reported_by"
-            class="text-input"
-            data-test="report-email"
-            :errors="errors.reported_by"
-          />
-        </Field>
-        <Field :label="$t('form.url')" :help="$t(`report.${type}-url`)" required>
-          <TextInput
-            v-model="form.url"
-            class="text-input"
-            data-test="report-url"
-            :errors="errors.url"
-          />
-        </Field>
+    <form class="list-container">
+      <TextInput
+        v-model="form.reported_by"
+        class="text-input"
+        data-test="report-email"
+        :label="$t('form.email-contact')"
+        required
+        :errors="errors.reported_by"
+      />
+      <TextInput
+        v-model="form.url"
+        class="text-input"
+        data-test="report-url"
+        :errors="errors.url"
+        :label="$t('form.url')"
+        :help="$t(`report.${type}-url`)"
+        required
+      />
 
-        <!-- we hide title (no needed) -->
-        <!-- <Field :label="$t('form.title')" :help="$t(`report.${type}-title`)" required>
+      <!-- we hide title (no needed) -->
+      <!-- <Field :label="$t('form.title')" :help="$t(`report.${type}-title`)" required>
           <TextInput
             v-model="form.title"
             class="text-input"
@@ -130,18 +134,20 @@ const submit = async () => {
           />
         </Field> -->
 
-        <Field :label="$t('form.description')" :help="$t(`report.${type}-text`)" required>
-          <TextInput
-            v-model="form.message"
-            class="text-input-test"
-            input-type="textarea"
-            :rows="10"
-            data-test="report-description"
-            :errors="errors.message"
-          />
-        </Field>
-      </div>
-    </FormPanel>
+      <TextInput
+        v-model="form.message"
+        class="text-input-test"
+        input-type="textarea"
+        :rows="10"
+        data-test="report-description"
+        :label="$t('form.description')"
+        :help="$t(`report.${type}-text`)"
+        required
+        :errors="errors.message"
+      />
+
+      <Recaptcha v-model="form.recaptcha" :errors="errors.recaptcha" />
+    </form>
 
     <ConfirmModal
       v-if="stateModals.saveChange"

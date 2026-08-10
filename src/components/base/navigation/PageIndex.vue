@@ -20,59 +20,61 @@ const close = () => (open.value = false)
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .chevron {
   width: 2rem;
-  fill: $black;
+  fill: variables.$black;
   display: inline-block;
 }
 
 .summary {
-  background: $primary-lighter;
-  border-radius: $border-radius-l;
-  border: $border-width-s solid $primary;
+  background: variables.$primary-lighter;
+  border-radius: variables.$border-radius-l;
+  border: variables.$border-width-s solid variables.$primary;
   position: relative;
   overflow: visible;
   width: 280px;
 
-  @media screen and (min-width: $min-tablet) {
+  @media screen and (min-width: variables.$min-tablet) {
     width: 378px;
   }
 
   .summary-header {
-    padding: $space-xs $space-l;
-    font-size: $font-size-l;
+    padding: variables.$space-xs variables.$space-l;
+    font-size: variables.$font-size-l;
     font-weight: 700;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    color: $almost-black;
+    color: variables.$almost-black;
   }
 
   &.is-open .summary-header {
-    padding-bottom: $space-l;
+    padding-bottom: variables.$space-l;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: $primary;
+    background-color: variables.$primary;
   }
 
   .body {
-    background: $primary-lighter;
-    border-radius: 0 0 $border-radius-l $border-radius-l;
-    border-top: 0 solid $primary;
-    border-left: $border-width-s solid $primary;
-    border-right: $border-width-s solid $primary;
-    border-bottom: $border-width-s solid $primary;
+    background: variables.$primary-lighter;
+    border-radius: 0 0 variables.$border-radius-l variables.$border-radius-l;
+    border-top: 0 solid variables.$primary;
+    border-left: variables.$border-width-s solid variables.$primary;
+    border-right: variables.$border-width-s solid variables.$primary;
+    border-bottom: variables.$border-width-s solid variables.$primary;
     position: absolute;
     transform: translateY(-1rem);
     top: 100%;
-    left: -$border-width-s;
-    right: -$border-width-s;
+    left: -(variables.$border-width-s);
+    right: -(variables.$border-width-s);
     overflow-y: scroll;
     max-height: 302px;
-    padding: $space-m $space-l;
-    color: $primary-dark;
+    padding: variables.$space-m variables.$space-l;
+    color: variables.$primary-dark;
   }
 }
 </style>

@@ -12,9 +12,10 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
-
-import type { DocumentType } from '~/interfaces/researcher'
+import type {
+  TranslatedPeopleGroupModel,
+  ResearcherDocumentType,
+} from 'shared-projects-frontend/models'
 
 import {
   getGroupResearchDocument,
@@ -31,7 +32,7 @@ const props = withDefaults(
     preview?: boolean
     limit?: number
     group: TranslatedPeopleGroupModel
-    docType: DocumentType
+    docType: ResearcherDocumentType
   }>(),
   { preview: false, limit: null }
 )

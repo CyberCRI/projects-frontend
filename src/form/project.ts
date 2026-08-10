@@ -1,10 +1,11 @@
+import type {
+  TranslatedProjectCategory,
+  TranslatedTemplate,
+  ProjectForm,
+} from 'shared-projects-frontend/models'
 import { helpers, maxLength, minLength, required, requiredIf } from '@vuelidate/validators'
 import type ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
-import type { TranslatedProjectCategory } from '~/models/project-category.model'
-import type { TranslatedTemplate } from '~/models/template.model'
-import type { ProjectForm } from '~/models/project.model'
 import { NULL_CONTENT } from '~/functs/constants'
-import { pick } from 'es-toolkit'
 
 const onCleanProjectForm = (data: ProjectForm) => {
   const cleanedData = { ...data }
@@ -68,9 +69,12 @@ export const useProjectForm = (options = {}) => {
   })
 }
 
+type Description = Pick<ProjectForm, 'description'>
 export const useProjectDescriptionForm = (options = {}) => {
-  return useForm<Pick<ProjectForm, 'description'>>({
-    default: pick(defaultProjectForm(), ['description']),
+  const { description } = defaultProjectForm()
+
+  return useForm<Description>({
+    default: { description },
     ...options,
   })
 }

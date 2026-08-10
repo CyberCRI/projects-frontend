@@ -1,13 +1,12 @@
 import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
 import StatsByTab from '~/pages/StatsPage/Tabs/StatsByTab.vue'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
-import waitForExpect from 'wait-for-expect'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import pinia from '~/stores'
 
-vi.mock('~/api/stats.service', () => {
+vi.mock('shared-projects-frontend/apis', () => {
   const stats = {
     byMonth: [
       {
@@ -273,7 +272,7 @@ describe('StatsByTab.vue', () => {
     const wrapper = lpiShallowMount(StatsByTab, defaultParams)
     const vm: any = wrapper.vm
     expect(vm.isLoading).toBe(true)
-    await waitForExpect(() => {
+    await expect.poll(() => {
       expect(vm.isLoading).toBe(false)
     })
   })

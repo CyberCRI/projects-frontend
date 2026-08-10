@@ -37,6 +37,8 @@ const SDG_LOGO_HEADER = 'https://sdgs.un.org/themes/custom/porto/assets/goals/gl
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .sdg-preview {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -46,7 +48,7 @@ const SDG_LOGO_HEADER = 'https://sdgs.un.org/themes/custom/porto/assets/goals/gl
   height: 100%;
   min-height: 140px;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     grid-template-rows: 1fr auto;
     grid-template-columns: unset;
   }
@@ -54,15 +56,17 @@ const SDG_LOGO_HEADER = 'https://sdgs.un.org/themes/custom/porto/assets/goals/gl
 </style>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .sdg-logo {
   width: 140px;
   height: 100%;
   display: flex;
   align-items: center;
+  border: 1px solid var(--primary);
   border-radius: 20px;
-  background-color: var(--gray-darker);
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     width: 100%;
     height: 140px;
   }
@@ -73,12 +77,8 @@ const SDG_LOGO_HEADER = 'https://sdgs.un.org/themes/custom/porto/assets/goals/gl
     height: 117px;
     padding: 0.5rem;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       width: 140px;
-    }
-
-    img {
-      background-color: var(--gray-darker) !important;
     }
   }
 }

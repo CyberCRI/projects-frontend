@@ -4,7 +4,7 @@ import { lpiMount } from '~~/tests/helpers/LpiMount'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import pinia from '~/stores'
 
-import { OrganizationOutput } from '~/models/organization.model'
+import type { OrganizationOutput } from 'shared-projects-frontend/models'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
@@ -15,7 +15,8 @@ vi.mock('es-toolkit', () => ({
   capitalize: vi.fn((t) => t || ''),
 }))
 
-vi.mock('~/api/tag-classification.service', () => ({
+vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
+  ...(await orginalImporter()),
   getOrgClassificationTags: vi.fn().mockResolvedValue({
     data: {
       count: 3,

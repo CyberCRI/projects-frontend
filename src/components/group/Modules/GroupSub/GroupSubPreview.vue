@@ -1,9 +1,9 @@
 <template>
   <BaseGroupPreview
     id="subgroups"
-    :title="$t(GroupModuleTitle.subgroups, group.modules.subgroups)"
+    :title="$t(GROUP_MODULE_TITLE.subgroups, group.modules.subgroups)"
     :total="group.modules.subgroups"
-    :icon="GroupModuleIcon.subgroups"
+    :icon="GROUP_MODULE_ICON.subgroups"
     :see-more="{
       name: 'subGroups',
       params: {
@@ -18,9 +18,9 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 import GroupSubList from '@/components/group/Modules/GroupSub/GroupSubList.vue'
-import { GroupModuleIcon, GroupModuleTitle } from '@/models/invitation.model'
-import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { GROUP_MODULE_ICON, GROUP_MODULE_TITLE } from '~/functs/constants'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 
 defineProps<{ group: TranslatedPeopleGroupModel }>()

@@ -1,6 +1,6 @@
-import { ProjectOutputFactory, TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
 import BlogDrawer from '~/components/project/modules/BlogEntries/BlogDrawer.vue'
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { lpiMount, lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -28,9 +28,6 @@ describe('BlogDrawer.vue', () => {
         isOpened: true,
         initialStep: 2,
         project: project,
-      },
-      provide: {
-        projectLayoutProjectPatched: vi.fn(),
       },
     }
   })

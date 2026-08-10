@@ -1,5 +1,5 @@
+import type { Language } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import type { Language } from '~/models/types'
 export default defineNuxtPlugin((nuxtApp) => {
   // called right before setting a new locale
   nuxtApp.hook(

@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedGoal } from '~/models/goal.model'
+import type { TranslatedGoal } from 'shared-projects-frontend/models'
 
 import { formatDate } from '~/functs/date'
 
@@ -73,10 +73,12 @@ const deleteGoal = () => emit('delete', props.goal)
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .goal {
   position: relative;
-  outline: $border-width-s solid var(--black); // outline is crisper than border
-  border-radius: $border-radius-l;
+  outline: variables.$border-width-s solid var(--black); // outline is crisper than border
+  border-radius: variables.$border-radius-l;
   background: var(--white);
   transform: scale3d(1, 1, 1); // fix rounding pixel glitch
   &.shadow-box {
@@ -89,12 +91,12 @@ const deleteGoal = () => emit('delete', props.goal)
 
     .left {
       text-align: center;
-      padding: $space-m;
+      padding: variables.$space-m;
       box-sizing: border-box;
-      font-size: $font-size-s;
+      font-size: variables.$font-size-s;
       font-weight: 500;
-      border-top-left-radius: $border-radius-l;
-      border-bottom-left-radius: $border-radius-l;
+      border-top-left-radius: variables.$border-radius-l;
+      border-bottom-left-radius: variables.$border-radius-l;
       display: flex;
 
       .rotate-text {
@@ -105,7 +107,7 @@ const deleteGoal = () => emit('delete', props.goal)
     }
 
     .right {
-      padding: $space-s $space-l;
+      padding: variables.$space-s variables.$space-l;
       box-sizing: border-box;
       width: 20rem; // dummy value to fix layout issues
       flex-grow: 1;
@@ -120,7 +122,7 @@ const deleteGoal = () => emit('delete', props.goal)
         }
 
         .goal-title {
-          font-size: $font-size-l;
+          font-size: variables.$font-size-l;
           font-weight: 900;
         }
       }
@@ -135,7 +137,7 @@ const deleteGoal = () => emit('delete', props.goal)
     align-items: center;
 
     > button:nth-child(2) {
-      margin-left: $space-m;
+      margin-left: variables.$space-m;
     }
   }
 }

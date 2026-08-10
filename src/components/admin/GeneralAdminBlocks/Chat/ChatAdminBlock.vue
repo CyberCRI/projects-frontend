@@ -54,9 +54,11 @@ const reloadOrganization = () => {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .chat-data {
   & + .chat-data {
-    margin-top: $space-m;
+    margin-top: variables.$space-m;
   }
 
   strong {
@@ -64,7 +66,7 @@ const reloadOrganization = () => {
   }
 
   a {
-    color: $primary-dark;
+    color: variables.$primary-dark;
 
     &:hover {
       text-decoration: underline;

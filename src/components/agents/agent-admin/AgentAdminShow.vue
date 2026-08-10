@@ -1,4 +1,5 @@
-<script setup>
+<script setup lang="ts">
+import CodeBlock from '~/components/base/form/CodeBlock.vue'
 import useUsersStore from '@/stores/useUsers'
 const usersStore = useUsersStore()
 
@@ -31,26 +32,25 @@ const fetchAgent = async () => {
 <template>
   <EntityAdminShow :fetch-entity="fetchAgent" :entity-title="agent.title" @close="emit('close')">
     <template #default="{ entity }">
-      <pre>
-      {{ JSON.stringify(entity, null, 2) }}
-    </pre
-      >
+      <CodeBlock language="json" :content="JSON.stringify(entity, null, 2)" />
     </template>
   </EntityAdminShow>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .chunk {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
 .chunk ~ .chunk {
-  border-top: 1px solid $light-gray;
+  border-top: 1px solid variables.$light-gray;
 }
 
 .chunk-header {
   text-align: center;
-  color: $light-gray;
+  color: variables.$light-gray;
   font-style: italic;
   font-weight: normal;
 }

@@ -1,19 +1,23 @@
 import { createFactory } from 'faker-create-factory'
 
-import OrganizationTagFactory from '~~/tests/factories/tag.factory'
-import { UserSkillModel } from '~/models/user.model'
+import type { SkillModel, UserSkillModel } from 'shared-projects-frontend/models'
+import TagFactory from '~~/tests/factories/tag.factory'
 import BaseFactory from './base.factory'
 
-const UserSkillFactory = createFactory<UserSkillModel>((faker) => ({
+export const SkillFactory = createFactory<SkillModel>((faker) => ({
   ...BaseFactory.generate(),
   id: faker.datatype.number(),
-  can_mentor: faker.datatype.boolean(),
-  tag: OrganizationTagFactory.generate(),
+  tag: TagFactory.generate(),
   user: null,
-  type: 'skill',
-  comment: '',
   level: faker.datatype.number(),
   level_to_reach: faker.datatype.number(),
+}))
+
+const UserSkillFactory = createFactory<UserSkillModel>((faker) => ({
+  ...SkillFactory.generate(),
+  can_mentor: faker.datatype.boolean(),
+  type: 'skill',
+  comment: '',
   needs_mentor: faker.datatype.boolean(),
   category: '',
 }))

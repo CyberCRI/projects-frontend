@@ -43,7 +43,9 @@ const deleteDocument = async () => {
       await response.json()
       refreshDocumentList()
       toaster.pushSuccess(
-        t('vector-store.document-deleted', { title: documentToDelete.value.title })
+        t('vector-store.document-deleted', {
+          title: documentToDelete.value.title,
+        })
       )
     } else {
       toaster.pushError(`${response.status} - ${response.statusText}`)
@@ -109,6 +111,8 @@ const deleteDocument = async () => {
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .actions {
   margin-bottom: 1rem;
   display: flex;

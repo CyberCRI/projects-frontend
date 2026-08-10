@@ -1,8 +1,10 @@
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
 
-import type { TranslatedAttachmentLink } from '~/models/attachment-link.model'
-import type { TranslatedAttachmentFile } from '~/models/attachment-file.model'
-import type { TranslatedProject } from '~/models/project.model'
+import type {
+  TranslatedAttachmentLink,
+  TranslatedAttachmentFile,
+  TranslatedProject,
+} from 'shared-projects-frontend/models'
 import QRCode from 'qrcode'
 
 export default async function addResourceSectionFactory(
@@ -22,7 +24,9 @@ export default async function addResourceSectionFactory(
       // proxyed because we need fresh access token and short url for qrcode
       const url = `${apiUrl}/v1/project/${project.id}/${type}/${resource.id}/`
       if (url) {
-        const qrCodeDataUrl = await QRCode.toDataURL(url, { color: { dark: '#1d727c' } })
+        const qrCodeDataUrl = await QRCode.toDataURL(url, {
+          color: { dark: '#1d727c' },
+        })
         qrCodeImg = `<a class="resource-qr-code-link" href="${url}"><img src="${qrCodeDataUrl}" alt="QR Code" class="resource-qr-code"/></a>`
       }
 
@@ -125,9 +129,11 @@ export default async function addResourceSectionFactory(
     this.content.push(/* HTML */ `
       <div class="resource-entries-ctn">
         <h3 class="resource-title">
-          ${type === 'file'
-            ? t('project.files', resources.length)
-            : t('resource.web', resources.length)}
+          ${
+            type === 'file'
+              ? t('project.files', resources.length)
+              : t('resource.web', resources.length)
+          }
         </h3>
         <div>${resourceList}</div>
       </div>

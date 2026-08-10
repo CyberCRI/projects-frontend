@@ -912,7 +912,10 @@
       },
       "description": "The description field is required"
     },
-    "quit-without-saving-title": "Quit without saving?"
+    "quit-without-saving-title": "Quit without saving?",
+    "recaptcha": {
+      "required": "Recaptcha is required."
+    }
   },
   "footer": {
     "contact": "Contact us",
@@ -926,7 +929,8 @@
     "madeBy": "is made by",
     "sourceText": "See the source code",
     "pca": "Continuity plan (PCA)",
-    "pssi": "Security plan (PSSI)"
+    "pssi": "Security plan (PSSI)",
+    "about-projects": "About Projects"
   },
   "goal": {
     "add": "Add a goal",
@@ -1765,7 +1769,9 @@
         "too-big": "File is too big (max: {maxSize}Mb)",
         "invalid-image": "Unsupported file, need to be a valid image.",
         "required-image": "A file is required",
-        "required": "A file is required"
+        "required": "A file is required",
+        "delete": "Delete file",
+        "delete-image": "Remove Image"
       }
     },
     "link": {
@@ -2482,6 +2488,8 @@
       "project-sub": "Be notified when other team members modify your projects",
       "announcement": "Announcements",
       "announcement-sub": "Be notified when new announcements are published on the website",
+      "announcement-has-new-application": "Announcements Application",
+      "announcement-has-new-application-sub": "Be notified when announcements have a new application",
       "review": "Ready for review",
       "review-sub": "When you are a reviewer of a project, be notified when a project is ready to be reviewed by you",
       "reviewed": "Has been reviewed",
@@ -3424,13 +3432,19 @@
     },
     "form": {
       "title": {
-        "label": "Title"
+        "label": "Title",
+        "required": "The title is required."
       },
       "description": {
         "label": "Description"
       },
+      "content": {
+        "label": "Content",
+        "required": "The content is required."
+      },
       "icon": {
-        "label": "Icon"
+        "label": "Icon",
+        "select": "Select Icon"
       },
       "show_preview": {
         "label": "Show preview in summary page."

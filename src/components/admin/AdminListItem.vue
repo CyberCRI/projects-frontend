@@ -68,6 +68,8 @@ defineEmits<{
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .top-list {
   flex-grow: 1;
   display: flex;
@@ -101,12 +103,12 @@ li {
 }
 
 .icon-td {
-  width: pxToRem(25px);
+  width: variables.pxtorem(25px);
   padding: 7px;
 }
 
 .name {
-  padding: $space-unit;
+  padding: variables.$space-unit;
 }
 
 .grey-color {

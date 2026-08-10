@@ -1,13 +1,15 @@
 import useLoadingFromStatus from '~/composables/useLoadingFromStatus'
-import type { UseApiOptions } from '~/composables/useAPI'
 
+import type { ClientAPIOptions } from 'shared-projects-frontend/apis'
 import { withQuery } from '~/functs/query'
 import { isNil } from 'es-toolkit'
 
+type AsyncHandlerParameters = Parameters<Parameters<typeof useAsyncData>['1']>[0]
 type AsyncHandler = {
-  ctx?: Parameters<Parameters<typeof useAsyncData>['1']>[0]
+  ctx?: AsyncHandlerParameters
   config: {
     query?: any
+    signal?: AbortSignal
   }
 }
 
@@ -16,7 +18,7 @@ export type AsyncConfig<ResDataT, DataT, Result> = Parameters<
 >['2'] & {
   translate?: (data: DataT) => Result
   // query params
-  query?: UseApiOptions['query']
+  query?: ClientAPIOptions['query']
   // d'ont run fetch if any of args/params are null/undefined
   checkArgs?: boolean
   // force fixed key (no add query params in key)
@@ -103,16 +105,18 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
 
   const { status, data, ...res } = useAsyncData<ResDataT, unknown, DataT>(
     key,
-    () => {
+    (_, { signal }) => {
       if (!checkArgs.value) {
         return null
       }
-      const conf = {} as AsyncHandler['config']
+
+      const conf: AsyncHandler['config'] = { signal }
       if (params[2].query) {
         conf.query = unref(params[2].query)
       } else {
         conf.query ??= {}
       }
+
       return params[1]({ config: conf })
     },
     {

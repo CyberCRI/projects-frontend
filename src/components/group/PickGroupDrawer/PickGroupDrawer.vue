@@ -23,9 +23,12 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import type {
+  TranslatedPeopleGroupModel,
+  HierarchyGroupModel,
+  TrasnlatedHierarchyGroupModel,
+} from 'shared-projects-frontend/models'
 import PickGroup from '~/components/group/PickGroup/PickGroup.vue'
-import type { HierarchyGroupModel } from '~/models/group.model'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import type { AsyncDataRequestStatus } from '#app'
@@ -37,7 +40,7 @@ const props = withDefaults(
     // text before the serach input
     subtitle?: string
     // groups hierarchy
-    groups?: (HierarchyGroupModel | TranslatedPeopleGroupModel)[]
+    groups?: (TrasnlatedHierarchyGroupModel | TranslatedPeopleGroupModel)[]
     // initially selected group
     initialGroup?: HierarchyGroupModel
     isOpened?: boolean

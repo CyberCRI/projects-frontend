@@ -25,9 +25,8 @@
 
 <script setup lang="ts">
 import CategoryCardDefaultBackground from '~/components/category/CategoryCardDefaultBackground.vue'
-import CroppedImage from '~/components/base/media/CroppedImage.vue'
-
-import type { ImageSizes } from '~/functs/imageSizesUtils'
+import type CroppedImage from '~/components/base/media/CroppedImage.vue'
+import type { ImageSize } from 'shared-projects-frontend/models'
 
 const props = withDefaults(
   defineProps<{
@@ -36,7 +35,7 @@ const props = withDefaults(
     imageHeight: string
     imageWidth: string
     url?: string
-    imageSizes?: ImageSizes
+    imageSizes?: ImageSize
     forcedRatio?: number
   }>(),
   {
@@ -64,6 +63,8 @@ const imageStyle = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .category-card-image {
   overflow: hidden;
   position: relative;

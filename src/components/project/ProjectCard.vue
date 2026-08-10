@@ -48,7 +48,9 @@
       class="picture picture-project skeletons-background"
     />
     <div
-      :class="{ 'has-description': translatedPurpose && translatedPurpose.length }"
+      :class="{
+        'has-description': translatedPurpose && translatedPurpose.length,
+      }"
       class="text text-limit"
     >
       <div ref="type" class="card-type">
@@ -78,7 +80,7 @@ import BasicCard from '~/components/base/BasicCard.vue'
 import useUsersStore from '~/stores/useUsers'
 
 import type { DEFAULT_PROJECT_PATATOID } from '~/composables/usePatatoids'
-import type { TranslatedProject } from '~/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import type { IconImageChoice } from '~/functs/IconImage'
 
 const props = withDefaults(
@@ -171,7 +173,9 @@ const title = computed(() => `${translatedTitle.value}\n\n${translatedPurpose.va
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .icon {
-  fill: $primary-dark;
+  fill: variables.$primary-dark;
 }
 </style>

@@ -70,7 +70,7 @@
 
 <script setup lang="ts">
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
-import type { PeopleModel } from '~/models/people.model'
+import type { PeopleModel } from 'shared-projects-frontend/models'
 import type { RouteLocationRaw } from 'vue-router'
 
 const props = withDefaults(
@@ -128,6 +128,8 @@ const switchView = () => router.push(props.editProfileLink)
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .edit-btn-ctn {
   padding-bottom: 1rem;
   display: flex;
@@ -135,7 +137,7 @@ const switchView = () => router.push(props.editProfileLink)
 }
 
 .user-contacts-ctn {
-  border: 1px solid $lighter-gray;
+  border: 1px solid variables.$lighter-gray;
   border-radius: 1rem;
   padding: 1rem;
   display: flex;
@@ -150,21 +152,22 @@ const switchView = () => router.push(props.editProfileLink)
   .social {
     display: flex;
     align-items: flex-start;
-    word-break: break-word;
-    gap: $space-xs;
+    word-break: normal;
+    overflow-wrap: break-word;
+    gap: variables.$space-xs;
 
     .icon {
       flex-shrink: 0;
       vertical-align: baseline;
       width: 22px;
       height: 22px;
-      fill: $primary-dark;
+      fill: variables.$primary-dark;
     }
 
     a {
       font-weight: 500;
-      font-size: $font-size-m;
-      color: $primary-dark;
+      font-size: variables.$font-size-m;
+      color: variables.$primary-dark;
     }
   }
 

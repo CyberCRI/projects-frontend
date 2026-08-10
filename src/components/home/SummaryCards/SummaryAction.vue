@@ -1,7 +1,7 @@
 <template>
   <component :is="is" :to="to" class="summary-action skeletons-background">
     <IconImage class="icon" :name="actionIcon" />
-    <span class="label">{{ capitalize(actionLabel) }}</span>
+    <span class="label">{{ actionLabel }}</span>
   </component>
 </template>
 <script setup lang="ts">
@@ -9,7 +9,6 @@ import IconImage from '~/components/base/media/IconImage.vue'
 
 import type { IconImageChoice } from '~/functs/IconImage'
 import type { RouteLocationRaw } from 'vue-router'
-import { capitalize } from '~/functs/string'
 
 const props = withDefaults(
   defineProps<{
@@ -30,6 +29,8 @@ const is = computed(() => {
 })
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .summary-action {
   display: flex;
   align-items: center;
@@ -45,7 +46,7 @@ const is = computed(() => {
     transform-origin: center center;
     transform: translateZ(0) scale(0, 1);
     transition: 200ms ease-in-out;
-    border-bottom: $border-width-m solid $primary-dark;
+    border-bottom: variables.$border-width-m solid variables.$primary-dark;
   }
 
   &:hover::before {
@@ -59,15 +60,15 @@ const is = computed(() => {
   }
 
   .icon {
-    fill: $primary-dark;
-    height: $layout-size-2xl;
-    width: $layout-size-2xl;
+    fill: variables.$primary-dark;
+    height: variables.$layout-size-2xl;
+    width: variables.$layout-size-2xl;
   }
 
   .label {
-    color: $primary-dark;
+    color: variables.$primary-dark;
     font-weight: 700;
-    margin-left: $space-xs;
+    margin-left: variables.$space-xs;
     white-space: nowrap;
   }
 

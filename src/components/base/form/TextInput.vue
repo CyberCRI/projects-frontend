@@ -126,6 +126,8 @@ watchEffect(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .input-wrapper {
   width: 100%;
 
@@ -143,7 +145,7 @@ watchEffect(() => {
       top: 50%;
       transform: translate(-20%, -50%);
       height: 60%;
-      fill: $primary-dark;
+      fill: variables.$primary-dark;
       cursor: pointer;
     }
   }
@@ -155,17 +157,17 @@ textarea {
   font-size: 1em;
   box-sizing: border-box;
   width: 100%;
-  border-radius: $border-radius-s;
-  background: $white;
-  border: $border-width-s solid $light-gray;
-  color: $black;
+  border-radius: variables.$border-radius-s;
+  background: variables.$white;
+  border: variables.$border-width-s solid variables.$light-gray;
+  color: variables.$black;
 }
 
 textarea {
-  border-bottom-right-radius: $border-radius-s;
+  border-bottom-right-radius: variables.$border-radius-s;
 }
 
 ::placeholder {
-  color: $mid-gray;
+  color: variables.$mid-gray;
 }
 </style>

@@ -1,4 +1,4 @@
-import type { ProjectMessageModel } from '~/models/project-message.model'
+import type { ProjectMessageModel } from 'shared-projects-frontend/models'
 
 import analytics from '~/analytics/index'
 

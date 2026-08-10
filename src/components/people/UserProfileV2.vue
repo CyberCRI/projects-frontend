@@ -50,17 +50,20 @@
 </template>
 
 <script>
-import { getUser } from '~/api/people.service.ts'
+import { getUser } from 'shared-projects-frontend/apis'
 
-import useUsersStore from '~/stores/useUsers.ts'
+import useUsersStore from '~/stores/useUsers'
 
 import ProfileSummaryTab from '~/pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'
+import { usePermissionUser } from '~/composables/usePermissions/useUserPermissions'
+import NavPanelLoader from '~/components/base/layouts/NavPanelLoader.vue'
 
 export default {
   name: 'UserProfileV2',
 
   components: {
     ProfileSummaryTab,
+    NavPanelLoader,
   },
   provide() {
     return {
@@ -95,9 +98,9 @@ export default {
 
   emits: ['user-not-found', 'close', 'profile-edited'],
 
-  setup() {
+  setup(props) {
     const usersStore = useUsersStore()
-    const { canEditUser } = usePermissions()
+    const { canEditUser } = usePermissionUser(computed(() => props.userId))
     const { onboardingTrap } = useOnboardingStatus()
     const { t } = useNuxtI18n()
     const uniqueId = 'project-nav-panel'
@@ -374,7 +377,10 @@ export default {
     },
 
     profileDisplayTabsFiltered() {
-      return this.profileDisplayTabs.map((entry) => ({ ...entry, dataTest: entry.key }))
+      return this.profileDisplayTabs.map((entry) => ({
+        ...entry,
+        dataTest: entry.key,
+      }))
     },
 
     profileEditTabs() {
@@ -552,7 +558,10 @@ export default {
     },
 
     profileEditTabsFiltered() {
-      return this.profileEditTabs.map((entry) => ({ ...entry, dataTest: entry.key }))
+      return this.profileEditTabs.map((entry) => ({
+        ...entry,
+        dataTest: entry.key,
+      }))
     },
 
     allProfileTabs() {
@@ -628,10 +637,14 @@ export default {
     async loadUser() {
       if (!this.userId || this.userId === this.usersStore.id) {
         // get the connected user
-        this.originalUser = await this.usersStore.getUser(this.usersStore.id, { noError: true })
-      } else {
+        this.originalUser = await this.usersStore.getUser(this.usersStore.id, {
+          noError: true,
+        })
+      } else if (this.userId) {
         // get another user
         this.originalUser = await getUser(this.userId, { noError: true })
+      } else {
+        throw new Error('userId is empty')
       }
     },
   },
@@ -639,12 +652,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .profile-links {
   display: inline-flex;
   width: 100%;
   justify-content: flex-end;
   padding-bottom: 24px;
   text-transform: none;
-  gap: $space-unit;
+  gap: variables.$space-unit;
 }
 </style>

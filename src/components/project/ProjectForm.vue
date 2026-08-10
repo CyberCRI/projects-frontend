@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import type { ProjectForm, TranslatedProject } from '~/models/project.model'
+import type { ProjectForm, TranslatedProject } from 'shared-projects-frontend/models'
 import TagSelectDrawer from '~/components/drawer/Tag/TagSelectDrawer.vue'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import { defaultProjectForm, useProjectForm } from '~/form/project'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { getFirstTextNotEmpty } from '~/functs/string'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import Field from '~/components/base/form/Field.vue'
-import { isEqual, isNil, pick } from 'es-toolkit'
+import { isNil, pick } from 'es-toolkit'
+import { formEqual } from '~/form/base'
 
 const props = withDefaults(
   defineProps<{
@@ -61,7 +62,7 @@ const defaultLocalForm = () => {
         project.template?.$t?.project_purpose,
         project.template?.project_purpose,
       ]) || newForm.purpose
-    newForm.imageSizes = pictureApiToImageSizes(project.header_image) || newForm.imageSizes
+    newForm.imageSizes = pictureApiToImageSizes(project.header_image || newForm.imageSizes)
     newForm.file = project.header_image || newForm.file
     newForm.language = project.language || locale.value || newForm.language
 
@@ -77,13 +78,17 @@ const defaultLocalForm = () => {
   return newForm
 }
 
-const { form, errors, isValid, cleanedData, reset } = useProjectForm({ lazy: true })
+const { form, errors, isValid, cleanedData, reset } = useProjectForm({
+  lazy: true,
+})
 watch(
   () => props.project,
   () => reset(defaultLocalForm()),
   { immediate: true, deep: true }
 )
-const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
+const isFormEqual = useBlockNavigation(() =>
+  formEqual(form.value, defaultLocalForm(), { html: ['description'] })
+)
 
 const languageOptions = computed(() => {
   return organizationsStore.languages.map((language) => {

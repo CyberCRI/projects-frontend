@@ -22,7 +22,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { patchUser } from '~/api/people.service'
+import { patchUser } from 'shared-projects-frontend/apis'
 
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
@@ -39,7 +39,9 @@ const organizationCode = useOrganizationCode()
 const resetOnboardingStatus = async () => {
   reseting.value = true
   try {
-    const payload = { onboarding_status: { show_welcome: true, show_progress: true } }
+    const payload = {
+      onboarding_status: { show_welcome: true, show_progress: true },
+    }
     const user = usersStore.userFromApi
     const keycloak_id = user.keycloak_id
     await patchUser(keycloak_id, payload)
@@ -75,6 +77,8 @@ const resetTermsSigned = async () => {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .debug-onboarding {
   margin: 1rem;
   text-align: center;

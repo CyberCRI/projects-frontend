@@ -6,10 +6,10 @@
     }"
     class="notification"
     tabindex="0"
-    @click="$emit('navigated', notification)"
+    @click="notificationRoute && $emit('navigated', notification)"
   >
     <component
-      :is="notificationRoute ? 'NuxtLink' : 'div'"
+      :is="notificationRoute ? NuxtLink : 'div'"
       :to="notificationRoute"
       class="notification-link"
     >
@@ -119,7 +119,7 @@ import IconImage from '~/components/base/media/IconImage.vue'
 
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
-import type { NotificationModel } from '~/models/notifications.model'
+import type { NotificationModel } from 'shared-projects-frontend/models'
 import type { IconImageChoice } from '~/functs/IconImage'
 import type { RouteLocationRaw } from 'vue-router'
 import { getTimePassed } from '@/functs/date'
@@ -209,58 +209,60 @@ const notificationRoute = computed<RouteLocationRaw>(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .notification {
-  margin: $space-m 0;
-  font-size: $font-size-m;
+  margin: variables.$space-m 0;
+  font-size: variables.$font-size-m;
   line-height: 1.2;
 
   &--spacer {
-    padding: $space-s 16px;
+    padding: variables.$space-s 16px;
   }
 
   &:hover {
-    background: $primary-lighter;
+    background: variables.$primary-lighter;
   }
 }
 
 .notification-link {
   display: flex;
   align-items: center;
-  padding: $space-s;
+  padding: variables.$space-s;
   cursor: pointer;
 }
 
 .img-container {
-  border-radius: 50%;
-  background-size: cover;
-  background-position: top center;
-  width: 50px;
-  height: 50px;
-  flex: none;
-  margin-right: $space-s;
+  border-radius: 50% !important;
+  background-size: cover !important;
+  background-position: top center !important;
+  width: 50px !important;
+  height: 50px !important;
+  flex: none !important;
+  margin-right: variables.$space-s !important;
 }
 
 .icon {
-  fill: $primary;
+  fill: variables.$primary;
   width: 10px;
   height: 10px;
-  margin-right: $space-s;
+  margin-right: variables.$space-s;
   flex: none;
 }
 
 .date {
-  color: $mid-gray;
+  color: variables.$mid-gray;
   font-weight: 400;
   width: 100%;
   display: inline-block;
-  font-size: $font-size-xs;
+  font-size: variables.$font-size-xs;
 }
 
 .container {
   strong,
   a {
     font-weight: 700;
-    color: $primary-dark;
+    color: variables.$primary-dark;
     text-transform: capitalize;
   }
 }

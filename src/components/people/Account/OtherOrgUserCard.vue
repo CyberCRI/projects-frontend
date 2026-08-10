@@ -33,14 +33,13 @@
 </template>
 
 <script setup lang="ts">
-import { getOrganizations } from '~/api/organizations.service'
-import { getUser } from '~/api/people.service'
+import { getOrganizations, getUser } from 'shared-projects-frontend/apis'
 
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
-import type { TranslatedUserModel } from '~/models/user.model'
 import { roleI18n } from '~/functs/rolesUtils'
 
 const props = defineProps<{
@@ -77,32 +76,34 @@ onMounted(() => loadRoles())
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .other-org-account-card {
   display: flex;
   align-items: center;
-  padding: $space-m;
-  gap: $space-m;
+  padding: variables.$space-m;
+  gap: variables.$space-m;
   box-sizing: border-box;
-  border-radius: $border-radius-m;
-  background-color: $primary-lighter;
+  border-radius: variables.$border-radius-m;
+  background-color: variables.$primary-lighter;
 }
 
 .img-container {
   border-radius: 50%;
   background-size: cover;
   background-position: top center;
-  width: pxToRem(80px);
-  height: pxToRem(80px);
+  width: variables.pxtorem(80px);
+  height: variables.pxtorem(80px);
   flex-shrink: 0;
 }
 
 .name {
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
 }
 
 .job {
   font-weight: normal;
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
 }
 
 .loader {

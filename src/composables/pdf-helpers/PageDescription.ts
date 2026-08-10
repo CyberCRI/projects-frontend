@@ -4,8 +4,8 @@ import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
 
-import type { TranslatedProject } from '~/models/project.model'
-import { textIsEmpty } from '~/functs/string'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
+import { textIsEmpty } from '~/functs/tiptap'
 
 export default async function addPageDescriptionFactory(project: TranslatedProject) {
   const { t } = useNuxtI18n()

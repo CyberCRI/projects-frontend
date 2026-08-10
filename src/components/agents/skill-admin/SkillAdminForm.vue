@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { helpers, required } from '@vuelidate/validators'
 import useToasterStore from '@/stores/useToaster'
@@ -23,7 +23,7 @@ const emit = defineEmits(['close', 'entity-created', 'entity-updated'])
 
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
-const defaultForm = (skill) => ({
+const defaultForm = (skill?) => ({
   title: skill?.title ?? '',
   description: md2html(skill?.description ?? ''),
   content: md2html(skill?.skillContents?.length ? skill.skillContents[0].content : ''),
@@ -132,7 +132,9 @@ const submit = async () => {
         @blur="v$.title.$validate"
       />
       <FieldErrors :errors="v$.title.$errors" />
-      <p v-if="titleExists" class="error">{{ $t('agent-skills.title-exists') }}</p>
+      <p v-if="titleExists" class="error">
+        {{ $t('agent-skills.title-exists') }}
+      </p>
     </div>
     <div class="form-section">
       <h4>{{ $t('agent-skills.description') }}</h4>
@@ -157,8 +159,10 @@ const submit = async () => {
   </BaseDrawer>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .error {
-  color: $salmon;
+  color: variables.$salmon;
 }
 
 .form-section ~ .form-section {

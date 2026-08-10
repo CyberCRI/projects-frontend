@@ -1,4 +1,4 @@
-import type { GoalModel } from '~/models/goal.model'
+import type { GoalModel } from 'shared-projects-frontend/models'
 
 import analytics from '~/analytics'
 

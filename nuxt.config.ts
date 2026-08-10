@@ -3,7 +3,14 @@ import path from 'node:path'
 import fs from 'node:fs'
 
 // Determine the environment file
-const customEnvFile = process.env.ENV_FILE ? `.env.${process.env.ENV_FILE}` : '.env'
+const customEnvFile = import.meta.env.ENV_FILE ? `.env.${import.meta.env.ENV_FILE}` : '.env'
+
+const alias = {}
+const sharedPackageOverride = import.meta.env.IMPORT_SHARED_PACKAGE_OVERRIDE
+if (sharedPackageOverride) {
+  alias['shared-projects-frontend'] = path.join(__dirname, sharedPackageOverride)
+  console.log('Overriding shared package imports:', sharedPackageOverride)
+}
 
 // not load env when we are in tests
 if (fs.existsSync(customEnvFile) && import.meta.env.VITEST !== 'true') {
@@ -50,7 +57,14 @@ export default defineNuxtConfig({
     },
   },
   srcDir: 'src/',
-  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxt/test-utils/module', 'nuxt-svgo', '@nuxt/eslint'],
+  modules: [
+    '@pinia/nuxt',
+    '@nuxtjs/i18n',
+    '@nuxt/test-utils/module',
+    'nuxt-svgo',
+    '@nuxt/eslint',
+    '@nuxtjs/stylelint-module',
+  ],
   // disable caching
   routeRules: {
     '/**': {
@@ -86,26 +100,8 @@ export default defineNuxtConfig({
     },
   },
   vite: {
-    plugins: [
-      {
-        // Vitest 2.x bundles Vite 5 internally. Nuxt 3.19+ uses this.environment.name
-        // (Vite 6 Environment API) in nuxt:resolve-bare-imports (enforce:'post').
-        // When this.environment is undefined (Vite 5 context), that plugin throws a
-        // plain object that tinypool serialises as "[object Object]" → "Unknown Error".
-        // Intercept optional-peer-dep virtual IDs before Nuxt's post-plugin runs so the
-        // crash is never reached. Safe in production: Vite 6 has this.environment, and
-        // optional deps that are missing should produce empty modules anyway.
-        name: 'fix-vite5-optional-peer-dep',
-        enforce: 'pre' as const,
-        resolveId(id: string) {
-          if (id.startsWith('__vite-optional-peer-dep:')) return '\0' + id
-        },
-        load(id: string) {
-          if (id.startsWith('\0__vite-optional-peer-dep:')) return ''
-        },
-      },
-    ],
     resolve: {
+      alias, // See also 'nitro' section
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
       // Force all prosemirror packages to resolve to a single instance.
       // prosemirror-dropcursor and prosemirror-gapcursor ship their own nested
@@ -113,34 +109,70 @@ export default defineNuxtConfig({
       // rest of the app uses the top-level v1.4.3. Both create keyless plugins
       // (new Plugin({})) that each get key "plugin$1" from their counter — a
       // collision that causes "Adding different instances of a keyed plugin".
-      alias: {
-        'prosemirror-state': path.resolve('./node_modules/prosemirror-state'),
-        'prosemirror-view': path.resolve('./node_modules/prosemirror-view'),
-        'prosemirror-model': path.resolve('./node_modules/prosemirror-model'),
-        'prosemirror-transform': path.resolve('./node_modules/prosemirror-transform'),
-      },
+      dedupe: [
+        'prosemirror-state',
+        'prosemirror-model',
+        'prosemirror-view',
+        'prosemirror-transform',
+
+        '@tiptap/core',
+        '@tiptap/extension-blockquote',
+        '@tiptap/extension-bold',
+        '@tiptap/extension-bullet-list',
+        '@tiptap/extension-code-block',
+        '@tiptap/extension-code-block-lowlight',
+        '@tiptap/extension-collaboration',
+        '@tiptap/extension-collaboration-cursor',
+        '@tiptap/extension-color',
+        '@tiptap/extension-heading',
+        '@tiptap/extension-image',
+        '@tiptap/extension-italic',
+        '@tiptap/extension-link',
+        '@tiptap/extension-list-item',
+        '@tiptap/extension-ordered-list',
+        '@tiptap/extension-table',
+        '@tiptap/extension-table-cell',
+        '@tiptap/extension-table-header',
+        '@tiptap/extension-table-row',
+        '@tiptap/extension-text-align',
+        '@tiptap/extension-text-style',
+        '@tiptap/extension-underline',
+        '@tiptap/html',
+        '@tiptap/pm',
+        '@tiptap/starter-kit',
+        '@tiptap/vue-3',
+        'shared-projects-frontend',
+        'ofetch',
+      ],
+    },
+    optimizeDeps: {
+      // Vite can only "discover" deps as it crawls sources,
+      // packages that get imported conditionally, dynamically, or deep inside client-only components/plugins
+      // often get missed on the first pass
+      // hence those annoying .'new dependencies optimized' that trigger page reloads when developing
+      include: [
+        '@hocuspocus/provider',
+        '@tiptap/extension-collaboration-cursor',
+        '@tiptap/extension-collaboration',
+        'qrcode',
+        'y-prosemirror',
+        'leaflet',
+        'leaflet.markercluster',
+        '@vuepic/vue-datepicker',
+        'date-fns/locale',
+      ],
     },
     css: {
       preprocessorOptions: {
         scss: {
           additionalData: `
                         @use 'sass:math';
-                        @import '@/design/scss/variables.scss';
-                        $PUBLIC_BINARIES_PREFIX: '/public-assets';
                     `,
         },
       },
     },
 
     server: {
-      //host: '0.0.0.0',
-      //port: 8080,
-      // proxy: {
-      //     ...apiProxy,
-      // },
-      watch: {
-        usePolling: true,
-      },
       hmr: {
         port: 3010,
       },
@@ -229,6 +261,9 @@ export default defineNuxtConfig({
 
   nitro: {
     minify: import.meta.dev,
+    // Nuxt's top-level alias mostly affects Vite (client + SSR bundling of app code),
+    // but Nitro has its own alias resolution for server routes/middleware.
+    alias,
   },
 
   app: {

@@ -1,0 +1,57 @@
+<script setup lang="ts">
+import type { WebSocketStatus } from '@hocuspocus/provider'
+
+const { t } = useNuxtI18n()
+
+withDefaults(
+  defineProps<{
+    disconnectionGrace: boolean
+    status: WebSocketStatus | 'offline'
+    online?: boolean
+  }>(),
+  {
+    online: false,
+  }
+)
+</script>
+
+<template>
+  <div :class="{ 'editor-frozen': !disconnectionGrace }" class="status-bar">
+    <div v-if="!online" class="connection-status" v-text="t(`multieditor.offline`)" />
+    <div
+      v-if="online && status === 'connecting'"
+      class="connection-status"
+      v-text="t(`multieditor.server-connecting`)"
+    />
+    <div
+      v-if="online && status === 'disconnected'"
+      class="connection-status"
+      v-text="t(`multieditor.server-disconnected`)"
+    />
+    <div v-if="!disconnectionGrace" class="connection-status" v-text="t(`multieditor.frozen`)" />
+  </div>
+</template>
+
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
+.status-bar {
+  justify-content: center;
+  top: 30px;
+  background: variables.$white;
+  color: variables.$primary-dark;
+  display: flex;
+  padding: 5px 20px;
+  position: sticky;
+  z-index: 10;
+  width: 100%;
+
+  &.editor-frozen {
+    top: 0;
+  }
+
+  .connection-status {
+    padding: 0 2rem;
+  }
+}
+</style>

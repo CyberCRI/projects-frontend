@@ -30,22 +30,24 @@ const { stateModal, toggleModal } = useModal(props.isInitialyOpen)
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .field-label {
   display: flex;
   align-items: center;
   gap: 1rem;
-  font-size: $font-size-m;
-  margin-bottom: $space-s;
+  font-size: variables.$font-size-m;
+  margin-bottom: variables.$space-s;
 
   .text {
     flex-grow: 1;
     font-weight: 500;
-    color: $almost-black;
+    color: variables.$almost-black;
   }
 
   .toggle {
     flex-shrink: 0;
-    fill: $primary-dark;
+    fill: variables.$primary-dark;
     width: 2em;
     height: 2em;
   }

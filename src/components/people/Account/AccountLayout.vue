@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { getUser } from '~/api/people.service'
+import { getUser } from 'shared-projects-frontend/apis'
 
 import AccountFormTitleBlock from '~/components/people/Account/AccountFormTitleBlock.vue'
 import AccountForm from '~/components/people/Account/AccountForm.vue'
@@ -76,6 +76,8 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   position: absolute;
   margin: auto;
@@ -96,6 +98,6 @@ onMounted(async () => {
   flex-direction: column;
   align-items: stretch;
   margin: 0 auto;
-  width: pxToRem(500px);
+  width: variables.pxtorem(500px);
 }
 </style>

@@ -18,9 +18,8 @@
 <script setup lang="ts">
 import BaseProjectTabText from '~/components/project/modules/Additionals/Types/Text/BaseProjectTabText.vue'
 import BaseProjectTabBlog from '~/components/project/modules/Additionals/Types/Blog/BaseProjectTabBlog.vue'
-import type { TranslatedProjectTab } from '~/models/projects-tabs.model'
+import type { TranslatedProjectTab, TranslatedProject } from 'shared-projects-frontend/models'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
-import type { TranslatedProject } from '@/models/project.model'
 
 withDefaults(
   defineProps<{

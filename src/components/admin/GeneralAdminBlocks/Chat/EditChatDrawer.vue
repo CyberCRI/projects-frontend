@@ -38,7 +38,7 @@
   </BaseDrawer>
 </template>
 <script setup lang="ts">
-import { patchOrganization } from '~/api/organizations.service'
+import { patchOrganization } from 'shared-projects-frontend/apis'
 
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
@@ -102,13 +102,15 @@ const saveChat = async () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .notice,
 .label {
   display: block;
-  padding-bottom: $space-m;
+  padding-bottom: variables.$space-m;
 }
 
 .form-section {
-  padding-bottom: $space-l;
+  padding-bottom: variables.$space-l;
 }
 </style>

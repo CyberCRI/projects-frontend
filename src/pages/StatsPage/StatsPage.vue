@@ -42,6 +42,8 @@ useLpiHead2({
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .stats-tab {
   margin-top: 70px;
 }

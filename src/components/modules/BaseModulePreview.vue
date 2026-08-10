@@ -47,11 +47,19 @@ withDefaults(
     icon?: IconImageChoice
     seeMorePosition?: 'bottom' | 'top'
   }>(),
-  { loading: false, icon: null, total: null, seeMore: null, seeMorePosition: 'top' }
+  {
+    loading: false,
+    icon: null,
+    total: null,
+    seeMore: null,
+    seeMorePosition: 'top',
+  }
 )
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .module {
   display: grid;
   grid-template-rows: auto 1fr auto;
@@ -73,8 +81,8 @@ withDefaults(
 }
 
 .title-container {
-  color: $primary-dark;
-  fill: $primary-dark;
+  color: variables.$primary-dark;
+  fill: variables.$primary-dark;
   display: flex;
   align-items: center;
 

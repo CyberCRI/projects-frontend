@@ -1,7 +1,7 @@
+import { getAllNews, getNews } from 'shared-projects-frontend/apis'
+import type { NewsModel } from 'shared-projects-frontend/models'
 import { mcpOptions, orgCode, resultFromTool } from './base'
-import { getAllNews, getNews } from '~/api/news.service'
 import type { TypeMcpServer } from '~/interfaces/mcp'
-import type { NewsModel } from '~/models/news.model'
 import { pick } from 'es-toolkit'
 import { z } from 'zod'
 
@@ -37,7 +37,9 @@ export default (server: TypeMcpServer) => {
     {
       title: 'News data',
       description: 'Get a news article. Use the news-list tool to get news ids.',
-      inputSchema: { slugOrId: z.number().describe('The id of the news article') },
+      inputSchema: {
+        slugOrId: z.number().describe('The id of the news article'),
+      },
     },
     resultFromTool(({ slugOrId }, extras) => {
       const opts = mcpOptions(extras)

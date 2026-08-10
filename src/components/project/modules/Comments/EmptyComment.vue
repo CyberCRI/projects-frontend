@@ -10,6 +10,8 @@ const image = usePublicURL(`/empties/emptybubble.png`)
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .no-item {
   padding-bottom: 100px;
 
@@ -17,7 +19,7 @@ const image = usePublicURL(`/empties/emptybubble.png`)
     text-align: center;
     margin: 100px 0 20px;
     color: grey;
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
     font-weight: 600;
     text-transform: uppercase;
     background: transparent;

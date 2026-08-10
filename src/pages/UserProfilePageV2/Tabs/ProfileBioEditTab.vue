@@ -48,8 +48,8 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedUserModel } from '~/models/user.model'
-import { patchUser } from '~/api/people.service'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
+import { patchUser } from 'shared-projects-frontend/apis'
 import { defaultFormBio } from '~/form/profile'
 
 import useToasterStore from '~/stores/useToaster'
@@ -133,8 +133,9 @@ watch(
   { immediate: true }
 )
 </script>
-<style scoped lang="scss">
-@import './profile-form';
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+@use '~/pages/UserProfilePageV2/Tabs/profile-form';
 
 .form-actions {
   position: sticky;

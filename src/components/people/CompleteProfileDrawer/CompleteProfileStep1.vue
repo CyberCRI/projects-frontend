@@ -117,7 +117,7 @@
                 :style="{
                   'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/${lang}/${sdg.id}.svg)`,
                 }"
-                @click="toggle"
+                @click="sdg.selected = !sdg.selected"
               />
               <IconImage class="sdg-checkmark" name="Check" />
             </label>
@@ -173,21 +173,26 @@
   </template>
 </template>
 
-<script>
+<script lang="ts">
 import { helpers, required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 
-import { getUser, patchUser, patchUserPicture, postUserPicture } from '~/api/people.service.ts'
+import {
+  getUser,
+  patchUser,
+  patchUserPicture,
+  postUserPicture,
+} from 'shared-projects-frontend/apis'
 
-import useToasterStore from '~/stores/useToaster.ts'
-import useUsersStore from '~/stores/useUsers.ts'
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
 
 import { usePatatoids } from '~/composables/usePatatoids'
 
 import ProfileEditBlock from '@/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
-import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
+import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import { NULL_CONTENT, SDGS, VALID_NAME_REGEX } from '~/functs/constants.ts'
+import { NULL_CONTENT, SDGS, VALID_NAME_REGEX } from '~/functs/constants'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import UserProfileV2 from '@/components/people/UserProfileV2.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
@@ -241,6 +246,7 @@ export default {
         family_name: '',
         job: '',
         description: '',
+        email: '',
       },
       bio: NULL_CONTENT,
       exempleToShow: null,
@@ -402,7 +408,10 @@ export default {
   },
 }
 </script>
-<style scoped lang="scss">
+
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   flex-grow: 1;
   display: flex;
@@ -415,12 +424,12 @@ export default {
 }
 
 .section-notice {
-  font-size: $font-size-m;
-  margin-bottom: pxToRem(23px);
+  font-size: variables.$font-size-m;
+  margin-bottom: variables.pxtorem(23px);
 }
 
 .link {
-  color: $primary-dark;
+  color: variables.$primary-dark;
   font-weight: 700;
   text-decoration: underline;
 
@@ -434,7 +443,7 @@ export default {
   justify-content: stretch;
   align-items: stretch;
 
-  @media (max-width: $med-tablet) {
+  @media (max-width: variables.$med-tablet) {
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
@@ -456,32 +465,32 @@ export default {
     }
   }
 
-  @media (min-width: $med-tablet) {
+  @media (min-width: variables.$med-tablet) {
     .column:first-child {
-      padding-right: pxToRem(62px);
-      border-right: $border-width-s solid $lighter-gray;
+      padding-right: variables.pxtorem(62px);
+      border-right: variables.$border-width-s solid variables.$lighter-gray;
     }
 
     .column + .column {
-      padding-left: pxToRem(62px);
-      border-left: $border-width-s solid $lighter-gray;
+      padding-left: variables.pxtorem(62px);
+      border-left: variables.$border-width-s solid variables.$lighter-gray;
     }
   }
 
-  @media (max-width: $med-tablet) {
+  @media (max-width: variables.$med-tablet) {
     .column + .column {
-      padding-top: pxToRem(21px);
+      padding-top: variables.pxtorem(21px);
     }
   }
 }
 
 .three-columns {
   display: flex;
-  gap: pxToRem(130px);
+  gap: variables.pxtorem(130px);
   justify-content: stretch;
   align-items: center;
 
-  @media (max-width: $med-tablet) {
+  @media (max-width: variables.$med-tablet) {
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
@@ -496,14 +505,14 @@ export default {
 
 .field-title {
   display: block;
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
   font-weight: 700;
-  margin-bottom: pxToRem(13px);
+  margin-bottom: variables.pxtorem(13px);
 }
 
 .field-notice {
-  font-size: $font-size-s;
-  margin-bottom: pxToRem(13px);
+  font-size: variables.$font-size-s;
+  margin-bottom: variables.pxtorem(13px);
 }
 
 .html-input,
@@ -511,27 +520,27 @@ input,
 textarea {
   display: block;
   width: 100%;
-  margin-bottom: pxToRem(21px);
-  font-size: $font-size-m;
+  margin-bottom: variables.pxtorem(21px);
+  font-size: variables.$font-size-m;
   padding: 11px;
-  border: $border-width-s solid $lighter-gray;
+  border: variables.$border-width-s solid variables.$lighter-gray;
   box-sizing: border-box;
   border-radius: 0;
 
   &::placeholder {
-    color: $lighter-gray;
+    color: variables.$lighter-gray;
     opacity: 1;
   }
 
   &[disabled] {
-    color: $mid-gray;
-    background-color: $almost-white;
+    color: variables.$mid-gray;
+    background-color: variables.$almost-white;
     cursor: not-allowed;
   }
 }
 
 .field-with-validation {
-  margin-bottom: pxToRem(21px);
+  margin-bottom: variables.pxtorem(21px);
 
   .field-decorator {
     position: relative;
@@ -549,7 +558,7 @@ textarea {
   }
 
   input {
-    margin-bottom: $space-s;
+    margin-bottom: variables.$space-s;
     padding-right: 2rem;
   }
 
@@ -567,7 +576,7 @@ textarea {
 }
 
 .html-input {
-  height: pxToRem(280px);
+  height: variables.pxtorem(280px);
 }
 
 .picture-block {
@@ -591,12 +600,12 @@ textarea {
 }
 
 .sdg-grid {
-  $sdg-size: pxToRem(150px);
+  $sdg-size: variables.pxtorem(150px);
 
-  margin-top: pxToRem(20px);
+  margin-top: variables.pxtorem(20px);
   display: grid;
   grid-template-columns: repeat(auto-fill, $sdg-size);
-  gap: pxToRem(10px);
+  gap: variables.pxtorem(10px);
   justify-content: space-between;
 
   .sdg {
@@ -617,7 +626,7 @@ textarea {
     display: inline-block;
     width: $sdg-size;
     height: $sdg-size;
-    border-radius: $border-radius-xs;
+    border-radius: variables.$border-radius-xs;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -627,8 +636,8 @@ textarea {
 
   .sdg-checkmark {
     display: inline-block;
-    background-color: $primary;
-    fill: $white;
+    background-color: variables.$primary;
+    fill: variables.$white;
     widows: 1rem;
     height: 1rem;
     border-radius: 50%;
@@ -645,7 +654,7 @@ textarea {
     position: absolute;
 
     &:checked + .sdg-pic {
-      box-shadow: 0 0 0 $border-width-m $primary;
+      box-shadow: 0 0 0 variables.$border-width-m variables.$primary;
       transition: box-shadow 200ms cubic-bezier(0.65, 1.23, 1, 1.99);
     }
 
@@ -660,27 +669,27 @@ textarea {
   display: inline-block;
   padding: 8px 12px;
   border-radius: 30px;
-  background-color: $white;
-  font-size: $font-size-s;
+  background-color: variables.$white;
+  font-size: variables.$font-size-s;
   text-transform: uppercase;
-  color: $primary-dark;
-  border: $border-width-s solid $primary;
+  color: variables.$primary-dark;
+  border: variables.$border-width-s solid variables.$primary;
   white-space: nowrap;
 
   &.grey {
-    color: $mid-gray;
-    border-color: $lighter-gray;
-    background-color: $almost-white;
+    color: variables.$mid-gray;
+    border-color: variables.$lighter-gray;
+    background-color: variables.$almost-white;
   }
 }
 
 .skill-list {
-  margin-top: pxToRem(20px);
+  margin-top: variables.pxtorem(20px);
   display: flex;
   flex-wrap: wrap;
-  gap: pxToRem(10px);
-  padding: pxToRem(10px);
-  background-color: $primary-lighter;
-  border-radius: $border-radius-8;
+  gap: variables.pxtorem(10px);
+  padding: variables.pxtorem(10px);
+  background-color: variables.$primary-lighter;
+  border-radius: variables.$border-radius-8;
 }
 </style>

@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { patchOrganization, postOrganizationImage } from '~/api/organizations.service'
+import { patchOrganization, postOrganizationImage } from 'shared-projects-frontend/apis'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
@@ -44,7 +44,9 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 import { NULL_CONTENT } from '~/functs/constants'
 
-const props = withDefaults(defineProps<{ isOpened?: boolean }>(), { isOpened: false })
+const props = withDefaults(defineProps<{ isOpened?: boolean }>(), {
+  isOpened: false,
+})
 
 const emit = defineEmits<{
   close: []
@@ -111,6 +113,8 @@ const close = () => emit('close')
 const handleImage = (img) => addedImages.value.push(img.id)
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .field-section {
   display: flex;
   flex-direction: column;
@@ -126,8 +130,8 @@ const handleImage = (img) => addedImages.value.push(img.id)
 }
 
 .field-label {
-  font-size: $font-size-s;
-  margin-top: $space-l;
-  margin-bottom: $space-m;
+  font-size: variables.$font-size-s;
+  margin-top: variables.$space-l;
+  margin-bottom: variables.$space-m;
 }
 </style>

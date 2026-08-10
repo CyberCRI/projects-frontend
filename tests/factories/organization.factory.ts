@@ -1,10 +1,10 @@
 import { createFactory } from 'faker-create-factory'
 
-import {
+import type {
   OrganizationModel,
   OrganizationOutput,
   OrganizationPatchInput,
-} from '~/models/organization.model'
+} from 'shared-projects-frontend/models'
 import OrganizationDirectoryFactory from './organization-directory.factory'
 import { ImageFactory } from './image.factory'
 import BaseFactory from './base.factory'
@@ -16,7 +16,7 @@ export const OrganizationFactory = createFactory<OrganizationModel>((faker) => (
   id: faker.datatype.number(),
   background_color: faker.datatype.string(),
   banner_image: ImageFactory.generate(),
-  code: faker.datatype.string(),
+  code: faker.lorem.slug(2).toUpperCase(),
   contact_email: faker.internet.email(),
   dashboard_title: faker.lorem.sentence(),
   dashboard_subtitle: faker.lorem.sentence(),

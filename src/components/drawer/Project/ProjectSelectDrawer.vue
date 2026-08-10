@@ -1,10 +1,9 @@
 <script setup lang="ts">
+import type { TranslatedProject, QueryFilterSearch } from 'shared-projects-frontend/models'
 import type { DrawerSearchProps } from '~/components/drawer/BaseDrawerSearch.vue'
 import BaseDrawerSearch from '~/components/drawer/BaseDrawerSearch.vue'
 import { searchProjectSkeleton } from '~/skeletons/search.skeletons'
-import type { TranslatedProject } from '~/models/project.model'
 import { factoryPagination } from '~/skeletons/base.skeletons'
-import type { QueryFilterSearch } from '~/models/search.model'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import { getSearchProjects } from '~/api/v2/search.service'
 
@@ -51,18 +50,6 @@ const {
   immediate: false,
 })
 
-// reset and refresh when opened
-watch(
-  () => props.isOpened,
-  () => {
-    if (props.isOpened) {
-      search.value = ''
-      refresh()
-    }
-  },
-  { immediate: true }
-)
-
 const results = computed(() => searchProjects.value.map((searchObj) => searchObj.project))
 </script>
 
@@ -76,6 +63,7 @@ const results = computed(() => searchProjects.value.map((searchObj) => searchObj
       :pagination="pagination"
       :results="results"
       :selected="selectedProjects"
+      @search="refresh"
       @close="emit('close')"
       @confirm="emit('submit', $event)"
     >

@@ -7,10 +7,10 @@ import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import { announcementSkeleton } from '@/skeletons/announcement.skeletons'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import { getProjectAnnouncements } from '@/api/v2/announcements.service'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
-import { deleteAnnouncement } from '~/api/announcements.service'
-import type { TranslatedProject } from '@/models/project.model'
+import { deleteAnnouncement } from 'shared-projects-frontend/apis'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { NuxtLink } from '#components'
@@ -75,7 +75,7 @@ const onApply = (announcement) => {
 }
 
 const cancel = () => {
-  asyncing.value = true
+  asyncing.value = false
   selectedAnnouncement.value = null
   closeAllModals()
 }
@@ -89,7 +89,7 @@ const onDeleteConfirm = () => {
       toaster.pushSuccess($t('toasts.announcement-delete.success'))
       refreshData()
     })
-    .catch(() => toaster.pushSuccess($t('toasts.announcement-delete.error')))
+    .catch(() => toaster.pushError($t('toasts.announcement-delete.error')))
     .finally(() => cancel())
 }
 </script>
@@ -153,6 +153,8 @@ const onDeleteConfirm = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .announcement-list {
   display: grid;
   grid-template-columns: 1fr;

@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { useProjectHierarchy } from '~/composables/project/useProjectHierarchy'
 import ProjectNavPanel from '~/components/project/Nav/ProjectNavPanel.vue'
+import type { ProjectSlugOrId } from 'shared-projects-frontend/models'
 import { useProjectTabs } from '~/composables/project/useProjectTabs'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
-import type { ProjectSlugOrId } from '@/models/project.model'
 import { getProject } from '@/api/v2/project.service'
 import useProjectsStore from '~/stores/useProjects'
 
@@ -12,8 +13,6 @@ const route = useRoute()
 const uniqueId = 'project-nav-panel'
 const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
   useToggleableNavPanel(uniqueId)
-
-const { canEditProject } = usePermissions()
 
 const projectIdOrSlug = computed<ProjectSlugOrId>(() => route.params.slugOrId.toString())
 
@@ -26,6 +25,8 @@ const {
 } = getProject(organizationCode, projectIdOrSlug, {
   default: projectSkeleton,
 })
+
+const { canEditProject } = usePermissionProject(computed(() => project.value?.id))
 
 const { tabs, currentTab, isEditing, toggleEditing } = useProjectTabs(projectIdOrSlug, project)
 
@@ -47,7 +48,8 @@ const propsTab = computed(() => ({
   project: project.value,
   // @ts-expect-error ignore props not defined
   ...(currentTab.value.props || {}),
-  loading: isLoading.value,
+  // only add loading when project is not set or is skeleton
+  loading: !project.value?.id && isLoading.value,
 }))
 
 // TODO rework this
@@ -108,7 +110,9 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .project-layout {
-  margin-top: pxToRem(48px);
+  margin-top: variables.pxtorem(48px);
 }
 </style>

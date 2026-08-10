@@ -11,20 +11,23 @@ import type {
   ProjectTabItemForm,
   TranslatedProjectTab,
   TranslatedProjectTabItem,
-} from '~/models/projects-tabs.model'
+  TranslatedProject,
+  ImageModel,
+} from 'shared-projects-frontend/models'
 import {
   createProjectTabItem,
   createProjectTabItemImage,
   updateProjectTabItem,
-} from '~/api/project-tabs.service'
+} from 'shared-projects-frontend/apis'
 import { defaultProjectTabItemForm, useProjectTabItemForm } from '~/form/project-tabs'
+import type { ProviderParams } from 'shared-projects-frontend/interfaces'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
-import type { TranslatedProject } from '~/models/project.model'
+import { roomKeyFromParams } from 'shared-projects-frontend/lib'
 import FormPanel from '~/components/base/FormPanel.vue'
-import type { ImageModel } from '~/models/image.model'
-import { getFirstTextNotEmpty } from '~/functs/string'
-import { isEqual, isNil } from 'es-toolkit'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
+import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
+import { isNil } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
@@ -41,6 +44,20 @@ const emit = defineEmits<{
   close: []
   reload: []
 }>()
+
+const providerParams = computed<ProviderParams>(() => ({
+  type: 'project-tab-item',
+  projectId: props.project.id,
+  organizationId: organizationsStore.current.id,
+  tabId: props.tab.id,
+  tabItemId: props.item?.id,
+}))
+
+const inOfflineMode = ref(false)
+
+const isCreated = computed(() => isNil(props.item?.id) || inOfflineMode.value)
+
+const room = computed(() => roomKeyFromParams(providerParams.value))
 
 const defaultLocalForm = () => {
   const baseForm = defaultProjectTabItemForm()
@@ -74,26 +91,15 @@ const { form, isValid, errors, cleanedData, reset } = useProjectTabItemForm({
   default: defaultLocalForm(),
 })
 watch(
-  () => [props.item, props.project],
+  () => [props.item, props.project, room.value],
   () => reset(defaultLocalForm()),
   { immediate: true, deep: true }
 )
-const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
+const isFormEqual = useBlockNavigation(() =>
+  formEqual(form.value, defaultLocalForm(), { html: ['content'] })
+)
 
 const asyncing = ref(false)
-
-const providerParams = computed(() => ({
-  itemId: props.item?.id ?? null,
-  tabId: props.tab.id,
-  projectId: props.project.id,
-  organizationId: organizationsStore.current.id,
-}))
-
-const inOfflineMode = ref(false)
-
-const isCreated = computed(() => isNil(props.item?.id) || inOfflineMode.value)
-
-const room = computed(() => (props.item?.id ? `blog_${props.item.id}` : null))
 
 const handleImage = (img: ImageModel) => {
   form.value.images_ids.push(img.id)
@@ -201,7 +207,7 @@ const checkClose = () => {
           @image="handleImage"
         />
         <TipTapCollaborativeEditor
-          v-else
+          v-else-if="room"
           ref="tiptapEditor"
           v-model="form.content"
           class="w-full"
@@ -243,16 +249,18 @@ const checkClose = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .blog-drawer {
   height: 100%;
 
   :deep(.drawer__main) {
-    gap: $space-unit;
+    gap: variables.$space-unit;
   }
 
   .content-editor {
     flex-grow: 1;
-    min-height: pxToRem(300px);
+    min-height: variables.pxtorem(300px);
   }
 }
 

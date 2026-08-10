@@ -49,7 +49,7 @@
   </template>
 </template>
 <script>
-import { getHierarchyGroups } from '~/api/groups.service.ts'
+import { getHierarchyGroups } from 'shared-projects-frontend/apis'
 
 import FilterSearchInput from '~/components/search/Filters/FilterSearchInput.vue'
 import FilterValue from '~/components/search/Filters/FilterValue.vue'
@@ -235,11 +235,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .selected-groups {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-m;
-  margin-bottom: $space-m;
+  gap: variables.$space-m;
+  margin-bottom: variables.$space-m;
 }
 
 .group-filter {

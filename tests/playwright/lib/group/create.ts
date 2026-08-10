@@ -1,5 +1,5 @@
 import { Logger, LogLevel } from '~~/tests/playwright/logger'
-import { Page } from '@playwright/test'
+import type { Page } from '@playwright/test'
 
 const logger = new Logger(LogLevel.Debug)
 

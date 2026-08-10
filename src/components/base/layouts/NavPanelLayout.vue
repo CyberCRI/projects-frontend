@@ -67,11 +67,13 @@ const { isMobile } = useViewportWidth()
     </div>
   </div>
 </template>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .nav-panel-backdrop {
   display: none;
 
-  @media (max-width: $min-tablet) {
+  @media (max-width: variables.$min-tablet) {
     display: block;
     position: fixed;
     top: 0;
@@ -84,7 +86,7 @@ const { isMobile } = useViewportWidth()
 }
 
 .nav-panel-layout {
-  margin-bottom: $space-l;
+  margin-bottom: variables.$space-l;
 }
 
 .breadcrumbs-ctn {
@@ -95,7 +97,7 @@ const { isMobile } = useViewportWidth()
   height: 2rem;
   padding-bottom: 1rem;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     .breadcrumbs {
       padding-left: 2.6rem;
     }
@@ -117,8 +119,8 @@ const { isMobile } = useViewportWidth()
   gap: 1.5rem;
   position: relative;
 
-  @media (max-width: $min-tablet) {
-    padding: 0 $space-xs;
+  @media (max-width: variables.$min-tablet) {
+    padding: 0 variables.$space-xs;
     gap: 0;
   }
 }
@@ -129,5 +131,7 @@ const { isMobile } = useViewportWidth()
 
 .content-panel {
   flex-basis: 100%;
+  overflow: hidden;
+  padding: 0 2px;
 }
 </style>

@@ -3,12 +3,13 @@ import useProjectCategories from '~/stores/useProjectCategories'
 
 import { onResize } from '~/composables/onResize'
 
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { resetScroll } from '~/composables/useScrollToTab'
 
 const { t } = useNuxtI18n()
 const route = useRoute()
-const { canCreateProject } = usePermissions()
+const { canCreateProject } = usePermissionProject(null)
 const projectCategoriesStore = useProjectCategories()
 const { searchFromQuery } = useSearch('projects')
 
@@ -55,7 +56,10 @@ const categoryHierarchy = computed(() => {
     })),
     {
       name: category.value?.$t?.name,
-      route: { name: 'Category', params: { slugOrId: category.value?.slug || category.value?.id } },
+      route: {
+        name: 'Category',
+        params: { slugOrId: category.value?.slug || category.value?.id },
+      },
     },
   ]
 })
@@ -135,7 +139,10 @@ watchEffect(() => {
         <NuxtLink
           v-for="child in sortedChildren"
           :key="child.id"
-          :to="{ name: 'Category', params: { slugOrId: child.slug || child.id } }"
+          :to="{
+            name: 'Category',
+            params: { slugOrId: child.slug || child.id },
+          }"
           class="category-child shadow-box"
         >
           <h3 class="child-title">
@@ -166,34 +173,36 @@ watchEffect(() => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .category-search-header {
-  color: $primary-dark;
-  font-size: $font-size-m;
+  color: variables.$primary-dark;
+  font-size: variables.$font-size-m;
   font-weight: 700;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: $space-l 0;
+  margin: variables.$space-l 0;
 
-  @media screen and (max-width: $max-tablet) {
-    margin: $space-l;
+  @media screen and (max-width: variables.$max-tablet) {
+    margin: variables.$space-l;
   }
 
   .search-by {
-    margin-right: $space-m;
+    margin-right: variables.$space-m;
   }
 
-  @media screen and (min-width: $max-tablet) {
+  @media screen and (min-width: variables.$max-tablet) {
     justify-content: flex-end;
   }
 
   :deep(.lpi-select) {
-    margin-left: $space-m;
+    margin-left: variables.$space-m;
   }
 
   &--search-input {
     justify-content: space-between;
-    padding: $space-l;
+    padding: variables.$space-l;
   }
 }
 
@@ -207,8 +216,8 @@ watchEffect(() => {
   }
 
   .breadcrumbs-ctn {
-    padding-left: $space-xl;
-    margin-top: $navbar-height;
+    padding-left: variables.$space-xl;
+    margin-top: variables.$navbar-height;
   }
 
   .banner {
@@ -223,7 +232,7 @@ watchEffect(() => {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 $space-l;
+      padding: 0 variables.$space-l;
     }
 
     &-title {
@@ -231,24 +240,24 @@ watchEffect(() => {
       flex-direction: column;
       align-items: center;
       width: 60%;
-      padding: $space-xl $space-l;
+      padding: variables.$space-xl variables.$space-l;
       background: rgb(255 255 255 / 75%);
-      border-radius: $border-radius-l;
+      border-radius: variables.$border-radius-l;
 
-      @media screen and (max-width: $max-tablet) {
+      @media screen and (max-width: variables.$max-tablet) {
         width: 100%;
       }
 
       .category-name {
         font-weight: 700;
-        font-size: $font-size-5xl;
-        line-height: $line-height-tight;
+        font-size: variables.$font-size-5xl;
+        line-height: variables.$line-height-tight;
         text-align: center;
-        margin-bottom: $space-m;
+        margin-bottom: variables.$space-m;
       }
 
       .category-description {
-        font-size: $font-size-m;
+        font-size: variables.$font-size-m;
         display: -webkit-box;
         -webkit-box-orient: vertical;
         overflow: hidden;
@@ -262,12 +271,12 @@ watchEffect(() => {
         display: flex;
         justify-content: stretch;
         align-items: center;
-        gap: $space-unit;
+        gap: variables.$space-unit;
         width: 100%;
-        margin-top: $space-l;
+        margin-top: variables.$space-l;
         flex-direction: row;
 
-        @media screen and (max-width: $min-tablet) {
+        @media screen and (max-width: variables.$min-tablet) {
           flex-direction: column;
         }
 
@@ -291,29 +300,29 @@ watchEffect(() => {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
-  padding: $space-2xl;
+  padding: variables.$space-2xl;
 
-  @media screen and (min-width: $min-tablet) {
+  @media screen and (min-width: variables.$min-tablet) {
     grid-template-columns: 1fr 1fr;
   }
 
-  @media screen and (min-width: $min-desktop) {
+  @media screen and (min-width: variables.$min-desktop) {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 
   .category-child {
     display: inline-flex;
-    gap: $space-m;
-    padding: $space-m;
+    gap: variables.$space-m;
+    padding: variables.$space-m;
     align-items: flex-start;
-    border: $border-width-s solid $primary;
-    border-radius: $border-radius-s;
-    background-color: $white;
+    border: variables.$border-width-s solid variables.$primary;
+    border-radius: variables.$border-radius-s;
+    background-color: variables.$white;
 
     .child-title {
       font-weight: 700;
-      color: $almost-black;
-      font-size: $font-size-l;
+      color: variables.$almost-black;
+      font-size: variables.$font-size-l;
       line-height: 1.4;
       flex-grow: 1;
     }

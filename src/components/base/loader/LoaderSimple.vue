@@ -14,7 +14,9 @@
   </svg>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader-simple {
   animation: rotation 1s infinite linear;
 

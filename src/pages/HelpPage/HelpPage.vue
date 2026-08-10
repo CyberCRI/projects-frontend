@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { textIsEmpty } from '~/functs/string'
+import { textIsEmpty } from '~/functs/tiptap'
 
 const { onboardingTrap } = useOnboardingStatus()
 const { t } = useNuxtI18n()
@@ -80,19 +80,21 @@ useLpiHead2({
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .intro-ctn {
-  margin-bottom: $space-xl;
-  background: $primary-lighter;
-  padding: $space-l;
-  border-radius: $border-radius-17;
+  margin-bottom: variables.$space-xl;
+  background: variables.$primary-lighter;
+  padding: variables.$space-l;
+  border-radius: variables.$border-radius-17;
 
   .action-list {
     list-style-type: disc;
     list-style-position: inside;
-    font-size: $font-size-l;
+    font-size: variables.$font-size-l;
 
     li {
-      padding: $space-m 0;
+      padding: variables.$space-m 0;
     }
   }
 }

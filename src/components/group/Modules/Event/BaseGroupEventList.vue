@@ -51,11 +51,14 @@
 </template>
 
 <script setup lang="ts">
-import type { QueryFilterEvent, TranslatedEventModel } from '~/models/event.model'
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import type {
+  QueryFilterEvent,
+  TranslatedEventModel,
+  TranslatedPeopleGroupModel,
+} from 'shared-projects-frontend/models'
 
+import { deleteEvent } from 'shared-projects-frontend/apis'
 import { getGroupEvent } from '~/api/v2/group.service'
-import { deleteEvent } from '~/api/event.service'
 
 import EditEventDrawer from '~/components/event/EditEventDrawer/EditEventDrawer.vue'
 import EventItem from '~/components/event/EventList/EventItem.vue'
@@ -159,6 +162,8 @@ const onConfirmDeleteEvent = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .filter-list {
   display: flex;
   justify-content: center;
@@ -168,7 +173,7 @@ const onConfirmDeleteEvent = () => {
 .events-wrapper {
   display: flex;
   flex-flow: column nowrap;
-  gap: $space-l;
-  padding: $space-m;
+  gap: variables.$space-l;
+  padding: variables.$space-m;
 }
 </style>

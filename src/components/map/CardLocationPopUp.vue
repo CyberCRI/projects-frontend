@@ -29,11 +29,10 @@
 </template>
 
 <script setup lang="ts">
+import type { AnyTranslatedLocation, ImageModel } from 'shared-projects-frontend/models'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import type { AnyTranslatedLocation } from '@/models/location.model'
 import LinkButton from '~/components/base/button/LinkButton.vue'
 import LocationPopUp from '@/components/map/LocationPopUp.vue'
-import type { ImageModel } from '~/models/image.model'
 import type { RouteLocationRaw } from 'vue-router'
 import { cropIfTooLong } from '@/functs/string'
 
@@ -56,6 +55,8 @@ const haveImage = computed(() => props.image || props.defaultPicture)
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .card-tooltip-button {
   justify-content: start;
 }
@@ -63,31 +64,31 @@ const haveImage = computed(() => props.image || props.defaultPicture)
 .card-tooltip-content {
   flex-basis: 100%;
   display: flex;
-  padding: 1.5rem $space-s;
+  padding: 1.5rem variables.$space-s;
   background-color: color-mix(in srgb, var(--location-color), transparent 90%);
 
   &-image,
   &-image img {
-    width: pxToRem(72px);
-    flex-basis: pxToRem(72px);
+    width: variables.pxtorem(72px);
+    flex-basis: variables.pxtorem(72px);
     flex-shrink: 0;
-    height: pxToRem(72px);
+    height: variables.pxtorem(72px);
     background-position: center center;
     background-size: cover;
-    border-radius: $border-radius-xs;
+    border-radius: variables.$border-radius-xs;
     object-fit: cover;
     object-position: 50% 50%;
-    margin-right: $space-m;
+    margin-right: variables.$space-m;
   }
 
   .card-title {
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
     font-weight: bolder;
   }
 
   .card-purpose {
-    font-size: $font-size-s;
-    margin: $space-s 0;
+    font-size: variables.$font-size-s;
+    margin: variables.$space-s 0;
   }
 }
 </style>

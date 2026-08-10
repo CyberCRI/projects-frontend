@@ -43,9 +43,9 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedEventModel } from '~/models/event.model'
+import type { TranslatedEventModel } from 'shared-projects-frontend/models'
 
-import { deleteEvent } from '~/api/event.service'
+import { deleteEvent } from 'shared-projects-frontend/apis'
 
 import EditEventDrawer from '~/components/event/EditEventDrawer/EditEventDrawer.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
@@ -110,7 +110,9 @@ const onDeleteEvent = async () => {
 }
 
 const getMonthFromDate = (yearMonth) => {
-  return new Date(yearMonth).toLocaleDateString(locale.value, { month: 'long' })
+  return new Date(yearMonth).toLocaleDateString(locale.value, {
+    month: 'long',
+  })
 }
 
 const onCancel = () => {
@@ -120,12 +122,14 @@ const onCancel = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .event-list {
   margin-bottom: 2rem;
 }
 
 .month-title {
-  margin: $space-m auto;
+  margin: variables.$space-m auto;
   text-transform: uppercase;
   color: var(--almost-black);
   text-align: center;
@@ -135,10 +139,10 @@ const onCancel = () => {
 .events-wrapper {
   display: flex;
   flex-flow: column nowrap;
-  gap: $space-l;
-  padding: $space-m;
-  border: $border-width-s solid var(--lighter-gray);
-  border-radius: $border-radius-m;
+  gap: variables.$space-l;
+  padding: variables.$space-m;
+  border: variables.$border-width-s solid var(--lighter-gray);
+  border-radius: variables.$border-radius-m;
   margin-top: 1rem;
 }
 </style>

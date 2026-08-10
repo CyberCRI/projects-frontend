@@ -1,5 +1,5 @@
+import type { ReviewForm } from 'shared-projects-frontend/models'
 import { helpers, required } from '@vuelidate/validators'
-import type { ReviewForm } from '~/models/review.model'
 import { NULL_CONTENT } from '~/functs/constants'
 import { requiredContent } from '~/form/base'
 
@@ -26,5 +26,9 @@ export const useProjectReviewForm = (options = {}) => {
     },
   }))
 
-  return useForm<ReviewForm>({ default: defaultProjectReviewForm(), rules, ...options })
+  return useForm<ReviewForm>({
+    default: defaultProjectReviewForm(),
+    rules,
+    ...options,
+  })
 }

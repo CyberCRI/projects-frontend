@@ -4,9 +4,9 @@ import addPurposeFactory from '~/composables/project-pdf-components/addPurposeFa
 import addSdgsFactory from '~/composables/project-pdf-components/addSdgsFactory'
 import addTagsFactory from '~/composables/project-pdf-components/addTagFactory'
 import ProjectHeader from '~/composables/project-pdf-components/ProjectHeader'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
-import type { TranslatedProject } from '~/models/project.model'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
 
 export default async function addPageOneFactory(project: TranslatedProject) {

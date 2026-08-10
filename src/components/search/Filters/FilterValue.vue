@@ -23,6 +23,8 @@ withDefaults(defineProps<{ label?: string; icon?: IconImageChoice; type?: string
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 $filter-value-icon-size: 16px;
 
 .filter-value {
@@ -31,17 +33,17 @@ $filter-value-icon-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: $border-width-s solid var(--primary-dark);
-  border-radius: $border-radius-l;
+  border: variables.$border-width-s solid var(--primary-dark);
+  border-radius: variables.$border-radius-l;
   overflow: hidden;
   box-sizing: border-box;
   min-width: 40px;
-  background: $white;
-  padding: $space-s $space-m;
+  background: variables.$white;
+  padding: variables.$space-s variables.$space-m;
 
   .filter-value-label {
     text-transform: uppercase;
-    font-size: $font-size-s;
+    font-size: variables.$font-size-s;
     font-weight: 700;
     color: var(--primary-dark);
     display: flex;
@@ -52,18 +54,18 @@ $filter-value-icon-size: 16px;
 
   .icon-ctn {
     flex-shrink: 0;
-    margin-left: $space-m;
+    margin-left: variables.$space-m;
     display: inline-block;
-    width: pxToRem($filter-value-icon-size);
-    height: pxToRem($filter-value-icon-size);
+    width: variables.pxtorem($filter-value-icon-size);
+    height: variables.pxtorem($filter-value-icon-size);
     background: var(--primary-dark);
     position: relative;
-    border: $border-width-m solid var(--primary-dark);
+    border: variables.$border-width-m solid var(--primary-dark);
     border-radius: 100%;
 
     svg {
-      width: pxToRem($filter-value-icon-size);
-      fill: $white;
+      width: variables.pxtorem($filter-value-icon-size);
+      fill: variables.$white;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -72,7 +74,7 @@ $filter-value-icon-size: 16px;
   }
 
   &.suggested {
-    border: $border-width-s solid $primary;
+    border: variables.$border-width-s solid variables.$primary;
 
     .filter-value-label {
       font-weight: 400;

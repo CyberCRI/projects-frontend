@@ -1,19 +1,21 @@
 <template>
-  <BaseModuleTab :title="$t(GroupModuleTitle[documentType])" :count="countElement">
+  <BaseModuleTab :title="$t(GROUP_MODULE_TITLE[documentType])" :count="countElement">
     <GroupResearcherDocumentsList :doc-type="documentType" :group="group" />
   </BaseModuleTab>
 </template>
 
 <script setup lang="ts">
+import type {
+  ResearcherDocumentType,
+  TranslatedPeopleGroupModel,
+} from 'shared-projects-frontend/models'
 import GroupResearcherDocumentsList from '~/components/people/Researcher/GroupResearcherDocumentsList.vue'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
-import type { DocumentType } from '@/interfaces/researcher'
 
-import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { GroupModuleTitle } from '@/models/invitation.model'
+import { GROUP_MODULE_TITLE } from '~/functs/constants'
 
 const props = defineProps<{
-  documentType: DocumentType
+  documentType: ResearcherDocumentType
   group: TranslatedPeopleGroupModel
 }>()
 

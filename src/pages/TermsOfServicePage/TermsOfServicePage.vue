@@ -28,12 +28,14 @@ useLpiHead2({
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .terms-version {
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-size: 0.9rem;
   text-align: right;
-  color: $mid-gray;
+  color: variables.$mid-gray;
 }
 </style>

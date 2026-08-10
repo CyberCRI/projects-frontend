@@ -1,9 +1,8 @@
 <script setup lang="ts" generic="T extends AttachmentFileModel | AttachmentLinkModel">
+import type { AttachmentLinkModel, AttachmentFileModel } from 'shared-projects-frontend/models'
 import { defaultAttachmentForm, useAttachmentForm } from '~/form/attachement'
-import type { AttachmentLinkModel } from '~/models/attachment-link.model'
-import type { AttachmentFileModel } from '~/models/attachment-file.model'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
-import { isEqual } from 'es-toolkit'
+import { formEqual } from '~/form/base'
 
 const props = withDefaults(
   defineProps<{
@@ -85,7 +84,7 @@ const isFormEqual = computed(() => {
   if (actualForm.id && props.formType === 'file') {
     actualForm.file = originalForm.file = null
   }
-  return isEqual(actualForm, originalForm)
+  return formEqual(actualForm, originalForm)
 })
 
 const onClose = () => {
@@ -171,6 +170,8 @@ const onClose = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .file-form {
   display: flex;
   justify-content: center;

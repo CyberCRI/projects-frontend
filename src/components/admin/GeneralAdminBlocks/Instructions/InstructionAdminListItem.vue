@@ -15,11 +15,13 @@
 </template>
 
 <script setup lang="ts">
-import type { InstructionModel } from '~/models/instruction.model'
+import type { InstructionModel } from 'shared-projects-frontend/models'
 
+import { usePermissionInstruction } from '~/composables/usePermissions/useInstructionPermissions'
 import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
 
-import { cropIfTooLong, html2Text } from '~/functs/string'
+import { cropIfTooLong } from '~/functs/string'
+import { html2Text } from '~/functs/tiptap'
 
 const props = defineProps<{
   instruction: InstructionModel
@@ -30,7 +32,9 @@ defineEmits<{
   'edit-instruction': [InstructionModel]
 }>()
 
-const { canEditInstruction, canDeleteInstruction } = usePermissions()
+const { canEditInstruction, canDeleteInstruction } = usePermissionInstruction(
+  computed(() => props.instruction.id)
+)
 
 const instructionText = computed(() => {
   return cropIfTooLong(html2Text(props.instruction.content), 255)
@@ -38,6 +42,8 @@ const instructionText = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .instruction-excerpt-wrapper {
   position: relative;
   padding-right: 1.4rem;

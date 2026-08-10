@@ -1,9 +1,11 @@
-import { getBlogEntries as fetchBlogEntries } from '@/api/blogentries.service'
+import type {
+  QueryFilterBlogEntry,
+  OrganizationModel,
+  ProjectSlugOrId,
+} from 'shared-projects-frontend/models'
+import { getBlogEntries as fetchBlogEntries } from 'shared-projects-frontend/apis'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import type { QueryFilterBlogEntry } from '@/models/blog-entry.model'
-import type { OrganizationModel } from '@/models/organization.model'
-import type { ProjectSlugOrId } from '@/models/project.model'
-import type { RefOrRaw } from '@/interfaces/utils'
+import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}

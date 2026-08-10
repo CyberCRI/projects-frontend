@@ -1,13 +1,16 @@
 <script setup lang="ts">
+import { patchProject, postProjectImage } from 'shared-projects-frontend/apis'
 import { defaultProjectForm, useProjectDescriptionForm } from '~/form/project'
 import { refreshProjectData } from '~/composables/project/refreshProject'
-import { patchProject, postProjectImage } from '~/api/projects.service'
+import type { ProviderParams } from 'shared-projects-frontend/interfaces'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
-import type { TranslatedProject } from '~/models/project.model'
+import { roomKeyFromParams } from 'shared-projects-frontend/lib'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import FormPanel from '~/components/base/FormPanel.vue'
-import { getFirstTextNotEmpty } from '~/functs/string'
-import { isEqual, pick } from 'es-toolkit'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
+import { formEqual } from '~/form/base'
+import { pick } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
@@ -30,15 +33,14 @@ const socketReady = ref(false)
 const router = useRouter()
 const organizationsStore = useOrganizationsStore()
 
-const editorRef = useTemplateRef('tiptapEditor')
-
-const room = computed(() => `description_${props.project.id}`)
-const providerParams = computed(() => {
+const providerParams = computed<ProviderParams>(() => {
   return {
-    projectId: props.project.id,
+    type: 'project-description',
+    projectId: props.project.slug,
     organizationId: organizationsStore.current.id,
   }
 })
+const room = computed(() => roomKeyFromParams(providerParams.value))
 
 const defaultLocalForm = () => {
   const defaultForm = pick(defaultProjectForm(), ['description'])
@@ -67,14 +69,9 @@ const { stateModals, openModals, closeModals, closeAllModals } = useModals({
   unauthorized: false,
 })
 
-const isFormEqual = useBlockNavigation(() => {
-  const numberEditor = inSoloMode.value
-    ? 1
-    : editorRef.value?.editor?.storage?.collaborationCursor?.users?.length || 0
-
-  // if form is same or your are in multiple user editor
-  return isEqual(form.value, defaultLocalForm()) || numberEditor !== 1
-})
+const isFormEqual = useBlockNavigation(() =>
+  formEqual(form.value, defaultLocalForm(), { html: ['description'] })
+)
 
 // callback
 
@@ -113,7 +110,7 @@ const onSubmit = () => {
         redirect()
       })
     })
-    .catch(() => toaster.pushSuccess(t('toasts.description-update.error')))
+    .catch(() => toaster.pushError(t('toasts.description-update.error')))
     .then(() => (asyncing.value = false))
 }
 
@@ -138,6 +135,7 @@ const checkSubmit = () => {
   <BaseModuleTab :title="project.$t.title">
     <FormPanel
       :confirm-action-disabled="!isValid || (!inSoloMode && !socketReady) || isFormEqual"
+      :asyncing="asyncing"
       @close="checkClose"
       @confirm="checkSubmit"
     >

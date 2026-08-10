@@ -62,41 +62,43 @@ const menuAction = (item) => {
 const setActive = (val) => (isActive.value = val)
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .list-item {
-  padding: $space-xs $space-l;
+  padding: variables.$space-xs variables.$space-l;
   text-align: start;
   font-weight: 700;
-  font-size: $font-size-m;
-  line-height: $line-height-tight;
+  font-size: variables.$font-size-m;
+  line-height: variables.$line-height-tight;
 }
 
 .user-badge {
-  margin-right: $space-s;
+  margin-right: variables.$space-s;
   font-weight: 700;
-  font-size: $font-size-xs;
+  font-size: variables.$font-size-xs;
 }
 
 .icon {
   height: 18px;
   width: 18px;
-  fill: $white;
-  margin-right: $space-xs;
+  fill: variables.$white;
+  margin-right: variables.$space-xs;
 
   &-active {
-    fill: $primary-dark;
+    fill: variables.$primary-dark;
   }
 }
 
 .link {
   display: inline-flex;
-  color: $white;
+  color: variables.$white;
   text-transform: uppercase;
   cursor: pointer;
   padding: 8px;
 
   &:visited {
-    color: $white;
+    color: variables.$white;
   }
 }
 </style>

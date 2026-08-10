@@ -11,7 +11,9 @@ export default async function getAgentData(id) {
       promptContent: {
         include: { prompt: true },
       },
-      skillContents: { include: { skillContent: { include: { skill: true } } } },
+      skillContents: {
+        include: { skillContent: { include: { skill: true } } },
+      },
       documents: true,
       mcps: true,
     },

@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import SdgsFilter from '~/components/search/Filters/SdgsFilter.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
-import { isEqual } from 'es-toolkit'
+import { formEqual } from '~/form/base'
 
 const props = withDefaults(
   defineProps<{
@@ -33,7 +33,9 @@ const props = withDefaults(
   }
 )
 
-const { stateModals, closeModals, openModals } = useModals({ saveChange: false })
+const { stateModals, closeModals, openModals } = useModals({
+  saveChange: false,
+})
 
 const model = defineModel<number[]>()
 const tmpModel = ref([...model.value])
@@ -54,7 +56,7 @@ const close = () => {
   closeModals('saveChange')
   emit('close')
 }
-const isFormEqual = computed(() => isEqual(model.value, tmpModel.value))
+const isFormEqual = computed(() => formEqual(model.value, tmpModel.value))
 
 const checkClose = () => {
   if (isFormEqual.value) {

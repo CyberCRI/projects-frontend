@@ -20,13 +20,13 @@
 </template>
 
 <script setup lang="ts">
-import { patchTemplate, postTemplateImage } from '~/api/templates.service'
+import { patchTemplate, postTemplateImage } from 'shared-projects-frontend/apis'
 
 import TemplateForm from '~/components/templates/TemplateForm.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import LayoutTab from '~/components/admin/LayoutTab.vue'
 
-import type { TemplateModel } from '~/models/template.model'
+import type { TemplateForm as TemplateFormType } from 'shared-projects-frontend/models'
 import { getTemplate } from '~/api/v2/templates.service'
 import FormPanel from '~/components/base/FormPanel.vue'
 import { omit } from 'es-toolkit'
@@ -45,7 +45,10 @@ const organizationCode = useOrganizationCode()
 const templateId = computed(() => parseInt(route.params.id.toString(), 10))
 const { data: template, status, refresh } = getTemplate(organizationCode, templateId)
 
-const templateRaw = computed<TemplateModel>(() => omit(template.value, ['$t']))
+const templateRaw = computed<TemplateFormType>(() => ({
+  ...omit(template.value, ['$t']),
+  project_categories_ids: [],
+}))
 
 const redirect = () => router.push({ name: 'templatesList' })
 

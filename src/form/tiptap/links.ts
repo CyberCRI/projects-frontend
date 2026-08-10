@@ -20,7 +20,6 @@ export const useTipTapLinkForm = (mode: Ref<'add' | 'edit'>, options = {}) => {
       text: '',
       href: '',
     },
-    lazy: true,
     ...options,
   })
 }

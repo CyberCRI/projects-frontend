@@ -1,14 +1,14 @@
 <template>
-  <BaseModuleTab :title="$t(GroupModuleTitle.locations, countElement)" :count="countElement">
+  <BaseModuleTab :title="$t(GROUP_MODULE_TITLE.locations, countElement)" :count="countElement">
     <GroupLocationBase :group="group" :editable="editable" />
   </BaseModuleTab>
 </template>
 
 <script setup lang="ts">
 import GroupLocationBase from '@/components/group/Modules/Locations/GroupLocationBase.vue'
-import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
-import { GroupModuleTitle } from '@/models/invitation.model'
+import { GROUP_MODULE_TITLE } from '~/functs/constants'
 
 const props = withDefaults(
   defineProps<{

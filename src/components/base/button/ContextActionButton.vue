@@ -36,6 +36,8 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .context-action-button {
   --context-action-button-size: 2rem;
 
@@ -43,7 +45,7 @@ withDefaults(
   justify-content: center;
   align-items: center;
   font-weight: 700;
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
   transition: 0.15s all ease-in-out;
   cursor: pointer;
   will-change: transform;
@@ -66,14 +68,14 @@ withDefaults(
   }
 
   .action-label {
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 
   .icon-wrapper {
     width: var(--context-action-button-size);
     height: var(--context-action-button-size);
-    background: $primary-dark;
-    color: $white;
+    background: variables.$primary-dark;
+    color: variables.$white;
     border-radius: 50%;
     position: relative;
   }
@@ -87,10 +89,10 @@ withDefaults(
   }
 
   &.secondary .icon-wrapper {
-    background: $white;
-    color: $primary-dark;
-    fill: $primary-dark;
-    border: $border-width-s solid $primary-dark;
+    background: variables.$white;
+    color: variables.$primary-dark;
+    fill: variables.$primary-dark;
+    border: variables.$border-width-s solid variables.$primary-dark;
   }
 
   &.no-border .icon-wrapper {
@@ -147,13 +149,13 @@ withDefaults(
 
 .context-action-button :deep(svg) {
   transition: 0.15s fill ease-in-out;
-  fill: $white;
+  fill: variables.$white;
   position: absolute;
   inset: 12%;
 }
 
 .context-action-button.secondary :deep(svg) {
-  fill: $primary-dark;
+  fill: variables.$primary-dark;
 }
 
 @keyframes open-eye {

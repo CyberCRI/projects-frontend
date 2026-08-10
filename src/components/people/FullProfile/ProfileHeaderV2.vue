@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedUserModel } from '~/models/user.model'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
 import IdentifierLink from '~/components/people/Researcher/IdentifierLink.vue'
 import SdgList from '~/components/sdgs/SdgList.vue'
@@ -108,6 +108,8 @@ const displayableGroups = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .profile-header {
   position: relative;
 
@@ -116,13 +118,13 @@ const displayableGroups = computed(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 0 0 pxToRem(240px);
-    width: pxToRem(240px);
-    margin: 0 auto $space-xl;
+    flex: 0 0 variables.pxtorem(240px);
+    width: variables.pxtorem(240px);
+    margin: 0 auto variables.$space-xl;
 
     .img-ctn {
-      width: pxToRem(240px);
-      height: pxToRem(240px);
+      width: variables.pxtorem(240px);
+      height: variables.pxtorem(240px);
       border-radius: 100%;
       overflow: hidden;
       flex-shrink: 0;
@@ -144,7 +146,7 @@ const displayableGroups = computed(() => {
       flex-basis: 100%;
       display: flex;
       flex-flow: column;
-      margin-bottom: $layout-size-5xl;
+      margin-bottom: variables.$layout-size-5xl;
 
       > *:last-child {
         margin-bottom: 0 !important;
@@ -158,40 +160,40 @@ const displayableGroups = computed(() => {
 
       .name {
         flex-grow: 1;
-        font-size: $font-size-5xl;
+        font-size: variables.$font-size-5xl;
         font-weight: 700;
-        margin-bottom: $space-l;
+        margin-bottom: variables.$space-l;
         text-transform: capitalize;
       }
 
       .pronouns {
-        font-size: $font-size-l;
+        font-size: variables.$font-size-l;
         font-weight: 400;
       }
 
       .job {
-        font-size: $font-size-l;
+        font-size: variables.$font-size-l;
         font-weight: 400;
-        margin-bottom: $space-l;
+        margin-bottom: variables.$space-l;
       }
 
       .short-description {
         font-weight: 400;
-        font-size: $font-size-m;
-        margin-bottom: $space-l;
+        font-size: variables.$font-size-m;
+        margin-bottom: variables.$space-l;
       }
 
       .short-bio {
-        font-size: $font-size-m;
-        margin-bottom: $space-l;
+        font-size: variables.$font-size-m;
+        margin-bottom: variables.$space-l;
         display: flex;
       }
 
       .group-ctn {
         display: flex;
-        gap: $space-m;
+        gap: variables.$space-m;
         flex-wrap: wrap;
-        margin-bottom: $space-l;
+        margin-bottom: variables.$space-l;
       }
 
       .group-anim {
@@ -212,12 +214,12 @@ const displayableGroups = computed(() => {
       .sdg-ctn {
         display: flex;
         flex-wrap: wrap;
-        gap: $space-s;
-        margin-top: $space-l;
+        gap: variables.$space-s;
+        margin-top: variables.$space-l;
 
         .sdg-img {
-          width: pxToRem(40px);
-          height: pxToRem(40px);
+          width: variables.pxtorem(40px);
+          height: variables.pxtorem(40px);
           transition: all 0.2s ease-in-out;
           transform: translateZ(0);
 
@@ -230,10 +232,10 @@ const displayableGroups = computed(() => {
   }
 }
 
-@media screen and (min-width: $max-tablet) {
+@media screen and (min-width: variables.$max-tablet) {
   .profile-header {
-    border: $border-width-s solid $primary;
-    border-radius: $border-radius-l;
+    border: variables.$border-width-s solid variables.$primary;
+    border-radius: variables.$border-radius-l;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -241,29 +243,29 @@ const displayableGroups = computed(() => {
     .profile-content {
       display: flex;
       align-items: center;
-      gap: $space-l;
+      gap: variables.$space-l;
     }
 
     .img-block {
-      padding: $space-xl 0 $space-xl $space-l;
+      padding: variables.$space-xl 0 variables.$space-xl variables.$space-l;
       margin: 0;
     }
 
     .user-info-ctn {
       flex-grow: 1;
-      padding: $space-xl 0;
+      padding: variables.$space-xl 0;
 
       .main {
         margin-bottom: 0;
       }
 
       .name {
-        margin-bottom: $space-s;
+        margin-bottom: variables.$space-s;
       }
 
       .short-bio {
-        font-size: $font-size-s;
-        margin-bottom: $space-m;
+        font-size: variables.$font-size-s;
+        margin-bottom: variables.$space-m;
       }
     }
   }

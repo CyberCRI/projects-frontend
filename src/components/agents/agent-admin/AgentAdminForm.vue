@@ -274,7 +274,10 @@ const submit = async () => {
     }))
 
   try {
-    const body = { ...form.value, startMessage: html2md(form.value.startMessage) }
+    const body = {
+      ...form.value,
+      startMessage: html2md(form.value.startMessage),
+    }
     if (isEdit.value) {
       await $fetch(`/api/agent/${props.agent.id}/`, {
         method: 'put' as any, // weird issue with ts here :/
@@ -409,7 +412,9 @@ const submit = async () => {
           :placeholder="$t('agents.prompt-version-placeholder')"
         />
       </div>
-      <h4 class="form-section-title">{{ $t('agents.start-message-section') }}</h4>
+      <h4 class="form-section-title">
+        {{ $t('agents.start-message-section') }}
+      </h4>
       <div class="form-section">
         <TipTapEditor
           v-model.trim="form.startMessage"
@@ -456,8 +461,10 @@ const submit = async () => {
   </BaseDrawer>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .error {
-  color: $salmon;
+  color: variables.$salmon;
 }
 
 .form-section ~ .form-section {
@@ -465,7 +472,7 @@ const submit = async () => {
 }
 
 .form-section-title {
-  color: $primary-dark;
+  color: variables.$primary-dark;
   font-size: 1.3em;
   padding-block: 1rem;
 }
@@ -498,7 +505,7 @@ const submit = async () => {
 
 .warn-notice {
   display: block;
-  border-left: 2px solid $salmon;
+  border-left: 2px solid variables.$salmon;
   padding-left: 1rem;
   margin-left: 0.5rem;
   margin-bottom: 1rem;

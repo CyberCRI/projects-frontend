@@ -9,17 +9,18 @@ import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
 
 vi.mock('~/api/auth/keycloakUtils')
-const keycloak = useKeycloak()
-
-vi.spyOn(keycloakUtils, 'getRefreshTokenInterval').mockReturnValue(10)
-
-vi.spyOn(keycloak, 'getCurrentUrl').mockImplementation(() => 'https://localhost:8080/dashboard')
-
 const localStorageSetItem = vi.spyOn(Storage.prototype, 'setItem')
 const localStorageGetItem = vi.spyOn(Storage.prototype, 'getItem')
 const localStorageRemoveItem = vi.spyOn(Storage.prototype, 'removeItem')
 
 describe.skip('Keycloak | codeVerifier', () => {
+  let keycloak
+  beforeEach(() => {
+    keycloak = useKeycloak()
+    vi.spyOn(keycloakUtils, 'getRefreshTokenInterval').mockReturnValue(10)
+    vi.spyOn(keycloak, 'getCurrentUrl').mockImplementation(() => 'https://localhost:8080/dashboard')
+  })
+
   afterEach(() => {
     localStorage.clear()
     localStorageSetItem.mockClear()
@@ -43,7 +44,11 @@ describe.skip('Keycloak | codeVerifier', () => {
 })
 
 describe.skip('Keycloak | appSecret', () => {
+  let keycloak
   afterEach(() => {
+    keycloak = useKeycloak()
+    vi.spyOn(keycloakUtils, 'getRefreshTokenInterval').mockReturnValue(10)
+    vi.spyOn(keycloak, 'getCurrentUrl').mockImplementation(() => 'https://localhost:8080/dashboard')
     localStorage.clear()
     localStorageSetItem.mockClear()
     localStorageGetItem.mockClear()
@@ -69,7 +74,11 @@ describe.skip('Keycloak | appSecret', () => {
 
 describe.skip('Keycloak | refreshTokenLoop', () => {
   let usersStore
+  let keycloak
   beforeEach(() => {
+    keycloak = useKeycloak()
+    vi.spyOn(keycloakUtils, 'getRefreshTokenInterval').mockReturnValue(10)
+    vi.spyOn(keycloak, 'getCurrentUrl').mockImplementation(() => 'https://localhost:8080/dashboard')
     usersStore = useUsersStore(pinia)
   })
   vi.spyOn(globalThis, 'setTimeout').mockImplementation(

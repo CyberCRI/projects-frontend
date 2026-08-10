@@ -26,7 +26,11 @@ export async function translateAgentFields(newAgent: Agent, oldAgent?: Agent | n
   const fieldsToTranslate: InputField[] = []
   // strict check against undefined cause an empty string is still something to save
   if (newAgent.title !== undefined && newAgent.title != oldAgent?.title)
-    fieldsToTranslate.push({ fieldName: 'title', type: 'text', content: newAgent.title })
+    fieldsToTranslate.push({
+      fieldName: 'title',
+      type: 'text',
+      content: newAgent.title,
+    })
   if (newAgent.description !== undefined && newAgent.description != oldAgent?.description)
     fieldsToTranslate.push({
       fieldName: 'description',
@@ -43,7 +47,7 @@ export async function translateAgentFields(newAgent: Agent, oldAgent?: Agent | n
   const translations = await translateFields(fieldsToTranslate)
 
   const output = await chatbotPrisma.$transaction(async (tx) => {
-    if (oldAgent.id)
+    if (oldAgent?.id)
       await tx.agentTranslation.deleteMany({
         where: {
           fieldName: { in: fieldsToTranslate.map((f) => f.fieldName) },

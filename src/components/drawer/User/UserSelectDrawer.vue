@@ -1,11 +1,10 @@
 <script setup lang="ts">
+import type { TranslatedUserModel, QueryFilterSearch } from 'shared-projects-frontend/models'
 import type { DrawerSearchProps } from '~/components/drawer/BaseDrawerSearch.vue'
 import CardInlineUser from '~/components/drawer/User/CardInlineUser.vue'
 import BaseDrawerSearch from '~/components/drawer/BaseDrawerSearch.vue'
 import { searchUserSkeleton } from '~/skeletons/search.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
-import type { QueryFilterSearch } from '~/models/search.model'
-import type { TranslatedUserModel } from '~/models/user.model'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import { getSearchUser } from '~/api/v2/search.service'
 
@@ -51,18 +50,6 @@ const {
   immediate: false,
 })
 
-// reset and refresh when opened
-watch(
-  () => props.isOpened,
-  () => {
-    if (props.isOpened) {
-      search.value = ''
-      refresh()
-    }
-  },
-  { immediate: true }
-)
-
 const results = computed(() => searchUsers.value.map((searchObj) => searchObj.user))
 </script>
 
@@ -76,6 +63,7 @@ const results = computed(() => searchUsers.value.map((searchObj) => searchObj.us
       :pagination="pagination"
       :results="results"
       :selected="selectedUsers"
+      @search="refresh"
       @close="emit('close')"
       @confirm="emit('submit', $event)"
     >

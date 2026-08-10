@@ -138,10 +138,10 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import type { PropsDefinitions } from '~/components/base/form/TextEditor/useTipTap'
 import TemplateFormSection from '~/components/templates/TemplateFormSection.vue'
 import { defaultTemplateForm, useTemplateForm } from '~/form/template'
-import type { TemplateForm } from '~/models/template.model'
+import type { TemplateForm } from 'shared-projects-frontend/models'
+import type { PropsDefinitions } from '~/composables/tiptap'
 import type { ErrorObject } from '@vuelidate/core'
 import { isEqual } from 'es-toolkit'
 
@@ -198,9 +198,11 @@ const haveError = (...errors: ErrorObject[][]): boolean => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .tag-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-s;
+  gap: variables.$space-s;
 }
 </style>

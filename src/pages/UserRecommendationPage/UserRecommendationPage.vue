@@ -45,6 +45,8 @@ useLpiHead2({
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .list-users {
   display: flex;
   gap: 0.5rem;

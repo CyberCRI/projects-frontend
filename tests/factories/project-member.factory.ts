@@ -1,13 +1,13 @@
 import { createFactory } from 'faker-create-factory'
 
-import {
+import type {
   ProjectMembersAddEntry,
   ProjectMembersAddInput,
   ProjectMemberModel,
   ProjectMembersDeleteInput,
   ProjectMemberPeopleGroupOutput,
   ProjectTeamModel,
-} from '~/models/project-member.model'
+} from 'shared-projects-frontend/models'
 import { UserFactory } from './user.factory'
 import BaseFactory from './base.factory'
 

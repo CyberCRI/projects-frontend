@@ -82,6 +82,8 @@ const videoSrc = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .video-container {
   display: flex;
   padding: 20px 0;
@@ -104,7 +106,7 @@ const videoSrc = computed(() => {
 
   .title {
     display: block;
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
     margin-bottom: 0;
     text-transform: uppercase;
   }

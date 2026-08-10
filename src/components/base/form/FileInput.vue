@@ -50,6 +50,8 @@ const labelRef = useTemplateRef('label')
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .file-input-ctn {
   width: fit-content;
   display: flex;
@@ -65,7 +67,7 @@ const labelRef = useTemplateRef('label')
   }
 
   .error-message {
-    color: $salmon;
+    color: variables.$salmon;
     font-weight: bold;
   }
 }

@@ -8,14 +8,15 @@
       :picture-ratio="1 / 1"
       :default-picture="DEFAULT_IMAGE_PATATOID"
       no-resize
+      disable-delete
       @update:picture="setLogo($event)"
     />
   </AdminBlock>
 </template>
 
 <script setup lang="ts">
+import { postOrganisationLogo } from 'shared-projects-frontend/apis'
 import { DEFAULT_IMAGE_PATATOID } from '@/composables/usePatatoids'
-import { postOrganisationLogo } from '@/api/organizations.service'
 
 import ImageEditor from '~/components/base/form/ImageEditor.vue'
 

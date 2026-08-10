@@ -9,7 +9,7 @@
         {{ news.title }}
       </h3>
       <ContextActionMenuInline
-        v-if="editable"
+        v-if="editable && (canDeleteNews || canEditNews)"
         class="news-item-editable"
         :can-delete="canDeleteNews"
         :can-edit="canEditNews"
@@ -34,7 +34,7 @@
         </h3>
 
         <ContextActionMenuInline
-          v-if="editable"
+          v-if="editable && canDeleteNews"
           class="news-item-editable"
           :can-delete="canDeleteNews"
           :can-edit="canEditNews"
@@ -54,7 +54,7 @@
   </component>
 </template>
 <script setup lang="ts">
-import type { TranslatedNews } from '~/models/news.model'
+import type { TranslatedNews } from 'shared-projects-frontend/models'
 
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
@@ -62,7 +62,8 @@ import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 
 import { DEFAULT_NEWS_PATATOID } from '~/composables/usePatatoids'
 
-import { html2Text } from '~/functs/string'
+import { usePermissionNews } from '~/composables/usePermissions/useNewsPermissions'
+import { html2Text } from '~/functs/tiptap'
 
 const props = withDefaults(
   defineProps<{ news: TranslatedNews; editable?: boolean; is?: string }>(),
@@ -79,27 +80,29 @@ const emit = defineEmits<{
 const isComponent = computed(() => props.is ?? resolveComponent('NuxtLink'))
 
 const { t } = useNuxtI18n()
-const { canEditNews, canDeleteNews } = usePermissions()
+const { canEditNews, canDeleteNews } = usePermissionNews(computed(() => props.news.id))
 const style = ref({})
 const textsStyle = ref({})
 
 const content = computed(() => html2Text(props.news.$t.content))
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .news-item {
   --news-dimension: 8rem;
   --picture-ratio: calc(4 / 3);
 
   display: flex;
   align-items: stretch;
-  gap: $space-l;
+  gap: variables.$space-l;
   overflow: hidden;
-  padding: $space-s;
-  border: $border-width-s solid $lighter-gray;
-  border-radius: $border-radius-s;
+  padding: variables.$space-s;
+  border: variables.$border-width-s solid variables.$lighter-gray;
+  border-radius: variables.$border-radius-s;
   flex-direction: column;
 
-  @media screen and (min-width: $min-tablet) {
+  @media screen and (min-width: variables.$min-tablet) {
     flex-direction: row;
     height: var(--news-dimension);
   }
@@ -110,7 +113,7 @@ const content = computed(() => html2Text(props.news.$t.content))
   aspect-ratio: calc(4 / 3);
   width: 100%;
 
-  @media screen and (min-width: $min-tablet) {
+  @media screen and (min-width: variables.$min-tablet) {
     flex-basis: calc(var(--news-dimension) * var(--picture-ratio, 1));
     width: auto;
   }
@@ -122,7 +125,7 @@ const content = computed(() => html2Text(props.news.$t.content))
   gap: 0.5rem;
   width: 100%;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     height: 12rem;
   }
 }
@@ -135,17 +138,17 @@ const content = computed(() => html2Text(props.news.$t.content))
 }
 
 .news-title {
-  font-size: $font-size-xl;
-  line-height: $line-height-tight;
+  font-size: variables.$font-size-xl;
+  line-height: variables.$line-height-tight;
 }
 
-@media screen and (min-width: $min-tablet) {
+@media screen and (min-width: variables.$min-tablet) {
   .mobile {
     display: none;
   }
 }
 
-@media screen and (max-width: $min-tablet) {
+@media screen and (max-width: variables.$min-tablet) {
   .desktop {
     display: none;
   }
@@ -165,6 +168,6 @@ const content = computed(() => html2Text(props.news.$t.content))
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: $border-radius-s;
+  border-radius: variables.$border-radius-s;
 }
 </style>

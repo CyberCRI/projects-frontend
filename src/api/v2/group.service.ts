@@ -1,5 +1,10 @@
-import type { OrganizationModel } from '~/models/organization.model'
-import type { PeopleGroupIdOrSlug } from '~/models/invitation.model'
+import type {
+  PeopleGroupIdOrSlug,
+  QueryFilterGroup,
+  QueryFilterGroupHierarchy,
+  OrganizationModel,
+  TranslatedGroupMember,
+} from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
@@ -14,18 +19,17 @@ import {
   getGroupEvent as fetchGroupEvent,
   getGroupGallery as fetchGroupGallery,
   getGroupNews as fetchGroupNews,
-} from '~/api/groups.service'
+} from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
 import useAsyncPaginationAPI from '~/composables/useAsyncPaginationAPI'
 import useAsyncAPI from '~/composables/useAsyncAPI'
 
-import type { TranslatedGroupMember } from '~/models/group.model'
 import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}
 
-type Config = UseAsyncApiConfig
+type Config = UseAsyncApiConfig<QueryFilterGroup>
 type ConfigPagination = UseAsyncPaginationApiConfig
 
 export const getGroup = (
@@ -39,7 +43,10 @@ export const getGroup = (
   return useAsyncAPI(
     key,
     ({ config }) =>
-      fetchGetGroup(unref(organizationCode), unref(groupId), { ...DEFAULT_CONFIG, ...config }),
+      fetchGetGroup(unref(organizationCode), unref(groupId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
     {
       translate: translateGroup,
       watch: onlyRefs([organizationCode, groupId]),
@@ -50,7 +57,7 @@ export const getGroup = (
 
 export const getHierarchyGroups = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  config: Config = {}
+  config: UseAsyncApiConfig<QueryFilterGroupHierarchy> = {}
 ) => {
   const { translateGroup } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::hierarchy-groups`)
@@ -58,7 +65,10 @@ export const getHierarchyGroups = (
   return useAsyncAPI(
     key,
     ({ config }) =>
-      fetchGetHierarchyGroups(unref(organizationCode), { ...DEFAULT_CONFIG, ...config }),
+      fetchGetHierarchyGroups(unref(organizationCode), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
     {
       translate: translateGroup,
       watch: onlyRefs([organizationCode]),

@@ -83,7 +83,10 @@ export default defineLazyEventHandler(() => {
     }))
 
     // chunking express
-    const splitter = new RecursiveCharacterTextSplitter({ chunkSize: 500, chunkOverlap: 100 })
+    const splitter = new RecursiveCharacterTextSplitter({
+      chunkSize: 500,
+      chunkOverlap: 100,
+    })
     const chunks = await splitter.splitDocuments(fileDocsWithMeta)
 
     await vectorStore.delete({

@@ -1,4 +1,4 @@
-import type { TemplateModel } from '~/models/template.model'
+import type { TemplateModel } from 'shared-projects-frontend/models'
 
 export const templateSkeleton = (def?: Partial<TemplateModel>): TemplateModel => ({
   id: -1,

@@ -63,14 +63,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import FilterSearchInput from '~/components/search/Filters/FilterSearchInput.vue'
 import SuggestedTags from '~/components/search/FilterTags/SuggestedTags.vue'
 import CurrentTags from '~/components/search/FilterTags/CurrentTags.vue'
 import TagResults from '~/components/search/FilterTags/TagResults.vue'
 import LpiSelect from '~/components/base/form/LpiSelect.vue'
 
-import useTagSearch from '~/composables/useTagSearch.ts'
+import type { SkillModel, TagModel } from 'shared-projects-frontend/models'
+import useTagSearch from '~/composables/useTagSearch'
+import type { PropType } from 'vue'
 
 export default {
   name: 'SkillsFilterEditor',
@@ -90,7 +92,7 @@ export default {
     },
     blockedSkills: {
       // unselctable skills (already selected ones)
-      type: Array,
+      type: Array as PropType<TagModel[] | SkillModel[]>,
       default: () => [],
     },
 
@@ -188,7 +190,6 @@ export default {
     onAddSkill(result) {
       this.addSkill(result)
       this.search = ''
-      this.confirmedSearch = ''
       this.focusInput()
     },
 
@@ -204,26 +205,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .section {
-  margin-bottom: $space-m;
+  margin-bottom: variables.$space-m;
 }
 
 .notice {
-  font-size: $font-size-s;
-  margin-bottom: $space-s;
+  font-size: variables.$font-size-s;
+  margin-bottom: variables.$space-s;
 }
 
 .notice-suggested {
-  margin-top: $space-m;
+  margin-top: variables.$space-m;
 }
 
 .current-skill {
-  margin-top: pxToRem(16px);
+  margin-top: variables.pxtorem(16px);
 }
 
 .search-input-ctn {
-  margin-bottom: $space-l;
-  margin-top: $space-l;
+  margin-bottom: variables.$space-l;
+  margin-top: variables.$space-l;
 }
 
 .input-ctn {

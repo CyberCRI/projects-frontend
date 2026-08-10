@@ -33,7 +33,7 @@ const confirm = () => {
 <template>
   <BaseDrawer
     :is-opened="isOpened"
-    :title="$t('icon.select')"
+    :title="$t('tab.form.icon.select')"
     class="medium"
     :confirm-action-disabled="tempModel === model"
     @close="emit('close')"
@@ -55,6 +55,8 @@ const confirm = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .icon-choices {
   display: inline-block;
   width: 4rem;

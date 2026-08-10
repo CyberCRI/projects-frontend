@@ -11,20 +11,22 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProject } from '@/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 
 defineProps<{
   project: TranslatedProject
 }>()
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .project-header-image-ctn {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: $border-radius-l;
+  border-radius: variables.$border-radius-l;
   overflow: hidden;
-  background-color: $white;
+  background-color: variables.$white;
   position: absolute;
   inset: 0;
 
@@ -34,7 +36,7 @@ defineProps<{
   }
 
   &.img-mobile-ctn .cropped-image {
-    border-radius: $border-radius-l;
+    border-radius: variables.$border-radius-l;
   }
 }
 </style>

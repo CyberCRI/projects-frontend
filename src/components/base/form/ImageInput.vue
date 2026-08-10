@@ -10,7 +10,6 @@
           @click.prevent="labelRef.click()"
         />
       </label>
-
       <input
         :id="uniqueId"
         ref="fileInput"
@@ -36,6 +35,7 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import type { ErrorObject } from '@vuelidate/core'
 
 import { useUniqueId } from '~/composables/useUniqueId'
+import { MAX_FILE_SIZE_MB } from '~/functs/constants'
 
 const props = withDefaults(
   defineProps<{
@@ -54,7 +54,7 @@ const props = withDefaults(
     unfocusable: false,
     label: null,
     isLink: false,
-    maxSizeMb: 2.25,
+    maxSizeMb: MAX_FILE_SIZE_MB,
     fileTypes: 'image/*',
     multiple: false,
     required: false,
@@ -112,6 +112,8 @@ const uploadImage = (event) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .image-input-ctn {
   width: fit-content;
   display: flex;
@@ -127,7 +129,7 @@ const uploadImage = (event) => {
   }
 
   .error-message {
-    color: $salmon;
+    color: variables.$salmon;
     font-weight: bold;
   }
 }
