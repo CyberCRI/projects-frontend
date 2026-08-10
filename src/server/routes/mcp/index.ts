@@ -1,25 +1,41 @@
+// import { getOAuthProtectedResourceMetadataUrl } from '@modelcontextprotocol/sdk/server/auth/router.js'
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
+// import { requireBearerAuth } from "@modelcontextprotocol/sdk/server/auth/middleware/bearerAuth.js";
+// import { requireBearerAuth } from '@modelcontextprotocol/server'
 import createMCPServer from '~/mcp-server'
 export default defineEventHandler(async (event) => {
   const { appMcpServerUrl } = useRuntimeConfig()
+  // const { appKeycloakUrl, appKeycloakRealm } = useRuntimeConfig().public
   const { req, res } = event.node
+
+  const MCP_URL = appMcpServerUrl.replace(/\/mcp\/?$/, '') // this server's canonical URI
+  // const RESOURCE = `${MCP_URL}/mcp` // RFC 8707 resource indicator
+  // const ISSUER = `${appKeycloakUrl.replace(/\/?$/, '')}/realms/${appKeycloakRealm}/`
 
   const { authed } = getQuery(event)
   const token = getRequestHeader(event, 'authorization') || ''
 
-  if (authed && !token) {
-    setResponseStatus(event, 401)
-    setHeader(
-      event,
-      'WWW-Authenticate',
-      `Bearer resource_metadata="${appMcpServerUrl}.well-known/oauth-protected-resource'"`
-    )
+  if (authed) {
+    traceMcp('Authenticated acces')
+    if (!token) {
+      traceMcp('No toke')
+      setResponseStatus(event, 401)
+      setHeader(
+        event,
+        'WWW-Authenticate',
+        `Bearer resource_metadata="${MCP_URL}/.well-known/oauth-protected-resource'"`
+      )
 
-    return {
-      statusCode: 401,
-      message: 'Unauthorized',
+      return {
+        statusCode: 401,
+        message: 'Unauthorized',
+      }
+    } else {
+      traceMcp('With token')
     }
+  } else {
+    traceMcp('Anonymous access')
   }
 
   //   const eventStream = createEventStream(event)
