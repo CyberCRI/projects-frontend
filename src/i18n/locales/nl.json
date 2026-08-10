@@ -3432,7 +3432,6 @@
     },
     "form": {
       "title": {
-        "label": "Titel",
         "required": "De titel is vereist."
       },
       "description": {

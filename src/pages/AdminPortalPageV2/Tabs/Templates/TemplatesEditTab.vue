@@ -54,6 +54,8 @@ const redirect = () => router.push({ name: 'templatesList' })
 
 const submit = () => {
   asyncing.value = true
+
+  console.log(cleanedData.value)
   patchTemplate(organizationCode, templateId.value, cleanedData.value)
     .then(() => {
       toaster.pushSuccess('toasts.template-update.success')

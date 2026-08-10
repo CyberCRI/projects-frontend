@@ -3,7 +3,9 @@ import { required } from '@vuelidate/validators'
 import useForm from '~/composables/useForm'
 
 import type { TemplateForm } from 'shared-projects-frontend/models'
+import { useProjectTabForm } from '~/form/project-tabs'
 import { NULL_CONTENT } from '~/functs/constants'
+import { subArrayForm } from '~/form/base'
 
 export const defaultTemplateForm = (): TemplateForm => ({
   name: '',
@@ -23,12 +25,17 @@ export const defaultTemplateForm = (): TemplateForm => ({
 
   comment_content: '',
   categories: [],
+
+  tabs: [],
 })
 
 export const useTemplateForm = (options = {}) => {
   const rules = computed(() => ({
     name: {
       required,
+    },
+    tabs: {
+      sub: subArrayForm(useProjectTabForm),
     },
   }))
 

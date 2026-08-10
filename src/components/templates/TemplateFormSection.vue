@@ -5,16 +5,18 @@ const props = withDefaults(
   defineProps<{
     title: string
     errors?: boolean
+    opened?: boolean
   }>(),
   {
     errors: false,
+    opened: false,
   }
 )
 
-const { stateModal, openModal, toggleModal } = useModal(false)
+const { stateModal, openModal, toggleModal } = useModal(props.opened)
 
 watchEffect(() => {
-  if (props.errors) {
+  if (props.errors || props.opened) {
     openModal()
   }
 })

@@ -3432,7 +3432,6 @@
     },
     "form": {
       "title": {
-        "label": "Pealkiri",
         "required": "Pealkiri on vajalik."
       },
       "description": {

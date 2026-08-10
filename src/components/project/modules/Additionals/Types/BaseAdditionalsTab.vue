@@ -107,12 +107,11 @@ const onConfirmDeleteTab = () => {
       />
     </BaseModuleHeader>
 
-    <HelpField class="description-info">
-      <ContentExpandable
-        v-if="!textIsEmpty(tab.$t.description) && !stateModals.editTab"
-        key="description"
-        :height-limit="300"
-      >
+    <HelpField
+      v-if="!textIsEmpty(tab.$t.description) && !stateModals.editTab"
+      class="description-info"
+    >
+      <ContentExpandable key="description" :height-limit="300">
         <TipTapOutput :content="tab.$t.description" />
       </ContentExpandable>
     </HelpField>

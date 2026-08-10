@@ -138,3 +138,34 @@ export const formEqual = <A, B, Keys extends keyof (A & B)>(
 
   return true
 }
+
+export const subForm = <Form extends () => any>(form: Form): ValidationRuleWithParams => {
+  const f = form()
+
+  return {
+    $validator: (value?: any) => {
+      f.reset(value)
+
+      return f.isValid.value
+    },
+    $message: () => {
+      const { t } = useNuxtI18n()
+
+      return t('common.invalid-form')
+    },
+    $params: {
+      form,
+    },
+  }
+}
+
+export const subArrayForm = <Form extends () => any>(form: Form): ValidationRuleWithParams => {
+  const sub = subForm(form)
+
+  const validator = sub.$validator
+  sub.$validator = (values: any[]) => {
+    return values.map(validator).every((res) => res === true)
+  }
+
+  return sub
+}

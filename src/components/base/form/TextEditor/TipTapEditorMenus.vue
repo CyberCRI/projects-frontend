@@ -39,7 +39,7 @@ const { stateModals, closeModals, openAndCloseAll } = useModals({
 
 <template>
   <EditorModalImage
-    v-if="stateModals.image"
+    v-if="stateModals.image && saveImageCallback"
     :editor="editor"
     :save-image-callback="saveImageCallback"
     @close="closeModals('image')"
@@ -63,6 +63,7 @@ const { stateModals, closeModals, openAndCloseAll } = useModals({
     :open-video-modal="() => openAndCloseAll('video')"
     :save-icon-visible="saveIconVisible"
     :disable-save="disableSave"
+    :disable-image="!saveImageCallback"
     @saved="$emit('saved')"
   />
 
@@ -71,7 +72,7 @@ const { stateModals, closeModals, openAndCloseAll } = useModals({
 
     <LinkMenuBar :editor="editor" class="editorlinkmenu" @open="openAndCloseAll('link')" />
 
-    <ImageMenuBar :editor="editor" />
+    <ImageMenuBar v-if="saveImageCallback" :editor="editor" />
 
     <VideoMenuBar :editor="editor" />
   </template>

@@ -9,6 +9,8 @@ export type OptionsForm<T, CleanResult> = {
   validateTimeout?: number
   onClean?: (data: T) => CleanResult
   model?: Ref<T>
+
+  $scope?: boolean
 }
 
 export type UseFormResult<T, CleanResult> = {
@@ -65,7 +67,7 @@ const useForm = <T extends object, CleanResult = T>(
   const _onClean = options.onClean ?? onClean
 
   const v$ = useValidate(options.rules ?? {}, form, {
-    $scope: false,
+    $scope: options.$scope ?? false,
   })
   const isValid = computed(() => !v$.value.$invalid)
 

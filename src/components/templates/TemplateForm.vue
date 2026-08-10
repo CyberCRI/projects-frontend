@@ -118,6 +118,19 @@
       </Field>
     </TemplateFormSection>
 
+    <template v-for="(tab, idx) in form.tabs || []">
+      <TemplateFormSection v-if="tab" :key="tab.id || tab.key" :opened="true" :title="tab.title">
+        <TabFormRaw :model-value="form.tabs[idx]" @update:model-value="updateTab(idx, $event)" />
+        <br />
+        <h2 class="title-template">
+          {{ $t('tab.form.template.title') }}
+        </h2>
+        <TabItemFormRaw v-model="form.tabs[idx].template" />
+      </TemplateFormSection>
+    </template>
+
+    <LpiButton btn-icon="Plus" :label="$t('tab.tab.add')" @click="addNewTab" />
+
     <!-- drawer / modal -->
     <BaseDrawer
       :confirm-action-name="$t('common.confirm')"
@@ -138,10 +151,13 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
+import { defaultProjectTabForm, defaultProjectTabItemForm } from '~/form/project-tabs'
+import type { ProjectTabForm, TemplateForm } from 'shared-projects-frontend/models'
 import TemplateFormSection from '~/components/templates/TemplateFormSection.vue'
 import { defaultTemplateForm, useTemplateForm } from '~/form/template'
-import type { TemplateForm } from 'shared-projects-frontend/models'
+import TabItemFormRaw from '~/components/tabs/TabItemFormRaw.vue'
 import type { PropsDefinitions } from '~/composables/tiptap'
+import TabFormRaw from '~/components/tabs/TabFormRaw.vue'
 import type { ErrorObject } from '@vuelidate/core'
 import { isEqual } from 'es-toolkit'
 
@@ -170,7 +186,7 @@ const localeDefaultForm = () => {
   }
 }
 const model = defineModel<TemplateForm>()
-const { form, errors, isValid, cleanedData, reset } = useTemplateForm()
+const { form, errors, isValid, cleanedData, reset } = useTemplateForm({ $scope: true })
 const isFormEqual = useBlockNavigation(() => isEqual(form.value, localeDefaultForm()))
 watch(
   () => props.template,
@@ -195,6 +211,23 @@ const confirmCategory = () => {
 const haveError = (...errors: ErrorObject[][]): boolean => {
   return errors.filter((err) => err.length !== 0).length !== 0
 }
+
+const addNewTab = () => {
+  const tab = defaultProjectTabForm()
+  tab.key = useUniqueId(20)
+  tab.template = defaultProjectTabItemForm()
+
+  form.value.tabs.push(tab)
+}
+
+const updateTab = (idx: number, tab: ProjectTabForm) => {
+  const orginalTab = form.value.tabs[idx]
+
+  form.value.tabs[idx] = {
+    key: orginalTab.key,
+    ...(tab || {}),
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -204,5 +237,9 @@ const haveError = (...errors: ErrorObject[][]): boolean => {
   display: flex;
   flex-wrap: wrap;
   gap: variables.$space-s;
+}
+
+.title-template {
+  font-size: 2rem;
 }
 </style>

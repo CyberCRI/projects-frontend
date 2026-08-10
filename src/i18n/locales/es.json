@@ -3432,7 +3432,6 @@
     },
     "form": {
       "title": {
-        "label": "Título",
         "required": "Se requiere el título."
       },
       "description": {

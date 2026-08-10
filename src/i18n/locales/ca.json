@@ -3432,7 +3432,6 @@
     },
     "form": {
       "title": {
-        "label": "Títol",
         "required": "Es requereix el títol."
       },
       "description": {
