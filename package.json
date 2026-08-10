@@ -152,7 +152,7 @@
     "nuxt": "3.21.8",
     "nuxt-svgo": "5.3.0",
     "openai": "5.23.2",
-    "pdf-parse": "^2.4.5",
+    "pdf-parse": "^1",
     "pg": "8.20.0",
     "pg-connection-string": "^2.13.0",
     "pg-format": "1.0.4",
@@ -214,6 +214,7 @@
     "vue-tsc": "^3.3.7"
   },
   "resolutions": {
+    "pdf-parse": "^1.1.1",
     "nuxt": "^3.0.0",
     "@tiptap/core": "2.26.3",
     "@tiptap/extension-blockquote": "2.26.3",
