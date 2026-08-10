@@ -152,6 +152,7 @@
     "nuxt": "3.21.8",
     "nuxt-svgo": "5.3.0",
     "openai": "5.23.2",
+    "pdf-parse": "^2.4.5",
     "pg": "8.20.0",
     "pg-connection-string": "^2.13.0",
     "pg-format": "1.0.4",
