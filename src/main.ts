@@ -27,8 +27,8 @@ export default async function main(): Promise<void> {
 
   // await initAnalytics()
   await analytics.init()
-  await initOrganization()
   if (import.meta.client) {
+    await initOrganization()
     await initUser()
     await initSentry(nuxtApp.vueApp)
   }
