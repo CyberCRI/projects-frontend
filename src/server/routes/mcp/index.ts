@@ -1,6 +1,7 @@
 // import { getOAuthProtectedResourceMetadataUrl } from '@modelcontextprotocol/sdk/server/auth/router.js'
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
+import { exchangeToken } from '@/server/utils/token-exchange'
 // import { requireBearerAuth } from "@modelcontextprotocol/sdk/server/auth/middleware/bearerAuth.js";
 // import { requireBearerAuth } from '@modelcontextprotocol/server'
 import createMCPServer from '~/mcp-server'
@@ -15,6 +16,7 @@ export default defineEventHandler(async (event) => {
 
   const { authed } = getQuery(event)
   const token = getRequestHeader(event, 'authorization') || ''
+  let downstreamAccessToken = null
 
   if (authed) {
     traceMcp('Authenticated acces')
@@ -32,7 +34,24 @@ export default defineEventHandler(async (event) => {
         message: 'Unauthorized',
       }
     } else {
-      traceMcp('With token')
+      traceMcp('With pkce token')
+
+      const auth = getRequestHeader(event, 'authorization') || ''
+      if (!auth?.startsWith('Bearer ')) {
+        return {
+          statusCode: 401,
+          message: 'missing_bearer_token',
+        }
+      }
+      const subjectToken = auth.slice('Bearer '.length)
+
+      try {
+        downstreamAccessToken = await exchangeToken(subjectToken) // {audience, scope} ?
+        console.log('token exchaged')
+      } catch (err) {
+        console.error('token exchange error:', err.message)
+        return { status: 502, message: 'token_exchange_failed' }
+      }
     }
   } else {
     traceMcp('Anonymous access')
@@ -71,6 +90,10 @@ export default defineEventHandler(async (event) => {
   //     console.log('MCP connection closed, closing transport')
   //     //       transport.close()
   //   })
+
+  if (downstreamAccessToken) {
+    req.headers['authorization'] = `Bearer ${downstreamAccessToken}`
+  }
 
   await mcpServer.connect(transport)
   await transport.handleRequest(req, res)
