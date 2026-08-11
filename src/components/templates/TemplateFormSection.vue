@@ -6,13 +6,18 @@ const props = withDefaults(
     title: string
     errors?: boolean
     opened?: boolean
+    canDelete?: boolean
   }>(),
   {
     errors: false,
     opened: false,
+    canDelete: false,
   }
 )
 
+defineEmits<{
+  delete: []
+}>()
 const { stateModal, openModal, toggleModal } = useModal(props.opened)
 
 watchEffect(() => {
@@ -34,6 +39,13 @@ watchEffect(() => {
       <h4 class="divider-title">
         {{ title }}
       </h4>
+      <LpiButton
+        v-if="canDelete"
+        secondary
+        class="no-border skeletons-background"
+        btn-icon="TrashCanOutline"
+        @click.prevent="$emit('delete')"
+      />
     </div>
 
     <ContentExpandable :opened="stateModal" :height-limit="0" :hide-see-more="true">
@@ -64,7 +76,7 @@ watchEffect(() => {
 
 .section-header {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   background-color: var(--primary-light);
   border-radius: 20px;

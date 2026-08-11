@@ -57,6 +57,14 @@ const defaultLocalForm = () => {
     ...baseForm,
   }
 
+  if (props.project.template) {
+    const templateTab = props.project.template.tabs.find((t) => t.uuid === props.tab.uuid)
+    if (templateTab) {
+      newForm.title = templateTab.title_item || newForm.title
+      newForm.content = getFirstTextNotEmpty([templateTab.content_item]) || newForm.content
+    }
+  }
+
   const item = props.item
   if (item) {
     newForm.id = item.id

@@ -18,9 +18,7 @@ withDefaults(
   }>(),
   {
     asyncing: false,
-    item: null,
     providerParams: null,
-    saveItemImage: null,
     saveImageCallback: null,
     room: null,
   }

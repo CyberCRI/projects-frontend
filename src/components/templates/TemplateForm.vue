@@ -119,13 +119,26 @@
     </TemplateFormSection>
 
     <template v-for="(tab, idx) in form.tabs || []">
-      <TemplateFormSection v-if="tab" :key="tab.id || tab.key" :opened="true" :title="tab.title">
+      <TemplateFormSection
+        v-if="tab"
+        :key="tab.id || tab.uuid"
+        can-delete
+        :opened="!tab.id"
+        :title="tab.title"
+        @delete="onDeleteTab(idx)"
+      >
         <TabFormRaw :model-value="form.tabs[idx]" @update:model-value="updateTab(idx, $event)" />
         <br />
         <h2 class="title-template">
           {{ $t('tab.form.template.title') }}
         </h2>
-        <TabItemFormRaw v-model="form.tabs[idx].template" />
+        <TabItemFormRaw
+          :model-value="{
+            title: form.tabs[idx].title_item,
+            content: form.tabs[idx].content_item,
+          }"
+          @update:model-value="onUpdateTemplate(idx, $event)"
+        />
       </TemplateFormSection>
     </template>
 
@@ -151,10 +164,13 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import { defaultProjectTabForm, defaultProjectTabItemForm } from '~/form/project-tabs'
-import type { ProjectTabForm, TemplateForm } from 'shared-projects-frontend/models'
+import type {
+  ProjectTabForm,
+  ProjectTabItemForm,
+  TemplateForm,
+} from 'shared-projects-frontend/models'
+import { defaultTemplateForm, defaultTemplateTabForm, useTemplateForm } from '~/form/template'
 import TemplateFormSection from '~/components/templates/TemplateFormSection.vue'
-import { defaultTemplateForm, useTemplateForm } from '~/form/template'
 import TabItemFormRaw from '~/components/tabs/TabItemFormRaw.vue'
 import type { PropsDefinitions } from '~/composables/tiptap'
 import TabFormRaw from '~/components/tabs/TabFormRaw.vue'
@@ -183,11 +199,18 @@ const localeDefaultForm = () => {
   return {
     ...defaultTemplateForm(),
     ...(props.template || {}),
+    tabs: [...(props?.template?.tabs || [])],
   }
 }
 const model = defineModel<TemplateForm>()
 const { form, errors, isValid, cleanedData, reset } = useTemplateForm({ $scope: true })
+
 const isFormEqual = useBlockNavigation(() => isEqual(form.value, localeDefaultForm()))
+
+watchEffect(() => {
+  console.log(isFormEqual.value, form.value.tabs, localeDefaultForm().tabs)
+})
+
 watch(
   () => props.template,
   () => reset(localeDefaultForm()),
@@ -213,20 +236,37 @@ const haveError = (...errors: ErrorObject[][]): boolean => {
 }
 
 const addNewTab = () => {
-  const tab = defaultProjectTabForm()
-  tab.key = useUniqueId(20)
-  tab.template = defaultProjectTabItemForm()
-
+  const tab = defaultTemplateTabForm()
   form.value.tabs.push(tab)
 }
 
 const updateTab = (idx: number, tab: ProjectTabForm) => {
   const orginalTab = form.value.tabs[idx]
 
-  form.value.tabs[idx] = {
-    key: orginalTab.key,
-    ...(tab || {}),
+  console.log('update tab', tab)
+
+  if (tab) {
+    form.value.tabs[idx] = {
+      uuid: orginalTab.uuid,
+      ...tab,
+    }
   }
+}
+
+const onUpdateTemplate = (idx: number, item: ProjectTabItemForm | null) => {
+  if (item) {
+    form.value.tabs[idx] = {
+      ...form.value.tabs[idx],
+      title_item: item.title,
+      content_item: item.content,
+    }
+  }
+}
+
+const onDeleteTab = (idx: number) => {
+  const tabs = [...form.value.tabs]
+  tabs.splice(idx, 1)
+  form.value.tabs = tabs
 }
 </script>
 

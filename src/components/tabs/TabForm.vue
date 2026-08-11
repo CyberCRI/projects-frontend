@@ -26,9 +26,21 @@ const emit = defineEmits<{
 const defaultLocalForm = () => {
   const newForm = defaultProjectTabForm()
 
+  if (props.project.template) {
+    const templateTab = props.project.template.tabs.find((t) => t.uuid === props.tab.uuid)
+    if (templateTab) {
+      newForm.title = templateTab.title || newForm.title
+      newForm.description = getFirstTextNotEmpty([templateTab.description]) || newForm.description
+      newForm.type = templateTab.type || newForm.type
+      newForm.icon = templateTab.icon || newForm.icon
+      newForm.show_preview = templateTab.show_preview || newForm.show_preview
+    }
+  }
+
   const tab = props.tab
   if (tab) {
     newForm.id = tab.id
+    newForm.uuid = tab.uuid
     newForm.title = tab.title || newForm.title
     newForm.description = getFirstTextNotEmpty([tab.description]) || newForm.description
     newForm.type = tab.type || newForm.type

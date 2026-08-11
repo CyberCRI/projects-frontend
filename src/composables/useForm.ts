@@ -69,6 +69,7 @@ const useForm = <T extends object, CleanResult = T>(
   const v$ = useValidate(options.rules ?? {}, form, {
     $scope: options.$scope ?? false,
   })
+
   const isValid = computed(() => !v$.value.$invalid)
 
   const lazy = isNil(options.lazy) ? true : options.lazy
@@ -98,11 +99,12 @@ const useForm = <T extends object, CleanResult = T>(
 
   watch(
     [form, isValid],
-    () => {
+    async () => {
+      const valid = await v$.value.$validate()
       const formContent = { ...toRaw(form.value) }
 
-      let cleanded = null
-      if (isValid.value) {
+      let cleanded = formContent as any
+      if (valid) {
         cleanded = _onClean(formContent)
       }
       if (options.model) {
