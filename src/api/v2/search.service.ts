@@ -31,7 +31,7 @@ export const getSearchAll = (
   search: RefOrRaw<string>,
   config: ConfigPagination = {}
 ) => {
-  const key = computed(() => `${unref(organization)}::search::all`)
+  const key = computed(() => `${unref(organization)}::search::all::${unref(search)}`)
   const { translateUser, translateGroup, translateProject } = useAutoTranslate()
 
   const translatedSearch = (datas: SearchResultAll[]) => {
@@ -87,7 +87,7 @@ export const getSearchProjects = (
   search: RefOrRaw<string>,
   config: ConfigPagination = {}
 ) => {
-  const key = computed(() => `${unref(organization)}::search::projects`)
+  const key = computed(() => `${unref(organization)}::search::projects::${unref(search)}`)
   const { translateProject } = useAutoTranslate()
 
   const translatedSearch = (datas: SearchResultProject[]) => {
@@ -133,7 +133,7 @@ export const getSearchUser = (
   search: RefOrRaw<string>,
   config: ConfigPagination = {}
 ) => {
-  const key = computed(() => `${unref(organization)}::search::user`)
+  const key = computed(() => `${unref(organization)}::search::user::${unref(search)}`)
   const { translateUser } = useAutoTranslate()
 
   const translatedSearch = (datas: SearchResultUser[]) => {
@@ -179,7 +179,7 @@ export const getSearchGroup = (
   search: RefOrRaw<string>,
   config: ConfigPagination = {}
 ) => {
-  const key = computed(() => `${unref(organization)}::search::group`)
+  const key = computed(() => `${unref(organization)}::search::group::${unref(search)}`)
   const { translateGroup } = useAutoTranslate()
 
   const translatedSearch = (datas: SearchResultGroup[]) => {
@@ -225,7 +225,7 @@ export const getSearchTag = (
   classificationType: RefOrRaw<'enabled-for-projects' | 'enabled-for-skills'>,
   config: ConfigPagination = {}
 ) => {
-  const key = computed(() => `${unref(organization)}::search::project::tags`)
+  const key = computed(() => `${unref(organization)}::search::project::tags::${unref(search)}`)
   const { translateTags } = useAutoTranslate()
 
   return useAsyncPaginationAPI(
