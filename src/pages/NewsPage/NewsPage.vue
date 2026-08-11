@@ -6,7 +6,7 @@
           <div class="news-img-ctn">
             <CroppedApiImage
               :alt="`${news.title} image`"
-              class="picture"
+              class="picture skeletons-background"
               :ratio="4 / 3"
               :picture-data="news.header_image"
               picture-size="medium"
@@ -14,11 +14,11 @@
             />
           </div>
           <div class="header-texts">
-            <BreadCrumbs :breadcrumbs="breadcrumbs" />
-            <h1 class="page-title">
+            <BreadCrumbs :breadcrumbs="breadcrumbs" class="skeletons-background" />
+            <h1 class="page-title skeletons-text">
               {{ news.$t.title }}
             </h1>
-            <p>
+            <p class="skeletons-text">
               {{ publicationDate }}
             </p>
           </div>
@@ -39,9 +39,13 @@
         </div>
       </div>
 
-      <TipTapOutput class="description-content" :content="news.$t.content" />
+      <TipTapOutput class="description-content skeletons-text" :content="news.$t.content" />
 
-      <GeneralMap v-if="news.location" class="map" :locations="[news.location]" />
+      <GeneralMap
+        v-if="news.location"
+        class="map skeletons-background"
+        :locations="[news.location]"
+      />
     </div>
 
     <EditNewsDrawer
