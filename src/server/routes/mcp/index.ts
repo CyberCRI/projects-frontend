@@ -9,13 +9,13 @@ export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig()
   const { appMcpServerUrl } = runtimeConfig
 
-  const { client_id, client_secret } = runtimeConfig.public
+  const { appKeycloakClientId, appKeycloakClientSecret } = runtimeConfig.public
   const { appKeycloakUrl, appKeycloakRealm } = useRuntimeConfig().public
 
   const keycloakClientConf = {
     TOKEN_ENDPOINT: `${appKeycloakUrl}/realms/${appKeycloakRealm}/protocol/openid-connect/token`,
-    CLIENT_ID: client_id as string,
-    CLIENT_SECRET: client_secret as string,
+    CLIENT_ID: appKeycloakClientId as string,
+    CLIENT_SECRET: appKeycloakClientSecret as string,
   }
 
   const { req, res } = event.node

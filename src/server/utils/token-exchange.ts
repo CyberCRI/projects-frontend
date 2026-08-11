@@ -57,7 +57,7 @@ export async function exchangeToken(
     throw new Error(`token-exchange failed (${res.status}): ${await res.text()} - CONF:
 TOKEN_ENDPOINT: '${TOKEN_ENDPOINT}'
 CLIENT_ID: '${CLIENT_ID}'
-CLIENT_SECRET: '${CLIENT_SECRET.substring(0, 4)}...'
+CLIENT_SECRET: '${(CLIENT_SECRET || '').substring(0, 4)}...'
 `)
   }
 
