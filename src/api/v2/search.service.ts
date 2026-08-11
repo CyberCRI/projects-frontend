@@ -225,7 +225,7 @@ export const getSearchTag = (
   classificationType: RefOrRaw<'enabled-for-projects' | 'enabled-for-skills'>,
   config: ConfigPagination = {}
 ) => {
-  const key = computed(() => `${unref(organization)}::search::project::tags::${unref(search)}`)
+  const key = computed(() => `${unref(organization)}::search::project::tags`)
   const { translateTags } = useAutoTranslate()
 
   return useAsyncPaginationAPI(
