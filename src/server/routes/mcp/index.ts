@@ -6,8 +6,18 @@ import { exchangeToken } from '@/server/utils/token-exchange'
 // import { requireBearerAuth } from '@modelcontextprotocol/server'
 import createMCPServer from '~/mcp-server'
 export default defineEventHandler(async (event) => {
-  const { appMcpServerUrl } = useRuntimeConfig()
-  // const { appKeycloakUrl, appKeycloakRealm } = useRuntimeConfig().public
+  const runtimeConfig = useRuntimeConfig()
+  const { appMcpServerUrl } = runtimeConfig
+
+  const { client_id, client_secret } = runtimeConfig.public
+  const { appKeycloakUrl, appKeycloakRealm } = useRuntimeConfig().public
+
+  const keycloakClientConf = {
+    TOKEN_ENDPOINT: `${appKeycloakUrl}/realms/${appKeycloakRealm}/protocol/openid-connect/token`,
+    CLIENT_ID: client_id as string,
+    CLIENT_SECRET: client_secret as string,
+  }
+
   const { req, res } = event.node
 
   const MCP_URL = appMcpServerUrl.replace(/\/mcp\/?$/, '') // this server's canonical URI
@@ -46,7 +56,7 @@ export default defineEventHandler(async (event) => {
       const subjectToken = auth.slice('Bearer '.length)
 
       try {
-        downstreamAccessToken = await exchangeToken(subjectToken) // {audience, scope} ?
+        downstreamAccessToken = await exchangeToken(keycloakClientConf, subjectToken) // {audience, scope} ?
         console.log('token exchaged')
       } catch (err) {
         console.error('token exchange error:', err.message)

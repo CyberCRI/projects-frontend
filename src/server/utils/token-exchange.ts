@@ -1,8 +1,3 @@
-// tokenExchange.js
-const TOKEN_ENDPOINT = `${process.env.KEYCLOAK_BASE_URL}/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/token`
-const CLIENT_ID = process.env.MCP_SERVER_CLIENT_ID // "mcp-server"
-const CLIENT_SECRET = process.env.MCP_SERVER_CLIENT_SECRET
-
 interface ExchangeTokenOptions {
   audience?: string
   scope?: string
@@ -21,9 +16,16 @@ interface TokenExchangeResponse {
   issued_token_type?: string
 }
 
+interface KeycloakCLientConfig {
+  TOKEN_ENDPOINT: string
+  CLIENT_ID: string
+  CLIENT_SECRET: string
+}
+
 const cache = new Map<string, CachedToken>()
 
 export async function exchangeToken(
+  { TOKEN_ENDPOINT, CLIENT_ID, CLIENT_SECRET }: KeycloakCLientConfig,
   subjectToken: string,
   { audience, scope }: ExchangeTokenOptions = {}
 ): Promise<string> {
