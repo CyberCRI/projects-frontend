@@ -1,16 +1,10 @@
 import { required } from '@vuelidate/validators'
-import { v4 as uuidv4 } from 'uuid'
 
 import useForm from '~/composables/useForm'
 
-import {
-  defaultProjectTabForm,
-  defaultProjectTabItemForm,
-  useProjectTabForm,
-} from '~/form/project-tabs'
-import type { TemplateForm } from 'shared-projects-frontend/models'
+import { defaultProjectTabForm, defaultProjectTabItemForm } from '~/form/project-tabs'
+import type { TemplateForm, TemplateTabForm } from 'shared-projects-frontend/models'
 import { NULL_CONTENT } from '~/functs/constants'
-import { subArrayForm } from '~/form/base'
 
 export const defaultTemplateForm = (): TemplateForm => ({
   name: '',
@@ -34,12 +28,10 @@ export const defaultTemplateForm = (): TemplateForm => ({
   tabs: [],
 })
 
-type TemplateTabForm = {}
 export const defaultTemplateTabForm = (): TemplateTabForm => {
   const item = defaultProjectTabItemForm()
   return {
     ...defaultProjectTabForm(),
-    uuid: uuidv4(),
     title_item: item.title,
     content_item: item.content,
   }

@@ -165,9 +165,9 @@ import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import type {
-  ProjectTabForm,
   ProjectTabItemForm,
   TemplateForm,
+  TemplateTabForm,
 } from 'shared-projects-frontend/models'
 import { defaultTemplateForm, defaultTemplateTabForm, useTemplateForm } from '~/form/template'
 import TemplateFormSection from '~/components/templates/TemplateFormSection.vue'
@@ -207,10 +207,6 @@ const { form, errors, isValid, cleanedData, reset } = useTemplateForm({ $scope: 
 
 const isFormEqual = useBlockNavigation(() => isEqual(form.value, localeDefaultForm()))
 
-watchEffect(() => {
-  console.log(isFormEqual.value, form.value.tabs, localeDefaultForm().tabs)
-})
-
 watch(
   () => props.template,
   () => reset(localeDefaultForm()),
@@ -240,7 +236,7 @@ const addNewTab = () => {
   form.value.tabs.push(tab)
 }
 
-const updateTab = (idx: number, tab: ProjectTabForm) => {
+const updateTab = (idx: number, tab: TemplateTabForm) => {
   const orginalTab = form.value.tabs[idx]
 
   console.log('update tab', tab)

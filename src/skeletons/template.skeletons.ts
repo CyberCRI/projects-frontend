@@ -19,5 +19,6 @@ export const templateSkeleton = (def?: Partial<TemplateModel>): TemplateModel =>
   review_title: 'review_title',
   review_description: 'review_description',
   comment_content: 'comment_content',
+  tabs: [],
   ...(def || {}),
 })

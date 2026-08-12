@@ -129,7 +129,6 @@ const useForm = <T extends object, CleanResult = T>(
    * @returns {void}
    */
   const reset = (newData?: T) => {
-    console.log('reset', newData)
     form.value = newData ?? ({} as T)
     v$.value.$reset()
   }

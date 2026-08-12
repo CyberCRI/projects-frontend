@@ -8,6 +8,7 @@ import type {
 
 export const ProjectTabFactory = createFactory<ProjectTab>((faker) => ({
   id: faker.datatype.number(),
+  uuid: faker.string.uuid(),
   description: faker.lorem.text(),
   title: faker.lorem.text(),
   type: 'blog',
