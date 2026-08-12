@@ -24,47 +24,58 @@ export default defineEventHandler(async (event) => {
   // const RESOURCE = `${MCP_URL}/mcp` // RFC 8707 resource indicator
   // const ISSUER = `${appKeycloakUrl.replace(/\/?$/, '')}/realms/${appKeycloakRealm}/`
 
-  const { authed } = getQuery(event)
+  const { authed, internal } = getQuery(event)
   const token = getRequestHeader(event, 'authorization') || ''
   let downstreamAccessToken = null
 
-  if (authed) {
-    traceMcp('Authenticated acces')
-    if (!token) {
-      traceMcp('No toke')
-      setResponseStatus(event, 401)
-      setHeader(
-        event,
-        'WWW-Authenticate',
-        `Bearer resource_metadata="${MCP_URL}/.well-known/oauth-protected-resource'"`
-      )
-
-      return {
-        statusCode: 401,
-        message: 'Unauthorized',
-      }
+  if (internal) {
+    traceMcp('Internal access...')
+    if (token) {
+      traceMcp('...With auth token')
     } else {
-      traceMcp('With pkce token')
-
-      const auth = getRequestHeader(event, 'authorization') || ''
-      if (!auth?.startsWith('Bearer ')) {
-        return {
-          statusCode: 401,
-          message: 'missing_bearer_token',
-        }
-      }
-      const subjectToken = auth.slice('Bearer '.length)
-
-      try {
-        downstreamAccessToken = await exchangeToken(keycloakClientConf, subjectToken) // {audience, scope} ?
-        console.log('token exchaged')
-      } catch (err) {
-        console.error('token exchange error:', err.message)
-        return { status: 502, message: 'token_exchange_failed' }
-      }
+      traceMcp('...Anonymous')
     }
   } else {
-    traceMcp('Anonymous access')
+    traceMcp('External access')
+    if (authed) {
+      traceMcp('Authenticated acces...')
+      if (!token) {
+        traceMcp('...No token')
+        setResponseStatus(event, 401)
+        setHeader(
+          event,
+          'WWW-Authenticate',
+          `Bearer resource_metadata="${MCP_URL}/.well-known/oauth-protected-resource'"`
+        )
+
+        return {
+          statusCode: 401,
+          message: 'Unauthorized',
+        }
+      } else {
+        traceMcp('...With pkce token...')
+
+        const auth = getRequestHeader(event, 'authorization') || ''
+        if (!auth?.startsWith('Bearer ')) {
+          return {
+            statusCode: 401,
+            message: 'missing_bearer_token',
+          }
+        }
+        const subjectToken = auth.slice('Bearer '.length)
+
+        try {
+          downstreamAccessToken = await exchangeToken(keycloakClientConf, subjectToken) // {audience, scope} ?
+          traceMcp('...token exchaged')
+        } catch (err) {
+          traceMcp('...token exchage failed')
+          console.error('token exchange error:', err.message)
+          return { status: 502, message: 'token_exchange_failed' }
+        }
+      }
+    } else {
+      traceMcp('...Anonymous access')
+    }
   }
 
   //   const eventStream = createEventStream(event)
