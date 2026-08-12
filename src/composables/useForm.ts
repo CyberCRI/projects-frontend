@@ -9,6 +9,7 @@ export type OptionsForm<T, CleanResult> = {
   validateTimeout?: number
   onClean?: (data: T) => CleanResult
   model?: Ref<T>
+  modelImpact?: boolean
 
   $scope?: boolean
 }
@@ -107,7 +108,8 @@ const useForm = <T extends object, CleanResult = T>(
       if (valid) {
         cleanded = _onClean(formContent)
       }
-      if (options.model) {
+
+      if (options.model && options.modelImpact) {
         options.model.value = cleanded
       }
       cleanedData.value = cleanded
@@ -127,8 +129,20 @@ const useForm = <T extends object, CleanResult = T>(
    * @returns {void}
    */
   const reset = (newData?: T) => {
+    console.log('reset', newData)
     form.value = newData ?? ({} as T)
     v$.value.$reset()
+  }
+
+  // if model is defined in userForm, reset value when model chnage
+  if (options.model && !options.modelImpact) {
+    watch(
+      options.model,
+      () => {
+        reset(options.model.value)
+      },
+      { deep: true, immediate: true }
+    )
   }
 
   return {

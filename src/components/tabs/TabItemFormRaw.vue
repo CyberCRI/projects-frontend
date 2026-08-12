@@ -31,10 +31,14 @@ defineEmits<{
 
 const inOfflineMode = ref(false)
 
-const model = defineModel<ProjectTabItemForm>({ default: defaultProjectTabItemForm })
+const model = defineModel<ProjectTabItemForm>()
 const isCreated = computed(() => isNil(model.value?.id) || inOfflineMode.value)
 
-const { form, errors } = useProjectTabItemForm({ model })
+const { form, errors } = useProjectTabItemForm({
+  model,
+  default: defaultProjectTabItemForm(),
+  modelImpact: false,
+})
 
 const handleImage = (img: ImageModel) => {
   form.value.images_ids.push(img.id)

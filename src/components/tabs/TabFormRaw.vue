@@ -9,6 +9,7 @@ import TextInput from '~/components/base/form/TextInput.vue'
 import HelpField from '~/components/base/form/HelpField.vue'
 import type { IconTabImageChoice } from '~/functs/IconImage'
 import { DEFAULT_ICONS_TABS } from '~/functs/constants'
+import { safeProjectIconTab } from '~/functs/projects'
 import { ICONS_TABS } from '~/functs/IconImage'
 
 const model = defineModel<ProjectTabForm>({ default: defaultProjectTabForm })
@@ -43,6 +44,10 @@ const selectedTypeDescription = computed(
 const onChangeType = (type: ProjectTabForm['type']) => {
   form.value.icon = DEFAULT_ICONS_TABS[type]
 }
+
+onBeforeMount(() => {
+  form.value.icon = safeProjectIconTab(form.value.icon, form.value.type)
+})
 
 const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
   a.toLowerCase().localeCompare(b)
