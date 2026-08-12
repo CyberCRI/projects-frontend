@@ -59,6 +59,8 @@ const onClean = (d) => d
 const useForm = <T extends object, CleanResult = T>(
   options: OptionsForm<T, CleanResult> = { onClean }
 ): UseFormResult<T, CleanResult> => {
+  options.modelImpact ??= true
+
   const def = {
     ...options.default,
     ...unref(options.model?.value ?? {}),
