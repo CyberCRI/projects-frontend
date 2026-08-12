@@ -302,24 +302,6 @@ export const useProjectTabs = (
           },
         }
       }),
-      ...(project.value?.template?.tabs || [])
-        .filter((t) => !tabs.value.find((t2) => t2.uuid === t.uuid))
-        .map((tab) => {
-          return {
-            key: `project-additionals-${tab.uuid}`,
-            label: tab.title,
-            view: `/projects/${projectId.value}/additionals/${tab.uuid}/edit`,
-            altView: `/projects/${projectId.value}/additionals/${tab.uuid}`,
-            dataTest: `project-additionals-${tab.uuid}`,
-            condition: true,
-            icon: safeProjectIconTab(tab.icon, tab.type),
-            props: {
-              template: true,
-              tab,
-            },
-          }
-        }),
-
       {
         key: 'project-additionals-add',
         label: t('tab.tab.add'),
