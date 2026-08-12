@@ -115,6 +115,7 @@ const onConfirmDeleteTab = () => {
         <TipTapOutput :content="tab.$t.description" />
       </ContentExpandable>
     </HelpField>
+
     <ContentExpandable
       v-if="editable"
       :height-limit="0"

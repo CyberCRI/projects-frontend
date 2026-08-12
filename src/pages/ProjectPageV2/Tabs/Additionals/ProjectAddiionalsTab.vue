@@ -1,5 +1,5 @@
 <template>
-  <BaseModuleTab :title="tab.$t.title" :count="tab.type === 'blog' ? tab.modules.items : 0">
+  <BaseModuleTab :count="tab.type === 'blog' ? tab.modules.items : 0">
     <BaseProjectTabBlog
       v-if="tab.type === 'blog'"
       :project="project"
