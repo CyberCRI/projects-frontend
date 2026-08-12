@@ -7,7 +7,7 @@ const { appMcpServerUrl } = runtimeConfig
 export default async function getMcpTools(
   agentData: any,
   event: any,
-  conversationId: string
+  userToken: string
 ): Promise<any[]> {
   const mcpConfigs = {}
 
@@ -18,7 +18,7 @@ export default async function getMcpTools(
       transport: 'http', // HTTP-based remote server
       url: appMcpServerUrl,
       headers: {
-        Authorization: `${conversationId}`,
+        Authorization: `${userToken}`,
       },
     }
   }
