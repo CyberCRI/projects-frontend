@@ -31,7 +31,7 @@ async function getRegistrationToken({
 export default defineEventHandler(async (event) => {
   const { appKeycloakUrl, appKeycloakRealm, appMcpAllowedHosts } = useRuntimeConfig().public
   const { appMcpKeycloakClientId, appMcpKeycloakClientSecret } = useRuntimeConfig()
-  const ALLOWED_REDIRECT_HOSTS = (appMcpAllowedHosts || '').split('|')
+  const ALLOWED_REDIRECT_HOSTS = ((appMcpAllowedHosts as string) || '').split('|')
   const ISSUER = `${appKeycloakUrl.replace(/\/$/, '')}/realms/${appKeycloakRealm}`
 
   const rawBody = await readRawBody(event, 'utf-8')

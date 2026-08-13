@@ -4,7 +4,7 @@ import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 export default defineEventHandler(async (event) => {
   const { appKeycloakUrl, appKeycloakRealm, appMcpAllowedHosts } = useRuntimeConfig().public
   const query = getQuery(event)
-  const ALLOWED_REDIRECT_HOSTS = (appMcpAllowedHosts || '').split('|')
+  const ALLOWED_REDIRECT_HOSTS = ((appMcpAllowedHosts as string) || '').split('|')
 
   // Defensive: refuse to forward to Keycloak if redirect_uri isn't one we trust.
   // This is an open-redirect guard — without it, this route would let anyone
