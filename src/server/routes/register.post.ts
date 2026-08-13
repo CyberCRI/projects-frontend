@@ -2,13 +2,41 @@ import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 
 const ALLOWED_REDIRECT_HOSTS = ['claude.ai', 'claude.com', 'localhost', '127.0.0.1']
 
+type RegistrationTokenParams = {
+  clientId: string
+  clientSecret: string
+  issuer: string
+}
+
+async function getRegistrationToken({
+  clientId,
+  clientSecret,
+  issuer,
+}: RegistrationTokenParams): Promise<string> {
+  const r = await fetch(`${issuer}/protocol/openid-connect/token`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      grant_type: 'client_credentials',
+      client_id: clientId,
+      client_secret: clientSecret,
+    }).toString(),
+  })
+  if (!r.ok) {
+    const text = await r.text()
+    throw new Error(`Failed to obtain registration token: ${r.status} ${text}`)
+  }
+  const data = await r.json()
+  return data.access_token
+}
+
 export default defineEventHandler(async (event) => {
   const { appKeycloakUrl, appKeycloakRealm } = useRuntimeConfig().public
+  const { appMcpKeycloakClientId, appMcpKeycloakClientSecret } = useRuntimeConfig()
   const ISSUER = `${appKeycloakUrl.replace(/\/$/, '')}/realms/${appKeycloakRealm}`
 
   const rawBody = await readRawBody(event, 'utf-8')
   if (!rawBody) {
-    traceMcp('Rejecting /register: empty body')
     setResponseStatus(event, 400)
     return { error: 'invalid_client_metadata', error_description: 'Request body is empty' }
   }
@@ -17,7 +45,6 @@ export default defineEventHandler(async (event) => {
   try {
     parsedBody = JSON.parse(rawBody)
   } catch {
-    traceMcp('Rejecting /register: body is not valid JSON', rawBody)
     setResponseStatus(event, 400)
     return { error: 'invalid_client_metadata', error_description: 'Request body is not valid JSON' }
   }
@@ -33,26 +60,25 @@ export default defineEventHandler(async (event) => {
       }
     })
   if (!allValid) {
-    traceMcp('Rejecting /register: invalid redirect_uris', redirectUris)
     setResponseStatus(event, 400)
-    return {
-      error: 'invalid_redirect_uri',
-      error_description: 'redirect_uris must belong to an allowed host',
-    }
+    return { error: 'invalid_redirect_uri' }
   }
 
-  // Don't forward client-requested scopes — mcp:tools is a realm Default scope and gets attached automatically.
-  delete parsedBody.scope
-
-  traceMcp('Registering client', {
-    client_name: parsedBody?.client_name,
-    redirect_uris: redirectUris,
-  })
+  delete parsedBody.scope // mcp:tools is a realm Default scope — no need to trust client-supplied scope
 
   try {
+    const registrationToken = await getRegistrationToken({
+      clientId: appMcpKeycloakClientId as string,
+      clientSecret: appMcpKeycloakClientSecret as string,
+      issuer: ISSUER,
+    })
+
     const r = await fetch(`${ISSUER}/clients-registrations/openid-connect`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${registrationToken}`,
+      },
       body: JSON.stringify(parsedBody),
     })
 
@@ -65,14 +91,9 @@ export default defineEventHandler(async (event) => {
     }
 
     if (r.ok) {
-      // Log the created client_id — this is safe, it's not a secret.
       traceMcp('Client registered successfully', {
         client_id: data.client_id,
         client_name: data.client_name,
-        client_id_issued_at: data.client_id_issued_at,
-        redirect_uris: data.redirect_uris,
-        token_endpoint_auth_method: data.token_endpoint_auth_method,
-        // Deliberately NOT logging: client_secret, registration_access_token
       })
     } else {
       traceMcp('Client registration failed', { status: r.status, error: data })
