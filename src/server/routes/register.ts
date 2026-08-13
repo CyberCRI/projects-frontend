@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
         'Content-Type': 'application/json',
         // Authorization: `Bearer ${process.env.KC_INITIAL_ACCESS_TOKEN}`, // your server's secret, not the user's
       },
-      body: JSON.stringify(body),
+      body: body,
     })
     traceMcp('register response status', r.status, r.statusText)
     const data = await r.json()
