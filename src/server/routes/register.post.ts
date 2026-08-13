@@ -1,7 +1,5 @@
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 
-const ALLOWED_REDIRECT_HOSTS = ['claude.ai', 'claude.com', 'localhost', '127.0.0.1']
-
 type RegistrationTokenParams = {
   clientId: string
   clientSecret: string
@@ -31,8 +29,9 @@ async function getRegistrationToken({
 }
 
 export default defineEventHandler(async (event) => {
-  const { appKeycloakUrl, appKeycloakRealm } = useRuntimeConfig().public
+  const { appKeycloakUrl, appKeycloakRealm, appMcpAllowedHosts } = useRuntimeConfig().public
   const { appMcpKeycloakClientId, appMcpKeycloakClientSecret } = useRuntimeConfig()
+  const ALLOWED_REDIRECT_HOSTS = (appMcpAllowedHosts || '').split('|')
   const ISSUER = `${appKeycloakUrl.replace(/\/$/, '')}/realms/${appKeycloakRealm}`
 
   const rawBody = await readRawBody(event, 'utf-8')

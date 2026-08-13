@@ -1,18 +1,10 @@
 // server/routes/authorize.get.ts
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 
-// TODO make an env variable for this
-const ALLOWED_REDIRECT_HOSTS = [
-  'claude.ai',
-  'claude.com',
-  'perplexity.ai',
-  'localhost',
-  '127.0.0.1',
-]
-
 export default defineEventHandler(async (event) => {
-  const { appKeycloakUrl, appKeycloakRealm } = useRuntimeConfig().public
+  const { appKeycloakUrl, appKeycloakRealm, appMcpAllowedHosts } = useRuntimeConfig().public
   const query = getQuery(event)
+  const ALLOWED_REDIRECT_HOSTS = (appMcpAllowedHosts || '').split('|')
 
   // Defensive: refuse to forward to Keycloak if redirect_uri isn't one we trust.
   // This is an open-redirect guard — without it, this route would let anyone
