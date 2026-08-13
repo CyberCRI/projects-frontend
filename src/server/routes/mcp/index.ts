@@ -2,10 +2,12 @@
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import { exchangeToken } from '@/server/utils/token-exchange'
+import { applyMcpCors } from '@/server/utils/mcp-cors'
 // import { requireBearerAuth } from "@modelcontextprotocol/sdk/server/auth/middleware/bearerAuth.js";
 // import { requireBearerAuth } from '@modelcontextprotocol/server'
 import createMCPServer from '~/mcp-server'
 export default defineEventHandler(async (event) => {
+  if (applyMcpCors(event)) return
   const runtimeConfig = useRuntimeConfig()
   const { appMcpServerUrl } = runtimeConfig
 
