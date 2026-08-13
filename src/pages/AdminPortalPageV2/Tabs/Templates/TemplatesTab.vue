@@ -91,11 +91,6 @@ const confirmDelete = () => {
 @use '~/design/scss/variables';
 
 .list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: variables.$space-l;
-  justify-content: stretch;
-
   ul {
     flex-grow: 1;
   }

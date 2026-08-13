@@ -139,12 +139,12 @@ export const formEqual = <A, B, Keys extends keyof (A & B)>(
   return true
 }
 
-export const subForm = <Form extends () => any>(form: Form): ValidationRuleWithParams => {
-  const f = form()
-
+export const subForm = <Form extends typeof useForm<any, any>>(
+  form: Form
+): ValidationRuleWithParams => {
   return {
     $validator: (value?: any) => {
-      f.reset(value)
+      const f = form({ default: value })
 
       return f.isValid.value
     },
@@ -157,15 +157,4 @@ export const subForm = <Form extends () => any>(form: Form): ValidationRuleWithP
       form,
     },
   }
-}
-
-export const subArrayForm = <Form extends () => any>(form: Form): ValidationRuleWithParams => {
-  const sub = subForm(form)
-
-  const validator = sub.$validator
-  sub.$validator = (values: any[]) => {
-    return values.map(validator).every((res) => res === true)
-  }
-
-  return sub
 }

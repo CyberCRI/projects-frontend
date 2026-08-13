@@ -1,8 +1,12 @@
-import { required } from '@vuelidate/validators'
+import { helpers, required } from '@vuelidate/validators'
 
 import useForm from '~/composables/useForm'
 
-import { defaultProjectTabForm, defaultProjectTabItemForm } from '~/form/project-tabs'
+import {
+  defaultProjectTabForm,
+  defaultProjectTabItemForm,
+  useProjectTabItemForm,
+} from '~/form/project-tabs'
 import type { TemplateForm, TemplateTabForm } from 'shared-projects-frontend/models'
 import { NULL_CONTENT } from '~/functs/constants'
 
@@ -32,10 +36,8 @@ export const defaultTemplateTabForm = (): TemplateTabForm => {
   const item = defaultProjectTabItemForm()
   return {
     ...defaultProjectTabForm(),
-    item: {
-      title: item.title,
-      content: item.content,
-    },
+    title_item: item.title,
+    content_item: item.content,
   }
 }
 
@@ -43,6 +45,9 @@ export const useTemplateForm = (options = {}) => {
   const rules = computed(() => ({
     name: {
       required,
+    },
+    tabs: {
+      $each: helpers.forEach(unref(useProjectTabItemForm().rules)),
     },
   }))
 

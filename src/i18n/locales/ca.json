@@ -586,7 +586,8 @@
     "empty": "Aquí no hi ha res...",
     "file": "fitxer | fitxers",
     "image": "imatge",
-    "select-placeholder": "Selecciona..."
+    "select-placeholder": "Selecciona...",
+    "error": "error"
   },
   "complete-profile": {
     "bio": {

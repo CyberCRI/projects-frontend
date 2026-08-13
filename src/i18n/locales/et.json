@@ -586,7 +586,8 @@
     "empty": "Siin pole midagi...",
     "file": "faili | failid",
     "image": "pilt",
-    "select-placeholder": "Valige..."
+    "select-placeholder": "Valige...",
+    "error": "viga"
   },
   "complete-profile": {
     "bio": {

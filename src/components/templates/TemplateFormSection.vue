@@ -29,12 +29,20 @@ watchEffect(() => {
 
 <template>
   <section class="list-container">
-    <div class="section-header">
+    <div class="section-header" :class="{ errors }">
       <LpiButton
         secondary
         class="no-border skeletons-background"
         :btn-icon="stateModal ? 'ChevronUp' : 'ChevronDown'"
         @click.prevent="toggleModal"
+      />
+      <LpiButton
+        v-if="errors"
+        color="red"
+        :title="$t('common.error')"
+        class="no-border error-icon skeletons-background"
+        btn-icon="Alert"
+        @click.prevent="openModal"
       />
       <h4 class="divider-title">
         {{ title }}
@@ -80,11 +88,21 @@ watchEffect(() => {
   align-items: center;
   background-color: var(--primary-light);
   border-radius: 20px;
+
+  &.errors {
+    grid-template-columns: auto auto 1fr auto;
+    gap: 0.5rem;
+  }
 }
 
 .list-title {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.error-icon {
+  fill: var(--red);
+  padding: 0 1rem;
 }
 </style>

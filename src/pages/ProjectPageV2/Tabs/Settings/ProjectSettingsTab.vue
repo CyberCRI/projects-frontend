@@ -4,11 +4,11 @@ import {
   deleteProject,
   patchProject,
 } from 'shared-projects-frontend/apis'
+import { refreshProjectData, refreshProjectTabs } from '~/composables/project/refreshProject'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
-import { refreshProjectData } from '~/composables/project/refreshProject'
 import type { TranslatedProject } from 'shared-projects-frontend/models'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
@@ -201,7 +201,10 @@ const selectedOrgLinks = computed(() => {
 })
 
 // callback
-const refresh = () => refreshProjectData(props.project)
+const refresh = () => {
+  refreshProjectData(props.project)
+  refreshProjectTabs(props.project)
+}
 
 const redirect = () => {
   closeAllModals()

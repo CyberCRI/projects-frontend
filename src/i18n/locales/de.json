@@ -586,7 +586,8 @@
     "empty": "Nichts hier...",
     "file": "Datei | Dateien",
     "image": "Bild",
-    "select-placeholder": "Wählen Sie..."
+    "select-placeholder": "Wählen Sie...",
+    "error": "Fehler"
   },
   "complete-profile": {
     "bio": {
