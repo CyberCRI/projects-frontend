@@ -1,7 +1,9 @@
 // server/routes/authorize.get.ts
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
+import { applyMcpCors } from '@/server/utils/mcp-cors'
 
 export default defineEventHandler(async (event) => {
+  if (applyMcpCors(event)) return
   const { appKeycloakUrl, appKeycloakRealm, appMcpAllowedHosts } = useRuntimeConfig().public
   const query = getQuery(event)
   const ALLOWED_REDIRECT_HOSTS = ((appMcpAllowedHosts as string) || '').split('|')

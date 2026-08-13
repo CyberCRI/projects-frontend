@@ -1,7 +1,9 @@
 // server/routes/token.post.ts
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
+import { applyMcpCors } from '@/server/utils/mcp-cors'
 
 export default defineEventHandler(async (event) => {
+  if (applyMcpCors(event)) return
   const { appKeycloakUrl, appKeycloakRealm } = useRuntimeConfig().public
   const ISSUER = `${appKeycloakUrl.replace(/\/$/, '')}/realms/${appKeycloakRealm}`
 

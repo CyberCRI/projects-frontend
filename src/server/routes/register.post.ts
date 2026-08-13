@@ -1,4 +1,5 @@
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
+import { applyMcpCors } from '@/server/utils/mcp-cors'
 
 type RegistrationTokenParams = {
   clientId: string
@@ -29,6 +30,7 @@ async function getRegistrationToken({
 }
 
 export default defineEventHandler(async (event) => {
+  if (applyMcpCors(event)) return
   const { appKeycloakUrl, appKeycloakRealm, appMcpAllowedHosts } = useRuntimeConfig().public
   const { appMcpKeycloakClientId, appMcpKeycloakClientSecret } = useRuntimeConfig()
   const ALLOWED_REDIRECT_HOSTS = ((appMcpAllowedHosts as string) || '').split('|')
