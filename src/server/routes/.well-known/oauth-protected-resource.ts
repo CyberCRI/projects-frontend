@@ -13,6 +13,7 @@ export default defineLazyEventHandler(() => {
       jwks_uri: `${ISSUER}/protocol/openid-connect/certs`,
       bearer_methods_supported: ['header'],
       scopes_supported: ['mcp:tools'],
+      registration_endpoint: `${MCP_URL}/register`,
     }
   })
 })
