@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   // const RESOURCE = `${MCP_URL}/mcp` // RFC 8707 resource indicator
   const ISSUER = `${appKeycloakUrl.replace(/\/?$/, '')}/realms/${appKeycloakRealm}/`
 
-  traceMcp('Registering client')
+  traceMcp('Registering client', body)
   try {
     const r = await fetch(`${ISSUER}/clients-registrations/openid-connect`, {
       method: 'POST',
