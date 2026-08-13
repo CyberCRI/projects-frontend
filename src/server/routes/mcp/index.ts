@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
 
   const { req, res } = event.node
 
-  const MCP_URL = appMcpServerUrl.replace(/\/mcp\/?$/, '') // this server's canonical URI
+  const MCP_URL = appMcpServerUrl.replace(/\?internal=true$/, '').replace(/\/mcp\/?$/, '') // this server's canonical URI
   // const RESOURCE = `${MCP_URL}/mcp` // RFC 8707 resource indicator
   // const ISSUER = `${appKeycloakUrl.replace(/\/?$/, '')}/realms/${appKeycloakRealm}/`
 
