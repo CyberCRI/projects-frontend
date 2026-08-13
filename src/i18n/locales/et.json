@@ -3428,11 +3428,13 @@
       "delete": "Kustuta element",
       "add": "Lisa uus element",
       "edit": "Redigeeri elementi",
-      "title": "Esemevorm"
+      "title": "Esemevorm",
+      "create": "Uue sisu loomine"
     },
     "form": {
       "title": {
-        "required": "Pealkiri on vajalik."
+        "required": "Pealkiri on vajalik.",
+        "label": "Pealkiri (külgmenüü)"
       },
       "description": {
         "label": "Kirjeldus"
@@ -3459,6 +3461,13 @@
       "content": {
         "label": "Sisu",
         "required": "Vajalik on sisu."
+      },
+      "template": {
+        "title": "Malli sisu"
+      },
+      "title-content": {
+        "label": "Pealkiri",
+        "required": "Pealkiri on vajalik."
       }
     },
     "toasts": {

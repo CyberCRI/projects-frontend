@@ -53,15 +53,20 @@ const defaultLocalForm = () => {
   return newForm
 }
 
+const model = defineModel<ProjectTabForm>({ default: defaultProjectTabForm })
+
 const { form, isValid, cleanedData, reset } = useProjectTabForm({
+  model,
   default: defaultLocalForm(),
 })
 
 const isFormEqual = useBlockNavigation(() =>
   formEqual(form.value, defaultLocalForm(), {
+    exclude: ['uuid'],
     html: ['description'],
   })
 )
+
 watch(
   () => [props.project, props.tab],
   () => reset(defaultLocalForm()),
@@ -80,6 +85,7 @@ const onConfirm = () => emit('submit', cleanedData.value)
     @confirm="onConfirm"
   >
     <TabFormRaw v-model="form" />
+    <slot />
     <template #footer:extra>
       <slot name="footer" />
     </template>

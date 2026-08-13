@@ -3428,11 +3428,13 @@
       "delete": "Esborra element",
       "add": "Afegeix un element nou",
       "edit": "Edita element",
-      "title": "Forma d' element"
+      "title": "Forma d' element",
+      "create": "Crea un nou contingut"
     },
     "form": {
       "title": {
-        "required": "Es requereix el títol."
+        "required": "Es requereix el títol.",
+        "label": "Títol (el menú)"
       },
       "description": {
         "label": "Descripció"
@@ -3459,6 +3461,13 @@
       "content": {
         "label": "Contingut",
         "required": "Es requereix el contingut."
+      },
+      "template": {
+        "title": "Contingut de la plantilla"
+      },
+      "title-content": {
+        "label": "Títol complet",
+        "required": "Es requereix el títol."
       }
     },
     "toasts": {

@@ -55,6 +55,7 @@ export const useProjectTabItemForm = (options = {}) => {
   }))
 
   return useForm<ProjectTabItemForm>({
+    default: defaultProjectTabItemForm(),
     rules,
     ...options,
   })

@@ -3428,11 +3428,13 @@
       "delete": "Artikel löschen",
       "add": "Neues Produkt hinzufügen",
       "edit": "Artikel bearbeiten",
-      "title": "Warenbezeichnung"
+      "title": "Warenbezeichnung",
+      "create": "Neue Inhalte erstellen"
     },
     "form": {
       "title": {
-        "required": "Der Titel ist erforderlich."
+        "required": "Der Titel ist erforderlich.",
+        "label": "Titel (Seitenmenü)"
       },
       "description": {
         "label": "Warenbezeichnung"
@@ -3459,6 +3461,13 @@
       "content": {
         "label": "Inhalt",
         "required": "Der Inhalt ist erforderlich."
+      },
+      "template": {
+        "title": "Inhalt"
+      },
+      "title-content": {
+        "label": "Vollständiger Titel",
+        "required": "Der Titel ist erforderlich."
       }
     },
     "toasts": {

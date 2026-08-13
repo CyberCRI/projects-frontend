@@ -3428,11 +3428,13 @@
       "delete": "Item verwijderen",
       "add": "Een nieuw item toevoegen",
       "edit": "Item bewerken",
-      "title": "Postformulier"
+      "title": "Postformulier",
+      "create": "Nieuwe inhoud aanmaken"
     },
     "form": {
       "title": {
-        "required": "De titel is vereist."
+        "required": "De titel is vereist.",
+        "label": "Titel (zijmenu)"
       },
       "description": {
         "label": "Omschrijving"
@@ -3459,6 +3461,13 @@
       "content": {
         "label": "Inhoud",
         "required": "De inhoud is vereist."
+      },
+      "template": {
+        "title": "Sjablooninhoud"
+      },
+      "title-content": {
+        "label": "Volledige titel",
+        "required": "De titel is vereist."
       }
     },
     "toasts": {

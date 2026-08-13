@@ -24,42 +24,49 @@ withDefaults(
   }
 )
 
-defineEmits<{
+const emit = defineEmits<{
   unauthorized: []
   save: []
+  'update:model-value': [ProjectTabItemForm]
 }>()
 
 const inOfflineMode = ref(false)
 
-const model = defineModel<ProjectTabItemForm>()
+const model = defineModel<ProjectTabItemForm>({ default: defaultProjectTabItemForm })
 const isCreated = computed(() => isNil(model.value?.id) || inOfflineMode.value)
 
-const { form, errors } = useProjectTabItemForm({
+const { errors } = useProjectTabItemForm({
   model,
   default: defaultProjectTabItemForm(),
-  modelImpact: false,
 })
 
+watch(
+  () => JSON.stringify(model.value),
+  () => emit('update:model-value', model.value),
+  { deep: true }
+)
+
 const handleImage = (img: ImageModel) => {
-  form.value.images_ids.push(img.id)
+  model.value.images_ids.push(img.id)
 }
 </script>
 
 <template>
   <div class="list-container">
     <TextInput
-      v-model="form.title"
+      v-model="model.title"
       :label="$t('tab.form.title-content.label')"
       :placeholder="$t('tab.form.title-content.label')"
       class="input-field"
       required
       :errors="errors.title"
+      @change="() => console.log('change', model)"
     />
     <Field :label="$t('tab.form.content.label')" required class="editor-section">
       <TipTapEditor
         v-if="isCreated"
         ref="tiptapEditor"
-        v-model="form.content"
+        v-model="model.content"
         class="input-field content-editor w-full"
         mode="full"
         :save-image-callback="saveImageCallback"
@@ -69,7 +76,7 @@ const handleImage = (img: ImageModel) => {
       <TipTapCollaborativeEditor
         v-else-if="room"
         ref="tiptapEditor"
-        v-model="form.content"
+        v-model="model.content"
         class="w-full"
         :room="room"
         :provider-params="providerParams"

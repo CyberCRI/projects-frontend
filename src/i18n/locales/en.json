@@ -3427,6 +3427,7 @@
       "delete-confirm": "Are you sure you want to delete this item.",
       "delete": "Delete item",
       "add": "Add a new item",
+      "create": "Create new content",
       "edit": "Edit item",
       "title": "Item form"
     },

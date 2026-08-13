@@ -3428,11 +3428,13 @@
       "delete": "Supprimer l' élément",
       "add": "Ajouter un nouvel élément",
       "edit": "Modifier l'élément",
-      "title": "Formulaire"
+      "title": "Formulaire",
+      "create": "Créer un nouveau contenu"
     },
     "form": {
       "title": {
-        "required": "Le titre est requis."
+        "required": "Le titre est requis.",
+        "label": "Titre (menu latéral)"
       },
       "description": {
         "label": "Description"
@@ -3459,6 +3461,13 @@
       "content": {
         "label": "Contenu",
         "required": "Le contenu est requis."
+      },
+      "template": {
+        "title": "Contenu du modèle"
+      },
+      "title-content": {
+        "label": "Titre complet",
+        "required": "Le titre est requis."
       }
     },
     "toasts": {

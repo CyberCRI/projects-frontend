@@ -32,8 +32,10 @@ export const defaultTemplateTabForm = (): TemplateTabForm => {
   const item = defaultProjectTabItemForm()
   return {
     ...defaultProjectTabForm(),
-    title_item: item.title,
-    content_item: item.content,
+    item: {
+      title: item.title,
+      content: item.content,
+    },
   }
 }
 

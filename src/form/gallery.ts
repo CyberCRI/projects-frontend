@@ -1,22 +1,21 @@
 import { required } from '@vuelidate/validators'
-import { clone } from 'es-toolkit'
 
 import type { ImageGalleryForm } from 'shared-projects-frontend/models'
 
 import useForm from '~/composables/useForm'
 
-const DEFAULT_FORM: ImageGalleryForm = {
+export const defaultGalleryForm = (): ImageGalleryForm => ({
   files: null,
-}
-
-const RULES = {
-  files: { required },
-}
+})
 
 export const useGalleryImageForm = (options = {}) => {
+  const rules = computed(() => ({
+    files: { required },
+  }))
+
   return useForm<ImageGalleryForm>({
-    default: clone(DEFAULT_FORM),
-    rules: clone(RULES),
+    default: defaultGalleryForm(),
+    rules,
     ...options,
   })
 }

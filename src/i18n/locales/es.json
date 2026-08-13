@@ -3428,11 +3428,13 @@
       "delete": "Suprimir el tema",
       "add": "Añadir un nuevo elemento",
       "edit": "Editar el tema",
-      "title": "Forma del artículo"
+      "title": "Forma del artículo",
+      "create": "Crear nuevo contenido"
     },
     "form": {
       "title": {
-        "required": "Se requiere el título."
+        "required": "Se requiere el título.",
+        "label": "Título (menú del lado)"
       },
       "description": {
         "label": "Descripción"
@@ -3459,6 +3461,13 @@
       "content": {
         "label": "Índice",
         "required": "El contenido es necesario."
+      },
+      "template": {
+        "title": "Índice"
+      },
+      "title-content": {
+        "label": "Título completo",
+        "required": "Se requiere el título."
       }
     },
     "toasts": {

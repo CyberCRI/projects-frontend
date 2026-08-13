@@ -12,6 +12,15 @@ import { DEFAULT_ICONS_TABS } from '~/functs/constants'
 import { safeProjectIconTab } from '~/functs/projects'
 import { ICONS_TABS } from '~/functs/IconImage'
 
+withDefaults(
+  defineProps<{
+    showType?: boolean
+  }>(),
+  {
+    showType: false,
+  }
+)
+
 const model = defineModel<ProjectTabForm>({ default: defaultProjectTabForm })
 
 const { stateModals, closeModals, toggleModals } = useModals({
@@ -57,24 +66,17 @@ const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
 <template>
   <div class="list-container">
     <!-- hide choices type if already created (you can't change type after create it) -->
-    <Field v-if="!form.id" :label="$t('tab.form.type.label')" required>
+    <Field v-if="!form.id || showType" :label="$t('tab.form.type.label')" required>
       <GroupButton v-model="form.type" :options="optionsType" @update:model-value="onChangeType" />
       <HelpField :description="selectedTypeDescription" />
     </Field>
 
     <div class="inline-field">
-      <TextInput
-        v-model="form.title"
-        class="inline-title"
-        :label="$t('tab.form.title.label')"
-        required
-        :errors="errors.title"
-      />
       <Field :label="$t('tab.form.icon.label')" required>
         <!-- <TipTapEditor -->
         <IconImage
           class="tab-icon shadow-drop"
-          :name="form.icon"
+          :name="safeProjectIconTab(form.icon, form.type)"
           :title="$t('common.select')"
           @click="toggleModals('editIcon')"
         />
@@ -87,6 +89,13 @@ const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
           @close="closeModals('editIcon')"
         />
       </Field>
+      <TextInput
+        v-model="form.title"
+        class="inline-title"
+        :label="$t('tab.form.title.label')"
+        required
+        :errors="errors.title"
+      />
     </div>
 
     <Field :label="$t('tab.form.show_preview.label')" :errors="errors.show_preview">
@@ -100,8 +109,8 @@ const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
 
 .tab-icon {
   display: inline-block;
-  width: 3rem;
-  height: 3em;
+  width: 2rem;
+  height: 2em;
   cursor: pointer;
   padding: 0.25rem;
   border: 1px solid var(--primary-dark);
@@ -115,7 +124,7 @@ const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
 
 .inline-field {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 0.25rem;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
 }
 </style>

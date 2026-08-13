@@ -1,6 +1,7 @@
 import type { ErrorObject, useVuelidate } from '@vuelidate/core'
 import { difference, isEqual, isNil } from 'es-toolkit'
 import useValidate from '@vuelidate/core'
+import type { ModelRef } from 'vue'
 
 export type OptionsForm<T, CleanResult> = {
   default?: T
@@ -8,8 +9,7 @@ export type OptionsForm<T, CleanResult> = {
   lazy?: boolean
   validateTimeout?: number
   onClean?: (data: T) => CleanResult
-  model?: Ref<T>
-  modelImpact?: boolean
+  model?: Ref<T> | ModelRef<T>
 
   $scope?: boolean
 }
@@ -59,14 +59,12 @@ const onClean = (d) => d
 const useForm = <T extends object, CleanResult = T>(
   options: OptionsForm<T, CleanResult> = { onClean }
 ): UseFormResult<T, CleanResult> => {
-  options.modelImpact ??= true
+  const form = options.model || (ref<T>() as Ref<T>)
 
-  const def = {
-    ...options.default,
-    ...unref(options.model?.value ?? {}),
-  } as T
+  if (isNil(form.value)) {
+    form.value = { ...options.default }
+  }
 
-  const form = ref<T>(def) as Ref<T>
   const _onClean = options.onClean ?? onClean
 
   const v$ = useValidate(options.rules ?? {}, form, {
@@ -106,14 +104,11 @@ const useForm = <T extends object, CleanResult = T>(
       const valid = await v$.value.$validate()
       const formContent = { ...toRaw(form.value) }
 
-      let cleanded = formContent as any
+      let cleanded = null
       if (valid) {
         cleanded = _onClean(formContent)
       }
 
-      if (options.model && options.modelImpact) {
-        options.model.value = cleanded
-      }
       cleanedData.value = cleanded
     },
     { deep: true, immediate: true }
@@ -131,20 +126,24 @@ const useForm = <T extends object, CleanResult = T>(
    * @returns {void}
    */
   const reset = (newData?: T) => {
+    console.log('reset', newData)
     form.value = newData ?? ({} as T)
     v$.value.$reset()
   }
 
-  // if model is defined in userForm, reset value when model chnage
-  if (options.model && !options.modelImpact) {
-    watch(
-      options.model,
-      () => {
-        reset(options.model.value)
-      },
-      { deep: true, immediate: true }
-    )
-  }
+  watch(
+    () => JSON.stringify(form.value),
+    (old, newd) => {
+      if (old !== newd) {
+        console.log('icici')
+        form.value = { ...form.value }
+      }
+    },
+    { deep: true }
+  )
+
+  // reset validator
+  v$.value.$reset()
 
   return {
     form,

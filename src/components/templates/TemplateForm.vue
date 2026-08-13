@@ -127,16 +127,17 @@
         :title="tab.title"
         @delete="onDeleteTab(idx)"
       >
-        <TabFormRaw :model-value="form.tabs[idx]" @update:model-value="updateTab(idx, $event)" />
+        <TabFormRaw
+          show-type
+          :model-value="form.tabs[idx]"
+          @update:model-value="updateTab(idx, $event)"
+        />
         <br />
         <h2 class="title-template">
           {{ $t('tab.form.template.title') }}
         </h2>
         <TabItemFormRaw
-          :model-value="{
-            title: form.tabs[idx].title_item,
-            content: form.tabs[idx].content_item,
-          }"
+          :model-value="form.tabs[idx].item"
           @update:model-value="onUpdateTemplate(idx, $event)"
         />
       </TemplateFormSection>
@@ -164,12 +165,8 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import type {
-  ProjectTabItemForm,
-  TemplateForm,
-  TemplateTabForm,
-} from 'shared-projects-frontend/models'
 import { defaultTemplateForm, defaultTemplateTabForm, useTemplateForm } from '~/form/template'
+import type { TemplateForm, TemplateTabForm } from 'shared-projects-frontend/models'
 import TemplateFormSection from '~/components/templates/TemplateFormSection.vue'
 import TabItemFormRaw from '~/components/tabs/TabItemFormRaw.vue'
 import type { PropsDefinitions } from '~/composables/tiptap'
@@ -199,7 +196,15 @@ const localeDefaultForm = () => {
   return {
     ...defaultTemplateForm(),
     ...(props.template || {}),
-    tabs: [...(props?.template?.tabs || [])],
+    tabs: [...(props?.template?.tabs || [])].map((tab) => {
+      return {
+        ...tab,
+        item: {
+          title: tab.title_item,
+          content: tab.content_item,
+        },
+      }
+    }),
   }
 }
 const model = defineModel<TemplateForm>()
@@ -239,8 +244,6 @@ const addNewTab = () => {
 const updateTab = (idx: number, tab: TemplateTabForm) => {
   const orginalTab = form.value.tabs[idx]
 
-  console.log('update tab', tab)
-
   if (tab) {
     form.value.tabs[idx] = {
       uuid: orginalTab.uuid,
@@ -249,12 +252,13 @@ const updateTab = (idx: number, tab: TemplateTabForm) => {
   }
 }
 
-const onUpdateTemplate = (idx: number, item: ProjectTabItemForm | null) => {
+const onUpdateTemplate = <Item extends TemplateTabForm['item']>(idx: number, item: Item | null) => {
   if (item) {
     form.value.tabs[idx] = {
       ...form.value.tabs[idx],
       title_item: item.title,
       content_item: item.content,
+      item,
     }
   }
 }

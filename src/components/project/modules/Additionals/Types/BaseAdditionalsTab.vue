@@ -13,6 +13,7 @@ import ContentExpandable from '~/components/base/ContentExpandable.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import HelpField from '~/components/base/form/HelpField.vue'
 import TabForm from '~/components/tabs/TabForm.vue'
+import Title from '~/components/base/Title.vue'
 import { textIsEmpty } from '~/functs/tiptap'
 import analytics from '~/analytics'
 
@@ -122,13 +123,8 @@ const onConfirmDeleteTab = () => {
       :opened="stateModals.editTab"
       hide-see-more
     >
-      <TabForm
-        class="p2"
-        :project="project"
-        :tab="tab"
-        @submit="onPatchTab"
-        @close="closeModals('editTab')"
-      >
+      <Title :title="$t('tab.tab.edit')" />
+      <TabForm :project="project" :tab="tab" @submit="onPatchTab" @close="closeModals('editTab')">
         <template #footer>
           <LpiButton
             class="w-fit"
