@@ -154,6 +154,7 @@ describe('useForm', () => {
     const { form } = useForm({
       default: {
         name: 'default',
+        // @ts-ignore
         age: 42,
       },
       model,
