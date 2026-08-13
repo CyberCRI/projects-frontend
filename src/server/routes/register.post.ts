@@ -41,6 +41,9 @@ export default defineEventHandler(async (event) => {
     }
   }
 
+  // Don't forward client-requested scopes — mcp:tools is a realm Default scope and gets attached automatically.
+  delete parsedBody.scope
+
   traceMcp('Registering client', {
     client_name: parsedBody?.client_name,
     redirect_uris: redirectUris,
