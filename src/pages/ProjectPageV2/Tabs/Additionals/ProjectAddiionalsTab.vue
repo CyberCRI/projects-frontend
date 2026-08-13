@@ -5,14 +5,12 @@
       :project="project"
       :tab="tab"
       :editable="editable"
-      :template="template"
     />
     <BaseProjectTabText
       v-else-if="tab.type === 'text'"
       :project="project"
       :tab="tab"
       :editable="editable"
-      :template="template"
     />
   </BaseModuleTab>
 </template>
@@ -28,8 +26,7 @@ withDefaults(
     project: TranslatedProject
     tab: TranslatedProjectTab
     editable?: boolean
-    template?: boolean
   }>(),
-  { editable: false, template: false }
+  { editable: false }
 )
 </script>

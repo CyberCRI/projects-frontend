@@ -59,10 +59,13 @@ const onClean = (d) => d
 const useForm = <T extends object, CleanResult = T>(
   options: OptionsForm<T, CleanResult> = { onClean }
 ): UseFormResult<T, CleanResult> => {
-  const form = options.model || (ref<T>() as Ref<T>)
+  const form = ref<T>() as Ref<T>
 
   if (isNil(form.value)) {
-    form.value = { ...options.default }
+    form.value = {
+      ...options.default,
+      ...(options.model?.value || {}),
+    }
   }
 
   const _onClean = options.onClean ?? onClean
@@ -126,21 +129,34 @@ const useForm = <T extends object, CleanResult = T>(
    * @returns {void}
    */
   const reset = (newData?: T) => {
-    console.log('reset', newData)
     form.value = newData ?? ({} as T)
     v$.value.$reset()
   }
 
-  watch(
-    () => JSON.stringify(form.value),
-    (old, newd) => {
-      if (old !== newd) {
-        console.log('icici')
-        form.value = { ...form.value }
-      }
-    },
-    { deep: true }
-  )
+  // re-set model/form
+  if (options.model) {
+    const model = options.model
+
+    watch(
+      model,
+      (value) => {
+        if (!isEqual(value, form.value)) {
+          form.value = { ...value }
+        }
+      },
+      { deep: true }
+    )
+
+    watch(
+      form,
+      (value) => {
+        if (!isEqual(value, model.value)) {
+          model.value = { ...value }
+        }
+      },
+      { deep: true }
+    )
+  }
 
   // reset validator
   v$.value.$reset()

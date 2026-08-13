@@ -18,7 +18,8 @@ onMounted(async () => {
   await projectCategoriesStore.getAllProjectCategories()
 })
 
-const model = defineModel<Pick<ProjectForm, 'categories' | 'template'>>()
+type ProjectTemplateForm = Pick<ProjectForm, 'categories' | 'template'>
+const model = defineModel<ProjectTemplateForm>()
 
 const { form } = useProjectTemplatesForm({ model })
 const { translateTemplate } = useAutoTranslate()
