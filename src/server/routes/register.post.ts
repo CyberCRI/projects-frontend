@@ -107,6 +107,14 @@ export default defineEventHandler(async (event) => {
     }
 
     if (r.ok) {
+      // Keycloak recomputes response_types/grant_types internally from client flags
+      // rather than echoing the request, and can produce spurious extra entries
+      // (e.g. "none" leaking into response_types). Since we know the correct values
+      // for a public PKCE MCP client, assert them rather than trusting the derived output.
+      data.response_types = ['code']
+      data.grant_types = ['authorization_code', 'refresh_token']
+      data.token_endpoint_auth_method = 'none'
+
       traceMcp('Client registered successfully', {
         client_id: data.client_id,
         client_name: data.client_name,
