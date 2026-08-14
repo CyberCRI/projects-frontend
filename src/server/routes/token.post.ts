@@ -16,6 +16,11 @@ export default defineEventHandler(async (event) => {
     return { error: 'invalid_request', error_description: 'Request body is empty' }
   }
 
+  traceMcp('Incoming /token request', {
+    hasAuthHeader: !!getHeader(event, 'authorization'),
+    bodyKeys: new URLSearchParams(rawBody).keys ? [...new URLSearchParams(rawBody).keys()] : [],
+  })
+
   traceMcp('Forwarding /token request')
 
   const forwardHeaders: Record<string, string> = { 'Content-Type': contentType }
