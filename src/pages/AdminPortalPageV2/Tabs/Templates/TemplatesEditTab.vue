@@ -8,7 +8,7 @@
         @close="redirect"
       >
         <TemplateForm
-          v-model="cleanedData"
+          v-model="form"
           :template="templateRaw"
           :save-image-callback="saveImageTemplate"
           @is-valid="setModals('isValid', $event)"
@@ -31,7 +31,7 @@ import { getTemplate } from '~/api/v2/templates.service'
 import FormPanel from '~/components/base/FormPanel.vue'
 import { omit } from 'es-toolkit'
 
-const cleanedData = ref()
+const form = ref()
 const { stateModals, setModals } = useModals({
   isValid: false,
   isFormEqual: false,
@@ -55,8 +55,7 @@ const redirect = () => router.push({ name: 'templatesList' })
 const submit = () => {
   asyncing.value = true
 
-  console.log(cleanedData.value)
-  patchTemplate(organizationCode, templateId.value, cleanedData.value)
+  patchTemplate(organizationCode, templateId.value, form.value)
     .then(() => {
       toaster.pushSuccess('toasts.template-update.success')
       return refresh().then(() => redirect())

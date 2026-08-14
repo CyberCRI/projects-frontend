@@ -34,7 +34,7 @@ export const useProjectTabs = (
   })
 
   const { isAdmin } = usePermissions()
-  const { isMember } = usePermissionProject(projectId)
+  const { isMember, canCreateTab } = usePermissionProject(projectId, project)
 
   const isMemberOrAdmin = computed(() => isMember.value || isAdmin.value)
 
@@ -307,7 +307,7 @@ export const useProjectTabs = (
         label: t('tab.tab.add'),
         view: `/projects/${projectId.value}/additionals/create`,
         altView: ``,
-        condition: true,
+        condition: canCreateTab.value || isAdmin.value,
         dataTest: 'project-additionals-add',
         icon: 'Plus',
       },

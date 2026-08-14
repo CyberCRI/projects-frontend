@@ -24,6 +24,9 @@
         </ul>
         <PaginationButtonsV2 :pagination="pagination" />
       </div>
+
+      <NothingHere v-if="templates.length === 0" />
+
       <ConfirmModal
         v-if="templateToDelete"
         :content="
@@ -50,6 +53,7 @@ import LayoutTab from '~/components/admin/LayoutTab.vue'
 
 import { templateSkeleton } from '~/skeletons/template.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
+import NothingHere from '~/components/base/NothingHere.vue'
 import { getTemplates } from '~/api/v2/templates.service'
 import useNuxtI18n from '~/composables/useNuxtI18n'
 

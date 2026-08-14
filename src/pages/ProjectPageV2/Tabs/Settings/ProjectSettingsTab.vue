@@ -202,8 +202,7 @@ const selectedOrgLinks = computed(() => {
 
 // callback
 const refresh = () => {
-  refreshProjectData(props.project)
-  refreshProjectTabs(props.project)
+  return refreshProjectData(props.project).then(() => refreshProjectTabs(props.project))
 }
 
 const redirect = () => {

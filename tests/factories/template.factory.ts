@@ -26,6 +26,7 @@ export const TemplateFactory = createFactory<TemplateModel>((faker) => ({
   project_description: faker.datatype.string(),
   project_title: faker.datatype.string(),
   tabs: [],
+  enable_tab: true,
 }))
 
 export const TemplateInputFactory = createFactory<TemplateForm>(() => ({

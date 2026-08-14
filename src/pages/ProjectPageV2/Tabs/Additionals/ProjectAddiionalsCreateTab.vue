@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { refreshProjectData, refreshProjectTabs } from '~/composables/project/refreshProject'
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import type { TranslatedProject, ProjectTabForm } from 'shared-projects-frontend/models'
 import { createProjectTab, createProjectTabItem } from 'shared-projects-frontend/apis'
 import { useProjectTabForm, useProjectTabItemForm } from '~/form/project-tabs'
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import TabItemFormRaw from '~/components/tabs/TabItemFormRaw.vue'
 import TabForm from '~/components/tabs/TabForm.vue'
 import Title from '~/components/base/Title.vue'
@@ -64,10 +66,33 @@ const onSubmit = (form: ProjectTabForm) => {
       asyncing.value = false
     })
 }
+
+const { isAdmin } = usePermissions()
+const { canCreateTab } = usePermissionProject(
+  computed(() => props.project.id),
+  computed(() => props.project)
+)
+
+watchEffect(() => {
+  if (!canCreateTab.value && !isAdmin.value) {
+    toaster.pushError(t('message.error.unauthorized'))
+    router.push({
+      name: 'ProjectSnapshot',
+      params: {
+        slugOrId: props.project.slug || props.project.id,
+      },
+    })
+  }
+})
 </script>
 
 <template>
   <BaseModuleTab :title="$t('tab.tab.title')">
+    <!-- show message when creation is only enable when you are admin -->
+    <LpiSnackbar v-if="!canCreateTab && isAdmin" icon="AlertOutline" type="warning">
+      {{ $t('tab.tab.not-enabled.admin') }}
+    </LpiSnackbar>
+
     <TabForm v-model="formTab" :asyncing="asyncing" :project="project" @submit="onSubmit">
       <!-- you can create description in create tabs only if type is text -->
       <template v-if="formTab.type === 'text'">

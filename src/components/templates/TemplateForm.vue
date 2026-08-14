@@ -35,6 +35,10 @@
           {{ $t('template.no-category-set') }}
         </span>
       </Field>
+
+      <Field :label="$t('template.enable-tab.label')" :help="$t('template.enable-tab.help')">
+        <SwitchInput v-model="form.enable_tab" />
+      </Field>
     </div>
 
     <TemplateFormSection
@@ -177,8 +181,10 @@ import type {
 import { defaultTemplateForm, defaultTemplateTabForm, useTemplateForm } from '~/form/template'
 import TemplateFormSection from '~/components/templates/TemplateFormSection.vue'
 import TabItemFormRaw from '~/components/tabs/TabItemFormRaw.vue'
+import SwitchInput from '~/components/base/form/SwitchInput.vue'
 import type { PropsDefinitions } from '~/composables/tiptap'
 import TabFormRaw from '~/components/tabs/TabFormRaw.vue'
+import Field from '~/components/base/form/Field.vue'
 import type { ErrorObject } from '@vuelidate/core'
 import { isEqual } from 'es-toolkit'
 

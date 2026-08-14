@@ -2149,7 +2149,11 @@
     "title-goal": "Goal",
     "title-comment": "Comment",
     "placeholder-purpose": "Purpose of the project",
-    "placeholder-title": "Title On-site"
+    "placeholder-title": "Title On-site",
+    "enable-tab": {
+      "label": "Allow new tab creation",
+      "help": "Allows users to create new tabs within this project"
+    }
   },
   "tips": {
     "background-color": "This color will be displayed behind the text.",
@@ -3422,7 +3426,10 @@
       "add": "Add a new Tab.",
       "edit": "Edit Tab",
       "title": "Tab Creation",
-      "label": "Tab | Tabs"
+      "label": "Tab | Tabs",
+      "not-enabled": {
+        "admin": "Tab creation is not enabled by default. However, as an administrator, you have the required permissions to access this feature and create new tabs."
+      }
     },
     "item": {
       "delete-confirm": "Are you sure you want to delete this item.",

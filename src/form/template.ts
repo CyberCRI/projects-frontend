@@ -30,6 +30,8 @@ export const defaultTemplateForm = (): TemplateForm => ({
   categories: [],
 
   tabs: [],
+
+  enable_tab: true,
 })
 
 export const defaultTemplateTabForm = (): TemplateTabForm => {
