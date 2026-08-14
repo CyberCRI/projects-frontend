@@ -45,6 +45,7 @@ export default defineEventHandler(async (event) => {
   let parsedBody: any
   try {
     parsedBody = JSON.parse(rawBody)
+    traceMcp('/register parsedBody', JSON.stringify(parsedBody, null, 2))
   } catch {
     setResponseStatus(event, 400)
     return { error: 'invalid_client_metadata', error_description: 'Request body is not valid JSON' }
@@ -66,7 +67,6 @@ export default defineEventHandler(async (event) => {
   }
 
   delete parsedBody.scope // mcp:tools is a realm Default scope — no need to trust client-supplied scope
-
   try {
     const registrationToken = await getRegistrationToken({
       clientId: appMcpKeycloakClientId as string,
