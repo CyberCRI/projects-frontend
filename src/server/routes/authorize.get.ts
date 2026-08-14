@@ -7,6 +7,7 @@ export default defineEventHandler(async (event) => {
   const { appKeycloakUrl, appKeycloakRealm, appMcpAllowedHosts } = useRuntimeConfig().public
   const query = getQuery(event)
   const ALLOWED_REDIRECT_HOSTS = ((appMcpAllowedHosts as string) || '').split('|')
+  traceMcp('/authorize hit with with query:\n', JSON.stringify(query, null, 2))
 
   // Defensive: refuse to forward to Keycloak if redirect_uri isn't one we trust.
   // This is an open-redirect guard — without it, this route would let anyone
