@@ -16,10 +16,13 @@ export default defineEventHandler(async (event) => {
     try {
       const host = new URL(redirectUri).hostname
       if (!ALLOWED_REDIRECT_HOSTS.includes(host)) {
-        traceMcp('Rejecting /authorize: disallowed redirect_uri host', host)
+        traceMcp(
+          `Rejecting /authorize: disallowed redirect_uri host ${host} (allowed: ${ALLOWED_REDIRECT_HOSTS.map((host) => `"${host}"`).join(', ')}) `
+        )
         throw createError({ statusCode: 400, statusMessage: 'invalid_redirect_uri' })
       }
-    } catch {
+    } catch (err) {
+      traceMcp('Error in /authorize', err)
       throw createError({ statusCode: 400, statusMessage: 'invalid_redirect_uri' })
     }
   }
