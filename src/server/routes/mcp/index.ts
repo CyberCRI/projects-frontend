@@ -14,6 +14,8 @@ export default defineEventHandler(async (event) => {
   const { appKeycloakClientId, appKeycloakClientSecret } = runtimeConfig.public
   const { appKeycloakUrl, appKeycloakRealm } = useRuntimeConfig().public
 
+  traceMcp('/mcp', JSON.stringify(getQuery(event), null, 2))
+
   const keycloakClientConf = {
     TOKEN_ENDPOINT: `${appKeycloakUrl}/realms/${appKeycloakRealm}/protocol/openid-connect/token`,
     CLIENT_ID: appKeycloakClientId as string,

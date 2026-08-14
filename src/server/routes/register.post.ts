@@ -52,19 +52,28 @@ export default defineEventHandler(async (event) => {
   }
 
   const redirectUris: string[] = parsedBody?.redirect_uris ?? []
-  const allValid =
-    redirectUris.length > 0 &&
-    redirectUris.every((uri) => {
-      try {
-        return ALLOWED_REDIRECT_HOSTS.includes(new URL(uri).hostname)
-      } catch {
-        return false
-      }
-    })
-  if (!allValid) {
-    setResponseStatus(event, 400)
-    return { error: 'invalid_redirect_uri' }
+
+  const validateRedirectUris = (uri: string) => {
+    try {
+      return ALLOWED_REDIRECT_HOSTS.includes(new URL(uri).hostname)
+    } catch {
+      return false
+    }
   }
+  const validRedirectUris = redirectUris.filter(validateRedirectUris)
+  const invalidRedirectUris = redirectUris.filter((uri) => !validateRedirectUris(uri))
+
+  traceMcp('validRedirectUris', validRedirectUris.map((uri) => `"${uri}"`).join(' '))
+  traceMcp('invalidRedirectUris', invalidRedirectUris.map((uri) => `"${uri}"`).join(' '))
+  if (validRedirectUris.length === 0) {
+    traceMcp('No redirect_uris matched an allowed host, respond with 400')
+    setResponseStatus(event, 400)
+    return {
+      error: 'invalid_redirect_uri',
+      error_description: 'No redirect_uris matched an allowed host',
+    }
+  }
+  parsedBody.redirect_uris = validRedirectUris // only forward trusted setResponseStatus
 
   // Force public client + PKCE regardless of what the client specifies (or omits).
   // Per RFC 7591, omitting this field defaults to "client_secret_basic" (confidential),
