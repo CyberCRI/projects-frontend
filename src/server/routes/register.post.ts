@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
   let parsedBody: any
   try {
     parsedBody = JSON.parse(rawBody)
-    traceMcp('/register parsedBody', JSON.stringify(parsedBody, null, 2))
+    // traceMcp('/register parsedBody', JSON.stringify(parsedBody, null, 2))
   } catch {
     setResponseStatus(event, 400)
     return { error: 'invalid_client_metadata', error_description: 'Request body is not valid JSON' }
@@ -65,6 +65,12 @@ export default defineEventHandler(async (event) => {
     setResponseStatus(event, 400)
     return { error: 'invalid_redirect_uri' }
   }
+
+  // Force public client + PKCE regardless of what the client specifies (or omits).
+  // Per RFC 7591, omitting this field defaults to "client_secret_basic" (confidential),
+  // which breaks PKCE-only clients like Perplexity that never send a secret back.
+  // -> this is needed for perplexity host
+  parsedBody.token_endpoint_auth_method = 'none'
 
   delete parsedBody.scope // mcp:tools is a realm Default scope — no need to trust client-supplied scope
   try {
