@@ -258,6 +258,11 @@ export default defineNuxtConfig({
     //   alwaysRedirect: true,
     // },
   },
+  stylelint: {
+    // only in dev ignore error
+    emitError: false,
+    emitWarning: true,
+  },
 
   nitro: {
     minify: import.meta.dev,

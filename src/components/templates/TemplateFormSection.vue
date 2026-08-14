@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import ContentExpandable from '~/components/base/ContentExpandable.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import type { IconImageChoice } from '~/functs/IconImage'
 
 const props = withDefaults(
   defineProps<{
@@ -7,11 +9,13 @@ const props = withDefaults(
     errors?: boolean
     opened?: boolean
     canDelete?: boolean
+    icon?: IconImageChoice
   }>(),
   {
     errors: false,
     opened: false,
     canDelete: false,
+    icon: null,
   }
 )
 
@@ -28,10 +32,11 @@ watchEffect(() => {
 </script>
 
 <template>
-  <section class="list-container">
+  <section class="list-container shadowed-box">
     <div class="section-header" :class="{ errors }">
       <LpiButton
         secondary
+        :aria-label="$t('common.expand')"
         class="no-border skeletons-background"
         :btn-icon="stateModal ? 'ChevronUp' : 'ChevronDown'"
         @click.prevent="toggleModal"
@@ -39,25 +44,30 @@ watchEffect(() => {
       <LpiButton
         v-if="errors"
         color="red"
-        :title="$t('common.error')"
+        :aria-label="$t('common.error')"
         class="no-border error-icon skeletons-background"
         btn-icon="Alert"
         @click.prevent="openModal"
       />
-      <h4 class="divider-title">
-        {{ title }}
-      </h4>
+      <span class="title">
+        <IconImage v-if="icon" class="icon" :name="icon" />
+        <span>
+          {{ title }}
+        </span>
+      </span>
+
       <LpiButton
         v-if="canDelete"
         secondary
         class="no-border skeletons-background"
         btn-icon="TrashCanOutline"
+        :aria-label="$t('common.delete')"
         @click.prevent="$emit('delete')"
       />
     </div>
 
     <ContentExpandable :opened="stateModal" :height-limit="0" :hide-see-more="true">
-      <div class="list-container py4">
+      <div class="list-container p4">
         <slot />
       </div>
     </ContentExpandable>
@@ -65,29 +75,27 @@ watchEffect(() => {
 </template>
 
 <style lang="scss" scoped>
-.divider-title {
-  text-align: center;
-  font-size: 1.5rem;
-  color: var(--primary-dark);
+@use '~/components/base/navigation/navpanel-menu-entry';
 
-  &::before,
-  &::after {
-    content: '';
-    transform: translateY(-0.4rem);
-    display: inline-block;
-    width: 3rem;
-    height: 0.07rem;
-    background-color: var(--primary-dark);
-    border-radius: 40px;
-  }
+.list-container {
+  gap: 0;
+  border-radius: 20px;
+  padding: 0.5rem;
+}
+
+.title {
+  display: flex;
+  place-items: center center;
+  gap: 0.5rem;
+  margin: 0 1rem;
+  color: var(--primary-dark);
+  fill: var(--primary-dark);
 }
 
 .section-header {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  background-color: var(--primary-light);
-  border-radius: 20px;
 
   &.errors {
     grid-template-columns: auto auto 1fr auto;

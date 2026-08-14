@@ -587,7 +587,8 @@
     "file": "fichier | fichiers",
     "image": "image",
     "select-placeholder": "Sélectionner...",
-    "error": "erreur"
+    "error": "erreur",
+    "expand": "élargir"
   },
   "complete-profile": {
     "bio": {
@@ -2176,7 +2177,11 @@
     "no-templates-set": "Pas de template.",
     "placeholder-purpose": "Objet du projet",
     "placeholder-title": "Titre Sur place",
-    "edit-category": "Modifier la catégorie."
+    "edit-category": "Modifier la catégorie.",
+    "enable-tab": {
+      "label": "Permettre la création de nouveaux onglets",
+      "help": "Permet aux utilisateurs de créer de nouveaux onglets dans ce projet"
+    }
   },
   "tips": {
     "background-color": "Cette couleur sera affichée derrière le texte.",
@@ -3422,7 +3427,10 @@
       "add": "Nouvel onglet",
       "edit": "Modifier l'onglet",
       "title": "Création d'onglets",
-      "label": "onglet | Tables"
+      "label": "onglet | Tables",
+      "not-enabled": {
+        "admin": "La création d'onglets n'est pas activée par défaut. Cependant, en tant qu'administrateur, vous avez les autorisations requises pour accéder à cette fonctionnalité et créer de nouveaux onglets."
+      }
     },
     "item": {
       "delete-confirm": "Voulez-vous vraiment supprimer cet élément.",

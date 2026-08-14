@@ -587,7 +587,8 @@
     "file": "faili | failid",
     "image": "pilt",
     "select-placeholder": "Valige...",
-    "error": "viga"
+    "error": "viga",
+    "expand": "laiendada"
   },
   "complete-profile": {
     "bio": {
@@ -2091,7 +2092,11 @@
     "no-templates-set": "Malli pole määratud.",
     "project-purpose": "Projekti eesmärgi vorm",
     "project-title": "Projekti nimetuse vorm",
-    "edit-category": "Kategooria muutmine."
+    "edit-category": "Kategooria muutmine.",
+    "enable-tab": {
+      "label": "Uue kaardi loomise lubamine",
+      "help": "Võimaldab kasutajatel luua projektis uusi kaarte"
+    }
   },
   "tips": {
     "background-color": "Seda värvi näidatakse teksti taga.",
@@ -3422,7 +3427,10 @@
       "add": "Lisa uus kaart.",
       "edit": "Muuda kaarti",
       "title": "Kaardi loomine",
-      "label": "Tab | Tabs"
+      "label": "Tab | Tabs",
+      "not-enabled": {
+        "admin": "Kaardi loomine ei ole vaikimisi lubatud. Kuid administraatorina on teil vajalikud õigused selle funktsiooni kasutamiseks ja uute vahekaartide loomiseks."
+      }
     },
     "item": {
       "delete-confirm": "Kas tõesti kustutada see element?",

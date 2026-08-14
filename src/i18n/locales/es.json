@@ -587,7 +587,8 @@
     "file": "archivo | archivos",
     "image": "imagen",
     "select-placeholder": "Seleccione...",
-    "error": "error"
+    "error": "error",
+    "expand": "Ampliación"
   },
   "complete-profile": {
     "bio": {
@@ -2091,7 +2092,11 @@
     "no-templates-set": "Sin plantilla.",
     "placeholder-purpose": "Finalidad del proyecto",
     "placeholder-title": "Título In situ",
-    "edit-category": "Edición de categoría."
+    "edit-category": "Edición de categoría.",
+    "enable-tab": {
+      "label": "Permitir la creación de nuevas pestañas",
+      "help": "Permite a los usuarios crear nuevas pestañas dentro de este proyecto"
+    }
   },
   "tips": {
     "background-color": "Este color se mostrará detrás del texto.",
@@ -3422,7 +3427,10 @@
       "add": "Añadir un nuevo Tab.",
       "edit": "Editar Tab",
       "title": "Creación de pestañas",
-      "label": "Tab | Tabs"
+      "label": "Tab | Tabs",
+      "not-enabled": {
+        "admin": "La creación de pestañas no está activada por defecto. Sin embargo, como administrador, tiene los permisos necesarios para acceder a esta función y crear nuevas pestañas."
+      }
     },
     "item": {
       "delete-confirm": "¿Estás seguro de que quieres eliminar este artículo.",

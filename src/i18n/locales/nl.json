@@ -587,7 +587,8 @@
     "file": "bestand | bestanden",
     "image": "afbeelding",
     "select-placeholder": "Selecteren...",
-    "error": "fout"
+    "error": "fout",
+    "expand": "uitzetten"
   },
   "complete-profile": {
     "bio": {
@@ -2091,7 +2092,11 @@
     "no-templates-set": "Geen sjabloon ingesteld.",
     "placeholder-purpose": "Doel van het project",
     "placeholder-title": "Titel ter plaatse",
-    "edit-category": "Categorie bewerken."
+    "edit-category": "Categorie bewerken.",
+    "enable-tab": {
+      "label": "Nieuw tabblad aanmaken toestaan",
+      "help": "Laat gebruikers toe om nieuwe tabbladen aan te maken binnen dit project"
+    }
   },
   "tips": {
     "background-color": "Deze kleur wordt achter de tekst weergegeven.",
@@ -3422,7 +3427,10 @@
       "add": "Een nieuw tabblad toevoegen.",
       "edit": "Tabblad bewerken",
       "title": "Tab aanmaken",
-      "label": "Tab | Tabbladen"
+      "label": "Tab | Tabbladen",
+      "not-enabled": {
+        "admin": "Tabblad aanmaken is standaard niet ingeschakeld. Als beheerder hebt u echter de benodigde toegangsrechten om toegang te krijgen tot deze functie en nieuwe tabbladen aan te maken."
+      }
     },
     "item": {
       "delete-confirm": "Weet u zeker dat u dit item wilt verwijderen.",

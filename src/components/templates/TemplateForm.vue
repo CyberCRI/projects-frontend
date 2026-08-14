@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="list-container template-form">
     <div class="list-container m4">
       <TextInput
         v-model="form.name"
@@ -69,6 +69,7 @@
 
     <TemplateFormSection
       :title="$t('template.title-blog')"
+      :icon="PROJECT_MODULE_ICON.blogs"
       :errors="haveError(errors.blogentry_title, errors.blogentry_content)"
     >
       <TextInput v-model="form.blogentry_title" :label="$t('template.blog-title')" />
@@ -86,6 +87,7 @@
 
     <TemplateFormSection
       :title="$t('template.title-goal')"
+      :icon="PROJECT_MODULE_ICON.goals"
       :errors="haveError(errors.goal_title, errors.goal_description)"
     >
       <TextInput
@@ -108,6 +110,7 @@
 
     <TemplateFormSection
       :title="$t('template.title-comment')"
+      :icon="PROJECT_MODULE_ICON.comments"
       :errors="haveError(errors.comment_content)"
     >
       <Field :label="$t('template.comment')">
@@ -130,6 +133,7 @@
         :opened="!tab.id"
         :title="tab.title"
         :errors="!!errors.tabs[0]?.$message?.[idx]?.length"
+        :icon="tab.icon"
         @delete="onDeleteTab(idx)"
       >
         <TabFormRaw
@@ -151,7 +155,7 @@
       </TemplateFormSection>
     </template>
 
-    <LpiButton btn-icon="Plus" :label="$t('tab.tab.add')" @click="addNewTab" />
+    <LpiButton btn-icon="Plus" class="my4 tab-add" :label="$t('tab.tab.add')" @click="addNewTab" />
 
     <!-- drawer / modal -->
     <BaseDrawer
@@ -184,6 +188,7 @@ import TabItemFormRaw from '~/components/tabs/TabItemFormRaw.vue'
 import SwitchInput from '~/components/base/form/SwitchInput.vue'
 import type { PropsDefinitions } from '~/composables/tiptap'
 import TabFormRaw from '~/components/tabs/TabFormRaw.vue'
+import { PROJECT_MODULE_ICON } from '~/functs/constants'
 import Field from '~/components/base/form/Field.vue'
 import type { ErrorObject } from '@vuelidate/core'
 import { isEqual } from 'es-toolkit'
@@ -278,6 +283,10 @@ const onDeleteTab = (idx: number) => {
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 
+.template-form {
+  gap: 1.5rem;
+}
+
 .tag-grid {
   display: flex;
   flex-wrap: wrap;
@@ -286,5 +295,9 @@ const onDeleteTab = (idx: number) => {
 
 .title-template {
   font-size: 2rem;
+}
+
+.tab-add {
+  width: fit-content;
 }
 </style>

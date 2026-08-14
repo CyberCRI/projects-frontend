@@ -587,7 +587,8 @@
     "file": "fitxer | fitxers",
     "image": "imatge",
     "select-placeholder": "Selecciona...",
-    "error": "error"
+    "error": "error",
+    "expand": "expandit"
   },
   "complete-profile": {
     "bio": {
@@ -2091,7 +2092,11 @@
     "no-templates-set": "No s' ha establert cap plantilla.",
     "placeholder-purpose": "propòsit del projecte",
     "placeholder-title": "Títol en ordre",
-    "edit-category": "Edita la categoria."
+    "edit-category": "Edita la categoria.",
+    "enable-tab": {
+      "label": "Permet la nova creació de pestanyes",
+      "help": "Permet als usuaris crear pestanyes noves dins d' aquest projecte"
+    }
   },
   "tips": {
     "background-color": "Aquest color es mostrarà darrera del text.",
@@ -3422,7 +3427,10 @@
       "add": "Afegeix una nova pestanya.",
       "edit": "Edita pestanya",
       "title": "Creació de pestanya",
-      "label": "Pestanya | Pestanyes"
+      "label": "Pestanya | Pestanyes",
+      "not-enabled": {
+        "admin": "La creació de tabulació no està habilitada per omissió. No obstant això, com a administrador, teniu els permisos requerits per accedir a aquesta característica i crear pestanyes noves."
+      }
     },
     "item": {
       "delete-confirm": "Esteu segur que voleu eliminar aquest element.",

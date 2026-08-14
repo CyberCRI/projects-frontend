@@ -587,7 +587,8 @@
     "file": "Datei | Dateien",
     "image": "Bild",
     "select-placeholder": "Wählen Sie...",
-    "error": "Fehler"
+    "error": "Fehler",
+    "expand": "expandieren"
   },
   "complete-profile": {
     "bio": {
@@ -2091,7 +2092,11 @@
     "no-templates-set": "Kein Template-Set.",
     "placeholder-purpose": "Ziel des Projekts",
     "placeholder-title": "Titel Vor Ort",
-    "edit-category": "Kategorie bearbeiten."
+    "edit-category": "Kategorie bearbeiten.",
+    "enable-tab": {
+      "label": "Neue Tab-Erstellung ermöglichen",
+      "help": "Ermöglicht Benutzern, neue Registerkarten in diesem Projekt zu erstellen"
+    }
   },
   "tips": {
     "background-color": "Diese Farbe wird hinter dem Text angezeigt.",
@@ -3422,7 +3427,10 @@
       "add": "Fügen Sie ein neues Tab hinzu.",
       "edit": "Tab bearbeiten",
       "title": "Tab Erstellung",
-      "label": "Register | Tabs"
+      "label": "Register | Tabs",
+      "not-enabled": {
+        "admin": "Die Tab-Erstellung ist nicht standardmäßig aktiviert. Als Administrator haben Sie jedoch die erforderlichen Berechtigungen, um auf diese Funktion zuzugreifen und neue Registerkarten zu erstellen."
+      }
     },
     "item": {
       "delete-confirm": "Sind Sie sicher, dass Sie diesen Artikel löschen möchten.",
