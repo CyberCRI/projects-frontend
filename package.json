@@ -158,7 +158,7 @@
     "pinia": "3.0.4",
     "qrcode": "1.5.4",
     "sass-migrator": "^2.6.1",
-    "shared-projects-frontend": "git+https://github.com/CyberCRI/shared-projects-frontend.git#0.2.0",
+    "shared-projects-frontend": "git+https://github.com/CyberCRI/shared-projects-frontend.git#0.3.0",
     "sortablejs-vue3": "1.3.0",
     "turndown": "^7.2.4",
     "typescript": "6.0.3",
