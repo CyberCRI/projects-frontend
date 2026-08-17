@@ -29,6 +29,49 @@ async function getRegistrationToken({
   return data.access_token
 }
 
+// after your existing DCR POST succeeds and you have `data.client_id`:
+
+async function tagClientAsManaged({
+  keycloakUrl,
+  realm,
+  adminToken, // needs manage-clients (or FGAP grant) — see note below
+  oauthClientId, // this is data.client_id from the DCR response
+  attributes,
+}: {
+  keycloakUrl: string
+  realm: string
+  adminToken: string
+  oauthClientId: string
+  attributes: Record<string, string>
+}) {
+  // Admin REST API is keyed by the internal UUID, not the OAuth client_id string,
+  // so look it up first.
+  const lookupRes = await fetch(
+    `${keycloakUrl}/admin/realms/${realm}/clients?clientId=${encodeURIComponent(oauthClientId)}`,
+    { headers: { Authorization: `Bearer ${adminToken}` } }
+  )
+  const [client] = await lookupRes.json()
+  if (!client) throw new Error(`Client ${oauthClientId} not found via admin API`)
+
+  // Merge attributes into the existing representation rather than clobbering it.
+  const updated = {
+    ...client,
+    attributes: { ...client.attributes, ...attributes },
+  }
+
+  const putRes = await fetch(`${keycloakUrl}/admin/realms/${realm}/clients/${client.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${adminToken}`,
+    },
+    body: JSON.stringify(updated),
+  })
+  if (!putRes.ok) {
+    throw new Error(`Failed to tag client: ${putRes.status} ${await putRes.text()}`)
+  }
+}
+
 export default defineEventHandler(async (event) => {
   if (applyMcpCors(event)) return
   const { appKeycloakUrl, appKeycloakRealm, appMcpAllowedHosts } = useRuntimeConfig().public
@@ -115,10 +158,25 @@ export default defineEventHandler(async (event) => {
       data.grant_types = ['authorization_code', 'refresh_token']
       data.token_endpoint_auth_method = 'none'
 
-      traceMcp('Client registered successfully', {
-        client_id: data.client_id,
-        client_name: data.client_name,
-      })
+      traceMcp(`Created client ${data.client_id}`)
+
+      try {
+        traceMcp(`Tagging client ${data.client_id} for inactivity workflow`)
+        await tagClientAsManaged({
+          keycloakUrl: appKeycloakUrl as string,
+          realm: appKeycloakRealm as string,
+          adminToken: registrationToken, // see permissions note below
+          oauthClientId: data.client_id,
+          attributes: { 'managed-by': 'mcp-registration-proxy' },
+        })
+        traceMcp(`Client ${data.client_id} registered successfully`, {
+          client_id: data.client_id,
+          client_name: data.client_name,
+        })
+      } catch (e) {
+        traceMcp(`Failed to tag client ${data.client_id} for inactivity workflow`, e)
+        throw e
+      }
     } else {
       traceMcp('Client registration failed', { status: r.status, error: data })
     }
