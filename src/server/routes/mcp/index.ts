@@ -53,7 +53,7 @@ export default defineEventHandler(async (event) => {
 
       const gate = requireBearerAuth({
         verifier: verifierFactory(JWKS_URI, KEYCLOAK_ISSUER, MCP_RESOURCE),
-        requiredScopes: ['mcp:tools'],
+        //requiredScopes: ['mcp:tools'],
         resourceMetadataUrl: getOAuthProtectedResourceMetadataUrl(new URL(MCP_SERVER_URL)),
       })
 
