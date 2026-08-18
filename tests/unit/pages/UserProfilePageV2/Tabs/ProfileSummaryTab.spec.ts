@@ -76,7 +76,7 @@ describe('ProfileSummaryTab', () => {
 
   it('shouldnt display resources', async () => {
     const user = userTranslatedFactory.generate()
-    user.resources.files = user.resources.links = 0
+    user.modules.files = user.modules.links = 0
     const wrapper = await lpiMountSuspended(ProfileSummaryTab, {
       props: { user },
       global: {
@@ -92,7 +92,7 @@ describe('ProfileSummaryTab', () => {
 
   it('should display resources', async () => {
     const user = userTranslatedFactory.generate()
-    user.resources.files = user.resources.links = 5
+    user.modules.files = user.modules.links = 5
     const wrapper = await lpiMountSuspended(ProfileSummaryTab, {
       props: { user },
       global: {

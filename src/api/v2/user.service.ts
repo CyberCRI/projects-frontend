@@ -24,14 +24,14 @@ export const getUser = (
   userId: RefOrRaw<UserSlugOrId>,
   config: Config = {}
 ) => {
-  const { translateUserFull } = useAutoTranslate()
+  const { translateUser } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::user::${unref(userId)}`)
 
   return useAsyncAPI(
     key,
     ({ config }) => fetchUser(unref(userId), { ...DEFAULT_CONFIG, ...config }),
     {
-      translate: translateUserFull,
+      translate: translateUser,
       watch: onlyRefs([organizationCode, userId]),
       ...config,
     }

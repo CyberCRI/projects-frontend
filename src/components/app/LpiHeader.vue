@@ -493,7 +493,7 @@ export default {
 
     loginName() {
       if (!this.isConnected) return ''
-      return this.usersStore.user.name.firstname.toUpperCase()
+      return this.usersStore.user.given_name.toUpperCase()
     },
 
     AdminLabel() {

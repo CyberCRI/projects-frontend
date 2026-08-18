@@ -122,9 +122,9 @@
                       <dt>{{ $t('admin.accounts.table.groups') }}</dt>
                       <dd>
                         <ul>
-                          <li v-for="group in user.people_groups || []" :key="group.id">
-                            {{ group.name }}
-                          </li>
+                          {{
+                            `${$t('common.groups')} : ${user.modules.groups}`
+                          }}
                         </ul>
                       </dd>
                     </dl>

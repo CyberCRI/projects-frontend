@@ -49,10 +49,11 @@ export const mapUserPreview = (user: UserModel) => ({
   ]),
   item_image: user.profile_picture?.variations?.small,
 
+  // TODO get this from modules
   // this can be not set, add it and convert it only if exists
-  ...addIfExists('skills', user, (skills: UserModel['skills']) => skills.map(mapUserSkill)),
+  ...addIfExists('skills', user, (skills: SkillModel[]) => skills.map(mapUserSkill)),
   ...addIfExists('sdgs', user, (sdgs: UserModel['sdgs']) => sdgs.map(mapSDG)),
-  ...addIfExists('people_groups', user, (groups: UserModel['people_groups']) =>
+  ...addIfExists('people_groups', user, (groups: PeopleGroupModel[]) =>
     groups.map(mapPeopleGroupPreview)
   ),
 })

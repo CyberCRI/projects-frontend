@@ -116,8 +116,8 @@ export default {
       },
     ])
     const originalUser = ref(null)
-    const { translateUserFull } = useAutoTranslate()
-    const user = translateUserFull(originalUser)
+    const { translateUser } = useAutoTranslate()
+    const user = translateUser(originalUser)
     const isLoading = ref(true)
     return {
       usersStore,

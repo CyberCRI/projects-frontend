@@ -74,7 +74,7 @@ const localGetNotifications = async () => {
     const result = await getNotifications({ limit: 20 }, organizationCode)
     notifications.value = result.results
     nextPage.value = result.next
-    usersStore.notificationsCount = 0
+    usersStore.userFromApi.value = 0
   } catch (err) {
     console.error(err)
   } finally {

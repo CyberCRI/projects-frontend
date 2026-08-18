@@ -18,7 +18,6 @@ import type { AuthResult } from '~/api/auth/keycloak'
 
 import type { Right } from 'shared-projects-frontend/interfaces'
 import { userRights } from 'shared-projects-frontend/lib'
-import { getOrgsFromRoles } from '~/functs/rolesUtils'
 import analytics from '~/analytics'
 import { defineStore } from 'pinia'
 import { pick } from 'es-toolkit'
@@ -65,7 +64,13 @@ const useUsersStore = defineStore('users', () => {
     return userRights(safeUser)
   })
 
-  const notificationsCount = ref(0)
+  const notificationsCount = computed(() => {
+    if (userFromApi.value) {
+      return userFromApi.value.modules.notifications
+    }
+    return 0
+  })
+
   const notificationsSettings = ref(null)
   const userDataRefreshLoop = ref(null)
   const followedCategories = ref<any[]>([])
@@ -82,19 +87,13 @@ const useUsersStore = defineStore('users', () => {
     if (userFromToken.value) {
       return {
         id: userFromToken.value.pid,
-        name: {
-          firstname: userFromToken.value.given_name,
-          lastname: userFromToken.value.family_name,
-        },
         given_name: userFromToken.value.given_name,
         family_name: userFromToken.value.family_name,
         email: userFromToken.value.email,
         roles: userFromToken.value.roles || [],
         permissions: userFromToken.value.permissions || {},
-        orgs: getOrgsFromRoles(userFromToken.value.roles),
         slug: userFromToken.value.slug,
         researcher: userFromToken.value.researcher,
-        resources: userFromToken.value.resources,
         signed_terms_and_conditions: userFromApi.value?.signed_terms_and_conditions || {},
         ...pick(userFromApi.value || {}, [
           'is_superuser',
@@ -134,7 +133,6 @@ const useUsersStore = defineStore('users', () => {
     userFromToken.value = null
     id_token.value = ''
     userFromApi.value = null
-    notificationsCount.value = 0
     notificationsSettings.value = null
     // API proxy cookie
     document.cookie = 'jwt_access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;'
@@ -238,7 +236,6 @@ const useUsersStore = defineStore('users', () => {
     try {
       // TODO: except for permissions, useless props that are on userFromApi anyway (to check)
       const user = await _getUser(id)
-      notificationsCount.value = user?.notifications || 0
       userFromApi.value = user
 
       startUserDataRefreshLoop()

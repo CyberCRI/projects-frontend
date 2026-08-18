@@ -295,19 +295,6 @@ export default function useAutoTranslate() {
   const translateTemplates = (templates) =>
     translateEntities<TranslatedTemplate>(templates, translateTemplate)
 
-  // -------
-  // use full
-
-  const translateUserFull = (user) =>
-    computed(() => {
-      const res = unref(translateUser(user))
-      if (res) {
-        res.people_groups = unref(translateGroups(res.people_groups))
-        res.skills = unref(translateTags(res.skills))
-      }
-      return res
-    })
-
   // -----------
   // news
   const translateOneNews = (news) =>
@@ -458,7 +445,6 @@ export default function useAutoTranslate() {
     // people
     translateUser,
     translateUsers,
-    translateUserFull,
     translateTag,
     translateTags,
 

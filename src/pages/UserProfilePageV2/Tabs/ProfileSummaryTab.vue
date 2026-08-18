@@ -146,8 +146,8 @@
         <template #default>
           <ResourcesRecap
             class="unboxed"
-            :files="user.resources.files"
-            :links="user.resources.links"
+            :files="user.modules.files"
+            :links="user.modules.links"
             :target="{
               name: 'ProfileResourcesOther',
               params: { userId: user.id },
@@ -192,7 +192,7 @@ const LIST_LIMIT = 6
 const DOCUMENTS_LIMIT = 3
 
 const resourcesCount = computed(() => {
-  return props.user.resources.files + props.user.resources.links
+  return props.user.modules.files + props.user.modules.links
 })
 const documentsCount = computed(
   () =>

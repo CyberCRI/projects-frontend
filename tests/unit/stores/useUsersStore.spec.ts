@@ -344,7 +344,7 @@ describe('Store module | users | getters', () => {
       parsedToken: userFromJWT,
     })
     usersStore.$patch(stateWithUserWithSpecialCharacter as any)
-    expect(usersStore.user.name.firstname).toBe('hénri')
+    expect(usersStore.user.given_name).toBe('hénri')
     spy.mockReset()
   })
 
