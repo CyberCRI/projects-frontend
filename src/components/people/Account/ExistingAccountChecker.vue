@@ -85,7 +85,9 @@ const searchUser = async () => {
   try {
     // 404 if user doesn't exist
     targetUser = await searchPeopleByExactMail(targetUser.email, {
-      current_org_pk: organization.value.id,
+      query: {
+        current_org_pk: organization.value.id,
+      },
     })
   } catch {
     console.log('no user match, proceed to account cretaion')

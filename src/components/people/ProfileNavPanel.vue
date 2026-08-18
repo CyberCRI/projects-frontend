@@ -70,12 +70,12 @@
 
 <script setup lang="ts">
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
-import type { PeopleModel } from 'shared-projects-frontend/models'
+import type { UserModel } from 'shared-projects-frontend/models'
 import type { RouteLocationRaw } from 'vue-router'
 
 const props = withDefaults(
   defineProps<{
-    user?: PeopleModel
+    user?: UserModel
     isSelf?: boolean
     editButtonLabel: string
     editProfileLink: RouteLocationRaw
@@ -98,7 +98,7 @@ const emit = defineEmits(['navigated'])
 
 const hasOnlyMail = computed(() => {
   return (
-    !props.user?.mobile &&
+    !props.user?.mobile_phone &&
     !props.user?.location &&
     !props.user?.facebook &&
     !props.user?.twitter &&

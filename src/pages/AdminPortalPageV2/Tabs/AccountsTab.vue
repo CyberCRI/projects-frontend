@@ -166,7 +166,7 @@ import FetchLoader from '~/components/base/FetchLoader.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 
 import { factoriesSkeleton } from '~/skeletons/base.skeletons'
-import { peopleSkeleton } from '~/skeletons/people.skeletons'
+import { userSkeleton } from '~/skeletons/user.skeletons'
 import { roleI18n } from '~/functs/rolesUtils'
 import { capitalize } from '~/functs/string'
 
@@ -236,7 +236,7 @@ const { query, setQuery } = useQuery<QuerySearchAdmin>({
 const organizationId = computed(() => organizationsStore.current.id)
 const { status, data, refresh, pagination } = searchPeopleAdmin(organizationId, {
   query,
-  default: () => factoriesSkeleton(peopleSkeleton, LIMIT),
+  default: () => factoriesSkeleton(userSkeleton, LIMIT),
   paginationConfig: {
     limit: LIMIT,
   },

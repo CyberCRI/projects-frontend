@@ -102,6 +102,12 @@ const useUsersStore = defineStore('users', () => {
           'facebook',
           'twitter',
           'website',
+          'modules',
+          'created_at',
+          'location',
+          'landline_phone',
+          'mobile_phone',
+          'skype',
         ]),
       }
     }

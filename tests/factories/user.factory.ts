@@ -65,6 +65,24 @@ export const UserFactory = createFactory<UserModel>((faker) => ({
   linkedin: null,
   twitter: null,
   website: null,
+  modules: {
+    conferences: 0,
+    files: 0,
+    follows_categories: 0,
+    follows_projects: 0,
+    groups: 0,
+    links: 0,
+    mentor: 0,
+    mentoree: 0,
+    projects: 0,
+    publications: 0,
+    skills: 0,
+  },
+  created_at: faker.datatype.datetime().toISOString(),
+  landline_phone: null,
+  location: '',
+  mobile_phone: null,
+  skype: null,
 }))
 
 export const userTranslatedFactory = createFactory<TranslatedUserModel>(() => {
