@@ -99,6 +99,7 @@
     "@langchain/openai": "1.5.5",
     "@langchain/pgvector": "0.1.0",
     "@langchain/textsplitters": "1.0.1",
+    "@modelcontextprotocol/express": "^2.0.0",
     "@modelcontextprotocol/sdk": "1.29.0",
     "@nuxtjs/i18n": "10.4.1",
     "@panva/oauth4webapi": "1.2.1",

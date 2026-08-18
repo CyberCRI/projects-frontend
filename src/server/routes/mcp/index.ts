@@ -1,36 +1,34 @@
 // import { getOAuthProtectedResourceMetadataUrl } from '@modelcontextprotocol/sdk/server/auth/router.js'
+import {
+  requireBearerAuth,
+  getOAuthProtectedResourceMetadataUrl,
+} from '@modelcontextprotocol/express'
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
-import { exchangeToken } from '@/server/utils/token-exchange'
+import { verifierFactory } from '@/server/utils/token-verifier'
 import { applyMcpCors } from '@/server/utils/mcp-cors'
-// import { requireBearerAuth } from "@modelcontextprotocol/sdk/server/auth/middleware/bearerAuth.js";
-// import { requireBearerAuth } from '@modelcontextprotocol/server'
 import createMCPServer from '~/mcp-server'
+
 export default defineEventHandler(async (event) => {
   if (applyMcpCors(event)) return
   const runtimeConfig = useRuntimeConfig()
   const { appMcpServerUrl } = runtimeConfig
 
-  const { appKeycloakClientId, appKeycloakClientSecret } = runtimeConfig.public
+  // const { appKeycloakClientId, appKeycloakClientSecret } = runtimeConfig.public
   const { appKeycloakUrl, appKeycloakRealm } = useRuntimeConfig().public
+  const KEYCLOAK_ISSUER = `${(appKeycloakUrl as string).replace(/\/?$/, '')}/realms/${appKeycloakRealm}/`
+  const MCP_SERVER_URL = (appMcpServerUrl as string)
+    .replace(/\?internal=true$/, '')
+    .replace(/\/mcp\/?$/, '') // this server's canonical URI
+  const MCP_RESOURCE = `${MCP_SERVER_URL}/mcp` // RFC 8707 resource indicator
+  const JWKS_URI = `${KEYCLOAK_ISSUER}/protocol/openid-connect/certs`
 
   traceMcp('/mcp', JSON.stringify(getQuery(event), null, 2))
 
-  const keycloakClientConf = {
-    TOKEN_ENDPOINT: `${appKeycloakUrl}/realms/${appKeycloakRealm}/protocol/openid-connect/token`,
-    CLIENT_ID: appKeycloakClientId as string,
-    CLIENT_SECRET: appKeycloakClientSecret as string,
-  }
-
   const { req, res } = event.node
-
-  const MCP_URL = appMcpServerUrl.replace(/\?internal=true$/, '').replace(/\/mcp\/?$/, '') // this server's canonical URI
-  // const RESOURCE = `${MCP_URL}/mcp` // RFC 8707 resource indicator
-  // const ISSUER = `${appKeycloakUrl.replace(/\/?$/, '')}/realms/${appKeycloakRealm}/`
 
   const { authed, internal } = getQuery(event)
   const token = getRequestHeader(event, 'authorization') || ''
-  let downstreamAccessToken = null
 
   if (internal) {
     traceMcp('Internal access...')
@@ -43,39 +41,20 @@ export default defineEventHandler(async (event) => {
     traceMcp('External access')
     if (authed) {
       traceMcp('Authenticated acces...')
-      if (!token) {
-        traceMcp('...No token')
-        setResponseStatus(event, 401)
-        setHeader(
-          event,
-          'WWW-Authenticate',
-          `Bearer resource_metadata="${MCP_URL}/.well-known/oauth-protected-resource'"`
-        )
 
-        return {
-          statusCode: 401,
-          message: 'Unauthorized',
-        }
+      const gate = requireBearerAuth({
+        verifier: verifierFactory(JWKS_URI, KEYCLOAK_ISSUER, MCP_RESOURCE),
+        requiredScopes: ['mcp:tools'],
+        resourceMetadataUrl: getOAuthProtectedResourceMetadataUrl(new URL(MCP_SERVER_URL)),
+      })
+
+      const request = toWebRequest(event) // Nitro → standard Fetch Request, no Express shim
+      const auth = await gate(request) // AuthInfo on success, ready-made 401/403 Response on failure
+      if (auth instanceof Response) {
+        traceMcp('auth is Response')
+        return auth // h3 forwards Fetch Response objects as-is
       } else {
-        traceMcp('...With pkce token...')
-
-        const auth = getRequestHeader(event, 'authorization') || ''
-        if (!auth?.startsWith('Bearer ')) {
-          return {
-            statusCode: 401,
-            message: 'missing_bearer_token',
-          }
-        }
-        const subjectToken = auth.slice('Bearer '.length)
-
-        try {
-          downstreamAccessToken = await exchangeToken(keycloakClientConf, subjectToken) // {audience, scope} ?
-          traceMcp('...token exchaged')
-        } catch (err) {
-          traceMcp('...token exchage failed')
-          console.error('token exchange error:', err.message)
-          return { status: 502, message: 'token_exchange_failed' }
-        }
+        traceMcp('auth is AuthInfo')
       }
     } else {
       traceMcp('...Anonymous access')
@@ -115,10 +94,6 @@ export default defineEventHandler(async (event) => {
   //     console.log('MCP connection closed, closing transport')
   //     //       transport.close()
   //   })
-
-  if (downstreamAccessToken) {
-    req.headers['authorization'] = `Bearer ${downstreamAccessToken}`
-  }
 
   await mcpServer.connect(transport)
   await transport.handleRequest(req, res)
