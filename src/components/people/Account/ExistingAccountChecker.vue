@@ -41,7 +41,7 @@ import useValidate from '@vuelidate/core'
 
 import type { UserModel } from 'shared-projects-frontend/models'
 
-import { searchPeopleByExactMail } from 'shared-projects-frontend/apis'
+import { searchUserByExactMail } from 'shared-projects-frontend/apis'
 
 import AccountFormTitleBlock from '~/components/people/Account/AccountFormTitleBlock.vue'
 import FieldErrors from '~/components/base/form/FieldErrors.vue'
@@ -84,7 +84,7 @@ const searchUser = async () => {
   asyncing.value = true
   try {
     // 404 if user doesn't exist
-    targetUser = await searchPeopleByExactMail(targetUser.email, {
+    targetUser = await searchUserByExactMail(targetUser.email, {
       query: {
         current_org_pk: organization.value.id,
       },

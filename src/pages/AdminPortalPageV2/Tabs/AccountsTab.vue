@@ -159,7 +159,7 @@
 <script setup lang="ts">
 import type { Ordering } from 'shared-projects-frontend/interfaces'
 
-import { searchPeopleAdmin } from '~/api/v2/people.service'
+import { searchUserAdmin } from '~/api/v2/user.service'
 
 import FetchLoader from '~/components/base/FetchLoader.vue'
 
@@ -234,7 +234,7 @@ const { query, setQuery } = useQuery<QuerySearchAdmin>({
 // TODO change to organizationCode
 // TODO add translate for user/group
 const organizationId = computed(() => organizationsStore.current.id)
-const { status, data, refresh, pagination } = searchPeopleAdmin(organizationId, {
+const { status, data, refresh, pagination } = searchUserAdmin(organizationId, {
   query,
   default: () => factoriesSkeleton(userSkeleton, LIMIT),
   paginationConfig: {
