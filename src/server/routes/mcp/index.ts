@@ -2,7 +2,7 @@
 import {
   requireBearerAuth,
   getOAuthProtectedResourceMetadataUrl,
-} from '@modelcontextprotocol/express'
+} from '@modelcontextprotocol/server'
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import { verifierFactory } from '@/server/utils/token-verifier'
