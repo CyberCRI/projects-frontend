@@ -6,30 +6,39 @@ import {
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import { verifierFactory } from '@/server/utils/token-verifier'
+import { exchangeToken } from '@/server/utils/token-exchange'
 import { applyMcpCors } from '@/server/utils/mcp-cors'
 import createMCPServer from '~/mcp-server'
 
 export default defineEventHandler(async (event) => {
-  if (applyMcpCors(event)) return
+  const cors = applyMcpCors(event)
+  if (cors) return cors
   const runtimeConfig = useRuntimeConfig()
   const { appMcpServerUrl } = runtimeConfig
 
   // const { appKeycloakClientId, appKeycloakClientSecret } = runtimeConfig.public
-  const { appKeycloakUrl, appKeycloakRealm } = useRuntimeConfig().public
+  const { appKeycloakUrl, appKeycloakRealm, appKeycloakClientId, appKeycloakClientSecret } =
+    useRuntimeConfig().public
   const KEYCLOAK_ISSUER = `${(appKeycloakUrl as string).replace(/\/?$/, '')}/realms/${appKeycloakRealm}/`
   const MCP_SERVER_URL = (appMcpServerUrl as string)
-    .replace(/\?internal=true$/, '')
+    .replace(/\?internal=true$/, '') // present for "normal" projects mcp
     .replace(/\/mcp\/?$/, '') // this server's canonical URI
   const MCP_RESOURCE = `${MCP_SERVER_URL}/mcp` // RFC 8707 resource indicator
   const JWKS_URI = `${KEYCLOAK_ISSUER}/protocol/openid-connect/certs`
 
   traceMcp('/mcp', JSON.stringify(getQuery(event), null, 2))
 
+  const keycloakClientConf = {
+    TOKEN_ENDPOINT: `${appKeycloakUrl}/realms/${appKeycloakRealm}/protocol/openid-connect/token`,
+    CLIENT_ID: appKeycloakClientId as string,
+    CLIENT_SECRET: appKeycloakClientSecret as string,
+  }
+
   const { req, res } = event.node
 
   const { authed, internal } = getQuery(event)
   const token = getRequestHeader(event, 'authorization') || ''
-
+  let exchangedToken = null
   if (internal) {
     traceMcp('Internal access...')
     if (token) {
@@ -55,6 +64,8 @@ export default defineEventHandler(async (event) => {
         return auth // h3 forwards Fetch Response objects as-is
       } else {
         traceMcp('auth is AuthInfo')
+        traceMcp('proceed to token exchange')
+        exchangedToken = await exchangeToken(keycloakClientConf, token.slice('Bearer '.length))
       }
     } else {
       traceMcp('...Anonymous access')
@@ -94,6 +105,10 @@ export default defineEventHandler(async (event) => {
   //     console.log('MCP connection closed, closing transport')
   //     //       transport.close()
   //   })
+
+  if (exchangedToken) {
+    req.headers['authorization'] = `Bearer ${exchangedToken}`
+  }
 
   await mcpServer.connect(transport)
   await transport.handleRequest(req, res)

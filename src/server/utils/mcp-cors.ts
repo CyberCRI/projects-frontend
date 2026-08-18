@@ -1,23 +1,25 @@
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import { handleCors, type H3Event } from 'h3'
 
-// this aim to fix an issue with perplixity and mcp client registration
+// only needed if a browser-based client (e.g. MCP Inspector) calls /mcp directly
 export function applyMcpCors(event: H3Event) {
-  const { appMcpAllowedHosts } = useRuntimeConfig().public
-  const ALLOWED_ORIGINS = ((appMcpAllowedHosts as string) || '')
-    .split('|')
-    .filter((origin) => origin != 'localhost' && origin != '127.0.0.1')
-
+  const origin = getRequestHeader(event, 'origin')
+  if (!origin) return
   const path = getRequestURL(event).pathname
-  traceMcp(
-    `CORS middleware triggered on path ${path} with allowed origins:`,
-    ALLOWED_ORIGINS.map((origin) => `"${origin}"`).join(', ')
-  )
+  traceMcp(`CORS middleware triggered on path ${path} with origins: ${origin}`)
   return handleCors(event, {
-    origin: ALLOWED_ORIGINS,
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowHeaders: ['Authorization', 'Content-Type', 'Mcp-Session-Id', 'MCP-Protocol-Version'],
-    exposeHeaders: ['Mcp-Session-Id', 'WWW-Authenticate'], // the critical one for this bug
-    credentials: false,
+    origin: [origin], // reflect the exact caller back; MCP clients call from many origins, so a fixed allowlist or '*' breaks legitimate ones
+    methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Mcp-Session-Id', 'Mcp-Protocol-Version'],
+    exposeHeaders: [
+      'WWW-Authenticate', // so a browser-side client can read the 401 challenge + resource_metadata pointer
+      'Mcp-Session-Id',
+      'Mcp-Protocol-Version',
+    ],
+    credentials: false, // MCP auth here is Bearer-token based, not cookie-based, so no credentialed CORS is needed
+    maxAge: '86400',
+    preflight: {
+      statusCode: 204,
+    },
   })
 }

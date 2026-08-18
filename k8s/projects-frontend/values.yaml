@@ -45,7 +45,6 @@ config:
     NUXT_APP_LANGCHAIN_TRACE: ''
     NUXT_APP_GOTENBERG_SERVER_URL: ''
     NUXT_PUBLIC_APP_GOTENBERG_ENABLED: ''
-    NUXT_PUBLIC_APP_MCP_ALLOWED_HOSTS: 'localhost|127.0.0.1|claude.ai|claude.com|perplexity.ai|www.perplexity.ai|enterprise.perplexity.ai|chatgpt.com|callback.mistral.ai'
 e2eEnv:
   nonSensitive:
     USER_ADMIN_EMAIL: testautomatatiquedministrateur1@outlook.fr

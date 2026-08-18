@@ -38,6 +38,10 @@ export async function exchangeToken(
     subject_token: subjectToken,
     subject_token_type: 'urn:ietf:params:oauth:token-type:access_token',
     requested_token_type: 'urn:ietf:params:oauth:token-type:access_token',
+    client_id: CLIENT_ID,
+    client_secret: CLIENT_SECRET,
+    // scope: 'projects-frontend-dev-dedicated', // pulls in the audience mapper
+    // audience: 'backend-api', // restricts the resulting aud to just this
   })
   if (audience) body.append('audience', audience)
   if (scope) body.append('scope', scope)
