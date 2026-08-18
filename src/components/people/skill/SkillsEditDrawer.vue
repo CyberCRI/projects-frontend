@@ -103,7 +103,7 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
-import type { TranslatedUserModel, UserSkillModel } from 'shared-projects-frontend/models'
+import type { TranslatedUserModel, SkillModel } from 'shared-projects-frontend/models'
 import useSkillTexts from '~/composables/useSkillTexts'
 import useTagSearch from '~/composables/useTagSearch'
 import { defaultMentorship } from '~/form/mentorship'
@@ -128,7 +128,7 @@ const emit = defineEmits<{
   close: []
   'switch-mode': []
   confirm: []
-  'skill-added': [UserSkillModel]
+  'skill-added': [SkillModel]
 }>()
 
 const toaster = useToasterStore()

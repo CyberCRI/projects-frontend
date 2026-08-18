@@ -2,13 +2,13 @@
 import MentorshipForm from '~/components/people/skill/MentorshipForm.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import type { UserSkillModel } from 'shared-projects-frontend/models'
+import type { SkillModel } from 'shared-projects-frontend/models'
 import useSkillTexts from '~/composables/useSkillTexts'
 
 const emit = defineEmits(['close', 'update-mentorship'])
 
 const props = defineProps<{
-  skill: UserSkillModel
+  skill: SkillModel
   isOpened: boolean
 }>()
 

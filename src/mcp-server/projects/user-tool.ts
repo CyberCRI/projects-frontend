@@ -1,4 +1,4 @@
-import type { UserModel, UserSkillModel, PeopleGroupModel } from 'shared-projects-frontend/models'
+import type { UserModel, SkillModel, PeopleGroupModel } from 'shared-projects-frontend/models'
 import { getUser as fetchUser, getGroup } from 'shared-projects-frontend/apis'
 import { addIfExists, tagMapPreview } from '~/mcp-server/projects/utils'
 import { mcpOptions, orgCode, resultFromTool } from './base'
@@ -14,7 +14,7 @@ export const FETCH_USER_SLUG_OR_ID =
 export const FETCH_GROUP_SLUG_OR_ID =
   'If you dont have the slug (given under "slug" or "id" key in a previous tool call data) or id of the group of users, use the search tool with the group of user name, the group id or slug will be in the first result, else use the previously mentioned slug or id.'
 
-const mapUserSkill = (skill: UserSkillModel) => ({
+const mapUserSkill = (skill: SkillModel) => ({
   item_type: 'user_skill',
   ...pick(skill, [
     'id',
