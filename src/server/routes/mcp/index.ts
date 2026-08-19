@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
     .replace(/\?internal=true$/, '') // present for "normal" projects mcp
     .replace(/\/mcp\/?$/, '') // this server's canonical URI
   const MCP_RESOURCE = `${MCP_SERVER_URL}/mcp` // RFC 8707 resource indicator
-  const JWKS_URI = `${KEYCLOAK_ISSUER}/protocol/openid-connect/certs`
+  const JWKS_URI = `${KEYCLOAK_ISSUER}protocol/openid-connect/certs`
 
   traceMcp('/mcp', JSON.stringify(getQuery(event), null, 2))
 

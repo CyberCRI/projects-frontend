@@ -7,6 +7,7 @@ export default defineLazyEventHandler(() => {
     .replace(/\?internal=true$/, '') // present for "normal" projects mcp
     .replace(/\/mcp\/?$/, '') // this server's canonical URI
   const MCP_RESOURCE = `${MCP_SERVER_URL}/mcp` // RFC 8707 resource indicator
+  const JWKS_URI = `${KEYCLOAK_ISSUER}protocol/openid-connect/certs`
 
   return defineEventHandler(async (event) => {
     const cors = applyMcpCors(event)
@@ -14,6 +15,8 @@ export default defineLazyEventHandler(() => {
     return {
       resource: MCP_RESOURCE,
       authorization_servers: [KEYCLOAK_ISSUER],
+      jwks_uri: JWKS_URI,
+      bearer_methods_supported: ['header'],
     }
   })
 })
