@@ -51,6 +51,8 @@ export default defineEventHandler(async (event) => {
     if (authed) {
       traceMcp('Authenticated acces...')
 
+      traceMcp('Incoming token', token)
+
       traceMcp('token safe payload', JSON.stringify(jwtDebugInfo(token), null, 2))
       const gate = requireBearerAuth({
         verifier: verifierFactory(JWKS_URI, KEYCLOAK_ISSUER, MCP_RESOURCE),
@@ -73,6 +75,7 @@ export default defineEventHandler(async (event) => {
         try {
           exchangedToken = await exchangeToken(keycloakClientConf, token.slice('Bearer '.length))
           traceMcp('...token exchanged')
+          traceMcp('Exchanged token', exchangedToken)
         } catch (err) {
           traceMcp('...error exchanging token', err)
           throw err
