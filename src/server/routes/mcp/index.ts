@@ -43,6 +43,7 @@ export default defineEventHandler(async (event) => {
     traceMcp('Internal access...')
     if (token) {
       traceMcp('...With auth token')
+      traceMcp('Internal token safe payload', JSON.stringify(jwtDebugInfo(token), null, 2))
     } else {
       traceMcp('...Anonymous')
     }
@@ -51,9 +52,7 @@ export default defineEventHandler(async (event) => {
     if (authed) {
       traceMcp('Authenticated acces...')
 
-      traceMcp('Incoming token', token)
-
-      traceMcp('token safe payload', JSON.stringify(jwtDebugInfo(token), null, 2))
+      traceMcp('External token safe payload', JSON.stringify(jwtDebugInfo(token), null, 2))
       const gate = requireBearerAuth({
         verifier: verifierFactory(JWKS_URI, KEYCLOAK_ISSUER, MCP_RESOURCE),
         //requiredScopes: ['mcp:tools'],
@@ -75,7 +74,10 @@ export default defineEventHandler(async (event) => {
         try {
           exchangedToken = await exchangeToken(keycloakClientConf, token.slice('Bearer '.length))
           traceMcp('...token exchanged')
-          traceMcp('Exchanged token', exchangedToken)
+          traceMcp(
+            'Exchanged token safe payload',
+            JSON.stringify(jwtDebugInfo(exchangedToken), null, 2)
+          )
         } catch (err) {
           traceMcp('...error exchanging token', err)
           throw err
@@ -98,7 +100,7 @@ export default defineEventHandler(async (event) => {
   // const body = await readBody(event)
 
   traceMcp('MCP connection request:')
-  traceMcp(req.headers, req.method, req.url /*body*/)
+  traceMcp(/*req.headers, req.method,*/ req.url /*body*/)
 
   const mcpServer = createMCPServer()
 

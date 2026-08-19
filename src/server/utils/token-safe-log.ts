@@ -4,7 +4,20 @@ function decodeJwtPayload(token: string): object {
   return JSON.parse(Buffer.from(parts[1], 'base64url').toString('utf8'))
 }
 
-const SAFE_CLAIMS = ['iss', 'aud', 'sub', 'exp', 'iat', 'nbf', 'jti', 'scope']
+const SAFE_CLAIMS = [
+  'iss',
+  'aud',
+  'sub',
+  'exp',
+  'iat',
+  'nbf',
+  'jti',
+  'scope',
+  // extra stuffs:
+  'azp',
+  'pid',
+  'email',
+]
 
 export default function jwtDebugInfo(token: string): object {
   try {
