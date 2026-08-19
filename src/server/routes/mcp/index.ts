@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
     if (authed) {
       traceMcp('Authenticated acces...')
 
-      traceMcp('token safe payload', JSON.stringify(jwtDebugInfo(token)))
+      traceMcp('token safe payload', JSON.stringify(jwtDebugInfo(token), null, 2))
       const gate = requireBearerAuth({
         verifier: verifierFactory(JWKS_URI, KEYCLOAK_ISSUER, MCP_RESOURCE),
         //requiredScopes: ['mcp:tools'],
