@@ -1,3 +1,4 @@
+import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import { createRemoteJWKSet, jwtVerify } from 'jose'
 
 export const verifierFactory = (
@@ -12,6 +13,7 @@ export const verifierFactory = (
         issuer: KEYCLOAK_ISSUER,
         audience: MCP_RESOURCE, // hard reject if this token wasn't minted for THIS server
       })
+      traceMcp('token payload in verifier', JSON.stringify(payload, null, 2))
       return {
         token,
         clientId: (payload.azp as string) ?? (payload.client_id as string),
