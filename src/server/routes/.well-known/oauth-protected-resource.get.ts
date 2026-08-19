@@ -17,6 +17,7 @@ export default defineLazyEventHandler(() => {
       authorization_servers: [KEYCLOAK_ISSUER],
       jwks_uri: JWKS_URI,
       bearer_methods_supported: ['header'],
+      scopes_supported: ['mcp:tools'],
     }
   })
 })
