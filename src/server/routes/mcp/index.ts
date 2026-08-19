@@ -7,9 +7,9 @@ import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import { verifierFactory } from '@/server/utils/token-verifier'
 import { exchangeToken } from '@/server/utils/token-exchange'
+import jwtDebugInfo from '@/server/utils/token-safe-log'
 import { applyMcpCors } from '@/server/utils/mcp-cors'
 import createMCPServer from '~/mcp-server'
-
 export default defineEventHandler(async (event) => {
   const cors = applyMcpCors(event)
   if (cors) return cors
@@ -51,6 +51,7 @@ export default defineEventHandler(async (event) => {
     if (authed) {
       traceMcp('Authenticated acces...')
 
+      traceMcp('token safe payload', JSON.stringify(jwtDebugInfo(token)))
       const gate = requireBearerAuth({
         verifier: verifierFactory(JWKS_URI, KEYCLOAK_ISSUER, MCP_RESOURCE),
         //requiredScopes: ['mcp:tools'],
