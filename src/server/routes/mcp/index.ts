@@ -60,7 +60,7 @@ export default defineEventHandler(async (event) => {
       const request = toWebRequest(event) // Nitro → standard Fetch Request, no Express shim
       const auth = await gate(request) // AuthInfo on success, ready-made 401/403 Response on failure
       if (auth instanceof Response) {
-        traceMcp('auth is Response')
+        traceMcp('auth is Response', auth)
         return auth // h3 forwards Fetch Response objects as-is
       } else {
         traceMcp('auth is AuthInfo')
