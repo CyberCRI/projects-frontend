@@ -65,8 +65,14 @@ export default defineEventHandler(async (event) => {
         return auth // h3 forwards Fetch Response objects as-is
       } else {
         traceMcp('auth is AuthInfo')
-        traceMcp('proceed to token exchange')
-        exchangedToken = await exchangeToken(keycloakClientConf, token.slice('Bearer '.length))
+        traceMcp('proceed to token exchange...')
+        try {
+          exchangedToken = await exchangeToken(keycloakClientConf, token.slice('Bearer '.length))
+          traceMcp('...token exchanged')
+        } catch (err) {
+          traceMcp('...error exchanging token', err)
+          throw err
+        }
       }
     } else {
       traceMcp('...Anonymous access')

@@ -1,3 +1,5 @@
+import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
+
 interface ExchangeTokenOptions {
   audience?: string
   scope?: string
@@ -31,17 +33,18 @@ export async function exchangeToken(
 ): Promise<string> {
   const key = `${subjectToken}::${audience ?? ''}::${scope ?? ''}`
   const cached = cache.get(key)
-  if (cached && cached.expiresAt > Date.now() + 5000) return cached.accessToken
+  if (cached && cached.expiresAt > Date.now() + 5000) {
+    traceMcp('Got cached token')
+    return cached.accessToken
+  }
 
   const body = new URLSearchParams({
     grant_type: 'urn:ietf:params:oauth:grant-type:token-exchange',
     subject_token: subjectToken,
     subject_token_type: 'urn:ietf:params:oauth:token-type:access_token',
     requested_token_type: 'urn:ietf:params:oauth:token-type:access_token',
-    client_id: CLIENT_ID,
-    client_secret: CLIENT_SECRET,
-    // scope: 'projects-frontend-dev-dedicated', // pulls in the audience mapper
-    // audience: 'backend-api', // restricts the resulting aud to just this
+    // client_id: CLIENT_ID,
+    // client_secret: CLIENT_SECRET,
   })
   if (audience) body.append('audience', audience)
   if (scope) body.append('scope', scope)
@@ -58,7 +61,11 @@ export async function exchangeToken(
   })
 
   if (!res.ok) {
-    throw new Error(`token-exchange failed (${res.status}): ${await res.text()}`)
+    const text = await res.text()
+    traceMcp(`Error exchanging token  (${res.status}): ${text}`)
+    throw new Error(`token-exchange failed (${res.status}): ${text}`)
+  } else {
+    traceMcp('Token exchange succeed')
   }
 
   const data: TokenExchangeResponse = await res.json()
