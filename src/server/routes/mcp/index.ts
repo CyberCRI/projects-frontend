@@ -19,12 +19,12 @@ export default defineEventHandler(async (event) => {
   // const { appKeycloakClientId, appKeycloakClientSecret } = runtimeConfig.public
   const { appKeycloakUrl, appKeycloakRealm, appKeycloakClientId, appKeycloakClientSecret } =
     useRuntimeConfig().public
-  const KEYCLOAK_ISSUER = `${(appKeycloakUrl as string).replace(/\/?$/, '')}/realms/${appKeycloakRealm}/`
+  const KEYCLOAK_ISSUER = `${(appKeycloakUrl as string).replace(/\/?$/, '')}/realms/${appKeycloakRealm}`
+  const JWKS_URI = `${KEYCLOAK_ISSUER}/protocol/openid-connect/certs`
   const MCP_SERVER_URL = (appMcpServerUrl as string)
     .replace(/\?internal=true$/, '') // present for "normal" projects mcp
     .replace(/\/mcp\/?$/, '') // this server's canonical URI
   const MCP_RESOURCE = `${MCP_SERVER_URL}/mcp` // RFC 8707 resource indicator
-  const JWKS_URI = `${KEYCLOAK_ISSUER}protocol/openid-connect/certs`
 
   traceMcp('/mcp', JSON.stringify(getQuery(event), null, 2))
 
