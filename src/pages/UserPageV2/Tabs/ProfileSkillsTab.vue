@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
-import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
+import BaseSkill from '~/components/profile/modules/Skills/BaseSkill.vue'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
 import { USER_MODULE_TITLE } from '~/functs/constants'
 
@@ -12,7 +12,6 @@ withDefaults(defineProps<{ user: TranslatedUserModel; editable?: boolean }>(), {
     :title="$t(USER_MODULE_TITLE.skills, user.modules.skills)"
     :count="user.modules.skills"
   >
-    <BaseModuleHeader :editable="editable" />
-    {{ user.modules.skills }}
+    <BaseSkill :user="user" :editable="editable" :limit="9" />
   </BaseModuleTab>
 </template>

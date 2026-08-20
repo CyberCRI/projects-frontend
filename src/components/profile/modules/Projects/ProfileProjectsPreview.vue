@@ -8,16 +8,18 @@ defineProps<{ user: TranslatedUserModel }>()
 
 <template>
   <BaseModulePreview
-    :title="$t(USER_MODULE_TITLE.groups, user.modules.groups)"
-    :icon="USER_MODULE_ICON.groups"
-    :total="user.modules.groups"
+    :title="$t(USER_MODULE_TITLE.projects, user.modules.projects)"
+    :icon="USER_MODULE_ICON.projects"
+    :total="user.modules.projects"
     :see-more="{
-      name: 'ProfileGroups',
+      name: 'ProfileProjects',
       params: {
         userIdOrSlug: user.slug || user.id,
       },
     }"
   >
-    {{ user.modules.groups }}
+    <template #content>
+      {{ user.modules.projects }}
+    </template>
   </BaseModulePreview>
 </template>

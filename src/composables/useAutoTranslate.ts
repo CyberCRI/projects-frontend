@@ -28,6 +28,8 @@ import type {
   TranslatedNews,
   TranslatedGoal,
   TranslatedTag,
+  SkillModel,
+  TranslatedSkill,
 } from 'shared-projects-frontend/models'
 import type { TranslatedAgent } from '~/models/agent.model'
 import type { RefOrRaw } from '~/interfaces/utils'
@@ -366,15 +368,16 @@ export default function useAutoTranslate() {
 
   // -----------
   // categoris
-  const translateCategory = (category) => {
-    const rawCategory = unref(category)
-    if (rawCategory?.children)
-      rawCategory.children = unref(translateCategories(rawCategory.children))
-    if (rawCategory?.hierarchy)
-      rawCategory.hierarchy = unref(translateCategories(rawCategory.hierarchy))
-    if (rawCategory?.tags) rawCategory.tags = unref(translateTags(rawCategory.tags))
-    return translateEntity<TranslatedProjectCategory>(rawCategory, ['name', 'description'])
-  }
+  const translateCategory = (category) =>
+    computed(() => {
+      const rawCategory = unref(category)
+      if (rawCategory?.children)
+        rawCategory.children = unref(translateCategories(rawCategory.children))
+      if (rawCategory?.hierarchy)
+        rawCategory.hierarchy = unref(translateCategories(rawCategory.hierarchy))
+      if (rawCategory?.tags) rawCategory.tags = unref(translateTags(rawCategory.tags))
+      return unref(translateEntity<TranslatedProjectCategory>(rawCategory, ['name', 'description']))
+    })
   const translateCategories = (categories) =>
     translateEntities<TranslatedProjectCategory>(categories, translateCategory)
 
@@ -408,6 +411,20 @@ export default function useAutoTranslate() {
   const translateAgent = (data) =>
     translateEntity<TranslatedAgent>(data, ['title', 'description', 'startMessage'])
   const translateAgents = (datas) => translateEntities<TranslatedAgent>(datas, translateAgent)
+
+  /*
+  skill
+  */
+  const translateSkill = (skill: SkillModel) =>
+    computed<TranslatedSkill>(() => {
+      const skillRaw = unref(skill)
+      return {
+        ...skillRaw,
+        tag: unref(translateTag(skill.tag)),
+      }
+    })
+  const translateSkills = (datas: SkillModel[]) =>
+    translateEntities<TranslatedSkill>(datas, translateSkill)
 
   return {
     isAutoTranslateActivated,
@@ -497,5 +514,9 @@ export default function useAutoTranslate() {
     // agent
     translateAgent,
     translateAgents,
+
+    // skills
+    translateSkill,
+    translateSkills,
   }
 }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
+import BaseSkill from '~/components/profile/modules/Skills/BaseSkill.vue'
 import { USER_MODULE_ICON, USER_MODULE_TITLE } from '~/functs/constants'
 
 defineProps<{ user: TranslatedUserModel }>()
@@ -18,6 +19,8 @@ defineProps<{ user: TranslatedUserModel }>()
       },
     }"
   >
-    {{ user.modules.skills }}
+    <template #content>
+      <BaseSkill :user="user" :limit="9" preview />
+    </template>
   </BaseModulePreview>
 </template>

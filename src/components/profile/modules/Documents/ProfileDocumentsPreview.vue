@@ -19,7 +19,9 @@ defineProps<{ user: TranslatedUserModel; documentType: ResearcherDocumentType }>
       },
     }"
   >
-    {{ documentType }}
-    {{ user.modules[documentType] }}
+    <template #content>
+      {{ documentType }}
+      {{ user.modules[documentType] }}
+    </template>
   </BaseModulePreview>
 </template>

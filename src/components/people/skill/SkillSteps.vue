@@ -1,11 +1,12 @@
 <template>
   <div :class="{ border: hasBorder }" class="container">
     <span v-if="showLabel" class="level-label">{{ skillLevels[activeStep - 1]?.label }}</span>
-    <span
+    <IconImage
       v-for="(step, index) in steps"
       :key="index"
       :class="{ 'step-completed': step <= activeStep }"
       class="step"
+      :name="step <= activeStep ? 'Star' : 'StarLine'"
     />
   </div>
 </template>
@@ -45,21 +46,14 @@ const { skillLevels } = useSkillLevels()
 }
 
 .step {
-  height: 10px;
-  width: 10px;
-  margin-right: 8px;
-  background-color: variables.$white;
-  border: variables.$border-width-m solid variables.$primary-dark;
-  border-radius: 50%;
+  height: 1.4rem;
+  width: 1.4rem;
   display: inline-block;
+  fill: variables.$primary-dark;
 }
 
 .level-label {
   padding-right: variables.$space-m;
-}
-
-.step-completed {
-  background-color: variables.$primary-dark;
 }
 
 .step:last-child {
