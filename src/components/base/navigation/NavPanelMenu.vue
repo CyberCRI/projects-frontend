@@ -54,6 +54,8 @@ export type MenuEntry = {
   noTitle?: boolean
   isAddAction?: boolean
   ignoreUnsavedEdit?: boolean
+
+  [key: string]: any
 }
 const props = withDefaults(
   defineProps<{

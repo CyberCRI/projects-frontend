@@ -25,8 +25,8 @@
               v-if="documentsCount.publications > DOCUMENTS_LIMIT"
               data-test="see-more"
               :to="{
-                name: 'ResearcherPublicationsOther',
-                params: { userId: user.id },
+                name: 'ResearcherPublications',
+                params: { userIdOrSlug: user.id },
               }"
             />
           </div>
@@ -50,8 +50,8 @@
               v-if="documentsCount.conferences > DOCUMENTS_LIMIT"
               data-test="see-more"
               :to="{
-                name: 'ResearcherConferencesOther',
-                params: { userId: user.id },
+                name: 'ResearcherConferences',
+                params: { ususerIdOrSlugerId: user.id },
               }"
             />
           </div>
@@ -149,12 +149,12 @@
             :files="user.modules.files"
             :links="user.modules.links"
             :target="{
-              name: 'ProfileResourcesOther',
-              params: { userId: user.id },
+              name: 'ProfileResources',
+              params: { userIdOrSlug: user.slug || user.id },
             }"
             :redirect="{
-              name: 'ProfileResourcesOther',
-              params: { userId: user.id },
+              name: 'ProfileResources',
+              params: { userIdOrSlug: user.slug || user.id },
               hash: '#tab',
             }"
           />

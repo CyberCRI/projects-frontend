@@ -431,12 +431,10 @@ export default {
     },
 
     redirectToProfile() {
-      if (this.isSelf) this.$router.push({ name: 'Profile' })
-      else
-        this.$router.push({
-          name: 'ProfileOtherUser',
-          params: { userId: this.user.id },
-        })
+      this.$router.push({
+        name: 'ProfileUser',
+        params: { userIdOrSlug: this.user.slug || this.user.id },
+      })
     },
 
     async resetForm() {

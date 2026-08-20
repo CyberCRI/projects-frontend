@@ -61,27 +61,20 @@
         <HeaderLink
           :label="$t('common.people')"
           :routes="[
-            'People',
-            'Profile',
-            'ProfileSummary',
+            'ProfileUser',
             'ProfileBio',
             'ProfileProjects',
             'ProfileGroups',
             'ProfileSkills',
-            'ProfileEdit',
-            'ProfileEditOther',
-            'ProfileOtherUser',
-            'ProfileEditOtherUser',
-            'ProfileSummaryOther',
-            'ProfileBioOther',
-            'ProfileProjectsOther',
-            'ProfileGroupsOther',
-            'ProfileSkillsOther',
-            'ProfileEditGeneralOther',
-            'ProfileEditBioOther',
-            'ProfileEditProjectsOther',
-            'ProfileEditGroupsOther',
-            'ProfileEditSkillsOther',
+            'ProfileDocuments',
+            'ProfileResources',
+            'ProfileEditUser',
+            'ProfileEditBio',
+            'ProfileEditProjects',
+            'ProfileEditGroups',
+            'ProfileEditSkills',
+            'ProfileEditDocuments',
+            'ProfileEditResources',
           ]"
           :to="{ name: 'People' }"
         />
@@ -304,14 +297,24 @@ export default {
       return [
         {
           label: this.$t('me.page-title').toUpperCase(),
-          to: { name: 'ProfileSummary' },
+          to: {
+            name: 'ProfileUser',
+            params: {
+              userIdOrSlug: this.usersStore.userFromApi?.slug || this.usersStore.userFromApi?.id,
+            },
+          },
           leftIcon: 'Account',
           condition: true,
           dataTest: 'my-profile',
         },
         {
           label: this.$t('me.my-projects').toUpperCase(),
-          to: { name: 'ProfileProjects' },
+          to: {
+            name: 'ProfileProjects',
+            params: {
+              userIdOrSlug: this.usersStore.userFromApi?.slug || this.usersStore.userFromApi?.id,
+            },
+          },
           leftIcon: 'Briefcase',
           condition: this.isConnected,
           dataTest: 'my-projects',
