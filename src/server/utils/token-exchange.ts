@@ -24,6 +24,8 @@ interface KeycloakCLientConfig {
   CLIENT_SECRET: string
 }
 
+const USE_CACHE = false
+
 const cache = new Map<string, CachedToken>()
 
 export async function exchangeToken(
@@ -32,10 +34,13 @@ export async function exchangeToken(
   { audience, scope }: ExchangeTokenOptions = {}
 ): Promise<string> {
   const key = `${subjectToken}::${audience ?? ''}::${scope ?? ''}`
-  const cached = cache.get(key)
-  if (cached && cached.expiresAt > Date.now() + 5000) {
-    traceMcp('Got cached token')
-    return cached.accessToken
+  traceMcp(`exchangeToken(), cache is ${USE_CACHE ? 'ON' : 'OFF'}`)
+  if (USE_CACHE) {
+    const cached = cache.get(key)
+    if (cached && cached.expiresAt > Date.now() + 5000) {
+      traceMcp('Got cached token')
+      return cached.accessToken
+    }
   }
 
   const body = new URLSearchParams({
@@ -69,11 +74,12 @@ export async function exchangeToken(
   }
 
   const data: TokenExchangeResponse = await res.json()
-
-  cache.set(key, {
-    accessToken: data.access_token,
-    expiresAt: Date.now() + data.expires_in * 1000,
-  })
+  if (USE_CACHE) {
+    cache.set(key, {
+      accessToken: data.access_token,
+      expiresAt: Date.now() + data.expires_in * 1000,
+    })
+  }
 
   return data.access_token
 }
