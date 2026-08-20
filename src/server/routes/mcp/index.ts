@@ -55,7 +55,7 @@ export default defineEventHandler(async (event) => {
       traceMcp('External token safe payload', JSON.stringify(jwtDebugInfo(token), null, 2))
       const gate = requireBearerAuth({
         verifier: verifierFactory(JWKS_URI, KEYCLOAK_ISSUER, MCP_RESOURCE),
-        //requiredScopes: ['mcp:tools'],
+        requiredScopes: ['mcp:tokex'],
         resourceMetadataUrl: getOAuthProtectedResourceMetadataUrl(new URL(MCP_SERVER_URL + '/mcp')),
       })
 
