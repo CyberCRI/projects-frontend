@@ -24,8 +24,8 @@ export default defineEventHandler(async (event) => {
   const MCP_SERVER_URL = (appMcpServerUrl as string)
     .replace(/\?internal=true$/, '') // present for "normal" projects mcp
     .replace(/\/mcp\/?$/, '') // this server's canonical URI
-  const MCP_RESOURCE = `${MCP_SERVER_URL}/mcp` // RFC 8707 resource indicator
-
+  // const MCP_RESOURCE = `${MCP_SERVER_URL}/mcp` // RFC 8707 resource indicator
+  const KEYCLOAK_CLIENT = appKeycloakClientId as string
   traceMcp('/mcp', JSON.stringify(getQuery(event), null, 2))
 
   const keycloakClientConf = {
@@ -54,7 +54,7 @@ export default defineEventHandler(async (event) => {
 
       traceMcp('External token safe payload', JSON.stringify(jwtDebugInfo(token), null, 2))
       const gate = requireBearerAuth({
-        verifier: verifierFactory(JWKS_URI, KEYCLOAK_ISSUER, MCP_RESOURCE),
+        verifier: verifierFactory(JWKS_URI, KEYCLOAK_ISSUER, KEYCLOAK_CLIENT),
         requiredScopes: ['mcp:tokex'],
         resourceMetadataUrl: getOAuthProtectedResourceMetadataUrl(new URL(MCP_SERVER_URL + '/mcp')),
       })
