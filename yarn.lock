@@ -10560,9 +10560,9 @@ setprototypeof@~1.2.0:
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.2.0.tgz#66c9a24a73f9fc28cbe66b09fed3d33dcaf1b424"
   integrity sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==
 
-"shared-projects-frontend@git+https://github.com/CyberCRI/shared-projects-frontend.git#0.4.1":
-  version "0.3.0"
-  resolved "git+https://github.com/CyberCRI/shared-projects-frontend.git#948c9b821cfb0ca82ebaddf47fe490d4ec44bf5a"
+"shared-projects-frontend@git+https://github.com/CyberCRI/shared-projects-frontend.git#0.4.0":
+  version "0.4.0"
+  resolved "git+https://github.com/CyberCRI/shared-projects-frontend.git#d13d741a8d10900bd0e2dc65278a91b2d02cbc79"
   dependencies:
     ofetch "^1.5.1"
     typescript "^6.0.3"
