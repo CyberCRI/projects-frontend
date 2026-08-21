@@ -34,6 +34,7 @@ const emit = defineEmits<{
 const { t } = useNuxtI18n()
 const toaster = useToaster()
 const router = useRouter()
+const global = useGlobals()
 
 const selectedItem = ref<TranslatedProjectTabItem>()
 
@@ -54,13 +55,24 @@ const refreshAll = () => refreshProjectTabs(props.project).then(() => emit('refr
 const onPatchTab = (form: ProjectTabForm) => {
   asyncing.value = true
   updateProjectTab(props.project.id, props.tab.id, form)
-    .then(() => {
+    .then((updatedTab) => {
       analytics.track('update_project_tab', {
         project: props.project.id,
         tab: props.tab.id,
       })
       refreshProjectTabs(props.project)
       toaster.pushSuccess(t(`tab.toasts.tab-update.success`))
+
+      if (props.tab.slug !== updatedTab.slug) {
+        global.hasUnsavedEdit = false
+        router.push({
+          name: 'projectAdditionals',
+          params: {
+            slugOrId: props.project.slug || props.project.id,
+            tabId: updatedTab.slug || updatedTab.id,
+          },
+        })
+      }
     })
     .catch(() => toaster.pushError(t(`tab.toasts.tab-update.error`)))
     .finally(() => {
