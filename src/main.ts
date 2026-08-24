@@ -8,10 +8,10 @@ import initSentry from '~/app/initSentry'
 import initUser from '~/app/initUser'
 import analytics from '~/analytics'
 
-// initialize client apis with projects-frontend options/config
-initializeClientApi()
 // quick redirect to keycloak login if url says so
 if (import.meta.client) {
+  // initialize client apis with projects-frontend options/config
+  initializeClientApi()
   quickLogin()
 
   // bug fix for leaflet's marker
@@ -27,8 +27,8 @@ export default async function main(): Promise<void> {
 
   // await initAnalytics()
   await analytics.init()
-  await initOrganization()
   if (import.meta.client) {
+    await initOrganization()
     await initUser()
     await initSentry(nuxtApp.vueApp)
   }

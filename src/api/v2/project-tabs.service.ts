@@ -1,10 +1,10 @@
 import type {
   OrganizationModel,
-  ProjectTab,
   ProjectTabItem,
   QueryFilterProjectTab,
   QueryFilterProjectTabItem,
   ProjectSlugOrId,
+  TabSlugOrId,
 } from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
@@ -54,7 +54,7 @@ export const getAllProjectTab = (
 export const getProjectTab = (
   organization: RefOrRaw<OrganizationModel['code']>,
   projectSlugOrId: RefOrRaw<ProjectSlugOrId>,
-  projectTabId: RefOrRaw<ProjectTab['id']>,
+  projectTabId: RefOrRaw<TabSlugOrId>,
   config: Config = {}
 ) => {
   const key = computed(
@@ -83,7 +83,7 @@ export const getProjectTab = (
 export const getAllProjectTabItem = (
   organization: RefOrRaw<OrganizationModel['code']>,
   projectSlugOrId: RefOrRaw<ProjectSlugOrId>,
-  projectTabId: RefOrRaw<ProjectTab['id']>,
+  projectTabId: RefOrRaw<TabSlugOrId>,
   config: ConfigTabItemPagiation = {}
 ) => {
   const key = computed(
@@ -112,7 +112,7 @@ export const getAllProjectTabItem = (
 export const getProjectTabItem = (
   organization: RefOrRaw<OrganizationModel['code']>,
   projectSlugOrId: RefOrRaw<ProjectSlugOrId>,
-  projectTabId: RefOrRaw<ProjectTab['id']>,
+  projectTabId: RefOrRaw<TabSlugOrId>,
   projectTabItemId: RefOrRaw<ProjectTabItem['id']>,
   config: Config = {}
 ) => {

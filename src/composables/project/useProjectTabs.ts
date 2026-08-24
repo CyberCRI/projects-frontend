@@ -164,11 +164,11 @@ export const useProjectTabs = (
 
         ...tabs.value.map((tab) => {
           return {
-            key: `project-additionals-${tab.id}`,
+            key: `project-additionals-${tab.slug || tab.id}`,
             label: tab.$t.title,
-            view: `/projects/${projectId.value}/additionals/${tab.id}`,
-            altView: `/projects/${projectId.value}/additionals/${tab.id}/edit`,
-            dataTest: `project-additionals-${tab.id}`,
+            view: `/projects/${projectId.value}/additionals/${tab.slug || tab.id}`,
+            altView: `/projects/${projectId.value}/additionals/${tab.slug || tab.id}/edit`,
+            dataTest: `project-additionals-${tab.slug || tab.id}`,
             condition: tab.modules.items >= 1,
             icon: safeProjectIconTab(tab.icon, tab.type),
             props: {
@@ -294,11 +294,11 @@ export const useProjectTabs = (
         },
         ...tabs.value.map((tab) => {
           return {
-            key: `project-additionals-${tab.id}`,
+            key: `project-additionals-${tab.slug || tab.id}`,
             label: tab.$t.title,
-            view: `/projects/${projectId.value}/additionals/${tab.id}/edit`,
-            altView: `/projects/${projectId.value}/additionals/${tab.id}`,
-            dataTest: `project-additionals-${tab.id}`,
+            view: `/projects/${projectId.value}/additionals/${tab.slug || tab.id}/edit`,
+            altView: `/projects/${projectId.value}/additionals/${tab.slug || tab.id}`,
+            dataTest: `project-additionals-${tab.slug || tab.id}`,
             condition: true,
             icon: safeProjectIconTab(tab.icon, tab.type),
             props: {

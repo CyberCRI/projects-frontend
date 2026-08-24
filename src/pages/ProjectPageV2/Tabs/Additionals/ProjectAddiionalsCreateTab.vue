@@ -56,7 +56,7 @@ const onSubmit = (form: ProjectTabForm) => {
             name: 'projectAdditionalsEdit',
             params: {
               slugOrId: props.project.slug || props.project.id,
-              tabId: projectTab.id,
+              tabId: projectTab.slug || projectTab.id,
             },
           })
         })

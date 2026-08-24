@@ -36,7 +36,7 @@ const organizationsStore = useOrganizationsStore()
 const providerParams = computed<ProviderParams>(() => {
   return {
     type: 'project-description',
-    projectId: props.project.slug,
+    projectId: props.project.id,
     organizationId: organizationsStore.current.id,
   }
 })
