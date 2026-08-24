@@ -13,6 +13,7 @@ import ContentExpandable from '~/components/base/ContentExpandable.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import HelpField from '~/components/base/form/HelpField.vue'
 import TabForm from '~/components/tabs/TabForm.vue'
+import Title from '~/components/base/Title.vue'
 import { textIsEmpty } from '~/functs/tiptap'
 import analytics from '~/analytics'
 
@@ -33,6 +34,7 @@ const emit = defineEmits<{
 const { t } = useNuxtI18n()
 const toaster = useToaster()
 const router = useRouter()
+const global = useGlobals()
 
 const selectedItem = ref<TranslatedProjectTabItem>()
 
@@ -53,13 +55,24 @@ const refreshAll = () => refreshProjectTabs(props.project).then(() => emit('refr
 const onPatchTab = (form: ProjectTabForm) => {
   asyncing.value = true
   updateProjectTab(props.project.id, props.tab.id, form)
-    .then(() => {
+    .then((updatedTab) => {
       analytics.track('update_project_tab', {
         project: props.project.id,
         tab: props.tab.id,
       })
       refreshProjectTabs(props.project)
       toaster.pushSuccess(t(`tab.toasts.tab-update.success`))
+
+      if (props.tab.slug !== updatedTab.slug) {
+        global.hasUnsavedEdit = false
+        router.push({
+          name: 'projectAdditionals',
+          params: {
+            slugOrId: props.project.slug || props.project.id,
+            tabId: updatedTab.slug || updatedTab.id,
+          },
+        })
+      }
     })
     .catch(() => toaster.pushError(t(`tab.toasts.tab-update.error`)))
     .finally(() => {
@@ -107,28 +120,23 @@ const onConfirmDeleteTab = () => {
       />
     </BaseModuleHeader>
 
-    <HelpField class="description-info">
-      <ContentExpandable
-        v-if="!textIsEmpty(tab.$t.description) && !stateModals.editTab"
-        key="description"
-        :height-limit="300"
-      >
+    <HelpField
+      v-if="!textIsEmpty(tab.$t.description) && !stateModals.editTab"
+      class="description-info"
+    >
+      <ContentExpandable key="description" :height-limit="300">
         <TipTapOutput :content="tab.$t.description" />
       </ContentExpandable>
     </HelpField>
+
     <ContentExpandable
       v-if="editable"
       :height-limit="0"
       :opened="stateModals.editTab"
       hide-see-more
     >
-      <TabForm
-        class="p2"
-        :project="project"
-        :tab="tab"
-        @submit="onPatchTab"
-        @close="closeModals('editTab')"
-      >
+      <Title :title="$t('tab.tab.edit')" />
+      <TabForm :project="project" :tab="tab" @submit="onPatchTab" @close="closeModals('editTab')">
         <template #footer>
           <LpiButton
             class="w-fit"

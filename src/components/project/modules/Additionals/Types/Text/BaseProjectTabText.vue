@@ -13,6 +13,7 @@ import ContentExpandable from '~/components/base/ContentExpandable.vue'
 import { getAllProjectTabItem } from '~/api/v2/project-tabs.service'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import FetchLoader from '~/components/base/FetchLoader.vue'
+import Title from '~/components/base/Title.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -54,6 +55,7 @@ const item = computed(() => data.value[0])
 <template>
   <FetchLoader :status="status" only-error :error="error" skeleton>
     <BaseAdditionalsTab :project="project" :tab="tab" :editable="editable" :preview="preview">
+      <Title v-if="item" :title="item.$t.title" />
       <ContentExpandable
         v-if="item && preview"
         :description="item.$t.content"

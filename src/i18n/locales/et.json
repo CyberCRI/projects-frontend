@@ -586,7 +586,9 @@
     "empty": "Siin pole midagi...",
     "file": "faili | failid",
     "image": "pilt",
-    "select-placeholder": "Valige..."
+    "select-placeholder": "Valige...",
+    "error": "viga",
+    "expand": "laiendada"
   },
   "complete-profile": {
     "bio": {
@@ -2090,7 +2092,11 @@
     "no-templates-set": "Malli pole määratud.",
     "project-purpose": "Projekti eesmärgi vorm",
     "project-title": "Projekti nimetuse vorm",
-    "edit-category": "Kategooria muutmine."
+    "edit-category": "Kategooria muutmine.",
+    "enable-tab": {
+      "label": "Uue kaardi loomise lubamine",
+      "help": "Võimaldab kasutajatel luua projektis uusi kaarte"
+    }
   },
   "tips": {
     "background-color": "Seda värvi näidatakse teksti taga.",
@@ -2362,6 +2368,18 @@
     "pdf": {
       "success": "PDF on edukalt genereeritud; link saadetakse teile e-posti teel.",
       "error": "PDF-i genereerimisel tekkis viga. Palun võtke ühendust administraatoriga."
+    },
+    "template-update": {
+      "success": "malli uuendati edukalt",
+      "error": "Viga malli uuendamisel"
+    },
+    "template-create": {
+      "success": "mall on edukalt loodud",
+      "error": "Viga malli loomisel"
+    },
+    "template-delete": {
+      "success": "mall on edukalt kustutatud",
+      "error": "Viga malli kustutamisel"
     }
   },
   "success": {
@@ -3409,19 +3427,23 @@
       "add": "Lisa uus kaart.",
       "edit": "Muuda kaarti",
       "title": "Kaardi loomine",
-      "label": "Tab | Tabs"
+      "label": "Tab | Tabs",
+      "not-enabled": {
+        "admin": "Kaardi loomine ei ole vaikimisi lubatud. Kuid administraatorina on teil vajalikud õigused selle funktsiooni kasutamiseks ja uute vahekaartide loomiseks."
+      }
     },
     "item": {
       "delete-confirm": "Kas tõesti kustutada see element?",
       "delete": "Kustuta element",
       "add": "Lisa uus element",
       "edit": "Redigeeri elementi",
-      "title": "Esemevorm"
+      "title": "Esemevorm",
+      "create": "Uue sisu loomine"
     },
     "form": {
       "title": {
-        "label": "Pealkiri",
-        "required": "Pealkiri on vajalik."
+        "required": "Pealkiri on vajalik.",
+        "label": "Pealkiri (külgmenüü)"
       },
       "description": {
         "label": "Kirjeldus"
@@ -3448,6 +3470,13 @@
       "content": {
         "label": "Sisu",
         "required": "Vajalik on sisu."
+      },
+      "template": {
+        "title": "Malli sisu"
+      },
+      "title-content": {
+        "label": "Pealkiri",
+        "required": "Pealkiri on vajalik."
       }
     },
     "toasts": {

@@ -1,14 +1,14 @@
 <template>
   <LayoutTab :title="t('template.list')" :notice="t('template.info')">
     <template #actions>
-      <LinkButton
+      <LpiButton
         btn-icon="Plus"
         :label="t('admin.portal.templates.add')"
         :to="{ name: 'templatesCreate' }"
       />
     </template>
 
-    <FetchLoader :status="status" :with-data="!!templates">
+    <FetchLoader :status="status" only-error skeleton :with-data="!!templates">
       <div class="list">
         <ul>
           <AdminList
@@ -22,7 +22,11 @@
             @delete="setDeleted(template)"
           />
         </ul>
+        <PaginationButtonsV2 :pagination="pagination" />
       </div>
+
+      <NothingHere v-if="templates.length === 0" />
+
       <ConfirmModal
         v-if="templateToDelete"
         :content="
@@ -47,13 +51,24 @@ import AdminList from '~/components/admin/AdminListItem.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import LayoutTab from '~/components/admin/LayoutTab.vue'
 
+import { templateSkeleton } from '~/skeletons/template.skeletons'
+import { factoryPagination } from '~/skeletons/base.skeletons'
+import NothingHere from '~/components/base/NothingHere.vue'
 import { getTemplates } from '~/api/v2/templates.service'
 import useNuxtI18n from '~/composables/useNuxtI18n'
 
 const { t } = useNuxtI18n()
 const organizationCode = useOrganizationCode()
-const { data: templates, status, refresh } = getTemplates(organizationCode)
+const {
+  data: templates,
+  status,
+  refresh,
+  pagination,
+} = getTemplates(organizationCode, {
+  default: () => factoryPagination(templateSkeleton),
+})
 
+const toaster = useToaster()
 const router = useRouter()
 const redirectEditTemplate = (template) =>
   router.push({ name: 'templatesEdit', params: { id: template.id } })
@@ -63,7 +78,15 @@ const templateToDelete = ref(null)
 const setDeleted = (template) => (templateToDelete.value = template)
 const cancelDelete = () => (templateToDelete.value = null)
 const confirmDelete = () => {
-  deleteTemplate(organizationCode, templateToDelete.value.id).then(() => refresh())
+  deleteTemplate(organizationCode, templateToDelete.value.id)
+    .then(() => {
+      toaster.pushSuccess('toasts.template-delete.success')
+      refresh()
+    })
+    .catch((error) => {
+      toaster.pushError('toasts.template-delete.error')
+      console.error(error)
+    })
   templateToDelete.value = null
 }
 </script>
@@ -72,11 +95,6 @@ const confirmDelete = () => {
 @use '~/design/scss/variables';
 
 .list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: variables.$space-l;
-  justify-content: stretch;
-
   ul {
     flex-grow: 1;
   }

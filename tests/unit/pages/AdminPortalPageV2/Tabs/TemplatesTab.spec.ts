@@ -1,6 +1,6 @@
-import TemplatesTab from '~/pages/AdminPortalPageV2/Tabs/TemplatesTab.vue'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
+import TemplatesTab from '~/pages/AdminPortalPageV2/Tabs/Templates/TemplatesTab.vue'
 import { flushPromises } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 

@@ -586,7 +586,9 @@
     "empty": "Nichts hier...",
     "file": "Datei | Dateien",
     "image": "Bild",
-    "select-placeholder": "Wählen Sie..."
+    "select-placeholder": "Wählen Sie...",
+    "error": "Fehler",
+    "expand": "expandieren"
   },
   "complete-profile": {
     "bio": {
@@ -2090,7 +2092,11 @@
     "no-templates-set": "Kein Template-Set.",
     "placeholder-purpose": "Ziel des Projekts",
     "placeholder-title": "Titel Vor Ort",
-    "edit-category": "Kategorie bearbeiten."
+    "edit-category": "Kategorie bearbeiten.",
+    "enable-tab": {
+      "label": "Neue Tab-Erstellung ermöglichen",
+      "help": "Ermöglicht Benutzern, neue Registerkarten in diesem Projekt zu erstellen"
+    }
   },
   "tips": {
     "background-color": "Diese Farbe wird hinter dem Text angezeigt.",
@@ -2362,6 +2368,18 @@
     "pdf": {
       "success": "Das PDF wurde erfolgreich generiert; ein Link wird per E-Mail an Sie gesendet.",
       "error": "Bei der Generierung des PDF wurde ein Fehler aufgetreten. Bitte kontaktieren Sie einen Administrator."
+    },
+    "template-update": {
+      "success": "Template wurde erfolgreich aktualisiert",
+      "error": "Fehler beim Template-Update"
+    },
+    "template-create": {
+      "success": "Template wurde erfolgreich erstellt",
+      "error": "Fehler bei der Erstellung von Vorlagen"
+    },
+    "template-delete": {
+      "success": "Template wurde erfolgreich gelöscht",
+      "error": "Fehler bei der Löschung der Vorlage"
     }
   },
   "success": {
@@ -3409,19 +3427,23 @@
       "add": "Fügen Sie ein neues Tab hinzu.",
       "edit": "Tab bearbeiten",
       "title": "Tab Erstellung",
-      "label": "Register | Tabs"
+      "label": "Register | Tabs",
+      "not-enabled": {
+        "admin": "Die Tab-Erstellung ist nicht standardmäßig aktiviert. Als Administrator haben Sie jedoch die erforderlichen Berechtigungen, um auf diese Funktion zuzugreifen und neue Registerkarten zu erstellen."
+      }
     },
     "item": {
       "delete-confirm": "Sind Sie sicher, dass Sie diesen Artikel löschen möchten.",
       "delete": "Artikel löschen",
       "add": "Neues Produkt hinzufügen",
       "edit": "Artikel bearbeiten",
-      "title": "Warenbezeichnung"
+      "title": "Warenbezeichnung",
+      "create": "Neue Inhalte erstellen"
     },
     "form": {
       "title": {
-        "label": "Titel",
-        "required": "Der Titel ist erforderlich."
+        "required": "Der Titel ist erforderlich.",
+        "label": "Titel (Seitenmenü)"
       },
       "description": {
         "label": "Warenbezeichnung"
@@ -3448,6 +3470,13 @@
       "content": {
         "label": "Inhalt",
         "required": "Der Inhalt ist erforderlich."
+      },
+      "template": {
+        "title": "Inhalt"
+      },
+      "title-content": {
+        "label": "Vollständiger Titel",
+        "required": "Der Titel ist erforderlich."
       }
     },
     "toasts": {

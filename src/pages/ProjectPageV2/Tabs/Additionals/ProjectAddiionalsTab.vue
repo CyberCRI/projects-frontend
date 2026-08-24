@@ -1,5 +1,5 @@
 <template>
-  <BaseModuleTab :title="tab.$t.title" :count="tab.type === 'blog' ? tab.modules.items : 0">
+  <BaseModuleTab :count="tab.type === 'blog' ? tab.modules.items : 0">
     <BaseProjectTabBlog
       v-if="tab.type === 'blog'"
       :project="project"
@@ -21,7 +21,7 @@ import BaseProjectTabBlog from '~/components/project/modules/Additionals/Types/B
 import type { TranslatedProjectTab, TranslatedProject } from 'shared-projects-frontend/models'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     project: TranslatedProject
     tab: TranslatedProjectTab
@@ -29,4 +29,12 @@ withDefaults(
   }>(),
   { editable: false }
 )
+
+watchEffect(() => {
+  useLpiHead2({
+    title: props.tab.$t.title,
+    description: props.tab.$t.description,
+    image: props.project.header_image,
+  })
+})
 </script>

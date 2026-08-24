@@ -4,29 +4,27 @@ import type { LocationForm } from 'shared-projects-frontend/models'
 
 import useForm from '~/composables/useForm'
 
-import { clone } from 'es-toolkit'
-
-const DEFAULT_FORM: LocationForm = {
+export const defaultLocationForm = (): LocationForm => ({
   lat: null,
   lng: null,
   title: '',
   description: '',
-}
-
-const RULES = {
-  title: {
-    maxLengthValue: maxLength(255),
-  },
-  description: {},
-  lat: { required },
-  lng: { required },
-  type: { required },
-}
+})
 
 export const useLocationForm = (options) => {
+  const rules = computed(() => ({
+    title: {
+      maxLengthValue: maxLength(255),
+    },
+    description: {},
+    lat: { required },
+    lng: { required },
+    type: { required },
+  }))
+
   return useForm<LocationForm>({
-    default: clone(DEFAULT_FORM),
-    rules: clone(RULES),
+    default: defaultLocationForm(),
+    rules,
     ...options,
   })
 }

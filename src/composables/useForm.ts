@@ -1,14 +1,18 @@
-import type { ErrorObject, useVuelidate } from '@vuelidate/core'
-import { difference, isEqual, isNil } from 'es-toolkit'
+import type { ErrorObject, useVuelidate, ValidationArgs } from '@vuelidate/core'
+import { difference, groupBy, isEqual, isNil } from 'es-toolkit'
+import type { RefOrRaw } from '~/interfaces/utils'
 import useValidate from '@vuelidate/core'
+import type { ModelRef } from 'vue'
 
 export type OptionsForm<T, CleanResult> = {
   default?: T
-  rules?: object
+  rules?: RefOrRaw<ValidationArgs<T> | object>
   lazy?: boolean
   validateTimeout?: number
   onClean?: (data: T) => CleanResult
-  model?: Ref<T>
+  model?: Ref<T> | ModelRef<T>
+
+  $scope?: boolean
 }
 
 export type UseFormResult<T, CleanResult> = {
@@ -17,6 +21,7 @@ export type UseFormResult<T, CleanResult> = {
   errors: ComputedRef<Record<keyof T, ErrorObject[]>>
   cleanedData: null | Ref<CleanResult>
   reset: (data?: T) => void
+  rules?: RefOrRaw<ValidationArgs<T> | object>
   v$: ReturnType<typeof useVuelidate<T>>
 }
 
@@ -56,22 +61,24 @@ const onClean = (d) => d
 const useForm = <T extends object, CleanResult = T>(
   options: OptionsForm<T, CleanResult> = { onClean }
 ): UseFormResult<T, CleanResult> => {
-  const def = {
+  const form = ref<T>({
     ...options.default,
-    ...unref(options.model?.value ?? {}),
-  } as T
+    ...(options.model?.value || {}),
+  }) as Ref<T>
 
-  const form = ref<T>(def) as Ref<T>
   const _onClean = options.onClean ?? onClean
 
-  const v$ = useValidate(options.rules ?? {}, form, {
-    $scope: false,
+  const rules = options.rules ?? {}
+
+  const v$ = useValidate(rules, form, {
+    $scope: options.$scope ?? false,
   })
+
   const isValid = computed(() => !v$.value.$invalid)
 
   const lazy = isNil(options.lazy) ? true : options.lazy
   watch(
-    () => ({ ...unref(form) }),
+    () => JSON.parse(JSON.stringify(form.value)),
     (newForm, oldForm) => {
       const diffKeys = differencesObjects(newForm, oldForm)
 
@@ -87,9 +94,12 @@ const useForm = <T extends object, CleanResult = T>(
   const errors = computed(() => {
     const err = {}
     Object.keys(form.value).forEach((k) => {
-      err[k] = v$.value[k]?.$errors || []
+      err[k] = []
     })
-    return err as Record<keyof T, ErrorObject[]>
+    return {
+      ...err,
+      ...groupBy(v$.value.$errors, (el) => el.$property),
+    } as Record<keyof T, ErrorObject[]>
   })
 
   const cleanedData = ref<CleanResult>()
@@ -97,15 +107,13 @@ const useForm = <T extends object, CleanResult = T>(
   watch(
     [form, isValid],
     () => {
-      const formContent = { ...toRaw(form.value) }
+      const formContent = { ...form.value }
 
       let cleanded = null
       if (isValid.value) {
         cleanded = _onClean(formContent)
       }
-      if (options.model) {
-        options.model.value = cleanded
-      }
+
       cleanedData.value = cleanded
     },
     { deep: true, immediate: true }
@@ -127,12 +135,41 @@ const useForm = <T extends object, CleanResult = T>(
     v$.value.$reset()
   }
 
+  // re-set model/form
+  if (options.model) {
+    const model = options.model
+
+    watch(
+      model,
+      (value) => {
+        if (!isEqual(value, form.value)) {
+          reset({ ...value })
+        }
+      },
+      { deep: true }
+    )
+
+    watch(
+      form,
+      (value) => {
+        if (!isEqual(value, model.value)) {
+          model.value = { ...value }
+        }
+      },
+      { deep: true }
+    )
+  }
+
+  // reset validator
+  reset(form.value)
+
   return {
     form,
     errors,
     isValid,
     cleanedData,
     reset,
+    rules,
     v$,
   }
 }

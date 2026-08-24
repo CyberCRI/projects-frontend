@@ -135,7 +135,7 @@ watchEffect(() => {
                   name: 'projectAdditionals',
                   params: {
                     slugOrId: project.slug || project.id,
-                    tabId: tab.id,
+                    tabId: tab.slug || tab.id,
                   },
                   hash: `#item:${item.id}`,
                 }

@@ -97,17 +97,19 @@ export default function useAdminPagesRoutes() {
             {
               path: 'list',
               name: 'templatesList',
-              component: () => import('../pages/AdminPortalPageV2/Tabs/TemplatesTab.vue'),
+              component: () => import('../pages/AdminPortalPageV2/Tabs/Templates/TemplatesTab.vue'),
             },
             {
               path: 'edit/:id',
               name: 'templatesEdit',
-              component: () => import('../pages/AdminPortalPageV2/Tabs/TemplatesEditTab.vue'),
+              component: () =>
+                import('../pages/AdminPortalPageV2/Tabs/Templates/TemplatesEditTab.vue'),
             },
             {
               path: 'create',
               name: 'templatesCreate',
-              component: () => import('../pages/AdminPortalPageV2/Tabs/TemplatesCreateTab.vue'),
+              component: () =>
+                import('../pages/AdminPortalPageV2/Tabs/Templates/TemplatesCreateTab.vue'),
             },
           ],
         },

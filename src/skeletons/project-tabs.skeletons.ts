@@ -3,7 +3,9 @@ import { DEFAULT_ICONS_TABS } from '~/functs/constants'
 
 export const projectTabSkeleton = (def?: Partial<ProjectTab>): ProjectTab => {
   const obj: Omit<ProjectTab, 'id'> = {
+    uuid: '',
     title: 'title',
+    slug: 'title',
     description: 'description',
     icon: DEFAULT_ICONS_TABS.text,
     type: 'text',

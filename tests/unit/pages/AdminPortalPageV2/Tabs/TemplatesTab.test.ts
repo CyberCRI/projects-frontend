@@ -1,5 +1,5 @@
+import TemplatesTab from '~/pages/AdminPortalPageV2/Tabs/Templates/TemplatesTab.vue'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
-import TemplatesTab from '~/pages/AdminPortalPageV2/Tabs/TemplatesTab.vue'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { flushPromises } from '@vue/test-utils'

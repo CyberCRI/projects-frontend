@@ -6,6 +6,7 @@
       btn-icon="Pen"
       :aria-label="$t('common.edit')"
       class="skeletons-background"
+      data-test="action-edit"
       @click.prevent="$emit('edit')"
     />
     <LpiButton
@@ -13,6 +14,7 @@
       btn-icon="TrashCanOutline"
       :aria-label="$t('common.delete')"
       class="skeletons-background"
+      data-test="action-delete"
       @click.prevent="$emit('delete')"
     />
   </div>

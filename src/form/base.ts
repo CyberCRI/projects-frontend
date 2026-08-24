@@ -138,3 +138,23 @@ export const formEqual = <A, B, Keys extends keyof (A & B)>(
 
   return true
 }
+
+export const subForm = <Form extends typeof useForm<any, any>>(
+  form: Form
+): ValidationRuleWithParams => {
+  return {
+    $validator: (value?: any) => {
+      const f = form({ default: value })
+
+      return f.isValid.value
+    },
+    $message: () => {
+      const { t } = useNuxtI18n()
+
+      return t('common.invalid-form')
+    },
+    $params: {
+      form,
+    },
+  }
+}

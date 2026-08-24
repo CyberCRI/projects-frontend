@@ -586,7 +586,9 @@
     "empty": "Aquí no hi ha res...",
     "file": "fitxer | fitxers",
     "image": "imatge",
-    "select-placeholder": "Selecciona..."
+    "select-placeholder": "Selecciona...",
+    "error": "error",
+    "expand": "expandit"
   },
   "complete-profile": {
     "bio": {
@@ -2090,7 +2092,11 @@
     "no-templates-set": "No s' ha establert cap plantilla.",
     "placeholder-purpose": "propòsit del projecte",
     "placeholder-title": "Títol en ordre",
-    "edit-category": "Edita la categoria."
+    "edit-category": "Edita la categoria.",
+    "enable-tab": {
+      "label": "Permet la nova creació de pestanyes",
+      "help": "Permet als usuaris crear pestanyes noves dins d' aquest projecte"
+    }
   },
   "tips": {
     "background-color": "Aquest color es mostrarà darrera del text.",
@@ -2362,6 +2368,18 @@
     "pdf": {
       "success": "El PDF s' ha generat amb èxit; s' enviarà un enllaç a través de correu electrònic.",
       "error": "Hi ha hagut un error en generar el PDF. Si us plau, contacteu amb un administrador."
+    },
+    "template-update": {
+      "success": "la plantilla s' ha actualitzat correctament",
+      "error": "Error durant l' actualització de la plantilla"
+    },
+    "template-create": {
+      "success": "s' ha creat amb èxit la plantillaName",
+      "error": "Error durant la creació de la plantilla"
+    },
+    "template-delete": {
+      "success": "la plantilla s' ha esborrat correctament",
+      "error": "Error durant l' esborrat de plantilles"
     }
   },
   "success": {
@@ -3409,19 +3427,23 @@
       "add": "Afegeix una nova pestanya.",
       "edit": "Edita pestanya",
       "title": "Creació de pestanya",
-      "label": "Pestanya | Pestanyes"
+      "label": "Pestanya | Pestanyes",
+      "not-enabled": {
+        "admin": "La creació de tabulació no està habilitada per omissió. No obstant això, com a administrador, teniu els permisos requerits per accedir a aquesta característica i crear pestanyes noves."
+      }
     },
     "item": {
       "delete-confirm": "Esteu segur que voleu eliminar aquest element.",
       "delete": "Esborra element",
       "add": "Afegeix un element nou",
       "edit": "Edita element",
-      "title": "Forma d' element"
+      "title": "Forma d' element",
+      "create": "Crea un nou contingut"
     },
     "form": {
       "title": {
-        "label": "Títol",
-        "required": "Es requereix el títol."
+        "required": "Es requereix el títol.",
+        "label": "Títol (el menú)"
       },
       "description": {
         "label": "Descripció"
@@ -3448,6 +3470,13 @@
       "content": {
         "label": "Contingut",
         "required": "Es requereix el contingut."
+      },
+      "template": {
+        "title": "Contingut de la plantilla"
+      },
+      "title-content": {
+        "label": "Títol complet",
+        "required": "Es requereix el títol."
       }
     },
     "toasts": {
