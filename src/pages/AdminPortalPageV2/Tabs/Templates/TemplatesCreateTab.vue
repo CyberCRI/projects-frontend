@@ -30,6 +30,7 @@ const { stateModals, setModals } = useModals({
   isFormEqual: false,
 })
 
+const { t } = useNuxtI18n()
 const toaster = useToaster()
 const router = useRouter()
 const asyncing = ref(false)
@@ -41,12 +42,12 @@ const submit = () => {
   asyncing.value = true
   postTemplate(organizationCode, cleanedData.value)
     .then(() => {
-      toaster.pushSuccess('toasts.template-create.success')
+      toaster.pushSuccess(t('toasts.template-create.success'))
       global.hasUnsavedEdit = false
       return redirect()
     })
     .catch((error) => {
-      toaster.pushError('toasts.template-create.error')
+      toaster.pushError(t('toasts.template-create.error'))
       console.log(error)
     })
     .finally(() => (asyncing.value = false))

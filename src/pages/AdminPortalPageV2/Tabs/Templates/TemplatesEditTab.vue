@@ -37,6 +37,7 @@ const { stateModals, setModals } = useModals({
   isFormEqual: false,
 })
 
+const { t } = useNuxtI18n()
 const toaster = useToaster()
 const route = useRoute()
 const router = useRouter()
@@ -57,11 +58,11 @@ const submit = () => {
 
   patchTemplate(organizationCode, templateId.value, form.value)
     .then(() => {
-      toaster.pushSuccess('toasts.template-update.success')
+      toaster.pushSuccess(t('toasts.template-update.success'))
       return refresh().then(() => redirect())
     })
     .catch((error) => {
-      toaster.pushError('toasts.template-update.error')
+      toaster.pushError(t('toasts.template-update.error'))
       console.log(error)
     })
     .finally(() => (asyncing.value = false))

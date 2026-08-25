@@ -80,11 +80,11 @@ const cancelDelete = () => (templateToDelete.value = null)
 const confirmDelete = () => {
   deleteTemplate(organizationCode, templateToDelete.value.id)
     .then(() => {
-      toaster.pushSuccess('toasts.template-delete.success')
+      toaster.pushSuccess(t('toasts.template-delete.success'))
       refresh()
     })
     .catch((error) => {
-      toaster.pushError('toasts.template-delete.error')
+      toaster.pushError(t('toasts.template-delete.error'))
       console.error(error)
     })
   templateToDelete.value = null
