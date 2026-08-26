@@ -3,6 +3,7 @@ import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
 import { USER_MODULE_TITLE } from '~/functs/constants'
+import BaseProfileGroupsList from '~/components/profile/modules/Groups/BaseProfileGroupsList.vue'
 
 withDefaults(defineProps<{ user: TranslatedUserModel; editable?: boolean }>(), { editable: false })
 </script>
@@ -13,6 +14,6 @@ withDefaults(defineProps<{ user: TranslatedUserModel; editable?: boolean }>(), {
     :count="user.modules.groups"
   >
     <BaseModuleHeader :editable="editable" />
-    {{ user.modules.groups }}
+    <BaseProfileGroupsList :profile="user" />
   </BaseModuleTab>
 </template>

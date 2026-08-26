@@ -2,7 +2,7 @@
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { USER_MODULE_ICON, USER_MODULE_TITLE } from '~/functs/constants'
-
+import BaseProfileGroupsList from '~/components/profile/modules/Groups/BaseProfileGroupsList.vue'
 defineProps<{ user: TranslatedUserModel }>()
 </script>
 
@@ -19,7 +19,7 @@ defineProps<{ user: TranslatedUserModel }>()
     }"
   >
     <template #content>
-      {{ user.modules.groups }}
+      <BaseProfileGroupsList :profile="user" :limit="5" preview />
     </template>
   </BaseModulePreview>
 </template>

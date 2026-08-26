@@ -9,6 +9,7 @@ import type { RefOrRaw } from '~/interfaces/utils'
 import {
   searchUserAdmin as fetchsearchUserAdmin,
   getUser as fetchUser,
+  getUserGroups as fetchUserGroups
 } from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
@@ -32,6 +33,27 @@ export const getUser = (
     ({ config }) => fetchUser(unref(userId), { ...DEFAULT_CONFIG, ...config }),
     {
       translate: translateUser,
+      watch: onlyRefs([organizationCode, userId]),
+      ...config,
+    }
+  )
+}
+
+
+
+export const getUserGroups = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  userId: RefOrRaw<UserSlugOrId>,
+  config: Config = {}
+) => {
+  const { translateGroups } = useAutoTranslate()
+  const key = computed(() => `${unref(organizationCode)}::user::${unref(userId)}::group`)
+
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) => fetchUserGroups(unref(userId), { ...DEFAULT_CONFIG, ...config }),
+    {
+      translate: translateGroups,
       watch: onlyRefs([organizationCode, userId]),
       ...config,
     }
