@@ -1377,8 +1377,8 @@
         "already-added": "(juba lisatud)",
         "skills": {
           "nothing-yet": "Teie profiilil pole veel oskusi.",
-          "add-success": "Oskus '{name}' lisatud.",
-          "edit-success": "Oskus '{name}' redigeeritud.",
+          "add-success": "Oskus lisatud.",
+          "edit-success": "Oskus redigeeritud.",
           "delete-success": "Oskus \"{name}\" eemaldatud.",
           "add": "Lisa kutseoskusi",
           "add-item": "Lisa oskus",
@@ -1392,12 +1392,15 @@
             "notice-levels": "Näidake oma meisterlikkuse taset.",
             "help-levels": "Lisateave oskuste taseme kohta"
           },
-          "selection": "Valitud oskused"
+          "selection": "Valitud oskused",
+          "add-error": "Oskusi ei saa lisada.",
+          "edit-error": "Oskust ei saa redigeerida.",
+          "delete-error": "Oskust ei saa eemaldada."
         },
         "hobbies": {
           "nothing-yet": "Teie profiilil pole veel oskusi.",
           "add-success": "Lisatud on hobi \"{name}\".",
-          "edit-success": "Hobby '{name}' toimetatud.",
+          "edit-success": "Hobby toimetatud.",
           "delete-success": "Hobby \"{name}\" eemaldatud.",
           "add": "Lisa hobid",
           "add-item": "Lisa hobi",
@@ -1411,7 +1414,10 @@
             "notice-levels": "Näidake oma meisterlikkuse taset.",
             "help-levels": "Rohkem hobide taseme kohta"
           },
-          "selection": "Valitud hobid"
+          "selection": "Valitud hobid",
+          "add-error": "Hobi ei saa lisada.",
+          "edit-error": "Hobi ei saa redigeerida.",
+          "delete-error": "Hobi ei saa eemaldada."
         },
         "mentorship": {
           "contact": {
@@ -1480,7 +1486,14 @@
             "description": "PhD tasemel või tegi suure projekti või võib õpetada magistri tasemel"
           }
         },
-        "nothing-yet": "Sa pole veel oskusi lisanud."
+        "nothing-yet": "Sa pole veel oskusi lisanud.",
+        "delete": "Oled kindel, et soovid selle oskuse kustutada?",
+        "form": {
+          "level": {
+            "label": "Tase",
+            "help": "Vali oma oskuste tase"
+          }
+        }
       },
       "privacy": {
         "tab": "Privaatsus",

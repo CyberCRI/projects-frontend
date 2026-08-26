@@ -1,18 +1,22 @@
 <template>
   <div :class="{ border: hasBorder }" class="container">
-    <span v-if="showLabel" class="level-label">{{ skillLevels[activeStep - 1]?.label }}</span>
     <IconImage
       v-for="(step, index) in steps"
       :key="index"
       :class="{ 'step-completed': step <= activeStep }"
       class="step"
       :name="step <= activeStep ? 'Star' : 'StarLine'"
+      @mouseover.prevent="$emit('mouseover', index + 1)"
+      @click="$emit('click', index + 1)"
+      @mouseleave.prevent="$emit('mouseleave')"
     />
+    <BadgeItem v-if="showLabel" :label="skillLevels[activeStep - 1]?.label" />
   </div>
 </template>
 
 <script setup lang="ts">
 import useSkillLevels from '~/composables/useSkillLevels'
+import { DEFAULT_SKILL_STEPS } from '~/functs/constants'
 
 withDefaults(
   defineProps<{
@@ -22,13 +26,19 @@ withDefaults(
     showLabel?: boolean
   }>(),
   {
-    steps: 1,
+    steps: DEFAULT_SKILL_STEPS,
     activeStep: 1,
     hasBorder: false,
     showLabel: false,
   }
 )
 const { skillLevels } = useSkillLevels()
+
+defineEmits<{
+  mouseover: [number]
+  mouseleave: []
+  click: [number]
+}>()
 </script>
 
 <style lang="scss" scoped>
@@ -36,8 +46,8 @@ const { skillLevels } = useSkillLevels()
 
 .container {
   display: inline-flex;
-  padding: variables.$space-m calc(variables.$space-l / 1.5);
   align-items: center;
+  gap: 0.2rem;
 }
 
 .border {

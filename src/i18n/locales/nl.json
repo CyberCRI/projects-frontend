@@ -1377,9 +1377,9 @@
         "suggested-skills": "Of kies een aanbevolen vaardigheid",
         "already-added": "(reeds toegevoegd)",
         "skills": {
-          "add-success": "Skill '{name}' toegevoegd.",
-          "edit-success": "Skill '{name}' bewerkt.",
-          "delete-success": "Skill '{name}' verwijderd.",
+          "add-success": "Skill toegevoegd.",
+          "edit-success": "Skill bewerkt.",
+          "delete-success": "Skill verwijderd.",
           "add": "Beroepsvaardigheden toevoegen",
           "add-item": "Een vaardigheid toevoegen",
           "edit-levels": "Niveaus bewerken",
@@ -1393,13 +1393,16 @@
             "help-levels": "Meer over vaardigheden"
           },
           "selection": "Geselecteerde vaardigheden",
-          "nothing-yet": "Je hebt nog geen vaardigheden toegevoegd."
+          "nothing-yet": "Je hebt nog geen vaardigheden toegevoegd.",
+          "add-error": "Skill kan niet toegevoegd worden.",
+          "edit-error": "Skill kan niet bewerkt worden.",
+          "delete-error": "Skill kan niet verwijderd worden."
         },
         "hobbies": {
           "nothing-yet": "Je hebt nog geen hobby's toegevoegd.",
-          "add-success": "Hobby '{name}' toegevoegd.",
-          "edit-success": "Hobby '{name}' bewerkt.",
-          "delete-success": "Hobby '{name}' verwijderd.",
+          "add-success": "Hobby toegevoegd.",
+          "edit-success": "Hobby bewerkt.",
+          "delete-success": "Hobby verwijderd.",
           "add": "Hobby's toevoegen",
           "add-item": "Een hobby toevoegen",
           "already-added": "Hobby is al toegevoegd",
@@ -1412,7 +1415,10 @@
             "notice-levels": "Geef je niveau van meesterschap aan.",
             "help-levels": "Meer over de hobby's"
           },
-          "selection": "Geselecteerde hobby's"
+          "selection": "Geselecteerde hobby's",
+          "add-error": "Hobby kan niet toegevoegd worden.",
+          "edit-error": "Hobby kan niet bewerkt worden.",
+          "delete-error": "Hobby kan niet verwijderd worden."
         },
         "mentorship": {
           "contact": {
@@ -1479,6 +1485,13 @@
           "expert": {
             "title": "Niveau 4: Expert",
             "description": "PhD-niveau of deed een groot project, of kan leren om masterniveau"
+          }
+        },
+        "delete": "Weet u zeker dat u deze vaardigheid wilt verwijderen?",
+        "form": {
+          "level": {
+            "label": "Niveau",
+            "help": "Kies de niveaus van uw vaardigheden"
           }
         }
       },

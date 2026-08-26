@@ -334,3 +334,6 @@ export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
   resources: 'resource.resources',
   groups: 'profile.groups',
 }
+
+// max skill steps
+export const DEFAULT_SKILL_STEPS = 4

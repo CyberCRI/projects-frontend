@@ -1375,11 +1375,21 @@
         "save-success": "Profile saved.",
         "suggested-skills": "Or pick a suggested skill",
         "already-added": "(already added)",
+        "delete": "Are you sure you want to delete this skill?",
+        "form": {
+          "level": {
+            "label": "Level",
+            "help": "Choose the levels of your skill"
+          }
+        },
         "skills": {
           "nothing-yet": "You have not added any skills yet.",
-          "add-success": "Skill '{name}' added.",
-          "edit-success": "Skill '{name}' edited.",
-          "delete-success": "Skill '{name}' removed.",
+          "add-success": "Skill added.",
+          "add-error": "Skill can't be added.",
+          "edit-success": "Skill edited.",
+          "edit-error": "Skill can't be edited.",
+          "delete-success": "Skill removed.",
+          "delete-error": "Skill can't be removed.",
           "add": "Add professional skills",
           "add-item": "Add a skill",
           "edit-levels": "Edit levels",
@@ -1396,9 +1406,12 @@
         },
         "hobbies": {
           "nothing-yet": "You have not added any hobbies yet.",
-          "add-success": "Hobby '{name}' added.",
-          "edit-success": "Hobby '{name}' edited.",
-          "delete-success": "Hobby '{name}' removed.",
+          "add-success": "Hobby added.",
+          "add-error": "Hobby can't be added.",
+          "edit-success": "Hobby edited.",
+          "edit-error": "Hobby can't be edited.",
+          "delete-success": "Hobby removed.",
+          "delete-error": "Hobby can't be removed.",
           "add": "Add hobbies",
           "add-item": "Add a hobby",
           "already-added": "Hobby already added",

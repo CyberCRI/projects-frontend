@@ -11,6 +11,8 @@
         <p>{{ description }}</p>
       </div>
     </transition>
+
+    <slot />
   </div>
 </template>
 <script setup lang="ts">

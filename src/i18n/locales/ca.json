@@ -1377,9 +1377,9 @@
         "already-added": "(Ja està afegit)",
         "skills": {
           "nothing-yet": "Encara no heu afegit cap habilitat.",
-          "add-success": "Skill '{name}' afegia.",
-          "edit-success": "Skill '{name}' editat.",
-          "delete-success": "Skill '{name}' eliminat.",
+          "add-success": "Skill afegia.",
+          "edit-success": "Skill editat.",
+          "delete-success": "Skill eliminat.",
           "add": "Afegeix habilitats professionals",
           "add-item": "Afegeix una habilitat",
           "edit-levels": "Edita els nivells",
@@ -1392,7 +1392,10 @@
             "notice-levels": "Indica el teu nivell de mestre.",
             "help-levels": "Més sobre nivells d'habilitat"
           },
-          "selection": "habilitats seleccionades"
+          "selection": "habilitats seleccionades",
+          "add-error": "No es pot afegir Skill.",
+          "edit-error": "No es pot editar Skill.",
+          "delete-error": "No es pot eliminar Skill."
         },
         "hobbies": {
           "nothing-yet": "Encara no heu afegit cap hobby.",
@@ -1411,7 +1414,10 @@
             "notice-levels": "Indica el teu nivell de mestre.",
             "help-levels": "Més sobre els nivells de bbies"
           },
-          "selection": "Hobbies seleccionades"
+          "selection": "Hobbies seleccionades",
+          "add-error": "No es pot afegir en Hobby.",
+          "edit-error": "En Hobby no es pot editar.",
+          "delete-error": "En Hobby no es pot eliminar."
         },
         "mentorship": {
           "contact": {
@@ -1480,7 +1486,14 @@
             "description": "Nivell de doctorat o va fer un gran projecte, o pot ensenyar al nivell mestre"
           }
         },
-        "nothing-yet": "Encara no has afegit habilitats."
+        "nothing-yet": "Encara no has afegit habilitats.",
+        "delete": "Esteu segur que voleu esborrar aquesta habilitat?",
+        "form": {
+          "level": {
+            "label": "Nivell",
+            "help": "Escolliu els nivells de la vostra habilitat"
+          }
+        }
       },
       "privacy": {
         "tab": "Privadesa",
