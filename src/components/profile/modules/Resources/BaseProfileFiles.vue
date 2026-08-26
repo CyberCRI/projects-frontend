@@ -66,7 +66,7 @@ const cancel = () => {
 }
 
 const fullRefresh = () =>
-  refreshProfileData(props.project).then(() => {
+  refreshProfileData(props.profile).then(() => {
     refresh()
     cancel()
   })
@@ -95,11 +95,10 @@ const onDeleteConfirm = () => {
 
 const onSubmit = (form: AttachmentForm) => {
   asyncing.value = true
-
   const formData = new FormData()
   formData.append('title', form.title)
   formData.append('description', form.description)
-  formData.append('profile_id', props.profile.id)
+  formData.append('user_id', props.profile.id)
   formData.append('file', form.file, form.file.name)
   formData.append('mime', form.file.type)
 
