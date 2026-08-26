@@ -1603,11 +1603,11 @@
       },
       "publications": {
         "tab": "Publications",
-        "no-editable": "Les publications d'édition seront disponibles début janvier 2026"
+        "no-editable": "L'édition des publications seront bientôt disponibles"
       },
       "conferences": {
         "tab": "Conférences",
-        "no-editable": "Des conférences d'édition seront disponibles début janvier 2026"
+        "no-editable": "L'édition des conférences seront bientôt disponibles"
       }
     },
     "go-to-page": "Voir la page du profil",

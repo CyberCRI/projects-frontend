@@ -21,7 +21,7 @@
                 selected: query.year === obj.year,
                 preview: preview,
               }"
-              :title="`${t(`profile.${docType}`)} ${obj.year} (${obj.count})`"
+              :title="`${t(`profile.${documentType}`)} ${obj.year} (${obj.count})`"
               :style="{ '--bar-count': obj.height }"
               @click="!preview && toggleQuery('year', obj.year)"
             >
@@ -91,7 +91,7 @@
           v-for="doc in documents"
           :key="doc.id"
           :document="doc"
-          :doc-type="docType"
+          :document-type="documentType"
           :preview="preview"
           @similar="documentSelected = doc"
         />
@@ -99,11 +99,11 @@
       <PaginationButtonsV2 v-if="props.preview === false" class="m-auto" :pagination="pagination" />
     </template>
     <div v-else class="documents-empty">
-      {{ t(`profile.${docType}-empty`) }}
+      {{ t(`profile.${documentType}-empty`) }}
     </div>
     <ResearcherDocumentSimilars
       :document="documentSelected"
-      :doc-type="docType"
+      :document-type="documentType"
       @close="documentSelected = null"
     />
   </div>
@@ -115,16 +115,17 @@ import type {
   QueryFilterDocument,
   Relators,
   ResearcherDocumentAnalytics,
+  ResearcherDocumentType,
   TranslatedResearcherDocument,
 } from 'shared-projects-frontend/models'
 
-import ResearcherDocumentSimilars from '~/components/people/Researcher/ResearcherDocumentSimilars.vue'
-import ResearcherDocument from '~/components/people/Researcher/ResearcherDocument.vue'
 import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
 
 import type { Pagination as PaginationType } from '~/composables/usePagination'
 import { useQuery } from '~/composables/useQuery'
 
+import ResearcherDocumentSimilars from '~/components/profile/modules/Documents/ResearcherDocumentSimilars.vue'
+import ResearcherDocument from '~/components/profile/modules/Documents/ResearcherDocument.vue'
 import { sanitizeResearcherDocumentAnalyticsYears } from '~/api/sanitizes/researcher'
 import { isNil } from 'es-toolkit'
 
@@ -134,7 +135,7 @@ const props = withDefaults(
     documentsAnalytics: ResearcherDocumentAnalytics
     pagination?: PaginationType
     preview?: boolean
-    docType: string
+    documentType: ResearcherDocumentType
   }>(),
   { preview: false, pagination: null }
 )

@@ -1518,11 +1518,11 @@
       },
       "publications": {
         "tab": "Trükised",
-        "no-editable": "Väljaannete toimetamine on saadaval 2026. aasta jaanuari alguses"
+        "no-editable": "Peagi ilmuvad trükised"
       },
       "conferences": {
         "tab": "Konverentsid",
-        "no-editable": "Toimetuskonverentsid on saadaval 2026. aasta jaanuari alguses"
+        "no-editable": "Peatselt on kättesaadavad konverentsid"
       }
     },
     "go-to-page": "Vaata profiili lehekülge",

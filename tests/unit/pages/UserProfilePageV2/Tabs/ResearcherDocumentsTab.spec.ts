@@ -16,12 +16,12 @@ describe('ResearcherDocumentsTab.vue', () => {
     })
     const props = {
       user,
-      docType: 'publications' satisfies ResearcherDocumentType as ResearcherDocumentType,
+      documentType: 'publications' satisfies ResearcherDocumentType as ResearcherDocumentType,
     }
     const organizationCode = useOrganizationCode()
 
     registerEndpoint(
-      `crisalid/organization/${organizationCode}/researcher/${props.user.researcher.id}/${props.docType}/analytics/`,
+      `crisalid/organization/${organizationCode}/researcher/${props.user.researcher.id}/${props.documentType}/analytics/`,
       () => {
         return {
           document_types: {
@@ -51,7 +51,7 @@ describe('ResearcherDocumentsTab.vue', () => {
     })
 
     registerEndpoint(
-      `crisalid/organization/${organizationCode}/researcher/${props.user.researcher.id}/${props.docType}/`,
+      `crisalid/organization/${organizationCode}/researcher/${props.user.researcher.id}/${props.documentType}/`,
       () => {
         return PaginationsFactory.generate({
           results: [docWithoutSimilars],

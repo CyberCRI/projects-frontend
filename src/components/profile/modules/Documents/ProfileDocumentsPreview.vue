@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import UserResearcherDocumentsList from '~/components/profile/modules/Documents/UserResearcherDocumentsList.vue'
 import type { ResearcherDocumentType, TranslatedUserModel } from 'shared-projects-frontend/models'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
 import { USER_MODULE_ICON, USER_MODULE_TITLE } from '~/functs/constants'
 
 defineProps<{ user: TranslatedUserModel; documentType: ResearcherDocumentType }>()
+
+const DOCUMENTS_LIMIT = 3
 </script>
 
 <template>
@@ -20,8 +23,12 @@ defineProps<{ user: TranslatedUserModel; documentType: ResearcherDocumentType }>
     }"
   >
     <template #content>
-      {{ documentType }}
-      {{ user.modules[documentType] }}
+      <UserResearcherDocumentsList
+        :document-type="documentType"
+        preview
+        :limit="DOCUMENTS_LIMIT"
+        :user="user"
+      />
     </template>
   </BaseModulePreview>
 </template>

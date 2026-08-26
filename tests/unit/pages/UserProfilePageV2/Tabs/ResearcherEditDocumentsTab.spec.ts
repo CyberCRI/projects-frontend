@@ -8,7 +8,7 @@ import { describe, expect, it } from 'vitest'
 describe('ResearcherEditDocumentsTab.vue', () => {
   it('should render component', async () => {
     const props = {
-      docType: 'publications' satisfies ResearcherDocumentType as ResearcherDocumentType,
+      documentType: 'publications' satisfies ResearcherDocumentType as ResearcherDocumentType,
     }
 
     const wrapper = await lpiMountSuspended(ResearcherEditDocumentsTab, { props })

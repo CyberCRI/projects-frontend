@@ -1518,11 +1518,11 @@
       },
       "publications": {
         "tab": "Publicacions",
-        "no-editable": "Les publicacions d' edició estaran disponibles al principi del 20 de gener del 2026"
+        "no-editable": "L' edició de les publicacions estarà disponible aviat"
       },
       "conferences": {
         "tab": "Conferèncias",
-        "no-editable": "L' edició de conferències estarà disponible al principi del 2026 de gener."
+        "no-editable": "L' edició de conferències estarà disponible aviat"
       }
     },
     "go-to-page": "Visualitza la pàgina del perfil",

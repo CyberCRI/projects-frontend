@@ -1518,11 +1518,11 @@
       },
       "publications": {
         "tab": "Publicaties",
-        "no-editable": "Publicaties worden begin januari 2026 bewerkt."
+        "no-editable": "Het bewerken van publicaties zal binnenkort beschikbaar zijn"
       },
       "conferences": {
         "tab": "Conferenties",
-        "no-editable": "Begin januari 2026 zullen er conferenties worden gehouden over de uitvoering van de projecten."
+        "no-editable": "Conferenties worden binnenkort bewerkt."
       }
     },
     "go-to-page": "De pagina van het profiel weergeven",

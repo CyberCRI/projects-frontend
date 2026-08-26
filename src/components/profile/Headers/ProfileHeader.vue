@@ -62,12 +62,12 @@
 <script setup lang="ts">
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
-import IdentifierLink from '~/components/people/Researcher/IdentifierLink.vue'
 import SdgList from '~/components/sdgs/SdgList.vue'
 
 import { useUserFullName } from '~/composables/user/useUserFullName'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
+import IdentifierLink from '~/components/profile/modules/Documents/IdentifierLink.vue'
 import { capitalize } from '~/functs/string'
 
 const props = defineProps<{
