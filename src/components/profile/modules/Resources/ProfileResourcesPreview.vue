@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
 import BaseProfileResources from '~/components/profile/modules/Resources/BaseProfileResources.vue'
+import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { USER_MODULE_ICON, USER_MODULE_TITLE } from '~/functs/constants'
 

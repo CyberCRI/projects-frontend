@@ -10,10 +10,10 @@ import type {
   AttachmentForm,
 } from 'shared-projects-frontend/models'
 import { attachementFileSkeletons } from '~/skeletons/attachements.skeletons'
-import { getUserAttachmentFile } from '~/api/v2/attachment-files.service'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import ResourceDrawerV2 from '~/components/resources/ResourceDrawerV2.vue'
 import { refreshProfileData } from '~/composables/profile/refreshProfile'
+import { getUserAttachmentFile } from '~/api/v2/attachment-files.service'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
