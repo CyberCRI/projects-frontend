@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 import FollowIcon from '~/components/base/FollowIcon.vue'
 import followUtils from '~/functs/followUtils'

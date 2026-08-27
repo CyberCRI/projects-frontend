@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 withDefaults(
   defineProps<{

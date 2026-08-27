@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { postAccessRequest } from 'shared-projects-frontend/apis'
 import { email, helpers, required } from '@vuelidate/validators'
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import { useKeycloak } from '@dsb-norge/vue-keycloak-js'
 import useToasterStore from '@/stores/useToaster'
 import useValidate from '@vuelidate/core'
 // import { I18nT } from 'vue-i18n'
@@ -11,6 +11,7 @@ const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const router = useRouter()
 const { t } = useNuxtI18n()
+const keycloak = useKeycloak()
 
 const form = ref({
   email: '',
@@ -83,9 +84,6 @@ async function requestAccess() {
 }
 function cancel() {
   router.push({ name: 'HomeRoot' })
-}
-function login() {
-  goToKeycloakLoginPage()
 }
 function closeDrawer() {
   showContactUsDrawer.value = false
@@ -185,7 +183,9 @@ useLpiHead2({
       <div class="extra-links" :class="{ 'is-confirm': confirm }">
         <p v-if="!confirm" class="extra-link extra-login">
           {{ $t('request-access.have-account') }}
-          <a href="#" class="link" @click.prevent="login">{{ $t('request-access.login') }}</a>
+          <a href="#" class="link" @click.prevent="keycloak.login">
+            {{ $t('request-access.login') }}
+          </a>
         </p>
         <p class="extra-link extra-help">
           {{ $t('request-access.need-help') }}

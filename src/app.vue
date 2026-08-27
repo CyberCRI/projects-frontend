@@ -33,15 +33,12 @@
 </template>
 
 <script setup lang="ts">
-import useKeycloak from '~/api/auth/keycloak'
-
 import AppToastList from '~/components/app/AppToastList.vue'
-import { checkExpiredToken } from '~/api/auth/keycloakUtils'
 import LpiHeader from '~/components/app/LpiHeader.vue'
 import LpiFooter from '~/components/app/LpiFooter.vue'
 
+import useUsersStore from '~/stores/useUserStore'
 import useGlobalsStore from '~/stores/useGlobals'
-import useUsersStore from '~/stores/useUsers'
 
 import { fixTiptapTableHeight } from '~/composables/tiptap/editorUtils'
 
@@ -50,9 +47,7 @@ useRuntimeHook('app:error', (error: null) => {
 })
 
 const route = useRoute()
-const router = useRouter()
 const usersStore = useUsersStore()
-const keycloak = useKeycloak()
 
 const reportBugModalActive = ref(false)
 const isLoading = false
@@ -89,37 +84,9 @@ const toggleReportBugModal = () => {
   reportBugModalActive.value = !reportBugModalActive.value
 }
 
-const onFocus = () => {
-  const accessToken = localStorage.getItem('ACCESS_TOKEN')
-  const storeAccessToken = usersStore.accessToken
-
-  const originalLogout = () => {
-    usersStore.resetUser()
-    // navigate to /dashboard
-    if (!route || route.name !== 'Home') {
-      router.push({ name: 'Home' })
-    }
-  }
-  if (storeAccessToken && accessToken) {
-    // logged in, verify token is still fresh
-    if (checkExpiredToken()) {
-      originalLogout()
-    }
-  } else if (storeAccessToken && !accessToken) {
-    // logged out in another tab
-    originalLogout()
-  } else if (!storeAccessToken && accessToken) {
-    // logged in in another tab
-    keycloak.refreshTokenLoop.start()
-  }
-}
-
 onResize(fixTiptapTableHeight)
 
 onClientMounted(() => {
-  // handle multiple tabs browsing for auth
-  window.addEventListener('focus', onFocus)
-
   document.querySelector('.app-loader')?.classList.add('fade-out')
   setTimeout(() => {
     document.querySelector('.app-loader')?.remove()
@@ -134,7 +101,7 @@ onClientMounted(() => {
       const { type, payload } = e.data
       switch (type) {
         case 'TOS_ACCEPTED': {
-          const user = usersStore.userFromApi
+          const user = usersStore.user
           if (user) user.signed_terms_and_conditions = payload
           break
         }
@@ -146,7 +113,6 @@ onClientMounted(() => {
 
 onClientBeforeUnmounted(() => {
   // this.$refs.scrollview.removeEventListener('scroll', this.setDarkTopbar)
-  window.removeEventListener('focus', onFocus)
   if (window?.lpiSharedWorker) {
     window?.lpiSharedWorker.port.close()
   }

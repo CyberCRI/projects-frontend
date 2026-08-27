@@ -77,7 +77,7 @@ import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import BasicCard from '~/components/base/BasicCard.vue'
 
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 import type { DEFAULT_PROJECT_PATATOID } from '~/composables/usePatatoids'
 import type { TranslatedProject } from 'shared-projects-frontend/models'

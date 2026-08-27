@@ -32,7 +32,7 @@ import { getFeaturedProjects } from '@/api/v2/organizations.service'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { userSkeleton } from '@/skeletons/user.skeletons'
-import useUsersStore from '@/stores/useUsers'
+import useUsersStore from '@/stores/useUserStore'
 
 const usersStore = useUsersStore()
 const loggedIn = computed(() => usersStore.isConnected)

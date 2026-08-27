@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // import useToasterStore from '@/stores/useToaster'
-// import useUsersStore from '@/stores/useUsers'
+// import useUsersStore from '@/stores/useUserStore'
 
 // if (!useRuntimeConfig().public.appHasChatbotPromptDb) {
 //   usePage404()

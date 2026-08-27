@@ -52,8 +52,8 @@ import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { patchUser } from 'shared-projects-frontend/apis'
 import { defaultFormBio } from '~/form/profile'
 
+import useUsersStore from '~/stores/useUserStore'
 import useToasterStore from '~/stores/useToaster'
-import useUsersStore from '~/stores/useUsers'
 
 const props = defineProps<{
   user: TranslatedUserModel

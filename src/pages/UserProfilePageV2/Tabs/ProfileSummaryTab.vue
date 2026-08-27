@@ -124,7 +124,7 @@ import UserDescriptions from '~/components/people/UserDescriptions.vue'
 import SkillSummary from '~/components/people/skill/SkillSummary.vue'
 import SeeMoreArrow from '~/components/base/button/SeeMoreArrow.vue'
 
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 const selectTab = inject<(number) => void>('tabsLayoutSelectTab', () => {})
 

@@ -5,7 +5,7 @@ import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 import pinia from '~/stores'
 
 // issue with webcrypto, so mock so offending import

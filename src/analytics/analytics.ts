@@ -1,6 +1,6 @@
 // Full API reference: https://developer.mixpanel.com/docs/javascript-full-api-reference
 import useOrganizationsStore from '~/stores/useOrganizations'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 import type { RequestOptions } from 'mixpanel-browser'
 import { useRuntimeConfig } from '#imports'

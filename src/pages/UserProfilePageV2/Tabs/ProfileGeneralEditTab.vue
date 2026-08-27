@@ -219,8 +219,8 @@ import {
 
 import SdgList from '~/components/sdgs/SdgList.vue'
 
+import useUsersStore from '~/stores/useUserStore'
 import useToasterStore from '~/stores/useToaster'
-import useUsersStore from '~/stores/useUsers'
 
 import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { VALID_NAME_REGEX } from '~/functs/constants'

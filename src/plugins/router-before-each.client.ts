@@ -1,15 +1,16 @@
-import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
-
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import { resetScroll } from '~/composables/useScrollToTab'
+import { useKeycloak } from '@dsb-norge/vue-keycloak-js'
 
 export default defineNuxtPlugin(async () => {
   const router = useRouter()
   if (!router) {
     return
   }
+
+  const { login } = useKeycloak()
   router.beforeEach((to, from, next) => {
     // console.log('BEFORE EACH')
     if (to.matched.some((route) => route.meta.resetScroll)) {
@@ -52,7 +53,7 @@ export default defineNuxtPlugin(async () => {
           window.history.pushState({ path: newurl }, '', newurl)
           proceed = false
           // login
-          goToKeycloakLoginPage()
+          login()
         }
       }
       // if we didn't login, redirect to an authorized page

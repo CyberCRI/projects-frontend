@@ -66,7 +66,7 @@ import useToasterStore from '@/stores/useToaster'
 import TextInput from '~/components/base/form/TextInput.vue'
 import Recaptcha from '~/components/base/form/Recaptcha.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 import { formEqual } from '~/form/base'
 
 const props = defineProps<{ isOpened: boolean }>()

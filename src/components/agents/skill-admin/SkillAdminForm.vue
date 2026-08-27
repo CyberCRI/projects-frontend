@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { helpers, required } from '@vuelidate/validators'
+import useUsersStore from '@/stores/useUserStore'
 import useToasterStore from '@/stores/useToaster'
-import useUsersStore from '@/stores/useUsers'
 import { requiredContent } from '~/form/base'
 import useValidate from '@vuelidate/core'
 

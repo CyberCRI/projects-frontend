@@ -63,7 +63,7 @@ import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 import type {
   QueryFilterEvent,

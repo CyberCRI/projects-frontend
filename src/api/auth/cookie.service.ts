@@ -1,7 +1,10 @@
 import { removeUserCookie } from 'shared-projects-frontend/apis'
+import { useKeycloak } from '@dsb-norge/vue-keycloak-js'
 
 export async function removeApiCookie() {
   // unset cookie for API proxy
-  document.cookie = 'jwt_access_token=; path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT;'
+  const keycloak = useKeycloak()
+
+  await keycloak.logoutFn()
   return await removeUserCookie()
 }

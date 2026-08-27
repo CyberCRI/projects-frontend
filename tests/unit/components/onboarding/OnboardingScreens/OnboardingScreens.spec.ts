@@ -2,7 +2,7 @@ import OnboardingScreens from '~/components/onboarding/OnboardingScreens/Onboard
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 import pinia from '~/stores'
 
 describe('OnboardingScreens', () => {

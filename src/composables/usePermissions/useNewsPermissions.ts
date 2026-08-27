@@ -7,7 +7,7 @@ import {
   canDeleteNews as globalCanDeleteNews,
 } from 'shared-projects-frontend/lib'
 import type { NewsModel } from 'shared-projects-frontend/models'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 /**
  * check permissions for news

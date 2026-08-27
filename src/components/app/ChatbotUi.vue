@@ -1,6 +1,6 @@
 <script setup>
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
-import useUsersStore from '@/stores/useUsers'
+import useUsersStore from '@/stores/useUserStore'
 // import { shuffle } from 'es-toolkit'
 import analytics from '@/analytics'
 import 'deep-chat'

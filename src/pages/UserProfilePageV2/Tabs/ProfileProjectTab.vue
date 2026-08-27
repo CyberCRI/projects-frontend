@@ -103,7 +103,7 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import useProjectCategories from '~/stores/useProjectCategories'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 const props = defineProps<{
   user: TranslatedUserModel

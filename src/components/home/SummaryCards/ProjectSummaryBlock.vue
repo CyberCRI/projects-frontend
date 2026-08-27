@@ -35,7 +35,7 @@ import type { TranslatedProject } from 'shared-projects-frontend/models'
 import BaseListSummaryBlock from '~/components/home/SummaryCards/BaseListSummaryBlock.vue'
 import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
 import ProjectLine from '~/components/home/SummaryCards/ProjectLine.vue'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 withDefaults(
   defineProps<{

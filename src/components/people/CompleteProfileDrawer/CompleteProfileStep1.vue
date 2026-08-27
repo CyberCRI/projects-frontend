@@ -184,8 +184,8 @@ import {
   postUserPicture,
 } from 'shared-projects-frontend/apis'
 
+import useUsersStore from '~/stores/useUserStore'
 import useToasterStore from '~/stores/useToaster'
-import useUsersStore from '~/stores/useUsers'
 
 import { usePatatoids } from '~/composables/usePatatoids'
 

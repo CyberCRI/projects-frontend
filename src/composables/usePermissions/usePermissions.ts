@@ -7,7 +7,7 @@ import {
   isAdmin as globalIsAdmin,
   isAdminOrFacilitator as globalIsAdminOrFacilitator,
 } from 'shared-projects-frontend/lib'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 /**
  * check permissions for user

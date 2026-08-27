@@ -16,7 +16,7 @@ import type { ProjectModel, TranslatedProject } from 'shared-projects-frontend/m
 import useOrganizationsStore from '~/stores/useOrganizations'
 import type { RefOrRaw } from '~/interfaces/utils'
 
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 /**
  * check permissions for project

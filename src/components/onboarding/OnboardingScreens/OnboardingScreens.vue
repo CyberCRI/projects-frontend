@@ -29,7 +29,7 @@ import TakeTourModal from '~/components/onboarding/WelcomeModal/TakeTourModal.vu
 import WelcomeModal from '~/components/onboarding/WelcomeModal/WelcomeModal.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 export default {
   name: 'OnboardingScreens',

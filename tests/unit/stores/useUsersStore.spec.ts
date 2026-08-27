@@ -32,7 +32,7 @@ vi.mock('~/api/auth/keycloakUtils', async (importOriginal) => {
 })
 vi.mock('~/analytics')
 
-const userStore = async (pinia) => (await import('~/stores/useUsers')).default(pinia)
+const userStore = async (pinia) => (await import('~/stores/useUserStore')).default(pinia)
 
 describe('Store module | users | init', () => {
   let pinia

@@ -2,9 +2,9 @@
 import { postUserWithInvitation, getInvitation } from 'shared-projects-frontend/apis'
 import { imageSizesFormDataPost } from '@/functs/imageSizesUtils'
 import { email, helpers, required } from '@vuelidate/validators'
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { getPatatoidFile } from '@/composables/usePatatoids'
+import { useKeycloak } from '@dsb-norge/vue-keycloak-js'
 import { usePublicURL } from '@/composables/usePublic'
 import useToasterStore from '@/stores/useToaster'
 import useVuelidate from '@vuelidate/core'
@@ -19,6 +19,7 @@ const organizationsStore = useOrganizationsStore()
 const { t, locale } = useNuxtI18n()
 const organizationCode = useOrganizationCode()
 
+const keycloak = useKeycloak()
 const form = ref({
   email: '',
   given_name: '',
@@ -113,8 +114,6 @@ const register = async () => {
     asyncing.value = false
   }
 }
-
-const login = () => goToKeycloakLoginPage
 
 const closeDrawer = () => {
   showContactUsDrawer.value = false
@@ -241,7 +240,9 @@ useLpiHead2({
           <div class="extra-links" :class="{ 'is-confirm': confirm }">
             <p v-if="!confirm" class="extra-link extra-login">
               {{ $t('register.have-account') }}
-              <a href="#" class="link" @click.prevent="login">{{ $t('register.login') }}</a>
+              <a href="#" class="link" @click.prevent="keycloak.login">
+                {{ $t('register.login') }}
+              </a>
             </p>
             <p class="extra-link extra-help">
               {{ $t('register.need-help') }}

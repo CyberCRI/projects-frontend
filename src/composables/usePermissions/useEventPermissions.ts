@@ -7,7 +7,7 @@ import {
   canDeleteEvent as globalCanDeleteEvent,
 } from 'shared-projects-frontend/lib'
 import type { EventModel } from 'shared-projects-frontend/models'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 /**
  * check permissions for event

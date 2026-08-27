@@ -2,7 +2,7 @@
 import RecommendationBlock from '@/components/search/Recommendations/RecommendationBlock.vue'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import useUsersStore from '@/stores/useUsers'
+import useUsersStore from '@/stores/useUserStore'
 const organizationsStore = useOrganizationsStore()
 const usersStore = useUsersStore()
 const router = useRouter()

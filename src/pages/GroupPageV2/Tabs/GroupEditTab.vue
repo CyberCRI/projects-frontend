@@ -11,8 +11,8 @@ import {
   postGroupHeader,
 } from 'shared-projects-frontend/apis'
 
+import useUsersStore from '~/stores/useUserStore'
 import useToasterStore from '~/stores/useToaster'
-import useUsersStore from '~/stores/useUsers'
 
 import { useLpiHead2 } from '~/composables/useLpiHead'
 

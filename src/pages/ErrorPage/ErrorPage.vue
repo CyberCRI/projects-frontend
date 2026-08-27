@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
+import useUsersStore from '~/stores/useUserStore'
 
-import useUsersStore from '~/stores/useUsers'
-
+import { useKeycloak } from '@dsb-norge/vue-keycloak-js'
 import { usePublicURL } from '~/composables/usePublic'
 
+const keycloak = useKeycloak()
 const usersStore = useUsersStore()
 const { t } = useNuxtI18n()
 
@@ -31,10 +31,6 @@ const illustrationText = computed(() => {
     ? t('page404.illustration-text')
     : t('page404.not-connected.illustration-text')
 })
-
-const login = () => {
-  goToKeycloakLoginPage()
-}
 
 // watchEffect(() => {
 //   useLpiHead2({
@@ -65,10 +61,10 @@ useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.va
             {{ t('page404.contact-mail') }}
           </a>
         </I18nT>
-        <LpiButton v-if="!isConnected" :label="t('common.login')" @click="login" />
+        <LpiButton v-if="!isConnected" :label="t('common.login')" @click="keycloak.login" />
         <div class="illustration">
           <img :src="imageFullUrl" />
-          <a :class="{ 'text--connected': !isConnected }" class="text" @click="login">
+          <a :class="{ 'text--connected': !isConnected }" class="text" @click="keycloak.login">
             {{ illustrationText }}
           </a>
         </div>

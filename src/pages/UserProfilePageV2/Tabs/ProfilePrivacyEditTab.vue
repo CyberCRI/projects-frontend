@@ -121,8 +121,8 @@ import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 import GroupButton from '~/components/base/button/GroupButton.vue'
 
 import type { PrivacySettings, PrivacyValue } from 'shared-projects-frontend/models'
+import useUsersStore from '~/stores/useUserStore'
 import useToasterStore from '~/stores/useToaster'
-import useUsersStore from '~/stores/useUsers'
 
 function defaultForm(): PrivacySettings {
   return {
