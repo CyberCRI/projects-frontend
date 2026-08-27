@@ -6,7 +6,7 @@ import useUsersStore from '~/stores/useUsers'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import UserSkillsFull from '~/components/people/skill/UserSkillsFull.vue'
 import type { OrganizationOutput } from 'shared-projects-frontend/models'
-import UserSkillFactory from '~~/tests/factories/skill.factory'
+import { SkillFactory } from '~~/tests/factories/skill.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
@@ -86,7 +86,7 @@ describe('ProfileSkillTab', () => {
 
     registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
     registerEndpoint(`user/${user2.id}/category-follow/`, () => PaginationsFactory.generate())
-    user.skills = [UserSkillFactory.generate({ id: 123, type: 'hobby', tag: aTag })]
+    user.skills = [SkillFactory.generate({ id: 123, type: 'hobby', tag: aTag })]
     usersStore.userFromApi = usersStore.userFromToken = user2
 
     const wrapper = await lpiMountSuspended(ProfileSkillTab, { props: { user } })
@@ -101,7 +101,7 @@ describe('ProfileSkillTab', () => {
 
     registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
     registerEndpoint(`user/${user2.id}/category-follow/`, () => PaginationsFactory.generate())
-    user.skills = [UserSkillFactory.generate({ id: 123, type: 'hobby', tag: aTag })]
+    user.skills = [SkillFactory.generate({ id: 123, type: 'hobby', tag: aTag })]
     usersStore.userFromApi = usersStore.userFromToken = user2
 
     const wrapper = await lpiMountSuspended(ProfileSkillTab, { props: { user } })
@@ -117,8 +117,8 @@ describe('ProfileSkillTab', () => {
     registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
     registerEndpoint(`user/${user2.id}/category-follow/`, () => PaginationsFactory.generate())
     user.skills = [
-      UserSkillFactory.generate({ id: 123, type: 'hobby', tag: aTag }),
-      UserSkillFactory.generate({ id: 123, type: 'skill', tag: aTag }),
+      SkillFactory.generate({ id: 123, type: 'hobby', tag: aTag }),
+      SkillFactory.generate({ id: 123, type: 'skill', tag: aTag }),
     ]
     usersStore.userFromApi = usersStore.userFromToken = user2
 
@@ -135,8 +135,8 @@ describe('ProfileSkillTab', () => {
     registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
     registerEndpoint(`user/${user2.id}/category-follow/`, () => PaginationsFactory.generate())
     user.skills = [
-      UserSkillFactory.generate({ id: 123, type: 'hobby', tag: aTag }),
-      UserSkillFactory.generate({ id: 123, type: 'skill', tag: aTag }),
+      SkillFactory.generate({ id: 123, type: 'hobby', tag: aTag }),
+      SkillFactory.generate({ id: 123, type: 'skill', tag: aTag }),
     ]
     usersStore.userFromApi = usersStore.userFromToken = user2
 

@@ -2,7 +2,7 @@
   <li class="recommendation-item">
     <NuxtLink
       class="recommendation"
-      :to="{ name: 'ProfileOtherUser', params: { userId: user.slug } }"
+      :to="{ name: 'ProfileUser', params: { userIdOrSlug: user.slug || user.id } }"
     >
       <CroppedApiImage
         ref="userImg"

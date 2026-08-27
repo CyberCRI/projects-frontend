@@ -2,7 +2,7 @@
   <BaseDrawer
     :is-opened="!!document"
     data-test="add-default-skills-drawer"
-    :title="`${t(`profile.${docType}-similars`)} (${countElement})`"
+    :title="`${t(`profile.${documentType}-similars`)} (${countElement})`"
     class="medium"
     :no-footer="!havePagination"
     @close="emit('close')"
@@ -13,7 +13,7 @@
           v-for="doc in documents"
           :key="doc.id"
           :document="doc"
-          :doc-type="docType"
+          :document-type="documentType"
           :similar="false"
         />
       </div>
@@ -27,7 +27,10 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedResearcherDocument } from 'shared-projects-frontend/models'
+import type {
+  ResearcherDocumentType,
+  TranslatedResearcherDocument,
+} from 'shared-projects-frontend/models'
 
 import { getResearchDocumentSimilars } from '~/api/v2/crisalid.service'
 
@@ -44,7 +47,7 @@ const { t } = useNuxtI18n()
 const emit = defineEmits(['close'])
 const props = defineProps<{
   document?: TranslatedResearcherDocument
-  docType: string
+  documentType: ResearcherDocumentType
 }>()
 
 const organizationCode = useOrganizationCode()

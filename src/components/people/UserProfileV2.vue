@@ -8,8 +8,8 @@
             btn-icon="Eye"
             :label="$t('profile.go-to-page')"
             :to="{
-              name: 'ProfileOtherUser',
-              params: { userId: user?.slug || userId },
+              name: 'ProfileUser',
+              params: { userIdOrSlug: user?.slug || userId },
             }"
           />
         </div>
@@ -116,8 +116,8 @@ export default {
       },
     ])
     const originalUser = ref(null)
-    const { translateUserFull } = useAutoTranslate()
-    const user = translateUserFull(originalUser)
+    const { translateUser } = useAutoTranslate()
+    const user = translateUser(originalUser)
     const isLoading = ref(true)
     return {
       usersStore,
@@ -184,12 +184,6 @@ export default {
       return this.isSelf ? this.$t('profile.edit.edit-your-profile') : this.$t('profile.edit.edit')
     },
     editProfileLink() {
-      // return this.isSelf
-      //   ? { name: 'ProfileEditGeneral' }
-      //   : {
-      //       name: 'ProfileEditOtherUser',
-      //       params: { userId: this.user?.slug || this.userId },
-      //     }
       return this.currentTab?.altView
     },
 
@@ -202,8 +196,7 @@ export default {
       // the indices are used in calls to provided method tabsLayoutSelectTab()
       // some index are used for navigation (see below)
 
-      const roadSuffix = this.isSelf ? '' : 'Other'
-      const params = this.isSelf ? {} : { userId: this.user.slug || this.user.id }
+      const params = { userIdOrSlug: this.user.slug || this.user.id }
       return [
         {
           label: this.$t('profile.snapshot'),
@@ -211,11 +204,11 @@ export default {
           id: 'profile-summary',
           // view: `/profile/${this.pathInfix}summary`,
           view: {
-            name: 'ProfileSummary' + roadSuffix,
+            name: 'ProfileSummary',
             params,
           },
           altView: {
-            name: 'ProfileEditGeneral' + roadSuffix,
+            name: 'ProfileEditGeneral',
             params,
           },
           // component: ProfileSummaryTab,
@@ -234,11 +227,11 @@ export default {
           id: 'profile-bio',
           // view: `/profile/${this.pathInfix}bio`,
           view: {
-            name: 'ProfileBio' + roadSuffix,
+            name: 'ProfileBio',
             params,
           },
           altView: {
-            name: 'ProfileEditBio' + roadSuffix,
+            name: 'ProfileEditBio',
             params,
           },
           // component: ProfileBioTab,
@@ -256,11 +249,11 @@ export default {
           id: 'profile-projects',
           //view: `/profile/${this.pathInfix}projects`,
           view: {
-            name: 'ProfileProjects' + roadSuffix,
+            name: 'ProfileProjects',
             params,
           },
           altView: {
-            name: 'ProfileEditProjects' + roadSuffix,
+            name: 'ProfileEditProjects',
             params,
           },
           // component: ProfileProjectTab,
@@ -275,11 +268,11 @@ export default {
           key: 'publications',
           id: 'profile-publications',
           view: {
-            name: 'ResearcherPublications' + roadSuffix,
+            name: 'ResearcherPublications',
             params,
           },
           altView: {
-            name: 'ProfileEditPublications' + roadSuffix,
+            name: 'ProfileEditPublications',
             params,
           },
           props: {
@@ -294,11 +287,11 @@ export default {
           key: 'conferences',
           id: 'profile-conferences',
           view: {
-            name: 'ResearcherConferences' + roadSuffix,
+            name: 'ResearcherConferences',
             params,
           },
           altView: {
-            name: 'ProfileEditConferences' + roadSuffix,
+            name: 'ProfileEditConferences',
             params,
           },
           props: {
@@ -313,11 +306,11 @@ export default {
           id: 'profile-groups',
           //view: `/profile/${this.pathInfix}groups`,
           view: {
-            name: 'ProfileGroups' + roadSuffix,
+            name: 'ProfileGroups',
             params,
           },
           altView: {
-            name: 'ProfileEditGroups' + roadSuffix,
+            name: 'ProfileEditGroups',
             params,
           },
           // component: ProfileGroupsTab,
@@ -335,11 +328,11 @@ export default {
           id: 'profile-skills',
           // view: `/profile/${this.pathInfix}skills`,
           view: {
-            name: 'ProfileSkills' + roadSuffix,
+            name: 'ProfileSkills',
             params,
           },
           altView: {
-            name: 'ProfileEditSkills' + roadSuffix,
+            name: 'ProfileEditSkills',
             params,
           },
           // component: ProfileSkillTab,
@@ -358,11 +351,11 @@ export default {
           id: 'profile-resources',
           // view: `/profile/${this.pathInfix}skills`,
           view: {
-            name: 'ProfileResources' + roadSuffix,
+            name: 'ProfileResources',
             params,
           },
           altView: {
-            name: 'ProfileEditResources' + roadSuffix,
+            name: 'ProfileEditResources',
             params,
           },
           // component: ProfileSkillTab,
@@ -387,8 +380,7 @@ export default {
       // watch out for the order of the tabs
       // the indices are used in calls to provided method tabsLayoutSelectTab()
       // some index are used for navigation (see below)
-      const roadSuffix = this.isSelf ? '' : 'Other'
-      const params = this.isSelf ? {} : { userId: this.user.slug || this.user.id }
+      const params = { userIdOrSlug: this.user.slug || this.user.id }
       const props = {
         user: this.user,
         onProfileEdited: () => {
@@ -401,11 +393,11 @@ export default {
           key: 'general',
           id: 'profile-edit-general',
           view: {
-            name: 'ProfileEditGeneral' + roadSuffix,
+            name: 'ProfileEditGeneral',
             params,
           },
           altView: {
-            name: 'ProfileSummary' + roadSuffix,
+            name: 'ProfileSummary',
             params,
           },
           props,
@@ -418,11 +410,11 @@ export default {
           key: 'bio',
           id: 'profile-edit-bio',
           view: {
-            name: 'ProfileEditBio' + roadSuffix,
+            name: 'ProfileEditBio',
             params,
           },
           altView: {
-            name: 'ProfileBio' + roadSuffix,
+            name: 'ProfileBio',
             params,
           },
           props,
@@ -435,11 +427,11 @@ export default {
           key: 'projects',
           id: 'profile-edit-projects',
           view: {
-            name: 'ProfileEditProjects' + roadSuffix,
+            name: 'ProfileEditProjects',
             params,
           },
           altView: {
-            name: 'ProfileProjects' + roadSuffix,
+            name: 'ProfileProjects',
             params,
           },
           props,
@@ -452,11 +444,11 @@ export default {
           key: 'publications',
           id: 'profile-edit-publications',
           view: {
-            name: 'ProfileEditPublications' + roadSuffix,
+            name: 'ProfileEditPublications',
             params,
           },
           altView: {
-            name: 'ResearcherPublications' + roadSuffix,
+            name: 'ResearcherPublications',
             params,
           },
           props,
@@ -469,11 +461,11 @@ export default {
           key: 'conferences',
           id: 'profile-edit-conferences',
           view: {
-            name: 'ProfileEditConferences' + roadSuffix,
+            name: 'ProfileEditConferences',
             params,
           },
           altView: {
-            name: 'ResearcherConferences' + roadSuffix,
+            name: 'ResearcherConferences',
             params,
           },
           props,
@@ -486,11 +478,11 @@ export default {
           key: 'groups',
           id: 'profile-edit-groups',
           view: {
-            name: 'ProfileEditGroups' + roadSuffix,
+            name: 'ProfileEditGroups',
             params,
           },
           altView: {
-            name: 'ProfileGroups' + roadSuffix,
+            name: 'ProfileGroups',
             params,
           },
           props,
@@ -503,11 +495,11 @@ export default {
           key: 'skills',
           id: 'profile-edit-skills',
           view: {
-            name: 'ProfileEditSkills' + roadSuffix,
+            name: 'ProfileEditSkills',
             params,
           },
           altView: {
-            name: 'ProfileSkills' + roadSuffix,
+            name: 'ProfileSkills',
             params,
           },
           props,
@@ -520,11 +512,11 @@ export default {
           key: 'resources',
           id: 'profile-edit-resources',
           view: {
-            name: 'ProfileEditResources' + roadSuffix,
+            name: 'ProfileEditResources',
             params,
           },
           altView: {
-            name: 'ProfileResources' + roadSuffix,
+            name: 'ProfileResources',
             params,
           },
           props,
@@ -538,11 +530,11 @@ export default {
           key: 'privacy',
           id: 'profile-edit-privacy',
           view: {
-            name: 'ProfileEditPrivacy' + roadSuffix,
+            name: 'ProfileEditPrivacy',
             params,
           },
           altView: {
-            name: 'ProfileSummary' + roadSuffix,
+            name: 'ProfileSummary',
             params,
           },
           props,

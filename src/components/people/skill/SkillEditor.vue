@@ -5,7 +5,7 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import ToolTip from '~/components/base/ToolTip.vue'
 
-import type { UserSkillModel } from 'shared-projects-frontend/models'
+import type { SkillModel } from 'shared-projects-frontend/models'
 import useSkillLevels from '~/composables/useSkillLevels'
 import useSkillTexts from '~/composables/useSkillTexts'
 
@@ -13,7 +13,7 @@ export type SkillType = 'skills' | 'hobbies'
 
 const props = withDefaults(
   defineProps<{
-    skill: UserSkillModel
+    skill: SkillModel
     type: SkillType
     scrollIntoView?: boolean
     noMentorship?: boolean

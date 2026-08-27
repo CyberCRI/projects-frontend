@@ -25,7 +25,7 @@ import type {
   ReviewModel,
   GoalModel,
 } from 'shared-projects-frontend/models'
-import { mapPeopleGroupPreview, mapUserPreview } from '~/mcp-server/projects/people-tool'
+import { mapPeopleGroupPreview, mapUserPreview } from '~/mcp-server/projects/user-tool'
 import { addIfExists, tagMapPreview } from '~/mcp-server/projects/utils'
 import { mcpOptions, orgCode, resultFromTool } from './base'
 import type { TypeMcpServer } from '~/interfaces/mcp'

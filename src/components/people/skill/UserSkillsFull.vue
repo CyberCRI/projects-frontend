@@ -38,12 +38,12 @@
 <script setup lang="ts">
 import SkillLevelTip from '~/components/people/skill/SkillLevelTip.vue'
 import SkillItemFull from '~/components/people/skill/SkillItemFull.vue'
-import type { UserSkillModel } from 'shared-projects-frontend/models'
+import type { SkillModel } from 'shared-projects-frontend/models'
 import LinkButton from '~/components/base/button/LinkButton.vue'
 
 withDefaults(
   defineProps<{
-    skills: UserSkillModel[]
+    skills: SkillModel[]
     title?: string
     // {skillId: "mentor"| "mentoree"}
     userMentorship?: any

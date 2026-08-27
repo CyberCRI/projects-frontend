@@ -5,14 +5,9 @@ import type {
   UserFromJWTModel,
   TranslatedUserModel,
 } from 'shared-projects-frontend/models'
-import { groupTranslatedFactory } from '~~/tests/factories/group.factory'
 
 export const UserFactory = createFactory<UserModel>((faker) => ({
   id: faker.datatype.number(),
-  name: {
-    firstname: faker.name.firstName(),
-    lastname: faker.name.lastName(),
-  },
   given_name: faker.name.firstName(),
   family_name: faker.name.lastName(),
   email: faker.internet.email(),
@@ -24,10 +19,7 @@ export const UserFactory = createFactory<UserModel>((faker) => ({
     '/projects/organizations/CRI/external',
     '/projects/organizations/OTHER_ORG/external',
   ],
-  orgs: ['CRI', 'OTHER_ORG'],
-  permissions: [''],
-  people_groups: [], // TODO: generate this
-  skills: [], // TODO: generate this
+  permissions: [],
   profile_picture: {
     id: faker.datatype.number(),
     name: faker.lorem.sentence(),
@@ -48,10 +40,6 @@ export const UserFactory = createFactory<UserModel>((faker) => ({
   },
   researcher: null,
   slug: '',
-  resources: {
-    files: faker.datatype.number(),
-    links: faker.datatype.number(),
-  },
   privacy_settings: {
     email: 'org',
     mobile_phone: 'org',
@@ -65,6 +53,25 @@ export const UserFactory = createFactory<UserModel>((faker) => ({
   linkedin: null,
   twitter: null,
   website: null,
+  modules: {
+    conferences: 0,
+    files: 0,
+    follows_categories: 0,
+    follows_projects: 0,
+    groups: 0,
+    links: 0,
+    mentor: 0,
+    mentoree: 0,
+    projects: 0,
+    publications: 0,
+    skills: 0,
+    notifications: 0,
+  },
+  created_at: faker.datatype.datetime().toISOString(),
+  landline_phone: null,
+  location: '',
+  mobile_phone: null,
+  skype: null,
 }))
 
 export const userTranslatedFactory = createFactory<TranslatedUserModel>(() => {
@@ -76,7 +83,6 @@ export const userTranslatedFactory = createFactory<TranslatedUserModel>(() => {
       job: user.job,
       short_description: user.short_description,
     },
-    people_groups: groupTranslatedFactory.generateMany(user.people_groups?.length || 0),
   }
 })
 

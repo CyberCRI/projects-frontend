@@ -11,7 +11,7 @@ import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
 
 const route = {
-  name: 'ProfileSummary',
+  name: 'ProfileUser',
 }
 
 const buildParams = (userId: number, showPageLink: boolean) => ({

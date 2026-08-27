@@ -1,13 +1,13 @@
 <template>
   <NavPanelAside :class="{ 'profile-edit-tabs': isEditing }">
-    <div v-if="isSelf || canEditUser" class="edit-btn-ctn">
+    <div v-if="canEditUser" class="edit-btn-ctn">
       <GroupButton
         :model-value="isEditing"
         :options="[
           { value: false, label: 'Show' },
           { value: true, label: 'Edit' },
         ]"
-        :label="editButtonLabel"
+        :label="$t('profile.edit.edit')"
         btn-icon="Pen"
         :data-test="isEditing ? 'display-profile' : 'edit-profile'"
         class="edit-btn small"
@@ -69,36 +69,34 @@
 </template>
 
 <script setup lang="ts">
+import { usePermissionUser } from '~/composables/usePermissions/useUserPermissions'
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
-import type { PeopleModel } from 'shared-projects-frontend/models'
-import type { RouteLocationRaw } from 'vue-router'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
 const props = withDefaults(
   defineProps<{
-    user?: PeopleModel
-    isSelf?: boolean
-    editButtonLabel: string
-    editProfileLink: RouteLocationRaw
-    canEditUser?: boolean
-    profileTabs: MenuEntry[]
+    user: TranslatedUserModel
+    profileTabs?: MenuEntry[]
     currentTab?: MenuEntry
     isEditing?: boolean
   }>(),
   {
-    user: null,
-    isSelf: false,
-    canEditUser: false,
+    profileTabs: () => [],
     currentTab: null,
     isEditing: false,
   }
 )
 
-const router = useRouter()
-const emit = defineEmits(['navigated'])
+const emit = defineEmits<{
+  'toggle-editing': [boolean]
+  navigated: []
+}>()
+
+const { canEditUser } = usePermissionUser(computed(() => props.user.id))
 
 const hasOnlyMail = computed(() => {
   return (
-    !props.user?.mobile &&
+    !props.user?.mobile_phone &&
     !props.user?.location &&
     !props.user?.facebook &&
     !props.user?.twitter &&
@@ -124,7 +122,7 @@ const socialName = (url) => {
 
 const fixLocation = (l) => l.split('\n').join('<br />')
 const navigated = () => emit('navigated')
-const switchView = () => router.push(props.editProfileLink)
+const switchView = () => emit('toggle-editing', !props.isEditing)
 </script>
 
 <style lang="scss" scoped>

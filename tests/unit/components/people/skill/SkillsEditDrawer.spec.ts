@@ -60,7 +60,7 @@ describe('SkillsEditDrawer.vue', () => {
       props: {
         isOpen: true,
         type: 'skills',
-        user: userTranslatedFactory.generate({ id: 1, skills: [] }),
+        user: userTranslatedFactory.generate({ id: 1 }),
         searchAllMode: true,
       },
     })

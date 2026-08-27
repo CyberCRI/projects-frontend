@@ -12,58 +12,6 @@
       <SkillSummary :user="user" class="unboxed" />
     </div>
     <div class="lists">
-      <!-- publications -->
-
-      <UserProjectsSearch v-if="documentsCount.publications" :limit="DOCUMENTS_LIMIT" :user="user">
-        <template #default>
-          <div class="project-list-header">
-            <h4 class="title">
-              {{ $t('me.publications') }}
-              <span>({{ documentsCount.publications }})</span>
-            </h4>
-            <SeeMoreArrow
-              v-if="documentsCount.publications > DOCUMENTS_LIMIT"
-              data-test="see-more"
-              :to="{
-                name: 'ResearcherPublicationsOther',
-                params: { userId: user.id },
-              }"
-            />
-          </div>
-          <OwnResearcherDocumentsList
-            doc-type="publications"
-            preview
-            :limit="DOCUMENTS_LIMIT"
-            :user="user"
-          />
-        </template>
-      </UserProjectsSearch>
-
-      <UserProjectsSearch v-if="documentsCount.conferences" :limit="DOCUMENTS_LIMIT" :user="user">
-        <template #default>
-          <div class="project-list-header">
-            <h4 class="title">
-              {{ $t('me.conferences') }}
-              <span>({{ documentsCount.conferences }})</span>
-            </h4>
-            <SeeMoreArrow
-              v-if="documentsCount.conferences > DOCUMENTS_LIMIT"
-              data-test="see-more"
-              :to="{
-                name: 'ResearcherConferencesOther',
-                params: { userId: user.id },
-              }"
-            />
-          </div>
-          <OwnResearcherDocumentsList
-            doc-type="conferences"
-            preview
-            :limit="DOCUMENTS_LIMIT"
-            :user="user"
-          />
-        </template>
-      </UserProjectsSearch>
-
       <!-- user projects (Owners, Members) -->
       <UserProjectsSearch :limit="LIST_LIMIT" :member-roles="['owners', 'members']" :user="user">
         <template #default="{ items: projects, isLoading, totalCount }">
@@ -146,15 +94,15 @@
         <template #default>
           <ResourcesRecap
             class="unboxed"
-            :files="user.resources.files"
-            :links="user.resources.links"
+            :files="user.modules.files"
+            :links="user.modules.links"
             :target="{
-              name: 'ProfileResourcesOther',
-              params: { userId: user.id },
+              name: 'ProfileResources',
+              params: { userIdOrSlug: user.slug || user.id },
             }"
             :redirect="{
-              name: 'ProfileResourcesOther',
-              params: { userId: user.id },
+              name: 'ProfileResources',
+              params: { userIdOrSlug: user.slug || user.id },
               hash: '#tab',
             }"
           />
@@ -170,7 +118,6 @@
 <script setup lang="ts">
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
-import OwnResearcherDocumentsList from '~/components/people/Researcher/OwnResearcherDocumentsList.vue'
 import UserProjectsSearch from '~/components/people/UserProfile/UserProjectsSearch.vue'
 import UserProjectList from '~/components/people/UserProfile/UserProjectList.vue'
 import UserDescriptions from '~/components/people/UserDescriptions.vue'
@@ -189,18 +136,10 @@ const { t } = useNuxtI18n()
 const usersStore = useUsersStore()
 
 const LIST_LIMIT = 6
-const DOCUMENTS_LIMIT = 3
 
 const resourcesCount = computed(() => {
-  return props.user.resources.files + props.user.resources.links
+  return props.user.modules.files + props.user.modules.links
 })
-const documentsCount = computed(
-  () =>
-    props.user.researcher?.documents ?? {
-      publications: 0,
-      conferences: 0,
-    }
-)
 const isCurrentUser = computed(() => usersStore.id === props.user.id)
 
 const noFollowLabel = computed(() => {

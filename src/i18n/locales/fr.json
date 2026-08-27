@@ -1462,9 +1462,9 @@
         "already-added": "(déjà ajouté)",
         "skills": {
           "nothing-yet": "Vous n'avez pas encore ajouté de compétences.",
-          "add-success": "Compétence '{name}' ajoutée.",
-          "edit-success": "Compétence '{name}' éditée.",
-          "delete-success": "Compétence '{name}' supprimée.",
+          "add-success": "Compétence ajoutée.",
+          "edit-success": "Compétence éditée.",
+          "delete-success": "Compétence supprimée.",
           "add": "Ajouter des compétences professionnelles",
           "add-item": "Ajouter une compétence",
           "edit-levels": "Éditer les niveaux",
@@ -1477,13 +1477,16 @@
             "notice-levels": "Indiquez votre niveau de maîtrise.",
             "help-levels": "Plus à propos des niveaux de compétences"
           },
-          "selection": "Compétences"
+          "selection": "Compétences",
+          "add-error": "La compétence ne peut pas être ajoutée.",
+          "edit-error": "Les compétences ne peuvent pas être modifiées.",
+          "delete-error": "Les compétences ne peuvent pas être retirées."
         },
         "hobbies": {
           "nothing-yet": "Vous n'avez pas encore ajouté de loisirs.",
-          "add-success": "Loisir '{name}' ajouté.",
-          "edit-success": "Loisir '{name}' édité.",
-          "delete-success": "Loisir '{name}' supprimé.",
+          "add-success": "Loisir ajouté.",
+          "edit-success": "Loisir édité.",
+          "delete-success": "Loisir supprimé.",
           "add": "Ajouter des loisirs",
           "add-item": "Ajouter un loisir",
           "edit-levels": "Éditer les niveaux",
@@ -1496,7 +1499,10 @@
             "notice-levels": "Indiquer votre niveau pour chaque loisir",
             "help-levels": "En savoir plus sur les niveaux de loisir"
           },
-          "selection": "Loisirs"
+          "selection": "Loisirs",
+          "add-error": "Hobby ne peut pas être ajouté.",
+          "edit-error": "Hobby ne peut pas être édité.",
+          "delete-error": "Hobby ne peut pas être enlevé."
         },
         "levels": {
           "curious": "Curieux",
@@ -1565,7 +1571,14 @@
             "description": "Niveau doctorat ou fait un grand projet, ou peut enseigner au niveau master"
           }
         },
-        "nothing-yet": "Tu n'as pas encore ajouté de compétences."
+        "nothing-yet": "Tu n'as pas encore ajouté de compétences.",
+        "delete": "Voulez-vous vraiment supprimer cette compétence?",
+        "form": {
+          "level": {
+            "label": "Niveau",
+            "help": "Choisissez les niveaux de vos compétences"
+          }
+        }
       },
       "privacy": {
         "tab": "Confidentialité",
@@ -1603,11 +1616,11 @@
       },
       "publications": {
         "tab": "Publications",
-        "no-editable": "Les publications d'édition seront disponibles début janvier 2026"
+        "no-editable": "L'édition des publications seront bientôt disponibles"
       },
       "conferences": {
         "tab": "Conférences",
-        "no-editable": "Des conférences d'édition seront disponibles début janvier 2026"
+        "no-editable": "L'édition des conférences seront bientôt disponibles"
       }
     },
     "go-to-page": "Voir la page du profil",

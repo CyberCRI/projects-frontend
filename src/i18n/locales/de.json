@@ -1377,9 +1377,9 @@
         "already-added": "(bereits hinzugefügt)",
         "skills": {
           "nothing-yet": "Sie haben noch keine Fähigkeiten hinzugefügt.",
-          "add-success": "Skill '{name}' hinzugefügt.",
-          "edit-success": "Skill '{name}' bearbeitet.",
-          "delete-success": "Die Skill '{name}' entfernt.",
+          "add-success": "Skill hinzugefügt.",
+          "edit-success": "Skill bearbeitet.",
+          "delete-success": "Die Skill entfernt.",
           "add": "Fügen Sie professionelle Fähigkeiten",
           "add-item": "Fügen Sie eine Fähigkeit hinzu",
           "edit-levels": "Ebenen bearbeiten",
@@ -1392,13 +1392,16 @@
             "notice-levels": "Geben Sie Ihr Niveau der Meisterschaft.",
             "help-levels": "Mehr über Fähigkeiten Ebenen"
           },
-          "selection": "Ausgewählte Fähigkeiten"
+          "selection": "Ausgewählte Fähigkeiten",
+          "add-error": "Können nicht hinzugefügt werden.",
+          "edit-error": "Können nicht bearbeitet werden.",
+          "delete-error": "Geschicklichkeit kann nicht entfernt werden."
         },
         "hobbies": {
           "nothing-yet": "Sie haben noch keine Hobbys hinzugefügt.",
-          "add-success": "Hobby '{name}' hinzugefügt.",
-          "edit-success": "Hobby '{name}' bearbeitet.",
-          "delete-success": "Hobby '{name}' entfernt.",
+          "add-success": "Hobby hinzugefügt.",
+          "edit-success": "Hobby bearbeitet.",
+          "delete-success": "Hobby entfernt.",
           "add": "Hobbys hinzufügen",
           "add-item": "Ein Hobby hinzufügen",
           "already-added": "Hobby bereits hinzugefügt",
@@ -1411,7 +1414,10 @@
             "notice-levels": "Geben Sie Ihr Niveau der Meisterschaft.",
             "help-levels": "Mehr über die Hobbystufen"
           },
-          "selection": "Ausgewählte Hobbys"
+          "selection": "Ausgewählte Hobbys",
+          "add-error": "Hobby kann nicht hinzugefügt werden.",
+          "edit-error": "Hobby kann nicht bearbeitet werden.",
+          "delete-error": "Hobby kann nicht entfernt werden."
         },
         "mentorship": {
           "contact": {
@@ -1480,7 +1486,14 @@
             "description": "PhD-Level oder hat ein großes Projekt, oder kann Meister-Level lehren"
           }
         },
-        "nothing-yet": "Du hast noch keine Fähigkeiten hinzugefügt."
+        "nothing-yet": "Du hast noch keine Fähigkeiten hinzugefügt.",
+        "delete": "Sind Sie sicher, dass Sie diese Fähigkeit löschen möchten?",
+        "form": {
+          "level": {
+            "label": "Ebene",
+            "help": "Wählen Sie die Ebenen Ihrer Fähigkeiten"
+          }
+        }
       },
       "privacy": {
         "tab": "Datenschutz",
@@ -1518,11 +1531,11 @@
       },
       "publications": {
         "tab": "Veröffentlichungen",
-        "no-editable": "Redaktionen werden Anfang Januar 2026 verfügbar sein."
+        "no-editable": "Redaktionen werden bald verfügbar sein"
       },
       "conferences": {
         "tab": "Konferenzen",
-        "no-editable": "Editing Konferenzen werden Anfang Januar 2026 verfügbar sein"
+        "no-editable": "Editing Konferenzen werden bald verfügbar sein"
       }
     },
     "go-to-page": "Profilseite anzeigen",

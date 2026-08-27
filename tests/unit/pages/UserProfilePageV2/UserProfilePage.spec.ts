@@ -9,7 +9,7 @@ import { describe, expect, it } from 'vitest'
 describe('UserProfilePage.vue', () => {
   it('should render component', async () => {
     const user = UserFactory.generate()
-    const props = { userId: user.id }
+    const props = { userIdOrSlug: user.id }
 
     registerEndpoint(`user/${user.id}/`, () => user)
 
@@ -18,7 +18,7 @@ describe('UserProfilePage.vue', () => {
       global: {
         mocks: {
           $route: {
-            name: 'ProfileSummaryOther',
+            name: 'ProfileUser',
           },
         },
       },

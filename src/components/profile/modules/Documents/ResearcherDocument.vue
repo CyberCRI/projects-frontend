@@ -9,11 +9,11 @@
       <span v-for="(author, idx) in document.contributors" :key="author.id">
         <!-- if author.user isa projectsUser, create a nuxtlink to go to the user -->
         <NuxtLink
-          v-if="author.user?.slug"
+          v-if="author.user?.slug || author.user?.id"
           class="profile-document-contributor"
           :to="{
-            name: 'ProfileOtherUser',
-            params: { userId: author.user.slug },
+            name: 'ProfileUser',
+            params: { userIdOrSlug: author.user.slug || author.user.id },
           }"
         >
           <strong>{{ author.display_name }}</strong>
@@ -52,18 +52,21 @@
       v-if="similar && document.similars > 0"
       :data-test="`see-more-${document.id}`"
       class="no-padding reset-btn"
-      :label="`${document.similars} ${t(`profile.${docType}-similars`)}`"
+      :label="`${document.similars} ${t(`profile.${documentType}-similars`)}`"
       @click="emit('similar', document)"
     />
   </article>
 </template>
 
 <script setup lang="ts">
-import type { TranslatedResearcherDocument } from 'shared-projects-frontend/models'
+import type {
+  ResearcherDocumentType,
+  TranslatedResearcherDocument,
+} from 'shared-projects-frontend/models'
 
-import IdentifierLink from '~/components/people/Researcher/IdentifierLink.vue'
 import SeeMoreArrow from '~/components/base/button/SeeMoreArrow.vue'
 
+import IdentifierLink from '~/components/profile/modules/Documents/IdentifierLink.vue'
 import PushPinSvg from '~/assets/svg/pushpin.svg'
 
 const { t, locale } = useNuxtI18n()
@@ -72,7 +75,7 @@ const emit = defineEmits(['similar'])
 withDefaults(
   defineProps<{
     document: TranslatedResearcherDocument
-    docType: string
+    documentType: ResearcherDocumentType
     preview?: boolean
     similar?: boolean
   }>(),

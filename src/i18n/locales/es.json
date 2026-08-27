@@ -1377,9 +1377,9 @@
         "already-added": "(ya añadido)",
         "skills": {
           "nothing-yet": "Aún no has añadido ninguna habilidad.",
-          "add-success": "Habilidad '{name}' añadido.",
-          "edit-success": "Habilidad '{name}' editada.",
-          "delete-success": "Skill '{name}' eliminado.",
+          "add-success": "Habilidad añadido.",
+          "edit-success": "Habilidad editada.",
+          "delete-success": "Skill eliminado.",
           "add": "Agregar habilidades profesionales",
           "add-item": "Añadir una habilidad",
           "edit-levels": "Modificar los niveles",
@@ -1392,13 +1392,16 @@
             "notice-levels": "Indica tu nivel de dominio.",
             "help-levels": "Más sobre los niveles de habilidad"
           },
-          "selection": "habilidades seleccionadas"
+          "selection": "habilidades seleccionadas",
+          "add-error": "La habilidad no se puede añadir.",
+          "edit-error": "La habilidad no puede ser editada.",
+          "delete-error": "La habilidad no se puede quitar."
         },
         "hobbies": {
           "nothing-yet": "Aún no has añadido hobbies.",
-          "add-success": "Hobby '{name}' añadido.",
-          "edit-success": "Hobby '{name}' editado.",
-          "delete-success": "Hobby '{name}' eliminado.",
+          "add-success": "Hobby añadido.",
+          "edit-success": "Hobby editado.",
+          "delete-success": "Hobby eliminado.",
           "add": "Añadir pasatiempos",
           "add-item": "Añadir un pasatiempo",
           "already-added": "Hobby ya ha añadido",
@@ -1411,7 +1414,10 @@
             "notice-levels": "Indica tu nivel de dominio.",
             "help-levels": "Más sobre los niveles de hobbies"
           },
-          "selection": "Hobbies seleccionados"
+          "selection": "Hobbies seleccionados",
+          "add-error": "Hobby no puede ser añadido.",
+          "edit-error": "Hobby no puede ser editado.",
+          "delete-error": "Hobby no puede ser eliminado."
         },
         "mentorship": {
           "contact": {
@@ -1480,7 +1486,14 @@
             "description": "Nivel de doctorado o hizo un gran proyecto, o puede enseñar a nivel maestro"
           }
         },
-        "nothing-yet": "Aún no has añadido habilidades."
+        "nothing-yet": "Aún no has añadido habilidades.",
+        "delete": "¿Seguro que quieres eliminar esta habilidad?",
+        "form": {
+          "level": {
+            "label": "Nivel",
+            "help": "Elija los niveles de su habilidad"
+          }
+        }
       },
       "privacy": {
         "tab": "Privacidad",
@@ -1518,11 +1531,11 @@
       },
       "publications": {
         "tab": "Publicaciones",
-        "no-editable": "Las publicaciones de edición estarán disponibles a principios de enero de 2026"
+        "no-editable": "Las publicaciones de edición estarán disponibles pronto"
       },
       "conferences": {
         "tab": "Conferencias",
-        "no-editable": "Las conferencias de edición estarán disponibles a principios de enero de 2026"
+        "no-editable": "Las conferencias de edición estarán disponibles pronto"
       }
     },
     "go-to-page": "Ver página del perfil",

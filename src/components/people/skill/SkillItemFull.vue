@@ -106,11 +106,11 @@ import ToolTip from '~/components/base/ToolTip.vue'
 
 import useSkillTexts from '~/composables/useSkillTexts'
 
-import type { UserSkillModel } from 'shared-projects-frontend/models'
+import type { SkillModel } from 'shared-projects-frontend/models'
 
 const props = withDefaults(
   defineProps<{
-    skill: UserSkillModel
+    skill: SkillModel
     steps?: number
     hasAskedMentorship?: boolean
     hasOfferedMentorship?: boolean

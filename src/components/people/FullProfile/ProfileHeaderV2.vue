@@ -81,9 +81,9 @@
 </template>
 
 <script setup lang="ts">
+import IdentifierLink from '~/components/profile/modules/Documents/IdentifierLink.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
-import IdentifierLink from '~/components/people/Researcher/IdentifierLink.vue'
 import SdgList from '~/components/sdgs/SdgList.vue'
 
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'

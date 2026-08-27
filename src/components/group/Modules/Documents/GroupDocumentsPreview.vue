@@ -12,7 +12,7 @@
     <template #content>
       <GroupResearcherDocumentsList
         preview
-        :doc-type="documentType"
+        :document-type="documentType"
         :group="group"
         :limit="LIMIT"
       />
@@ -21,11 +21,11 @@
 </template>
 
 <script setup lang="ts">
+import GroupResearcherDocumentsList from '~/components/group/Modules/Documents/GroupResearcherDocumentsList.vue'
 import type {
   TranslatedPeopleGroupModel,
   ResearcherDocumentType,
 } from 'shared-projects-frontend/models'
-import GroupResearcherDocumentsList from '@/components/people/Researcher/GroupResearcherDocumentsList.vue'
 import { GROUP_MODULE_ICON, GROUP_MODULE_TITLE } from '~/functs/constants'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 

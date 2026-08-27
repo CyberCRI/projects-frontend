@@ -89,14 +89,10 @@ const resetForm = () => {
 }
 
 const redirectToProfile = () => {
-  if (isSelf.value) {
-    router.push({ name: 'ProfileBio' })
-  } else {
-    router.push({
-      name: 'ProfileBioOther',
-      params: { userId: props.user.id },
-    })
-  }
+  router.push({
+    name: 'ProfileBio',
+    params: { userIdOrSlug: props.user.slug || props.user.id },
+  })
 }
 
 const save = async () => {

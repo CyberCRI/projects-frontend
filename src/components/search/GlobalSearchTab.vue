@@ -28,9 +28,10 @@
             :user="projectListSlotProps.item.user"
             :mode="projectListSlotProps.mode"
             :to-link="{
-              name: 'ProfileOtherUser',
+              name: 'ProfileUser',
               params: {
-                userId: projectListSlotProps.item.user.slug || projectListSlotProps.item.user.id,
+                userIdOrSlug:
+                  projectListSlotProps.item.user.slug || projectListSlotProps.item.user.id,
               },
             }"
           />
