@@ -33,16 +33,6 @@ const { status, data: groups } = getUserGroups(organizationCode, profileId, {
   immediate: profileId.value != -1,
   default: () => factoryPagination(groupSkeleton, limitGroupsSkeletons.value),
 })
-
-// const clear = () => {
-//   asyncing.value = false
-// }
-
-// const fullRefresh = () =>
-//   refreshUser(props.profile).then(() => {
-//     refresh()
-//     clear()
-//   })
 </script>
 
 <template>
@@ -50,14 +40,14 @@ const { status, data: groups } = getUserGroups(organizationCode, profileId, {
     <div class="teams">
       <SectionHeader
         v-if="!preview"
-        :title="$t(USER_MODULE_TITLE.groups, groups?.lengt)"
+        :title="$t(USER_MODULE_TITLE.groups, groups.length)"
         :has-button="false"
-        :quantity="groups?.length"
+        :quantity="groups.length"
       />
       <div class="team-groups">
         <GroupCard v-for="group in groups" :key="group.id" :group="group" />
       </div>
-      <NothingHere v-if="groups?.length === 0" />
+      <NothingHere v-if="groups.length === 0" />
     </div>
   </FetchLoader>
 </template>

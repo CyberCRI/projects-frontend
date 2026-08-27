@@ -141,15 +141,6 @@ export const useUserTabs = (
           icon: 'Pen',
         },
         {
-          key: 'profile-groups-edit',
-          label: t(USER_MODULE_TITLE.groups, modules.value.groups),
-          view: `/profile/${userId.value}/groups/edit`,
-          altView: `/profile/${userId.value}/groups`,
-          condition: true,
-          dataTest: 'profile-groups-edit',
-          icon: 'Pen',
-        },
-        {
           key: 'profile-publications-edit',
           label: t(USER_MODULE_TITLE.publications, modules.value.publications),
           view: `/profile/${userId.value}/documents/publications/edit`,
