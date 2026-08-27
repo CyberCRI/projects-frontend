@@ -6,13 +6,13 @@ export const refreshProfileData = <T extends ProfileModel | TranslatedProfile>(p
   const organizationCode = useOrganizationCode()
 
   return refreshNuxtData([
-    `${organizationCode}::profile::${profile.id}`,
-    `${organizationCode}::profile::${profile.slug}`,
-    `${organizationCode}::profile::${route.params?.slugOrId}`,
+    `${organizationCode}::user::${profile.id}`,
+    `${organizationCode}::user::${profile.slug}`,
+    `${organizationCode}::user::${route.params?.slugOrId}`,
   ])
 }
 
-export const refreshProjectTabs = <T extends ProfileModel | TranslatedProfile>(profile: T) => {
+export const refreshProfileTabs = <T extends ProfileModel | TranslatedProfile>(profile: T) => {
   const route = useRoute()
 
   const organizationCode = useOrganizationCode()
