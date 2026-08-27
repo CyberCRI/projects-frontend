@@ -36,7 +36,7 @@ const resources = computed(() => props.project.modules.links + props.project.mod
 }
 </style>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .flat-resources {
   display: flex;
   align-items: center;

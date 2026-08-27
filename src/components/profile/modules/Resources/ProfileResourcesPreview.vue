@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import BaseProfileResources from '~/components/profile/modules/Resources/BaseProfileResources.vue'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { USER_MODULE_ICON, USER_MODULE_TITLE } from '~/functs/constants'
@@ -19,7 +20,21 @@ defineProps<{ user: TranslatedUserModel }>()
     }"
   >
     <template #content>
-      {{ user.modules.files + user.modules.links }}
+      <div class="flat-resources">
+        <BaseProfileResources :profile="user" preview :limit="3" />
+      </div>
     </template>
   </BaseModulePreview>
 </template>
+<style lang="scss" scoped>
+.flat-resources {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+
+  .resource-container {
+    display: contents !important;
+  }
+}
+</style>
