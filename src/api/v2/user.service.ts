@@ -9,7 +9,7 @@ import type { RefOrRaw } from '~/interfaces/utils'
 import {
   searchUserAdmin as fetchsearchUserAdmin,
   getUser as fetchUser,
-  getUserGroups as fetchUserGroups
+  getUserGroups as fetchUserGroups,
 } from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
@@ -39,16 +39,14 @@ export const getUser = (
   )
 }
 
-
-
 export const getUserGroups = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   userId: RefOrRaw<UserSlugOrId>,
-  config: Config = {}
+  config: ConfigPagination = {}
 ) => {
   const { translateGroups } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::user::${unref(userId)}::group`)
-
+  console.log(userId)
   return useAsyncPaginationAPI(
     key,
     ({ config }) => fetchUserGroups(unref(userId), { ...DEFAULT_CONFIG, ...config }),
