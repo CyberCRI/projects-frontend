@@ -73,7 +73,7 @@ import LinkButton from '@/components/base/button/LinkButton.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { patchUser } from 'shared-projects-frontend/apis'
-import useUsersStore from '@/stores/useUsers'
+import useUsersStore from '@/stores/useUserStore'
 
 export default {
   name: 'OnboardingTodoBlock',

@@ -1,19 +1,15 @@
 <script setup lang="ts">
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-// import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
-import useUsersStore from '@/stores/useUsers'
+import { useKeycloak } from '@dsb-norge/vue-keycloak-js'
+import useUsersStore from '@/stores/useUserStore'
 
 const { t } = useNuxtI18n()
 // type Params = Parameters<typeof useFetch>
 const usersStore = useUsersStore()
 const isConnected = computed(() => usersStore.isConnected)
+const keycloak = useKeycloak()
 
 if (!useRuntimeConfig().public.appHasChatbotPromptDb) {
   usePage404()
-}
-
-const login = () => {
-  goToKeycloakLoginPage()
 }
 
 let headers = {}
@@ -61,7 +57,7 @@ useLpiHead2({
         {{ $t('agents.need-login') }}
       </p>
       <div class="login-button centered">
-        <LpiButton :label="$t('common.login')" @click="login" />
+        <LpiButton :label="$t('common.login')" @click="keycloak.login" />
       </div>
     </div>
     <div v-else-if="isLoading" class="loader">

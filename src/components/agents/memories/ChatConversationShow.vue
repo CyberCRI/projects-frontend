@@ -1,6 +1,6 @@
 <script setup>
+import useUsersStore from '@/stores/useUserStore'
 import { formatDateTime } from '~/functs/date'
-import useUsersStore from '@/stores/useUsers'
 import { Remarkable } from 'remarkable'
 
 const { locale } = useNuxtI18n()

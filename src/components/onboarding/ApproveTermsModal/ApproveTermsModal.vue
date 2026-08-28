@@ -2,8 +2,8 @@
 import { patchUser } from 'shared-projects-frontend/apis'
 
 import useOrganizations from '~/stores/useOrganizations'
+import useUsersStore from '~/stores/useUserStore'
 import useToasterStore from '~/stores/useToaster'
-import useUsersStore from '~/stores/useUsers'
 
 const organizationsStore = useOrganizations()
 const usersStore = useUsersStore()

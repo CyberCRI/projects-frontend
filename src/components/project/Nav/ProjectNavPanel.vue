@@ -139,7 +139,7 @@ import { factoriesSkeleton } from '~/skeletons/base.skeletons'
 import { getProjectSimilars } from '~/api/v2/project.service'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import type { IconImageChoice } from '~/functs/IconImage'
-import useUsersStore from '@/stores/useUsers'
+import useUsersStore from '@/stores/useUserStore'
 
 const props = withDefaults(
   defineProps<{

@@ -1,7 +1,7 @@
 import ProfileSkillTab from '~/pages/UserProfilePageV2/Tabs/ProfileSkillTab.vue'
 import { userTranslatedFactory } from '~~/tests/factories/user.factory'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import UserSkillsFull from '~/components/people/skill/UserSkillsFull.vue'

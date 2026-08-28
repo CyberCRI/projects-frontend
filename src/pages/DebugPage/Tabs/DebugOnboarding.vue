@@ -26,8 +26,8 @@ import { patchUser } from 'shared-projects-frontend/apis'
 
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
+import useUsersStore from '~/stores/useUserStore'
 import useToasterStore from '~/stores/useToaster'
-import useUsersStore from '~/stores/useUsers'
 
 const toaster = useToasterStore()
 const usersStore = useUsersStore()

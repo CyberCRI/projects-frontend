@@ -159,7 +159,7 @@ import ContactDrawer from '~/components/app/ContactDrawer.vue'
 import LpiLogo from '~/components/app/LpiLogo.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 import { usePublicURL } from '~/composables/usePublic'
 

@@ -4,7 +4,7 @@ import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { lpiMount, lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 import pinia from '~/stores'
 
 describe('BlogDrawer.vue', () => {

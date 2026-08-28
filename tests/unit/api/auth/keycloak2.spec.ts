@@ -4,8 +4,8 @@ import useKeycloak from '~/api/auth/keycloak'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 
+import useUsersStore from '~/stores/useUserStore'
 import { flushPromises } from '@vue/test-utils'
-import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
 
 vi.mock('~/api/auth/keycloakUtils')

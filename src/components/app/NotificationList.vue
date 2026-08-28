@@ -43,7 +43,7 @@ import LpiButton from '~/components//base/button/LpiButton.vue'
 import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 const props = withDefaults(defineProps<{ isOpened?: boolean }>(), {
   isOpened: false,

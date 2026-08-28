@@ -3,7 +3,7 @@ import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import type { OrganizationOutput } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 import pinia from '~/stores'
 
 import ProjectHeaderV2 from '~/components/project/Headers/ProjectHeaderV2.vue'

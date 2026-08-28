@@ -35,7 +35,7 @@ import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
 import { getUserMentorship } from '~/api/v2/mentoring.service'
 
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 import useSkillTexts from '~/composables/useSkillTexts'
 

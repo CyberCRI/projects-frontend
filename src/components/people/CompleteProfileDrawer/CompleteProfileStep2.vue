@@ -15,7 +15,7 @@ import { getUser } from 'shared-projects-frontend/apis'
 import ProfileEditBlock from '~/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 import ProfileSkillsEditTab from '~/pages/UserProfilePageV2/Tabs/ProfileSkillsEditTab.vue'
 

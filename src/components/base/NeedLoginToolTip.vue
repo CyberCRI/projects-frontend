@@ -5,22 +5,21 @@
         {{ $t('common.need-login') }}
       </p>
       <p class="action">
-        <LpiButton :label="$t('home.login')" :secondary="false" @click="logInUser" />
+        <LpiButton :label="$t('home.login')" :secondary="false" @click="keycloak.login" />
       </p>
     </template>
     <slot :need-login="!usersStore.isConnected" />
   </ToolTip>
 </template>
 <script setup lang="ts">
-import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
-
 import LpiButton from '~/components/base/button/LpiButton.vue'
+import { useKeycloak } from '@dsb-norge/vue-keycloak-js'
 import ToolTip from '~/components/base/ToolTip.vue'
 
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 const usersStore = useUsersStore()
-const logInUser = () => goToKeycloakLoginPage()
+const keycloak = useKeycloak()
 </script>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';

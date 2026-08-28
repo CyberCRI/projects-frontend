@@ -105,7 +105,7 @@
           :rounded-icon="true"
           icon="Account"
           data-test="test-login-button"
-          @click="logInUser()"
+          @click="() => keycloak.login()"
         />
         <HeaderDropDown
           v-else-if="isAdmin || isFacilitator || isSuperAdmin"
@@ -185,7 +185,6 @@
 
 <script>
 import { getAnnouncements, patchUser } from 'shared-projects-frontend/apis'
-import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
 
 import HeaderItemList from '~/components/base/navigation/HeaderItemList.vue'
 import HeaderDropDown from '~/components/base/navigation/HeaderDropDown.vue'
@@ -199,9 +198,10 @@ import BadgeItem from '~/components/base/BadgeItem.vue'
 
 import useProjectCategories from '~/stores/useProjectCategories'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
+import { useKeycloak } from '@dsb-norge/vue-keycloak-js'
 import { nowDate } from '~/functs/date'
 
 export default {
@@ -227,6 +227,8 @@ export default {
     const { isAdmin, isFacilitator, isSuperAdmin } = usePermissions()
     const { locale, setLocale } = useNuxtI18n()
     const { isAutoTranslateActivated } = useAutoTranslate()
+
+    const keycloak = useKeycloak()
     return {
       appHasChatbotPromptDb,
       projectCategoriesStore,
@@ -238,6 +240,7 @@ export default {
       locale,
       isAutoTranslateActivated,
       setLocale,
+      keycloak,
     }
   },
 
@@ -546,20 +549,12 @@ export default {
       this.scrolled = window.scrollY > 10
     },
 
-    login() {
-      goToKeycloakLoginPage()
-    },
-
     goTo(route, params = null, query = null) {
       this.$router.push({
         name: route,
         params: params || {},
         query: query || {},
       })
-    },
-
-    logInUser() {
-      goToKeycloakLoginPage()
     },
 
     async logOutUser() {

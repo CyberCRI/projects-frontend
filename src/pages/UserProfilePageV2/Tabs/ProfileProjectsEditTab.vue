@@ -127,7 +127,7 @@
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
 import useProjectCategories from '~/stores/useProjectCategories'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 const PROJECTS_LIMIT = 12
 const PROJECTS_COLUMNS = 4

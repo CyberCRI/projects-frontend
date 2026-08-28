@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import CodeBlock from '~/components/base/form/CodeBlock.vue'
-import useUsersStore from '@/stores/useUsers'
+import useUsersStore from '@/stores/useUserStore'
 const usersStore = useUsersStore()
 
 const props = defineProps({ prompt: { type: [Object, null], required: true } })

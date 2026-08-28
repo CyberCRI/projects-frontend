@@ -11,8 +11,8 @@ import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import type { PropsDefinitions } from '~/composables/tiptap'
 import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
 
+import useUsersStore from '~/stores/useUserStore'
 import useToasterStore from '~/stores/useToaster'
-import useUsersStore from '~/stores/useUsers'
 
 import type { CollaborativeUser, ProviderParams } from 'shared-projects-frontend/interfaces'
 import TipTapEditorMenus from '~/components/base/form/TextEditor/TipTapEditorMenus.vue'

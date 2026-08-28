@@ -5,9 +5,9 @@ import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import { defaultReportForm, useReportForm } from '~/form/report'
+import useUsersStore from '~/stores/useUserStore'
 import useToasterStore from '~/stores/useToaster'
 import { cropIfTooLong } from '~/functs/string'
-import useUsersStore from '~/stores/useUsers'
 import { formEqual } from '~/form/base'
 
 const props = withDefaults(defineProps<{ type: 'abuse' | 'bug'; isOpened?: boolean }>(), {

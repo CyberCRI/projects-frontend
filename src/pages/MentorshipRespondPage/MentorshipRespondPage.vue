@@ -82,7 +82,7 @@
 <script>
 import { getMentorshipDetails, respondMentorship } from 'shared-projects-frontend/apis'
 
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 import useSkillTexts from '~/composables/useSkillTexts'
 

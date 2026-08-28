@@ -10,7 +10,7 @@ import useProjectCategoriesStore from '~/stores/useProjectCategories'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 import pinia from '~/stores'
 
 function connectedStore(usersStore) {

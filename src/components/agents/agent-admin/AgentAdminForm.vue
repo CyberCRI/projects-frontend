@@ -2,8 +2,8 @@
 import { helpers, required, decimal, between, integer, minValue } from '@vuelidate/validators'
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import useUsersStore from '~/stores/useUserStore'
 import useToasterStore from '~/stores/useToaster'
-import useUsersStore from '~/stores/useUsers'
 import useValidate from '@vuelidate/core'
 
 const { html2md, md2html } = useMarkdown()

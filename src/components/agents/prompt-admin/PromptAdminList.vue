@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import useUsersStore from '@/stores/useUsers'
+import useUsersStore from '@/stores/useUserStore'
 const usersStore = useUsersStore()
 let headers = {}
 const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')

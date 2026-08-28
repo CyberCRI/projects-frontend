@@ -55,7 +55,7 @@ import GroupCard from '~/components/group/GroupCard.vue'
 import CardList from '~/components/base/CardList.vue'
 
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 const props = defineProps<{
   user: TranslatedUserModel

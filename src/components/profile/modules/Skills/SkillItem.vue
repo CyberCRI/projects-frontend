@@ -4,7 +4,7 @@ import type { TranslatedSkill, TranslatedUserModel } from 'shared-projects-front
 import SkillSteps from '~/components/people/skill/SkillSteps.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import type { UserMentorShip } from '~/interfaces/mengtorship'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 const props = withDefaults(
   defineProps<{

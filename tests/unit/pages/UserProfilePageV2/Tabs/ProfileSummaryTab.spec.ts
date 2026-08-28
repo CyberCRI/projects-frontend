@@ -10,7 +10,7 @@ import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { ProjectFactory } from '~~/tests/factories/project.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 describe('ProfileSummaryTab', () => {
   let usersStore

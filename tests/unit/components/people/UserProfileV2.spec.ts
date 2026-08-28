@@ -7,7 +7,7 @@ import { beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 import pinia from '~/stores'
 
 const route = {

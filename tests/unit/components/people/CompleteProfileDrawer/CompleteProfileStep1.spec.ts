@@ -1,7 +1,7 @@
 import CompleteProfileStep1 from '~/components/people/CompleteProfileDrawer/CompleteProfileStep1.vue'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 import { UserFactory } from '~~/tests/factories/user.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'

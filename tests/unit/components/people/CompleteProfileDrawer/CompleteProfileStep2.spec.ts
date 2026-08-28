@@ -2,7 +2,7 @@ import CompleteProfileStep2 from '~/components/people/CompleteProfileDrawer/Comp
 import { UserFactory } from '~~/tests/factories/user.factory'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 import { describe, expect, it } from 'vitest'
 
 describe('CompleteProfileStep1.vue', () => {

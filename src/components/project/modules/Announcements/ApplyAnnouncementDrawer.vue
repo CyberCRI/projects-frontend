@@ -11,7 +11,7 @@ import type { TranslatedAnnouncement, TranslatedProject } from 'shared-projects-
 import { defaultAnnouncementReplyForm, useAnnouncementReplyForm } from '~/form/annoucement'
 import Recaptcha from '~/components/base/form/Recaptcha.vue'
 import Field from '~/components/base/form/Field.vue'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 import { formEqual } from '~/form/base'
 
 const props = withDefaults(

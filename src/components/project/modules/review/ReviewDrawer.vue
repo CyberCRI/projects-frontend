@@ -7,8 +7,8 @@ import SwitchInput from '~/components/base/form/SwitchInput.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
+import useUsersStore from '~/stores/useUserStore'
 import useToasterStore from '~/stores/useToaster'
-import useUsersStore from '~/stores/useUsers'
 
 import type {
   ReviewForm,

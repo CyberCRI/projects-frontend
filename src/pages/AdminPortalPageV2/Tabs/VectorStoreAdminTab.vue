@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import useUsersStore from '~/stores/useUserStore'
 import useToasterStore from '~/stores/useToaster'
-import useUsersStore from '~/stores/useUsers'
 
 if (!useRuntimeConfig().public.appHasVectorDb) {
   usePage404()

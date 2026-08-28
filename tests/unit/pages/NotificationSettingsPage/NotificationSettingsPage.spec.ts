@@ -4,8 +4,8 @@ import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { NotificationSettingsFactory } from '~~/tests/factories/notifications.factory'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import useUsersStore from '~/stores/useUserStore'
 import { flushPromises } from '@vue/test-utils'
-import useUsersStore from '~/stores/useUsers'
 import { describe, expect, it } from 'vitest'
 
 describe('NotificationSettingsPage.vue', () => {

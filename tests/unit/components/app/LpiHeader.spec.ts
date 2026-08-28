@@ -4,7 +4,7 @@ import useProjectCategoriesStore from '~/stores/useProjectCategories'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import LpiHeader from '~/components/app/LpiHeader.vue'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 import { AnnouncementFactory } from '~~/tests/factories/announcement.factory'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'

@@ -5,7 +5,7 @@ import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import type { TranslatedProject, TranslatedReview } from 'shared-projects-frontend/models'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 import { formatDate } from '~/functs/date'
 
 const props = withDefaults(

@@ -1,4 +1,4 @@
-import useUsersStore from '@/stores/useUsers'
+import useUsersStore from '@/stores/useUserStore'
 
 import { SDGS } from '~/functs/constants'
 // gloabls !

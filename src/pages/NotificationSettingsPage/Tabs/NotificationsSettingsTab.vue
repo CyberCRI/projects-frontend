@@ -25,7 +25,7 @@ import type { NotificationSettingsForm } from 'shared-projects-frontend/models'
 import GroupButton from '~/components/base/button/GroupButton.vue'
 import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 const usersStore = useUsersStore()
 const form = ref<NotificationSettingsForm>({

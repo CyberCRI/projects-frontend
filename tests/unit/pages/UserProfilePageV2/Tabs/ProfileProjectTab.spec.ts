@@ -5,7 +5,7 @@ import { flushPromises } from '@vue/test-utils'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 import { OrganizationFactory } from '~~/tests/factories/organization.factory'
 

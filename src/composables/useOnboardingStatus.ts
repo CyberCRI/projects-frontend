@@ -1,6 +1,6 @@
 import { patchUser } from 'shared-projects-frontend/apis'
 
-import useUsersStore from '~/stores/useUsers'
+import useUsersStore from '~/stores/useUserStore'
 
 type OnboardingKey =
   | 'show_welcome'

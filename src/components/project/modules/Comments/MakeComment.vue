@@ -23,7 +23,7 @@
     <div v-else class="no-account">
       <div>{{ $t('comment.need-account') }}</div>
       <div>
-        <LpiButton :label="$t('common.login')" @click="goToKeycloakLoginPage" />
+        <LpiButton :label="$t('common.login')" @click="keycloak.login" />
       </div>
     </div>
   </div>
@@ -38,14 +38,13 @@ import {
   postComment,
   postCommentImage,
 } from 'shared-projects-frontend/apis'
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
+import useUsersStore from '~/stores/useUserStore'
 import useToasterStore from '~/stores/useToaster'
-import useUsersStore from '~/stores/useUsers'
 
 import type {
   ProjectMessageModel,
@@ -56,6 +55,7 @@ import type {
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { defaultProjectMessageForm, useProjectMessageForm } from '~/form/messages'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
+import { useKeycloak } from '@dsb-norge/vue-keycloak-js'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
@@ -82,6 +82,8 @@ const emit = defineEmits<{
   'comment-edited': [CommentModel]
   'project-message-edited': [ProjectMessageModel]
 }>()
+
+const keycloak = useKeycloak()
 
 const toaster = useToasterStore()
 const usersStore = useUsersStore()

@@ -2,9 +2,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import * as authService from '~/api/auth/auth.service'
 
+import useUsersStore from '~/stores/useUserStore'
 import useToasterStore from '~/stores/useToaster'
 import useKeycloak from '~/api/auth/keycloak'
-import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
 vi.mock('~/api/auth/keycloakUtils', () => ({
   getRefreshTokenInterval: vi.fn().mockReturnValue(10),

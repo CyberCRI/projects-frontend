@@ -52,7 +52,7 @@
           </div>
         </template>
         <div class="image-account-buttons">
-          <LpiButton :label="$t('home.login')" :secondary="false" @click="logInUser" />
+          <LpiButton :label="$t('home.login')" :secondary="false" @click="keycloak.login" />
           <LpiButton
             v-if="isAccessRequestEnabled"
             :label="$t('home.account-request')"
@@ -66,8 +66,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
-
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import LinkButton from '~/components/base/button/LinkButton.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
@@ -76,7 +74,9 @@ import HtmlLimiter from '~/components/base/HtmlLimiter.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
+import { useKeycloak } from '@dsb-norge/vue-keycloak-js'
 
+const keycloak = useKeycloak()
 const organizationsStore = useOrganizationsStore()
 const styleDescription = ref({})
 const isDescriptionLimited = ref(false)
@@ -99,7 +99,6 @@ const descriptionLayoutComputed = (event) => {
   isDescriptionLimited.value = event.croppedHtml != organization.value?.$t?.description
   descriptionComputed.value = true
 }
-const logInUser = () => goToKeycloakLoginPage()
 </script>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';

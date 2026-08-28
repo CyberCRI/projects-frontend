@@ -1,6 +1,6 @@
 import type { AnyProject } from 'shared-projects-frontend/models'
+import useUsersStore from '~/stores/useUserStore'
 import followUtils from '~/functs/followUtils'
-import useUsersStore from '~/stores/useUsers'
 
 export const useProjectFollow = (project: ComputedRef<AnyProject>) => {
   const asyncing = ref(false)

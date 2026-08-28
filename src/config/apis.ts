@@ -1,8 +1,9 @@
+import useUsersStore from '~/stores/useUserStore'
 import useToasterStore from '~/stores/useToaster'
-import useUsersStore from '~/stores/useUsers'
 
 import { configureClientAPI, configureOptionsAPI } from 'shared-projects-frontend/apis'
 import type { ClientAPIOptions } from 'shared-projects-frontend/apis'
+import { useKeycloak } from '@dsb-norge/vue-keycloak-js'
 import { useRuntimeConfig } from '#imports'
 
 /**
@@ -43,10 +44,9 @@ export const initializeClientApi = () => {
             return
           }
 
-          const usersStore = useUsersStore()
-          const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
-          if (accessToken) {
-            options.headers.set('Authorization', `Bearer ${accessToken}`)
+          const { token } = useKeycloak()
+          if (token) {
+            options.headers.set('Authorization', `Bearer ${token}`)
           }
         }
       },
