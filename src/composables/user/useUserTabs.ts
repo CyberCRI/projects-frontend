@@ -27,7 +27,7 @@ export const useUserTabs = (
     return [
       {
         key: 'profile-summary',
-        label: t('profile.summary'),
+        label: t('profile.snapshot'),
         view: `/profile/${userId.value}/summary`,
         altView: `/profile/${userId.value}/summary/edit`,
         condition: true,
@@ -105,7 +105,7 @@ export const useUserTabs = (
       [
         {
           key: 'profile-summary-edit',
-          label: t('profile.summary'),
+          label: t('profile.snapshot'),
           view: `/profile/${userId.value}/summary/edit`,
           altView: `/profile/${userId.value}/summary`,
           condition: true,
