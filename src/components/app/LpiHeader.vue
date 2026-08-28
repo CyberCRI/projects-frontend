@@ -177,7 +177,7 @@
       </aside>
     </Transition>
 
-    <NotificationList :is-opened="showNotificationDrawer" @close="closeDrawer" />
+    <NotificationList v-if="isConnected" :is-opened="showNotificationDrawer" @close="closeDrawer" />
 
     <ContactDrawer :is-opened="showContactUsDrawer" @close="closeDrawer" />
   </div>
@@ -507,7 +507,7 @@ export default {
     },
 
     notificationCount() {
-      return this.usersStore.notificationsCount
+      return this.usersStore.user.modules.notifications
     },
     organisation() {
       return this.organizationsStore.current

@@ -2502,7 +2502,8 @@
       "access_request": "Respon a {access_request_nb} sota demanda d'accés ((s)!",
       "pending_access_requests": "Respon a {requests_count} sota demanda d'accés ((s)!"
     },
-    "empty": "No teniu notificacions"
+    "empty": "No teniu notificacions",
+    "error": "Hi ha hagut un error en desar les preferències de les notificacions."
   },
   "recommendations": {
     "empty": "No tens recomanacions",

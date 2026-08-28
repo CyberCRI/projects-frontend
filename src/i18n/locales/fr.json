@@ -2587,7 +2587,8 @@
       "access_request": "Répondez à {access_request_nb} demande(s) d'accès en attente!",
       "pending_access_requests": "Répondez à {requests_count} demande(s) d'accès en attente!"
     },
-    "empty": "Vous n’avez aucune notification"
+    "empty": "Vous n’avez aucune notification",
+    "error": "Une erreur s'est produite lors de l'enregistrement des paramètres des notifications."
   },
   "recommendations": {
     "empty": "Vous n'avez aucune recommandation",
