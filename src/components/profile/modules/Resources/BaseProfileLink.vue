@@ -43,6 +43,7 @@ const {
   data: links,
   pagination,
   refresh,
+  isLoading,
 } = getUserAttachmentLinks(organizationCode, profileId, {
   paginationConfig: {
     limit: props.limit,
@@ -142,7 +143,7 @@ const onSubmit = (form: AttachmentForm) => {
         @edit="onEdit(item)"
       />
     </div>
-    <NothingHere v-if="links.length === 0 && !preview" />
+    <NothingHere v-if="!isLoading && links.length === 0 && !preview" />
 
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>

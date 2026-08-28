@@ -26,7 +26,11 @@ const profileId = computed(() => props.profile.id)
 const organizationCode = useOrganizationCode()
 const limitGroupsSkeletons = computed(() => maxSkeleton(props.profile.modules.groups, props.limit))
 
-const { status, data: groups } = getUserGroups(organizationCode, profileId, {
+const {
+  status,
+  data: groups,
+  isLoading,
+} = getUserGroups(organizationCode, profileId, {
   paginationConfig: {
     limit: props.preview ? props.limit : 999999,
   },
@@ -47,7 +51,7 @@ const { status, data: groups } = getUserGroups(organizationCode, profileId, {
       <div class="team-groups">
         <GroupCard v-for="group in groups" :key="group.id" :group="group" />
       </div>
-      <NothingHere v-if="groups.length === 0" />
+      <NothingHere v-if="!isLoading && groups.length === 0" />
     </div>
   </FetchLoader>
 </template>
