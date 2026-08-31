@@ -3,6 +3,6 @@ const { appMcpServerTrace } = runtimeConfig
 
 export const traceMcp = (...args) => {
   if (appMcpServerTrace) {
-    console.log('[MCP TRACE]', ...args)
+    console.log(new Date().toISOString(), '[MCP TRACE]', ...args)
   }
 }

@@ -1,11 +1,92 @@
+// import { getOAuthProtectedResourceMetadataUrl } from '@modelcontextprotocol/sdk/server/auth/router.js'
+import {
+  requireBearerAuth,
+  getOAuthProtectedResourceMetadataUrl,
+} from '@modelcontextprotocol/server'
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
-
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
-import { tokenMap } from '~/server/routes/api/chat-stream'
+import { verifierFactory } from '@/server/utils/token-verifier'
+import { exchangeToken } from '@/server/utils/token-exchange'
+import jwtDebugInfo from '@/server/utils/token-safe-log'
+import { applyMcpCors } from '@/server/utils/mcp-cors'
 import createMCPServer from '~/mcp-server'
-
 export default defineEventHandler(async (event) => {
+  const cors = applyMcpCors(event)
+  if (cors) return cors
+  const runtimeConfig = useRuntimeConfig()
+  const { appMcpServerUrl } = runtimeConfig
+
+  // const { appKeycloakClientId, appKeycloakClientSecret } = runtimeConfig.public
+  const { appKeycloakUrl, appKeycloakRealm, appKeycloakClientId, appKeycloakClientSecret } =
+    useRuntimeConfig().public
+  const KEYCLOAK_ISSUER = `${(appKeycloakUrl as string).replace(/\/?$/, '')}/realms/${appKeycloakRealm}`
+  const JWKS_URI = `${KEYCLOAK_ISSUER}/protocol/openid-connect/certs`
+  const MCP_SERVER_URL = (appMcpServerUrl as string)
+    .replace(/\?internal=true$/, '') // present for "normal" projects mcp
+    .replace(/\/mcp\/?$/, '') // this server's canonical URI
+  // const MCP_RESOURCE = `${MCP_SERVER_URL}/mcp` // RFC 8707 resource indicator
+  const KEYCLOAK_CLIENT = appKeycloakClientId as string
+  traceMcp('/mcp', JSON.stringify(getQuery(event), null, 2))
+
+  const keycloakClientConf = {
+    TOKEN_ENDPOINT: `${appKeycloakUrl}/realms/${appKeycloakRealm}/protocol/openid-connect/token`,
+    CLIENT_ID: appKeycloakClientId as string,
+    CLIENT_SECRET: appKeycloakClientSecret as string,
+  }
+
   const { req, res } = event.node
+
+  const { authed, internal } = getQuery(event)
+  const token = getRequestHeader(event, 'authorization') || ''
+  let exchangedToken = null
+  if (internal) {
+    traceMcp('Internal access...')
+    if (token) {
+      traceMcp('...With auth token')
+      traceMcp('Internal token safe payload', JSON.stringify(jwtDebugInfo(token), null, 2))
+    } else {
+      traceMcp('...Anonymous')
+    }
+  } else {
+    traceMcp('External access')
+    if (authed) {
+      traceMcp('Authenticated acces...')
+
+      traceMcp('External token safe payload', JSON.stringify(jwtDebugInfo(token), null, 2))
+      const gate = requireBearerAuth({
+        verifier: verifierFactory(JWKS_URI, KEYCLOAK_ISSUER, KEYCLOAK_CLIENT),
+        requiredScopes: ['mcp:tokex'],
+        resourceMetadataUrl: getOAuthProtectedResourceMetadataUrl(new URL(MCP_SERVER_URL + '/mcp')),
+      })
+
+      // const request = toWebRequest(event) // Nitro → standard Fetch Request, no Express shim
+      // attempt to circumvant a "read twice the request" issue
+      const mockHeader = new Map()
+      mockHeader.set('authorization', token)
+      const mockRequest: unknown = { headers: mockHeader }
+      const auth = await gate(mockRequest as Request) // AuthInfo on success, ready-made 401/403 Response on failure
+      if (auth instanceof Response) {
+        traceMcp('auth is Response', auth)
+        return auth // h3 forwards Fetch Response objects as-is
+      } else {
+        traceMcp('auth is AuthInfo')
+        traceMcp('proceed to token exchange...')
+        try {
+          exchangedToken = await exchangeToken(keycloakClientConf, token.slice('Bearer '.length))
+          traceMcp('...token exchanged')
+          traceMcp(
+            'Exchanged token safe payload',
+            JSON.stringify(jwtDebugInfo(exchangedToken), null, 2)
+          )
+        } catch (err) {
+          traceMcp('...error exchanging token', err)
+          throw err
+        }
+      }
+    } else {
+      traceMcp('...Anonymous access')
+    }
+  }
 
   //   const eventStream = createEventStream(event)
   // Create a new transport for each request to prevent request ID collisions
@@ -19,20 +100,7 @@ export default defineEventHandler(async (event) => {
   // const body = await readBody(event)
 
   traceMcp('MCP connection request:')
-  traceMcp(req.headers, req.method, req.url /*body*/)
-
-  const conversationId = getRequestHeader(event, 'Authorization') || ''
-  if (conversationId) {
-    traceMcp('MCP request with conversationId header', conversationId)
-    traceMcp('MCP token map', tokenMap.size)
-    const tokenEntry = tokenMap.get(conversationId)
-    if (tokenEntry) {
-      traceMcp('MCP found token for conversationId', tokenEntry.token.substring(0, 6) + '...')
-      // transport.setAuthorizationToken(tokenEntry.token)
-    } else {
-      traceMcp('MCP no token found for conversationId')
-    }
-  }
+  traceMcp(/*req.headers, req.method,*/ req.url /*body*/)
 
   const mcpServer = createMCPServer()
 
@@ -54,8 +122,13 @@ export default defineEventHandler(async (event) => {
   //     //       transport.close()
   //   })
 
+  if (exchangedToken) {
+    req.headers['authorization'] = `Bearer ${exchangedToken}`
+  }
+
   await mcpServer.connect(transport)
   await transport.handleRequest(req, res)
+
   // return transport.handleRequest(req, res)
   // get res body
   //   return eventStream.send()

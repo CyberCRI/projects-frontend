@@ -7,7 +7,7 @@ import checkAdminRights, { getUser } from '@/server/utils/check-admin-rights.js'
 import traceLangchain from '@/server/projects-agent/tracers/trace-langchain'
 import getAgentData from '@/server/projects-agent/agent/get-agent-data'
 import getMetadata from '@/server/projects-agent/agent/get-metadata'
-import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
+// import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import getAgent from '@/server/projects-agent/agent/get-agent'
 import { tokenMap } from '@/server/routes/api/chat-stream'
 import { v4 as uuidv4 } from 'uuid'
@@ -114,13 +114,13 @@ export default defineLazyEventHandler(() => {
       traceLangchain('Starting new conversation with id:', conversationId)
     }
 
-    traceMcp('set token map ', conversationId)
-    tokenMap.set(conversationId, {
-      date: new Date(),
-      token: ('' + tokenHeader).replace('Bearer ', ''),
-    })
+    // traceMcp('set token map ', conversationId)
+    // tokenMap.set(conversationId, {
+    //   date: new Date(),
+    //   token: ('' + tokenHeader).replace('Bearer ', ''),
+    // })
 
-    const agent = await getAgent(agentData, event, conversationId)
+    const agent = await getAgent(agentData, event, tokenHeader)
 
     /* --------- Start coversation  --------- */
 
