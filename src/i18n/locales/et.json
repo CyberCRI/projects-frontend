@@ -917,7 +917,8 @@
     "quit-without-saving-title": "Lõpetad säästmata?",
     "recaptcha": {
       "required": "Recaptcha on vajalik."
-    }
+    },
+    "invalid-phone": "Vigane telefoninumber"
   },
   "footer": {
     "contact": "Võta meiega ühendust",

@@ -107,7 +107,7 @@ const save = async () => {
     emit('profile-edited')
 
     // update store if self
-    if (isSelf.value) usersStore.getUser(props.user.id)
+    if (isSelf.value) usersStore.refreshUser()
     toaster.pushSuccess(t('profile.edit.bio.save-success'))
     redirectToProfile()
   } catch (error) {

@@ -24,7 +24,7 @@ const profileId = computed(() => props.profile?.id)
 const organizationCode = useOrganizationCode()
 // TODO: categroies count + category card skeleton
 const limitSkeletons = computed(() =>
-  maxSkeleton(props.profile?.modules?.categories || 3, props.limit)
+  maxSkeleton(props.profile?.modules?.follows_categories || 3, props.limit)
 )
 
 const {

@@ -859,6 +859,7 @@
     "title": "Title",
     "url": "url",
     "templates": "Templates",
+    "invalid-phone": "Invalid phone number",
     "contact": {
       "subtitle": "Fill in this quick form and we’ll get back to you shortly",
       "subject": "Subject",

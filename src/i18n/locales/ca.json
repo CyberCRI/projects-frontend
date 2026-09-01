@@ -917,7 +917,8 @@
     "quit-without-saving-title": "Surto sense desar?",
     "recaptcha": {
       "required": "Cal reconquerir."
-    }
+    },
+    "invalid-phone": "Número de telèfon no vàlid"
   },
   "footer": {
     "contact": "Contacta amb nosaltres",

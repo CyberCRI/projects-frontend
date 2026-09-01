@@ -44,7 +44,7 @@ export default function useProfilePagesRoutes() {
     {
       path: 'summary/edit',
       name: 'ProfileEditUser',
-      component: () => import('../pages/UserPageV2/Tabs/ProfileSummaryTab.vue'),
+      component: () => import('../pages/UserPageV2/Tabs/ProfileEditTab.vue'),
       props: {
         editable: true,
       },

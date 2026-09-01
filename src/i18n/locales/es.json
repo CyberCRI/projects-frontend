@@ -917,7 +917,8 @@
     "quit-without-saving-title": "¿Dejar de salvar?",
     "recaptcha": {
       "required": "Recaptcha es necesaria."
-    }
+    },
+    "invalid-phone": "Número de teléfono inválido"
   },
   "footer": {
     "contact": "Contacta con nosotros",

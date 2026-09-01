@@ -99,7 +99,7 @@ const onSubmit = (form: AttachmentForm) => {
   const formData = new FormData()
   formData.append('title', form.title)
   formData.append('description', form.description)
-  formData.append('user_id', props.profile.id)
+  formData.append('user_id', props.profile.id.toString())
   formData.append('file', form.file, form.file.name)
   formData.append('mime', form.file.type)
 
@@ -136,8 +136,8 @@ const onSubmit = (form: AttachmentForm) => {
       @add="openModals('edit')"
     >
       <SectionHeader
-        :title="$t('resource.file.label', project?.modules?.files || 0)"
-        :quantity="project?.modules?.files || 0"
+        :title="$t('resource.file.label', profile.modules.files || 0)"
+        :quantity="profile.modules.files || 0"
         :has-button="false"
       />
     </BaseModuleHeader>

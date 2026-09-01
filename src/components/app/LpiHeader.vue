@@ -513,9 +513,9 @@ export default {
       return this.organizationsStore.current
     },
 
-    langFromUser() {
-      return this.usersStore.userFromApi?.language
-    },
+    // langFromUser() {
+    //   return this.usersStore.userFromApi?.language
+    // },
   },
   // TODO: this seem to crash i18n reactivity on rest of page... keep for further investigation
   // watch: {

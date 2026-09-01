@@ -70,7 +70,7 @@ const imageSizes = computed(() => {
 .category-card {
   position: relative;
   cursor: pointer;
-  border: variables.$border-width-s solid variables.$primary;
+  border: variables.$border-width-s solid var(--primary);
   border-radius: variables.$border-radius-m;
   display: flex;
   flex-direction: column;

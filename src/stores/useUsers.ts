@@ -74,19 +74,22 @@ const useUsersStore = defineStore('users', () => {
     return !!userFromToken.value
   })
 
-  const id = computed<UserSlugOrId | undefined>(() => userFromApi.value?.id)
+  const id = computed<UserModel['id'] | undefined>(() => userFromApi.value?.id)
+  const slugOrId = computed<UserSlugOrId | undefined>(
+    () => userFromApi.value?.slug || userFromApi.value?.id
+  )
 
   const user = computed((): UserModel | null => {
     if (userFromToken.value) {
       return {
-        id: userFromToken.value.pid,
-        given_name: userFromToken.value.given_name,
-        family_name: userFromToken.value.family_name,
-        email: userFromToken.value.email,
-        roles: userFromToken.value.roles || [],
-        permissions: userFromToken.value.permissions || {},
-        slug: userFromToken.value.slug,
-        researcher: userFromToken.value.researcher,
+        id: userFromApi.value?.id,
+        given_name: userFromApi.value?.given_name || userFromToken.value.given_name,
+        family_name: userFromApi.value?.family_name || userFromToken.value.family_name,
+        email: userFromApi.value?.email || userFromToken.value.email,
+        roles: userFromApi.value?.roles || userFromToken.value.roles || [],
+        permissions: userFromApi.value?.permissions || userFromToken.value.permissions || {},
+        slug: userFromApi.value?.slug || userFromToken.value.slug,
+        researcher: userFromApi.value?.researcher || userFromToken.value.researcher,
         signed_terms_and_conditions: userFromApi.value?.signed_terms_and_conditions || {},
         ...pick(userFromApi.value || {}, [
           'is_superuser',
@@ -213,7 +216,7 @@ const useUsersStore = defineStore('users', () => {
       userDataRefreshLoop.value = setInterval(
         () => {
           console.log('Refreshing user data...')
-          getUser(id.value)
+          refreshUser()
         },
         1000 * 60 * 5 // 5 minutes
       )
@@ -241,15 +244,6 @@ const useUsersStore = defineStore('users', () => {
     }
   }
 
-  watch(
-    () => keycloak_id.value,
-    (neo, old) => {
-      if (neo && neo !== old) {
-        getUser(keycloak_id.value)
-      }
-    }
-  )
-
   async function fetchFollowedCategories() {
     if (!id.value) return
     try {
@@ -270,7 +264,17 @@ const useUsersStore = defineStore('users', () => {
    * @memberof useUsersStore.defineStore('users') callback
    * @returns {Promise<UserModel>}
    */
-  const refreshUser = () => getUser(id.value)
+  const refreshUser = () => getUser(keycloak_id.value)
+
+  watch(
+    () => keycloak_id.value,
+    (neo, old) => {
+      if (neo && neo !== old) {
+        refreshUser()
+      }
+    },
+    { deep: true, immediate: true }
+  )
 
   return {
     // state
@@ -288,6 +292,7 @@ const useUsersStore = defineStore('users', () => {
     // getters
     isConnected,
     id,
+    slugOrId,
     user,
     // actions
     forceSetUser,
@@ -298,7 +303,6 @@ const useUsersStore = defineStore('users', () => {
     logIn,
     doRefreshToken,
     startUserDataRefreshLoop,
-    getUser,
     refreshUser,
     fetchFollowedCategories,
   }

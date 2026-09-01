@@ -98,13 +98,14 @@ const checkClose = () => {
         :placeholder="$t('profile.edit.bio.short-bio.placeholder')"
         :max-length="300"
         data-test="short-bio-input"
+        class="skeletons-background"
       />
 
       <Field :label="$t('profile.edit.bio.long-bio.label')" required class="editor-section">
         <TipTapEditor
           ref="tiptapEditor"
           v-model="form.description"
-          class="input-field content-editor w-full"
+          class="input-field content-editor w-full skeletons-background"
           :errors="errors.description"
         />
       </Field>

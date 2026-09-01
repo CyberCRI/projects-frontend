@@ -917,7 +917,8 @@
     "quit-without-saving-title": "Stoppen zonder te redden?",
     "recaptcha": {
       "required": "Recaptcha is vereist."
-    }
+    },
+    "invalid-phone": "Ongeldig telefoonnummer"
   },
   "footer": {
     "contact": "Contacteer ons",

@@ -389,7 +389,7 @@ export default {
           await this.onboardingTrap('complete_profile', false)
 
           // reload user
-          this.usersStore.getUser(this.user.id)
+          await this.usersStore.refreshUser()
           // confirm success
           this.toaster.pushSuccess(this.$t('profile.edit.general.save-success'))
         } else {

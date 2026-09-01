@@ -93,6 +93,7 @@ const onDeleteConfirm = () => {
 const onSubmit = (form: AttachmentForm) => {
   asyncing.value = true
   form.profile_id = props.profile.id
+
   if (form.id) {
     patchUserAttachmentLink(props.profile.id, selectedLink.value.id, form)
       .then(() => {
@@ -123,8 +124,8 @@ const onSubmit = (form: AttachmentForm) => {
       @add="openModals('edit')"
     >
       <SectionHeader
-        :title="$t('resource.link.label', profile?.modules?.links || 0)"
-        :quantity="profile?.modules?.links || 0"
+        :title="$t('resource.link.label', profile.modules.links || 0)"
+        :quantity="profile.modules.links || 0"
         :has-button="false"
       />
     </BaseModuleHeader>

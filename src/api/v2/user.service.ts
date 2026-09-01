@@ -45,13 +45,17 @@ export const getUser = (
     }
   )
 
+  /*
+    if we fetch the local connected user, set store with the new datas
+  */
   watchEffect(() => {
     // check user is loaded
     if (!results.data.value || results.status.value !== 'success') {
       return
     }
+
     // check local user is connected
-    if (!userStore.isConnected || !userStore.userFromApi.value) {
+    if (!userStore.isConnected || !userStore.user) {
       return
     }
 
@@ -63,8 +67,8 @@ export const getUser = (
 
     // check is same user
     if (
-      results.data.value.id === userStore.userFromApi.value.id ||
-      results.data.value.slug === userStore.userFromApi.value.slug
+      results.data.value.id === userStore.user.id ||
+      results.data.value.slug === userStore.user.slug
     ) {
       userStore.forceSetUser(results.data.value)
     }

@@ -4,6 +4,9 @@ import { urlCheck } from '~/form/base'
 
 const srcVideo: ValidationRuleWithoutParams = {
   $validator: (value: string | null, siblingState, vm) => {
+    if (!value) {
+      return false
+    }
     if (!urlCheck.$validator(value, siblingState, vm)) {
       return false
     }
