@@ -2502,7 +2502,8 @@
       "access_request": "Vastake {access_request_nb} ootel juurdepääsutaotluse(te)le!",
       "pending_access_requests": "Vastake {requests_count} ootel juurdepääsutaotluse(te)le!"
     },
-    "empty": "Sul pole teateid"
+    "empty": "Sul pole teateid",
+    "error": "Märguannete seadistuste salvestamisel tekkis viga."
   },
   "recommendations": {
     "empty": "Sul pole soovitusi",

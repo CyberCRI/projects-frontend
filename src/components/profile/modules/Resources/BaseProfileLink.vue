@@ -8,10 +8,10 @@ import type { TranslatedUserModel, AttachmentForm } from 'shared-projects-fronte
 import { attachementLinkSkeletons } from '~/skeletons/attachements.skeletons'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import ResourceDrawerV2 from '~/components/resources/ResourceDrawerV2.vue'
-import { refreshProfileData } from '~/composables/profile/refreshProfile'
 import { getUserAttachmentLinks } from '~/api/v2/attachment-link.service'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
+import { refreshUserData } from '~/composables/user/refreshUser'
 import SectionHeader from '~/components/base/SectionHeader.vue'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
@@ -43,6 +43,7 @@ const {
   data: links,
   pagination,
   refresh,
+  isLoading,
 } = getUserAttachmentLinks(organizationCode, profileId, {
   paginationConfig: {
     limit: props.limit,
@@ -62,7 +63,7 @@ const cancel = () => {
 }
 
 const fullRefresh = () =>
-  refreshProfileData(props.profile).then(() => {
+  refreshUserData(props.profile).then(() => {
     refresh()
     cancel()
   })
@@ -127,7 +128,7 @@ const onSubmit = (form: AttachmentForm) => {
         :has-button="false"
       />
     </BaseModuleHeader>
-    <div class="resource-container">
+    <div class="resource-container" :class="{ 'is-preview': preview }">
       <ResourceCard
         v-for="item in links"
         :key="item.id"
@@ -142,7 +143,7 @@ const onSubmit = (form: AttachmentForm) => {
         @edit="onEdit(item)"
       />
     </div>
-    <NothingHere v-if="links.length === 0 && !preview" />
+    <NothingHere v-if="!isLoading && links.length === 0 && !preview" />
 
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>
@@ -188,12 +189,28 @@ const onSubmit = (form: AttachmentForm) => {
     display: none;
   }
 
+  &.is-preview {
+    flex-basis: 50%;
+  }
+
   > div {
+    width: 100%;
+  }
+
+  &:not(.is-preview) > div {
     width: calc(33% - variables.$space-m);
 
     @media screen and (max-width: variables.$max-tablet) {
       width: calc(50% - variables.$space-m);
     }
+
+    @media screen and (max-width: variables.$min-tablet) {
+      width: 100%;
+    }
+  }
+
+  &.is-preview > div {
+    width: calc(50% - variables.$space-m);
 
     @media screen and (max-width: variables.$min-tablet) {
       width: 100%;

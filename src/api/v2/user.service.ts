@@ -10,6 +10,10 @@ import {
   searchUserAdmin as fetchsearchUserAdmin,
   getUser as fetchUser,
   getUserGroups as fetchUserGroups,
+  getUserProjectsMember as fetchUserProjectsMember,
+  getUserProjectsFollower as fetchUserProjectsFollower,
+  getUserProjectsReviewer as fetchUserProjectsReviewer,
+  getUserCategoriesFollower as fetchUserCategoriesFollower,
 } from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
@@ -76,12 +80,90 @@ export const getUserGroups = (
 ) => {
   const { translateGroups } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::user::${unref(userId)}::group`)
-  console.log(userId)
+
   return useAsyncPaginationAPI(
     key,
     ({ config }) => fetchUserGroups(unref(userId), { ...DEFAULT_CONFIG, ...config }),
     {
       translate: translateGroups,
+      watch: onlyRefs([organizationCode, userId]),
+      ...config,
+    }
+  )
+}
+
+export const getUserProjectsMember = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  userId: RefOrRaw<UserSlugOrId>,
+  config: ConfigPagination = {}
+) => {
+  const { translateProjects } = useAutoTranslate()
+  const key = computed(() => `${unref(organizationCode)}::user::${unref(userId)}::projects::member`)
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) => fetchUserProjectsMember(unref(userId), { ...DEFAULT_CONFIG, ...config }),
+    {
+      translate: translateProjects,
+      watch: onlyRefs([organizationCode, userId]),
+      ...config,
+    }
+  )
+}
+
+export const getUserProjectsReviewer = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  userId: RefOrRaw<UserSlugOrId>,
+  config: ConfigPagination = {}
+) => {
+  const { translateProjects } = useAutoTranslate()
+  const key = computed(
+    () => `${unref(organizationCode)}::user::${unref(userId)}::projects::reviewer`
+  )
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) => fetchUserProjectsReviewer(unref(userId), { ...DEFAULT_CONFIG, ...config }),
+    {
+      translate: translateProjects,
+      watch: onlyRefs([organizationCode, userId]),
+      ...config,
+    }
+  )
+}
+
+export const getUserProjectsFollower = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  userId: RefOrRaw<UserSlugOrId>,
+  config: ConfigPagination = {}
+) => {
+  const { translateProjects } = useAutoTranslate()
+  const key = computed(
+    () => `${unref(organizationCode)}::user::${unref(userId)}::projects::follower`
+  )
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) => fetchUserProjectsFollower(unref(userId), { ...DEFAULT_CONFIG, ...config }),
+    {
+      translate: translateProjects,
+      watch: onlyRefs([organizationCode, userId]),
+      ...config,
+    }
+  )
+}
+
+export const getUserCategoriesFollower = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  userId: RefOrRaw<UserSlugOrId>,
+  config: ConfigPagination = {}
+) => {
+  const { translateCategories } = useAutoTranslate()
+  const key = computed(
+    () => `${unref(organizationCode)}::user::${unref(userId)}::categories::follower`
+  )
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) => fetchUserCategoriesFollower(unref(userId), { ...DEFAULT_CONFIG, ...config }),
+    {
+      translate: translateCategories,
       watch: onlyRefs([organizationCode, userId]),
       ...config,
     }
