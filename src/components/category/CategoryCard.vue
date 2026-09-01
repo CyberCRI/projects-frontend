@@ -13,12 +13,12 @@
       :image-width="IMAGE_WIDTH"
       :url="imageSource"
       :image-sizes="imageSizes"
-      class="category-card-image"
+      class="category-card-image skeletons-background"
     />
 
     <div class="title-description-ctn">
       <div class="title-ctn">
-        <h3 class="title">
+        <h3 class="title skeletons-text">
           {{
             // @ts-expect-error TS2339 (translate category or not transalted ?)
             category.$t?.name ?? category.name
@@ -27,7 +27,7 @@
         <CategoryFollowButton :category-id="category.id" @click.stop.prevent="" />
       </div>
       <p
-        class="description"
+        class="description skeletons-text"
         v-html="
           //@ts-expect-error TS2339 (translate category or not transalted ?)
           category.$t?.description ?? category.name

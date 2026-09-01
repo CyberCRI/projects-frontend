@@ -47,6 +47,7 @@ const {
   data: files,
   pagination,
   refresh,
+  isLoading,
 } = getUserAttachmentFile(organizationCode, profileId, {
   paginationConfig: {
     limit: props.limit,
@@ -140,7 +141,7 @@ const onSubmit = (form: AttachmentForm) => {
         :has-button="false"
       />
     </BaseModuleHeader>
-    <div class="resource-container">
+    <div class="resource-container" :class="{ 'is-preview': preview }">
       <ResourceCard
         v-for="item in files"
         :key="item.id"
@@ -154,7 +155,7 @@ const onSubmit = (form: AttachmentForm) => {
         @edit="onEdit(item)"
       />
     </div>
-    <NothingHere v-if="files.length === 0 && !preview" />
+    <NothingHere v-if="!isLoading && files.length === 0 && !preview" />
 
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>
@@ -200,12 +201,24 @@ const onSubmit = (form: AttachmentForm) => {
     display: none;
   }
 
-  > div {
+  &.is-preview {
+    flex-basis: 50%;
+  }
+
+  &:not(.is-preview) > div {
     width: calc(33% - variables.$space-m);
 
     @media screen and (max-width: variables.$max-tablet) {
       width: calc(50% - variables.$space-m);
     }
+
+    @media screen and (max-width: variables.$min-tablet) {
+      width: 100%;
+    }
+  }
+
+  &.is-preview > div {
+    width: calc(50% - variables.$space-m);
 
     @media screen and (max-width: variables.$min-tablet) {
       width: 100%;

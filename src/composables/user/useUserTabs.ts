@@ -27,7 +27,7 @@ export const useUserTabs = (
     return [
       {
         key: 'profile-summary',
-        label: t('profile.summary'),
+        label: t('profile.snapshot'),
         view: `/profile/${userId.value}/summary`,
         altView: `/profile/${userId.value}/summary/edit`,
         condition: true,
@@ -105,7 +105,7 @@ export const useUserTabs = (
       [
         {
           key: 'profile-summary-edit',
-          label: t('profile.summary'),
+          label: t('profile.snapshot'),
           view: `/profile/${userId.value}/summary/edit`,
           altView: `/profile/${userId.value}/summary`,
           condition: true,
@@ -122,15 +122,16 @@ export const useUserTabs = (
           dataTest: 'profile-bio-edit',
           icon: 'Pen',
         },
-        {
-          key: 'profile-projects-edit',
-          label: t(USER_MODULE_TITLE.projects, modules.value.projects),
-          view: `/profile/${userId.value}/projects/edit`,
-          altView: `/profile/${userId.value}/projects`,
-          condition: true,
-          dataTest: 'profile-projects-edit',
-          icon: 'Pen',
-        },
+        // TODO: re-enable... or not...
+        // {
+        //   key: 'profile-projects-edit',
+        //   label: t(USER_MODULE_TITLE.projects, modules.value.projects),
+        //   view: `/profile/${userId.value}/projects/edit`,
+        //   altView: `/profile/${userId.value}/projects`,
+        //   condition: true,
+        //   dataTest: 'profile-projects-edit',
+        //   icon: 'Pen',
+        // },
         {
           key: 'profile-skills-edit',
           label: t(USER_MODULE_TITLE.skills, modules.value.skills),
