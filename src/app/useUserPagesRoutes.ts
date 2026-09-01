@@ -98,6 +98,15 @@ export default function useProfilePagesRoutes() {
         editable: true,
       },
     },
+
+    {
+      path: 'privacy/edit',
+      name: 'ProfileEditPrivacy',
+      component: () => import('../pages/UserPageV2/Tabs/ProfilePrivacyTab.vue'),
+      props: {
+        editable: true,
+      },
+    },
   ]
 
   return [
