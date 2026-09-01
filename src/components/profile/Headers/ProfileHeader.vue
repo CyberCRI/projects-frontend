@@ -15,7 +15,7 @@
       <div class="user-info-ctn">
         <div class="main">
           <div class="name-ctn">
-            <div class="name">
+            <div class="name skeletons-text">
               {{ userFullName }}
               <span v-if="user.pronouns && user.pronouns.length" class="pronouns">
                 ({{ user.pronouns }})
@@ -23,13 +23,13 @@
             </div>
           </div>
 
-          <div class="job">
+          <div class="job skeletons-text">
             {{ capitalize(user.$t.job) }}
           </div>
 
           <p
             v-if="user.short_description"
-            class="short-description"
+            class="short-description skeletons-text"
             v-html="user.short_description"
           />
 

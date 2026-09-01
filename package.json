@@ -147,6 +147,7 @@
     "langchain": "1.2.14",
     "leaflet": "1.9.4",
     "leaflet.markercluster": "1.5.3",
+    "libphonenumber-js": "^1.13.12",
     "lowlight": "3.3.0",
     "mixpanel-browser": "2.71.0",
     "nuxt": "3.21.8",

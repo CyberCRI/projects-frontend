@@ -30,15 +30,15 @@
       </div>
 
       <!-- TODO: Use privacy settings -->
-      <div v-if="user.mobile_phone" class="social">
+      <a v-if="mobilePhone" :href="mobilePhone.getURI()" class="social">
         <IconImage class="icon" name="Phone" />
-        <span>{{ user.mobile_phone }}</span>
-      </div>
+        <span>{{ mobilePhone.formatInternational() }}</span>
+      </a>
 
-      <div v-if="user.landline_phone" class="social">
+      <a v-if="landlinePhone" :href="landlinePhone.getURI()" class="social">
         <IconImage class="icon" name="Phone" />
-        <span>{{ user.landline_phone }}</span>
-      </div>
+        <span>{{ landlinePhone.formatInternational() }}</span>
+      </a>
 
       <div v-if="user && user.location" class="social">
         <IconImage class="icon" name="MapMarker" />
@@ -72,6 +72,7 @@
 import { usePermissionUser } from '~/composables/usePermissions/useUserPermissions'
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
+import parsePhoneNumber from 'libphonenumber-js'
 
 const props = withDefaults(
   defineProps<{
@@ -93,6 +94,30 @@ const emit = defineEmits<{
 }>()
 
 const { canEditUser } = usePermissionUser(computed(() => props.user.id))
+
+const mobilePhone = computed(() => {
+  if (!props.user?.mobile_phone) {
+    return null
+  }
+  const phone = parsePhoneNumber(props.user.mobile_phone)
+  if (!phone) {
+    return null
+  }
+
+  return phone
+})
+
+const landlinePhone = computed(() => {
+  if (!props.user?.landline_phone) {
+    return null
+  }
+  const phone = parsePhoneNumber(props.user.landline_phone)
+  if (!phone) {
+    return null
+  }
+
+  return phone
+})
 
 const hasOnlyMail = computed(() => {
   return (

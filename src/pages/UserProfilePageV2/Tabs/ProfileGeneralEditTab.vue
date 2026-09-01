@@ -415,7 +415,7 @@ export default {
           // give extra time for profile-edited event to be consumed
           await new Promise((resolve) => setTimeout(resolve, 50))
           // reload user if self to update store info
-          if (this.isSelf) this.usersStore.getUser(this.user.id)
+          if (this.isSelf) this.usersStore.refreshUser()
           // confirm success
           this.toaster.pushSuccess(this.$t('profile.edit.general.save-success'))
         }

@@ -629,9 +629,7 @@ export default {
     async loadUser() {
       if (!this.userId || this.userId === this.usersStore.id) {
         // get the connected user
-        this.originalUser = await this.usersStore.getUser(this.usersStore.id, {
-          noError: true,
-        })
+        this.originalUser = await this.usersStore.refreshUser()
       } else if (this.userId) {
         // get another user
         this.originalUser = await getUser(this.userId, { noError: true })

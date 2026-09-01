@@ -9,7 +9,7 @@ defineProps<{ user: TranslatedUserModel }>()
 <template>
   <BaseModulePreview
     :title="$t('profile.bio')"
-    icon="Alert"
+    icon="Account"
     :see-more="{
       name: 'ProfileBio',
       params: {

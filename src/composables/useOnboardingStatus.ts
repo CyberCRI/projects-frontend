@@ -27,7 +27,7 @@ export default function useOnboardingStatus() {
       if (status[key] !== val) {
         const payload = { onboarding_status: { ...status, [key]: val } }
         await patchUser(user.id, payload)
-        await usersStore.getUser(user.id)
+        await usersStore.refreshUser()
       }
     }
   }
@@ -45,7 +45,7 @@ export default function useOnboardingStatus() {
       if (statusIsDifferent) {
         const payload = { onboarding_status: { ...status, ...newStatus } }
         await patchUser(user.id, payload)
-        await usersStore.getUser(user.id)
+        await usersStore.refreshUser()
       }
     }
   }
