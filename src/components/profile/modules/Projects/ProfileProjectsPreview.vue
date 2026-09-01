@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import BaseProfileProjects from '~/components/profile/modules/Projects/BaseProfileProjects.vue'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { USER_MODULE_ICON, USER_MODULE_TITLE } from '~/functs/constants'
@@ -19,7 +20,7 @@ defineProps<{ user: TranslatedUserModel }>()
     }"
   >
     <template #content>
-      {{ user.modules.projects }}
+      <BaseProfileProjects :profile="user" preview :limit="3" />
     </template>
   </BaseModulePreview>
 </template>

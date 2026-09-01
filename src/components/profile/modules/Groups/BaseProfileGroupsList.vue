@@ -26,9 +26,14 @@ const profileId = computed(() => props.profile.id)
 const organizationCode = useOrganizationCode()
 const limitGroupsSkeletons = computed(() => maxSkeleton(props.profile.modules.groups, props.limit))
 
-const { status, data: groups } = getUserGroups(organizationCode, profileId, {
+const {
+  status,
+  data: groups,
+  isLoading,
+  pagination,
+} = getUserGroups(organizationCode, profileId, {
   paginationConfig: {
-    limit: props.preview ? props.limit : 999999,
+    limit: props.preview ? props.limit : null,
   },
   immediate: profileId.value != -1,
   default: () => factoryPagination(groupSkeleton, limitGroupsSkeletons.value),
@@ -38,6 +43,7 @@ const { status, data: groups } = getUserGroups(organizationCode, profileId, {
 <template>
   <FetchLoader :status="status" only-error skeleton>
     <div class="teams">
+      <BaseModuleHeader v-if="!preview" :pagination="pagination" :editable="false" />
       <SectionHeader
         v-if="!preview"
         :title="$t(USER_MODULE_TITLE.groups, groups.length)"
@@ -47,7 +53,8 @@ const { status, data: groups } = getUserGroups(organizationCode, profileId, {
       <div class="team-groups">
         <GroupCard v-for="group in groups" :key="group.id" :group="group" />
       </div>
-      <NothingHere v-if="groups.length === 0" />
+      <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
+      <NothingHere v-if="!isLoading && groups.length === 0" />
     </div>
   </FetchLoader>
 </template>

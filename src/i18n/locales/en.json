@@ -2473,6 +2473,7 @@
   "notifications": {
     "header": "Notifications",
     "title": "Notification settings",
+    "error": "An error occurred while saving notifications settings.",
     "tabs": {
       "email": "Email Notifications",
       "options": {

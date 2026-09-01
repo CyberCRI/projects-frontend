@@ -13,6 +13,6 @@ withDefaults(defineProps<{ user: TranslatedUserModel; editable?: boolean }>(), {
     :count="user.modules.projects"
   >
     <BaseModuleHeader :editable="editable" />
-    {{ user.modules.projects }}
+    <BaseProfileProjects :profile="user" />
   </BaseModuleTab>
 </template>

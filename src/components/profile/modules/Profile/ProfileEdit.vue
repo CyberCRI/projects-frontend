@@ -41,7 +41,6 @@ const defaultLocalForm = () => {
   localForm.landline_phone = props.user.landline_phone || localForm.landline_phone
   localForm.mobile_phone = props.user.mobile_phone || localForm.mobile_phone
   localForm.linkedin = props.user.linkedin || localForm.linkedin
-  localForm.twitter = props.user.twitter || localForm.twitter
   localForm.location = props.user.location || localForm.location
   localForm.skype = props.user.skype || localForm.skype
   localForm.facebook = props.user.facebook || localForm.facebook
@@ -231,23 +230,11 @@ const checkClose = () => {
         :errors="errors.linkedin"
       />
 
-      <!-- twitter -->
-      <!--div class="form-group">
-            <TextInput
-                v-model="form.twitter"
-                :label="$t('profile.edit.general.twitter.label')"
-                :placeholder="$t('profile.edit.general.twitter.placeholder')"
-                @blur="v$.twitter.$validate"
-                data-test="twitter-input"
-            ></TextInput>
-            <FieldErrors :errors="v$.twitter.$errors" />
-        </div-->
-
       <hr class="form-separator" />
 
       <!-- Picture -->
       <div class="form-group img-ctn">
-        <label>{{ $t('profile.edit.general.picture.label') }}</label>
+        <label class="skeletons-text">{{ $t('profile.edit.general.picture.label') }}</label>
         <ImageEditor
           v-model:image-sizes="form.imageSizes"
           v-model:picture="form.profile_picture"
@@ -285,7 +272,7 @@ const checkClose = () => {
       <Field :label="$t('sdg.title')">
         <template #in-label>
           <LpiButton
-            class="add-btn"
+            class="add-btn skeletons-background"
             :btn-icon="form.sdgs?.length ? 'Pen' : 'Plus'"
             data-test="add-sdgs"
             :label="$t(form.sdgs?.length ? 'group.form.edit' : 'group.form.add')"

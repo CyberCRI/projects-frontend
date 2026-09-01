@@ -917,7 +917,8 @@
     "quit-without-saving-title": "Nicht zu retten?",
     "recaptcha": {
       "required": "Recaptcha ist erforderlich."
-    }
+    },
+    "invalid-phone": "Invalide Telefonnummer"
   },
   "footer": {
     "contact": "Kontaktieren Sie uns",
@@ -2502,7 +2503,8 @@
       "access_request": "Antwort auf {access_request_nb} anhängige Zugangsanfrage(n)!",
       "pending_access_requests": "Antwort auf {requests_count} anhängige Zugangsanfrage(n)!"
     },
-    "empty": "Sie haben keine Benachrichtigungen"
+    "empty": "Sie haben keine Benachrichtigungen",
+    "error": "Ein Fehler trat beim Speichern von Benachrichtigungen Einstellungen auf."
   },
   "recommendations": {
     "empty": "Sie haben keine Empfehlungen",

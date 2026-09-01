@@ -12,11 +12,11 @@ import type {
 import { attachementFileSkeletons } from '~/skeletons/attachements.skeletons'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import ResourceDrawerV2 from '~/components/resources/ResourceDrawerV2.vue'
-import { refreshProfileData } from '~/composables/profile/refreshProfile'
 import { getUserAttachmentFile } from '~/api/v2/attachment-files.service'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
+import { refreshUserData } from '~/composables/user/refreshUser'
 import SectionHeader from '~/components/base/SectionHeader.vue'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
@@ -47,6 +47,7 @@ const {
   data: files,
   pagination,
   refresh,
+  isLoading,
 } = getUserAttachmentFile(organizationCode, profileId, {
   paginationConfig: {
     limit: props.limit,
@@ -66,7 +67,7 @@ const cancel = () => {
 }
 
 const fullRefresh = () =>
-  refreshProfileData(props.profile).then(() => {
+  refreshUserData(props.profile).then(() => {
     refresh()
     cancel()
   })
@@ -98,7 +99,7 @@ const onSubmit = (form: AttachmentForm) => {
   const formData = new FormData()
   formData.append('title', form.title)
   formData.append('description', form.description)
-  formData.append('user_id', props.profile.id)
+  formData.append('user_id', props.profile.id.toString())
   formData.append('file', form.file, form.file.name)
   formData.append('mime', form.file.type)
 
@@ -135,12 +136,12 @@ const onSubmit = (form: AttachmentForm) => {
       @add="openModals('edit')"
     >
       <SectionHeader
-        :title="$t('resource.file.label', project?.modules?.files || 0)"
-        :quantity="project?.modules?.files || 0"
+        :title="$t('resource.file.label', profile.modules.files || 0)"
+        :quantity="profile.modules.files || 0"
         :has-button="false"
       />
     </BaseModuleHeader>
-    <div class="resource-container">
+    <div class="resource-container" :class="{ 'is-preview': preview }">
       <ResourceCard
         v-for="item in files"
         :key="item.id"
@@ -154,7 +155,7 @@ const onSubmit = (form: AttachmentForm) => {
         @edit="onEdit(item)"
       />
     </div>
-    <NothingHere v-if="files.length === 0 && !preview" />
+    <NothingHere v-if="!isLoading && files.length === 0 && !preview" />
 
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>
@@ -200,12 +201,24 @@ const onSubmit = (form: AttachmentForm) => {
     display: none;
   }
 
-  > div {
+  &.is-preview {
+    flex-basis: 50%;
+  }
+
+  &:not(.is-preview) > div {
     width: calc(33% - variables.$space-m);
 
     @media screen and (max-width: variables.$max-tablet) {
       width: calc(50% - variables.$space-m);
     }
+
+    @media screen and (max-width: variables.$min-tablet) {
+      width: 100%;
+    }
+  }
+
+  &.is-preview > div {
+    width: calc(50% - variables.$space-m);
 
     @media screen and (max-width: variables.$min-tablet) {
       width: 100%;

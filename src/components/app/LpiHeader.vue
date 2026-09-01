@@ -177,7 +177,7 @@
       </aside>
     </Transition>
 
-    <NotificationList :is-opened="showNotificationDrawer" @close="closeDrawer" />
+    <NotificationList v-if="isConnected" :is-opened="showNotificationDrawer" @close="closeDrawer" />
 
     <ContactDrawer :is-opened="showContactUsDrawer" @close="closeDrawer" />
   </div>
@@ -507,27 +507,27 @@ export default {
     },
 
     notificationCount() {
-      return this.usersStore.notificationsCount
+      return this.usersStore.user.modules.notifications
     },
     organisation() {
       return this.organizationsStore.current
     },
 
-    langFromUser() {
-      return this.usersStore.userFromApi?.language
-    },
+    // langFromUser() {
+    //   return this.usersStore.userFromApi?.language
+    // },
   },
-
-  watch: {
-    langFromUser: {
-      handler: function (neo, old) {
-        if (neo && neo != old && neo != this.locale) {
-          this.setLocale(neo)
-        }
-      },
-      immediate: true,
-    },
-  },
+  // TODO: this seem to crash i18n reactivity on rest of page... keep for further investigation
+  // watch: {
+  //   langFromUser: {
+  //     handler: function (neo, old) {
+  //       if (neo && neo != old && neo != this.locale) {
+  //         this.setLocale(neo)
+  //       }
+  //     },
+  //     immediate: true,
+  //   },
+  // },
 
   async mounted() {
     await this.projectCategoriesStore.getAllProjectCategories()

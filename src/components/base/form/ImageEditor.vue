@@ -139,6 +139,7 @@ const nextDefaultPicture = async () => {
         :label="$t('project.random-image')"
         btn-icon="RotateRight"
         data-test="random-image-button"
+        class="skeletons-background"
         @click="nextDefaultPicture"
       />
 
@@ -155,6 +156,7 @@ const nextDefaultPicture = async () => {
         v-if="picture && !disableDelete"
         btn-icon="TrashCanOutline"
         :label="$t('resource.file.form.delete-image')"
+        class="skeletons-background"
         @click.prevent="onDelete"
       />
 
@@ -162,6 +164,7 @@ const nextDefaultPicture = async () => {
         v-if="!noResize && picture"
         v-disable-focus="disabled"
         :label="$t('project.form.resize-image')"
+        class="skeletons-background"
         btn-icon="CropFree"
         data-test="resize-image-button"
         @click="openModals('resizer')"

@@ -1,6 +1,9 @@
 <template>
   <BaseDrawer
-    :custom-style="customNotificationStyle"
+    :custom-style="{
+      maxHeight: 'unset',
+      padding: 'unset',
+    }"
     no-footer
     :is-opened="isOpened"
     class="small"
@@ -9,40 +12,30 @@
     @close="$emit('close')"
   >
     <div class="notification-list">
-      <LpiLoader v-if="isLoading" class="loading" type="simple" />
-      <ul v-else-if="notifications.length">
-        <NotificationItem
-          v-for="notification in notifications"
-          :key="notification.id"
-          :notification="notification"
-          @navigated="$emit('close')"
-        />
-      </ul>
-      <div v-else>
-        <p class="empty-notification">
-          {{ $t('notifications.empty') }}
-        </p>
-      </div>
-      <div v-if="!isLoading && notifications.length && nextPage" class="load-more">
-        <LpiButton
-          :disabled="isLoadingMore"
-          :btn-icon="isLoadingMore ? 'LoaderSimple' : 'Plus'"
-          :label="$t('common.more')"
-          @click="loadNextPage"
-        />
-      </div>
+      <FetchLoader :status="status" only-error skeleton>
+        <ul>
+          <NotificationItem
+            v-for="notification in notifications"
+            :key="notification.id"
+            :notification="notification"
+            @navigated="$emit('close')"
+          />
+        </ul>
+        <PaginationButtonsV2 :pagination="pagination" />
+        <EmptyLabel v-if="notifications.length === 0" :label="$t('notifications.empty')" />
+      </FetchLoader>
     </div>
   </BaseDrawer>
 </template>
 
 <script setup lang="ts">
-import { clientAPI, getNotifications } from 'shared-projects-frontend/apis'
-
 import NotificationItem from '~/components/app/NotificationItem.vue'
-import LpiButton from '~/components//base/button/LpiButton.vue'
-import LpiLoader from '~/components/base/loader/LpiLoader.vue'
+import { getNotifications } from '~/api/v2/notifications.service'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
+import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
+import { notificationSkeleton } from '~/skeletons/notifications.skeletons'
+import FetchLoader from '~/components/base/FetchLoader.vue'
 import useUsersStore from '~/stores/useUsers'
 
 const props = withDefaults(defineProps<{ isOpened?: boolean }>(), {
@@ -50,72 +43,30 @@ const props = withDefaults(defineProps<{ isOpened?: boolean }>(), {
 })
 
 defineEmits<{ close: [] }>()
-const usersStore = useUsersStore()
-const customNotificationStyle = ref({
-  maxHeight: 'unset',
-  padding: 'unset',
-})
-const notifications = ref([])
-const isLoading = ref(false)
-const isLoadingMore = ref(false)
-const nextPage = ref(null)
 
 const organizationCode = useOrganizationCode()
+const userStore = useUsersStore()
+const userId = computed(() => userStore.id)
+
+const limitSkeletons = computed(() => maxSkeleton(userStore.user.modules.notifications, 10))
+
+const {
+  status,
+  data: notifications,
+  pagination,
+  refresh,
+} = getNotifications(organizationCode, userId, {
+  query: {
+    ordering: '-created',
+    is_viewed: false,
+  },
+  immediate: props.isOpened,
+  default: () => factoryPagination(notificationSkeleton, limitSkeletons.value),
+})
 
 watchEffect(() => {
   if (props.isOpened) {
-    localGetNotifications()
+    refresh()
   }
 })
-
-const localGetNotifications = async () => {
-  isLoading.value = true
-  try {
-    const result = await getNotifications({ limit: 20 }, organizationCode)
-    notifications.value = result.results
-    nextPage.value = result.next
-    usersStore.userFromApi.value = 0
-  } catch (err) {
-    console.error(err)
-  } finally {
-    isLoading.value = false
-  }
-}
-
-const loadNextPage = async () => {
-  if (nextPage.value) {
-    isLoadingMore.value = true
-    const result = await clientAPI<PaginationResult<any>>(nextPage.value, {})
-    notifications.value.push(...result.results)
-    nextPage.value = result.next
-    isLoadingMore.value = false
-  }
-}
 </script>
-
-<style lang="scss" scoped>
-@use '~/design/scss/variables';
-
-.loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 50%;
-}
-
-.empty-notification {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 50%;
-  font-weight: 700;
-  color: variables.$primary-dark;
-  font-size: 20px;
-}
-
-.load-more {
-  display: flex;
-  justify-content: center;
-  padding-bottom: 2rem;
-}
-</style>

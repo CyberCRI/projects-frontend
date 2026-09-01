@@ -25,7 +25,6 @@ export const defaultProfileForm = (): UserForm => {
     landline_phone: '',
     mobile_phone: '',
     linkedin: '',
-    twitter: '',
     location: '',
     skype: '',
     facebook: '',

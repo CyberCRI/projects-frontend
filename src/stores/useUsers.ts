@@ -1,17 +1,11 @@
 import type {
-  NotificationSettingsForm,
   NotificationsSettings,
   UserSlugOrId,
   UserModel,
   TranslatedUserModel,
 } from 'shared-projects-frontend/models'
 
-import {
-  getProjectCategoriesFollow,
-  getUser as _getUser,
-  getUserNotificationSettings,
-  patchUserNotificationSettings,
-} from 'shared-projects-frontend/apis'
+import { getProjectCategoriesFollow, getUser as _getUser } from 'shared-projects-frontend/apis'
 import { logoutFromKeycloak, refreshAccessToken } from '~/api/auth/auth.service'
 import { checkExpiredToken } from '~/api/auth/keycloakUtils'
 import { removeApiCookie } from '~/api/auth/cookie.service'
@@ -80,9 +74,10 @@ const useUsersStore = defineStore('users', () => {
     return !!userFromToken.value
   })
 
-  const id = computed((): number | undefined => {
-    return userFromApi.value?.id
-  })
+  const id = computed<UserModel['id'] | undefined>(() => userFromApi.value?.id)
+  const slugOrId = computed<UserSlugOrId | undefined>(
+    () => userFromApi.value?.slug || userFromApi.value?.id
+  )
 
   const user = computed((): UserModel | null => {
     if (userFromToken.value) {
@@ -249,22 +244,6 @@ const useUsersStore = defineStore('users', () => {
     }
   }
 
-  async function getNotifications(id) {
-    // TODO: should be getNotificationsSetting
-    const result = await getUserNotificationSettings(id)
-    notificationsSettings.value = result
-    return result
-  }
-
-  async function patchNotifications(userId: UserSlugOrId, body: NotificationSettingsForm) {
-    // TODO: should be patchNotificationsSetting
-    const result = await patchUserNotificationSettings(userId, body)
-
-    notificationsSettings.value = result
-
-    return result
-  }
-
   async function fetchFollowedCategories() {
     if (!id.value) return
     try {
@@ -313,6 +292,7 @@ const useUsersStore = defineStore('users', () => {
     // getters
     isConnected,
     id,
+    slugOrId,
     user,
     // actions
     forceSetUser,
@@ -324,8 +304,6 @@ const useUsersStore = defineStore('users', () => {
     doRefreshToken,
     startUserDataRefreshLoop,
     refreshUser,
-    getNotifications,
-    patchNotifications,
     fetchFollowedCategories,
   }
 })

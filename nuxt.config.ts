@@ -49,6 +49,7 @@ try {
 export default defineNuxtConfig({
   ssr: true,
   // compatibilityDate: '2024-11-01',
+  debug: !!import.meta.env.NUXT_DEBUG, // fullstack backend use a DEBUG env that interfere with nuwt and cause log pollution
   devtools: {
     enabled: import.meta.dev,
 
