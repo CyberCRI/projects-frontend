@@ -8,10 +8,10 @@ import type { TranslatedUserModel, AttachmentForm } from 'shared-projects-fronte
 import { attachementLinkSkeletons } from '~/skeletons/attachements.skeletons'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import ResourceDrawerV2 from '~/components/resources/ResourceDrawerV2.vue'
-import { refreshProfileData } from '~/composables/profile/refreshProfile'
 import { getUserAttachmentLinks } from '~/api/v2/attachment-link.service'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
+import { refreshUserData } from '~/composables/user/refreshUser'
 import SectionHeader from '~/components/base/SectionHeader.vue'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
@@ -63,7 +63,7 @@ const cancel = () => {
 }
 
 const fullRefresh = () =>
-  refreshProfileData(props.profile).then(() => {
+  refreshUserData(props.profile).then(() => {
     refresh()
     cancel()
   })

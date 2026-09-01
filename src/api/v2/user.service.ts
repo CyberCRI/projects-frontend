@@ -50,6 +50,7 @@ export const getUserGroups = (
 ) => {
   const { translateGroups } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::user::${unref(userId)}::group`)
+
   return useAsyncPaginationAPI(
     key,
     ({ config }) => fetchUserGroups(unref(userId), { ...DEFAULT_CONFIG, ...config }),

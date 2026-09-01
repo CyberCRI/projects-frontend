@@ -2502,7 +2502,8 @@
       "access_request": "Reageer op {access_request_nb} in afwachting van toegangsverzoek(s)!",
       "pending_access_requests": "Reageer op {requests_count} in afwachting van toegangsverzoek(s)!"
     },
-    "empty": "U heeft geen meldingen"
+    "empty": "U heeft geen meldingen",
+    "error": "Er is een fout opgetreden bij het opslaan van meldingeninstellingen."
   },
   "recommendations": {
     "empty": "U heeft geen aanbevelingen",

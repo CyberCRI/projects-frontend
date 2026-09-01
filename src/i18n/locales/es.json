@@ -2502,7 +2502,8 @@
       "access_request": "Responder a {access_request_nb} solicitudes de acceso pendientes!",
       "pending_access_requests": "Responder a {requests_count} solicitudes de acceso pendientes!"
     },
-    "empty": "Usted no tiene notificaciones"
+    "empty": "Usted no tiene notificaciones",
+    "error": "Se produjo un error al guardar la configuración de notificaciones."
   },
   "recommendations": {
     "empty": "No tiene recomendaciones.",
