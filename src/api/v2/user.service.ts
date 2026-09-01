@@ -13,6 +13,7 @@ import {
 } from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
+import useUsersStore from '~/stores/useUsers'
 import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}
@@ -28,7 +29,9 @@ export const getUser = (
   const { translateUser } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::user::${unref(userId)}`)
 
-  return useAsyncAPI(
+  const userStore = useUsersStore()
+
+  const results = useAsyncAPI(
     key,
     ({ config }) => fetchUser(unref(userId), { ...DEFAULT_CONFIG, ...config }),
     {
@@ -37,6 +40,33 @@ export const getUser = (
       ...config,
     }
   )
+
+  watchEffect(() => {
+    // check user is loaded
+    if (!results.data.value || results.status.value !== 'success') {
+      return
+    }
+    // check local user is connected
+    if (!userStore.isConnected || !userStore.userFromApi.value) {
+      return
+    }
+
+    // check serializer is not defined
+    const serializer = unref(config.query)?.serializer
+    if (['light', 'superlight'].includes(serializer)) {
+      return
+    }
+
+    // check is same user
+    if (
+      results.data.value.id === userStore.userFromApi.value.id ||
+      results.data.value.slug === userStore.userFromApi.value.slug
+    ) {
+      userStore.forceSetUser(results.data.value)
+    }
+  })
+
+  return results
 }
 
 export const getUserGroups = (

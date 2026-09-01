@@ -3,6 +3,7 @@ import type {
   NotificationsSettings,
   UserSlugOrId,
   UserModel,
+  TranslatedUserModel,
 } from 'shared-projects-frontend/models'
 
 import {
@@ -231,15 +232,17 @@ const useUsersStore = defineStore('users', () => {
     if (id.value) await fetchFollowedCategories()
   })
 
+  const forceSetUser = (user: UserModel | TranslatedUserModel) => {
+    userFromApi.value = user
+    startUserDataRefreshLoop()
+  }
+
   async function getUser(id) {
     // id is keycloak_id OR django user id OR slug
     try {
       // TODO: except for permissions, useless props that are on userFromApi anyway (to check)
       const user = await _getUser(id)
-      userFromApi.value = user
-
-      startUserDataRefreshLoop()
-
+      forceSetUser(user)
       return user
     } catch (err) {
       console.error(err)
@@ -311,6 +314,7 @@ const useUsersStore = defineStore('users', () => {
     id,
     user,
     // actions
+    forceSetUser,
     stopUserDataRefreshLoop,
     resetUser,
     logOut,

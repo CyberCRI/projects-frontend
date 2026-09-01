@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BaseDescription from '~/components/modules/Abstract/BaseDescription.vue'
+import BaseEditBio from '~/components/profile/modules/Bio/BaseEditBio.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
-import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
 
 withDefaults(defineProps<{ user: TranslatedUserModel; editable?: boolean }>(), { editable: false })
@@ -9,7 +9,7 @@ withDefaults(defineProps<{ user: TranslatedUserModel; editable?: boolean }>(), {
 
 <template>
   <BaseModuleTab :title="$t('profile.bio')">
-    <BaseModuleHeader :editable="editable" />
-    <BaseDescription title="" :description="user.$t.description" />
+    <BaseDescription v-if="!editable" title="" :description="user.$t.description" />
+    <BaseEditBio v-else :user="user" />
   </BaseModuleTab>
 </template>
