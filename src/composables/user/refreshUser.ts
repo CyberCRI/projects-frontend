@@ -4,7 +4,6 @@ export const refreshUserData = <T extends UserModel | TranslatedUserModel>(user:
   const route = useRoute()
 
   const organizationCode = useOrganizationCode()
-
   return refreshNuxtData([
     `${organizationCode}::user::${user.id}`,
     `${organizationCode}::user::${user.slug}`,
