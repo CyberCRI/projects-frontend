@@ -115,7 +115,7 @@ watchEffect(() => {
 
       <div class="banner-title-ctn">
         <div class="banner-title">
-          <CategoryFollowButton class="follow-button" :category-id="category?.id" />
+          <CategoryFollowButton class="follow-button" :category="category" />
 
           <h1 class="category-name">
             {{ category?.$t?.name }}
@@ -148,7 +148,7 @@ watchEffect(() => {
           <h3 class="child-title">
             {{ child?.$t?.name }}
           </h3>
-          <CategoryFollowButton :category-id="child.id" @click.stop.prevent="" />
+          <CategoryFollowButton :category="child" @click.stop.prevent="" />
         </NuxtLink>
       </div>
       <div class="category-search-header">

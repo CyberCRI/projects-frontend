@@ -43,6 +43,7 @@ type AsyncReturn<ResDataT, DataT, Result> = Omit<
       >['data']
     : Result
   isLoading: ComputedRef<boolean>
+  isSkeleton: ComputedRef<boolean>
   key: ComputedRef<string>
 }
 
@@ -103,6 +104,8 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     return parentKey
   })
 
+  const isSkeleton = ref(false)
+
   const { status, data, ...res } = useAsyncData<ResDataT, unknown, DataT>(
     key,
     (_, { signal }) => {
@@ -117,10 +120,17 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
         conf.query ??= {}
       }
 
-      return params[1]({ config: conf })
+      return params[1]({ config: conf }).then((val) => {
+        isSkeleton.value = false
+        return val
+      })
     },
     {
       ...params[2],
+      default: () => {
+        isSkeleton.value = true
+        return params[2]?.default?.()
+      },
     }
   )
   const isLoading = useLoadingFromStatus(status)
@@ -134,6 +144,12 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     ...res,
     status,
     isLoading,
+    isSkeleton: computed(() => {
+      if (isLoading.value) {
+        return false
+      }
+      return isSkeleton.value
+    }),
     data: dataWrapped,
     key,
   }

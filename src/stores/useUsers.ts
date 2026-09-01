@@ -37,7 +37,6 @@ export interface UsersState {
   notificationsCount?: number
   notificationsSettings?: NotificationsSettings
   userDataRefreshLoop?: ReturnType<typeof setInterval> | null
-  followedCategories?: any[]
 }
 
 const useUsersStore = defineStore('users', () => {
@@ -223,10 +222,6 @@ const useUsersStore = defineStore('users', () => {
     }
   }
 
-  watchEffect(async () => {
-    if (id.value) await fetchFollowedCategories()
-  })
-
   const forceSetUser = (user: UserModel | TranslatedUserModel) => {
     userFromApi.value = user
     startUserDataRefreshLoop()
@@ -241,17 +236,6 @@ const useUsersStore = defineStore('users', () => {
       return user
     } catch (err) {
       console.error(err)
-    }
-  }
-
-  async function fetchFollowedCategories() {
-    if (!id.value) return
-    try {
-      // TODO check if paginated result workaround is needed
-      const resp = await getProjectCategoriesFollow(id.value)
-      followedCategories.value = resp.results
-    } catch (err) {
-      console.error('Error fetching followed categories:', err)
     }
   }
 
@@ -288,7 +272,6 @@ const useUsersStore = defineStore('users', () => {
     notificationsCount,
     notificationsSettings,
     userDataRefreshLoop,
-    followedCategories,
     // getters
     isConnected,
     id,
@@ -304,7 +287,6 @@ const useUsersStore = defineStore('users', () => {
     doRefreshToken,
     startUserDataRefreshLoop,
     refreshUser,
-    fetchFollowedCategories,
   }
 })
 

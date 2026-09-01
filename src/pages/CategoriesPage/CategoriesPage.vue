@@ -68,7 +68,7 @@ useLpiHead2({
     <div v-if="canCreateProject" class="action-ctn page-section-extra-wide">
       <div v-if="projectCategoriesStore._root?.id && isAdmin" class="follow-all">
         <CategoryFollowButton
-          :category-id="projectCategoriesStore._root?.id"
+          :category="projectCategoriesStore._root"
           class="follow-button"
           message-follow="category.follow-all-categories"
           message-following="category.following-all-categories"

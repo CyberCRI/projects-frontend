@@ -32,7 +32,7 @@ const {
   data: categories,
   pagination,
   isLoading,
-  //refresh,
+  isSkeleton,
 } = getUserCategoriesFollower(organizationCode, profileId, {
   paginationConfig: {
     limit: props.limit,
@@ -43,7 +43,7 @@ const {
 </script>
 
 <template>
-  <FetchLoader :status="status" only-error skeleton>
+  <FetchLoader :status="status" only-error skeleton :with-data="!isSkeleton">
     <BaseModuleHeader v-if="!preview" :pagination="pagination" :editable="false">
       <SectionHeader
         :title="$t('me.follow-category', categories.length || 0)"

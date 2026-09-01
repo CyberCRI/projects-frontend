@@ -1,3 +1,4 @@
+import { refreshUserFollowedProject } from '~/composables/user/refreshUser'
 import type { AnyProject } from 'shared-projects-frontend/models'
 import followUtils from '~/functs/followUtils'
 import useUsersStore from '~/stores/useUsers'
@@ -38,6 +39,7 @@ export const useProjectFollow = (project: ComputedRef<AnyProject>) => {
         .then(() => {
           followed.value = null
         })
+        .then(() => refreshUserFollowedProject(usersStore.user))
         .finally(() => nextTick(() => (asyncing.value = false)))
     } else {
       return followUtils
@@ -52,6 +54,7 @@ export const useProjectFollow = (project: ComputedRef<AnyProject>) => {
           }
           return follow
         })
+        .then(() => refreshUserFollowedProject(usersStore.user))
         .finally(() => nextTick(() => (asyncing.value = false)))
     }
   }

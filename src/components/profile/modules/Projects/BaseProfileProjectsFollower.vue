@@ -31,6 +31,7 @@ const {
   data: projects,
   pagination,
   isLoading,
+  isSkeleton,
 } = getUserProjectsFollower(organizationCode, profileId, {
   paginationConfig: {
     limit: props.limit,
@@ -41,7 +42,7 @@ const {
 </script>
 
 <template>
-  <FetchLoader :status="status" only-error skeleton>
+  <FetchLoader :status="status" only-error skeleton :with-data="!isSkeleton">
     <BaseModuleHeader v-if="!preview" :pagination="pagination" :editable="false">
       <SectionHeader
         :title="$t('me.follow', projects.length || 0)"

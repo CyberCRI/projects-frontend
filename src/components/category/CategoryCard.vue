@@ -24,7 +24,7 @@
             category.$t?.name ?? category.name
           }}
         </h3>
-        <CategoryFollowButton :category-id="category.id" @click.stop.prevent="" />
+        <CategoryFollowButton :category="category" @click.stop.prevent="" />
       </div>
       <p
         class="description skeletons-text"

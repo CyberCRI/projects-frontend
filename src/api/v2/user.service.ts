@@ -109,6 +109,7 @@ export const getUserProjectsMember = (
     {
       translate: translateProjects,
       watch: onlyRefs([organizationCode, userId]),
+      keyFixed: true,
       ...config,
     }
   )
@@ -129,6 +130,7 @@ export const getUserProjectsReviewer = (
     {
       translate: translateProjects,
       watch: onlyRefs([organizationCode, userId]),
+      keyFixed: true,
       ...config,
     }
   )
@@ -149,6 +151,7 @@ export const getUserProjectsFollower = (
     {
       translate: translateProjects,
       watch: onlyRefs([organizationCode, userId]),
+      keyFixed: true,
       ...config,
     }
   )
@@ -169,6 +172,7 @@ export const getUserCategoriesFollower = (
     {
       translate: translateCategories,
       watch: onlyRefs([organizationCode, userId]),
+      keyFixed: true,
       ...config,
     }
   )
