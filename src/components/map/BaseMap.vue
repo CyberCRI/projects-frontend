@@ -16,6 +16,8 @@ import fixLeaflet from '~/app/fixLeaflet'
 import type { UnwrapRef } from 'vue'
 import 'leaflet.markercluster'
 import * as L from 'leaflet'
+const runtimeConfig = useRuntimeConfig()
+const { appMapRendererApiKey } = runtimeConfig.public
 
 const props = withDefaults(
   defineProps<{
@@ -41,7 +43,7 @@ const mapInstance = ref<L.Map>(null)
 const markerClusterInstance = ref<L.MarkerClusterGroup>(null)
 const mapRef = useTemplateRef('map')
 
-const MAP_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
+const MAP_URL = `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${appMapRendererApiKey}`
 const CONFIG: L.MapOptions = {
   center: [0, 0],
   zoom: 2,

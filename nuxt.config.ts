@@ -210,6 +210,7 @@ export default defineNuxtConfig({
     appAgentMemoryTrace: '',
     appAgentMemorySlidingWindowSize: '',
     public: {
+      appMapRendererApiKey: '',
       appVersion: '',
       appApiOrgCode: '',
       appFavicon: '',
