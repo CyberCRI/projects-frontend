@@ -246,6 +246,7 @@ export default defineNuxtConfig({
       appHasVectorDb: 0,
       appHasChatbotPromptDb: 0,
       appLlmModelSuggestions: '',
+      appMapRendererApiKey: '',
     },
   },
   i18n: {
