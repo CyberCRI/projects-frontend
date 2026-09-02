@@ -108,7 +108,7 @@
     "@prisma/client": "^7.6.0",
     "@sentry/vue": "8.55.0",
     "@sindresorhus/slugify": "^3.0.0",
-    "@tiptap/core": "2.26.3",
+    "@tiptap/core": "3.30.4",
     "@tiptap/extension-blockquote": "2.26.3",
     "@tiptap/extension-bold": "2.26.3",
     "@tiptap/extension-bullet-list": "2.26.3",
@@ -217,7 +217,7 @@
   "resolutions": {
     "pdf-parse": "^1.1.1",
     "nuxt": "^3.0.0",
-    "@tiptap/core": "2.26.3",
+    "@tiptap/core": "3.30.4",
     "@tiptap/extension-blockquote": "2.26.3",
     "@tiptap/extension-bold": "2.26.3",
     "@tiptap/extension-bullet-list": "2.26.3",
