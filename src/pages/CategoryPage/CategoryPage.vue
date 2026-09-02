@@ -4,6 +4,7 @@ import useProjectCategories from '~/stores/useProjectCategories'
 import { onResize } from '~/composables/onResize'
 
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
+import CategoryFollowIcon from '~/components/category/CategoryFollowIcon.vue'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { resetScroll } from '~/composables/useScrollToTab'
 
@@ -115,7 +116,7 @@ watchEffect(() => {
 
       <div class="banner-title-ctn">
         <div class="banner-title">
-          <CategoryFollowButton class="follow-button" :category="category" />
+          <CategoryFollowIcon class="follow-button" :category="category" />
 
           <h1 class="category-name">
             {{ category?.$t?.name }}
@@ -148,7 +149,7 @@ watchEffect(() => {
           <h3 class="child-title">
             {{ child?.$t?.name }}
           </h3>
-          <CategoryFollowButton :category="child" @click.stop.prevent="" />
+          <CategoryFollowIcon :category="child" />
         </NuxtLink>
       </div>
       <div class="category-search-header">

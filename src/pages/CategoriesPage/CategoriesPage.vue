@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
+import CategoryFollowIcon from '~/components/category/CategoryFollowIcon.vue'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import useProjectCategories from '~/stores/useProjectCategories'
 
@@ -67,11 +68,11 @@ useLpiHead2({
 
     <div v-if="canCreateProject" class="action-ctn page-section-extra-wide">
       <div v-if="projectCategoriesStore._root?.id && isAdmin" class="follow-all">
-        <CategoryFollowButton
+        <CategoryFollowIcon
           :category="projectCategoriesStore._root"
           class="follow-button"
-          message-follow="category.follow-all-categories"
-          message-following="category.following-all-categories"
+          :follow-label="$t('category.follow-all-categories')"
+          :unfollow-label="$t('category.following-all-categories')"
         />
       </div>
       <LpiButton

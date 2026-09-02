@@ -5,8 +5,8 @@ import type {
   TranslatedUserModel,
 } from 'shared-projects-frontend/models'
 
-import { getProjectCategoriesFollow, getUser as _getUser } from 'shared-projects-frontend/apis'
 import { logoutFromKeycloak, refreshAccessToken } from '~/api/auth/auth.service'
+import { getUser as _getUser } from 'shared-projects-frontend/apis'
 import { checkExpiredToken } from '~/api/auth/keycloakUtils'
 import { removeApiCookie } from '~/api/auth/cookie.service'
 import type { AuthResult } from '~/api/auth/keycloak'
@@ -67,7 +67,6 @@ const useUsersStore = defineStore('users', () => {
 
   const notificationsSettings = ref(null)
   const userDataRefreshLoop = ref(null)
-  const followedCategories = ref<any[]>([])
 
   const isConnected = computed((): boolean => {
     return !!userFromToken.value

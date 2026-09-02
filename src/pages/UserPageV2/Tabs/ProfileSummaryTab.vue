@@ -21,7 +21,22 @@ const bioEmpty = computed(() => textIsEmpty(props.user.$t.description))
     <ProfileBioPreview v-if="!bioEmpty" :user="user" />
 
     <ProfileSkillsPreview v-if="user.modules.skills" :user="user" />
-    <ProfileProjectsPreview v-if="user.modules.projects" :user="user" />
+    <ProfileProjectsPreview v-if="user.modules.projects" type="projects" :user="user" />
+    <ProfileProjectsPreview
+      v-if="user.modules.reviews_projects"
+      type="reviews_projects"
+      :user="user"
+    />
+    <ProfileProjectsPreview
+      v-if="user.modules.follows_projects"
+      type="follows_projects"
+      :user="user"
+    />
+    <ProfileProjectsPreview
+      v-if="user.modules.follows_categories"
+      type="follows_categories"
+      :user="user"
+    />
     <ProfileGroupsPreview v-if="user.modules.groups" :user="user" />
 
     <!-- researcher -->
