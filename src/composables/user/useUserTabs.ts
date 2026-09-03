@@ -168,6 +168,15 @@ export const useUserTabs = (
           dataTest: 'profile-resources-edit',
           icon: 'Pen',
         },
+        {
+          key: 'profile-privacy-edit',
+          label: t('profile.edit.privacy.tab'),
+          view: `/profile/${userId.value}/privacy/edit`,
+          altView: `/profile/${userId.value}/summary`,
+          dataTest: 'profile-edit-privacy',
+          condition: true,
+          icon: 'Pen',
+        },
       ] satisfies MenuEntry[]
     ).map((tab) => ({ ...tab, isEditing: true }))
   })

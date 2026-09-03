@@ -14,6 +14,7 @@ import {
   getUserProjectsFollower as fetchUserProjectsFollower,
   getUserProjectsReviewer as fetchUserProjectsReviewer,
   getUserCategoriesFollower as fetchUserCategoriesFollower,
+  getUserPrivacy as fetchUserPrivacy,
 } from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
@@ -168,6 +169,22 @@ export const getUserCategoriesFollower = (
     ({ config }) => fetchUserCategoriesFollower(unref(userId), { ...DEFAULT_CONFIG, ...config }),
     {
       translate: translateCategories,
+      watch: onlyRefs([organizationCode, userId]),
+      ...config,
+    }
+  )
+}
+
+export const getUserPrivacy = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  userId: RefOrRaw<UserSlugOrId>,
+  config: ConfigPagination = {}
+) => {
+  const key = computed(() => `${unref(organizationCode)}::user::${unref(userId)}::privacy`)
+  return useAsyncAPI(
+    key,
+    ({ config }) => fetchUserPrivacy(unref(userId), { ...DEFAULT_CONFIG, ...config }),
+    {
       watch: onlyRefs([organizationCode, userId]),
       ...config,
     }

@@ -22,9 +22,7 @@ const props = withDefaults(
 
 const profileId = computed(() => props.profile?.id)
 const organizationCode = useOrganizationCode()
-const limitSkeletons = computed(() =>
-  maxSkeleton(props.profile?.modules?.projects || 6, props.limit)
-)
+const limitSkeletons = computed(() => maxSkeleton(props.profile.modules.projects || 6, props.limit))
 const {
   status,
   data: projects,
@@ -34,7 +32,7 @@ const {
   paginationConfig: {
     limit: props.limit,
   },
-  immediate: profileId.value != -1,
+  checkArgs: true,
   default: () => factoryPagination(projectSkeleton, limitSkeletons.value),
 })
 </script>
