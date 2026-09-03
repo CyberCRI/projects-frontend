@@ -48,6 +48,7 @@ const {
   paginationConfig: {
     limit: props.limit,
   },
+  condition: computed(() => profileId.value && profileId.value != -1),
   default: () => factoryPagination(attachementLinkSkeletons, limitSkeletons.value),
 })
 

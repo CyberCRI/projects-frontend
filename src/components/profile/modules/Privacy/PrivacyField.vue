@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
+import type { PrivacyValue } from 'shared-projects-frontend/models'
 defineProps<{ label: string; notice: string; options: GroupOption[]; hasIcon: boolean }>()
 const emit = defineEmits(['update:modelValue'])
-const modelValue = defineModel<string>()
+const modelValue = defineModel<PrivacyValue>()
 </script>
 <template>
   <div class="privacy-field">

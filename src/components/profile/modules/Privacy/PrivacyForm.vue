@@ -14,13 +14,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type { PrivacySettings, PrivacyValue } from 'shared-projects-frontend/models'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
+import type { PrivacySettings } from 'shared-projects-frontend/models'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
-import GroupButton from '~/components/base/button/GroupButton.vue'
 import { patchUserPrivacy } from 'shared-projects-frontend/apis'
-import { getUserPrivacy } from '~/api/v2/user.service.ts'
 import useToasterStore from '~/stores/useToaster'
 
 function defaultForm(): PrivacySettings {
@@ -47,6 +45,8 @@ function dataMapping() {
 
 const props = defineProps<{
   user: TranslatedUserModel
+  privacySettings: PrivacySettings | {}
+  isLoading: boolean
 }>()
 
 const emit = defineEmits(['update:modelValue', 'profile-edited'])
@@ -61,26 +61,23 @@ const asyncing = ref(false)
 //   const connectedUser = this.usersStore.userFromApi
 //   return connectedUser && this.user?.id === connectedUser?.id
 // },
-const optionsMap = computed(() => ({
+const optionsMap = computed<Record<string, GroupOption & { rank: number }>>(() => ({
   hide: {
     label: t('profile.edit.privacy.options.hide'),
     iconName: 'EyeSlash',
     value: 'hide',
-    // @ts-expect-error
     rank: 0,
   },
   org: {
     label: t('profile.edit.privacy.options.org'),
     iconName: 'PeopleGroup',
     value: 'org',
-    // @ts-expect-error
     rank: 1,
   },
   pub: {
     label: t('profile.edit.privacy.options.pub'),
     iconName: 'Eye',
     value: 'pub',
-    // @ts-expect-error
     rank: 2,
   },
   // } satisfies { [key in PrivacyValue]: GroupOption }
@@ -173,16 +170,16 @@ async function save() {
   }
 }
 
-const { data: privacySettings, isLoading } = await getUserPrivacy(
-  useOrganizationCode(),
-  props.user.id,
-  {
-    immediate: props.user.id != -1,
-  }
-)
+// const { data: privacySettings, isLoading } = await getUserPrivacy(
+//   useOrganizationCode(),
+//   props.user.id,
+//   {
+//     immediate: props.user.id != -1,
+//   }
+// )
 
 watch(
-  () => privacySettings.value,
+  () => props.privacySettings,
   (neo) => {
     if (neo) form.value = adaptApiToForm(neo)
   }
