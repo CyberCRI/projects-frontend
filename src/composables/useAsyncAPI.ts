@@ -24,7 +24,6 @@ export type AsyncConfig<ResDataT, DataT, Result> = Parameters<
   // force fixed key (no add query params in key)
   // like "group::55::members" (no pagination query like 'offset' / 'limit') are added
   keyFixed?: boolean
-  condition?: ComputedRef<boolean>
 }
 
 export type AsyncParameters<ResDataT, DataT, Result> = [
@@ -81,12 +80,6 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     params[2].immediate = false
   }
 
-  const condition = params[2].condition
-  if (condition) {
-    immediate = false
-    params[2].immediate = false
-  }
-
   const neededArgs = params[2].watch
   const checkArgs = computed(() => {
     return neededArgs.map((v) => unref(v)).filter((v) => isNil(v)).length === 0
@@ -131,16 +124,6 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     }
   )
   const isLoading = useLoadingFromStatus(status)
-
-  if (condition) {
-    watch(
-      () => condition.value,
-      (flag) => {
-        if (flag) res.execute()
-      },
-      { immediate: true }
-    )
-  }
 
   const dataWrapped = params[2]?.translate
     ? // @ts-expect-error 2345 todo check why

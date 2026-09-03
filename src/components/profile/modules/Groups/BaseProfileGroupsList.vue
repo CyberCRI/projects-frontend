@@ -37,7 +37,7 @@ const {
   },
   immediate: false,
   default: () => factoryPagination(groupSkeleton, limitGroupsSkeletons.value),
-  condition: computed(() => profileId.value && profileId.value != -1),
+  checkArgs: true,
 })
 </script>
 

@@ -37,7 +37,7 @@ const {
   paginationConfig: {
     limit: props.limit,
   },
-  condition: computed(() => profileId.value && profileId.value != -1),
+  checkArgs: true,
   default: () => factoryPagination(categorySkeleton, limitSkeletons.value),
 })
 </script>

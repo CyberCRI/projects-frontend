@@ -8,14 +8,14 @@ import { USER_MODULE_TITLE } from '~/functs/constants'
 const props = defineProps<{
   profile: TranslatedUserModel
 }>()
-const profileId = computed(() => props.profile?.id || -1)
+const profileId = computed(() => props.profile.id)
 const organizationCode = useOrganizationCode()
 const {
   status,
   data: privacySettings,
   isLoading,
 } = getUserPrivacy(organizationCode, profileId, {
-  condition: computed(() => profileId.value && profileId.value != -1),
+  checkArgs: true,
 })
 </script>
 
