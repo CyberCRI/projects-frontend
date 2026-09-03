@@ -35,7 +35,6 @@ const {
   paginationConfig: {
     limit: props.preview ? props.limit : null,
   },
-  immediate: false,
   default: () => factoryPagination(groupSkeleton, limitGroupsSkeletons.value),
   checkArgs: true,
 })
