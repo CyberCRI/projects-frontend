@@ -1,21 +1,22 @@
-import type { AnyProject } from 'shared-projects-frontend/models'
+import type {
+  ProjectCategoryModel,
+  TranslatedProjectCategory,
+} from 'shared-projects-frontend/models'
 import followUtils from '~/functs/followUtils'
 import useUsersStore from '~/stores/useUsers'
 
-export const useProjectFollow = (project: ComputedRef<AnyProject>) => {
+export const useCategoryFollow = (
+  category: ComputedRef<ProjectCategoryModel | TranslatedProjectCategory>
+) => {
   const asyncing = ref(false)
-  if (asyncing.value) {
-    return
-  }
-
   const usersStore = useUsersStore()
 
   const followed = ref()
 
   watch(
-    project,
+    category,
     () => {
-      followed.value = project.value?.is_followed
+      followed.value = category.value?.is_followed
     },
     { immediate: true, deep: true }
   )
@@ -31,9 +32,9 @@ export const useProjectFollow = (project: ComputedRef<AnyProject>) => {
 
     if (isFollowing.value) {
       return followUtils
-        .unfollow({
-          follower_id: followed.value.follow_id,
-          project_id: project.value.id,
+        .unfollowCategory({
+          follower_id: usersStore.id,
+          category_follow_id: followed.value.follow_id,
         })
         .then(() => {
           followed.value = null
@@ -42,9 +43,9 @@ export const useProjectFollow = (project: ComputedRef<AnyProject>) => {
         .then(() => followed.value)
     } else {
       return followUtils
-        .follow({
+        .followCategory({
           follower_id: usersStore.user.id,
-          project_id: project.value.id,
+          category_id: category.value.id,
         })
         .then((follow) => {
           followed.value = {

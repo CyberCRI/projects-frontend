@@ -24,7 +24,7 @@
             category.$t?.name ?? category.name
           }}
         </h3>
-        <CategoryFollowButton :category-id="category.id" @click.stop.prevent="" />
+        <CategoryFollowIcon :category="category" />
       </div>
       <p
         class="description skeletons-text"
@@ -43,6 +43,7 @@ import type {
   TranslatedProjectCategory,
 } from 'shared-projects-frontend/models'
 
+import CategoryFollowIcon from '~/components/category/CategoryFollowIcon.vue'
 import CategoryCardImage from '~/components/category/CategoryCardImage.vue'
 
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'

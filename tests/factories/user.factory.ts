@@ -66,6 +66,7 @@ export const UserFactory = createFactory<UserModel>((faker) => ({
     publications: 0,
     skills: 0,
     notifications: 0,
+    reviews_projects: 0,
   },
   created_at: faker.datatype.datetime().toISOString(),
   landline_phone: null,

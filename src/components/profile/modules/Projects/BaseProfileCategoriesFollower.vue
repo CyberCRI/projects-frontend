@@ -20,11 +20,11 @@ const props = withDefaults(
   }
 )
 
-const profileId = computed(() => props.profile?.id)
+const profileId = computed(() => props.profile.id)
 const organizationCode = useOrganizationCode()
 // TODO: categroies count + category card skeleton
 const limitSkeletons = computed(() =>
-  maxSkeleton(props.profile?.modules?.follows_categories || 3, props.limit)
+  maxSkeleton(props.profile.modules.follows_categories, props.limit)
 )
 
 const {
@@ -32,22 +32,28 @@ const {
   data: categories,
   pagination,
   isLoading,
-  //refresh,
+  isSkeleton,
 } = getUserCategoriesFollower(organizationCode, profileId, {
   paginationConfig: {
     limit: props.limit,
   },
+  keyFixed: computed(() => props.preview),
   checkArgs: true,
   default: () => factoryPagination(categorySkeleton, limitSkeletons.value),
 })
 </script>
 
 <template>
-  <FetchLoader :status="status" only-error skeleton>
-    <BaseModuleHeader v-if="!preview" :pagination="pagination" :editable="false">
+  <FetchLoader :status="status" only-error skeleton :with-data="!isSkeleton">
+    <BaseModuleHeader
+      v-if="!preview"
+      id="follows_categories"
+      :pagination="pagination"
+      :editable="false"
+    >
       <SectionHeader
-        :title="$t('me.follow-category', categories.length || 0)"
-        :quantity="categories.length || 0"
+        :title="$t('me.follow-category', pagination.count.value)"
+        :quantity="pagination.count.value"
         :has-button="false"
       />
     </BaseModuleHeader>

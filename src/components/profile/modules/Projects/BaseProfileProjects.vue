@@ -5,22 +5,14 @@ import BaseProfileProjectsFollower from '~/components/profile/modules/Projects/B
 import BaseProfileProjectsMember from '~/components/profile/modules/Projects/BaseProfileProjectsMember.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
-withDefaults(
-  defineProps<{
-    profile: TranslatedUserModel
-    limit?: number
-    preview?: boolean
-  }>(),
-  {
-    limit: null,
-    preview: false,
-  }
-)
+defineProps<{
+  profile: TranslatedUserModel
+}>()
 </script>
 
 <template>
-  <BaseProfileProjectsMember :profile="profile" :limit="limit" :preview="preview" />
-  <BaseProfileProjectsReviewer :profile="profile" :limit="limit" :preview="preview" />
-  <BaseProfileProjectsFollower :profile="profile" :limit="limit" :preview="preview" />
-  <BaseProfileCategoriesFollower :profile="profile" :limit="limit" :preview="preview" />
+  <BaseProfileProjectsMember :profile="profile" />
+  <BaseProfileProjectsReviewer :profile="profile" />
+  <BaseProfileProjectsFollower :profile="profile" />
+  <BaseProfileCategoriesFollower :profile="profile" />
 </template>

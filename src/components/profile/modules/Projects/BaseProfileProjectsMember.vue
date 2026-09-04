@@ -20,9 +20,9 @@ const props = withDefaults(
   }
 )
 
-const profileId = computed(() => props.profile?.id)
+const profileId = computed(() => props.profile.id)
 const organizationCode = useOrganizationCode()
-const limitSkeletons = computed(() => maxSkeleton(props.profile.modules.projects || 6, props.limit))
+const limitSkeletons = computed(() => maxSkeleton(props.profile.modules.projects, props.limit))
 const {
   status,
   data: projects,
@@ -32,6 +32,7 @@ const {
   paginationConfig: {
     limit: props.limit,
   },
+  keyFixed: computed(() => props.preview),
   checkArgs: true,
   default: () => factoryPagination(projectSkeleton, limitSkeletons.value),
 })
@@ -39,10 +40,10 @@ const {
 
 <template>
   <FetchLoader :status="status" only-error skeleton>
-    <BaseModuleHeader v-if="!preview" :pagination="pagination" :editable="false">
+    <BaseModuleHeader v-if="!preview" id="projects" :pagination="pagination" :editable="false">
       <SectionHeader
-        :title="$t('me.projects-participate', projects.length || 0)"
-        :quantity="projects.length || 0"
+        :title="$t('me.projects-participate', pagination.count.value)"
+        :quantity="pagination.count.value"
         :has-button="false"
       />
     </BaseModuleHeader>

@@ -306,8 +306,9 @@ export const USER_MODULE_ICON: {
 } = {
   conferences: 'Article',
   publications: 'Article',
-  follows_categories: 'Alert',
-  follows_projects: 'Briefcase',
+  reviews_projects: 'Briefcase',
+  follows_categories: 'BookmarkLine',
+  follows_projects: 'BookmarkLine',
   notifications: 'Bell',
   projects: 'Briefcase',
   skills: 'VipCrownLine',
@@ -322,8 +323,9 @@ export const USER_MODULE_ICON: {
 export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
   conferences: 'profile.conferences',
   publications: 'profile.publications',
-  follows_categories: '',
-  follows_projects: '',
+  reviews_projects: 'me.projects-reviewing',
+  follows_categories: 'me.follow-category',
+  follows_projects: 'me.follow',
   notifications: '',
   projects: 'profile.projects',
   skills: 'profile.skills',

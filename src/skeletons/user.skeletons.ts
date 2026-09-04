@@ -23,6 +23,7 @@ export const userSkeleton = (def?: Partial<UserModel>): UserModel => ({
   location: '',
   mobile_phone: null,
   modules: {
+    reviews_projects: 0,
     conferences: 0,
     files: 0,
     follows_categories: 0,
