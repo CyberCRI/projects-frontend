@@ -335,6 +335,7 @@ export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
   files: '',
   resources: 'resource.resources',
   groups: 'profile.groups',
+  privacy: 'profile.edit.privacy.tab',
 }
 
 // max skill steps

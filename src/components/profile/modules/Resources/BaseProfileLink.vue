@@ -34,9 +34,9 @@ const props = withDefaults(
 const { t } = useNuxtI18n()
 const asyncing = ref(false)
 const toaster = useToaster()
-const profileId = computed(() => props.profile?.id)
+const profileId = computed(() => props.profile.id)
 const organizationCode = useOrganizationCode()
-const limitSkeletons = computed(() => maxSkeleton(props.profile?.modules?.links || 0, props.limit))
+const limitSkeletons = computed(() => maxSkeleton(props.profile.modules.links || 0, props.limit))
 
 const {
   status,
@@ -48,6 +48,7 @@ const {
   paginationConfig: {
     limit: props.limit,
   },
+  checkArgs: true,
   default: () => factoryPagination(attachementLinkSkeletons, limitSkeletons.value),
 })
 

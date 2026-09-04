@@ -8,7 +8,7 @@ defineProps<{ user: TranslatedUserModel }>()
 
 <template>
   <BaseModulePreview
-    :title="$t(USER_MODULE_TITLE.groups, user?.modules?.groups)"
+    :title="$t(USER_MODULE_TITLE.groups, user.modules.groups)"
     :icon="USER_MODULE_ICON.groups"
     :total="user?.modules?.groups"
     :see-more="{
