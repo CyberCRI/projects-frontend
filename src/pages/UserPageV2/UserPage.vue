@@ -35,9 +35,11 @@ const {
 
 const userFullName = useUserFullName(user)
 
-const { canEditUser } = usePermissionUser(userIdOrSlug)
+const userId = computed(() => user.value?.id)
 
-const { tabs, currentTab, isEditing, toggleEditing } = useUserTabs(userIdOrSlug, user)
+const { canEditUser } = usePermissionUser(userId)
+
+const { tabs, currentTab, isEditing, toggleEditing } = useUserTabs(user)
 
 watchEffect(() => {
   if (!props.setHeader) {

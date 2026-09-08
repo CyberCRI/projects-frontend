@@ -1,14 +1,11 @@
-import type { UserSlugOrId, UserModel, TranslatedUserModel } from 'shared-projects-frontend/models'
+import type { UserModel, TranslatedUserModel } from 'shared-projects-frontend/models'
 import { usePermissionUser } from '~/composables/usePermissions/useUserPermissions'
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
 import { USER_MODULE_ICON, USER_MODULE_TITLE } from '~/functs/constants'
 import { userSkeleton } from '~/skeletons/user.skeletons'
 import { textIsEmpty } from '~/functs/tiptap'
 
-export const useUserTabs = (
-  userId: ComputedRef<UserSlugOrId>,
-  user: ComputedRef<TranslatedUserModel>
-) => {
+export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
   const route = useRoute()
   const router = useRouter()
 
@@ -21,6 +18,9 @@ export const useUserTabs = (
     }
   })
 
+  const userId = computed(() => user.value?.id)
+  const userSlugOrId = computed(() => user.value?.slug || user.value?.id)
+
   const { canEditUser } = usePermissionUser(userId)
 
   const TabsDisplay = computed(() => {
@@ -28,8 +28,8 @@ export const useUserTabs = (
       {
         key: 'profile-summary',
         label: t('profile.snapshot'),
-        view: `/profile/${userId.value}/summary`,
-        altView: `/profile/${userId.value}/summary/edit`,
+        view: `/profile/${userSlugOrId.value}/summary`,
+        altView: `/profile/${userSlugOrId.value}/summary/edit`,
         condition: true,
         dataTest: 'profile-summary',
         icon: 'Home',
@@ -38,8 +38,8 @@ export const useUserTabs = (
       {
         key: 'profile-bio',
         label: t('profile.bio'),
-        view: `/profile/${userId.value}/bio`,
-        altView: `/profile/${userId.value}/bio/edit`,
+        view: `/profile/${userSlugOrId.value}/bio`,
+        altView: `/profile/${userSlugOrId.value}/bio/edit`,
         condition: !textIsEmpty(user.value?.description),
         dataTest: 'profile-bio',
         icon: 'Account',
@@ -47,8 +47,8 @@ export const useUserTabs = (
       {
         key: 'profile-projects',
         label: t(USER_MODULE_TITLE.projects, modules.value.projects),
-        view: `/profile/${userId.value}/projects`,
-        altView: `/profile/${userId.value}/projects/edit`,
+        view: `/profile/${userSlugOrId.value}/projects`,
+        altView: `/profile/${userSlugOrId.value}/projects/edit`,
         condition: !!modules.value.projects,
         dataTest: 'profile-projects',
         icon: USER_MODULE_ICON.projects,
@@ -56,8 +56,8 @@ export const useUserTabs = (
       {
         key: 'profile-skills',
         label: t(USER_MODULE_TITLE.skills, modules.value.skills),
-        view: `/profile/${userId.value}/skills`,
-        altView: `/profile/${userId.value}/skills/edit`,
+        view: `/profile/${userSlugOrId.value}/skills`,
+        altView: `/profile/${userSlugOrId.value}/skills/edit`,
         condition: !!modules.value.skills,
         dataTest: 'profile-skills',
         icon: USER_MODULE_ICON.skills,
@@ -65,8 +65,8 @@ export const useUserTabs = (
       {
         key: 'profile-groups',
         label: t(USER_MODULE_TITLE.groups, modules.value.groups),
-        view: `/profile/${userId.value}/groups`,
-        altView: `/profile/${userId.value}/groups/edit`,
+        view: `/profile/${userSlugOrId.value}/groups`,
+        altView: `/profile/${userSlugOrId.value}/groups/edit`,
         condition: !!modules.value.groups,
         dataTest: 'profile-groups',
         icon: USER_MODULE_ICON.groups,
@@ -74,8 +74,8 @@ export const useUserTabs = (
       {
         key: 'profile-publications',
         label: t(USER_MODULE_TITLE.publications, modules.value.publications),
-        view: `/profile/${userId.value}/documents/publications`,
-        altView: `/profile/${userId.value}/documents/publications/edit`,
+        view: `/profile/${userSlugOrId.value}/documents/publications`,
+        altView: `/profile/${userSlugOrId.value}/documents/publications/edit`,
         condition: !!modules.value.publications,
         dataTest: 'profile-publications',
         icon: USER_MODULE_ICON.publications,
@@ -83,8 +83,8 @@ export const useUserTabs = (
       {
         key: 'profile-conferences',
         label: t(USER_MODULE_TITLE.conferences, modules.value.conferences),
-        view: `/profile/${userId.value}/documents/conferences`,
-        altView: `/profile/${userId.value}/documents/conferences/edit`,
+        view: `/profile/${userSlugOrId.value}/documents/conferences`,
+        altView: `/profile/${userSlugOrId.value}/documents/conferences/edit`,
         condition: !!modules.value.conferences,
         dataTest: 'profile-conferences',
         icon: USER_MODULE_ICON.conferences,
@@ -92,8 +92,8 @@ export const useUserTabs = (
       {
         key: 'profile-resources',
         label: t(USER_MODULE_TITLE.resources, modules.value.files + modules.value.links),
-        view: `/profile/${userId.value}/resources`,
-        altView: `/profile/${userId.value}/resources/edit`,
+        view: `/profile/${userSlugOrId.value}/resources`,
+        altView: `/profile/${userSlugOrId.value}/resources/edit`,
         condition: !!(modules.value.files || modules.value.links),
         dataTest: 'profile-resources',
         icon: USER_MODULE_ICON.resources,
@@ -106,8 +106,8 @@ export const useUserTabs = (
         {
           key: 'profile-summary-edit',
           label: t('profile.snapshot'),
-          view: `/profile/${userId.value}/summary/edit`,
-          altView: `/profile/${userId.value}/summary`,
+          view: `/profile/${userSlugOrId.value}/summary/edit`,
+          altView: `/profile/${userSlugOrId.value}/summary`,
           condition: true,
           dataTest: 'profile-summary-edit',
           icon: 'Pen',
@@ -116,8 +116,8 @@ export const useUserTabs = (
         {
           key: 'profile-bio-edit',
           label: t('profile.bio'),
-          view: `/profile/${userId.value}/bio/edit`,
-          altView: `/profile/${userId.value}/bio`,
+          view: `/profile/${userSlugOrId.value}/bio/edit`,
+          altView: `/profile/${userSlugOrId.value}/bio`,
           condition: true,
           dataTest: 'profile-bio-edit',
           icon: 'Pen',
@@ -126,8 +126,8 @@ export const useUserTabs = (
         // {
         //   key: 'profile-projects-edit',
         //   label: t(USER_MODULE_TITLE.projects, modules.value.projects),
-        //   view: `/profile/${userId.value}/projects/edit`,
-        //   altView: `/profile/${userId.value}/projects`,
+        //   view: `/profile/${userSlugOrId.value}/projects/edit`,
+        //   altView: `/profile/${userSlugOrId.value}/projects`,
         //   condition: true,
         //   dataTest: 'profile-projects-edit',
         //   icon: 'Pen',
@@ -135,8 +135,8 @@ export const useUserTabs = (
         {
           key: 'profile-skills-edit',
           label: t(USER_MODULE_TITLE.skills, modules.value.skills),
-          view: `/profile/${userId.value}/skills/edit`,
-          altView: `/profile/${userId.value}/skills`,
+          view: `/profile/${userSlugOrId.value}/skills/edit`,
+          altView: `/profile/${userSlugOrId.value}/skills`,
           condition: true,
           dataTest: 'profile-skills-edit',
           icon: 'Pen',
@@ -144,8 +144,8 @@ export const useUserTabs = (
         {
           key: 'profile-publications-edit',
           label: t(USER_MODULE_TITLE.publications, modules.value.publications),
-          view: `/profile/${userId.value}/documents/publications/edit`,
-          altView: `/profile/${userId.value}/documents/publications`,
+          view: `/profile/${userSlugOrId.value}/documents/publications/edit`,
+          altView: `/profile/${userSlugOrId.value}/documents/publications`,
           condition: true,
           dataTest: 'profile-publications-edit',
           icon: 'Pen',
@@ -153,8 +153,8 @@ export const useUserTabs = (
         {
           key: 'profile-conferences-edit',
           label: t(USER_MODULE_TITLE.conferences, modules.value.conferences),
-          view: `/profile/${userId.value}/documents/conferences/edit`,
-          altView: `/profile/${userId.value}/documents/conferences`,
+          view: `/profile/${userSlugOrId.value}/documents/conferences/edit`,
+          altView: `/profile/${userSlugOrId.value}/documents/conferences`,
           condition: true,
           dataTest: 'profile-conferences-edit',
           icon: 'Pen',
@@ -162,8 +162,8 @@ export const useUserTabs = (
         {
           key: 'profile-resources-edit',
           label: t(USER_MODULE_TITLE.resources, modules.value.files + modules.value.links),
-          view: `/profile/${userId.value}/resources/edit`,
-          altView: `/profile/${userId.value}/resources`,
+          view: `/profile/${userSlugOrId.value}/resources/edit`,
+          altView: `/profile/${userSlugOrId.value}/resources`,
           condition: true,
           dataTest: 'profile-resources-edit',
           icon: 'Pen',
@@ -171,8 +171,8 @@ export const useUserTabs = (
         {
           key: 'profile-privacy-edit',
           label: t('profile.edit.privacy.tab'),
-          view: `/profile/${userId.value}/privacy/edit`,
-          altView: `/profile/${userId.value}/summary`,
+          view: `/profile/${userSlugOrId.value}/privacy/edit`,
+          altView: `/profile/${userSlugOrId.value}/summary`,
           dataTest: 'profile-edit-privacy',
           condition: true,
           icon: 'Pen',
