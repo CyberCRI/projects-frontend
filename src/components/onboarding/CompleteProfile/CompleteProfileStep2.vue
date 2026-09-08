@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loading" class="loader">
+  <div v-if="isLoading" class="loader">
     <LoaderSimple />
   </div>
   <template v-else>
@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { getUser } from 'shared-projects-frontend/apis'
+import { getUser } from '~/api/v2/user.service'
 
 import BaseSkill from '~/components/profile/modules/Skills/BaseSkill.vue'
 
@@ -25,32 +25,13 @@ const emit = defineEmits(['saving', 'loading'])
 const { t } = useNuxtI18n()
 const usersStore = useUsersStore()
 const { onboardingTrap } = useOnboardingStatus()
+const organizationCode = useOrganizationCode()
+const { data: user, isLoading } = getUser(organizationCode, usersStore.id)
 
-const user = ref(null)
-const loading = ref(false)
-
-const loadUser = async () => {
-  try {
-    user.value = await getUser(usersStore.id)
-    console.log('loaded user', user)
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-onMounted(async () => {
-  loading.value = true
-  emit('loading', true)
-
-  try {
-    await loadUser()
-  } catch (error) {
-    console.error(error)
-  } finally {
-    loading.value = false
-    emit('loading', false)
-  }
-})
+watch(
+  () => isLoading.value,
+  (neo) => emit('loading', neo)
+)
 
 const save = async () => {
   // this called by CompleteProfileDrawer.vue
