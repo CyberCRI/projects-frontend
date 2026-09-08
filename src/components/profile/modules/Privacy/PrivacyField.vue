@@ -27,6 +27,7 @@ const modelValue = defineModel<PrivacyValue>()
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 @use '~/pages/UserProfilePageV2/Tabs/profile-form';
+
 .privacy-field {
   display: flex;
   justify-content: space-between;
