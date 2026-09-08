@@ -4,7 +4,7 @@
   </div>
   <template v-else>
     <ProfileEditBlock :block-title="t('complete-profile.skills.title')">
-      <ProfileSkillsEditTab v-if="user" :user="user" @profile-edited="loadUser" />
+      <BaseSkill v-if="user" :user="user" editable :limit="9" />
     </ProfileEditBlock>
   </template>
 </template>
@@ -12,12 +12,12 @@
 <script setup lang="ts">
 import { getUser } from 'shared-projects-frontend/apis'
 
+import BaseSkill from '~/components/profile/modules/Skills/BaseSkill.vue'
+
 import ProfileEditBlock from '~/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
 import useUsersStore from '~/stores/useUsers'
-
-import ProfileSkillsEditTab from '~/pages/UserProfilePageV2/Tabs/ProfileSkillsEditTab.vue'
 
 defineOptions({ name: 'CompleteProfileStep2' })
 const emit = defineEmits(['saving', 'loading'])
@@ -32,6 +32,7 @@ const loading = ref(false)
 const loadUser = async () => {
   try {
     user.value = await getUser(usersStore.id)
+    console.log('loaded user', user)
   } catch (error) {
     console.error(error)
   }

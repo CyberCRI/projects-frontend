@@ -119,7 +119,6 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   edited: []
-  'profile-edited': []
 }>()
 
 const { t } = useNuxtI18n()
@@ -152,7 +151,7 @@ const isInitial = computed(() => {
   )
 })
 
-const reloadUser = () => emit('profile-edited')
+const reloadUser = () => emit('edited')
 
 const onSkillAdded = (newSkill) => {
   lastAddedTalent.value = newSkill.id
