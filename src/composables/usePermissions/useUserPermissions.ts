@@ -23,9 +23,6 @@ export const usePermissionUser = (userId: RefOrRaw<UserModel['id'] | null>) => {
 
   const permissions = computed(() => internalUserId.value && userStore.isConnected)
   const isSelf = computed(() => userStore.id === internalUserId.value)
-  watchEffect(() =>
-    console.log('userStore.id', userStore.id, 'internalUserId.value', internalUserId.value)
-  )
   const canEditUser = computed(() => {
     return (
       permissions.value &&
