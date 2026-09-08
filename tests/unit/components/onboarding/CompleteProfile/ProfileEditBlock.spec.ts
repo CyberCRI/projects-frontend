@@ -1,4 +1,4 @@
-import ProfileEditBlock from '~/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
+import ProfileEditBlock from '~/components/onboarding/CompleteProfile/ProfileEditBlock.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 import { beforeEach, describe, expect, it } from 'vitest'

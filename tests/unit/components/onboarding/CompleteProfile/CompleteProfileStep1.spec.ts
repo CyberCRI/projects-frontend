@@ -1,4 +1,4 @@
-import CompleteProfileStep1 from '~/components/people/CompleteProfileDrawer/CompleteProfileStep1.vue'
+import CompleteProfileStep1 from '~/components/onboarding/CompleteProfile/CompleteProfileStep1.vue'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import useUsersStore from '~/stores/useUsers'

@@ -183,7 +183,7 @@ import useUsersStore from '~/stores/useUsers'
 
 import { usePatatoids } from '~/composables/usePatatoids'
 
-import ProfileEditBlock from '@/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
+import ProfileEditBlock from '@/components/onboarding/CompleteProfile/ProfileEditBlock.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { NULL_CONTENT, SDGS, VALID_NAME_REGEX } from '~/functs/constants'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
@@ -365,27 +365,6 @@ export default {
               newUser.profile_picture
             )
           })
-
-          // // patch user picture if changed
-          // if (
-          //   !this.form.picture?.url ||
-          //   this.form.picture?.url != this.user.profile_picture?.url ||
-          //   !isEqual(this.form.imageSizes, pictureApiToImageSizes(this.user.profile_picture))
-          // ) {
-          //   const formData = new FormData()
-          //   imageSizesFormData(formData, this.form.imageSizes)
-
-          //   if (this.form.picture instanceof File) {
-          //     formData.append('file', this.form.picture, this.form.picture.name)
-          //     const picture_id = (await postUserPicture(this.user.id, formData)).id
-
-          //     // TODO: make this in POST when backend allows it
-          //     formData.delete('file')
-          //     await patchUserPicture(this.user.id, picture_id, formData)
-          //   } else if (this.user.profile_picture && this.user.profile_picture.id) {
-          //     await patchUserPicture(this.user.id, this.user.profile_picture.id, formData)
-          //   }
-          // }
 
           await this.onboardingTrap('complete_profile', false)
 
