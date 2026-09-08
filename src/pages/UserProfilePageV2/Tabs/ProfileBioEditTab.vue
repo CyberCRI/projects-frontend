@@ -49,8 +49,8 @@
 
 <script setup lang="ts">
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
+import { defaultProfileFormBio as defaultFormBio } from '~/form/profile'
 import { patchUser } from 'shared-projects-frontend/apis'
-import { defaultFormBio } from '~/form/profile'
 
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'

@@ -21,7 +21,6 @@ describe('ProfileSkillTab', () => {
   beforeEach(() => {
     usersStore = useUsersStore()
     usersStore.userFromApi = {}
-    usersStore.getUser = vi.fn()
     usersStore.userFromToken = {}
     const organizationsStore = useOrganizationsStore()
     organizationsStore._current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
