@@ -1,23 +1,23 @@
 <template>
-  <div v-if="loading" class="loader">
+  <div v-if="isLoading" class="loader">
     <LoaderSimple />
   </div>
   <template v-else>
     <ProfileEditBlock :block-title="t('complete-profile.skills.title')">
-      <ProfileSkillsEditTab v-if="user" :user="user" @profile-edited="loadUser" />
+      <BaseSkill v-if="user" :user="user" editable :limit="9" />
     </ProfileEditBlock>
   </template>
 </template>
 
 <script setup lang="ts">
-import { getUser } from 'shared-projects-frontend/apis'
+import { getUser } from '~/api/v2/user.service'
 
-import ProfileEditBlock from '~/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
+import BaseSkill from '~/components/profile/modules/Skills/BaseSkill.vue'
+
+import ProfileEditBlock from '~/components/onboarding/CompleteProfile/ProfileEditBlock.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
 import useUsersStore from '~/stores/useUsers'
-
-import ProfileSkillsEditTab from '~/pages/UserProfilePageV2/Tabs/ProfileSkillsEditTab.vue'
 
 defineOptions({ name: 'CompleteProfileStep2' })
 const emit = defineEmits(['saving', 'loading'])
@@ -25,31 +25,13 @@ const emit = defineEmits(['saving', 'loading'])
 const { t } = useNuxtI18n()
 const usersStore = useUsersStore()
 const { onboardingTrap } = useOnboardingStatus()
+const organizationCode = useOrganizationCode()
+const { data: user, isLoading } = getUser(organizationCode, usersStore.id)
 
-const user = ref(null)
-const loading = ref(false)
-
-const loadUser = async () => {
-  try {
-    user.value = await getUser(usersStore.id)
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-onMounted(async () => {
-  loading.value = true
-  emit('loading', true)
-
-  try {
-    await loadUser()
-  } catch (error) {
-    console.error(error)
-  } finally {
-    loading.value = false
-    emit('loading', false)
-  }
-})
+watch(
+  () => isLoading.value,
+  (neo) => emit('loading', neo)
+)
 
 const save = async () => {
   // this called by CompleteProfileDrawer.vue

@@ -1,4 +1,4 @@
-import CompleteProfileDrawer from '~/components/people/CompleteProfileDrawer/CompleteProfileDrawer.vue'
+import CompleteProfileDrawer from '~/components/onboarding/CompleteProfile/CompleteProfileDrawer.vue'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import { beforeEach, describe, expect, it } from 'vitest'

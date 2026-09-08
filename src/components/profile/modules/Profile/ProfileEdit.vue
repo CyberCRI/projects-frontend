@@ -1,21 +1,20 @@
 <script setup lang="ts">
-import {
-  patchUser,
-  patchUserPicture,
-  postUserPicture,
-  deleteUserPicture,
-} from 'shared-projects-frontend/apis'
+import { patchUser } from 'shared-projects-frontend/apis'
 
 import SdgList from '~/components/sdgs/SdgList.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
-import type { TranslatedUserModel, UserModel, UserSlugOrId } from 'shared-projects-frontend/models'
-import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
-import { formEqual, imageAdded, imageDeleted, imageUpdated } from '~/form/base'
+import type { TranslatedUserModel, UserSlugOrId } from 'shared-projects-frontend/models'
 import { defaultProfileForm, useProfileForm } from '~/form/profile'
+import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { refreshUserData } from '~/composables/user/refreshUser'
 import FormPanel from '~/components/base/FormPanel.vue'
+import { formEqual } from '~/form/base'
+
+import { usePatatoids } from '~/composables/usePatatoids'
+
+import { checkProfilePicture } from '~/functs/users'
 
 const props = defineProps<{
   user: TranslatedUserModel
@@ -25,6 +24,8 @@ const router = useRouter()
 const toaster = useToasterStore()
 const { t } = useNuxtI18n()
 const asyncing = ref(false)
+
+const defaultPatatoids = usePatatoids()
 
 const defaultLocalForm = () => {
   const localForm = defaultProfileForm()
@@ -81,51 +82,17 @@ const close = () => {
   redirect()
 }
 
-const checkProfilePicture = async (newUser: UserModel) => {
-  let pictureId = newUser.profile_picture?.id
-
-  if (
-    imageDeleted(
-      { picture: form.value.profile_picture, imageSizes: form.value.imageSizes },
-      newUser.profile_picture
-    )
-  ) {
-    await deleteUserPicture(props.user.id, newUser.profile_picture.id)
-  }
-
-  if (
-    imageAdded(
-      { picture: form.value.profile_picture, imageSizes: form.value.imageSizes },
-      newUser.profile_picture
-    )
-  ) {
-    const file = form.value.profile_picture as File
-    const body = new FormData()
-    imageSizesFormData(body, form.value.imageSizes)
-    body.append('file', file, file.name)
-
-    pictureId = (await postUserPicture(props.user.id, body)).id
-  }
-
-  if (
-    imageUpdated(
-      { picture: form.value.profile_picture, imageSizes: form.value.imageSizes },
-      newUser.profile_picture
-    )
-  ) {
-    const body = new FormData()
-    imageSizesFormData(body, form.value.imageSizes)
-
-    await patchUserPicture(props.user.id, pictureId, body)
-  }
-  return newUser
-}
-
 const onConfirm = () => {
   asyncing.value = true
   return patchUser(props.user.id, form.value)
-    .then((newUser) => {
-      return checkProfilePicture(newUser)
+    .then(async (newUser) => {
+      await checkProfilePicture(
+        props.user.id,
+        form.value.profile_picture,
+        form.value.imageSizes,
+        newUser.profile_picture
+      )
+      return newUser
     })
     .then((newUser) => {
       return refreshUserData(newUser).then(() => {
@@ -241,7 +208,7 @@ const checkClose = () => {
           :picture-alt="`${form.given_name} image`"
           :contain="true"
           :round-picture="true"
-          :default-picture="DEFAULT_USER_PATATOID"
+          :default-picture="defaultPatatoids"
         />
       </div>
 

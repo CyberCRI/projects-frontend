@@ -117,7 +117,6 @@
                 :style="{
                   'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/${lang}/${sdg.id}.svg)`,
                 }"
-                @click="sdg.selected = !sdg.selected"
               />
               <IconImage class="sdg-checkmark" name="Check" />
             </label>
@@ -177,29 +176,24 @@
 import { helpers, required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 
-import {
-  getUser,
-  patchUser,
-  patchUserPicture,
-  postUserPicture,
-} from 'shared-projects-frontend/apis'
+import { getUser, patchUser } from 'shared-projects-frontend/apis'
 
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
 import { usePatatoids } from '~/composables/usePatatoids'
 
-import ProfileEditBlock from '@/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
-import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import ProfileEditBlock from '@/components/onboarding/CompleteProfile/ProfileEditBlock.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { NULL_CONTENT, SDGS, VALID_NAME_REGEX } from '~/functs/constants'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import UserProfileV2 from '@/components/people/UserProfileV2.vue'
+import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import IconImage from '@/components/base/media/IconImage.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { useRuntimeConfig } from '#imports'
-// import { I18nT } from 'vue-i18n'
-import { isEqual } from 'es-toolkit'
+
+import { checkProfilePicture } from '~/functs/users'
 
 export default {
   name: 'CompleteProfileStep1',
@@ -357,34 +351,20 @@ export default {
           const data = {
             given_name: this.form.given_name,
             family_name: this.form.family_name,
-            email: this.form.email,
+            email: this.user.email,
             job: this.form.job,
             sdgs: this.sdgs.filter((sdg) => sdg.selected).map((sdg) => sdg.id),
             description: this.bio,
           }
 
-          await patchUser(this.user.id, data)
-
-          // patch user picture if changed
-          if (
-            !this.form.picture?.url ||
-            this.form.picture?.url != this.user.profile_picture?.url ||
-            !isEqual(this.form.imageSizes, pictureApiToImageSizes(this.user.profile_picture))
-          ) {
-            const formData = new FormData()
-            imageSizesFormData(formData, this.form.imageSizes)
-
-            if (this.form.picture instanceof File) {
-              formData.append('file', this.form.picture, this.form.picture.name)
-              const picture_id = (await postUserPicture(this.user.id, formData)).id
-
-              // TODO: make this in POST when backend allows it
-              formData.delete('file')
-              await patchUserPicture(this.user.id, picture_id, formData)
-            } else if (this.user.profile_picture && this.user.profile_picture.id) {
-              await patchUserPicture(this.user.id, this.user.profile_picture.id, formData)
-            }
-          }
+          await patchUser(this.user.id, data).then((newUser) => {
+            return checkProfilePicture(
+              this.user.id,
+              this.form.picture,
+              this.form.imageSizes,
+              newUser.profile_picture
+            )
+          })
 
           await this.onboardingTrap('complete_profile', false)
 
@@ -632,6 +612,12 @@ textarea {
     background-size: cover;
     position: relative;
     transition: box-shadow 200ms cubic-bezier(0, -1.59, 0.6, 0.59);
+    filter: saturate(0%);
+    transition: filter 200ms ease-in-out;
+  }
+
+  input:checked ~ .sdg-pic {
+    filter: saturate(100%);
   }
 
   .sdg-checkmark {

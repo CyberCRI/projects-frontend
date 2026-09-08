@@ -1,4 +1,4 @@
-import CompleteProfileStep2 from '~/components/people/CompleteProfileDrawer/CompleteProfileStep2.vue'
+import CompleteProfileStep2 from '~/components/onboarding/CompleteProfile/CompleteProfileStep2.vue'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
