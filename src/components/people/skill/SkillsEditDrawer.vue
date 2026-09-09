@@ -150,7 +150,10 @@ const addedTalent = ref(null)
 const mentorship = ref(defaultMentorship())
 
 const selectionAsTagIds = computed(() => selection.value.map((s) => s.tag?.id))
-const allSkills = computed(() => props.user.skills || [])
+const allSkills = computed(() => {
+  // @ts-expect-error
+  return props.user.skills || []
+})
 
 const skills = computed(() => allSkills.value.filter((s) => s.type === 'skill'))
 const hobbies = computed(() => allSkills.value.filter((s) => s.type === 'hobby'))

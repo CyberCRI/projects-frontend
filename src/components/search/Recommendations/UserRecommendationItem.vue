@@ -80,6 +80,8 @@ const skillTexts = useSkillTexts()
 const SKILLS_LIMITS = 3
 
 const skills = computed(() => {
+  // TODO: profile-modules post fixes
+  // @ts-expect-error
   return (props.user.skills || []).filter((s) => s.type == 'skill')
 })
 const displayedSkills = computed(() => skills.value.slice(0, SKILLS_LIMITS))

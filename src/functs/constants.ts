@@ -318,6 +318,7 @@ export const USER_MODULE_ICON: {
   files: 'Globe',
   resources: 'Globe',
   groups: 'PeopleGroup',
+  privacy: 'Eye',
 }
 
 export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {

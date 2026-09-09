@@ -131,7 +131,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
       ...params[2],
       default: () => {
         isSkeleton.value = true
-        return params[2]?.default?.()
+        return params[2]?.default?.() ?? null
       },
     }
   )

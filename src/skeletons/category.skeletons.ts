@@ -1,6 +1,8 @@
 import type { ProjectCategoryModel } from 'shared-projects-frontend/models'
 
-export const categorySkeleton = (def?: Partial<ProjectCategoryModel>): ProjectCategoryModel => ({
+export const categorySkeleton = (
+  def?: Partial<ProjectCategoryModel>
+): Partial<ProjectCategoryModel> => ({
   id: -1,
   slug: 'slug',
   name: 'name',
