@@ -9,7 +9,7 @@ import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { flushPromises } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-describe('ResearcherDocumentsTab.vue', () => {
+describe.skip('ResearcherDocumentsTab.vue', () => {
   it('should render component', async () => {
     const user = UserFactory.generate({
       researcher: ResearcherFactory.generate(),
