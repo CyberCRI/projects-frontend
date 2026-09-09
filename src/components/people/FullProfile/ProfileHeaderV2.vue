@@ -100,6 +100,7 @@ const props = withDefaults(
 )
 
 const displayableGroups = computed(() => {
+  // @ts-expect-error peopleGroup is "light" in userModel
   return props.user?.people_groups
     ? // @ts-expect-error peopleGroup is "light" in userModel
       props.user.people_groups.filter((group) => group.organization === organizationCode)

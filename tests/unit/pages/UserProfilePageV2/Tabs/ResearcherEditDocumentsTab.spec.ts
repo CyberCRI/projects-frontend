@@ -5,7 +5,7 @@ import type { ResearcherDocumentType } from 'shared-projects-frontend/models'
 import { flushPromises } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-describe.skip('ResearcherEditDocumentsTab.vue', () => {
+describe('ResearcherEditDocumentsTab.vue', () => {
   it('should render component', async () => {
     const props = {
       documentType: 'publications' satisfies ResearcherDocumentType as ResearcherDocumentType,
