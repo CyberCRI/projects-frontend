@@ -14,9 +14,8 @@
   </div>
 </template>
 <script lang="ts" setup>
+import type { TranslatedUserModel, PrivacySettings } from 'shared-projects-frontend/models'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
-import type { TranslatedUserModel } from 'shared-projects-frontend/models'
-import type { PrivacySettings } from 'shared-projects-frontend/models'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 import { patchUserPrivacy } from 'shared-projects-frontend/apis'
 import useToasterStore from '~/stores/useToaster'
@@ -45,7 +44,7 @@ function dataMapping() {
 
 const props = defineProps<{
   user: TranslatedUserModel
-  privacySettings: PrivacySettings | {}
+  privacySettings: PrivacySettings | object
   isLoading: boolean
 }>()
 

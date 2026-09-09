@@ -8,9 +8,9 @@ import UserSkillsFull from '~/components/people/skill/UserSkillsFull.vue'
 import type { OrganizationOutput } from 'shared-projects-frontend/models'
 import { SkillFactory } from '~~/tests/factories/skill.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import EmptyLabel from '~/components/base/EmptyLabel.vue'
+import { beforeEach, describe, expect, it } from 'vitest'
 import TagFactory from '~~/tests/factories/tag.factory'
 import { flushPromises } from '@vue/test-utils'
 
@@ -21,7 +21,6 @@ describe('ProfileSkillTab', () => {
   beforeEach(() => {
     usersStore = useUsersStore()
     usersStore.userFromApi = {}
-    usersStore.getUser = vi.fn()
     usersStore.userFromToken = {}
     const organizationsStore = useOrganizationsStore()
     organizationsStore._current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput

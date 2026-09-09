@@ -611,7 +611,6 @@ textarea {
     background-position: center center;
     background-size: cover;
     position: relative;
-    transition: box-shadow 200ms cubic-bezier(0, -1.59, 0.6, 0.59);
     filter: saturate(0%);
     transition: filter 200ms ease-in-out;
   }

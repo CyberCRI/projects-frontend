@@ -26,7 +26,6 @@ export const usePermissionUser = (userId: RefOrRaw<UserModel['id'] | null>) => {
   const canEditUser = computed(() => {
     return (
       permissions.value &&
-      // @ts-expect-error internalUserId is number or string
       (globalCanEditUser(userStore.rights, organizationStore.current.id, internalUserId.value) ||
         isSelf.value)
     )

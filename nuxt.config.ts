@@ -48,6 +48,8 @@ try {
 
 export default defineNuxtConfig({
   ssr: true,
+  // let Nuxt add matching paths to .nuxt/tsconfig.json (used by `nuxt typecheck`, i.e. `yarn lint`)
+  alias,
   // compatibilityDate: '2024-11-01',
   debug: !!import.meta.env.NUXT_DEBUG, // fullstack backend use a DEBUG env that interfere with nuwt and cause log pollution
   devtools: {
