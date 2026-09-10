@@ -1,0 +1,56 @@
+@use '~/design/scss/variables';
+
+.form-group,
+.form-actions {
+  & ~ .form-group,
+  & ~ .form-actions {
+    padding-top: variables.$space-l;
+  }
+}
+
+.form-separator {
+  margin-top: variables.$space-l;
+  padding: 0;
+  border: variables.$border-width-s solid variables.$lighter-gray;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+  padding-bottom: variables.$space-l;
+  gap: variables.$space-m;
+}
+
+.form-group {
+  .label-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  label {
+    display: inline-block;
+    font-size: variables.$font-size-s;
+    font-weight: bold;
+    margin-bottom: variables.$space-m;
+    color: variables.$black;
+
+    &.large-space {
+      margin-bottom: variables.$space-l;
+    }
+  }
+
+  .editor {
+    margin-top: variables.$space-m;
+  }
+
+  .notice {
+    margin-bottom: variables.$space-m;
+  }
+}
+
+.error-message {
+  color: variables.$red;
+  margin-top: variables.$space-xs;
+  font-size: variables.$font-size-s;
+}
