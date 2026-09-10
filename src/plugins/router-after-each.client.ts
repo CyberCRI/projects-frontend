@@ -1,5 +1,9 @@
 export default defineNuxtPlugin(async () => {
-  useRouter().afterEach((to) => {
+  const router = useRouter()
+  if (!router) {
+    return
+  }
+  router.afterEach((to) => {
     // console.log('AFTER EACH')
     const isProjectPage = to.path.includes('projects') && !!to.params.slugOrId
     const additionalProperties = {

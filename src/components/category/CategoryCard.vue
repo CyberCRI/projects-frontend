@@ -13,21 +13,21 @@
       :image-width="IMAGE_WIDTH"
       :url="imageSource"
       :image-sizes="imageSizes"
-      class="category-card-image"
+      class="category-card-image skeletons-background"
     />
 
     <div class="title-description-ctn">
       <div class="title-ctn">
-        <h3 class="title">
+        <h3 class="title skeletons-text">
           {{
             // @ts-expect-error TS2339 (translate category or not transalted ?)
             category.$t?.name ?? category.name
           }}
         </h3>
-        <CategoryFollowButton :category-id="category.id" @click.stop.prevent="" />
+        <CategoryFollowIcon :category="category" />
       </div>
       <p
-        class="description"
+        class="description skeletons-text"
         v-html="
           //@ts-expect-error TS2339 (translate category or not transalted ?)
           category.$t?.description ?? category.name
@@ -43,6 +43,7 @@ import type {
   TranslatedProjectCategory,
 } from 'shared-projects-frontend/models'
 
+import CategoryFollowIcon from '~/components/category/CategoryFollowIcon.vue'
 import CategoryCardImage from '~/components/category/CategoryCardImage.vue'
 
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
@@ -70,7 +71,7 @@ const imageSizes = computed(() => {
 .category-card {
   position: relative;
   cursor: pointer;
-  border: variables.$border-width-s solid variables.$primary;
+  border: variables.$border-width-s solid var(--primary);
   border-radius: variables.$border-radius-m;
   display: flex;
   flex-direction: column;

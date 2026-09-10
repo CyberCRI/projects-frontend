@@ -1,13 +1,13 @@
 <template>
   <NavPanelAside :class="{ 'profile-edit-tabs': isEditing }">
-    <div v-if="isSelf || canEditUser" class="edit-btn-ctn">
+    <div v-if="canEditUser" class="edit-btn-ctn">
       <GroupButton
         :model-value="isEditing"
         :options="[
           { value: false, label: 'Show' },
           { value: true, label: 'Edit' },
         ]"
-        :label="editButtonLabel"
+        :label="$t('profile.edit.edit')"
         btn-icon="Pen"
         :data-test="isEditing ? 'display-profile' : 'edit-profile'"
         class="edit-btn small"
@@ -30,15 +30,15 @@
       </div>
 
       <!-- TODO: Use privacy settings -->
-      <div v-if="user.mobile_phone" class="social">
+      <a v-if="mobilePhone" :href="mobilePhone.getURI()" class="social">
         <IconImage class="icon" name="Phone" />
-        <span>{{ user.mobile_phone }}</span>
-      </div>
+        <span>{{ mobilePhone.formatInternational() }}</span>
+      </a>
 
-      <div v-if="user.landline_phone" class="social">
+      <a v-if="landlinePhone" :href="landlinePhone.getURI()" class="social">
         <IconImage class="icon" name="Phone" />
-        <span>{{ user.landline_phone }}</span>
-      </div>
+        <span>{{ landlinePhone.formatInternational() }}</span>
+      </a>
 
       <div v-if="user && user.location" class="social">
         <IconImage class="icon" name="MapMarker" />
@@ -69,36 +69,59 @@
 </template>
 
 <script setup lang="ts">
+import { usePermissionUser } from '~/composables/usePermissions/useUserPermissions'
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
-import type { PeopleModel } from 'shared-projects-frontend/models'
-import type { RouteLocationRaw } from 'vue-router'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
+import parsePhoneNumber from 'libphonenumber-js'
 
 const props = withDefaults(
   defineProps<{
-    user?: PeopleModel
-    isSelf?: boolean
-    editButtonLabel: string
-    editProfileLink: RouteLocationRaw
-    canEditUser?: boolean
-    profileTabs: MenuEntry[]
+    user: TranslatedUserModel
+    profileTabs?: MenuEntry[]
     currentTab?: MenuEntry
     isEditing?: boolean
   }>(),
   {
-    user: null,
-    isSelf: false,
-    canEditUser: false,
+    profileTabs: () => [],
     currentTab: null,
     isEditing: false,
   }
 )
 
-const router = useRouter()
-const emit = defineEmits(['navigated'])
+const emit = defineEmits<{
+  'toggle-editing': [boolean]
+  navigated: []
+}>()
+
+const { canEditUser } = usePermissionUser(computed(() => props.user.id))
+
+const mobilePhone = computed(() => {
+  if (!props.user?.mobile_phone) {
+    return null
+  }
+  const phone = parsePhoneNumber(props.user.mobile_phone)
+  if (!phone) {
+    return null
+  }
+
+  return phone
+})
+
+const landlinePhone = computed(() => {
+  if (!props.user?.landline_phone) {
+    return null
+  }
+  const phone = parsePhoneNumber(props.user.landline_phone)
+  if (!phone) {
+    return null
+  }
+
+  return phone
+})
 
 const hasOnlyMail = computed(() => {
   return (
-    !props.user?.mobile &&
+    !props.user?.mobile_phone &&
     !props.user?.location &&
     !props.user?.facebook &&
     !props.user?.twitter &&
@@ -124,7 +147,7 @@ const socialName = (url) => {
 
 const fixLocation = (l) => l.split('\n').join('<br />')
 const navigated = () => emit('navigated')
-const switchView = () => router.push(props.editProfileLink)
+const switchView = () => emit('toggle-editing', !props.isEditing)
 </script>
 
 <style lang="scss" scoped>

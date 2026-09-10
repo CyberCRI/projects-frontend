@@ -7991,6 +7991,11 @@ lib0@^0.2.109, lib0@^0.2.85, lib0@^0.2.87, lib0@^0.2.99:
   dependencies:
     isomorphic.js "^0.2.4"
 
+libphonenumber-js@^1.13.12:
+  version "1.13.12"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.13.12.tgz#ba5371e954cb07c0498de97afa312d25e93e2241"
+  integrity sha512-uLVeV1c9OTk6qkdqnj+mpMD+ZdnZ0szVyWu58HwMmpwkHA1gCEkyjd3veZQXDnuw9KEwSRjcc9B1pS9XKIN1fA==
+
 lightningcss-android-arm64@1.32.0:
   version "1.32.0"
   resolved "https://registry.yarnpkg.com/lightningcss-android-arm64/-/lightningcss-android-arm64-1.32.0.tgz#f033885116dfefd9c6f54787523e3514b61e1968"
@@ -10587,9 +10592,9 @@ setprototypeof@~1.2.0:
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.2.0.tgz#66c9a24a73f9fc28cbe66b09fed3d33dcaf1b424"
   integrity sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==
 
-"shared-projects-frontend@git+https://github.com/CyberCRI/shared-projects-frontend.git#0.4.2":
+"shared-projects-frontend@git+https://github.com/CyberCRI/shared-projects-frontend.git#user-modules-v0.0.1":
   version "0.4.2"
-  resolved "git+https://github.com/CyberCRI/shared-projects-frontend.git#cc0717e1d6da0f3d6571a274985ab8efe38a8871"
+  resolved "git+https://github.com/CyberCRI/shared-projects-frontend.git#7a6f6b7c5ae8e22c374e28a235fee5202c3f3af2"
   dependencies:
     ofetch "^1.5.1"
     typescript "^6.0.3"

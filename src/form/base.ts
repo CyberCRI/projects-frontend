@@ -1,6 +1,9 @@
 import type { ValidationRuleWithoutParams, ValidationRuleWithParams } from '@vuelidate/core'
+import type { ImageModel, ImageSize } from 'shared-projects-frontend/models'
+import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { isEqual, mapValues, omit, pick } from 'es-toolkit'
 import { html2html, textIsEmpty } from '~/functs/tiptap'
+import { isValidPhoneNumber } from 'libphonenumber-js'
 import { required, url } from '@vuelidate/validators'
 import { MIMETYPES_IMAGES } from '~/functs/constants'
 
@@ -86,7 +89,7 @@ export const isImageFile: ValidationRuleWithoutParams = {
 export const urlCheck: ValidationRuleWithoutParams = {
   $validator: (value: string | null, siblingState, vm) => {
     if (!value) {
-      return false
+      return true
     }
     // if not starts without http, add it to validate with validator
     if (!/^https?:\/\//i.test(value)) {
@@ -95,6 +98,29 @@ export const urlCheck: ValidationRuleWithoutParams = {
     return url.$validator(value, siblingState, vm)
   },
   $message: url.$message,
+}
+
+/**
+ * phoneNumber check
+ *
+ * @constant
+ * @name urlCheck
+ * @kind variable
+ * @type {ValidationRuleWithoutParams<any>}
+ * @exports
+ */
+export const checkPhoneNumber: ValidationRuleWithoutParams = {
+  $validator: (value: string | null) => {
+    if (!value) {
+      return true
+    }
+    return isValidPhoneNumber(value)
+  },
+  $message: () => {
+    const { t } = useNuxtI18n()
+
+    return t('form.invalid-phone')
+  },
 }
 
 // options to formEqual
@@ -137,6 +163,33 @@ export const formEqual = <A, B, Keys extends keyof (A & B)>(
   }
 
   return true
+}
+
+type ImageChecker = (
+  form: {
+    picture: ImageModel | File | null
+    imageSizes: ImageSize | null
+  },
+  picture: ImageModel | null
+) => boolean
+
+export const imageDeleted: ImageChecker = (form, picture) => {
+  // if picture is a file (uploaded by user)
+  // and picture have id (already created)
+  if (form.picture instanceof File && !!picture?.id) {
+    return true
+  }
+
+  // if (form.picture.)
+  return !(form.picture instanceof File) && picture?.id != form.picture?.id && !!picture?.id
+}
+
+export const imageAdded: ImageChecker = (form) => {
+  return form.picture instanceof File
+}
+
+export const imageUpdated: ImageChecker = (form, picture) => {
+  return !isEqual(form.imageSizes, pictureApiToImageSizes(picture))
 }
 
 export const subForm = <Form extends typeof useForm<any, any>>(

@@ -6,6 +6,7 @@ import type {
   ProjectTabType,
   PeopleGroupModulesKeys,
   ProjectModuleExtra,
+  UserModuleExtra,
 } from 'shared-projects-frontend/models'
 import type { IconImageChoice, IconTabImageChoice } from '~/functs/IconImage'
 
@@ -297,3 +298,46 @@ export const LOCATION_TYPE_TITLE: { [key in LocationType]: string } = {
   news: 'location.news',
   event: 'location.event',
 }
+
+// user
+
+export const USER_MODULE_ICON: {
+  [key in UserModuleExtra]: IconImageChoice
+} = {
+  conferences: 'Article',
+  publications: 'Article',
+  reviews_projects: 'Briefcase',
+  follows_categories: 'BookmarkLine',
+  follows_projects: 'BookmarkLine',
+  notifications: 'Bell',
+  projects: 'Briefcase',
+  skills: 'VipCrownLine',
+  mentor: 'Alert',
+  mentoree: 'Alert',
+  links: 'Paperclip',
+  files: 'Globe',
+  resources: 'Globe',
+  groups: 'PeopleGroup',
+  privacy: 'Eye',
+}
+
+export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
+  conferences: 'profile.conferences',
+  publications: 'profile.publications',
+  reviews_projects: 'me.projects-reviewing',
+  follows_categories: 'me.follow-category',
+  follows_projects: 'me.follow',
+  notifications: '',
+  projects: 'profile.projects',
+  skills: 'profile.skills',
+  mentor: '',
+  mentoree: '',
+  links: '',
+  files: '',
+  resources: 'resource.resources',
+  groups: 'profile.groups',
+  privacy: 'profile.edit.privacy.tab',
+}
+
+// max skill steps
+export const DEFAULT_SKILL_STEPS = 4

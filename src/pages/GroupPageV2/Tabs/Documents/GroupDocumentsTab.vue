@@ -1,6 +1,6 @@
 <template>
   <BaseModuleTab :title="$t(GROUP_MODULE_TITLE[documentType])" :count="countElement">
-    <GroupResearcherDocumentsList :doc-type="documentType" :group="group" />
+    <GroupResearcherDocumentsList :document-type="documentType" :group="group" />
   </BaseModuleTab>
 </template>
 
@@ -9,9 +9,9 @@ import type {
   ResearcherDocumentType,
   TranslatedPeopleGroupModel,
 } from 'shared-projects-frontend/models'
-import GroupResearcherDocumentsList from '~/components/people/Researcher/GroupResearcherDocumentsList.vue'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
 
+import GroupResearcherDocumentsList from '~/components/group/Modules/Documents/GroupResearcherDocumentsList.vue'
 import { GROUP_MODULE_TITLE } from '~/functs/constants'
 
 const props = defineProps<{
