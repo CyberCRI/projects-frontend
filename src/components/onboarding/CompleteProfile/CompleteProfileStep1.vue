@@ -161,13 +161,7 @@
       :title="$t('profile.drawer_title')"
       @close="exempleToShow = null"
     >
-      <UserProfileV2
-        v-if="exempleToShow"
-        ref="profile-user"
-        :can-edit="false"
-        :user-id="exempleToShow"
-        is-preview
-      />
+      <UserProfilePreview v-if="exempleToShow" ref="profile-user" :user-id="exempleToShow" />
     </BaseDrawer>
   </template>
 </template>
@@ -185,9 +179,9 @@ import { usePatatoids } from '~/composables/usePatatoids'
 
 import ProfileEditBlock from '@/components/onboarding/CompleteProfile/ProfileEditBlock.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
+import UserProfilePreview from '@/components/people/UserProfilePreview.vue'
 import { NULL_CONTENT, SDGS, VALID_NAME_REGEX } from '~/functs/constants'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import UserProfileV2 from '@/components/people/UserProfileV2.vue'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import IconImage from '@/components/base/media/IconImage.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
@@ -204,7 +198,7 @@ export default {
     ProfileEditBlock,
     TipTapEditor,
     BaseDrawer,
-    UserProfileV2,
+    UserProfilePreview,
     LoaderSimple,
   },
 

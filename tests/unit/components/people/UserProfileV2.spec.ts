@@ -1,4 +1,4 @@
-import UserProfileV2 from '~/components/people/UserProfileV2.vue'
+import UserProfilePreview from '~/components/people/UserProfilePreview.vue'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { flushPromises } from '@vue/test-utils'
@@ -26,7 +26,7 @@ const buildParams = (userId: number, showPageLink: boolean) => ({
   },
 })
 
-describe('UserProfileV2', () => {
+describe('UserProfilePreview', () => {
   let usersStore
   const user = UserFactory.generate()
   const user2 = UserFactory.generate()
@@ -44,8 +44,8 @@ describe('UserProfileV2', () => {
     usersStore.userFromApi = usersStore.userFromToken = user
   })
 
-  it('should render UserProfileV2 component', () => {
-    const wrapper = lpiShallowMount(UserProfileV2, buildParams(user.id, false))
+  it('should render UserProfilePreview component', () => {
+    const wrapper = lpiShallowMount(UserProfilePreview, buildParams(user.id, false))
 
     expect(wrapper.exists()).toBeTruthy()
   })
@@ -54,56 +54,9 @@ describe('UserProfileV2', () => {
     registerEndpoint(`user/123333/`, () => {
       throw createError({ statusCode: 404 })
     })
-    const wrapper = lpiShallowMount(UserProfileV2, buildParams(123333, false))
+    const wrapper = lpiShallowMount(UserProfilePreview, buildParams(123333, false))
 
     await flushPromises()
     expect(wrapper.emitted()['user-not-found']).toBeTruthy()
   })
-
-  it('should see that current user is the logged one', async () => {
-    const wrapper = lpiShallowMount(UserProfileV2, buildParams(null, false))
-    const vm: any = wrapper.vm
-    await flushPromises()
-    expect(vm.isSelf).toBeTruthy()
-  })
-
-  it('should see that current user is not the logged one', async () => {
-    usersStore.userFromApi = usersStore.userFromToken = user2
-
-    const wrapper = lpiShallowMount(UserProfileV2, buildParams(user.id, false))
-    const vm: any = wrapper.vm
-    await flushPromises()
-    expect(vm.isSelf).toBeFalsy()
-  })
-
-  it('should allow edition of self profile', async () => {
-    const wrapper = lpiShallowMount(UserProfileV2, buildParams(null, false))
-    const vm: any = wrapper.vm
-    await flushPromises()
-    expect(vm.canEditUserOrIsSelf).toBe(true)
-  })
-
-  it('should not allow edition of other profile without specific rights', async () => {
-    const wrapper = lpiShallowMount(UserProfileV2, buildParams(user2.id, false))
-    const vm: any = wrapper.vm
-    await flushPromises()
-    expect(vm.canEditUserOrIsSelf).toBe(false)
-  })
-
-  // it('should display a loader first then the content', async () => {
-  //   let wrapper = lpiShallowMount(UserProfileV2, buildParams(123, false))
-  //   let vm: any = wrapper.vm
-
-  //   expect(vm.isLoading).toBe(true)
-  //   expect(wrapper.find('loader-simple-stub').exists()).toBe(true)
-  //   expect(wrapper.find('profile-header-stub').exists()).toBe(false)
-  //   expect(wrapper.find('profile-tabs-stub').exists()).toBe(false)
-
-  //   await flushPromises()
-
-  //   expect(vm.isLoading).toBe(false)
-  //   expect(wrapper.find('loader-simple-stub').exists()).toBe(false)
-  //   expect(wrapper.find('profile-header-stub').exists()).toBe(true)
-  //   expect(wrapper.find('profile-tabs-stub').exists()).toBe(true)
-  // })
 })

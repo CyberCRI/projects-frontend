@@ -69,12 +69,10 @@
       :title="$t('profile.drawer_title')"
       @close="profileIsOpened = false"
     >
-      <UserProfileV2
+      <UserProfilePreview
         v-if="profileIsOpened"
         ref="profile-user"
-        :can-edit="false"
         :user-id="mentorship?.mentoree?.id"
-        is-preview
       />
     </BaseDrawer>
   </div>
