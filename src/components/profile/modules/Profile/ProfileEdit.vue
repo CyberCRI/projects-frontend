@@ -268,7 +268,7 @@ const checkClose = () => {
 
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
-@use '~/pages/UserProfilePageV2/Tabs/profile-form';
+@use '~/components/profile/modules/profile-form';
 
 .img-ctn {
   margin-bottom: variables.$space-xl;

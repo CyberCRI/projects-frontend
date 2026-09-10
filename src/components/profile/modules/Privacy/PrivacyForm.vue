@@ -219,7 +219,7 @@ function adaptApiToForm(apiSettings) {
 
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
-@use '~/pages/UserProfilePageV2/Tabs/profile-form';
+@use '~/components/profile/modules/profile-form';
 
 .profile-edit-privacy {
   margin-top: variables.$space-xl;
