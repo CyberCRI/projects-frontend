@@ -219,7 +219,7 @@ const createGroup = async () => {
     startEditWatcher()
 
     // reload current user rights in case they changed
-    await usersStore.getUser(usersStore.userFromApi.id)
+    await usersStore.refreshUser()
     toaster.pushSuccess(t('toasts.group-create.success'))
 
     router.push(
@@ -256,7 +256,7 @@ const updateGroup = async () => {
     startEditWatcher()
 
     // reload current user rights in case they changed
-    await usersStore.getUser(usersStore.userFromApi.id)
+    await usersStore.refreshUser()
     toaster.pushSuccess(t('toasts.group-edit.success'))
 
     emit('reload-group')

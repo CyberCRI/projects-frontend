@@ -147,7 +147,7 @@ export default {
       const payload = { onboarding_status: { ...this.status, [key]: val } }
       try {
         await patchUser(this.user.id, payload)
-        await this.usersStore.getUser(this.user.id)
+        await this.usersStore.refreshUser()
       } catch (err) {
         console.error(err)
       } finally {

@@ -122,9 +122,9 @@
                       <dt>{{ $t('admin.accounts.table.groups') }}</dt>
                       <dd>
                         <ul>
-                          <li v-for="group in user.people_groups || []" :key="group.id">
-                            {{ group.name }}
-                          </li>
+                          {{
+                            `${$t('common.groups')} : ${user.modules.groups}`
+                          }}
                         </ul>
                       </dd>
                     </dl>
@@ -159,14 +159,14 @@
 <script setup lang="ts">
 import type { Ordering } from 'shared-projects-frontend/interfaces'
 
-import { searchPeopleAdmin } from '~/api/v2/people.service'
+import { searchUserAdmin } from '~/api/v2/user.service'
 
 import FetchLoader from '~/components/base/FetchLoader.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 
 import { factoriesSkeleton } from '~/skeletons/base.skeletons'
-import { peopleSkeleton } from '~/skeletons/people.skeletons'
+import { userSkeleton } from '~/skeletons/user.skeletons'
 import { roleI18n } from '~/functs/rolesUtils'
 import { capitalize } from '~/functs/string'
 
@@ -234,9 +234,9 @@ const { query, setQuery } = useQuery<QuerySearchAdmin>({
 // TODO change to organizationCode
 // TODO add translate for user/group
 const organizationId = computed(() => organizationsStore.current.id)
-const { status, data, refresh, pagination } = searchPeopleAdmin(organizationId, {
+const { status, data, refresh, pagination } = searchUserAdmin(organizationId, {
   query,
-  default: () => factoriesSkeleton(peopleSkeleton, LIMIT),
+  default: () => factoriesSkeleton(userSkeleton, LIMIT),
   paginationConfig: {
     limit: LIMIT,
   },

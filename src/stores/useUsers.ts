@@ -1,24 +1,18 @@
 import type {
-  NotificationSettingsForm,
   NotificationsSettings,
   UserSlugOrId,
   UserModel,
+  TranslatedUserModel,
 } from 'shared-projects-frontend/models'
 
-import {
-  getProjectCategoriesFollow,
-  getUser as _getUser,
-  getUserNotificationSettings,
-  patchUserNotificationSettings,
-} from 'shared-projects-frontend/apis'
 import { logoutFromKeycloak, refreshAccessToken } from '~/api/auth/auth.service'
+import { getUser as _getUser } from 'shared-projects-frontend/apis'
 import { checkExpiredToken } from '~/api/auth/keycloakUtils'
 import { removeApiCookie } from '~/api/auth/cookie.service'
 import type { AuthResult } from '~/api/auth/keycloak'
 
 import type { Right } from 'shared-projects-frontend/interfaces'
 import { userRights } from 'shared-projects-frontend/lib'
-import { getOrgsFromRoles } from '~/functs/rolesUtils'
 import analytics from '~/analytics'
 import { defineStore } from 'pinia'
 import { pick } from 'es-toolkit'
@@ -43,7 +37,6 @@ export interface UsersState {
   notificationsCount?: number
   notificationsSettings?: NotificationsSettings
   userDataRefreshLoop?: ReturnType<typeof setInterval> | null
-  followedCategories?: any[]
 }
 
 const useUsersStore = defineStore('users', () => {
@@ -65,36 +58,36 @@ const useUsersStore = defineStore('users', () => {
     return userRights(safeUser)
   })
 
-  const notificationsCount = ref(0)
+  const notificationsCount = computed(() => {
+    if (userFromApi.value) {
+      return userFromApi.value.modules.notifications
+    }
+    return 0
+  })
+
   const notificationsSettings = ref(null)
   const userDataRefreshLoop = ref(null)
-  const followedCategories = ref<any[]>([])
 
   const isConnected = computed((): boolean => {
     return !!userFromToken.value
   })
 
-  const id = computed((): number | undefined => {
-    return userFromApi.value?.id
-  })
+  const id = computed<UserModel['id'] | undefined>(() => userFromApi.value?.id)
+  const slugOrId = computed<UserSlugOrId | undefined>(
+    () => userFromApi.value?.slug || userFromApi.value?.id
+  )
 
   const user = computed((): UserModel | null => {
     if (userFromToken.value) {
       return {
-        id: userFromToken.value.pid,
-        name: {
-          firstname: userFromToken.value.given_name,
-          lastname: userFromToken.value.family_name,
-        },
-        given_name: userFromToken.value.given_name,
-        family_name: userFromToken.value.family_name,
-        email: userFromToken.value.email,
-        roles: userFromToken.value.roles || [],
-        permissions: userFromToken.value.permissions || {},
-        orgs: getOrgsFromRoles(userFromToken.value.roles),
-        slug: userFromToken.value.slug,
-        researcher: userFromToken.value.researcher,
-        resources: userFromToken.value.resources,
+        id: userFromApi.value?.id,
+        given_name: userFromApi.value?.given_name || userFromToken.value.given_name,
+        family_name: userFromApi.value?.family_name || userFromToken.value.family_name,
+        email: userFromApi.value?.email || userFromToken.value.email,
+        roles: userFromApi.value?.roles || userFromToken.value.roles || [],
+        permissions: userFromApi.value?.permissions || userFromToken.value.permissions || {},
+        slug: userFromApi.value?.slug || userFromToken.value.slug,
+        researcher: userFromApi.value?.researcher || userFromToken.value.researcher,
         signed_terms_and_conditions: userFromApi.value?.signed_terms_and_conditions || {},
         ...pick(userFromApi.value || {}, [
           'is_superuser',
@@ -102,6 +95,12 @@ const useUsersStore = defineStore('users', () => {
           'facebook',
           'twitter',
           'website',
+          'modules',
+          'created_at',
+          'location',
+          'landline_phone',
+          'mobile_phone',
+          'skype',
         ]),
       }
     }
@@ -128,7 +127,6 @@ const useUsersStore = defineStore('users', () => {
     userFromToken.value = null
     id_token.value = ''
     userFromApi.value = null
-    notificationsCount.value = 0
     notificationsSettings.value = null
     // API proxy cookie
     document.cookie = 'jwt_access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;'
@@ -216,66 +214,27 @@ const useUsersStore = defineStore('users', () => {
       userDataRefreshLoop.value = setInterval(
         () => {
           console.log('Refreshing user data...')
-          getUser(id.value)
+          refreshUser()
         },
         1000 * 60 * 5 // 5 minutes
       )
     }
   }
 
-  watchEffect(async () => {
-    if (id.value) await fetchFollowedCategories()
-  })
+  const forceSetUser = (user: UserModel | TranslatedUserModel) => {
+    userFromApi.value = user
+    startUserDataRefreshLoop()
+  }
 
   async function getUser(id) {
     // id is keycloak_id OR django user id OR slug
     try {
       // TODO: except for permissions, useless props that are on userFromApi anyway (to check)
       const user = await _getUser(id)
-      notificationsCount.value = user?.notifications || 0
-      userFromApi.value = user
-
-      startUserDataRefreshLoop()
-
+      forceSetUser(user)
       return user
     } catch (err) {
       console.error(err)
-    }
-  }
-
-  watch(
-    () => keycloak_id.value,
-    (neo, old) => {
-      if (neo && neo !== old) {
-        getUser(keycloak_id.value)
-      }
-    }
-  )
-
-  async function getNotifications(id) {
-    // TODO: should be getNotificationsSetting
-    const result = await getUserNotificationSettings(id)
-    notificationsSettings.value = result
-    return result
-  }
-
-  async function patchNotifications(userId: UserSlugOrId, body: NotificationSettingsForm) {
-    // TODO: should be patchNotificationsSetting
-    const result = await patchUserNotificationSettings(userId, body)
-
-    notificationsSettings.value = result
-
-    return result
-  }
-
-  async function fetchFollowedCategories() {
-    if (!id.value) return
-    try {
-      // TODO check if paginated result workaround is needed
-      const resp = await getProjectCategoriesFollow(id.value)
-      followedCategories.value = resp.results
-    } catch (err) {
-      console.error('Error fetching followed categories:', err)
     }
   }
 
@@ -288,7 +247,17 @@ const useUsersStore = defineStore('users', () => {
    * @memberof useUsersStore.defineStore('users') callback
    * @returns {Promise<UserModel>}
    */
-  const refreshUser = () => getUser(id.value)
+  const refreshUser = () => getUser(keycloak_id.value)
+
+  watch(
+    () => keycloak_id.value,
+    (neo, old) => {
+      if (neo && neo !== old) {
+        refreshUser()
+      }
+    },
+    { deep: true, immediate: true }
+  )
 
   return {
     // state
@@ -302,12 +271,13 @@ const useUsersStore = defineStore('users', () => {
     notificationsCount,
     notificationsSettings,
     userDataRefreshLoop,
-    followedCategories,
     // getters
     isConnected,
     id,
+    slugOrId,
     user,
     // actions
+    forceSetUser,
     stopUserDataRefreshLoop,
     resetUser,
     logOut,
@@ -315,11 +285,7 @@ const useUsersStore = defineStore('users', () => {
     logIn,
     doRefreshToken,
     startUserDataRefreshLoop,
-    getUser,
     refreshUser,
-    getNotifications,
-    patchNotifications,
-    fetchFollowedCategories,
   }
 })
 

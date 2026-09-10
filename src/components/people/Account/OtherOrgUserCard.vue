@@ -1,9 +1,7 @@
 <template>
   <div class="other-org-account-card">
     <CroppedApiImage
-      :alt="
-        user?.keycloack_id ? `${user.given_name} ${user.family_name} image` : `${user.name} image`
-      "
+      :alt="`${user.given_name} ${user.family_name} image`"
       class="img-container"
       :picture-data="user.profile_picture"
       picture-size="small"

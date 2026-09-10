@@ -1,6 +1,5 @@
 <template>
   <li
-    v-if="notification"
     :class="{
       'notification--spacer': !icon,
     }"
@@ -13,15 +12,15 @@
       :to="notificationRoute"
       class="notification-link"
     >
-      <IconImage v-if="icon" :name="icon" class="icon" />
+      <IconImage v-if="icon" :name="icon" class="icon skeletons-background" />
       <CroppedApiImage
         alt="user image"
-        class="img-container"
+        class="img-container skeletons-background"
         :picture-data="notification.sender?.profile_picture"
         picture-size="medium"
         :default-picture="DEFAULT_USER_PATATOID"
       />
-      <div class="container">
+      <div class="container skeletons-background">
         <I18nT :keypath="`notifications.type.${notification.type}`" tag="p">
           <template #sender>
             <strong v-if="senderName">
@@ -125,7 +124,6 @@ import type { RouteLocationRaw } from 'vue-router'
 import { getTimePassed } from '@/functs/date'
 import { isEmpty } from '~/functs/utils'
 import { NuxtLink } from '#components'
-// import { I18nT } from 'vue-i18n'
 
 const props = defineProps<{
   notification: NotificationModel
@@ -135,7 +133,8 @@ defineEmits<{
   navigated: [NotificationModel]
 }>()
 
-const icon = computed<IconImageChoice>(() => (props.notification?.is_viewed ? null : 'Circle'))
+const icon = computed<IconImageChoice>(() => (props.notification.is_viewed ? null : 'Circle'))
+
 const context = computed(() => {
   if (isEmpty(props.notification.context)) return null
   return props.notification.context

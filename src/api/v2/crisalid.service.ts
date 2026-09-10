@@ -11,8 +11,8 @@ import type { RefOrRaw } from '~/interfaces/utils'
 import {
   getGroupResearchDocument as fetchGroupResearchDocument,
   getGroupResearchDocumentAnalytics as fetchGroupResearchDocumentAnalytics,
-  getOwnResearchDocument as fetchOwnResearchDocument,
-  getOwnResearchDocumentAnalytics as fetchOwnResearchDocumentAnalytics,
+  getUserResearchDocument as fetchUserResearchDocument,
+  getUserResearchDocumentAnalytics as fetchUserResearchDocumentAnalytics,
   getResearchDocumentSimilars as fetchResearchDocumentSimilars,
 } from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
@@ -27,7 +27,7 @@ const DEFAULT_CONFIG = {}
 type Config = UseAsyncApiConfig
 type ConfigPagination = UseAsyncPaginationApiConfig
 
-export const getOwnResearchDocument = (
+export const getUserResearchDocument = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   researcherId: RefOrRaw<Researcher['id']>,
   documenType: ResearcherDocumentType,
@@ -41,7 +41,7 @@ export const getOwnResearchDocument = (
   return useAsyncPaginationAPI(
     key,
     ({ config }) =>
-      fetchOwnResearchDocument(unref(organizationCode), unref(researcherId), unref(documenType), {
+      fetchUserResearchDocument(unref(organizationCode), unref(researcherId), unref(documenType), {
         ...DEFAULT_CONFIG,
         ...config,
       }),
@@ -77,7 +77,7 @@ export const getGroupResearchDocument = (
   )
 }
 
-export const getOwnResearchDocumentAnalytics = (
+export const getUserResearchDocumentAnalytics = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   researcherId: RefOrRaw<Researcher['id']>,
   documenType: ResearcherDocumentType,
@@ -91,7 +91,7 @@ export const getOwnResearchDocumentAnalytics = (
   return useAsyncAPI(
     key,
     ({ config }) =>
-      fetchOwnResearchDocumentAnalytics(
+      fetchUserResearchDocumentAnalytics(
         unref(organizationCode),
         unref(researcherId),
         unref(documenType),

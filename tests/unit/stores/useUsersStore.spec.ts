@@ -5,7 +5,6 @@ import { setActivePinia, createPinia } from 'pinia'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { removeUserCookie } from 'shared-projects-frontend/apis'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { getOrgsFromRoles } from '~/functs/rolesUtils'
 import { flushTick } from '~~/tests/helpers/utils'
 import analytics from '~/analytics'
 import type { Mock } from 'vitest'
@@ -236,7 +235,7 @@ describe('Store module | users | getters', () => {
       keycloak_id: 'xtECRsVj-GOq3qv7mUIL7_ACcCbGgspCalhNyZwJo38',
       people_id: '744cf291-0bde-4d0f-a7d6-0b0f7142be88',
       email: 'fares.doghri@cri-paris.org',
-      given_name: 'Fares',
+      given_name: 'hénri',
       family_name: 'Doghri',
       roles: [],
       permissions: {},
@@ -307,15 +306,12 @@ describe('Store module | users | getters', () => {
   it('user', () => {
     usersStore.$patch(stateWithSessionToken as any)
     expect(usersStore.user).toEqual({
-      name: {
-        firstname: stateWithSessionToken.userFromToken.given_name,
-        lastname: stateWithSessionToken.userFromToken.family_name,
-      },
-      given_name: stateWithSessionToken.userFromToken.given_name,
-      family_name: stateWithSessionToken.userFromToken.family_name,
-      email: stateWithSessionToken.userFromToken.email,
+      id: stateWithSessionToken.userFromApi.id,
+      location: stateWithSessionToken.userFromApi.location,
+      given_name: stateWithSessionToken.userFromApi.given_name,
+      family_name: stateWithSessionToken.userFromApi.family_name,
+      email: stateWithSessionToken.userFromApi.email,
       roles: [],
-      orgs: getOrgsFromRoles([]),
       permissions: [
         'organization.create',
         'organization.retrieve',
@@ -344,7 +340,7 @@ describe('Store module | users | getters', () => {
       parsedToken: userFromJWT,
     })
     usersStore.$patch(stateWithUserWithSpecialCharacter as any)
-    expect(usersStore.user.name.firstname).toBe('hénri')
+    expect(usersStore.user.given_name).toBe('hénri')
     spy.mockReset()
   })
 

@@ -51,6 +51,10 @@ export const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((fake
   outdated_slugs: [],
   parent: null,
   templates: [],
+  is_followed: {
+    is_followed: false,
+    follow_id: null,
+  },
 }))
 
 export const ProjectCategoryOutputFactory = createFactory<ProjectCategoryOutput>(() => ({
