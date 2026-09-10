@@ -10,7 +10,7 @@
     </div>
 
     <div class="skills">
-      <SkillItem
+      <SkillItemAlt
         v-for="skill in visibleSkills"
         :key="skill.id"
         :label="skillTexts.title(skill)"
@@ -22,8 +22,8 @@
 </template>
 
 <script>
+import SkillItemAlt from '~/components/people/skill/SkillItemAlt.vue'
 import SeeMoreArrow from '~/components/base/button/SeeMoreArrow.vue'
-import SkillItem from '~/components/people/skill/SkillItem.vue'
 
 import useUsersStore from '~/stores/useUsers'
 
@@ -34,7 +34,7 @@ export default {
 
   components: {
     SeeMoreArrow,
-    SkillItem,
+    SkillItemAlt,
   },
   inject: {
     selectTab: {
