@@ -210,7 +210,7 @@
     "stylelint-config-recommended-vue": "^1.6.1",
     "stylelint-config-standard-scss": "^17.0.0",
     "stylelint-scss": "^7.2.0",
-    "vitest": "^4.1.10",
+    "vitest": "^4.1.11",
     "vitest-fetch-mock": "^0.4.5",
     "vue-tsc": "^3.3.7"
   },
