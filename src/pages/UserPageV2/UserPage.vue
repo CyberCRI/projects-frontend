@@ -61,6 +61,12 @@ const propsTab = computed(() => ({
   // only add loading when project is not set or is skeleton
   loading: !user.value?.id && isLoading.value,
 }))
+
+const hasSubPageTitle = computed(
+  () =>
+    !!currentTab.value?.key &&
+    !['profile-summary', 'profile-summary-edit'].includes(currentTab.value.key)
+)
 </script>
 
 <template>
@@ -104,7 +110,12 @@ const propsTab = computed(() => ({
           />
         </template>
         <template #content>
-          <SubPageTitle :title-prefix="userFullName" :current-tab="currentTab" />
+          <SubPageTitle
+            v-if="hasSubPageTitle"
+            class="skeletons-text"
+            :title-prefix="userFullName"
+            :current-tab="currentTab"
+          />
           <NuxtPage v-if="currentTab" v-bind="propsTab" />
         </template>
       </NavPanelLayout>
