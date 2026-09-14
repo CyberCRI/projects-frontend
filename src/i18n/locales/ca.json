@@ -810,7 +810,6 @@
     }
   },
   "drawer": {
-    "clear": "Neteja tots els seleccionats",
     "select-all": "Selecciona- ho tot",
     "member": {
       "add": "Afegeix un membre | Afegeix membres",
@@ -826,7 +825,8 @@
       "add": "Afegeix projecte | Afegeix projectes",
       "edit": "Edita projecte | Edita projectes",
       "delete": "Elimina projecte | Esborra projectes"
-    }
+    },
+    "clear": "Neteja els seleccionats | Neteja tots els seleccionats"
   },
   "faq": {
     "delete-confirm-content": "Esteu segur que voleu esborrar la pestanya d' ajuda personalitzada pel vostre portal. S' esborrarà tot el seu contingut.",

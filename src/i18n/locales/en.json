@@ -810,7 +810,7 @@
     }
   },
   "drawer": {
-    "clear": "Clear all selected",
+    "clear": "Clear selected | Clear all selected",
     "select-all": "Select all",
     "member": {
       "add": "Add member | Add members",

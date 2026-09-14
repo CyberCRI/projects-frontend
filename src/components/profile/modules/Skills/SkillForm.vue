@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import SkillSelectDrawer from '~/components/drawer/Skill/SkillSelectDrawer.vue'
 import type { TranslatedTag, SkillForm } from 'shared-projects-frontend/models'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
-import TagSelectDrawer from '~/components/drawer/Tag/TagSelectDrawer.vue'
 import CardInlineTag from '~/components/drawer/Tag/CardInlineTag.vue'
 import GroupButton from '~/components/base/button/GroupButton.vue'
 import Field from '~/components/base/form/Field.vue'
@@ -100,8 +100,7 @@ watchEffect(() => {
 
 <template>
   <div class="list-container">
-    <TagSelectDrawer
-      classification-type="enabled-for-skills"
+    <SkillSelectDrawer
       :selected-tags="form.tag ? [form.tag] : []"
       :is-opened="stateModals.selectSkill"
       :max-selected="1"

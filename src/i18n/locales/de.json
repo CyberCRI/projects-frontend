@@ -810,7 +810,6 @@
     }
   },
   "drawer": {
-    "clear": "Alle ausgewählten löschen",
     "select-all": "Alles auswählen",
     "member": {
       "add": "Mitglied hinzufügen | Mitglieder hinzufügen",
@@ -826,7 +825,8 @@
       "add": "Projekt hinzufügen | Projekte hinzufügen",
       "edit": "Projekt bearbeiten | Projekte bearbeiten",
       "delete": "Projekt löschen | Projekte löschen"
-    }
+    },
+    "clear": "Ausgewählt | Alle ausgewählten löschen"
   },
   "faq": {
     "delete-confirm-content": "Sind Sie sicher, dass Sie das für Ihr Portal personalisierte Help Tab löschen möchten. Alle Inhalte werden gelöscht.",

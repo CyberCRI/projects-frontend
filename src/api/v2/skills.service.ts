@@ -1,13 +1,14 @@
+import {
+  getUserSkills as fetchUserSkills,
+  getUserSkill as fetchUserSkill,
+  getAllOrgClassifications as fetchAllOrgClassifications,
+} from 'shared-projects-frontend/apis'
 import type {
   OrganizationModel,
   QueryFilterSkill,
   SkillModel,
   UserSlugOrId,
 } from 'shared-projects-frontend/models'
-import {
-  getUserSkills as fetchUserSkills,
-  getUserSkill as fetchUserSkill,
-} from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '~/functs/onlyRefs'
@@ -64,6 +65,28 @@ export const getUserSkill = (
     {
       translate: (skill) => translateSkill(skill),
       watch: onlyRefs([organization, userId, skillId]),
+      ...config,
+    }
+  )
+}
+
+export const getAllOrgClassifications = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  config: ConfigPagination = {}
+) => {
+  const { translateClassifications } = useAutoTranslate()
+
+  const key = computed(() => `${unref(organizationCode)}::classifications::all`)
+
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) =>
+      fetchAllOrgClassifications(unref(organizationCode), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: (datas) => translateClassifications(datas),
       ...config,
     }
   )

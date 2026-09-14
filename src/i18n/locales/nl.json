@@ -810,7 +810,6 @@
     }
   },
   "drawer": {
-    "clear": "Alles wissen",
     "select-all": "Alles selecteren",
     "member": {
       "add": "Lid toevoegen | Leden toevoegen",
@@ -826,7 +825,8 @@
       "add": "Project toevoegen | Projecten toevoegen",
       "edit": "Project bewerken | Projecten bewerken",
       "delete": "Project verwijderen | Projecten verwijderen"
-    }
+    },
+    "clear": "Geselecteerd wissen | Alles wissen"
   },
   "faq": {
     "delete-confirm-content": "Weet u zeker dat u de Help Tab wilt verwijderen die voor uw portal is gepersonaliseerd. Alle inhoud wordt verwijderd.",

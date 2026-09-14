@@ -810,7 +810,6 @@
     }
   },
   "drawer": {
-    "clear": "Puhasta kõik valitud",
     "select-all": "Valige kõik",
     "member": {
       "add": "Lisa liige | Lisa liikmeid",
@@ -826,7 +825,8 @@
       "add": "Lisa projekt | Lisa projekte",
       "edit": "Muuda projekti | Muuda projekte",
       "delete": "Kustuta projekt | Kustuta projektid"
-    }
+    },
+    "clear": "Puhasta valitud | Puhasta kõik valitud"
   },
   "faq": {
     "delete-confirm-content": "Kas oled kindel, et soovid kustutada portaali jaoks isikupärastatud abikaardi. Kogu selle sisu kustutatakse.",

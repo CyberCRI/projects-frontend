@@ -810,7 +810,6 @@
     }
   },
   "drawer": {
-    "clear": "Limpiar todo seleccionado",
     "select-all": "Seleccione todo",
     "member": {
       "add": "Añadir miembro | Añadir miembros",
@@ -826,7 +825,8 @@
       "add": "Agregar proyecto | Agregar proyectos",
       "edit": "Editar proyecto | Editar proyectos",
       "delete": "Eliminar el proyecto | Eliminar proyectos"
-    }
+    },
+    "clear": "Limpiar seleccionado | Limpiar todo seleccionado"
   },
   "faq": {
     "delete-confirm-content": "¿Estás seguro de que quieres eliminar la pestaña Ayuda personalizada para tu portal. Todo su contenido será eliminado.",

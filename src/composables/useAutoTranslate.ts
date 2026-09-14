@@ -30,6 +30,8 @@ import type {
   TranslatedTag,
   SkillModel,
   TranslatedSkill,
+  TagClassificationModel,
+  TranslatedTagClassification,
 } from 'shared-projects-frontend/models'
 import type { TranslatedAgent } from '~/models/agent.model'
 import type { RefOrRaw } from '~/interfaces/utils'
@@ -426,6 +428,21 @@ export default function useAutoTranslate() {
   const translateSkills = (datas: SkillModel[]) =>
     translateEntities<TranslatedSkill>(datas, translateSkill)
 
+  /*
+    classification
+  */
+  const translateClassification = (classification: TagClassificationModel) =>
+    computed<TranslatedTagClassification>(() => {
+      const classificationRaw = unref(classification)
+      return {
+        ...unref(translateEntity(classificationRaw, ['title', 'description'])),
+        tags: unref(translateTag(classificationRaw.tags)),
+      }
+    })
+
+  const translateClassifications = (classifications: TagClassificationModel[]) =>
+    translateEntities<TranslatedTagClassification>(classifications, translateClassification)
+
   return {
     isAutoTranslateActivated,
     getTranslatableField,
@@ -518,5 +535,9 @@ export default function useAutoTranslate() {
     // skills
     translateSkill,
     translateSkills,
+
+    // classifications
+    translateClassification,
+    translateClassifications,
   }
 }

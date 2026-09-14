@@ -810,7 +810,6 @@
     }
   },
   "drawer": {
-    "clear": "Effacer la sélection",
     "select-all": "Tout sélectionner",
     "member": {
       "add": "Ajouter un membre | Ajouter des membres",
@@ -826,7 +825,8 @@
       "add": "Ajouter un projet | Ajouter des projets",
       "edit": "Modifier le projet | Modifier les projets",
       "delete": "Supprimer le projet | Supprimer les projets"
-    }
+    },
+    "clear": "Effacer la sélection | Effacer tout sélectionné"
   },
   "faq": {
     "delete-confirm-content": "Etes-vous bien sûr de vouloir supprimer l'onglet d'aide personnalisée pour votre portail? Tout son contenu sera effacé.",
