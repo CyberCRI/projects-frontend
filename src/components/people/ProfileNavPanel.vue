@@ -24,7 +24,7 @@
         'mail-only': hasOnlyMail,
       }"
     >
-      <div v-if="user && user.email" class="social">
+      <div v-if="user && user.email" class="social skeletons-text">
         <IconImage class="icon" name="Email" />
         <a :href="`mailto:${user.email}`">{{ $t('complete-profile.personal.email') }}</a>
       </div>
