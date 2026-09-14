@@ -1332,7 +1332,8 @@
         },
         "long-bio": {
           "label": "Bio larga",
-          "placeholder": "Prepárate profesionalmente. Presenta tu trayectoria profesional y tu ocupación actual."
+          "placeholder": "Prepárate profesionalmente. Presenta tu trayectoria profesional y tu ocupación actual.",
+          "required": "Este campo es obligatorio"
         },
         "personal-bio": {
           "label": "Bio personal",

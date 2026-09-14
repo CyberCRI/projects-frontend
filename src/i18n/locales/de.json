@@ -1332,7 +1332,8 @@
         },
         "long-bio": {
           "label": "Lange bio",
-          "placeholder": "Präsentieren Sie sich professionell. Präsentieren Sie Ihren Karriereweg und Ihre aktuelle Besetzung."
+          "placeholder": "Präsentieren Sie sich professionell. Präsentieren Sie Ihren Karriereweg und Ihre aktuelle Besetzung.",
+          "required": "Dieses Feld ist erforderlich"
         },
         "personal-bio": {
           "label": "Persönliches Bio",

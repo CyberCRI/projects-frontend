@@ -78,7 +78,7 @@ const defaultLocalForm = () => {
   return newForm
 }
 
-const { form, errors, isValid, cleanedData, reset, jumpToFirstError, formFieldTargetIds } =
+const { form, errors, v$, cleanedData, reset, jumpToFirstError, formFieldTargetIds } =
   useProjectForm({
     lazy: true,
   })
@@ -101,8 +101,8 @@ const languageOptions = computed(() => {
   })
 })
 
-const onSubmit = () => {
-  if (!isValid.value) {
+const onSubmit = async () => {
+  if (!(await v$.value.$validate())) {
     jumpToFirstError()
     return
   }

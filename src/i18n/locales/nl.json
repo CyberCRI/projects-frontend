@@ -1332,7 +1332,8 @@
         },
         "long-bio": {
           "label": "Lange bio",
-          "placeholder": "Jezelf professioneel presenteren. Presenteer je carrièrepad en je huidige beroep."
+          "placeholder": "Jezelf professioneel presenteren. Presenteer je carrièrepad en je huidige beroep.",
+          "required": "Dit veld is verplicht."
         },
         "personal-bio": {
           "label": "Persoonlijke bio",

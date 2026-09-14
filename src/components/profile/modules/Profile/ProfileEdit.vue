@@ -49,7 +49,7 @@ const defaultLocalForm = () => {
   return localForm
 }
 
-const { form, errors, isValid, reset, formFieldTargetIds, jumpToFirstError } = useProfileForm({
+const { form, errors, v$, reset, formFieldTargetIds, jumpToFirstError } = useProfileForm({
   default: defaultLocalForm(),
 })
 
@@ -82,12 +82,13 @@ const close = () => {
   redirect()
 }
 
-const onConfirm = () => {
-  if (!isValid.value) {
+const onConfirm = async () => {
+  asyncing.value = true
+  if (!(await v$.value.$validate())) {
     jumpToFirstError()
+    asyncing.value = false
     return
   }
-  asyncing.value = true
   return patchUser(props.user.id, form.value)
     .then(async (newUser) => {
       await checkProfilePicture(
@@ -286,6 +287,7 @@ const checkClose = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 32rem;
 
   label {
     align-self: flex-start;

@@ -1332,7 +1332,8 @@
         },
         "long-bio": {
           "label": "Long bio",
-          "placeholder": "Present yourself professionally. Present your career path and your current occupation."
+          "placeholder": "Present yourself professionally. Present your career path and your current occupation.",
+          "required": "This field is required"
         },
         "personal-bio": {
           "label": "Personal bio",

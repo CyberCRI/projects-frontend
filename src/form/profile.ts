@@ -90,8 +90,11 @@ export const useProfileFormBio = (options = {}) => {
 
   const rules = computed(() => ({
     description: {
-      required: helpers.withMessage(t('profile.form.content.required'), requiredContent),
+      required: helpers.withMessage(t('profile.edit.bio.long-bio.required'), requiredContent),
     },
+    // short_description: {
+    //   required: helpers.withMessage(t('profile.form.content.required'), requiredContent),
+    // },
   }))
 
   return useForm<ProfileFormBio>({

@@ -89,10 +89,9 @@ const close = () => {
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
-const { form, isValid, cleanedData, reset, jumpToFirstError, formFieldTargetIds } =
-  useProjectTabItemForm({
-    default: defaultLocalForm(),
-  })
+const { form, isValid, cleanedData, reset } = useProjectTabItemForm({
+  default: defaultLocalForm(),
+})
 watch(
   () => [props.item, props.project, room.value],
   () => reset(defaultLocalForm()),
@@ -155,11 +154,6 @@ const postTabItem = (body: ProjectTabItemForm) => {
 }
 
 const save = () => {
-  if (!isValid.value) {
-    jumpToFirstError()
-    return
-  }
-
   asyncing.value = true
   const body = cleanedData.value
 
@@ -180,14 +174,19 @@ const checkClose = () => {
 </script>
 
 <template>
-  <FormPanel :is-form-equal="isFormEqual" :asyncing="asyncing" @close="checkClose" @confirm="save">
+  <FormPanel
+    :is-form-equal="isFormEqual"
+    :confirm-action-disabled="!isValid"
+    :asyncing="asyncing"
+    @close="checkClose"
+    @confirm="save"
+  >
     <TabItemFormRaw
       v-model="form"
       :asyncing="asyncing"
       :room="room"
       :provider-params="providerParams"
       :save-image-callback="saveItemImage"
-      :form-field-target-ids="formFieldTargetIds"
       @unauthorized="close"
       @save="save"
     />

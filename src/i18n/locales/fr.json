@@ -1417,7 +1417,8 @@
         },
         "long-bio": {
           "label": "Bio longue",
-          "placeholder": "Présentez-vous professionnellement. Présentez votre parcours professionnel et votre occupation actuelle."
+          "placeholder": "Présentez-vous professionnellement. Présentez votre parcours professionnel et votre occupation actuelle.",
+          "required": "Ce champ est obligatoire"
         },
         "personal-bio": {
           "label": "Bio personnelle",

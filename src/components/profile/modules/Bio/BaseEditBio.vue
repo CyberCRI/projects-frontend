@@ -32,7 +32,7 @@ const defaultLocalForm = () => {
   return f
 }
 
-const { form, errors, isValid, formFieldTargetIds, jumpToFirstError } = useProfileFormBio({
+const { form, errors, v$, formFieldTargetIds, jumpToFirstError } = useProfileFormBio({
   default: defaultLocalForm(),
 })
 
@@ -57,8 +57,8 @@ const close = () => {
   redirect()
 }
 
-const onConfirm = () => {
-  if (!isValid.value) {
+const onConfirm = async () => {
+  if (!(await v$.value.$validate())) {
     jumpToFirstError()
     return
   }

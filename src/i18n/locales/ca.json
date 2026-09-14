@@ -1332,7 +1332,8 @@
         },
         "long-bio": {
           "label": "biografia llarga",
-          "placeholder": "Presenta't professionalment. Presenta la teva ruta professional i la teva ocupació actual."
+          "placeholder": "Presenta't professionalment. Presenta la teva ruta professional i la teva ocupació actual.",
+          "required": "Aquest camp és obligatori."
         },
         "personal-bio": {
           "label": "bio Personal",
