@@ -32,7 +32,7 @@ const defaultLocalForm = () => {
   return f
 }
 
-const { form, errors, isValid } = useProfileFormBio({
+const { form, errors, isValid, formFieldTargetIds, jumpToFirstError } = useProfileFormBio({
   default: defaultLocalForm(),
 })
 
@@ -58,6 +58,10 @@ const close = () => {
 }
 
 const onConfirm = () => {
+  if (!isValid.value) {
+    jumpToFirstError()
+    return
+  }
   patchUser(props.user.id, form.value)
     .then((newUser) => {
       toaster.pushSuccess(t('profile.edit.bio.save-success'))
@@ -85,12 +89,7 @@ const checkClose = () => {
 </script>
 
 <template>
-  <FormPanel
-    :asyncing="asyncing"
-    :confirm-action-disabled="isEqual || !isValid"
-    @close="checkClose"
-    @confirm="onConfirm"
-  >
+  <FormPanel :asyncing="asyncing" :is-form-equal="isEqual" @close="checkClose" @confirm="onConfirm">
     <div class="list-container">
       <TextInput
         v-model="form.short_description"
@@ -99,6 +98,7 @@ const checkClose = () => {
         :max-length="300"
         data-test="short-bio-input"
         class="skeletons-background"
+        :data-field-target="formFieldTargetIds.short_description"
       />
 
       <Field :label="$t('profile.edit.bio.long-bio.label')" required class="editor-section">
@@ -107,6 +107,7 @@ const checkClose = () => {
           v-model="form.description"
           class="input-field content-editor w-full skeletons-background"
           :errors="errors.description"
+          :data-field-target="formFieldTargetIds.description"
         />
       </Field>
     </div>

@@ -55,7 +55,8 @@ const defaultLocalForm = () => {
   return newForm
 }
 
-const { isValid, form, errors, reset } = useProjectDescriptionForm()
+const { isValid, form, errors, reset, jumpToFirstError, formFieldTargetIds } =
+  useProjectDescriptionForm()
 
 watch(
   () => props.project.description,
@@ -93,6 +94,7 @@ const redirect = () => {
 
 const onSubmit = () => {
   if (!isValid.value) {
+    jumpToFirstError()
     return
   }
 
@@ -134,7 +136,8 @@ const checkSubmit = () => {
 <template>
   <BaseModuleTab :title="project.$t.title">
     <FormPanel
-      :confirm-action-disabled="!isValid || (!inSoloMode && !socketReady) || isFormEqual"
+      :confirm-action-disabled="!isValid || (!inSoloMode && !socketReady)"
+      :is-form-equal="isFormEqual"
       :asyncing="asyncing"
       @close="checkClose"
       @confirm="checkSubmit"
@@ -152,6 +155,7 @@ const checkSubmit = () => {
           class="skeletons-background"
           :disable-save="asyncing"
           :errors="errors.description"
+          :data-field-target="formFieldTargetIds.description"
           @unauthorized="openModals('unauthorized')"
           @saved="checkSubmit"
           @socket-ready="socketReady = $event"

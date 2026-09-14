@@ -49,7 +49,7 @@ const defaultLocalForm = () => {
   return localForm
 }
 
-const { form, errors, isValid, reset } = useProfileForm({
+const { form, errors, isValid, reset, formFieldTargetIds, jumpToFirstError } = useProfileForm({
   default: defaultLocalForm(),
 })
 
@@ -83,6 +83,10 @@ const close = () => {
 }
 
 const onConfirm = () => {
+  if (!isValid.value) {
+    jumpToFirstError()
+    return
+  }
   asyncing.value = true
   return patchUser(props.user.id, form.value)
     .then(async (newUser) => {
@@ -119,12 +123,7 @@ const checkClose = () => {
 </script>
 
 <template>
-  <FormPanel
-    :asyncing="asyncing"
-    :confirm-action-disabled="isEqual || !isValid"
-    @confirm="onConfirm"
-    @close="checkClose"
-  >
+  <FormPanel :asyncing="asyncing" :is-form-equal="isEqual" @confirm="onConfirm" @close="checkClose">
     <div class="list-container">
       <!-- first name -->
       <TextInput
@@ -133,6 +132,7 @@ const checkClose = () => {
         :placeholder="$t('profile.edit.general.first-name.placeholder')"
         data-test="first-name-input"
         :errors="errors.given_name"
+        :data-field-target="formFieldTargetIds.given_name"
       />
       <TextInput
         v-model="form.family_name"
@@ -140,6 +140,7 @@ const checkClose = () => {
         :placeholder="$t('profile.edit.general.last-name.placeholder')"
         data-test="last-name-input"
         :errors="errors.family_name"
+        :data-field-target="formFieldTargetIds.family_name"
       />
       <!-- pronouns -->
       <TextInput
@@ -149,6 +150,7 @@ const checkClose = () => {
         :label="$t('profile.edit.general.pronouns.label')"
         :help="$t('profile.edit.general.pronouns.notice')"
         :errors="errors.pronouns"
+        :data-field-target="formFieldTargetIds.pronouns"
       />
 
       <!-- pro email -->
@@ -159,6 +161,7 @@ const checkClose = () => {
         :disabled="true"
         input-type="email"
         :errors="errors.email"
+        :data-field-target="formFieldTargetIds.email"
       />
 
       <!-- pro number -->
@@ -168,6 +171,7 @@ const checkClose = () => {
         :placeholder="$t('profile.edit.general.professional-number.placeholder')"
         data-test="professional-number-input"
         :errors="errors.landline_phone"
+        :data-field-target="formFieldTargetIds.landline_phone"
       />
 
       <!-- personal number -->
@@ -177,6 +181,7 @@ const checkClose = () => {
         :placeholder="$t('profile.edit.general.personal-number.placeholder')"
         data-test="personal-number-input"
         :errors="errors.mobile_phone"
+        :data-field-target="formFieldTargetIds.mobile_phone"
       />
 
       <!-- website -->
@@ -186,6 +191,7 @@ const checkClose = () => {
         :placeholder="$t('profile.edit.general.personal-webpage.placeholder')"
         data-test="personal-webpage-input"
         :errors="errors.website"
+        :data-field-target="formFieldTargetIds.website"
       />
 
       <!-- linkedin -->
@@ -195,6 +201,7 @@ const checkClose = () => {
         :placeholder="$t('profile.edit.general.linkedin.placeholder')"
         data-test="linkedin-input"
         :errors="errors.linkedin"
+        :data-field-target="formFieldTargetIds.linkedin"
       />
 
       <hr class="form-separator" />
@@ -209,6 +216,7 @@ const checkClose = () => {
           :contain="true"
           :round-picture="true"
           :default-picture="defaultPatatoids"
+          :data-field-target="formFieldTargetIds.profile_picture"
         />
       </div>
 
@@ -221,6 +229,7 @@ const checkClose = () => {
         :placeholder="$t('profile.edit.general.title.placeholder')"
         data-test="title-input"
         :errors="errors.job"
+        :data-field-target="formFieldTargetIds.job"
       />
 
       <!-- org address -->
@@ -231,6 +240,7 @@ const checkClose = () => {
         input-type="textarea"
         data-test="location-input"
         :errors="errors.location"
+        :data-field-target="formFieldTargetIds.location"
       />
 
       <hr class="form-separator" />
@@ -243,6 +253,7 @@ const checkClose = () => {
             :btn-icon="form.sdgs?.length ? 'Pen' : 'Plus'"
             data-test="add-sdgs"
             :label="$t(form.sdgs?.length ? 'group.form.edit' : 'group.form.add')"
+            :data-field-target="formFieldTargetIds.sdgs"
             @click="openModals('sdgs')"
           />
         </template>

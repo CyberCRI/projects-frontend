@@ -20,7 +20,7 @@
           <slot name="footer:extra" />
 
           <LpiButton
-            :disabled="confirmActionDisabled || asyncing"
+            :disabled="isFormEqual || confirmActionDisabled || asyncing"
             :label="confirmActionName || t('common.confirm')"
             :btn-icon="asyncing ? 'LoaderSimple' : null"
             class="footer__right-button skeletons-background"
@@ -44,6 +44,7 @@ withDefaults(
     noFooter?: boolean
     customStyle?: StyleValue
     confirmActionDisabled?: boolean
+    isFormEqual?: boolean
     asyncing?: boolean
     showCancel?: boolean
   }>(),
