@@ -90,7 +90,7 @@ export const getUserGroups = (
     key,
     ({ config }) => fetchUserGroups(unref(userId), { ...DEFAULT_CONFIG, ...config }),
     {
-      translate: translateGroups,
+      translate: (data) => translateGroups(data),
       watch: onlyRefs([organizationCode, userId]),
       ...config,
     }
@@ -108,7 +108,7 @@ export const getUserProjectsMember = (
     key,
     ({ config }) => fetchUserProjectsMember(unref(userId), { ...DEFAULT_CONFIG, ...config }),
     {
-      translate: translateProjects,
+      translate: (data) => translateProjects(data),
       watch: onlyRefs([organizationCode, userId]),
       ...config,
     }
@@ -128,7 +128,7 @@ export const getUserProjectsReviewer = (
     key,
     ({ config }) => fetchUserProjectsReviewer(unref(userId), { ...DEFAULT_CONFIG, ...config }),
     {
-      translate: translateProjects,
+      translate: (data) => translateProjects(data),
       watch: onlyRefs([organizationCode, userId]),
       ...config,
     }
@@ -148,7 +148,7 @@ export const getUserProjectsFollower = (
     key,
     ({ config }) => fetchUserProjectsFollower(unref(userId), { ...DEFAULT_CONFIG, ...config }),
     {
-      translate: translateProjects,
+      translate: (data) => translateProjects(data),
       watch: onlyRefs([organizationCode, userId]),
       ...config,
     }
@@ -168,7 +168,7 @@ export const getUserCategoriesFollower = (
     key,
     ({ config }) => fetchUserCategoriesFollower(unref(userId), { ...DEFAULT_CONFIG, ...config }),
     {
-      translate: translateCategories,
+      translate: (data) => translateCategories(data),
       watch: onlyRefs([organizationCode, userId]),
       ...config,
     }

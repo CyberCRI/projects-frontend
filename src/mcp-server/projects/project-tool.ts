@@ -144,7 +144,12 @@ export default (server: TypeMcpServer) => {
           .then((data) => (modulesData.blogs = data.results.map(mapBlogEntry)))
           .catch(onError),
         getLinkedProject(idOrSlug, optionModule)
-          .then((data) => (modulesData.linked_projects = data.results.map(mapProjectPreview)))
+          .then(
+            (data) =>
+              (modulesData.linked_projects = data.results.map((linked) =>
+                mapProjectPreview(linked.project)
+              ))
+          )
           .catch(onError),
         getProjectMembers(idOrSlug, optionModule)
           .then((data) => (modulesData.members = data.results.map(mapUserPreview)))

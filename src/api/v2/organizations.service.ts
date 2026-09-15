@@ -26,7 +26,7 @@ export const getFeaturedProjects = (
         ...config,
       }),
     {
-      translate: translateProjects,
+      translate: (data) => translateProjects(data),
       watch: onlyRefs([organizationCode]),
       ...config,
     }
@@ -45,7 +45,7 @@ export const getOrganizations = (config: ConfigPagination = {}) => {
         ...config,
       }),
     {
-      translate: translateOrganizations,
+      translate: (data) => translateOrganizations(data),
       ...config,
     }
   )

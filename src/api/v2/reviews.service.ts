@@ -32,7 +32,7 @@ export const getProjectReviews = (
         ...config,
       }),
     {
-      translate: translateReviews,
+      translate: (data) => translateReviews(data),
       watch: onlyRefs([organization, projectSlugOrId]),
       ...config,
     }
