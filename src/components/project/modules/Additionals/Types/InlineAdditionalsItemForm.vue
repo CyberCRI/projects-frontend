@@ -154,10 +154,6 @@ const postTabItem = (body: ProjectTabItemForm) => {
 }
 
 const save = () => {
-  if (!isValid.value) {
-    return
-  }
-
   asyncing.value = true
   const body = cleanedData.value
 
@@ -179,7 +175,8 @@ const checkClose = () => {
 
 <template>
   <FormPanel
-    :confirm-action-disabled="!isValid || isFormEqual"
+    :is-form-equal="isFormEqual"
+    :confirm-action-disabled="!isValid"
     :asyncing="asyncing"
     @close="checkClose"
     @confirm="save"

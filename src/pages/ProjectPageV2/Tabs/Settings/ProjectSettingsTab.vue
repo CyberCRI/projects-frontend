@@ -67,10 +67,11 @@ const defaultLocalForm = () => {
     template: props.project.template,
   }
 }
-const { form, reset, cleanedData, isValid } = useProjectSettingForm({
-  default: defaultLocalForm(),
-  lazy: true,
-})
+const { form, reset, cleanedData, isValid, jumpToFirstError, formFieldTargetIds } =
+  useProjectSettingForm({
+    default: defaultLocalForm(),
+    lazy: true,
+  })
 
 const updateFormTemplates = (templateForm) => {
   form.value = {
@@ -216,6 +217,10 @@ const redirect = () => {
 }
 
 const onUpdate = () => {
+  if (!isValid.value) {
+    jumpToFirstError()
+    return
+  }
   asyncing.value = true
   const body = { ...cleanedData.value }
 
@@ -279,13 +284,18 @@ const checkClose = () => {
     <!-- actions -->
     <FormPanel
       :asyncing="asyncing"
-      :confirm-action-disabled="!isValid || isFormEqual"
+      :is-form-equal="isFormEqual"
+      :is-valid="isValid"
       @confirm="onUpdate"
       @close="checkClose"
     >
       <div class="list-container">
         <template v-if="canEditProject">
-          <Section class="skeletons-background" :title="$t('project.visibility')">
+          <Section
+            class="skeletons-background"
+            :title="$t('project.visibility')"
+            :data-field-target="formFieldTargetIds.publication_status"
+          >
             <GroupButton
               v-model="form.publication_status"
               :has-icon="true"
@@ -298,7 +308,11 @@ const checkClose = () => {
               {{ selectedPublicationDescription }}
             </p>
           </Section>
-          <Section class="skeletons-background" :title="$t('project.life-status')">
+          <Section
+            class="skeletons-background"
+            :title="$t('project.life-status')"
+            :data-field-target="formFieldTargetIds.life_status"
+          >
             <GroupButton
               v-model="form.life_status"
               :has-icon="true"
@@ -323,6 +337,7 @@ const checkClose = () => {
             v-if="organizations?.length && isAdmin"
             class="skeletons-background"
             :title="$t('project.org-settings.title')"
+            :data-field-target="formFieldTargetIds.organizations_codes"
           >
             <p class="org-description">
               {{ $t('project.org-settings.description') }}

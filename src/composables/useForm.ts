@@ -2,6 +2,7 @@ import type { ErrorObject, useVuelidate, ValidationArgs } from '@vuelidate/core'
 import { difference, groupBy, isEqual, isNil } from 'es-toolkit'
 import type { RefOrRaw } from '~/interfaces/utils'
 import useValidate from '@vuelidate/core'
+import { v4 as uuidv4 } from 'uuid'
 import type { ModelRef } from 'vue'
 
 export type OptionsForm<T, CleanResult> = {
@@ -17,12 +18,14 @@ export type OptionsForm<T, CleanResult> = {
 
 export type UseFormResult<T, CleanResult> = {
   form: Ref<T>
+  formFieldTargetIds: Ref<Record<string, string>>
   isValid: Ref<boolean>
   errors: ComputedRef<Record<keyof T, ErrorObject[]>>
   cleanedData: null | Ref<CleanResult>
   reset: (data?: T) => void
   rules?: RefOrRaw<ValidationArgs<T> | object>
   v$: ReturnType<typeof useVuelidate<T>>
+  jumpToFirstError: () => void
 }
 
 const differencesObjects = (obj: any, obj2: any): string[] => {
@@ -89,6 +92,13 @@ const useForm = <T extends object, CleanResult = T>(
       })
     },
     { deep: true, immediate: !lazy }
+  )
+
+  const formFieldTargetIds = ref(
+    Object.keys(form.value).reduce((acc, key) => {
+      acc[key] = 'form-field-target-' + uuidv4()
+      return acc
+    }, {})
   )
 
   const errors = computed(() => {
@@ -163,14 +173,48 @@ const useForm = <T extends object, CleanResult = T>(
   // reset validator
   reset(form.value)
 
+  /**
+   * Scroll to the first field with error
+   *
+   * @name jumpToFirstError
+   * @kind variable
+   * @memberof useForm
+   * @returns {void}
+   */
+  const jumpToFirstError = () => {
+    const fieldsWithError = Object.entries(errors.value)
+      .filter(([_, value]) => (value as Array<any>).length)
+      .map(([key]) => key)
+    if (fieldsWithError.length) {
+      const firstErrorKey = fieldsWithError[0]
+      const firstErrorTarget = formFieldTargetIds.value[firstErrorKey]
+      if (firstErrorTarget) {
+        const target = document.querySelector(`[data-field-target="${firstErrorTarget}"]`)
+        if (target)
+          target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' })
+        else
+          console.error(
+            '[useForm] No matching element for key ' +
+              firstErrorKey +
+              ' with target id ' +
+              firstErrorTarget
+          )
+      } else {
+        console.error('[useForm] No matching target for ' + firstErrorKey)
+      }
+    }
+  }
+
   return {
     form,
+    formFieldTargetIds,
     errors,
     isValid,
     cleanedData,
     reset,
     rules,
     v$,
+    jumpToFirstError,
   }
 }
 

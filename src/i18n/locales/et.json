@@ -1332,7 +1332,8 @@
         },
         "long-bio": {
           "label": "Pikk biograafia",
-          "placeholder": "Esitle ennast professionaalselt. Esitage oma karjääri ja oma praegust ametit."
+          "placeholder": "Esitle ennast professionaalselt. Esitage oma karjääri ja oma praegust ametit.",
+          "required": "See väli on kohustuslik."
         },
         "personal-bio": {
           "label": "Isiklik biobioloogia",

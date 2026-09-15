@@ -78,9 +78,10 @@ const defaultLocalForm = () => {
   return newForm
 }
 
-const { form, errors, isValid, cleanedData, reset } = useProjectForm({
-  lazy: true,
-})
+const { form, errors, v$, cleanedData, reset, jumpToFirstError, formFieldTargetIds } =
+  useProjectForm({
+    lazy: true,
+  })
 watch(
   () => props.project,
   () => reset(defaultLocalForm()),
@@ -100,7 +101,13 @@ const languageOptions = computed(() => {
   })
 })
 
-const onSubmit = () => emit('submit', cleanedData.value)
+const onSubmit = async () => {
+  if (!(await v$.value.$validate())) {
+    jumpToFirstError()
+    return
+  }
+  emit('submit', cleanedData.value)
+}
 const onSubmitTags = (tags) => {
   form.value.tags = tags
   closeModals('tags')
@@ -109,7 +116,7 @@ const onSubmitTags = (tags) => {
 
 <template>
   <FormPanel
-    :confirm-action-disabled="!isValid || isFormEqual"
+    :is-form-equal="isFormEqual"
     :asyncing="loading"
     @close="emit('close')"
     @confirm="onSubmit"
@@ -123,6 +130,7 @@ const onSubmitTags = (tags) => {
         space-below-label="large-space"
         data-test="title-input"
         :errors="errors.title"
+        :data-field-target="formFieldTargetIds.title"
       />
       <TextInput
         v-model="form.purpose"
@@ -132,6 +140,7 @@ const onSubmitTags = (tags) => {
         data-test="purpose-input"
         space-below-label="large-space"
         :errors="errors.purpose"
+        :data-field-target="formFieldTargetIds.purpose"
       />
 
       <Field :errors="errors.tags" :label="$t('tag.title')">
@@ -139,6 +148,7 @@ const onSubmitTags = (tags) => {
           <LpiButton
             btn-icon="Plus"
             :label="$t('project.form.add-tags')"
+            :data-field-target="formFieldTargetIds.tags"
             @click="openModals('tags')"
           />
         </template>
@@ -152,6 +162,7 @@ const onSubmitTags = (tags) => {
           :contain="true"
           :max-size-mb="Infinity"
           :default-picture="DEFAULT_PROJECT_PATATOID"
+          :data-field-target="formFieldTargetIds.file"
         />
       </Field>
 
@@ -162,6 +173,7 @@ const onSubmitTags = (tags) => {
           :options="languageOptions"
           class="category-select"
           data-test="select-language"
+          :data-field-target="formFieldTargetIds.language"
         />
       </Field>
     </div>
