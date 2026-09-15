@@ -3,7 +3,6 @@
     <div class="form-section img-section">
       <label>{{ $t('news.form.image.label') }}</label>
       <ImageEditor
-        class="img-ctn"
         picture-alt="news image"
         :contain="true"
         :image-sizes="model.imageSizes"
@@ -245,10 +244,6 @@ label {
 
 .display-date {
   margin-left: 1rem;
-}
-
-.img-ctn {
-  max-width: 32rem;
 }
 
 label,

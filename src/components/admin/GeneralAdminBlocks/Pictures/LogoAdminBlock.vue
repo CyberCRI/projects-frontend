@@ -1,7 +1,6 @@
 <template>
   <AdminBlock :block-title="$t('admin.portal.general.logo')" :is-loading="false">
     <ImageEditor
-      class="img-ctn"
       picture-alt="logo"
       :contain="true"
       :image-sizes="logoImageSizes"
@@ -56,8 +55,3 @@ const setLogo = async (file) => {
   }
 }
 </script>
-<style lang="scss" scoped>
-.img-ctn {
-  max-width: 32rem;
-}
-</style>

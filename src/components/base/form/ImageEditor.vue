@@ -144,9 +144,9 @@ const nextDefaultPicture = async () => {
       />
 
       <ImageInput
-        class="image-file-input"
         id="header_image"
         ref="imageInput"
+        class="image-file-input"
         :unfocusable="disabled"
         :label="$t('common.modify')"
         :max-size-mb="maxSizeMb"
@@ -199,6 +199,7 @@ const nextDefaultPicture = async () => {
 
 .img-inner {
   width: 100%;
+  max-width: 32rem;
   display: flex;
   align-items: center;
   gap: variables.$space-m;
@@ -215,9 +216,11 @@ const nextDefaultPicture = async () => {
     gap: variables.$space-m;
     justify-content: center;
     align-items: strech;
+
     .lpi-button {
       justify-content: flex-start;
     }
+
     :deep(.image-file-input),
     :deep(.header_image),
     :deep(.image-input-ctn),

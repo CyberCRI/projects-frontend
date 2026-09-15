@@ -1,7 +1,6 @@
 <template>
   <AdminBlock :block-title="$t('admin.portal.general.public-image')" :is-loading="false">
     <ImageEditor
-      class="img-ctn"
       picture-alt="welcome picture"
       :contain="true"
       :image-sizes="bannerImageSizes"
@@ -81,9 +80,3 @@ const resizeBanner = async (imageSizes) => {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.img-ctn {
-  max-width: 32rem;
-}
-</style>

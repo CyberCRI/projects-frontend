@@ -40,7 +40,6 @@
     <!-- Image -->
     <Field :label="$t('group.image-header')">
       <ImageEditor
-        class="img-ctn"
         v-model:image-sizes="form.imageSizes"
         v-model:picture="form.header_image"
         :picture-alt="`${form.name} image`"
@@ -572,10 +571,6 @@ export default {
     color: variables.$mid-gray;
     cursor: not-allowed;
   }
-}
-
-.img-ctn {
-  max-width: 32rem;
 }
 
 .description label {
