@@ -6,6 +6,7 @@ import {
 import type {
   OrganizationModel,
   QueryFilterSkill,
+  QueryFilterTagClassification,
   SkillModel,
   UserSlugOrId,
 } from 'shared-projects-frontend/models'
@@ -70,9 +71,10 @@ export const getUserSkill = (
   )
 }
 
+type ConfigPaginationClassification = UseAsyncPaginationApiConfig<QueryFilterTagClassification>
 export const getAllOrgClassifications = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  config: ConfigPagination = {}
+  config: ConfigPaginationClassification = {}
 ) => {
   const { translateClassifications } = useAutoTranslate()
 

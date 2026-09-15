@@ -77,6 +77,10 @@ const mentorShip = computed<MentorShip>(() => {
 
 <template>
   <FetchLoader :status="[statusSkill, statusMentorShip]" :error="error" only-error skeleton>
+    <p v-if="skills.length === 0" class="skeletons-text">
+      {{ $t('profile.edit.skills.intro') }}
+    </p>
+
     <SkillContainer
       v-if="editable || (groupedSkills.skill || []).length"
       :user="user"

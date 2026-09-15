@@ -9,7 +9,6 @@ import { deleteUserSkill, patchUserSkill, postUserSkill } from 'shared-projects-
 import SkillDrawer from '~/components/profile/modules/Skills/SkillDrawer.vue'
 import type { SkillType } from '~/components/people/skill/SkillEditor.vue'
 import SkillItem from '~/components/profile/modules/Skills/SkillItem.vue'
-import NothingHere from '~/components/base/NothingHere.vue'
 import type { MentorShip } from '~/interfaces/mengtorship'
 import useToasterStore from '~/stores/useToaster'
 import Title from '~/components/base/Title.vue'
@@ -136,7 +135,7 @@ const onAdd = () => {
         @mentorship-send="$emit('mentorship-send')"
       />
     </div>
-    <NothingHere v-if="skills.length === 0" />
+    <EmptyLabel v-if="skills.length === 0" />
 
     <!-- drawer -->
 

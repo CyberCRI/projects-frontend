@@ -2,6 +2,7 @@ import { PrismaClient } from '~~/prisma-chatbot-db/generated/prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
 
 const prismaClientSingleton = () => {
+  return
   const connectionString = process.env.NUXT_APP_CHATBOT_PROMPT_DB
   if (!connectionString) throw new Error('NUXT_APP_CHATBOT_PROMPT_DB is not set')
   const adapter = new PrismaPg({ connectionString })

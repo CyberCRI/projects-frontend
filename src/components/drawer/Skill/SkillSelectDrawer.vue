@@ -36,26 +36,25 @@ const emit = defineEmits<{
 const attrs = useAttrs() as DrawerSearchProps<TranslatedTag>
 
 const search = ref('')
-const LIMIT = 30
 
 const organizationCode = useOrganizationCode()
 
-const { status: statusClassifications, data: allClassifications } = getAllOrgClassifications(
+const { status: statusClassifications, data: classifications } = getAllOrgClassifications(
   organizationCode,
   {
+    // add 99 to get all classifications
     paginationConfig: {
       limit: 999,
+    },
+    query: {
+      enabled_for: ['skills'],
     },
     default: () => factoryPagination(() => null, 0, 0),
   }
 )
 
 const classificationsOptions = computed(() => {
-  const enabledForSkills = allClassifications.value.filter(
-    (classification) => classification.is_enabled_for_skills
-  )
-
-  return enabledForSkills.map((tag) => ({
+  return classifications.value.map((tag) => ({
     label: tag.$t.title,
     value: tag.id,
   }))
@@ -63,6 +62,7 @@ const classificationsOptions = computed(() => {
 
 const selectedClasification = ref<TagClassificationModel['id']>(null)
 
+const LIMIT = 30
 const {
   status: statusTags,
   data: tags,
@@ -97,11 +97,15 @@ const {
       @confirm="emit('submit', $event)"
     >
       <template #top>
-        <div class="my4">
+        <div class="margin-notice">
           <p class="notice">
             {{ $t('search.pick-skill-classification') }}
           </p>
-          <LpiSelect v-model="selectedClasification" :options="classificationsOptions" />
+          <LpiSelect
+            v-model="selectedClasification"
+            :options="classificationsOptions"
+            :placeholder="$t('search.choose-skill')"
+          />
         </div>
       </template>
       <template #select-item="{ item, onClick }">
@@ -135,5 +139,11 @@ const {
 
 .full-card-tag {
   width: 100% !important;
+}
+</style>
+
+<style lang="scss" scoped>
+.margin-notice {
+  margin: 1rem auto;
 }
 </style>

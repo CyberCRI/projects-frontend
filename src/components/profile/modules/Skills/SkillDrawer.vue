@@ -63,6 +63,6 @@ watch(
     @close="$emit('close')"
     @confirm="onConfirm"
   >
-    <SkillForm v-model="form" @close="$emit('close')" />
+    <SkillForm v-model="form" :skill-type="skillType" @close="$emit('close')" />
   </BaseDrawer>
 </template>

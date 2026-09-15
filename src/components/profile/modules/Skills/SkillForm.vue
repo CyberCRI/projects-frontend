@@ -2,10 +2,15 @@
 import SkillSelectDrawer from '~/components/drawer/Skill/SkillSelectDrawer.vue'
 import type { TranslatedTag, SkillForm } from 'shared-projects-frontend/models'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
+import type { SkillType } from '~/components/people/skill/SkillEditor.vue'
 import CardInlineTag from '~/components/drawer/Tag/CardInlineTag.vue'
 import GroupButton from '~/components/base/button/GroupButton.vue'
 import Field from '~/components/base/form/Field.vue'
 import { useSkillForm } from '~/form/skill'
+
+defineProps<{
+  skillType: SkillType
+}>()
 
 const model = defineModel<SkillForm>({ default: () => ({}) })
 
@@ -104,6 +109,11 @@ watchEffect(() => {
       :selected-tags="form.tag ? [form.tag] : []"
       :is-opened="stateModals.selectSkill"
       :max-selected="1"
+      :title="
+        skillType === 'skills'
+          ? $t('profile.edit.skills.skills.drawer.title')
+          : $t('profile.edit.skills.hobbies.drawer.title')
+      "
       max-auto-confirm
       @close="checkCloseTag"
       @submit="onSelectedTag"
@@ -123,15 +133,17 @@ watchEffect(() => {
       :errors="errors.level"
     >
       <template #in-label>
-        <SkillLevelTip>
-          <LinkButton
-            label=""
-            btn-icon="HelpCircle"
-            data-test="skill-levels-help-button"
-            secondary
-            icon-only
-          />
-        </SkillLevelTip>
+        <div class="margin-skills-tip">
+          <SkillLevelTip>
+            <LinkButton
+              label=""
+              btn-icon="HelpCircle"
+              data-test="skill-levels-help-button"
+              secondary
+              icon-only
+            />
+          </SkillLevelTip>
+        </div>
       </template>
       <div class="skill-level-inline">
         <SkillSteps
@@ -151,6 +163,7 @@ watchEffect(() => {
       :errors="[...errors.needs_mentor, ...errors.can_mentor]"
     >
       <GroupButton
+        class="margin-choices-metnroship"
         :model-value="mentorValue"
         :options="options"
         @update:model-value="onUpdateMentor"
@@ -172,6 +185,14 @@ watchEffect(() => {
 <style lang="scss" scoped>
 .skill-tag-card-form {
   width: 100%;
+}
+
+.margin-skills-tip {
+  margin-top: -0.7rem !important;
+}
+
+.margin-choices-metnroship {
+  margin: 1rem 0;
 }
 </style>
 
