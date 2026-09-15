@@ -40,6 +40,7 @@
     <!-- Image -->
     <Field :label="$t('group.image-header')">
       <ImageEditor
+        class="img-ctn"
         v-model:image-sizes="form.imageSizes"
         v-model:picture="form.header_image"
         :picture-alt="`${form.name} image`"
@@ -573,33 +574,8 @@ export default {
   }
 }
 
-.delete-group {
-  label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
-    width: 100%;
-    font-size: variables.$font-size-m;
-    margin-bottom: variables.$space-l;
-
-    .section-title {
-      color: variables.$black;
-      font-weight: bold;
-      display: block;
-    }
-  }
-
-  .img-ctn {
-    margin-bottom: variables.$space-xl;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    label {
-      align-self: flex-start;
-    }
-  }
+.img-ctn {
+  max-width: 32rem;
 }
 
 .description label {

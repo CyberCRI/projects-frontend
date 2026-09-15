@@ -1,8 +1,9 @@
 <template>
   <form>
-    <div class="form-section img-ctn">
+    <div class="form-section img-section">
       <label>{{ $t('news.form.image.label') }}</label>
       <ImageEditor
+        class="img-ctn"
         picture-alt="news image"
         :contain="true"
         :image-sizes="model.imageSizes"
@@ -220,7 +221,7 @@ const updateLocation = (location) => {
   min-height: variables.pxtorem(300px);
 }
 
-.img-ctn {
+.img-section {
   margin-bottom: variables.$space-xl;
   display: flex;
   flex-direction: column;
@@ -244,6 +245,10 @@ label {
 
 .display-date {
   margin-left: 1rem;
+}
+
+.img-ctn {
+  max-width: 32rem;
 }
 
 label,

@@ -144,6 +144,7 @@ const nextDefaultPicture = async () => {
       />
 
       <ImageInput
+        class="image-file-input"
         id="header_image"
         ref="imageInput"
         :unfocusable="disabled"
@@ -161,7 +162,7 @@ const nextDefaultPicture = async () => {
       />
 
       <LpiButton
-        v-if="!noResize && picture"
+        v-if="!noResize && displayedImage"
         v-disable-focus="disabled"
         :label="$t('project.form.resize-image')"
         class="skeletons-background"
@@ -213,7 +214,19 @@ const nextDefaultPicture = async () => {
     flex-flow: column;
     gap: variables.$space-m;
     justify-content: center;
-    align-items: flex-start;
+    align-items: strech;
+    .lpi-button {
+      justify-content: flex-start;
+    }
+    :deep(.image-file-input),
+    :deep(.header_image),
+    :deep(.image-input-ctn),
+    :deep(.image-button),
+    :deep(.lpi-button) {
+      display: flex;
+      justify-content: stretch;
+      flex-grow: 1;
+    }
   }
 
   .img-preview {

@@ -155,7 +155,7 @@ const onSubmitTags = (tags) => {
         <TagsFilterSummary v-model="form.tags" />
       </Field>
 
-      <Field :label="$t('project.image-header')">
+      <Field :label="$t('project.image-header')" class="img-ctn">
         <ImageEditor
           v-model:image-sizes="form.imageSizes"
           v-model:picture="form.file"
@@ -188,3 +188,8 @@ const onSubmitTags = (tags) => {
     @close="closeModals('tags')"
   />
 </template>
+<style lang="scss" scoped>
+.img-ctn {
+  max-width: 32rem;
+}
+</style>
