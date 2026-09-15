@@ -99,10 +99,12 @@ export default function useAutoTranslate() {
     })
 
   const translateEntity = <DataT = any>(entity, fields: string[]) =>
-    computed<DataT>(() => ({
-      ...unref(entity || {}),
-      $t: unref(getTranslatableFields(entity, fields)),
-    }))
+    computed<DataT>(() => {
+      return {
+        ...unref(entity || {}),
+        $t: unref(getTranslatableFields(entity, fields)),
+      }
+    })
 
   const translateEntities = <DataT = any>(entities, translateFn) =>
     computed<DataT[]>(() => {
@@ -380,9 +382,9 @@ export default function useAutoTranslate() {
       if (rawCategory?.tags) rawCategory.tags = unref(translateTags(rawCategory.tags))
       return unref(translateEntity<TranslatedProjectCategory>(rawCategory, ['name', 'description']))
     })
-  const translateCategories = (categories) =>
-    translateEntities<TranslatedProjectCategory>(categories, translateCategory)
-
+  const translateCategories = (categories) => {
+    return translateEntities<TranslatedProjectCategory>(categories, translateCategory)
+  }
   /*
     researcher document
   */

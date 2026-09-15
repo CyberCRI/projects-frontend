@@ -20,7 +20,7 @@
         <!--TODO: put this back once the new page is created-->
         <!--                <HeaderLink :label="$t('search.peoples')" route="people" :to="{name: 'People'}" />-->
         <HeaderLink
-          v-if="projectCategoriesStore.all?.length"
+          v-if="hasCategory"
           :label="$t('projects')"
           :routes="[
             'Categories',
@@ -227,6 +227,7 @@ export default {
     const { isAdmin, isFacilitator, isSuperAdmin } = usePermissions()
     const { locale, setLocale } = useNuxtI18n()
     const { isAutoTranslateActivated } = useAutoTranslate()
+    const hasCategory = computed(() => projectCategoriesStore.all?.length)
     return {
       appHasChatbotPromptDb,
       projectCategoriesStore,
@@ -238,6 +239,7 @@ export default {
       locale,
       isAutoTranslateActivated,
       setLocale,
+      hasCategory,
     }
   },
 
@@ -440,7 +442,7 @@ export default {
           label: this.$t('projects'),
           action: () => this.goTo('Categories'),
           leftIcon: null,
-          condition: this.projectCategoriesStore.all?.length,
+          condition: this.hasCategory,
           dataTest: 'search',
         },
         {
@@ -517,17 +519,16 @@ export default {
     //   return this.usersStore.userFromApi?.language
     // },
   },
-  // TODO: this seem to crash i18n reactivity on rest of page... keep for further investigation
-  // watch: {
-  //   langFromUser: {
-  //     handler: function (neo, old) {
-  //       if (neo && neo != old && neo != this.locale) {
-  //         this.setLocale(neo)
-  //       }
-  //     },
-  //     immediate: true,
-  //   },
-  // },
+  watch: {
+    langFromUser: {
+      handler: function (neo, old) {
+        if (neo && neo != old && neo != this.locale) {
+          this.setLocale(neo)
+        }
+      },
+      immediate: true,
+    },
+  },
 
   async mounted() {
     await this.projectCategoriesStore.getAllProjectCategories()

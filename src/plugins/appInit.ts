@@ -7,6 +7,7 @@ export default defineNuxtPlugin(async () => {
   // see https://github.com/nuxt/test-utils/issues/526
   const process = await import('node:process')
   const isTest = String(process.env?.TEST) === 'true'
+
   if (!isTest) {
     await main()
   }

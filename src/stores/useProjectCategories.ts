@@ -23,9 +23,9 @@ export interface ProjectCategoriesMap {
 }
 
 const useProjectCategoriesStore = defineStore('projectCategories', () => {
-  const _all = ref([])
+  const all = ref([])
   const { translateCategories, translateCategory } = useAutoTranslate()
-  const all = translateCategories(_all)
+
   const _root = ref(null)
   const root = translateCategory(_root)
 
@@ -88,7 +88,7 @@ const useProjectCategoriesStore = defineStore('projectCategories', () => {
     const organizationCode = useOrganizationCode()
 
     return apiGetAllProjectCategories(organizationCode).then((resp) => {
-      _all.value = resp.results
+      all.value = unref(translateCategories(resp.results as any) as any)
       return resp.results
     })
   }
@@ -118,7 +118,6 @@ const useProjectCategoriesStore = defineStore('projectCategories', () => {
     getAllProjectCategories,
     getRootProjectCategory,
     // for unit tests only
-    _all,
     _root,
   }
 })
