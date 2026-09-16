@@ -69,7 +69,7 @@ export const getLinkedProject = (
         ...config,
       }),
     {
-      translate: translatedProjectLinkeds,
+      translate: (data) => translatedProjectLinkeds(data),
       watch: onlyRefs([organization, projectSlugOrId]),
       ...config,
     }
@@ -93,7 +93,8 @@ export const getProjectMembers = (
         ...config,
       }),
     {
-      translate: (data) => translateUsers<TranslatedProjectMember>(data),
+      translate: (data) =>
+        translateUsers(data) as unknown as ComputedRef<TranslatedProjectMember[]>,
       watch: onlyRefs([organization, projectSlugOrId]),
       ...config,
     }
@@ -131,7 +132,7 @@ export const getProjectLocations = (
 ) => {
   const key = computed(() => `${unref(organization)}::project::${unref(projectSlugOrId)}::members`)
 
-  const { translateLocations } = useAutoTranslate()
+  const { translateProjectLocations } = useAutoTranslate()
 
   return useAsyncAPI(
     key,
@@ -141,7 +142,7 @@ export const getProjectLocations = (
         ...config,
       }),
     {
-      translate: translateLocations,
+      translate: (data) => translateProjectLocations(data),
       watch: onlyRefs([organization, projectSlugOrId]),
       ...config,
     }
@@ -167,7 +168,7 @@ export const getProjectSimilars = (
         ...config,
       }),
     {
-      translate: translateProjects,
+      translate: (data) => translateProjects(data),
       watch: onlyRefs([organization, projectSlugOrId]),
       ...config,
     }

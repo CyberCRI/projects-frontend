@@ -35,7 +35,7 @@ export const getProjectComments = (
         ...config,
       }),
     {
-      translate: translateComments,
+      translate: (data) => translateComments(data),
       watch: onlyRefs([organization]),
       ...config,
     }
@@ -62,7 +62,7 @@ export const getProjectMessages = (
         ...config,
       }),
     {
-      translate: translateProjectMessages,
+      translate: (data) => translateProjectMessages(data),
       watch: onlyRefs([organization]),
       ...config,
     }
