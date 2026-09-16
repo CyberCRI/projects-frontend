@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { UserSkillModel } from 'shared-projects-frontend/models'
+import type { SkillModel } from 'shared-projects-frontend/models'
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 
-const model = defineModel<Partial<UserSkillModel>>()
+const model = defineModel<Partial<SkillModel>>()
 
 watchEffect(() => {
   if (model.value.can_mentor) {

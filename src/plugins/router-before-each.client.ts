@@ -6,7 +6,11 @@ import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import { resetScroll } from '~/composables/useScrollToTab'
 
 export default defineNuxtPlugin(async () => {
-  useRouter().beforeEach((to, from, next) => {
+  const router = useRouter()
+  if (!router) {
+    return
+  }
+  router.beforeEach((to, from, next) => {
     // console.log('BEFORE EACH')
     if (to.matched.some((route) => route.meta.resetScroll)) {
       resetScroll()

@@ -18,7 +18,7 @@ export default defineNuxtRouteMiddleware(async function postLogin(to) {
       await keycloak.loginIfValidState(loginSearchParams)
 
       if (usersStore?.keycloak_id) {
-        await usersStore.getUser(usersStore.keycloak_id)
+        await usersStore.refreshUser()
         // if (usersStore.userFromApi) {
         //   console.log('setlang', usersStore.userFromApi.language)
         //   setLocale(usersStore.userFromApi.language)

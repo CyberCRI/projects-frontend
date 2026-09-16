@@ -2,13 +2,12 @@
 import MentorshipForm from '~/components/people/skill/MentorshipForm.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import type { UserSkillModel } from 'shared-projects-frontend/models'
-import useSkillTexts from '~/composables/useSkillTexts'
+import type { SkillForm } from 'shared-projects-frontend/models'
 
 const emit = defineEmits(['close', 'update-mentorship'])
 
 const props = defineProps<{
-  skill: UserSkillModel
+  skill: SkillForm
   isOpened: boolean
 }>()
 
@@ -31,8 +30,6 @@ watchEffect(function onOpen() {
 function saveMentorship() {
   emit('update-mentorship', { id: props.skill.id, ...mentorship.value })
 }
-
-const skillTexts = useSkillTexts()
 </script>
 <template>
   <BaseDrawer
@@ -42,7 +39,7 @@ const skillTexts = useSkillTexts()
     :is-opened="isOpened"
     :title="
       $t('profile.edit.skills.mentorship.edit', {
-        skill: skillTexts.title(skill),
+        skill: skill.tag?.$t?.title || skill.tag?.title,
       })
     "
     class="medium"

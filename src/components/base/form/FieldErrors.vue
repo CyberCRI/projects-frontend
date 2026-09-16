@@ -1,5 +1,5 @@
 <template>
-  <p v-for="error of errors" :key="error.$uid" class="error-description">
+  <p v-for="error of errors" :key="error.$uid" class="error-description skeletons-text">
     {{ error.$message }}
   </p>
 </template>

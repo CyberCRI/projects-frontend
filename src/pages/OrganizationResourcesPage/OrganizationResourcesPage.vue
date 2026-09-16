@@ -73,8 +73,6 @@ const onSubmit = (resource: AttachmentForm) => {
   const formData = new FormData()
   formData.append('title', resource.title)
   formData.append('description', resource.description)
-  formData.append('file', resource.file, resource.file.name)
-  formData.append('mime', resource.file.type)
 
   if (resource.id) {
     // on update remove file (old things 😕)
@@ -90,6 +88,8 @@ const onSubmit = (resource: AttachmentForm) => {
       .catch(() => toaster.pushError(t('toasts.file-update.success')))
       .finally(() => (asyncing.value = false))
   } else {
+    formData.append('file', resource.file, resource.file.name)
+    formData.append('mime', resource.file.type)
     postOrganizationFiles(organizationCode, formData)
       .then(() => {
         closeAllModals()

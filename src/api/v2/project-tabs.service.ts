@@ -43,7 +43,7 @@ export const getAllProjectTab = (
         ...config,
       }),
     {
-      translate: translateProjectTabs,
+      translate: (data) => translateProjectTabs(data),
       watch: onlyRefs([organization, projectSlugOrId]),
       keyFixed: true,
       ...config,
@@ -101,7 +101,7 @@ export const getAllProjectTabItem = (
         ...config,
       }),
     {
-      translate: translateProjectTabItems,
+      translate: (data) => translateProjectTabItems(data),
       watch: onlyRefs([organization, projectSlugOrId, projectTabId]),
       keyFixed: true,
       ...config,

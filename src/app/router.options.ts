@@ -1,7 +1,7 @@
 import type { RouterConfig } from '@nuxt/schema'
 
 import useProjectPagesRoutes from './useProjectPagesRoutes'
-import useProfilePagesRoutes from './useProfilePagesRoutes'
+import useProfilePagesRoutes from './useUserPagesRoutes'
 import useGroupPagesRoutes from './useGroupPagesRoutes'
 import useAdminPageRoutes from './useAdminPagesRoutes'
 import type { RouteRecordRaw } from 'vue-router'

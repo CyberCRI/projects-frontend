@@ -8,11 +8,21 @@ import {
 import ExistingAccountChecker from '~/components/people/Account/ExistingAccountChecker.vue'
 import AccountLayout from '~/components/people/Account/AccountLayout.vue'
 import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { searchUserByExactMail } from 'shared-projects-frontend/apis'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { flushTick } from '~~/tests/helpers/utils'
 import { flushPromises } from '@vue/test-utils'
+
+// searchUserByExactMail is mocked directly (rather than via registerEndpoint):
+// the real call encodeURIComponent()'s the email and merges a query object, a
+// combination the test-fetch mocking layer can't route (fails with
+// "Failed to parse URL" before ever reaching a registered endpoint).
+vi.mock('shared-projects-frontend/apis', async (importOriginal) => ({
+  ...(await importOriginal()),
+  searchUserByExactMail: vi.fn(),
+}))
 
 describe('AccountDrawer', () => {
   let defaultProps
@@ -26,6 +36,7 @@ describe('AccountDrawer', () => {
 
   beforeEach(() => {
     vi.resetModules()
+    vi.mocked(searchUserByExactMail).mockReset()
     defaultProps = {
       isAddMode: true,
       isInviteMode: false,
@@ -33,10 +44,7 @@ describe('AccountDrawer', () => {
   })
 
   it('AddMode', async () => {
-    const email = 'test@protonmail.com'
-    registerEndpoint(`user/get-by-email/${email}/`, () => {
-      throw createError({ statusCode: 404 })
-    })
+    vi.mocked(searchUserByExactMail).mockRejectedValue(createError({ statusCode: 404 }))
 
     const wrapper = await lpiMount(AccountDrawer, { props: defaultProps })
     expect(wrapper.findComponent(ExistingAccountChecker).exists()).toBe(true)
@@ -45,9 +53,7 @@ describe('AccountDrawer', () => {
 
   it('AddMode email not exists', async () => {
     const email = 'test@protonmail.com'
-    registerEndpoint(`user/get-by-email/${email}/`, () => {
-      throw createError({ statusCode: 404 })
-    })
+    vi.mocked(searchUserByExactMail).mockRejectedValue(createError({ statusCode: 404 }))
 
     const organizationStore = useOrganizationsStore()
     registerEndpoint(
@@ -79,9 +85,7 @@ describe('AccountDrawer', () => {
     const user = UserFactory.generate()
 
     registerEndpoint(`user/${user.id}/`, () => user)
-    registerEndpoint(`user/get-by-email/${user.email}/`, () => {
-      return user
-    })
+    vi.mocked(searchUserByExactMail).mockResolvedValue(user)
 
     const wrapper = await lpiMount(AccountDrawer, { props })
 
@@ -109,10 +113,7 @@ describe('AccountDrawer', () => {
     const organization = OrganizationOutputFactory.generate()
     registerEndpoint(`user/${props.selectedUser.id}/`, () => props.selectedUser)
     registerEndpoint(`organization/`, () => ({ results: [organization] }))
-    const email = props.selectedUser.email
-    registerEndpoint(`user/get-by-email/${email}/`, () => {
-      throw createError({ statusCode: 404 })
-    })
+    vi.mocked(searchUserByExactMail).mockRejectedValue(createError({ statusCode: 404 }))
 
     const wrapper = await lpiMount(AccountDrawer, {
       props,

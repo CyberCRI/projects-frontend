@@ -810,7 +810,6 @@
     }
   },
   "drawer": {
-    "clear": "Puhasta kõik valitud",
     "select-all": "Valige kõik",
     "member": {
       "add": "Lisa liige | Lisa liikmeid",
@@ -826,7 +825,8 @@
       "add": "Lisa projekt | Lisa projekte",
       "edit": "Muuda projekti | Muuda projekte",
       "delete": "Kustuta projekt | Kustuta projektid"
-    }
+    },
+    "clear": "Puhasta valitud | Puhasta kõik valitud"
   },
   "faq": {
     "delete-confirm-content": "Kas oled kindel, et soovid kustutada portaali jaoks isikupärastatud abikaardi. Kogu selle sisu kustutatakse.",
@@ -917,7 +917,8 @@
     "quit-without-saving-title": "Lõpetad säästmata?",
     "recaptcha": {
       "required": "Recaptcha on vajalik."
-    }
+    },
+    "invalid-phone": "Vigane telefoninumber"
   },
   "footer": {
     "contact": "Võta meiega ühendust",
@@ -1331,7 +1332,8 @@
         },
         "long-bio": {
           "label": "Pikk biograafia",
-          "placeholder": "Esitle ennast professionaalselt. Esitage oma karjääri ja oma praegust ametit."
+          "placeholder": "Esitle ennast professionaalselt. Esitage oma karjääri ja oma praegust ametit.",
+          "required": "See väli on kohustuslik."
         },
         "personal-bio": {
           "label": "Isiklik biobioloogia",
@@ -1377,8 +1379,8 @@
         "already-added": "(juba lisatud)",
         "skills": {
           "nothing-yet": "Teie profiilil pole veel oskusi.",
-          "add-success": "Oskus '{name}' lisatud.",
-          "edit-success": "Oskus '{name}' redigeeritud.",
+          "add-success": "Oskus lisatud.",
+          "edit-success": "Oskus redigeeritud.",
           "delete-success": "Oskus \"{name}\" eemaldatud.",
           "add": "Lisa kutseoskusi",
           "add-item": "Lisa oskus",
@@ -1392,12 +1394,15 @@
             "notice-levels": "Näidake oma meisterlikkuse taset.",
             "help-levels": "Lisateave oskuste taseme kohta"
           },
-          "selection": "Valitud oskused"
+          "selection": "Valitud oskused",
+          "add-error": "Oskusi ei saa lisada.",
+          "edit-error": "Oskust ei saa redigeerida.",
+          "delete-error": "Oskust ei saa eemaldada."
         },
         "hobbies": {
           "nothing-yet": "Teie profiilil pole veel oskusi.",
           "add-success": "Lisatud on hobi \"{name}\".",
-          "edit-success": "Hobby '{name}' toimetatud.",
+          "edit-success": "Hobby toimetatud.",
           "delete-success": "Hobby \"{name}\" eemaldatud.",
           "add": "Lisa hobid",
           "add-item": "Lisa hobi",
@@ -1411,7 +1416,10 @@
             "notice-levels": "Näidake oma meisterlikkuse taset.",
             "help-levels": "Rohkem hobide taseme kohta"
           },
-          "selection": "Valitud hobid"
+          "selection": "Valitud hobid",
+          "add-error": "Hobi ei saa lisada.",
+          "edit-error": "Hobi ei saa redigeerida.",
+          "delete-error": "Hobi ei saa eemaldada."
         },
         "mentorship": {
           "contact": {
@@ -1480,7 +1488,14 @@
             "description": "PhD tasemel või tegi suure projekti või võib õpetada magistri tasemel"
           }
         },
-        "nothing-yet": "Sa pole veel oskusi lisanud."
+        "nothing-yet": "Sa pole veel oskusi lisanud.",
+        "delete": "Oled kindel, et soovid selle oskuse kustutada?",
+        "form": {
+          "level": {
+            "label": "Tase",
+            "help": "Vali oma oskuste tase"
+          }
+        }
       },
       "privacy": {
         "tab": "Privaatsus",
@@ -1518,11 +1533,11 @@
       },
       "publications": {
         "tab": "Trükised",
-        "no-editable": "Väljaannete toimetamine on saadaval 2026. aasta jaanuari alguses"
+        "no-editable": "Peagi ilmuvad trükised"
       },
       "conferences": {
         "tab": "Konverentsid",
-        "no-editable": "Toimetuskonverentsid on saadaval 2026. aasta jaanuari alguses"
+        "no-editable": "Peatselt on kättesaadavad konverentsid"
       }
     },
     "go-to-page": "Vaata profiili lehekülge",
@@ -2489,7 +2504,8 @@
       "access_request": "Vastake {access_request_nb} ootel juurdepääsutaotluse(te)le!",
       "pending_access_requests": "Vastake {requests_count} ootel juurdepääsutaotluse(te)le!"
     },
-    "empty": "Sul pole teateid"
+    "empty": "Sul pole teateid",
+    "error": "Märguannete seadistuste salvestamisel tekkis viga."
   },
   "recommendations": {
     "empty": "Sul pole soovitusi",

@@ -12,7 +12,7 @@
             :disabled="asyncing"
             :label="t('common.cancel')"
             secondary
-            class="footer__left-button"
+            class="footer__left-button skeletons-background"
             data-test="close-button"
             @click="close"
           />
@@ -20,10 +20,10 @@
           <slot name="footer:extra" />
 
           <LpiButton
-            :disabled="confirmActionDisabled || asyncing"
+            :disabled="isFormEqual || confirmActionDisabled || asyncing"
             :label="confirmActionName || t('common.confirm')"
             :btn-icon="asyncing ? 'LoaderSimple' : null"
-            class="footer__right-button"
+            class="footer__right-button skeletons-background"
             data-test="confirm-button"
             @click="confirm"
           />
@@ -44,6 +44,7 @@ withDefaults(
     noFooter?: boolean
     customStyle?: StyleValue
     confirmActionDisabled?: boolean
+    isFormEqual?: boolean
     asyncing?: boolean
     showCancel?: boolean
   }>(),

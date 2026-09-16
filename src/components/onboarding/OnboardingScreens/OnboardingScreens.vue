@@ -23,7 +23,7 @@
   </template>
 </template>
 <script lang="ts">
-import CompleteProfileDrawer from '~/components/people/CompleteProfileDrawer/CompleteProfileDrawer.vue'
+import CompleteProfileDrawer from '~/components/onboarding/CompleteProfile/CompleteProfileDrawer.vue'
 import ProfileCompletedModal from '~/components/onboarding/WelcomeModal/ProfileCompletedModal.vue'
 import TakeTourModal from '~/components/onboarding/WelcomeModal/TakeTourModal.vue'
 import WelcomeModal from '~/components/onboarding/WelcomeModal/WelcomeModal.vue'

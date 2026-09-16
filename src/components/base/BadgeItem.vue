@@ -7,7 +7,9 @@
       <IconImage :class="{ 'icon-small': size === 'small' }" :name="iconName" class="icon" />
     </span>
 
-    <span :class="size" class="label">{{ label }}</span>
+    <span :class="size" class="label">
+      <slot>{{ label }}</slot>
+    </span>
 
     <slot name="right" />
   </div>
@@ -20,14 +22,24 @@ import type { IconImageChoice } from '~/functs/IconImage'
 
 withDefaults(
   defineProps<{
-    label: string
+    label?: string
     iconName?: IconImageChoice
     size?: string
     simpleText?: boolean
     colors?:
-      'primary-light' | 'primary-dark' | 'green' | 'salmon' | 'ok' | 'warning' | 'disabled' | ''
+      | 'primary-light'
+      | 'primary-dark'
+      | 'green'
+      | 'salmon'
+      | 'ok'
+      | 'warning'
+      | 'grey'
+      | 'disabled'
+      | 'blue'
+      | ''
   }>(),
   {
+    label: null,
     iconName: null,
     size: 'big',
     simpleText: false,
@@ -96,6 +108,14 @@ withDefaults(
 
     .label {
       color: variables.$mid-gray;
+    }
+  }
+
+  &.blue {
+    background-color: variables.$blue;
+
+    .label {
+      color: variables.$black;
     }
   }
 

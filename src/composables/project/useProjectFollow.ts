@@ -39,6 +39,7 @@ export const useProjectFollow = (project: ComputedRef<AnyProject>) => {
           followed.value = null
         })
         .finally(() => nextTick(() => (asyncing.value = false)))
+        .then(() => followed.value)
     } else {
       return followUtils
         .follow({
@@ -50,9 +51,9 @@ export const useProjectFollow = (project: ComputedRef<AnyProject>) => {
             is_followed: true,
             follow_id: follow.id,
           }
-          return follow
         })
         .finally(() => nextTick(() => (asyncing.value = false)))
+        .then(() => followed.value)
     }
   }
 

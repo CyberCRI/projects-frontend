@@ -13,10 +13,8 @@ export default async function addPageMembersFactory(project: TranslatedProject) 
 
   // add limit to 999 to have all users
   const members = unref(
-    translateUsers<TranslatedProjectMember>(
-      (await getProjectMembers(project.id, { query: { limit: 999 } })).results
-    )
-  )
+    translateUsers((await getProjectMembers(project.id, { query: { limit: 999 } })).results)
+  ) as TranslatedProjectMember[]
 
   const groupedMembers = groupBy(members, (item) => item.role)
 

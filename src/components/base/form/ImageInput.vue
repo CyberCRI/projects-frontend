@@ -6,6 +6,7 @@
           :is="isLink ? LinkButton : LpiButton"
           v-disable-focus="unfocusable"
           btn-icon="Upload"
+          class="skeletons-background"
           :label="displayedLabel"
           @click.prevent="labelRef.click()"
         />

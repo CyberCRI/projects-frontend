@@ -573,35 +573,6 @@ export default {
   }
 }
 
-.delete-group {
-  label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
-    width: 100%;
-    font-size: variables.$font-size-m;
-    margin-bottom: variables.$space-l;
-
-    .section-title {
-      color: variables.$black;
-      font-weight: bold;
-      display: block;
-    }
-  }
-
-  .img-ctn {
-    margin-bottom: variables.$space-xl;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    label {
-      align-self: flex-start;
-    }
-  }
-}
-
 .description label {
   display: flex;
   justify-content: space-between;

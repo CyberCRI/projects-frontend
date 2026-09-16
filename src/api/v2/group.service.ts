@@ -93,7 +93,7 @@ export const getGroupProject = (
         ...config,
       }),
     {
-      translate: translateProjects,
+      translate: (data) => translateProjects(data),
       watch: onlyRefs([organizationCode, groupId]),
       ...config,
     }
@@ -117,7 +117,7 @@ export const getGroupMember = (
         ...config,
       }),
     {
-      translate: (data) => translateUsers<TranslatedGroupMember>(data),
+      translate: (data) => translateUsers(data) as unknown as ComputedRef<TranslatedGroupMember[]>,
       watch: onlyRefs([organizationCode, groupId]),
       ...config,
     }
@@ -140,7 +140,7 @@ export const getGroupSimilar = (
         ...config,
       }),
     {
-      translate: translateGroups,
+      translate: (data) => translateGroups(data),
       watch: onlyRefs([organizationCode, groupId]),
       ...config,
     }
@@ -163,7 +163,7 @@ export const getSubGroup = (
         ...config,
       }),
     {
-      translate: translateGroups,
+      translate: (data) => translateGroups(data),
       watch: onlyRefs([organizationCode, groupId]),
       ...config,
     }
@@ -234,7 +234,7 @@ export const getGroupNews = (
     },
     {
       watch: onlyRefs([organizationCode, groupId]),
-      translate: translateNews,
+      translate: (data) => translateNews(data),
       ...config,
     }
   )
@@ -259,7 +259,7 @@ export const getGroupEvent = (
     },
     {
       watch: onlyRefs([organizationCode, groupId]),
-      translate: translateEvents,
+      translate: (data) => translateEvents(data),
       ...config,
     }
   )

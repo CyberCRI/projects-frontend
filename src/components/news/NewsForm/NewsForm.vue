@@ -1,6 +1,6 @@
 <template>
   <form>
-    <div class="form-section img-ctn">
+    <div class="form-section img-section">
       <label>{{ $t('news.form.image.label') }}</label>
       <ImageEditor
         picture-alt="news image"
@@ -220,7 +220,7 @@ const updateLocation = (location) => {
   min-height: variables.pxtorem(300px);
 }
 
-.img-ctn {
+.img-section {
   margin-bottom: variables.$space-xl;
   display: flex;
   flex-direction: column;

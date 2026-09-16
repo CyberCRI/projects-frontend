@@ -1,431 +1,224 @@
+import {
+  getTranslatableField as $getTranslatableField,
+  translateEntity,
+  translateMany,
+  translateProject as $translateProject,
+  translateComment as $translateComment,
+  translateAnnouncement as $translateAnnouncement,
+  translateReview as $translateReview,
+  translateLink as $translateLink,
+  translateFile as $translateFile,
+  translateBlogEntry as $translateBlogEntry,
+  translateGoal as $translateGoal,
+  translateLocation as $translateLocation,
+  translateProjectMessage as $translateProjectMessage,
+  translateProjectLocation as $translateProjectLocation,
+  translatedProjectLinked as $translatedProjectLinked,
+  translateUser as $translateUser,
+  translateTag as $translateTag,
+  translateGroup as $translateGroup,
+  translatePeopleGroupLocation as $translatePeopleGroupLocation,
+  translateOrganization as $translateOrganization,
+  translateOneNews as $translateOneNews,
+  translateOneNewsLocation as $translateOneNewsLocation,
+  translateEvent as $translateEvent,
+  translateEventsLocation as $translateEventsLocation,
+  translateInstruction as $translateInstruction,
+  translateNewsFeed as $translateNewsFeed,
+  translateCategory as $translateCategory,
+  translateTemplate as $translateTemplate,
+  translateResearcherDocument as $translateResearcherDocument,
+  translateProjectTab as $translateProjectTab,
+  translateProjectTabItem as $translateProjectTabItem,
+  translateSkill as $translateSkill,
+  translateClassification as $translateClassification,
+} from 'shared-projects-frontend/translate'
 import type {
-  TranslatedEventLocation,
-  TranslatedLocation,
-  TranslatedNewsLocation,
   GeneralLocationPeopleGroup,
-  TranslatedPeopleGroupModel,
   AttachmentLinkModel,
-  TranslatedAttachmentLink,
   AttachmentFileModel,
-  TranslatedAttachmentFile,
-  TranslatedProjectTab,
-  TranslatedProjectTabItem,
-  TranslatedLinkedProject,
-  TranslatedProject,
-  TranslatedProjectCategory,
-  TranslatedProjectMessage,
-  TranslatedOrganizationModel,
-  TranslatedAnnouncement,
-  TranslatedInstruction,
-  TranslatedBlogEntry,
-  TranslatedTemplate,
-  TranslatedNewsfeed,
-  TranslatedResearcherDocument,
-  TranslatedEventModel,
-  TranslatedComment,
-  TranslatedUserModel,
-  TranslatedReview,
-  TranslatedNews,
-  TranslatedGoal,
-  TranslatedTag,
+  SkillModel,
+  TagClassificationModel,
+  ProjectModel,
+  CommentModel,
+  AnnouncementModel,
+  ReviewModel,
+  BlogEntryModel,
+  GoalModel,
+  LocationModel,
+  ProjectMessageModel,
+  UserModel,
+  TagModel,
+  PeopleGroupModel,
+  OrganizationModel,
+  NewsModel,
+  NewsLocation,
+  EventModel,
+  EventLocation,
+  InstructionModel,
+  NewsfeedModel,
+  ProjectCategoryModel,
+  TemplateModel,
+  ResearcherDocument,
+  ProjectTab,
+  ProjectTabItem,
+  LinkedProject,
+  Language,
 } from 'shared-projects-frontend/models'
+import type { Agent } from '~~/prisma-chatbot-db/generated/prisma/browser'
 import type { TranslatedAgent } from '~/models/agent.model'
 import type { RefOrRaw } from '~/interfaces/utils'
+
+const $translateAgent = (data: Agent, locale: Language | null): TranslatedAgent => {
+  if (!data) {
+    return null
+  }
+  return translateEntity<TranslatedAgent>(data, ['description', 'startMessage', 'title'], locale)
+}
 
 export default function useAutoTranslate() {
   // TODO: memoize in local storage / user prefs
   const isAutoTranslateActivated = useState('isAutoTranslateActivated', () => true)
 
-  // const { locale } = useNuxtI18n()
-  // but we use auto translate in organization pinia store so
-  // https://stackoverflow.com/questions/77594888/how-to-use-i18n-messages-in-a-nuxt3-pinia-store
-  const locale = (useNuxtApp().$i18n as any).locale
+  const { locale } = useNuxtI18n()
 
-  // base functions
-  const getDetectedLanguage = (entity, field) => {
-    return entity[`${field}_detected_language`]
-  }
+  const language = computed(() => {
+    if (isAutoTranslateActivated.value) {
+      return null
+    }
+    return locale.value
+  })
 
-  //    TODO: temp fix for multilingual edits
-  //    display translated text even if we are on original language
-  // const useOriginalValue = (entity, field) => {
-  //   const _entity = unref(entity)
-  //   const _field = unref(field)
-  //   let res = !isAutoTranslateActivated.value
-  //   if (!res && _entity && _field) res = _entity[`${_field}_detected_language`] === locale.value
-  //   return res
-  // }
-  const useOriginalValue = () => !isAutoTranslateActivated.value
+  const getTranslatableField = (data: RefOrRaw<any>, field) =>
+    computed(() => $getTranslatableField(unref(data), field, language.value))
 
-  const getTranslatableField = (entity: any, field: string, defaultValue: any = '') =>
-    computed(() => {
-      const _entity = unref(entity)
-      const _field = unref(field)
-      const _defaultValue = unref(defaultValue)
-      if (!_entity || !_field) return _defaultValue
-      const isNotTranslated = !_entity[`${_field}_detected_language`]
-      const isDetectectedLanguage = locale.value == _entity[`${_field}_detected_language`]
-      //    TODO: temp fix for multilingual edits
-      //    display translated text even if we are on original language
-      // if (useOriginalValue(_entity, _field)) return _entity[_field] || _defaultValue
-      if (useOriginalValue() || isDetectectedLanguage || isNotTranslated)
-        return _entity[_field] || _defaultValue
-      return _entity[`${_field}_${locale.value}`] || _entity[_field] || _defaultValue
-    })
+  const translateAgent = (data: RefOrRaw<Agent>) =>
+    computed<TranslatedAgent>(() => $translateAgent(unref(data), language.value))
+  const translateAgents = (data: RefOrRaw<Agent[]>) =>
+    computed<TranslatedAgent[]>(() => translateMany($translateAgent, unref(data), language.value))
 
-  const getTranslatableFields = (entity: any, fields: string[], defaultValue: any = '') =>
-    computed(() => {
-      const _entity = unref(entity)
-      const _defaultValue = unref(defaultValue)
-      const res = {}
-      for (const field of fields) {
-        const _field = unref(field)
-        if (!_entity || !_field) continue
-
-        const isNotTranslated = !_entity[`${_field}_detected_language`]
-        const isDetectectedLanguage = locale.value == _entity[`${_field}_detected_language`]
-        //    TODO: temp fix for multilingual edits
-        //    display translated text even if we are on original language
-        // else if (useOriginalValue(_entity, _field)) res[_field] = _entity[_field] || _defaultValue
-        if (useOriginalValue() || isDetectectedLanguage || isNotTranslated)
-          res[_field] = _entity[_field] || _defaultValue
-        else res[_field] = _entity[`${_field}_${locale.value}`] || _entity[_field] || _defaultValue
-      }
-      return res
-    })
-
-  const translateEntity = <DataT = any>(entity, fields: string[]) =>
-    computed<DataT>(() => ({
-      ...unref(entity || {}),
-      $t: unref(getTranslatableFields(entity, fields)),
-    }))
-
-  const translateEntities = <DataT = any>(entities, translateFn) =>
-    computed<DataT[]>(() => {
-      const _entities = unref(entities)
-      return _entities?.map((entity) => unref(translateFn(entity)) || [])
-    })
-
-  // --------------------
-  // Projects
-  const translateProject = (project) => {
-    return computed<TranslatedProject>(() => {
-      const unrefProject = unref(project)
-      if (!unrefProject) return project
-      return {
-        ...unref(translateEntity(unrefProject, ['title', 'description', 'purpose'])),
-        template: unrefProject.template
-          ? unref(translateTemplate(unrefProject.template))
-          : unrefProject.template,
-        categories: unrefProject.categories
-          ? unref(translateCategories(unrefProject.categories))
-          : unrefProject.categories,
-        tags: unrefProject.tags ? unref(translateTags(unrefProject.tags)) : unrefProject.tags,
-      }
-    })
-  }
-  const translateProjects = (projects) =>
-    translateEntities<TranslatedProject>(projects, translateProject)
-
-  const translatedProjectLinked = (linkedProject) =>
-    computed<TranslatedLinkedProject>(() => {
-      const raw = unref(linkedProject)
-      return {
-        ...raw,
-        project: raw.project ? unref(translateProject(raw.project)) : null,
-        target: raw.target ? unref(translateProject(raw.target)) : null,
-      }
-    })
-  const translatedProjectLinkeds = (linkedProjects) =>
-    translateEntities<TranslatedLinkedProject>(linkedProjects, translatedProjectLinked)
-
-  const translateComment = (comment) =>
-    computed<TranslatedComment>(() => {
-      const raw = unref(comment)
-      return {
-        ...unref(translateEntity<TranslatedComment>(comment, ['content'])),
-        replies: raw.replies ? unref(translateComments(raw.replies)) : null,
-      }
-    })
-
-  const translateComments = (comments) =>
-    translateEntities<TranslatedComment>(comments, translateComment)
-
-  const translateAnnouncement = (announcement) =>
-    computed(() => {
-      if (!announcement) return announcement
-      return {
-        ...unref(translateEntity(announcement, ['title', 'description'])),
-        project: unref(translateProject(announcement.project)),
-      } as TranslatedAnnouncement
-    })
-  const translateAnnouncements = (announcements) =>
-    translateEntities<TranslatedAnnouncement>(announcements, translateAnnouncement)
-
-  const translateReview = (review) =>
-    translateEntity<TranslatedReview>(review, ['title', 'description'])
-  const translateReviews = (reviews) =>
-    translateEntities<TranslatedReview>(reviews, translateReview)
-
-  const translateLink = (link: RefOrRaw<AttachmentLinkModel>) =>
-    translateEntity<TranslatedAttachmentLink>(link, ['title', 'description'])
-  const translateLinks = (links: RefOrRaw<AttachmentLinkModel[]>) =>
-    translateEntities<TranslatedAttachmentLink>(links, translateLink)
-
-  const translateFile = (file: RefOrRaw<AttachmentFileModel>) =>
-    translateEntity<TranslatedAttachmentFile>(file, ['title', 'description'])
-  const translateFiles = (files: RefOrRaw<AttachmentFileModel[]>) =>
-    translateEntities<TranslatedAttachmentFile>(files, translateFile)
-
-  const translateBlogEntry = (blogEntry) =>
-    translateEntity<TranslatedBlogEntry>(blogEntry, ['title', 'content'])
-  const translateBlogEntries = (blogEntries) =>
-    translateEntities<TranslatedBlogEntry>(blogEntries, translateBlogEntry)
-
-  const translateGoal = (goal) => translateEntity<TranslatedGoal>(goal, ['title', 'description'])
-  const translateGoals = (goals) => translateEntities<TranslatedGoal>(goals, translateGoal)
-
-  const translateLocation = <T = TranslatedLocation>(location) =>
-    translateEntity<T>(location, ['title', 'description'])
-  const translateLocations = <T = TranslatedLocation>(locations) =>
-    translateEntities<T>(locations, translateLocation)
-
-  const translateProjectLocation = (location) => {
-    return computed<TranslatedLocation>(() => {
-      if (!location) {
-        return location
-      }
-      return {
-        ...unref(translateLocation(location)),
-        project: unref(translateProject(location.project)),
-      }
-    })
-  }
-  const translateProjectLocations = (Locations) =>
-    translateEntities<TranslatedLocation>(Locations, translateProjectLocation)
-
-  const translatePeopleGroupLocation = (location) => {
-    return computed<GeneralLocationPeopleGroup>(() => {
-      if (!location) {
-        return location
-      }
-      return {
-        ...unref(translateLocation(location)),
-        people_group: unref(translateGroup(location.people_group)),
-      }
-    })
-  }
-  const translatePeopleGroupLocations = (Locations) =>
-    translateEntities<GeneralLocationPeopleGroup>(Locations, translatePeopleGroupLocation)
-
-  const translateProjectMessage = (message) =>
-    computed(() => {
-      const raw = unref(message)
-      return {
-        ...unref(translateEntity<TranslatedProjectMessage>(message, ['content'])),
-        replies: raw.replies ? unref(translateProjectMessages(raw.replies)) : null,
-      }
-    })
-  const translateProjectMessages = (messages) =>
-    translateEntities<TranslatedProjectMessage>(messages, translateProjectMessage)
-
-  // --------------------
-  // People
-  const translateUser = <Model = TranslatedUserModel>(user) =>
-    translateEntity<Model>(user, ['description', 'short_description', 'job'])
-  const translateUsers = <Model = TranslatedUserModel>(users) =>
-    translateEntities<Model>(users, translateUser)
-
-  const translateTag = <T = TranslatedTag>(tag) => translateEntity<T>(tag, ['description', 'title'])
-  const translateTags = <T = TranslatedTag>(tags) => translateEntities<T>(tags, translateTag)
-
-  // -----------------
-  // groups
-  const translateGroup = (group) =>
-    computed<TranslatedPeopleGroupModel>(() => {
-      const _group = unref(
-        translateEntity<TranslatedPeopleGroupModel>(group, [
-          'name',
-          'description',
-          'short_description',
-        ])
-      )
-      return {
-        ..._group,
-        locations: _group?.locations ? unref(translateLocations(_group.locations)) : null,
-      }
-    })
-  const translateGroups = (groups) =>
-    translateEntities<TranslatedPeopleGroupModel>(groups, translateGroup)
-
-  // orgs
-  const translateOrganization = (org) =>
-    translateEntity<TranslatedOrganizationModel>(org, [
-      'name',
-      'dashboard_title',
-      'dashboard_subtitle',
-      'description',
-      'chat_button_text',
-    ])
-  const translateOrganizations = (orgs) =>
-    translateEntities<TranslatedOrganizationModel>(orgs, translateOrganization)
-
-  const translateTemplate = (template) =>
-    computed(() => {
-      const _template = unref(
-        translateEntity<TranslatedTemplate>(template, [
-          'name',
-          'description',
-          'project_title',
-          'project_description',
-          'project_purpose',
-          'blogentry_title',
-          'blogentry_content',
-          'goal_title',
-          'goal_description',
-          'comment_content',
-        ])
-      )
-      if (_template?.project_tags)
-        _template.project_tags = unref(translateTags(_template.project_tags))
-      if (_template?.categories)
-        _template.categories = unref(translateCategories(_template.categories))
-      return _template
-    })
-  const translateTemplates = (templates) =>
-    translateEntities<TranslatedTemplate>(templates, translateTemplate)
-
-  // -------
-  // use full
-
-  const translateUserFull = (user) =>
-    computed(() => {
-      const res = unref(translateUser(user))
-      if (res) {
-        res.people_groups = unref(translateGroups(res.people_groups))
-        res.skills = unref(translateTags(res.skills))
-      }
-      return res
-    })
-
-  // -----------
-  // news
-  const translateOneNews = (news) =>
-    computed(() => {
-      const newsRaw = unref(news)
-      return {
-        ...unref(translateEntity<TranslatedNews>(newsRaw, ['title', 'content'])),
-        location: newsRaw?.location ? unref(translateLocation(newsRaw.location)) : null,
-      }
-    })
-  const translateNews = (news) => translateEntities<TranslatedNews>(news, translateOneNews)
-
-  const translateOneNewsLocation = (location) =>
-    computed<TranslatedNewsLocation>(() => {
-      const locationRaw = unref(location)
-      return {
-        ...unref(translateLocation(locationRaw)),
-        news: locationRaw?.news ? unref(translateOneNews(locationRaw.news)) : null,
-      }
-    })
-  const translateNewsLocations = (news) =>
-    translateEntities<TranslatedNewsLocation>(news, translateOneNewsLocation)
-
-  // -----------
-  // instructions
-  const translateInstruction = (instruction) =>
-    translateEntity<TranslatedInstruction>(instruction, ['title', 'content'])
-  const translateInstructions = (instructions) =>
-    translateEntities<TranslatedInstruction>(instructions, translateInstruction)
-
-  // -----------
-  // events
-  const translateEvent = (event) =>
-    computed<TranslatedEventModel>(() => {
-      const locationRaw = unref(event)
-      return {
-        ...unref(translateEntity(event, ['title', 'content'])),
-        location: locationRaw?.location ? unref(translateLocation(locationRaw.location)) : null,
-      }
-    })
-  const translateEvents = (events) =>
-    translateEntities<TranslatedEventModel>(events, translateEvent)
-
-  const translateEventsLocation = (location) =>
-    computed<TranslatedEventLocation>(() => {
-      const locationRaw = unref(location)
-      return {
-        ...unref(translateLocation(locationRaw)),
-        event: locationRaw?.event ? unref(translateEvent(locationRaw.event)) : null,
-      }
-    })
-  const translateEventsLocations = (locations) =>
-    translateEntities<TranslatedEventLocation>(locations, translateEventsLocation)
-
-  // -----------
-  // Newsfeed
-  const translateNewsfeed = (items) =>
-    computed(() => {
-      const _items = unref(items)
-      return _items?.map((item) => ({
-        ...item,
-        project: item.project ? unref(translateProject(item.project)) : item.project,
-        news: item.news ? unref(translateOneNews(item.news)) : item.news,
-        announcement: item.announcement
-          ? unref(translateAnnouncement(item.announcement))
-          : item.announcement,
-      })) as TranslatedNewsfeed[]
-    })
-
-  // -----------
-  // categoris
-  const translateCategory = (category) => {
-    const rawCategory = unref(category)
-    if (rawCategory?.children)
-      rawCategory.children = unref(translateCategories(rawCategory.children))
-    if (rawCategory?.hierarchy)
-      rawCategory.hierarchy = unref(translateCategories(rawCategory.hierarchy))
-    if (rawCategory?.tags) rawCategory.tags = unref(translateTags(rawCategory.tags))
-    return translateEntity<TranslatedProjectCategory>(rawCategory, ['name', 'description'])
-  }
-  const translateCategories = (categories) =>
-    translateEntities<TranslatedProjectCategory>(categories, translateCategory)
-
-  /*
-    researcher document
-  */
-
-  const translateResearcherDocument = (data) =>
-    translateEntity<TranslatedResearcherDocument>(data, ['title', 'description'])
-  const translateResearcherDocuments = (datas) =>
-    translateEntities<TranslatedResearcherDocument>(datas, translateResearcherDocument)
-
-  /*
-    project tabs
-  */
-
-  const translateProjectTab = (data) =>
-    translateEntity<TranslatedProjectTab>(data, ['title', 'description'])
-  const translateProjectTabs = (datas) =>
-    translateEntities<TranslatedProjectTab>(datas, translateProjectTab)
-
-  const translateProjectTabItem = (data) =>
-    translateEntity<TranslatedProjectTabItem>(data, ['title', 'content'])
-  const translateProjectTabItems = (datas) =>
-    translateEntities<TranslatedProjectTabItem>(datas, translateProjectTabItem)
-
-  /*
-  agent
-  */
-
-  const translateAgent = (data) =>
-    translateEntity<TranslatedAgent>(data, ['title', 'description', 'startMessage'])
-  const translateAgents = (datas) => translateEntities<TranslatedAgent>(datas, translateAgent)
+  const translateProject = (data: RefOrRaw<ProjectModel>) =>
+    computed(() => $translateProject(unref(data), language.value))
+  const translateProjects = (data: RefOrRaw<ProjectModel[]>) =>
+    computed(() => translateMany($translateProject, unref(data), language.value))
+  const translateComment = (data: RefOrRaw<CommentModel>) =>
+    computed(() => $translateComment(unref(data), language.value))
+  const translateComments = (data: RefOrRaw<CommentModel[]>) =>
+    computed(() => translateMany($translateComment, unref(data), language.value))
+  const translateAnnouncement = (data: RefOrRaw<AnnouncementModel>) =>
+    computed(() => $translateAnnouncement(unref(data), language.value))
+  const translateAnnouncements = (data: RefOrRaw<AnnouncementModel[]>) =>
+    computed(() => translateMany($translateAnnouncement, unref(data), language.value))
+  const translateReview = (data: RefOrRaw<ReviewModel>) =>
+    computed(() => $translateReview(unref(data), language.value))
+  const translateReviews = (data: RefOrRaw<ReviewModel[]>) =>
+    computed(() => translateMany($translateReview, unref(data), language.value))
+  const translateLink = (data: RefOrRaw<AttachmentLinkModel>) =>
+    computed(() => $translateLink(unref(data), language.value))
+  const translateLinks = (data: RefOrRaw<AttachmentLinkModel[]>) =>
+    computed(() => translateMany($translateLink, unref(data), language.value))
+  const translateFile = (data: RefOrRaw<AttachmentFileModel>) =>
+    computed(() => $translateFile(unref(data), language.value))
+  const translateFiles = (data: RefOrRaw<AttachmentFileModel[]>) =>
+    computed(() => translateMany($translateFile, unref(data), language.value))
+  const translateBlogEntry = (data: RefOrRaw<BlogEntryModel>) =>
+    computed(() => $translateBlogEntry(unref(data), language.value))
+  const translateBlogEntries = (data: RefOrRaw<BlogEntryModel[]>) =>
+    computed(() => translateMany($translateBlogEntry, unref(data), language.value))
+  const translateGoal = (data: RefOrRaw<GoalModel>) =>
+    computed(() => $translateGoal(unref(data), language.value))
+  const translateGoals = (data: RefOrRaw<GoalModel[]>) =>
+    computed(() => translateMany($translateGoal, unref(data), language.value))
+  const translateLocation = (data: RefOrRaw<LocationModel>) =>
+    computed(() => $translateLocation(unref(data), language.value))
+  const translateLocations = (data: RefOrRaw<LocationModel[]>) =>
+    computed(() => translateMany($translateLocation, unref(data), language.value))
+  const translateProjectMessage = (data: RefOrRaw<ProjectMessageModel>) =>
+    computed(() => $translateProjectMessage(unref(data), language.value))
+  const translateProjectMessages = (data: RefOrRaw<ProjectMessageModel[]>) =>
+    computed(() => translateMany($translateProjectMessage, unref(data), language.value))
+  const translateProjectLocation = (data: RefOrRaw<LocationModel>) =>
+    computed(() => $translateProjectLocation(unref(data), language.value))
+  const translateProjectLocations = (data: RefOrRaw<LocationModel[]>) =>
+    computed(() => translateMany($translateProjectLocation, unref(data), language.value))
+  const translatedProjectLinked = (data: RefOrRaw<LinkedProject>) =>
+    computed(() => $translatedProjectLinked(unref(data), language.value))
+  const translatedProjectLinkeds = (data: RefOrRaw<LinkedProject[]>) =>
+    computed(() => translateMany($translatedProjectLinked, unref(data), language.value))
+  const translateUser = (data: RefOrRaw<UserModel>) =>
+    computed(() => $translateUser(unref(data), language.value))
+  const translateUsers = (data: RefOrRaw<UserModel[]>) =>
+    computed(() => translateMany($translateUser, unref(data), language.value))
+  const translateTag = (data: RefOrRaw<TagModel>) =>
+    computed(() => $translateTag(unref(data), language.value))
+  const translateTags = (data: RefOrRaw<TagModel[]>) =>
+    computed(() => translateMany($translateTag, unref(data), language.value))
+  const translateGroup = (data: RefOrRaw<PeopleGroupModel>) =>
+    computed(() => $translateGroup(unref(data), language.value))
+  const translateGroups = (data: RefOrRaw<PeopleGroupModel[]>) =>
+    computed(() => translateMany($translateGroup, unref(data), language.value))
+  const translatePeopleGroupLocation = (data: RefOrRaw<GeneralLocationPeopleGroup>) =>
+    computed(() => $translatePeopleGroupLocation(unref(data), language.value))
+  const translatePeopleGroupLocations = (data: RefOrRaw<GeneralLocationPeopleGroup[]>) =>
+    computed(() => translateMany($translatePeopleGroupLocation, unref(data), language.value))
+  const translateOrganization = (data: RefOrRaw<OrganizationModel>) =>
+    computed(() => $translateOrganization(unref(data), language.value))
+  const translateOrganizations = (data: RefOrRaw<OrganizationModel[]>) =>
+    computed(() => translateMany($translateOrganization, unref(data), language.value))
+  const translateOneNews = (data: RefOrRaw<NewsModel>) =>
+    computed(() => $translateOneNews(unref(data), language.value))
+  const translateNews = (data: RefOrRaw<NewsModel[]>) =>
+    computed(() => translateMany($translateOneNews, unref(data), language.value))
+  const translateOneNewsLocation = (data: RefOrRaw<NewsLocation>) =>
+    computed(() => $translateOneNewsLocation(unref(data), language.value))
+  const translateNewsLocations = (data: RefOrRaw<NewsLocation[]>) =>
+    computed(() => translateMany($translateOneNewsLocation, unref(data), language.value))
+  const translateEvent = (data: RefOrRaw<EventModel>) =>
+    computed(() => $translateEvent(unref(data), language.value))
+  const translateEvents = (data: RefOrRaw<EventModel[]>) =>
+    computed(() => translateMany($translateEvent, unref(data), language.value))
+  const translateEventsLocation = (data: RefOrRaw<EventLocation>) =>
+    computed(() => $translateEventsLocation(unref(data), language.value))
+  const translateEventsLocations = (data: RefOrRaw<EventLocation[]>) =>
+    computed(() => translateMany($translateEventsLocation, unref(data), language.value))
+  const translateInstruction = (data: RefOrRaw<InstructionModel>) =>
+    computed(() => $translateInstruction(unref(data), language.value))
+  const translateInstructions = (data: RefOrRaw<InstructionModel[]>) =>
+    computed(() => translateMany($translateInstruction, unref(data), language.value))
+  const translateNewsfeed = (data: RefOrRaw<NewsfeedModel[]>) =>
+    computed(() => $translateNewsFeed(unref(data), language.value))
+  const translateCategory = (data: RefOrRaw<ProjectCategoryModel>) =>
+    computed(() => $translateCategory(unref(data), language.value))
+  const translateCategories = (data: RefOrRaw<ProjectCategoryModel[]>) =>
+    computed(() => translateMany($translateCategory, unref(data), language.value))
+  const translateTemplate = (data: RefOrRaw<TemplateModel>) =>
+    computed(() => $translateTemplate(unref(data), language.value))
+  const translateTemplates = (data: RefOrRaw<TemplateModel[]>) =>
+    computed(() => translateMany($translateTemplate, unref(data), language.value))
+  const translateResearcherDocument = (data: RefOrRaw<ResearcherDocument>) =>
+    computed(() => $translateResearcherDocument(unref(data), language.value))
+  const translateResearcherDocuments = (data: RefOrRaw<ResearcherDocument[]>) =>
+    computed(() => translateMany($translateResearcherDocument, unref(data), language.value))
+  const translateProjectTab = (data: RefOrRaw<ProjectTab>) =>
+    computed(() => $translateProjectTab(unref(data), language.value))
+  const translateProjectTabs = (data: RefOrRaw<ProjectTab[]>) =>
+    computed(() => translateMany($translateProjectTab, unref(data), language.value))
+  const translateProjectTabItem = (data: RefOrRaw<ProjectTabItem>) =>
+    computed(() => $translateProjectTabItem(unref(data), language.value))
+  const translateProjectTabItems = (data: RefOrRaw<ProjectTabItem[]>) =>
+    computed(() => translateMany($translateProjectTabItem, unref(data), language.value))
+  const translateSkill = (data: RefOrRaw<SkillModel>) =>
+    computed(() => $translateSkill(unref(data), language.value))
+  const translateSkills = (data: RefOrRaw<SkillModel[]>) =>
+    computed(() => translateMany($translateSkill, unref(data), language.value))
+  const translateClassification = (data: RefOrRaw<TagClassificationModel>) =>
+    computed(() => $translateClassification(unref(data), language.value))
+  const translateClassifications = (data: RefOrRaw<TagClassificationModel[]>) =>
+    computed(() => translateMany($translateClassification, unref(data), language.value))
 
   return {
     isAutoTranslateActivated,
     getTranslatableField,
-    getDetectedLanguage,
 
     // project
     translateProject,
@@ -458,7 +251,6 @@ export default function useAutoTranslate() {
     // people
     translateUser,
     translateUsers,
-    translateUserFull,
     translateTag,
     translateTags,
 
@@ -511,5 +303,13 @@ export default function useAutoTranslate() {
     // agent
     translateAgent,
     translateAgents,
+
+    // skills
+    translateSkill,
+    translateSkills,
+
+    // classifications
+    translateClassification,
+    translateClassifications,
   }
 }

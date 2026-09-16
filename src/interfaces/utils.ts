@@ -1,7 +1,15 @@
+import type { ValidationArgs } from '@vuelidate/core'
+
 export type RefOrRaw<T> = Ref<T> | ComputedRef<T> | T
 
 // change field to optional
 export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
+export type ExtractKeys<T, K extends T> = Extract<T, K>
+
 // LPi Date used in all apps
 export type LpiDate = string | Date | Date[] | string[] | null
+
+export type Rules<T> = {
+  [key in keyof T]: ValidationArgs
+}

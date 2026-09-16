@@ -6,21 +6,31 @@
         <p>{{ t('profile.edit.skills.tip.intro-edit') }}</p>
         <ul>
           <li>
-            <strong>{{ t('profile.edit.skills.tip.curious.title') }}</strong>
+            <strong>
+              <SkillSteps :active-step="1" />
+              <br />
+              {{ t('profile.edit.skills.tip.curious.title') }}
+            </strong>
             <br />
             {{ t('profile.edit.skills.tip.curious.description') }}
           </li>
           <li>
+            <SkillSteps :active-step="2" />
+            <br />
             <strong>{{ t('profile.edit.skills.tip.basic.title') }}</strong>
             <br />
             {{ t('profile.edit.skills.tip.basic.description') }}
           </li>
           <li>
+            <SkillSteps :active-step="3" />
+            <br />
             <strong>{{ t('profile.edit.skills.tip.competent.title') }}</strong>
             <br />
             {{ t('profile.edit.skills.tip.competent.description') }}
           </li>
           <li>
+            <SkillSteps :active-step="4" />
+            <br />
             <strong>{{ t('profile.edit.skills.tip.expert.title') }}</strong>
             <br />
             {{ t('profile.edit.skills.tip.expert.description') }}

@@ -33,7 +33,11 @@ const onDelete = () => (search.value = '')
 <template>
   <section>
     <div v-if="countSelected">
-      <LpiButton btn-icon="Eraser" :label="$t('drawer.clear')" @click="emit('select-clear')" />
+      <LpiButton
+        btn-icon="Eraser"
+        :label="$t('drawer.clear', countSelected)"
+        @click="emit('select-clear')"
+      />
       <slot name="selected" />
     </div>
 

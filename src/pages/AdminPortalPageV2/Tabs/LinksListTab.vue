@@ -241,6 +241,7 @@ export default {
 
 .list {
   margin-top: variables.$space-2xl;
+  overflow: scroll;
 }
 
 .copy-link {
@@ -277,7 +278,6 @@ table {
     padding: variables.$space-unit;
     vertical-align: middle;
     text-align: left;
-    white-space: nowrap;
   }
 
   .loader {

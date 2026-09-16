@@ -8,7 +8,7 @@
           </label>
           <slot name="in-label" />
         </div>
-        <span v-if="help" class="description skeletons-text">
+        <span v-if="help || $slots.help" class="description skeletons-text">
           <slot name="help">
             {{ help }}
           </slot>

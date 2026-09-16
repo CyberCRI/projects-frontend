@@ -5,7 +5,7 @@ import {
   getAllTagsById,
 } from 'shared-projects-frontend/apis'
 import { SORBOBOT_EXTRA, sorbobotIsEnabled } from '~/mcp-server/sorbobot/sorbobot-tool'
-import { mapPeopleGroupPreview, mapUserPreview } from './people-tool'
+import { mapPeopleGroupPreview, mapUserPreview } from './user-tool'
 import { mcpOptions, orgCode, resultFromTool } from './base'
 import type { Config } from 'shared-projects-frontend/apis'
 import type { TypeMcpServer } from '~/interfaces/mcp'

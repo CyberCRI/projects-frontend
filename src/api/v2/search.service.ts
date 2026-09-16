@@ -9,6 +9,7 @@ import type {
   TranslatedSearchResultProject,
   TranslatedSearchResultUser,
   OrganizationModel,
+  TagClassificationModel,
 } from 'shared-projects-frontend/models'
 import {
   searchAll,
@@ -222,22 +223,26 @@ export const getSearchGroup = (
 // TODO change backend with prefix organization code in url
 export const getSearchTag = (
   organization: RefOrRaw<OrganizationModel['code']>,
-  classificationType: RefOrRaw<'enabled-for-projects' | 'enabled-for-skills'>,
+  classificationId: RefOrRaw<
+    TagClassificationModel['id'] | 'enabled-for-projects' | 'enabled-for-skills'
+  >,
   config: ConfigPagination = {}
 ) => {
-  const key = computed(() => `${unref(organization)}::search::project::tags`)
+  const key = computed(
+    () => `${unref(organization)}::search::classifications::${unref(classificationId)}::tags`
+  )
   const { translateTags } = useAutoTranslate()
 
   return useAsyncPaginationAPI(
     key,
     ({ config }) =>
-      getOrgClassificationTags(unref(organization), unref(classificationType), {
+      getOrgClassificationTags(unref(organization), unref(classificationId), {
         ...DEFAULT_CONFIG,
         ...config,
       }),
     {
       translate: (data) => translateTags(data),
-      watch: onlyRefs([classificationType, organization]),
+      watch: onlyRefs([classificationId, organization]),
       ...config,
     }
   )

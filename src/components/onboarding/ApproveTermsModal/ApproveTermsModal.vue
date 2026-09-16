@@ -78,7 +78,7 @@ const onTermApproved = async () => {
   }
   try {
     await patchUser(user.id, payload)
-    await usersStore.getUser(user.id)
+    await usersStore.refreshUser()
     if (window?.lpiSharedWorker) {
       window?.lpiSharedWorker.port.postMessage({
         type: 'TOS_ACCEPTED',
