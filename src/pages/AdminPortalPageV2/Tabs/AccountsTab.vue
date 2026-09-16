@@ -233,7 +233,7 @@ const { query, setQuery } = useQuery<QuerySearchAdmin>({
 
 // TODO change to organizationCode
 // TODO add translate for user/group
-const organizationId = computed(() => organizationsStore.current.id)
+const organizationId = computed(() => organizationsStore.current?.id)
 const { status, data, refresh, pagination } = searchUserAdmin(organizationId, {
   query,
   default: () => factoriesSkeleton(userSkeleton, LIMIT),
