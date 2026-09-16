@@ -94,7 +94,7 @@ export default function useAutoTranslate() {
   })
 
   const getTranslatableField = (data: RefOrRaw<any>, field) =>
-    computed(() => $getTranslatableField(data, field, language.value))
+    computed(() => $getTranslatableField(unref(data), field, language.value))
 
   const translateAgent = (data: RefOrRaw<Agent>) =>
     computed<TranslatedAgent>(() => $translateAgent(unref(data), language.value))

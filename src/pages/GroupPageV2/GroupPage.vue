@@ -9,7 +9,7 @@
     }"
   >
     <div class="page-section-extra-wide">
-      <FetchLoader :status="status" :error="error" redirect-404 :with-data="!!group.id">
+      <FetchLoader :status="status" :error="error" redirect-404 :with-data="!!group">
         <NavPanelLayout
           :is-loading="groupLoading"
           :is-nav-collapsed="isNavCollapsed"
