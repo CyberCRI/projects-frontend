@@ -1,6 +1,7 @@
 import type { ErrorObject, useVuelidate, ValidationArgs } from '@vuelidate/core'
 import { difference, groupBy, isEqual, isNil } from 'es-toolkit'
 import type { RefOrRaw } from '~/interfaces/utils'
+import { deepToRaw } from '~/functs/utils'
 import useValidate from '@vuelidate/core'
 import { v4 as uuidv4 } from 'uuid'
 import type { ModelRef } from 'vue'
@@ -117,7 +118,7 @@ const useForm = <T extends object, CleanResult = T>(
   watch(
     [form, isValid],
     () => {
-      const formContent = { ...form.value }
+      const formContent = deepToRaw(form.value)
 
       let cleanded = null
       if (isValid.value) {

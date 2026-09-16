@@ -101,13 +101,8 @@ const onSubmit = (form: AttachmentForm) => {
   formData.append('title', form.title)
   formData.append('description', form.description)
   formData.append('user_id', props.profile.id.toString())
-  formData.append('file', form.file, form.file.name)
-  formData.append('mime', form.file.type)
 
   if (form.id) {
-    // on update remove file (old things 😕)
-    formData.delete('file')
-    formData.delete('mime')
     patchUserAttachmentFile(props.profile.id, selectedFile.value.id, formData)
       .then(() => {
         toaster.pushSuccess(t('toasts.link-update.success'))
@@ -116,6 +111,8 @@ const onSubmit = (form: AttachmentForm) => {
       .catch(() => toaster.pushError(t('toasts.link-update.error')))
       .finally(() => (asyncing.value = false))
   } else {
+    formData.append('file', form.file, form.file.name)
+    formData.append('mime', form.file.type)
     postUserAttachmentFile(props.profile.id, formData)
       .then(() => {
         toaster.pushSuccess(t('toasts.link-create.success'))

@@ -42,7 +42,7 @@ export const useAttachmentForm = (type: RefOrRaw<'file' | 'link'>, options = {})
   })
 
   const onClean = (data) => {
-    const cleanedData = structuredClone(data)
+    const cleanedData = data
 
     // cleanup attachemenFiles
     if (unref(type) === 'link') {

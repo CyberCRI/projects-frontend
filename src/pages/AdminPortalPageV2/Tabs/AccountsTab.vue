@@ -157,14 +157,13 @@
 </template>
 
 <script setup lang="ts">
-import type { Ordering } from 'shared-projects-frontend/interfaces'
-
 import { searchUserAdmin } from '~/api/v2/user.service'
 
 import FetchLoader from '~/components/base/FetchLoader.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 
+import type { QueryFilterUser } from 'shared-projects-frontend/models'
 import { factoriesSkeleton } from '~/skeletons/base.skeletons'
 import { userSkeleton } from '~/skeletons/user.skeletons'
 import { roleI18n } from '~/functs/rolesUtils'
@@ -218,17 +217,13 @@ const LIMIT_OPTIONS = [
 const LIMIT = LIMIT_OPTIONS[0].value
 
 type OrderAdmin = 'family_name' | 'created_at' | 'email_verified'
-type QuerySearchAdmin = {
-  current_org_role: string
-  search: string
-  ordering: Ordering<OrderAdmin>
-}
 
 const search = ref('')
-const { query, setQuery } = useQuery<QuerySearchAdmin>({
+const { query, setQuery } = useQuery<QueryFilterUser>({
   current_org_role: 'admins,facilitators,users,viewers',
   ordering: '-created_at',
   search: search.value,
+  modules: ['groups'],
 })
 
 // TODO change to organizationCode

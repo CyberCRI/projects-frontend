@@ -37,6 +37,7 @@ import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import { notificationSkeleton } from '~/skeletons/notifications.skeletons'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import useUsersStore from '~/stores/useUsers'
+import { debounce } from 'es-toolkit'
 
 const props = withDefaults(defineProps<{ isOpened?: boolean }>(), {
   isOpened: false,
@@ -63,6 +64,16 @@ const {
   immediate: props.isOpened,
   default: () => factoryPagination(notificationSkeleton, limitSkeletons.value),
 })
+
+const refeshUser = debounce(() => userStore.refreshUser(), 1_000)
+
+watch(
+  () => [notifications.value, props.isOpened],
+  // refresh user to refresh notifications
+  // optimize add endpiints "refreshUserModule"
+  () => props.isOpened && refeshUser(),
+  { deep: true }
+)
 
 watchEffect(() => {
   if (props.isOpened) {
