@@ -8,6 +8,7 @@ import FetchLoader from '~/components/base/FetchLoader.vue'
 import { skillSkeleton } from '~/skeletons/skill.skeletons'
 import type { MentorShip } from '~/interfaces/mengtorship'
 import { getUserSkills } from '~/api/v2/skills.service'
+import useUsersStore from '~/stores/useUsers'
 import { groupBy } from 'es-toolkit'
 
 const props = withDefaults(
@@ -25,6 +26,7 @@ const props = withDefaults(
   }
 )
 
+const userStore = useUsersStore()
 const userSlugOrId = computed(() => props.user.slug || props.user.id)
 
 const limitSkeletons = computed(() => maxSkeleton(props.user.modules.skills, props.limit))
@@ -49,6 +51,14 @@ const {
   data: dataMentorship,
 } = getUserMentorship(organizationCode, {
   default: () => [],
+  immediate: false,
+})
+
+// refresh only if user is connected
+watchEffect(() => {
+  if (userStore.isConnected) {
+    refreshMentorship()
+  }
 })
 
 const groupedSkills = computed(() => groupBy(skills.value, (skill) => skill.type))

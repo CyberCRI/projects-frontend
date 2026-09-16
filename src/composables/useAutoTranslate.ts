@@ -73,11 +73,7 @@ const $translateAgent = (data: Agent, locale: Language | null): TranslatedAgent 
   if (!data) {
     return null
   }
-  return translateEntity<TranslatedAgent>(
-    unref(data),
-    ['description', 'startMessage', 'title'],
-    locale
-  )
+  return translateEntity<TranslatedAgent>(data, ['description', 'startMessage', 'title'], locale)
 }
 
 export default function useAutoTranslate() {

@@ -15,6 +15,8 @@ export type DrawerSearchProps<Item2> = {
   // when selected elements is lenght of maxSelected, "autoConfirm" (like user submited)
   maxAutoConfirm?: boolean
   classContainer?: string
+  // active search components
+  activeSearch?: boolean
 }
 
 const props = withDefaults(defineProps<DrawerSearchProps<Item>>(), {
@@ -26,6 +28,7 @@ const props = withDefaults(defineProps<DrawerSearchProps<Item>>(), {
   maxSelected: null,
   maxAutoConfirm: false,
   classContainer: null,
+  activeSearch: true,
 })
 
 const emit = defineEmits<{
@@ -139,6 +142,7 @@ watch(
   >
     <slot name="top" />
     <BaseSearch
+      v-if="activeSearch"
       v-model="search"
       :count-result="results.length"
       :count-selected="selectedItems.length"

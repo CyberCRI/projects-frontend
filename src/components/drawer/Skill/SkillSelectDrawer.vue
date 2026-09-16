@@ -13,6 +13,8 @@ import LpiSelect from '~/components/base/form/LpiSelect.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import { tagSkeleton } from '~/skeletons/project.skeletons'
 import { getSearchTag } from '~/api/v2/search.service'
+import Field from '~/components/base/form/Field.vue'
+import { isNil } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
@@ -92,21 +94,19 @@ const {
       :results="tags || []"
       :selected="selectedTags"
       class-container="full-card-container"
+      :active-search="!isNil(selectedClasification)"
       @search="refresh"
       @close="emit('close')"
       @confirm="emit('submit', $event)"
     >
       <template #top>
-        <div class="margin-notice">
-          <p class="notice">
-            {{ $t('search.pick-skill-classification') }}
-          </p>
+        <Field class="margin-notice" :label="$t('search.pick-skill-classification')">
           <LpiSelect
             v-model="selectedClasification"
             :options="classificationsOptions"
             :placeholder="$t('search.choose-skill')"
           />
-        </div>
+        </Field>
       </template>
       <template #select-item="{ item, onClick }">
         <CardInlineTag

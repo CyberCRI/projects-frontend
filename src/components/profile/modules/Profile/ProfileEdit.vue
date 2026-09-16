@@ -31,6 +31,7 @@ const defaultLocalForm = () => {
   const localForm = defaultProfileForm()
 
   localForm.sdgs = props.user.sdgs || localForm.sdgs
+  localForm.pronouns = props.user.pronouns || localForm.pronouns
   localForm.email = props.user.email || localForm.email
   localForm.family_name = props.user.family_name || localForm.family_name
   localForm.given_name = props.user.given_name || localForm.given_name
@@ -72,6 +73,12 @@ const redirect = (userSlugOrId: UserSlugOrId = null) => {
     params: { userIdOrSlug: userSlugOrId || props.user.slug || props.user.id },
   })
 }
+const redirectUserChange = (userSlugOrId: UserSlugOrId) => {
+  router.push({
+    name: 'ProfileEditUser',
+    params: { userIdOrSlug: userSlugOrId },
+  })
+}
 const clear = () => {
   closeAllModals()
   asyncing.value = false
@@ -102,7 +109,11 @@ const onConfirm = async () => {
     .then((newUser) => {
       return refreshUserData(newUser).then(() => {
         toaster.pushSuccess(t('profile.edit.general.save-success'))
-        close()
+
+        if (props.user.slug !== newUser.slug) {
+          global.hasUnsavedEdit = false
+          redirectUserChange(newUser.slug || newUser.id)
+        }
       })
     })
     .catch((error) => {
