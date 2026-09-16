@@ -10,11 +10,7 @@ const props = defineProps<{
 }>()
 const profileId = computed(() => props.profile.id)
 const organizationCode = useOrganizationCode()
-const {
-  status,
-  data: privacySettings,
-  isLoading,
-} = getUserPrivacy(organizationCode, profileId, {
+const { status, data: privacySettings } = getUserPrivacy(organizationCode, profileId, {
   checkArgs: true,
 })
 </script>
@@ -23,7 +19,7 @@ const {
   <FetchLoader :status="status" only-error skeleton>
     <div class="teams">
       <SectionHeader :title="$t(USER_MODULE_TITLE.privacy)" :has-button="false" :quantity="0" />
-      <PrivacyForm :user="profile" :privacy-settings="privacySettings" :is-loading="isLoading" />
+      <PrivacyForm :user="profile" :privacy-settings="privacySettings" />
     </div>
   </FetchLoader>
 </template>

@@ -73,12 +73,6 @@ const redirect = (userSlugOrId: UserSlugOrId = null) => {
     params: { userIdOrSlug: userSlugOrId || props.user.slug || props.user.id },
   })
 }
-const redirectUserChange = (userSlugOrId: UserSlugOrId) => {
-  router.push({
-    name: 'ProfileEditUser',
-    params: { userIdOrSlug: userSlugOrId },
-  })
-}
 const clear = () => {
   closeAllModals()
   asyncing.value = false
@@ -112,7 +106,7 @@ const onConfirm = async () => {
 
         if (props.user.slug !== newUser.slug) {
           global.hasUnsavedEdit = false
-          redirectUserChange(newUser.slug || newUser.id)
+          redirect(newUser.slug || newUser.id)
         }
       })
     })

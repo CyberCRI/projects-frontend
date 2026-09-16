@@ -1,22 +1,22 @@
 <template>
   <div class="profile-edit-privacy" :class="{ frozen: asyncing }">
-    <PrivacyField
-      v-for="field in fields"
-      :key="field.modelKey"
-      v-model="form[field.modelKey]"
-      :label="field.label"
-      :notice="field.notice"
-      :has-icon="field.hasIcon"
-      :options="field.options"
-      @update:model-value="save"
-    />
-    <LoaderSimple v-if="isLoading || asyncing" class="loader" />
+    <FetchAsync :asyncing="asyncing">
+      <PrivacyField
+        v-for="field in fields"
+        :key="field.modelKey"
+        v-model="form[field.modelKey]"
+        :label="field.label"
+        :notice="field.notice"
+        :has-icon="field.hasIcon"
+        :options="field.options"
+        @update:model-value="save"
+      />
+    </FetchAsync>
   </div>
 </template>
 <script lang="ts" setup>
 import type { TranslatedUserModel, PrivacySettings } from 'shared-projects-frontend/models'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
-import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 import { patchUserPrivacy } from 'shared-projects-frontend/apis'
 import useToasterStore from '~/stores/useToaster'
 
@@ -45,7 +45,6 @@ function dataMapping() {
 const props = defineProps<{
   user: TranslatedUserModel
   privacySettings: PrivacySettings | object
-  isLoading: boolean
 }>()
 
 const emit = defineEmits(['update:modelValue', 'profile-edited'])
@@ -55,11 +54,7 @@ const toaster = useToasterStore()
 const { t } = useI18n()
 const form = ref(defaultForm())
 const asyncing = ref(false)
-// isSelf() {
-//   if (!this.user) return true
-//   const connectedUser = this.usersStore.userFromApi
-//   return connectedUser && this.user?.id === connectedUser?.id
-// },
+
 const optionsMap = computed<Record<string, GroupOption & { rank: number }>>(() => ({
   hide: {
     label: t('profile.edit.privacy.options.hide'),
@@ -154,28 +149,16 @@ async function save() {
     const apiData = adaptFormToApi()
     await patchUserPrivacy(props.user.id, apiData)
 
-    // TODO refresh
-    // if (props.user.id === usersStore.id) usersStore.getUser(props.user.id)
-    // else getUser(props.user.id)
-
     emit('profile-edited')
 
     toaster.pushSuccess(t('profile.edit.privacy.save-success'))
   } catch (error) {
-    toaster.pushError(`${t('profile.edit.privacy.save-error')} (${error})`)
+    toaster.pushError(t('profile.edit.privacy.save-error'))
     console.error(error)
   } finally {
     asyncing.value = false
   }
 }
-
-// const { data: privacySettings, isLoading } = await getUserPrivacy(
-//   useOrganizationCode(),
-//   props.user.id,
-//   {
-//     immediate: props.user.id != -1,
-//   }
-// )
 
 watch(
   () => props.privacySettings,

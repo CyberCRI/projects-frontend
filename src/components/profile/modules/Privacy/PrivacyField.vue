@@ -8,8 +8,8 @@ const modelValue = defineModel<PrivacyValue>()
 <template>
   <div class="privacy-field">
     <div class="wording">
-      <label>{{ label }}</label>
-      <p class="notice">
+      <label class="skeletons-text">{{ label }}</label>
+      <p class="notice skeletons-text">
         {{ notice }}
       </p>
     </div>
