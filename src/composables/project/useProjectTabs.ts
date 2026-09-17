@@ -32,6 +32,9 @@ export const useProjectTabs = (
 
   const { data: tabs } = getAllProjectTab(organizationCode, projectId, {
     default: () => factoryPagination(projectTabSkeleton, project?.value?.modules?.tabs || 0),
+    query: {
+      show_tab: true,
+    },
   })
 
   const { isAdmin } = usePermissions()
@@ -307,13 +310,13 @@ export const useProjectTabs = (
           }
         }),
         {
-          key: 'project-additionals-add',
-          label: t('tab.tab.add'),
-          view: `/projects/${projectId.value}/additionals/create`,
+          key: 'project-settings-tabs',
+          label: t('tab.tab.settings'),
+          view: `/projects/${projectId.value}/settings-tabs/edit`,
           altView: ``,
           condition: canCreateTab.value || isAdmin.value,
-          dataTest: 'project-additionals-add',
-          icon: 'Plus',
+          dataTest: 'project-settings-tabs',
+          icon: 'Cog',
         },
 
         {

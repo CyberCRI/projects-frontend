@@ -9,6 +9,7 @@ import type {
   UserModuleExtra,
 } from 'shared-projects-frontend/models'
 import type { IconImageChoice, IconTabImageChoice } from '~/functs/IconImage'
+import { omit } from 'es-toolkit'
 
 export const RESOURCE_PROJECT_CATEGORY = [
   'inspired-by',
@@ -252,6 +253,14 @@ export const PROJECT_MODULE_TITLE: { [key in ProjectModuleExtra]: string } = {
   messages: 'comment.private-exchange.tab',
   tabs: 'tab.tab.label',
 }
+
+export const PROJECT_TABS = omit(PROJECT_MODULE_TITLE, [
+  'links',
+  'files',
+  'tabs',
+  'similars',
+  'reviews',
+])
 
 // groups
 export const GROUP_MODULE_ICON: {

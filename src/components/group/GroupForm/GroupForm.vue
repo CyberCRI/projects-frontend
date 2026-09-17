@@ -62,7 +62,6 @@
       </template>
       <div v-if="form.description">
         <TipTapOutput class="description-content" :content="form.description" />
-        <!-- TODO htmllimiter-->
       </div>
       <empty-label v-else />
     </Field>

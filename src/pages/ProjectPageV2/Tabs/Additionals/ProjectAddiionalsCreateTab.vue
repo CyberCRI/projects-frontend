@@ -91,19 +91,17 @@ watchEffect(() => {
 </script>
 
 <template>
-  <BaseModuleTab :title="$t('tab.tab.title')">
-    <!-- show message when creation is only enable when you are admin -->
-    <LpiSnackbar v-if="!canCreateTab && isAdmin" icon="AlertOutline" type="warning">
-      {{ $t('tab.tab.not-enabled.admin') }}
-    </LpiSnackbar>
+  <!-- show message when creation is only enable when you are admin -->
+  <LpiSnackbar v-if="!canCreateTab && isAdmin" icon="AlertOutline" type="warning">
+    {{ $t('tab.tab.not-enabled.admin') }}
+  </LpiSnackbar>
 
-    <TabForm v-model="formTab" :asyncing="asyncing" :project="project" @submit="onSubmit">
-      <!-- you can create description in create tabs only if type is text -->
-      <template v-if="formTab.type === 'text'">
-        <br />
-        <Title :title="$t('tab.item.create')" />
-        <TabItemFormRaw v-model="formTabItem" />
-      </template>
-    </TabForm>
-  </BaseModuleTab>
+  <TabForm v-model="formTab" :asyncing="asyncing" :project="project" @submit="onSubmit">
+    <!-- you can create description in create tabs only if type is text -->
+    <template v-if="formTab.type === 'text'">
+      <br />
+      <Title :title="$t('tab.item.create')" />
+      <TabItemFormRaw v-model="formTabItem" />
+    </template>
+  </TabForm>
 </template>

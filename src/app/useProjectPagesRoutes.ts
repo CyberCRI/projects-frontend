@@ -82,6 +82,12 @@ export default function useProjectPagesRoutes() {
             import('../pages/ProjectPageV2/Tabs/Announcements/ProjectAnnouncementsTab.vue'),
         },
         {
+          path: 'project-tabs-settings',
+          name: 'ProjectTabsSettings',
+          // component: () => import('../pages/ProjectPageV2/Tabs/ProjectSettingsTab.vue'),
+          redirect: { name: 'ProjectSnapshot' },
+        },
+        {
           path: 'project-settings',
           name: 'ProjectSettings',
           // component: () => import('../pages/ProjectPageV2/Tabs/ProjectSettingsTab.vue'),
@@ -199,6 +205,15 @@ export default function useProjectPagesRoutes() {
           },
         },
         {
+          path: 'settings-tabs/edit',
+          name: 'ProjectTabsSettingsEdit',
+          component: () =>
+            import('../pages/ProjectPageV2/Tabs/Settings/ProjectTabsSettingsTab.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
           path: 'project-settings/edit',
           name: 'ProjectSettingsEdit',
           component: () => import('../pages/ProjectPageV2/Tabs/Settings/ProjectSettingsTab.vue'),
@@ -227,12 +242,6 @@ export default function useProjectPagesRoutes() {
           name: 'projectAdditionalsEdit',
           component: () =>
             import('../pages/ProjectPageV2/Tabs/Additionals/ProjectAddiionalsTab.vue'),
-        },
-        {
-          path: 'additionals/create',
-          name: 'projectAdditionalsCreate',
-          component: () =>
-            import('../pages/ProjectPageV2/Tabs/Additionals/ProjectAddiionalsCreateTab.vue'),
         },
       ],
     },

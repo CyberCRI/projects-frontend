@@ -90,6 +90,7 @@ const {
 } = getAllProjectTab(organizationCode, projectId, {
   query: {
     show_preview: true,
+    show_tab: true,
   },
   default: () => factoryPagination(projectTabSkeleton, 0),
   paginationConfig: {

@@ -3443,6 +3443,7 @@
       "delete": "Delete tab",
       "add": "Add a new Tab.",
       "edit": "Edit Tab",
+      "settings": "Tab Settings",
       "title": "Tab Creation",
       "label": "Tab | Tabs",
       "not-enabled": {

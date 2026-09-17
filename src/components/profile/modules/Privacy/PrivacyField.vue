@@ -1,15 +1,22 @@
 <script lang="ts" setup>
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
 import type { PrivacyValue } from 'shared-projects-frontend/models'
-defineProps<{ label: string; notice: string; options: GroupOption[]; hasIcon: boolean }>()
+withDefaults(
+  defineProps<{ label: string; notice?: string; options: GroupOption[]; hasIcon?: boolean }>(),
+  {
+    notice: '',
+    hasIcon: false,
+  }
+)
 const emit = defineEmits(['update:modelValue'])
 const modelValue = defineModel<PrivacyValue>()
 </script>
+
 <template>
   <div class="privacy-field">
     <div class="wording">
       <label class="skeletons-text">{{ label }}</label>
-      <p class="notice skeletons-text">
+      <p v-if="notice" class="notice skeletons-text">
         {{ notice }}
       </p>
     </div>
@@ -24,6 +31,7 @@ const modelValue = defineModel<PrivacyValue>()
     </div>
   </div>
 </template>
+
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 @use '~/components/profile/modules/profile-form';
