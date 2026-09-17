@@ -9,9 +9,14 @@
         :help="$t('template.tips-template')"
         :placeholder="$t('project.form.project-templates')"
         :errors="errors.name"
+        :data-field-target="formFieldTargetIds.name"
       />
 
-      <Field :label="$t('template.description')" :help="$t('template.tips-template')">
+      <Field
+        :label="$t('template.description')"
+        :help="$t('template.tips-template')"
+        :data-field-target="formFieldTargetIds.description"
+      >
         <TipTapEditor
           v-model="form.description"
           class="w-full"
@@ -20,7 +25,7 @@
         />
       </Field>
 
-      <Field :label="$t('template.category')">
+      <Field :label="$t('template.category')" :data-field-target="formFieldTargetIds.categories">
         <template #in-label>
           <LpiButton :label="$t('category.edit')" @click="openModals('category')" />
         </template>
@@ -36,7 +41,11 @@
         </span>
       </Field>
 
-      <Field :label="$t('template.enable-tab.label')" :help="$t('template.enable-tab.help')">
+      <Field
+        :label="$t('template.enable-tab.label')"
+        :help="$t('template.enable-tab.help')"
+        :data-field-target="formFieldTargetIds.enable_tab"
+      >
         <SwitchInput v-model="form.enable_tab" />
       </Field>
     </div>
@@ -49,11 +58,13 @@
         v-model="form.project_title"
         :label="$t('template.project-title')"
         :errors="errors.project_title"
+        :data-field-target="formFieldTargetIds.project_title"
       />
       <TextInput
         v-model="form.project_purpose"
         :label="$t('template.project-purpose')"
         :errors="errors.project_purpose"
+        :data-field-target="formFieldTargetIds.project_purpose"
       />
 
       <Field :label="$t('template.project-description')">
@@ -63,6 +74,7 @@
           mode="full"
           class="w-full"
           :errors="errors.project_description"
+          :data-field-target="formFieldTargetIds.project_description"
         />
       </Field>
     </TemplateFormSection>
@@ -72,7 +84,11 @@
       :icon="PROJECT_MODULE_ICON.blogs"
       :errors="haveError(errors.blogentry_title, errors.blogentry_content)"
     >
-      <TextInput v-model="form.blogentry_title" :label="$t('template.blog-title')" />
+      <TextInput
+        v-model="form.blogentry_title"
+        :data-field-target="formFieldTargetIds.blogentry_title"
+        :label="$t('template.blog-title')"
+      />
 
       <Field :label="$t('template.blog-content')">
         <TipTapEditor
@@ -81,6 +97,7 @@
           mode="full"
           class="w-full"
           :errors="errors.blogentry_content"
+          :data-field-target="formFieldTargetIds.blogentry_content"
         />
       </Field>
     </TemplateFormSection>
@@ -94,6 +111,7 @@
         v-model="form.goal_title"
         :label="$t('template.advancement-goal-title')"
         :errors="errors.goal_title"
+        :data-field-target="formFieldTargetIds.goal_title"
       />
 
       <Field :label="$t('template.advancement-goal-content')">
@@ -104,6 +122,7 @@
           class="w-full"
           mode="full"
           :errors="errors.goal_description"
+          :data-field-target="formFieldTargetIds.goal_description"
         />
       </Field>
     </TemplateFormSection>
@@ -113,7 +132,10 @@
       :icon="PROJECT_MODULE_ICON.comments"
       :errors="haveError(errors.comment_content)"
     >
-      <Field :label="$t('template.comment')">
+      <Field
+        :label="$t('template.comment')"
+        :data-field-target="formFieldTargetIds.comment_content"
+      >
         <TipTapEditor
           v-model="form.comment_content"
           :save-image-callback="saveImageCallback"
@@ -124,6 +146,8 @@
         />
       </Field>
     </TemplateFormSection>
+
+    {{ JSON.stringify(formFieldTargetIds) }}
 
     <template v-for="(tab, idx) in form.tabs || []">
       <TemplateFormSection
@@ -139,6 +163,8 @@
         <TabFormRaw
           show-type
           :model-value="form.tabs[idx]"
+          :errors="errors.tabs[0]?.$message?.[idx]"
+          :data-field-target="formFieldTargetIds.tabs[idx]"
           @update:model-value="updateTab(idx, $event)"
         />
         <br />
@@ -219,7 +245,9 @@ const localeDefaultForm = () => {
   }
 }
 const model = defineModel<TemplateForm>()
-const { form, errors, isValid, cleanedData, reset } = useTemplateForm({ $scope: true })
+const { form, errors, isValid, validate, cleanedData, reset, formFieldTargetIds } = useTemplateForm(
+  { $scope: true }
+)
 
 const isFormEqual = useBlockNavigation(() => isEqual(form.value, localeDefaultForm()))
 
@@ -231,6 +259,9 @@ watch(
 watchEffect(() => emit('isValid', isValid.value))
 watchEffect(() => (model.value = cleanedData.value))
 watchEffect(() => emit('isFormEqual', isFormEqual.value))
+defineExpose({
+  validate,
+})
 
 // temp categories select in drawer
 const tmpCategories = ref([])

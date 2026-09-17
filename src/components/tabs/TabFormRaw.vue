@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ProjectTabForm, ProjectTabType } from 'shared-projects-frontend/models'
-import { defaultProjectTabForm, useProjectTabForm } from '~/form/project-tabs'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
 import GroupButton from '~/components/base/button/GroupButton.vue'
 import IconDrawer from '~/components/drawer/Icon/IconDrawer.vue'
@@ -8,26 +7,30 @@ import IconImage from '~/components/base/media/IconImage.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import HelpField from '~/components/base/form/HelpField.vue'
 import type { IconTabImageChoice } from '~/functs/IconImage'
+import { defaultProjectTabForm } from '~/form/project-tabs'
 import { DEFAULT_ICONS_TABS } from '~/functs/constants'
 import { safeProjectIconTab } from '~/functs/projects'
+import type { ErrorObject } from '@vuelidate/core'
 import { ICONS_TABS } from '~/functs/IconImage'
 
 withDefaults(
   defineProps<{
     showType?: boolean
+    formFieldTargetIds?: Record<keyof ProjectTabForm, string>
+    errors?: Record<keyof ProjectTabForm, ErrorObject[]>
   }>(),
   {
     showType: false,
+    formFieldTargetIds: null,
+    errors: () => null,
   }
 )
 
-const model = defineModel<ProjectTabForm>({ default: defaultProjectTabForm })
+const form = defineModel<ProjectTabForm>({ default: defaultProjectTabForm })
 
 const { stateModals, closeModals, toggleModals } = useModals({
   editIcon: false,
 })
-
-const { form, errors } = useProjectTabForm({ model })
 
 const optionsType = computed<GroupOption[]>(
   () =>
@@ -66,13 +69,22 @@ const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
 <template>
   <div class="list-container">
     <!-- hide choices type if already created (you can't change type after create it) -->
-    <Field v-if="!form.id || showType" :label="$t('tab.form.type.label')" required>
+    <Field
+      v-if="!form.id || showType"
+      :label="$t('tab.form.type.label')"
+      required
+      :data-field-target="formFieldTargetIds?.type"
+    >
       <GroupButton v-model="form.type" :options="optionsType" @update:model-value="onChangeType" />
       <HelpField :description="selectedTypeDescription" />
     </Field>
 
     <div class="inline-field">
-      <Field :label="$t('tab.form.icon.label')" required>
+      <Field
+        :label="$t('tab.form.icon.label')"
+        required
+        :data-field-target="formFieldTargetIds?.icon"
+      >
         <!-- <TipTapEditor -->
         <IconImage
           class="tab-icon shadow-drop"
@@ -80,7 +92,7 @@ const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
           :title="$t('common.select')"
           @click="toggleModals('editIcon')"
         />
-        <FieldErrors :errors="errors.icon" />
+        <FieldErrors :errors="errors?.icon" />
 
         <IconDrawer
           v-model="form.icon"
@@ -94,11 +106,16 @@ const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
         class="inline-title"
         :label="$t('tab.form.title.label')"
         required
-        :errors="errors.title"
+        :errors="errors?.title"
+        :data-field-target="formFieldTargetIds?.title"
       />
     </div>
 
-    <Field :label="$t('tab.form.show_preview.label')" :errors="errors.show_preview">
+    <Field
+      :label="$t('tab.form.show_preview.label')"
+      :errors="errors?.show_preview"
+      :data-field-target="formFieldTargetIds?.show_preview"
+    >
       <SwitchInput v-model="form.show_preview" />
     </Field>
   </div>

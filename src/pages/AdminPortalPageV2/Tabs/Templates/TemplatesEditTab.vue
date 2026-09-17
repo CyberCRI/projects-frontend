@@ -9,6 +9,7 @@
         @close="redirect"
       >
         <TemplateForm
+          ref="refForm"
           v-model="form"
           :template="templateRaw"
           :save-image-callback="saveImageTemplate"

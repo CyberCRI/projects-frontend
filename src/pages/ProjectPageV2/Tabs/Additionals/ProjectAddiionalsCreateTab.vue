@@ -21,10 +21,14 @@ const router = useRouter()
 const asyncing = ref(false)
 const gobals = useGlobals()
 
-const { form: formTab } = useProjectTabForm()
-const { form: formTabItem } = useProjectTabItemForm()
+const { form: formTab, validate: validateTab } = useProjectTabForm()
+const { form: formTabItem, validate: validatTabItem } = useProjectTabItemForm()
 
-const onSubmit = (form: ProjectTabForm) => {
+const onSubmit = async (form: ProjectTabForm) => {
+  if (!(await validateTab()) || !(await validatTabItem())) {
+    return
+  }
+
   asyncing.value = true
 
   createProjectTab(props.project.id, form)

@@ -18,7 +18,6 @@
           />
 
           <slot name="footer:extra" />
-
           <LpiButton
             :disabled="isFormEqual || confirmActionDisabled || asyncing"
             :label="confirmActionName || t('common.confirm')"
