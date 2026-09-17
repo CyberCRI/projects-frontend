@@ -147,9 +147,6 @@ import useUsersStore from '@/stores/useUsers'
 import { formatDate } from '~/functs/date'
 import analytics from '@/analytics'
 
-const runtimeConfig = useRuntimeConfig()
-const newCommentEnabled = ref(runtimeConfig.public.appNewCommentEnabled || false)
-
 const props = withDefaults(
   defineProps<{
     project: TranslatedProject
@@ -164,6 +161,9 @@ const props = withDefaults(
     repliedComment: null,
   }
 )
+
+const runtimeConfig = useRuntimeConfig()
+const newCommentEnabled = ref(props.isPrivate || !runtimeConfig.public.appNewCommentDisabled)
 
 const { t, locale } = useNuxtI18n()
 
