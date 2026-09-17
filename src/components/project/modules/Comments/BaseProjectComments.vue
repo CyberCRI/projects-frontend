@@ -9,9 +9,7 @@ import { projectCommentSkeleton } from '@/skeletons/comments.skeletons'
 import type FetchLoader from '@/components/base/FetchLoader.vue'
 import { throttle } from 'es-toolkit'
 
-const runtimeConfig = useRuntimeConfig()
-const newCommentEnabled = ref(runtimeConfig.public.appNewCommentEnabled || false)
-
+1
 const props = withDefaults(
   defineProps<{
     project: TranslatedProject
@@ -25,6 +23,9 @@ const props = withDefaults(
     isPrivate: false,
   }
 )
+
+const runtimeConfig = useRuntimeConfig()
+const newCommentEnabled = ref(props.isPrivate || !runtimeConfig.public.appNewCommentDisabled)
 
 const limitSkeletons = computed(() => maxSkeleton(props.project.modules.comments, props.limit))
 
