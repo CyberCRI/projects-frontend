@@ -486,6 +486,7 @@
     "add-comment": "Lisa oma kommentaar!",
     "comment-verb": "Kommentaar",
     "comments": "Märkused",
+    "temp-deactivated-notice": "Uued kommentaarid on ajutiselt peatatud. Need on peagi taas saadaval!",
     "deleted": "Kommentaar välja jäetud",
     "discard-comment": "Kõrvalda kommentaar?",
     "discard-changes": "Kõrvaldamismuudatused?",

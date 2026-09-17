@@ -46,7 +46,7 @@
           <div v-if="isConnected" class="actions">
             <div class="reply-action skeletons-background">
               <LpiButton
-                v-if="!isReply"
+                v-if="newCommentEnabled && !isReply"
                 :label="$t('common.reply')"
                 btn-icon="Reply"
                 @click="toggleModals('replying')"
@@ -55,8 +55,8 @@
 
             <div class="author-action skeletons-background">
               <ContextActionMenuInline
-                :can-edit="canEdit"
-                :can-delete="canEdit"
+                :can-edit="newCommentEnabled && canEdit"
+                :can-delete="newCommentEnabled && canEdit"
                 @delete="openModals('delete')"
                 @edit="toggleModals('edit')"
               />
@@ -146,6 +146,9 @@ import useToasterStore from '@/stores/useToaster'
 import useUsersStore from '@/stores/useUsers'
 import { formatDate } from '~/functs/date'
 import analytics from '@/analytics'
+
+const runtimeConfig = useRuntimeConfig()
+const newCommentEnabled = ref(runtimeConfig.public.appNewCommentEnabled || false)
 
 const props = withDefaults(
   defineProps<{
