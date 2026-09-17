@@ -250,6 +250,7 @@ export default defineNuxtConfig({
       appHasChatbotPromptDb: 0,
       appLlmModelSuggestions: '',
       appMapRendererApiKey: '',
+      appNewCommentEnabled: 0,
     },
   },
   i18n: {

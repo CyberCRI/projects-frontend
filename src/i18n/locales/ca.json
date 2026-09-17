@@ -486,6 +486,7 @@
     "add-comment": "Afegeix el teu comentari!",
     "comment-verb": "Comentari",
     "comments": "Comentaris",
+    "temp-deactivated-notice": "Els nous comentaris estan desactivats temporalment. Tornaran aviat!",
     "deleted": "El comentari s' ha esborrat en el",
     "discard-comment": "Voleu descartar el comentari?",
     "discard-changes": "Voleu descartar els canvis?",

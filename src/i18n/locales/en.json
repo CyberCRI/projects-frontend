@@ -486,6 +486,7 @@
     "add-comment": "Add your comment!",
     "comment-verb": "Comment",
     "comments": "Comments",
+    "temp-deactivated-notice": "New comments are temporarily deactivated. They will be back soon!",
     "deleted": "Comment deleted on the",
     "discard-comment": "Discard comment?",
     "discard-changes": "Discard changes?",
