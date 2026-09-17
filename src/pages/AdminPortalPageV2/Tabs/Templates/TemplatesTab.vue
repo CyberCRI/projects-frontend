@@ -8,6 +8,10 @@
       />
     </template>
 
+    <template #filters>
+      <ListFilter v-model="query.search" :pagination="pagination" />
+    </template>
+
     <FetchLoader :status="status" only-error skeleton :with-data="!!templates">
       <div class="list">
         <ul>
@@ -44,6 +48,7 @@
 </template>
 
 <script setup lang="ts">
+import type { QueryFilterTemplate } from 'shared-projects-frontend/models'
 import { deleteTemplate } from 'shared-projects-frontend/apis'
 
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
@@ -54,11 +59,18 @@ import LayoutTab from '~/components/admin/LayoutTab.vue'
 import { templateSkeleton } from '~/skeletons/template.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import NothingHere from '~/components/base/NothingHere.vue'
+import ListFilter from '~/components/base/ListFilter.vue'
 import { getTemplates } from '~/api/v2/templates.service'
 import useNuxtI18n from '~/composables/useNuxtI18n'
 
 const { t } = useNuxtI18n()
 const organizationCode = useOrganizationCode()
+
+const { query } = useQuery<QueryFilterTemplate>({
+  ordering: '-updated_at',
+  search: '',
+})
+
 const {
   data: templates,
   status,
@@ -66,6 +78,7 @@ const {
   pagination,
 } = getTemplates(organizationCode, {
   default: () => factoryPagination(templateSkeleton),
+  query,
 })
 
 const toaster = useToaster()
