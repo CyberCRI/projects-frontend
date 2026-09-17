@@ -918,7 +918,8 @@
     "recaptcha": {
       "required": "Recaptcha is vereist."
     },
-    "invalid-phone": "Ongeldig telefoonnummer"
+    "invalid-phone": "Ongeldig telefoonnummer",
+    "is-unmodified": "Het formulier is niet gewijzigd"
   },
   "footer": {
     "contact": "Contacteer ons",

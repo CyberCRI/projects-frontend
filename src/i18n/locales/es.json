@@ -918,7 +918,8 @@
     "recaptcha": {
       "required": "Recaptcha es necesaria."
     },
-    "invalid-phone": "Número de teléfono inválido"
+    "invalid-phone": "Número de teléfono inválido",
+    "is-unmodified": "El formulario no se modifica"
   },
   "footer": {
     "contact": "Contacta con nosotros",
