@@ -45,11 +45,7 @@ const {
   },
 })
 
-const {
-  refresh: refreshMentorship,
-  status: statusMentorShip,
-  data: dataMentorship,
-} = getUserMentorship(organizationCode, {
+const { refresh: refreshMentorship, data: dataMentorship } = getUserMentorship(organizationCode, {
   default: () => [],
   immediate: false,
 })
@@ -86,7 +82,7 @@ const mentorShip = computed<MentorShip>(() => {
 </script>
 
 <template>
-  <FetchLoader :status="[statusSkill, statusMentorShip]" :error="error" only-error skeleton>
+  <FetchLoader :status="statusSkill" :error="error" only-error skeleton>
     <p v-if="skills.length === 0" class="skeletons-text">
       {{ $t('profile.edit.skills.intro') }}
     </p>
