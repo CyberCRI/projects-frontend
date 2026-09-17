@@ -9,7 +9,6 @@ import { projectCommentSkeleton } from '@/skeletons/comments.skeletons'
 import type FetchLoader from '@/components/base/FetchLoader.vue'
 import { throttle } from 'es-toolkit'
 
-1
 const props = withDefaults(
   defineProps<{
     project: TranslatedProject
