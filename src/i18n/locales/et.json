@@ -918,7 +918,8 @@
     "recaptcha": {
       "required": "Recaptcha on vajalik."
     },
-    "invalid-phone": "Vigane telefoninumber"
+    "invalid-phone": "Vigane telefoninumber",
+    "is-unmodified": "Vormi ei ole muudetud"
   },
   "footer": {
     "contact": "Võta meiega ühendust",

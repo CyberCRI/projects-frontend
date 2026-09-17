@@ -6,27 +6,31 @@
       </main>
 
       <footer v-if="!noFooter" class="form-panel-footer">
-        <slot name="footer">
-          <LpiButton
-            v-if="showCancel"
-            :disabled="asyncing"
-            :label="t('common.cancel')"
-            secondary
-            class="footer__left-button skeletons-background"
-            data-test="close-button"
-            @click="close"
-          />
+        <UnmodifiedFormWarning v-if="isFormEqual" />
+        <div class="form-panel-actions">
+          <slot name="footer">
+            <LpiButton
+              v-if="showCancel"
+              :disabled="asyncing"
+              :label="t('common.cancel')"
+              secondary
+              class="footer__left-button skeletons-background"
+              data-test="close-button"
+              @click="close"
+            />
 
-          <slot name="footer:extra" />
-          <LpiButton
-            :disabled="isFormEqual || confirmActionDisabled || asyncing"
-            :label="confirmActionName || t('common.confirm')"
-            :btn-icon="asyncing ? 'LoaderSimple' : null"
-            class="footer__right-button skeletons-background"
-            data-test="confirm-button"
-            @click="confirm"
-          />
-        </slot>
+            <slot name="footer:extra" />
+
+            <LpiButton
+              :disabled="isFormEqual || confirmActionDisabled || asyncing"
+              :label="confirmActionName || t('common.confirm')"
+              :btn-icon="asyncing ? 'LoaderSimple' : null"
+              class="footer__right-button skeletons-background"
+              data-test="confirm-button"
+              @click="confirm"
+            />
+          </slot>
+        </div>
       </footer>
     </div>
   </div>
@@ -76,13 +80,19 @@ const confirm = () => emit('confirm')
   .form-panel-footer {
     width: 100%;
     display: flex;
-    justify-content: center;
+    flex-flow: column nowrap;
     border-top: variables.$border-width-s solid variables.$lighter-gray;
     color: variables.$primary-dark;
-    font-weight: 700;
     padding-top: variables.$space-l;
     padding-bottom: variables.$space-l;
     background: variables.$white;
+    gap: variables.$space-l;
+  }
+
+  .form-panel-actions {
+    display: flex;
+    justify-content: center;
+    font-weight: 700;
     gap: variables.$space-l;
 
     button ~ button {

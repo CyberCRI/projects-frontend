@@ -918,7 +918,8 @@
     "recaptcha": {
       "required": "Recaptcha ist erforderlich."
     },
-    "invalid-phone": "Invalide Telefonnummer"
+    "invalid-phone": "Invalide Telefonnummer",
+    "is-unmodified": "Das Formular wird nicht geändert"
   },
   "footer": {
     "contact": "Kontaktieren Sie uns",

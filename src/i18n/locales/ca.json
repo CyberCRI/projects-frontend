@@ -918,7 +918,8 @@
     "recaptcha": {
       "required": "Cal reconquerir."
     },
-    "invalid-phone": "Número de telèfon no vàlid"
+    "invalid-phone": "Número de telèfon no vàlid",
+    "is-unmodified": "El formulari no es modifica"
   },
   "footer": {
     "contact": "Contacta amb nosaltres",

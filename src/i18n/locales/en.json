@@ -860,6 +860,7 @@
     "url": "url",
     "templates": "Templates",
     "invalid-phone": "Invalid phone number",
+    "is-unmodified": "Form is not modified",
     "contact": {
       "subtitle": "Fill in this quick form and we’ll get back to you shortly",
       "subject": "Subject",
