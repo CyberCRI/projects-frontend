@@ -55,7 +55,7 @@ const defaultLocalForm = () => {
 
 const model = defineModel<ProjectTabForm>({ default: defaultProjectTabForm })
 
-const { form, isValid, cleanedData, reset } = useProjectTabForm({
+const { form, validate, cleanedData, errors, reset, formFieldTargetIds } = useProjectTabForm({
   model,
   default: defaultLocalForm(),
 })
@@ -73,18 +73,22 @@ watch(
   { immediate: true, deep: true }
 )
 
-const onConfirm = () => emit('submit', cleanedData.value)
+const onConfirm = async () => {
+  if (await validate()) {
+    emit('submit', cleanedData.value)
+  }
+}
 </script>
 
 <template>
   <FormPanel
     :asyncing="asyncing"
-    :confirm-action-disabled="!isValid || isFormEqual"
+    :is-form-equal="isFormEqual"
     :confirm-action-name="$t('common.save')"
     :show-cancel="false"
     @confirm="onConfirm"
   >
-    <TabFormRaw v-model="form" />
+    <TabFormRaw v-model="form" :errors="errors" :form-field-target-ids="formFieldTargetIds" />
     <slot />
     <template #footer:extra>
       <slot name="footer" />

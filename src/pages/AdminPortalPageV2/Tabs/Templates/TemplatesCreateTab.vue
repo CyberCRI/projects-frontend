@@ -2,15 +2,14 @@
   <LayoutTab>
     <FormPanel
       :asyncing="asyncing"
-      :confirm-action-disabled="!stateModals.isValid"
       :is-form-equal="stateModals.isFormEqual"
       @confirm="submit"
       @close="redirect"
     >
       <TemplateForm
+        ref="refForm"
         v-model="cleanedData"
         :save-image-callback="saveImageTemplate"
-        @is-valid="setModals('isValid', $event)"
         @is-form-equal="setModals('isFormEqual', $event)"
       />
     </FormPanel>
@@ -31,6 +30,8 @@ const { stateModals, setModals } = useModals({
   isFormEqual: false,
 })
 
+const refForm = useTemplateRef('refForm')
+
 const { t } = useNuxtI18n()
 const toaster = useToaster()
 const router = useRouter()
@@ -39,7 +40,11 @@ const organizationCode = useOrganizationCode()
 const global = useGlobals()
 
 const redirect = () => router.push({ name: 'templatesList' })
-const submit = () => {
+const submit = async () => {
+  if (!(await refForm.value.validate())) {
+    return
+  }
+
   asyncing.value = true
   postTemplate(organizationCode, cleanedData.value)
     .then(() => {
