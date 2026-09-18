@@ -53,6 +53,7 @@ export default {
     const usersStore = useUsersStore()
     const { canEditUser } = usePermissionUser(computed(() => props.userId))
     const { onboardingTrap } = useOnboardingStatus()
+    const organizationCode = useOrganizationCode()
     const { t } = useNuxtI18n()
     const uniqueId = 'project-nav-panel'
     const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
@@ -81,6 +82,7 @@ export default {
       user,
       isLoading,
       onboardingTrap,
+      organizationCode,
     }
   },
 
@@ -102,7 +104,7 @@ export default {
         this.originalUser = await this.usersStore.refreshUser()
       } else if (this.userId) {
         // get another user
-        this.originalUser = await getUser(this.userId, { noError: true })
+        this.originalUser = await getUser(this.organizationCode, this.userId, { noError: true })
       } else {
         throw new Error('userId is empty')
       }

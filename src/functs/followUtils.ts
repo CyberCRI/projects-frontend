@@ -2,6 +2,7 @@ import type {
   FollowCategoryInput,
   FollowInput,
   FollowOutput,
+  OrganizationModel,
   UnfollowCategoryInput,
 } from 'shared-projects-frontend/models'
 
@@ -15,8 +16,8 @@ import {
 
 import analytics from '~/analytics'
 
-async function follow(follow: FollowInput) {
-  const result = await postFollow(follow)
+async function follow(organizationCode: OrganizationModel['code'], follow: FollowInput) {
+  const result = await postFollow(organizationCode, follow.project_id, follow)
 
   analytics.follow.follow({
     project: {
@@ -30,8 +31,11 @@ async function follow(follow: FollowInput) {
   return result
 }
 
-async function followMany({ id, body }: { id: string; body: any }) {
-  const result = await postFollowMany({ id, body })
+async function followMany(
+  organizationCode: OrganizationModel['code'],
+  { id, body }: { id: string; body: any }
+) {
+  const result = await postFollowMany(organizationCode, { id, body })
   const targets = []
   const body_followed_projects = body.follows
   for (let i = 0; i < body_followed_projects.length; i++) {
@@ -55,8 +59,11 @@ async function followMany({ id, body }: { id: string; body: any }) {
   return result
 }
 
-async function unfollow({ follower_id, project_id }: FollowInput): Promise<void> {
-  const result = await deleteFollow({ follower_id, project_id })
+async function unfollow(
+  organizationCode: OrganizationModel['code'],
+  { follower_id, project_id }: FollowInput
+): Promise<void> {
+  const result = await deleteFollow(organizationCode, project_id, follower_id)
 
   analytics.follow.unfollow({
     project: {

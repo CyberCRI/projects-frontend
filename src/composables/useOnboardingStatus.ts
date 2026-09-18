@@ -16,9 +16,11 @@ type OnboardingKey =
 export type OnboardingStatusType = {
   [key in OnboardingKey]?: boolean | number
 }
+
 export default function useOnboardingStatus() {
   const onboardingTrap = async (key: OnboardingKey, val: boolean) => {
     // TODO pinia check this
+    const organizationCode = useOrganizationCode()
     const usersStore = useUsersStore()
     const connected = usersStore.isConnected
     if (connected) {
@@ -26,13 +28,15 @@ export default function useOnboardingStatus() {
       const status = user?.onboarding_status || {}
       if (status[key] !== val) {
         const payload = { onboarding_status: { ...status, [key]: val } }
-        await patchUser(user.id, payload)
+        await patchUser(organizationCode, user.id, payload)
         await usersStore.refreshUser()
       }
     }
   }
 
   const onboardingTrapAll = async (newStatus: OnboardingStatusType) => {
+    const organizationCode = useOrganizationCode()
+
     // TODO pinia check this
     const usersStore = useUsersStore()
     const connected = usersStore.isConnected
@@ -44,7 +48,7 @@ export default function useOnboardingStatus() {
 
       if (statusIsDifferent) {
         const payload = { onboarding_status: { ...status, ...newStatus } }
-        await patchUser(user.id, payload)
+        await patchUser(organizationCode, user.id, payload)
         await usersStore.refreshUser()
       }
     }

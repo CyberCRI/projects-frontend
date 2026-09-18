@@ -38,7 +38,8 @@ export const getUser = (
 
   const results = useAsyncAPI(
     key,
-    ({ config }) => fetchUser(unref(userId), { ...DEFAULT_CONFIG, ...config }),
+    ({ config }) =>
+      fetchUser(unref(organizationCode), unref(userId), { ...DEFAULT_CONFIG, ...config }),
     {
       translate: translateUser,
       watch: onlyRefs([organizationCode, userId]),
@@ -88,7 +89,8 @@ export const getUserGroups = (
 
   return useAsyncPaginationAPI(
     key,
-    ({ config }) => fetchUserGroups(unref(userId), { ...DEFAULT_CONFIG, ...config }),
+    ({ config }) =>
+      fetchUserGroups(unref(organizationCode), unref(userId), { ...DEFAULT_CONFIG, ...config }),
     {
       translate: (data) => translateGroups(data),
       watch: onlyRefs([organizationCode, userId]),
@@ -106,7 +108,11 @@ export const getUserProjectsMember = (
   const key = computed(() => `${unref(organizationCode)}::user::${unref(userId)}::projects::member`)
   return useAsyncPaginationAPI(
     key,
-    ({ config }) => fetchUserProjectsMember(unref(userId), { ...DEFAULT_CONFIG, ...config }),
+    ({ config }) =>
+      fetchUserProjectsMember(unref(organizationCode), unref(userId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
     {
       translate: (data) => translateProjects(data),
       watch: onlyRefs([organizationCode, userId]),
@@ -126,7 +132,11 @@ export const getUserProjectsReviewer = (
   )
   return useAsyncPaginationAPI(
     key,
-    ({ config }) => fetchUserProjectsReviewer(unref(userId), { ...DEFAULT_CONFIG, ...config }),
+    ({ config }) =>
+      fetchUserProjectsReviewer(unref(organizationCode), unref(userId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
     {
       translate: (data) => translateProjects(data),
       watch: onlyRefs([organizationCode, userId]),
@@ -146,7 +156,11 @@ export const getUserProjectsFollower = (
   )
   return useAsyncPaginationAPI(
     key,
-    ({ config }) => fetchUserProjectsFollower(unref(userId), { ...DEFAULT_CONFIG, ...config }),
+    ({ config }) =>
+      fetchUserProjectsFollower(unref(organizationCode), unref(userId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
     {
       translate: (data) => translateProjects(data),
       watch: onlyRefs([organizationCode, userId]),
@@ -166,7 +180,11 @@ export const getUserCategoriesFollower = (
   )
   return useAsyncPaginationAPI(
     key,
-    ({ config }) => fetchUserCategoriesFollower(unref(userId), { ...DEFAULT_CONFIG, ...config }),
+    ({ config }) =>
+      fetchUserCategoriesFollower(unref(organizationCode), unref(userId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
     {
       translate: (data) => translateCategories(data),
       watch: onlyRefs([organizationCode, userId]),
@@ -183,7 +201,8 @@ export const getUserPrivacy = (
   const key = computed(() => `${unref(organizationCode)}::user::${unref(userId)}::privacy`)
   return useAsyncAPI(
     key,
-    ({ config }) => fetchUserPrivacy(unref(userId), { ...DEFAULT_CONFIG, ...config }),
+    ({ config }) =>
+      fetchUserPrivacy(unref(organizationCode), unref(userId), { ...DEFAULT_CONFIG, ...config }),
     {
       watch: onlyRefs([organizationCode, userId]),
       ...config,
