@@ -98,7 +98,7 @@ export default (server: TypeMcpServer) => {
     },
     resultFromTool(({ idOrSlug }, extras) => {
       const opts = mcpOptions(extras)
-      return fetchUser(idOrSlug, opts).then(mapUserPreview)
+      return fetchUser(orgCode, idOrSlug, opts).then(mapUserPreview)
     })
   )
 

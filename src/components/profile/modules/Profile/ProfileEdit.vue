@@ -83,6 +83,8 @@ const close = () => {
   redirect()
 }
 
+const organizationCode = useOrganizationCode()
+
 const onConfirm = async () => {
   asyncing.value = true
   if (!(await v$.value.$validate())) {
@@ -90,9 +92,10 @@ const onConfirm = async () => {
     asyncing.value = false
     return
   }
-  return patchUser(props.user.id, form.value)
+  return patchUser(organizationCode, props.user.id, form.value)
     .then(async (newUser) => {
       await checkProfilePicture(
+        organizationCode,
         props.user.id,
         form.value.profile_picture,
         form.value.imageSizes,

@@ -88,10 +88,12 @@ export default {
 
   setup() {
     const usersStore = useUsersStore()
+    const organizationCode = useOrganizationCode()
     const { canCreateProject } = usePermissionProject(null)
     return {
       usersStore,
       canCreateProject,
+      organizationCode,
     }
   },
 
@@ -146,7 +148,7 @@ export default {
       this.asyncing[key] = true
       const payload = { onboarding_status: { ...this.status, [key]: val } }
       try {
-        await patchUser(this.user.id, payload)
+        await patchUser(this.organizationCode, this.user.id, payload)
         await this.usersStore.refreshUser()
       } catch (err) {
         console.error(err)

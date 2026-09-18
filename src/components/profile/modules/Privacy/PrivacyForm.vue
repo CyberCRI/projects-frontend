@@ -47,6 +47,8 @@ const props = defineProps<{
   privacySettings: PrivacySettings | object
 }>()
 
+const organizationCode = useOrganizationCode()
+
 const emit = defineEmits(['update:modelValue', 'profile-edited'])
 
 const toaster = useToasterStore()
@@ -147,7 +149,7 @@ async function save() {
   asyncing.value = true
   try {
     const apiData = adaptFormToApi()
-    await patchUserPrivacy(props.user.id, apiData)
+    await patchUserPrivacy(organizationCode, props.user.id, apiData)
 
     emit('profile-edited')
 
