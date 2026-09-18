@@ -87,7 +87,7 @@ function showToolContent(s) {
 function evaluationToDetails(markdown) {
   return markdown.replaceAll(
     /<evaluation>([\s\S]*?)<\/evaluation>/g,
-    (_match, content) => '\n```\n' + content.trim() + '\n```\n'
+    (_match, content) => '\n```evaluation\n' + content.trim() + '\n```\n'
   )
 }
 
@@ -207,5 +207,27 @@ summary {
 
 .more-button {
   margin: 0 auto;
+}
+
+:deep(.language-evaluation) {
+  padding-left: 1rem;
+  margin-left: 1rem;
+  position: relative;
+  text-wrap: wrap;
+  display: block;
+  color: #999;
+  border-left: 1px solid variables.$primary-dark;
+  &:before {
+    display: inline-block;
+    content: 'Evaluation';
+    font-size: 1rem;
+    position: absolute;
+    top: 0rem;
+    left: 0rem;
+    transform-origin: right bottom;
+    transform: translateX(-100%) rotate(-90deg);
+    color: variables.$primary-dark;
+    font-weight: 700;
+  }
 }
 </style>
