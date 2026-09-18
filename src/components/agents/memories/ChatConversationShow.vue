@@ -83,6 +83,14 @@ function showToolContent(s) {
     return renderMd(s)
   }
 }
+
+function evaluationToDetails(markdown) {
+  return markdown.replaceAll(
+    /<evaluation>([\s\S]*?)<\/evaluation>/g,
+    (_match, content) => '\n```\n' + content.trim() + '\n```\n'
+  )
+}
+
 refresh()
 </script>
 <template>
@@ -131,7 +139,7 @@ refresh()
           <pre v-if="message.role == 'tool' && !message.toolCallId?.startsWith('retriever_')">
             {{ showToolContent(message.content) }}
           </pre>
-          <div v-else v-html="renderMd(message.content)" />
+          <div v-else v-html="renderMd(evaluationToDetails(message.content))" />
           <ul v-if="message.toolCalls">
             <li v-for="tool_call in message.toolCalls" :key="tool_call.id">
               <pre>{{ JSON.stringify(tool_call, null, 2) }}</pre>
