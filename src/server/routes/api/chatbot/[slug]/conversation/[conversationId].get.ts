@@ -74,13 +74,15 @@ export default defineLazyEventHandler(() => {
       conversation.messages = conversation.messages.slice(0, limit)
     }
 
-    conversation.messages = conversation.messages.map((message) => {
-      if (message.role == 'assistant') {
-        const filterSpecialTag = filterSpecialTagFactory()
-        message.content = filterSpecialTag(message.content)
-      }
-      return message
-    })
+    if (conversation?.messages) {
+      conversation.messages = conversation.messages.map((message) => {
+        if (message.role == 'assistant') {
+          const filterSpecialTag = filterSpecialTagFactory()
+          message.content = filterSpecialTag(message.content)
+        }
+        return message
+      })
+    }
 
     return { conversation, more }
   })
