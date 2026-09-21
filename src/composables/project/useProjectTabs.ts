@@ -1,9 +1,5 @@
-import type {
-  ProjectModel,
-  ProjectSlugOrId,
-  TranslatedProject,
-} from 'shared-projects-frontend/models'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
+import type { ProjectModel, TranslatedProject } from 'shared-projects-frontend/models'
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
 import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
@@ -14,7 +10,7 @@ import { factoryPagination } from '~/skeletons/base.skeletons'
 import { safeProjectIconTab } from '~/functs/projects'
 
 export const useProjectTabs = (
-  projectId: ComputedRef<ProjectSlugOrId>,
+  projectId: ComputedRef<ProjectModel['id']>, // NOT slug (permisions strings se only id)
   project: ComputedRef<TranslatedProject | null>
 ) => {
   const route = useRoute()
@@ -35,7 +31,7 @@ export const useProjectTabs = (
   })
 
   const { isAdmin } = usePermissions()
-  const { isMember, canCreateTab } = usePermissionProject(projectId, project)
+  const { isMember, canCreateTab, canCreateReview } = usePermissionProject(projectId, project)
 
   const isMemberOrAdmin = computed(() => isMember.value || isAdmin.value)
 
@@ -288,7 +284,8 @@ export const useProjectTabs = (
           label: t(PROJECT_MODULE_TITLE.reviews, modules.value.reviews),
           view: `/projects/${projectId.value}/reviews/edit`,
           altView: `/projects/${projectId.value}/reviews`,
-          condition: !!modules.value.reviews || project.value.life_status === 'toreview',
+          condition:
+            (isAdmin.value || canCreateReview.value) && project.value.life_status === 'toreview',
           dataTest: 'project-reviews',
           icon: PROJECT_MODULE_ICON.reviews,
         },

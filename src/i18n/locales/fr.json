@@ -273,7 +273,7 @@
         "no-child": "Pas de sous-catégorie",
         "description-limit": "300 caractères maximum.",
         "edit": "Modifier une catégorie",
-        "is-reviewable": "Autoriser les révisions",
+        "is-reviewable": "Autoriser les évaluations",
         "limit-publication-to-reviewers": "Limiter la publication aux correcteurs",
         "preview-categories": "Pré-visualiser",
         "display-projects": "Afficher les projets",
@@ -1664,7 +1664,7 @@
   "project": {
     "infos": "Infos",
     "add-linked-project": "Ajouter un projet lié",
-    "add-review": "Ajouter une révision",
+    "add-review": "Ajouter une évaluation",
     "add-to-project": {
       "title": "Ajouter au projet",
       "blog-entry": "Article de blog",
@@ -1694,7 +1694,7 @@
     "edit": "Modifier le projet",
     "edit-linked-project": "Modifier le projet lié",
     "edit-location-point": "Modifier ce point de localisation",
-    "edit-review": "Modifier la révision",
+    "edit-review": "Modifier l'évaluation",
     "edit-map": "Modifier les emplacements",
     "files": "Fichier du projet | fichier du projet | fichiers du projet",
     "follow": "Suivre",
@@ -1751,9 +1751,9 @@
     "remove-user": "Supprimer",
     "resource": "Ressource | Ressources",
     "review": "Réviser",
-    "reviews": "Révisions",
-    "review-confirm-delete": "Êtes-vous sûr de vouloir supprimer cette révision ?",
-    "reviewable": "Prêt pour révision",
+    "reviews": "Évaluations",
+    "review-confirm-delete": "Êtes-vous sûr de vouloir supprimer cette évaluation ?",
+    "reviewable": "Prêt pour évaluation",
     "reviewed-on-the": "a évalué ce projet le",
     "remove-group": "Supprimer le groupe",
     "show-n-projects": "Afficher les {count} projets",
@@ -1785,7 +1785,7 @@
     "groups": "Groupe | Groupes",
     "label": "projet | projets",
     "actions": "Action dangereuse",
-    "review-not-editable": "Vous ne pouvez pas ajouter d'avis à ce projet; le projet n'est pas actuellement ouvert à l'examen."
+    "review-not-editable": "Vous ne pouvez pas ajouter d'évaluation à ce projet; le projet n'est pas actuellement ouvert à l'examen."
   },
   "project_list": {
     "updated_at": "Dernier actif",
@@ -2429,16 +2429,16 @@
       "success": "La visibilité du projet a bien été mise à jour"
     },
     "review-create": {
-      "success": "La révision a bien été ajoutée",
-      "error": "Erreur lors de l'ajout de la révision"
+      "success": "L'évaluation a bien été ajoutée",
+      "error": "Erreur lors de l'ajout de l'évaluation"
     },
     "review-delete": {
-      "success": "La révision a bien été supprimée",
-      "error": "Erreur lors de la suppression de la révision"
+      "success": "L'évaluation a bien été supprimée",
+      "error": "Erreur lors de la suppression de l'évaluation"
     },
     "review-update": {
-      "success": "La révision a bien été modifiée",
-      "error": "Erreur lors de la modification de la révision"
+      "success": "L'évaluation a bien été modifiée",
+      "error": "Erreur lors de la modification de la évaluation"
     },
     "sdgs-update": {
       "success": "Les ODDs ont bien été modifiés",
@@ -2538,10 +2538,10 @@
       "project-sub": "Être notifié si d'autres membres modifient vos projets",
       "announcement": "Annonces",
       "announcement-sub": "Être notifié quand une annonce est publiée sur le site",
-      "review": "Prêt pour révision",
+      "review": "Prêt pour évaluation",
       "review-sub": "Être notifié quand un projet est pret à être revisé par vous",
-      "reviewed": "Révision faite",
-      "reviewed-sub": "Être notifié quand une révision est envoyée sur votre projet",
+      "reviewed": "Évaluation faite",
+      "reviewed-sub": "Être notifié quand une évaluation est envoyée sur votre projet",
       "reply": "Réponse aux commentaires",
       "reply-sub": "Être notifié quand une réponse à votre commentaire est faite",
       "announcement-has-new-application": "Annonces Demande",
@@ -3280,8 +3280,8 @@
       "help": "A tous les droits d'édition pour ce groupe."
     },
     "reviewers": {
-      "label": "Examinateur | Les évaluateurs",
-      "help": "Lorsque le projet a été marqué « prêt à faire l'objet d'un examen », l'examinateur peut donner son avis et verrouiller un projet afin d'éviter d'autres modifications dans le projet. Un examinateur a également des droits de modification."
+      "label": "Évaluateur | Les évaluateurs",
+      "help": "Lorsque le projet a été marqué « prêt à faire l'objet d'un examen », l'évaluateur peut donner son avis et verrouiller un projet afin d'éviter d'autres modifications dans le projet. Un évaluateur a également des droits de modification."
     },
     "members": {
       "label": "Participant | Participants",
@@ -3321,7 +3321,7 @@
     },
     "label": "Rôle | Rôles",
     "edit": "Modifier les rôles",
-    "select": "Sélectionnez les droits",
+    "select": "Sélectionnez le(s) rôle(s)",
     "help": "Informations sur les rôles.",
     "viewers": {
       "label": "Affichage | Affichages",
