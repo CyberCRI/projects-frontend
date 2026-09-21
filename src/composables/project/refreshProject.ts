@@ -17,9 +17,21 @@ export const refreshProjectTabs = <T extends ProjectModel | TranslatedProject>(p
 
   const organizationCode = useOrganizationCode()
 
-  return refreshNuxtData([
+  const tabs = [
     `${organizationCode}::project::${project.id}::tab::all`,
     `${organizationCode}::project::${project.slug}::tab::all`,
     `${organizationCode}::project::${route.params?.slugOrId}::tab::all`,
-  ])
+  ]
+
+  const finalsTabs = []
+
+  tabs.forEach((key) => {
+    ;['preview', 'menu', 'settings'].forEach((uniqueKey) => {
+      finalsTabs.push(`${key}+${uniqueKey}`)
+    })
+  })
+
+  console.log(finalsTabs)
+
+  return refreshNuxtData(finalsTabs)
 }

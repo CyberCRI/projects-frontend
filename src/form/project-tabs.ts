@@ -1,15 +1,5 @@
-import type {
-  ProjectModuleExtra,
-  ProjectTabForm,
-  ProjectTabItemForm,
-  ProjectTabSettingsForm,
-} from 'shared-projects-frontend/models'
-import {
-  DEFAULT_ICONS_TABS,
-  NULL_CONTENT,
-  PROJECT_MODULE_TITLE,
-  PROJECT_TABS,
-} from '~/functs/constants'
+import type { ProjectTabForm, ProjectTabItemForm } from 'shared-projects-frontend/models'
+import { DEFAULT_ICONS_TABS, NULL_CONTENT, PROJECT_TABS } from '~/functs/constants'
 import { helpers, required } from '@vuelidate/validators'
 import { requiredContent } from '~/form/base'
 import { omit, mapValues } from 'es-toolkit'
@@ -23,6 +13,7 @@ export const defaultProjectTabForm = (): ProjectTabForm => {
     icon: DEFAULT_ICONS_TABS.text,
     images_ids: [],
     show_preview: true,
+    show_tab: true,
     uuid: uuidv4(),
   }
 }

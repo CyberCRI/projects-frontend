@@ -9,7 +9,7 @@ import type {
   UserModuleExtra,
 } from 'shared-projects-frontend/models'
 import type { IconImageChoice, IconTabImageChoice } from '~/functs/IconImage'
-import { omit } from 'es-toolkit'
+import { omit, pick } from 'es-toolkit'
 
 export const RESOURCE_PROJECT_CATEGORY = [
   'inspired-by',
@@ -150,6 +150,7 @@ export const CHART_COLORS = [
   '#AE47FF',
   '#D6A2FF',
 ]
+
 // all unicode letters, marks (for diacriticals), numbers, spaces, and the following characters: - _ . '
 export const VALID_NAME_REGEX = /^[\p{Letter}\p{Mark}\p{Number} \-_.']+$/giu
 
@@ -207,7 +208,7 @@ export const DEFAULT_COLOR_TIPTAP = [
 
 // tabs
 export const PROJECT_MODULE_ICON: {
-  [key in ProjectModuleExtra]: IconImageChoice
+  [key in ProjectModuleExtra]: IconTabImageChoice
 } = {
   announcements: 'BullhornOutline',
   blogs: 'NewsLine',
@@ -224,13 +225,6 @@ export const PROJECT_MODULE_ICON: {
   reviews: 'Feedback',
   messages: 'ChatBubble',
   tabs: 'Tab',
-}
-
-export const DEFAULT_ICONS_TABS: {
-  [key in ProjectTabType]: IconTabImageChoice
-} = {
-  blog: 'NewsLine',
-  text: 'Briefcase',
 }
 
 export const PROJECT_MODULE_TITLE: { [key in ProjectModuleExtra]: string } = {
@@ -260,6 +254,26 @@ export const PROJECT_TABS = omit(PROJECT_MODULE_TITLE, [
   'similars',
   'reviews',
 ])
+
+export const DEFAULT_PROJECT_TABS_ORDER: (keyof typeof PROJECT_TABS)[] = [
+  'members',
+  'groups',
+  'linked_projects',
+  'locations',
+  'goals',
+  'blogs',
+  'resources',
+  'announcements',
+  'comments',
+]
+
+export const DEFAULT_ICONS_TABS: {
+  [key in ProjectTabType]: IconTabImageChoice
+} = {
+  blog: 'NewsLine',
+  text: 'Briefcase',
+  ...pick(PROJECT_MODULE_ICON, Object.keys(PROJECT_TABS) as ProjectModuleExtra[]),
+}
 
 // groups
 export const GROUP_MODULE_ICON: {

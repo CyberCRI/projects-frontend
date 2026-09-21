@@ -5,6 +5,7 @@ import ContextActionButton from '~/components/base/button/ContextActionButton.vu
 import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
+import { DRAG_OPTIONS } from '~/functs/constants'
 import { Sortable } from 'sortablejs-vue3'
 
 const emit = defineEmits([
@@ -42,14 +43,13 @@ const chevronImage = computed(() => {
   return !hasChildren.value ? 'ChevronRight' : showChild.value ? 'ChevronUp' : 'ChevronDown'
 })
 
-const dragOptions = computed(() => {
-  return {
-    animation: 200,
-    group: 'categories',
-    disabled: false,
-    ghostClass: 'category-ghost',
-  }
-})
+// sortable
+const DRAG_OPTIONS = {
+  animation: 200,
+  group: 'categories',
+  disabled: false,
+  ghostClass: 'category-ghost',
+}
 
 function onDragStart(event) {
   const dragged = event.target.closest('[data-category-id]')
@@ -166,7 +166,7 @@ watch(
     <div class="child-list">
       <Sortable
         :list="category.children"
-        :options="dragOptions"
+        :options="DRAG_OPTIONS"
         group="categories"
         tag="ul"
         item-key="id"

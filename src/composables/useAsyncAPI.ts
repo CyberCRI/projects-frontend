@@ -25,6 +25,9 @@ export type AsyncConfig<ResDataT, DataT, Result> = Parameters<
   // force fixed key (no add query params in key)
   // like "group::55::members" (no pagination query like 'offset' / 'limit') are added
   keyFixed?: RefOrRaw<boolean>
+
+  // add a prefix in anyKeys
+  uniqueKey?: RefOrRaw<string>
 }
 
 export type AsyncParameters<ResDataT, DataT, Result> = [
@@ -95,7 +98,10 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   // like "organization::CRI::group::55::members" (if query is empty)
   // or "organization::CRI::group::55::members::limit=3::offset=10"
   const key = computed(() => {
-    let parentKey = unref(params[0]).toString()
+    const uniqueKey = (unref(params[2].uniqueKey) || '').toString()
+    let parentKey = `${unref(params[0])}${uniqueKey ? `+${uniqueKey}` : ''}`
+
+    console.log('inparents', parentKey)
     const fixed = unref(params[2].keyFixed)
     if (fixed) {
       return parentKey

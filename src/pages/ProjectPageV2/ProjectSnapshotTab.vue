@@ -4,19 +4,8 @@
 
     <ProjectDescriptionPreview v-if="!descripitonEmpty" :project="project" />
 
-    <ProjectMembersPreview v-if="project.modules.members" :project="project" />
-    <ProjectGroupsPreview v-if="project.modules.groups" :project="project" />
-
-    <ProjectLocationsPreview v-if="project.modules.locations" :project="project" />
-
-    <ProjectGoalsPreview v-if="project.modules.goals" :project="project" />
-
-    <ProjectBlogEntriesPreview v-if="project.modules.blogs" :project="project" />
-
-    <ProjectLinkedProjectsPreview v-if="project.modules.linked_projects" :project="project" />
-
     <FetchLoader :status="status" :error="error" only-error skeleton>
-      <template v-for="tab in tabs">
+      <template v-for="tab in allTabs">
         <ProjectTabItemPreview
           v-if="tab.modules.items"
           :key="tab.id"
@@ -25,17 +14,6 @@
         />
       </template>
     </FetchLoader>
-
-    <ProjectResourcesPreview
-      v-if="project.modules.links || project.modules.files"
-      :project="project"
-    />
-
-    <ProjectReviewPreview v-if="isConnected && project.modules.reviews" :project="project" />
-
-    <ProjectAnnouncementsPreview v-if="project.modules.announcements" :project="project" />
-
-    <ProjectCommentsPreview v-if="project.modules.comments" :project="project" />
 
     <ProjectPrivateExchangePreview
       v-if="project.modules.messages && isMemberOrAdmin"
@@ -46,18 +24,8 @@
 
 <script setup lang="ts">
 import ProjectPrivateExchangePreview from '@/components/project/modules/PrivateExchange/ProjectPrivateExchangePreview.vue'
-import ProjectLinkedProjectsPreview from '@/components/project/modules/LinkedProjects/ProjectLinkedProjectsPreview.vue'
-import ProjectAnnouncementsPreview from '@/components/project/modules/Announcements/ProjectAnnouncementsPreview.vue'
-import ProjectBlogEntriesPreview from '@/components/project/modules/BlogEntries/ProjectBlogEntriesPreview.vue'
-import ProjectResourcesPreview from '@/components/project/modules/Resources/ProjectResourcesPreview.vue'
-import ProjectLocationsPreview from '@/components/project/modules/Locations/ProjectLocationsPreview.vue'
 import ProjectTabItemPreview from '~/components/project/modules/Additionals/ProjectTabItemPreview.vue'
-import ProjectCommentsPreview from '@/components/project/modules/Comments/ProjectCommentsPreview.vue'
-import ProjectMembersPreview from '~/components/project/modules/Members/ProjectMembersPreview.vue'
 import ProjectDescriptionPreview from '@/components/project/modules/ProjectDescriptionPreview.vue'
-import ProjectReviewPreview from '~/components/project/modules/review/ProjectReviewPreview.vue'
-import ProjectGroupsPreview from '~/components/project/modules/Groups/ProjectGroupsPreview.vue'
-import ProjectGoalsPreview from '@/components/project/modules/Goals/ProjectGoalsPreview.vue'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import type { TranslatedProject } from 'shared-projects-frontend/models'
@@ -65,8 +33,8 @@ import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import FetchLoader from '~/components/base/FetchLoader.vue'
-import useUsersStore from '~/stores/useUsers'
 import { textIsEmpty } from '@/functs/tiptap'
+import { sanitizeTabs } from '~/functs/tabs'
 
 const props = defineProps<{
   project: TranslatedProject
@@ -74,8 +42,6 @@ const props = defineProps<{
 
 const { isAdmin } = usePermissions()
 const { isMember } = usePermissionProject(computed(() => props.project.id))
-
-const { isConnected } = useUsersStore()
 
 const isMemberOrAdmin = computed(() => isMember.value || isAdmin.value)
 
@@ -94,9 +60,12 @@ const {
   },
   default: () => factoryPagination(projectTabSkeleton, 0),
   paginationConfig: {
-    limit: 100,
+    limit: 999,
   },
+  uniqueKey: 'preview',
 })
+
+const allTabs = computed(() => sanitizeTabs(tabs.value, props.project.modules))
 </script>
 
 <style lang="scss" scoped>
