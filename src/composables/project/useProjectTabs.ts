@@ -288,7 +288,7 @@ export const useProjectTabs = (
           label: t(PROJECT_MODULE_TITLE.reviews, modules.value.reviews),
           view: `/projects/${projectId.value}/reviews/edit`,
           altView: `/projects/${projectId.value}/reviews`,
-          condition: !!modules.value.reviews || project.value.life_status === 'toreview',
+          condition: project.value.life_status === 'toreview',
           dataTest: 'project-reviews',
           icon: PROJECT_MODULE_ICON.reviews,
         },

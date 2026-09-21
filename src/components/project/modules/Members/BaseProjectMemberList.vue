@@ -141,7 +141,7 @@ const addUser = (memberRoles: { [key: TranslatedUserModel['id']]: ProjectMemberR
 
   addProjectMembers(props.project.id, body)
     .then(() => {
-      toaster.pushSuccess(t('toasts.team-member-delete.success'))
+      toaster.pushSuccess(t('toasts.team-member-create.success'))
       fullRefresh()
     })
     .catch(() => toaster.pushError(t('toasts.team-member-delete.error')))
