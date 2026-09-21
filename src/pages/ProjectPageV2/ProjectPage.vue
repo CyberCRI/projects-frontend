@@ -26,9 +26,11 @@ const {
   default: projectSkeleton,
 })
 
-const { canEditProject } = usePermissionProject(computed(() => project.value?.id))
+const projectId = computed(() => project.value?.id)
 
-const { tabs, currentTab, isEditing, toggleEditing } = useProjectTabs(projectIdOrSlug, project)
+const { canEditProject } = usePermissionProject(projectId)
+
+const { tabs, currentTab, isEditing, toggleEditing } = useProjectTabs(projectId, project)
 
 // set headers
 watchEffect(() => {

@@ -98,10 +98,11 @@ export const usePermissionProject = (
 
   // reviews
   const canCreateReview = computed(() => {
-    return (
+    const res =
       permissions.value &&
       globalCanCreateReview(userStore.rights, organizationStore.current.id, internalProjectId.value)
-    )
+    console.log('canCreateReview', res, organizationStore.current?.id, internalProjectId.value)
+    return res
   })
 
   const canEditReview = computed(() => {
