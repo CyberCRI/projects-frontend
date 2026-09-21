@@ -16,6 +16,8 @@ import fixLeaflet from '~/app/fixLeaflet'
 import type { UnwrapRef } from 'vue'
 import 'leaflet.markercluster'
 import * as L from 'leaflet'
+const runtimeConfig = useRuntimeConfig()
+const { appMapRendererApiKey } = runtimeConfig.public
 
 const runtimeConfig = useRuntimeConfig()
 const { appMapRendererApiKey } = runtimeConfig.public
