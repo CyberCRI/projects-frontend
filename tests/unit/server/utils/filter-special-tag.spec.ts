@@ -2,8 +2,6 @@ import filterSpcialTagFactory from '~/server/utils/filter-special-tag'
 import { describe, it, expect } from 'vitest'
 
 describe('filterSpecialTag', () => {
-  // ── Happy path ────────────────────────────────────────────────────────────
-
   it('should retrun same string if it didnt contain the tag', async () => {
     const filterTag = filterSpcialTagFactory('mytag')
     const chunks = ['Hello world']
