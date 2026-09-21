@@ -211,6 +211,7 @@ export default {
     const runtimeConfig = useRuntimeConfig()
     const { onboardingTrap } = useOnboardingStatus()
     const defaultPictures = usePatatoids()
+    const organizationCode = useOrganizationCode()
     return {
       toaster,
       locale,
@@ -218,6 +219,7 @@ export default {
       runtimeConfig,
       onboardingTrap,
       defaultPictures,
+      organizationCode,
     }
   },
 
@@ -315,7 +317,7 @@ export default {
   methods: {
     async loadUser() {
       try {
-        this.user = await getUser(this.usersStore.id)
+        this.user = await getUser(this.organizationCode, this.usersStore.id)
         this.form.picture = this.user.profile_picture || null
         this.form.imageSizes = this.user.profile_picture
           ? pictureApiToImageSizes(this.user.profile_picture)
@@ -351,8 +353,9 @@ export default {
             description: this.bio,
           }
 
-          await patchUser(this.user.id, data).then((newUser) => {
+          await patchUser(this.organizationCode, this.user.id, data).then((newUser) => {
             return checkProfilePicture(
+              this.organizationCode,
               this.user.id,
               this.form.picture,
               this.form.imageSizes,

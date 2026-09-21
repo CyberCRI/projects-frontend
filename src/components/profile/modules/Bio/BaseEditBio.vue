@@ -18,6 +18,7 @@ const props = withDefaults(
 const router = useRouter()
 const { t } = useNuxtI18n()
 
+const organizationCode = useOrganizationCode()
 const { stateModals, openModals, closeAllModals, closeModals } = useModals({
   saveChange: false,
 })
@@ -62,7 +63,7 @@ const onConfirm = async () => {
     jumpToFirstError()
     return
   }
-  patchUser(props.user.id, form.value)
+  patchUser(organizationCode, props.user.id, form.value)
     .then((newUser) => {
       toaster.pushSuccess(t('profile.edit.bio.save-success'))
       return refreshUserData(props.user).then(() => {

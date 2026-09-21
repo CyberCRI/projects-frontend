@@ -43,6 +43,8 @@ const useUsersStore = defineStore('users', () => {
   // store is initialized before app is started, so we must check expiration here too
   if (import.meta.client) checkExpiredToken()
 
+  const organizatonCode = useOrganizationCode()
+
   const refreshToken = ref(localStorage?.getItem('REFRESH_TOKEN') ?? null)
   const userFromToken = ref(null)
   const userFromApi = ref(null)
@@ -230,7 +232,7 @@ const useUsersStore = defineStore('users', () => {
     // id is keycloak_id OR django user id OR slug
     try {
       // TODO: except for permissions, useless props that are on userFromApi anyway (to check)
-      const user = await _getUser(id)
+      const user = await _getUser(organizatonCode, id)
       forceSetUser(user)
       return user
     } catch (err) {

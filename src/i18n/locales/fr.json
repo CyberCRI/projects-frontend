@@ -486,6 +486,7 @@
     "add-comment": "Ajoutez votre commentaire !",
     "comment-verb": "Commenter",
     "comments": "Commentaires",
+    "temp-deactivated-notice": "Les nouveaux commentaires sont temporairement désactivés. Ils seront bientôt de retour !",
     "deleted": "commentaire effacé le",
     "discard-comment": "Annuler le commentaire ?",
     "discard-changes": "Annuler les modifications ?",

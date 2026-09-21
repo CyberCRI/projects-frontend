@@ -206,14 +206,6 @@ export const DEFAULT_COLOR_TIPTAP = [
 ]
 
 // tabs
-
-export const DEFAULT_ICONS_TABS: {
-  [key in ProjectTabType]: IconTabImageChoice
-} = {
-  blog: 'NewsLine',
-  text: 'Briefcase',
-}
-
 export const PROJECT_MODULE_ICON: {
   [key in ProjectModuleExtra]: IconImageChoice
 } = {
@@ -232,6 +224,13 @@ export const PROJECT_MODULE_ICON: {
   reviews: 'Feedback',
   messages: 'ChatBubble',
   tabs: 'Tab',
+}
+
+export const DEFAULT_ICONS_TABS: {
+  [key in ProjectTabType]: IconTabImageChoice
+} = {
+  blog: 'NewsLine',
+  text: 'Briefcase',
 }
 
 export const PROJECT_MODULE_TITLE: { [key in ProjectModuleExtra]: string } = {

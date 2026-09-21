@@ -46,7 +46,7 @@
           <div v-if="isConnected" class="actions">
             <div class="reply-action skeletons-background">
               <LpiButton
-                v-if="!isReply"
+                v-if="newCommentEnabled && !isReply"
                 :label="$t('common.reply')"
                 btn-icon="Reply"
                 @click="toggleModals('replying')"
@@ -55,8 +55,8 @@
 
             <div class="author-action skeletons-background">
               <ContextActionMenuInline
-                :can-edit="canEdit"
-                :can-delete="canEdit"
+                :can-edit="newCommentEnabled && canEdit"
+                :can-delete="newCommentEnabled && canEdit"
                 @delete="openModals('delete')"
                 @edit="toggleModals('edit')"
               />
@@ -161,6 +161,9 @@ const props = withDefaults(
     repliedComment: null,
   }
 )
+
+const runtimeConfig = useRuntimeConfig()
+const newCommentEnabled = ref(props.isPrivate || !runtimeConfig.public.appNewCommentDisabled)
 
 const { t, locale } = useNuxtI18n()
 
