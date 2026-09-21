@@ -217,13 +217,14 @@ summary {
   display: block;
   color: #999;
   border-left: 1px solid variables.$primary-dark;
-  &:before {
+
+  &::before {
     display: inline-block;
     content: 'Evaluation';
     font-size: 1rem;
     position: absolute;
-    top: 0rem;
-    left: 0rem;
+    top: 0;
+    left: 0;
     transform-origin: right bottom;
     transform: translateX(-100%) rotate(-90deg);
     color: variables.$primary-dark;
