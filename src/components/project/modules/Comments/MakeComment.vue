@@ -2,6 +2,7 @@
   <div class="make-comment skeletons-background">
     <div v-if="usersStore.isConnected">
       <TipTapEditor
+        :key="editorKey"
         v-model="form.content"
         :errors="errors.content"
         :save-image-callback="saveCommentImage"
@@ -11,7 +12,7 @@
       />
 
       <div class="action">
-        <LpiButton :label="$t('common.cancel')" :secondary="true" @click="emit('canceled')" />
+        <LpiButton :label="$t('common.cancel')" :secondary="true" @click="cancel" />
         <LpiButton
           :disabled="!canSubmitComment || asyncing || !isValid || isFormEqual"
           :btn-icon="asyncing ? 'LoaderSimple' : null"
@@ -46,6 +47,8 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
+
+import { v4 as uuidv4 } from 'uuid'
 
 import type {
   ProjectMessageModel,
@@ -82,6 +85,9 @@ const emit = defineEmits<{
   'comment-edited': [CommentModel]
   'project-message-edited': [ProjectMessageModel]
 }>()
+
+const editorKey = ref(uuidv4())
+const refreshEditor = () => (editorKey.value = uuidv4())
 
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
@@ -136,6 +142,16 @@ const scrollToNewComment = (comment) => {
 
 const addImage = (image: ImageModel) => form.value.images_ids.push(image.id)
 
+const resetForm = () => {
+  reset(defaultLocalForm())
+  nextTick(() => refreshEditor())
+}
+
+const cancel = () => {
+  resetForm()
+  emit('canceled')
+}
+
 const submit = async () => {
   if (props.originalComment) {
     await updateComment().then(() => emit('submited'))
@@ -159,7 +175,10 @@ const createComment = () => {
         nextTick(() => scrollToNewComment(message))
       })
       .catch(() => toaster.pushError(t('toasts.project-message-create.error')))
-      .finally(() => (asyncing.value = false))
+      .finally(() => {
+        resetForm()
+        asyncing.value = false
+      })
   } else {
     return postComment(props.project.id, form.value)
       .then((comment) => {
@@ -168,11 +187,14 @@ const createComment = () => {
           comment,
         })
         toaster.pushSuccess(t('toasts.comment-create.success'))
+        resetForm()
         emit('comment-posted', comment)
         nextTick(() => scrollToNewComment(comment))
       })
       .catch(() => toaster.pushError(t('toasts.comment-create.error')))
-      .finally(() => (asyncing.value = false))
+      .finally(() => {
+        asyncing.value = false
+      })
   }
 }
 
