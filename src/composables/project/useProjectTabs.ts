@@ -14,6 +14,7 @@ export const useProjectTabs = (
   project: ComputedRef<TranslatedProject | null>
 ) => {
   const route = useRoute()
+  const routeSlugOrId = computed(() => route.params.slugOrId)
   const router = useRouter()
   const organizationCode = useOrganizationCode()
 
@@ -41,8 +42,8 @@ export const useProjectTabs = (
         {
           key: 'project-summary',
           label: t('project.summary'),
-          view: `/projects/${projectId.value}/summary`,
-          altView: `/projects/${projectId.value}/summary/edit`,
+          view: `/projects/${routeSlugOrId.value}/summary`,
+          altView: `/projects/${routeSlugOrId.value}/summary/edit`,
           condition: true,
           dataTest: 'project-summary',
           icon: 'Home',
@@ -51,8 +52,8 @@ export const useProjectTabs = (
         {
           key: 'project-description',
           label: t('form.description'),
-          view: `/projects/${projectId.value}/description`,
-          altView: `/projects/${projectId.value}/description/edit`,
+          view: `/projects/${routeSlugOrId.value}/description`,
+          altView: `/projects/${routeSlugOrId.value}/description/edit`,
           condition: true,
           dataTest: 'project-description',
           icon: 'Article',
@@ -60,8 +61,8 @@ export const useProjectTabs = (
         {
           key: 'project-members',
           label: t(PROJECT_MODULE_TITLE.members, modules.value.members),
-          view: `/projects/${projectId.value}/members`,
-          altView: `/projects/${projectId.value}/members/edit`,
+          view: `/projects/${routeSlugOrId.value}/members`,
+          altView: `/projects/${routeSlugOrId.value}/members/edit`,
           condition: !!modules.value.members,
           dataTest: 'project-members',
           icon: PROJECT_MODULE_ICON.members,
@@ -69,8 +70,8 @@ export const useProjectTabs = (
         {
           key: 'project-groups',
           label: t(PROJECT_MODULE_TITLE.groups, modules.value.groups),
-          view: `/projects/${projectId.value}/groups`,
-          altView: `/projects/${projectId.value}/groups/edit`,
+          view: `/projects/${routeSlugOrId.value}/groups`,
+          altView: `/projects/${routeSlugOrId.value}/groups/edit`,
           condition: !!modules.value.groups,
           dataTest: 'project-groups',
           icon: PROJECT_MODULE_ICON.groups,
@@ -78,8 +79,8 @@ export const useProjectTabs = (
         {
           key: 'project-linked-projects',
           label: t(PROJECT_MODULE_TITLE.linked_projects, modules.value.linked_projects),
-          view: `/projects/${projectId.value}/linked-projects`,
-          altView: `/projects/${projectId.value}/linked-projects/edit`,
+          view: `/projects/${routeSlugOrId.value}/linked-projects`,
+          altView: `/projects/${routeSlugOrId.value}/linked-projects/edit`,
           condition: !!modules.value.linked_projects,
           dataTest: 'project-linked-projects',
           icon: PROJECT_MODULE_ICON.linked_projects,
@@ -87,8 +88,8 @@ export const useProjectTabs = (
         {
           key: 'project-locations',
           label: t(PROJECT_MODULE_TITLE.locations, modules.value.locations),
-          view: `/projects/${projectId.value}/locations`,
-          altView: `/projects/${projectId.value}/locations/edit`,
+          view: `/projects/${routeSlugOrId.value}/locations`,
+          altView: `/projects/${routeSlugOrId.value}/locations/edit`,
           condition: !!modules.value.locations,
           dataTest: 'project-locations',
           icon: PROJECT_MODULE_ICON.locations,
@@ -96,8 +97,8 @@ export const useProjectTabs = (
         {
           key: 'project-goals',
           label: t(PROJECT_MODULE_TITLE.goals, modules.value.goals),
-          view: `/projects/${projectId.value}/goals`,
-          altView: `/projects/${projectId.value}/goals/edit`,
+          view: `/projects/${routeSlugOrId.value}/goals`,
+          altView: `/projects/${routeSlugOrId.value}/goals/edit`,
           condition: !!modules.value.goals,
           dataTest: 'project-goals',
           icon: PROJECT_MODULE_ICON.goals,
@@ -105,8 +106,8 @@ export const useProjectTabs = (
         {
           key: 'project-blog',
           label: t(PROJECT_MODULE_TITLE.blogs, modules.value.blogs),
-          view: `/projects/${projectId.value}/blog-entries`,
-          altView: `/projects/${projectId.value}/blog-entries/edit`,
+          view: `/projects/${routeSlugOrId.value}/blog-entries`,
+          altView: `/projects/${routeSlugOrId.value}/blog-entries/edit`,
           condition: !!modules.value.blogs,
           dataTest: 'project-blog',
           icon: PROJECT_MODULE_ICON.blogs,
@@ -114,8 +115,8 @@ export const useProjectTabs = (
         {
           key: 'project-resources',
           label: t(PROJECT_MODULE_TITLE.resources, modules.value.files + modules.value.links),
-          view: `/projects/${projectId.value}/resources`,
-          altView: `/projects/${projectId.value}/resources/edit`,
+          view: `/projects/${routeSlugOrId.value}/resources`,
+          altView: `/projects/${routeSlugOrId.value}/resources/edit`,
           condition: !!(modules.value.files + modules.value.links),
           dataTest: 'project-resources',
           icon: PROJECT_MODULE_ICON.resources,
@@ -123,8 +124,8 @@ export const useProjectTabs = (
         {
           key: 'project-announcements',
           label: t(PROJECT_MODULE_TITLE.announcements, modules.value.announcements),
-          view: `/projects/${projectId.value}/announcements`,
-          altView: `/projects/${projectId.value}/announcements/edit`,
+          view: `/projects/${routeSlugOrId.value}/announcements`,
+          altView: `/projects/${routeSlugOrId.value}/announcements/edit`,
           condition: !!modules.value.announcements,
           dataTest: 'project-announcements',
           icon: PROJECT_MODULE_ICON.announcements,
@@ -132,8 +133,8 @@ export const useProjectTabs = (
         {
           key: 'project-comments',
           label: t(PROJECT_MODULE_TITLE.comments, modules.value.comments),
-          view: `/projects/${projectId.value}/comments`,
-          altView: `/projects/${projectId.value}/comments/edit`,
+          view: `/projects/${routeSlugOrId.value}/comments`,
+          altView: `/projects/${routeSlugOrId.value}/comments/edit`,
           // always show comments tabs to post comment
           condition: true,
           dataTest: 'project-comments',
@@ -142,8 +143,8 @@ export const useProjectTabs = (
         {
           key: 'project-reviews',
           label: t(PROJECT_MODULE_TITLE.reviews, modules.value.reviews),
-          view: `/projects/${projectId.value}/reviews`,
-          altView: `/projects/${projectId.value}/reviews/edit`,
+          view: `/projects/${routeSlugOrId.value}/reviews`,
+          altView: `/projects/${routeSlugOrId.value}/reviews/edit`,
           condition: !!modules.value.reviews,
           dataTest: 'project-reviews',
           icon: PROJECT_MODULE_ICON.reviews,
@@ -151,8 +152,8 @@ export const useProjectTabs = (
         {
           key: 'project-private-exchange',
           label: t('comment.private-exchange.tab'),
-          view: `/projects/${projectId.value}/private-exchange`,
-          altView: `/projects/${projectId.value}/private-exchange/edit`,
+          view: `/projects/${routeSlugOrId.value}/private-exchange`,
+          altView: `/projects/${routeSlugOrId.value}/private-exchange/edit`,
           condition: isMemberOrAdmin.value,
           dataTest: 'project-private-exchange',
           icon: 'EmailOutline',
@@ -162,8 +163,8 @@ export const useProjectTabs = (
           return {
             key: `project-additionals-${tab.slug || tab.id}`,
             label: tab.$t.title,
-            view: `/projects/${projectId.value}/additionals/${tab.slug || tab.id}`,
-            altView: `/projects/${projectId.value}/additionals/${tab.slug || tab.id}/edit`,
+            view: `/projects/${routeSlugOrId.value}/additionals/${tab.slug || tab.id}`,
+            altView: `/projects/${routeSlugOrId.value}/additionals/${tab.slug || tab.id}/edit`,
             dataTest: `project-additionals-${tab.slug || tab.id}`,
             condition: tab.modules.items >= 1,
             icon: safeProjectIconTab(tab.icon, tab.type),
@@ -184,8 +185,8 @@ export const useProjectTabs = (
         {
           key: 'project-summary',
           label: t('project.summary'),
-          view: `/projects/${projectId.value}/summary/edit`,
-          altView: `/projects/${projectId.value}/summary`,
+          view: `/projects/${routeSlugOrId.value}/summary/edit`,
+          altView: `/projects/${routeSlugOrId.value}/summary`,
           condition: true,
           dataTest: 'project-summary',
           icon: 'Home',
@@ -193,8 +194,8 @@ export const useProjectTabs = (
         {
           key: 'project-description',
           label: t('form.description'),
-          view: `/projects/${projectId.value}/description/edit`,
-          altView: `/projects/${projectId.value}/description`,
+          view: `/projects/${routeSlugOrId.value}/description/edit`,
+          altView: `/projects/${routeSlugOrId.value}/description`,
           condition: true,
           dataTest: 'project-description',
           icon: 'Article',
@@ -202,8 +203,8 @@ export const useProjectTabs = (
         {
           key: 'project-members',
           label: t(PROJECT_MODULE_TITLE.members, modules.value.members),
-          view: `/projects/${projectId.value}/members/edit`,
-          altView: `/projects/${projectId.value}/members`,
+          view: `/projects/${routeSlugOrId.value}/members/edit`,
+          altView: `/projects/${routeSlugOrId.value}/members`,
           condition: true,
           dataTest: 'project-members',
           icon: PROJECT_MODULE_ICON.members,
@@ -212,8 +213,8 @@ export const useProjectTabs = (
         {
           key: 'project-groups',
           label: t(PROJECT_MODULE_TITLE.groups, modules.value.groups),
-          view: `/projects/${projectId.value}/groups/edit`,
-          altView: `/projects/${projectId.value}/groups`,
+          view: `/projects/${routeSlugOrId.value}/groups/edit`,
+          altView: `/projects/${routeSlugOrId.value}/groups`,
           condition: true,
           dataTest: 'project-groups',
           icon: PROJECT_MODULE_ICON.groups,
@@ -222,8 +223,8 @@ export const useProjectTabs = (
         {
           key: 'project-linked-projects',
           label: t(PROJECT_MODULE_TITLE.linked_projects, modules.value.linked_projects),
-          view: `/projects/${projectId.value}/linked-projects/edit`,
-          altView: `/projects/${projectId.value}/linked-projects`,
+          view: `/projects/${routeSlugOrId.value}/linked-projects/edit`,
+          altView: `/projects/${routeSlugOrId.value}/linked-projects`,
           condition: true,
           dataTest: 'project-linked-projects',
           icon: PROJECT_MODULE_ICON.linked_projects,
@@ -232,8 +233,8 @@ export const useProjectTabs = (
         {
           key: 'project-locations',
           label: t(PROJECT_MODULE_TITLE.locations, modules.value.locations),
-          view: `/projects/${projectId.value}/locations/edit`,
-          altView: `/projects/${projectId.value}/locations`,
+          view: `/projects/${routeSlugOrId.value}/locations/edit`,
+          altView: `/projects/${routeSlugOrId.value}/locations`,
           condition: true,
           dataTest: 'project-locations',
           icon: PROJECT_MODULE_ICON.locations,
@@ -242,8 +243,8 @@ export const useProjectTabs = (
         {
           key: 'project-goals',
           label: t(PROJECT_MODULE_TITLE.goals, modules.value.goals),
-          view: `/projects/${projectId.value}/goals/edit`,
-          altView: `/projects/${projectId.value}/goals`,
+          view: `/projects/${routeSlugOrId.value}/goals/edit`,
+          altView: `/projects/${routeSlugOrId.value}/goals`,
           condition: true,
           dataTest: 'project-goals',
           icon: PROJECT_MODULE_ICON.goals,
@@ -252,8 +253,8 @@ export const useProjectTabs = (
         {
           key: 'project-blog',
           label: t(PROJECT_MODULE_TITLE.blogs, modules.value.blogs),
-          view: `/projects/${projectId.value}/blog-entries/edit`,
-          altView: `/projects/${projectId.value}/blog-entries`,
+          view: `/projects/${routeSlugOrId.value}/blog-entries/edit`,
+          altView: `/projects/${routeSlugOrId.value}/blog-entries`,
           condition: true,
           dataTest: 'project-blog',
           icon: PROJECT_MODULE_ICON.blogs,
@@ -262,8 +263,8 @@ export const useProjectTabs = (
         {
           key: 'project-resources',
           label: t(PROJECT_MODULE_TITLE.resources, modules.value.files + modules.value.links),
-          view: `/projects/${projectId.value}/resources/edit`,
-          altView: `/projects/${projectId.value}/resources`,
+          view: `/projects/${routeSlugOrId.value}/resources/edit`,
+          altView: `/projects/${routeSlugOrId.value}/resources`,
           condition: true,
           dataTest: 'project-resources',
           icon: PROJECT_MODULE_ICON.resources,
@@ -272,8 +273,8 @@ export const useProjectTabs = (
         {
           key: 'project-announcements',
           label: t(PROJECT_MODULE_TITLE.announcements, modules.value.announcements),
-          view: `/projects/${projectId.value}/announcements/edit`,
-          altView: `/projects/${projectId.value}/announcements`,
+          view: `/projects/${routeSlugOrId.value}/announcements/edit`,
+          altView: `/projects/${routeSlugOrId.value}/announcements`,
           condition: true,
           dataTest: 'project-announcements',
           icon: PROJECT_MODULE_ICON.announcements,
@@ -282,8 +283,8 @@ export const useProjectTabs = (
         {
           key: 'project-reviews',
           label: t(PROJECT_MODULE_TITLE.reviews, modules.value.reviews),
-          view: `/projects/${projectId.value}/reviews/edit`,
-          altView: `/projects/${projectId.value}/reviews`,
+          view: `/projects/${routeSlugOrId.value}/reviews/edit`,
+          altView: `/projects/${routeSlugOrId.value}/reviews`,
           condition:
             (isAdmin.value || canCreateReview.value) && project.value.life_status === 'toreview',
           dataTest: 'project-reviews',
@@ -293,8 +294,8 @@ export const useProjectTabs = (
           return {
             key: `project-additionals-${tab.slug || tab.id}`,
             label: tab.$t.title,
-            view: `/projects/${projectId.value}/additionals/${tab.slug || tab.id}/edit`,
-            altView: `/projects/${projectId.value}/additionals/${tab.slug || tab.id}`,
+            view: `/projects/${routeSlugOrId.value}/additionals/${tab.slug || tab.id}/edit`,
+            altView: `/projects/${routeSlugOrId.value}/additionals/${tab.slug || tab.id}`,
             dataTest: `project-additionals-${tab.slug || tab.id}`,
             condition: true,
             icon: safeProjectIconTab(tab.icon, tab.type),
@@ -306,7 +307,7 @@ export const useProjectTabs = (
         {
           key: 'project-additionals-add',
           label: t('tab.tab.add'),
-          view: `/projects/${projectId.value}/additionals/create`,
+          view: `/projects/${routeSlugOrId.value}/additionals/create`,
           altView: ``,
           condition: canCreateTab.value || isAdmin.value,
           dataTest: 'project-additionals-add',
@@ -316,8 +317,8 @@ export const useProjectTabs = (
         {
           key: 'project-settings',
           label: t('project.settings'),
-          view: `/projects/${projectId.value}/project-settings/edit`,
-          altView: `/projects/${projectId.value}/summary`,
+          view: `/projects/${routeSlugOrId.value}/project-settings/edit`,
+          altView: `/projects/${routeSlugOrId.value}/summary`,
           condition: true,
           dataTest: 'project-settings',
           icon: 'Cog',
