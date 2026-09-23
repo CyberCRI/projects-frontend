@@ -18,6 +18,7 @@ withDefaults(
       'fetch-async': true,
     }"
   >
+    asyncing: {{ asyncing }}
     <slot />
   </div>
 </template>
@@ -27,9 +28,9 @@ withDefaults(
   display: contents;
 
   &.asyncing {
-    pointer-events: none;
-    user-select: none;
-    opacity: v-bind('opacity');
+    pointer-events: none !important;
+    user-select: none !important;
+    opacity: v-bind('opacity') !important;
   }
 }
 </style>

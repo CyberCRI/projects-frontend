@@ -4,20 +4,22 @@ import type {
   ProjectTabForm,
   ProjectTabType,
   TranslatedProject,
+  TranslatedProjectTab,
 } from 'shared-projects-frontend/models'
 import ProjectAddiionalsCreateTab from '~/pages/ProjectPageV2/Tabs/Additionals/ProjectAddiionalsCreateTab.vue'
+import { createProjectTab, deleteProjectTab, updateProjectTab } from 'shared-projects-frontend/apis'
 import { refreshProjectData, refreshProjectTabs } from '~/composables/project/refreshProject'
 import { defaultProjectTabSettings, userProjectTabSettings } from '~/form/project-tabs'
-import { createProjectTab, updateProjectTab } from 'shared-projects-frontend/apis'
 import GroupButtonField from '~/components/base/form/GroupButtonField.vue'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'
-import { defaultTab, getTab, sanitizeTabs } from '~/functs/tabs'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import type { IconImageChoice } from '~/functs/IconImage'
+import { defaultTab, sanitizeTabs } from '~/functs/tabs'
 import { Sortable } from 'sortablejs-vue3'
 import { deepToRaw } from '~/functs/utils'
+import analytics from '~/analytics'
 
 const props = defineProps<{
   project: TranslatedProject
@@ -80,14 +82,23 @@ watch(
   { immediate: true, deep: true }
 )
 
-const { stateModals, openModals, closeModals } = useModals({
+const { stateModals, openModals, closeAllModals } = useModals({
   add: false,
   edit: false,
+  delete: false,
 })
 
 const fullRefresh = () => {
-  refresh()
-  closeModals('edit', 'add')
+  return refreshProjectData(props.project)
+    .then(() => refreshProjectTabs(props.project))
+    .then(() => refresh())
+}
+
+const selectTab = ref<ProjectTab>(null)
+const clean = () => {
+  selectTab.value = null
+  asyncing.value = false
+  closeAllModals()
 }
 
 const asyncing = ref(false)
@@ -128,7 +139,7 @@ const onUpdateOrCreate = (modelKey: ProjectTabType | ProjectTab['id'], form: Pro
   return updateProjectTab(props.project.id, modelKey, form)
     .then(() => {
       toaster.pushSuccess(t('tab.toasts.tab-visibility.success'))
-      refreshProjectData(props.project).then(() => refreshProjectTabs(props.project))
+      fullRefresh()
     })
     .catch(() => toaster.pushError(t('tab.toasts.tab-visibility.error')))
     .then(() => {
@@ -144,63 +155,74 @@ const onSubmit = async (modelKey: ProjectTabType | ProjectTab['id'], value: bool
 
   asyncing.value = true
   onUpdateOrCreate(modelKey, body)
-    .then(() => {
-      toaster.pushSuccess(t('tab.toasts.tab-visibility.success'))
-      refreshProjectData(props.project).then(() => refreshProjectTabs(props.project))
-    })
+    .then(() => fullRefresh())
+    .then(() => toaster.pushSuccess(t('tab.toasts.tab-visibility.success')))
     .catch(() => toaster.pushError(t('tab.toasts.tab-visibility.error')))
-    .then(() => {
-      asyncing.value = false
-    })
+    .finally(() => clean())
 }
 
-const selectTab = ref(null)
-const onDelete = (element: ProjectTabType | ProjectTab['id']) => {
+const onDelete = (element: ProjectTab) => {
   selectTab.value = element
+  openModals('delete')
 }
-const onEdit = (element: ProjectTabType | ProjectTab['id']) => {
-  selectTab.value = getTab(tabs.value, element) || defaultTab(element as ProjectTabType)
+const onEdit = (element: ProjectTab) => {
+  selectTab.value = element
   openModals('edit')
 }
 
 const onDrag = (ev) => {
+  asyncing.value = true
+
   const { oldIndex, newIndex } = ev
 
-  let subTabs = deepToRaw(allTabs.value)
-  const item = subTabs[oldIndex]
-  subTabs.splice(newIndex, 0, { ...item })
-  subTabs = subTabs
-    .filter((tab) => tab !== item)
-    .filter((tab, idx) => {
-      if (tab.order === idx) {
-        return false
-      }
-      tab.order = idx
-      return true
-    })
+  // move old index element to new positions
+  const copyAllTabs: TranslatedProjectTab[] = deepToRaw(allTabs.value)
+  const [element] = copyAllTabs.splice(oldIndex, 1)
+  copyAllTabs.splice(newIndex, 0, element)
 
-  if (subTabs.length === 0) {
+  // filter only with element changed new oder
+  const newTabs = []
+  copyAllTabs.forEach((tab, idx) => {
+    if (tab.order === idx) {
+      return
+    }
+    newTabs.push({
+      ...tab,
+      order: idx,
+    })
+  })
+
+  if (newTabs.length === 0) {
+    asyncing.value = false
     return
   }
 
-  asyncing.value = true
   Promise.all(
-    subTabs.map((item) =>
+    newTabs.map((item) =>
       onUpdateOrCreate(item.id || item.type, {
         order: item.order,
       })
     )
   )
-    .then(() => {
-      toaster.pushSuccess(t('tab.toasts.tab-order.success'))
-      refreshProjectData(props.project)
-        .then(() => refreshProjectTabs(props.project))
-        .then(() => refresh())
-    })
+    .then(() => fullRefresh())
+    .then(() => toaster.pushSuccess(t('tab.toasts.tab-order.success')))
     .catch(() => toaster.pushError(t('tab.toasts.tab-order.error')))
+    .finally(() => clean())
+}
+
+const onDeleteConfirm = () => {
+  asyncing.value = true
+  deleteProjectTab(props.project.id, selectTab.value.id)
+    .then(() => fullRefresh())
     .then(() => {
-      asyncing.value = false
+      analytics.track('delete_project_tab', {
+        project: props.project.id,
+        tab: selectTab.value.id,
+      })
+      toaster.pushSuccess(t(`tab.toasts.tab-delete.success`))
     })
+    .catch(() => toaster.pushError(t(`tab.toasts.tab-delete.error`)))
+    .finally(() => clean())
 }
 </script>
 
@@ -233,10 +255,11 @@ const onDrag = (ev) => {
                 <template #actions-right>
                   <ContextActionMenuInline
                     class="context-actions"
-                    :can-delete="canDeleteTab"
+                    show-empty
+                    :can-delete="['text', 'blog'].includes(element.tab.type) && canDeleteTab"
                     :can-edit="canDeleteEdit"
-                    @delete="onDelete(element.modelKey)"
-                    @edit="onEdit(element.modelKey)"
+                    @delete="onDelete(element.tab)"
+                    @edit="onEdit(element.tab)"
                   />
                 </template>
               </GroupButtonField>
@@ -251,10 +274,18 @@ const onDrag = (ev) => {
         :is-opened="stateModals.edit || stateModals.add"
         :project="project"
         :tab="selectTab"
-        @close="closeModals('edit', 'add')"
-        @refresh="fullRefresh()"
+        @close="clean"
+        @refresh="fullRefresh().then(() => clean())"
       />
     </FetchLoader>
+
+    <ConfirmModal
+      v-if="stateModals.delete"
+      :title="$t('tab.tab.delete-confirm')"
+      :asyncing="asyncing"
+      @cancel="clean"
+      @confirm="onDeleteConfirm"
+    />
   </BaseModuleTab>
 </template>
 

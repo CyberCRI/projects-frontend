@@ -5,22 +5,12 @@ import type {
   TranslatedProjectTab,
   ProjectTab,
 } from 'shared-projects-frontend/models'
-import {
-  createProjectTab,
-  createProjectTabItem,
-  updateProjectTab,
-} from 'shared-projects-frontend/apis'
-import {
-  defaultProjectTabForm,
-  useProjectTabForm,
-  useProjectTabItemForm,
-} from '~/form/project-tabs'
 import { refreshProjectData, refreshProjectTabs } from '~/composables/project/refreshProject'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
+import { createProjectTab, updateProjectTab } from 'shared-projects-frontend/apis'
+import { defaultProjectTabForm, useProjectTabForm } from '~/form/project-tabs'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
-import TabItemFormRaw from '~/components/tabs/TabItemFormRaw.vue'
 import TabForm from '~/components/tabs/TabForm.vue'
-import Title from '~/components/base/Title.vue'
 import analytics from '~/analytics'
 import { isNil } from 'es-toolkit'
 
@@ -63,7 +53,6 @@ const {
   validate: validateTab,
   reset,
 } = useProjectTabForm({ default: defaultLocalForm() })
-const { form: formTabItem } = useProjectTabItemForm()
 
 watch(
   () => props.tab,
@@ -73,25 +62,13 @@ watch(
 
 const createOrUpdate = (form: ProjectTabForm): Promise<ProjectTab> => {
   if (isNil(form.id)) {
-    return createProjectTab(props.project.id, form)
-      .then((projectTab) => {
-        analytics.track('create_project_tab', {
-          project: props.project.id,
-          tab: projectTab.id,
-        })
-        return projectTab
+    return createProjectTab(props.project.id, form).then((projectTab) => {
+      analytics.track('create_project_tab', {
+        project: props.project.id,
+        tab: projectTab.id,
       })
-      .then((projectTab) => {
-        // ignore blog creations
-        if (projectTab.type === 'blog') {
-          return projectTab
-        }
-        return createProjectTabItem(props.project.id, projectTab.id, formTabItem.value)
-          .catch(() => {
-            toaster.pushError(t('tab.toasts.item-create.error'))
-          })
-          .then(() => projectTab)
-      })
+      return projectTab
+    })
   } else {
     return updateProjectTab(props.project.id, form.id, form).then((projectTab) => {
       analytics.track('update_project_tab', {
@@ -180,13 +157,6 @@ watchEffect(() => {
       :project="project"
       :tab="tab"
       @submit="onSubmit"
-    >
-      <!-- you can create description in create tabs only if type is text -->
-      <template v-if="isNil(formTab.id) && formTab.type === 'text'">
-        <br />
-        <Title :title="$t('tab.item.create')" />
-        <TabItemFormRaw v-model="formTabItem" />
-      </template>
-    </TabForm>
+    />
   </BaseDrawer>
 </template>
