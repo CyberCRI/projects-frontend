@@ -63,7 +63,7 @@ const {
   validate: validateTab,
   reset,
 } = useProjectTabForm({ default: defaultLocalForm() })
-const { form: formTabItem, validate } = useProjectTabItemForm()
+const { form: formTabItem } = useProjectTabItemForm()
 
 watch(
   () => props.tab,

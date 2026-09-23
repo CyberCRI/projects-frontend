@@ -5,7 +5,6 @@ import ContextActionButton from '~/components/base/button/ContextActionButton.vu
 import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
-import { DRAG_OPTIONS } from '~/functs/constants'
 import { Sortable } from 'sortablejs-vue3'
 
 const emit = defineEmits([
