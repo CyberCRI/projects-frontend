@@ -31,7 +31,5 @@ export const refreshProjectTabs = <T extends ProjectModel | TranslatedProject>(p
     })
   })
 
-  console.log(finalsTabs)
-
   return refreshNuxtData(finalsTabs)
 }

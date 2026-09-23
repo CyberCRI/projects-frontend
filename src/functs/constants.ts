@@ -210,6 +210,7 @@ export const DEFAULT_COLOR_TIPTAP = [
 export const PROJECT_MODULE_ICON: {
   [key in ProjectModuleExtra]: IconTabImageChoice
 } = {
+  description: 'Article',
   announcements: 'BullhornOutline',
   blogs: 'NewsLine',
   goals: 'TimerLine',
@@ -228,6 +229,7 @@ export const PROJECT_MODULE_ICON: {
 }
 
 export const PROJECT_MODULE_TITLE: { [key in ProjectModuleExtra]: string } = {
+  description: 'project.description',
   announcements: 'home.announcements',
   blogs: 'blog.title',
   goals: 'goal.goals',
@@ -247,15 +249,10 @@ export const PROJECT_MODULE_TITLE: { [key in ProjectModuleExtra]: string } = {
   tabs: 'tab.tab.label',
 }
 
-export const PROJECT_TABS = omit(PROJECT_MODULE_TITLE, [
-  'links',
-  'files',
-  'tabs',
-  'similars',
-  'reviews',
-])
+export const PROJECT_TABS = omit(PROJECT_MODULE_TITLE, ['links', 'files', 'tabs', 'similars'])
 
 export const DEFAULT_PROJECT_TABS_ORDER: (keyof typeof PROJECT_TABS)[] = [
+  'description',
   'members',
   'groups',
   'linked_projects',
@@ -265,6 +262,8 @@ export const DEFAULT_PROJECT_TABS_ORDER: (keyof typeof PROJECT_TABS)[] = [
   'resources',
   'announcements',
   'comments',
+  'messages',
+  'reviews',
 ]
 
 export const DEFAULT_ICONS_TABS: {

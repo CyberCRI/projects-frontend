@@ -4,7 +4,6 @@ import type {
   TranslatedProject,
 } from 'shared-projects-frontend/models'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
-import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'
@@ -50,15 +49,18 @@ export const useProjectTabs = (
     const display = allTabs.value.map((tab) => {
       let condition = tab.show_tab && (!!tab.modules.items || !!modules.value[tab.type])
 
-      if (tab.type === 'comments') {
+      let tabType = tab.type as string
+      if (tabType === 'comments' || tabType === 'messages') {
         condition = true
+      } else if (tabType === 'linked_projects') {
+        tabType = 'linked-projects'
       }
 
       const base = {
         key: `project-${tab.type}`,
         label: tab.$t.title,
-        view: `/projects/${projectId.value}/${tab.type}`,
-        altView: `/projects/${projectId.value}/${tab.type}/edit`,
+        view: `/projects/${projectId.value}/${tabType}`,
+        altView: `/projects/${projectId.value}/${tabType}/edit`,
         condition,
         dataTest: `project-${tab.type}`,
         icon: safeProjectIconTab(tab.icon, tab.type),
@@ -70,7 +72,7 @@ export const useProjectTabs = (
       if (['blog', 'text'].includes(tab.type)) {
         return {
           ...base,
-          viewiew: `/projects/${projectId.value}/additionals/${tab.slug || tab.id}`,
+          view: `/projects/${projectId.value}/additionals/${tab.slug || tab.id}`,
           altView: `/projects/${projectId.value}/additionals/${tab.slug || tab.id}/edit`,
           dataTest: `project-additionals-${tab.slug || tab.id}`,
         }
@@ -89,15 +91,6 @@ export const useProjectTabs = (
         icon: 'Home',
         noTitle: true,
       },
-      {
-        key: 'project-description',
-        label: t('form.description'),
-        view: `/projects/${projectId.value}/description`,
-        altView: `/projects/${projectId.value}/description/edit`,
-        condition: true,
-        dataTest: 'project-description',
-        icon: 'Article',
-      },
       ...display,
     ].map((t) => ({ ...t, isEditing: false }))
   })
@@ -107,17 +100,22 @@ export const useProjectTabs = (
   const groupTabsEdit = computed(() => {
     const display = allTabs.value.map((tab) => {
       let condition = tab.show_tab
-      if (tab.type === 'comments') {
+      let tabType: string = tab.type
+      if (tabType === 'comments') {
         condition = false
-      } else if (tab.type === 'messages') {
+      } else if (tabType === 'messages') {
         condition = isMemberOrAdmin.value
+      } else if (tabType === 'reviews') {
+        condition = !!modules.value.reviews || project.value.life_status === 'toreview'
+      } else if (tabType === 'linked_projects') {
+        tabType = 'linked-projects'
       }
 
       const base = {
         key: `project-${tab.type}-edit`,
         label: tab.$t.title,
-        view: `/projects/${projectId.value}/${tab.type}/edit`,
-        altView: `/projects/${projectId.value}/${tab.type}`,
+        view: `/projects/${projectId.value}/${tabType}/edit`,
+        altView: `/projects/${projectId.value}/${tabType}`,
         condition,
         dataTest: `project-${tab.type}-edit`,
         icon: safeProjectIconTab(tab.icon, tab.type),
@@ -147,26 +145,7 @@ export const useProjectTabs = (
         dataTest: 'project-summary',
         icon: 'Home',
       },
-      {
-        key: 'project-description',
-        label: t('form.description'),
-        view: `/projects/${projectId.value}/description/edit`,
-        altView: `/projects/${projectId.value}/description`,
-        condition: true,
-        dataTest: 'project-description',
-        icon: 'Article',
-      },
       ...display,
-
-      {
-        key: 'project-reviews',
-        label: t(PROJECT_MODULE_TITLE.reviews, modules.value.reviews),
-        view: `/projects/${projectId.value}/reviews/edit`,
-        altView: `/projects/${projectId.value}/reviews`,
-        condition: !!modules.value.reviews || project.value.life_status === 'toreview',
-        dataTest: 'project-reviews',
-        icon: PROJECT_MODULE_ICON.reviews,
-      },
       {
         key: 'project-settings-tabs',
         label: t('tab.tab.settings'),

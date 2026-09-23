@@ -2,7 +2,7 @@ import type { ProjectTabForm, ProjectTabItemForm } from 'shared-projects-fronten
 import { DEFAULT_ICONS_TABS, NULL_CONTENT, PROJECT_TABS } from '~/functs/constants'
 import { helpers, required } from '@vuelidate/validators'
 import { requiredContent } from '~/form/base'
-import { omit, mapValues } from 'es-toolkit'
+import { mapValues } from 'es-toolkit'
 import { v4 as uuidv4 } from 'uuid'
 
 export const defaultProjectTabForm = (): ProjectTabForm => {

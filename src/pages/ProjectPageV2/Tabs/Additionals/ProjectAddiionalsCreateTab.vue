@@ -55,7 +55,6 @@ const defaultLocalForm = () => {
     local.show_preview = props.tab.show_preview || local.show_preview
     local.show_tab = props.tab.show_tab || local.show_tab
   }
-  console.log(local, props.tab)
   return local
 }
 
@@ -163,7 +162,13 @@ watchEffect(() => {
 </script>
 
 <template>
-  <BaseDrawer :title="$t('tab.tab.add')" :is-opened="isOpened" no-footer @close="emit('close')">
+  <BaseDrawer
+    :title="formTab.id ? $t('tab.tab.edit') : $t('tab.tab.add')"
+    :is-opened="isOpened"
+    no-footer
+    class="medium"
+    @close="emit('close')"
+  >
     <!-- show message when creation is only enable when you are admin -->
     <LpiSnackbar v-if="!canCreateTab && isAdmin" icon="AlertOutline" type="warning">
       {{ $t('tab.tab.not-enabled.admin') }}

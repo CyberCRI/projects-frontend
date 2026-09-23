@@ -1,19 +1,16 @@
 <script setup lang="ts">
 import BaseProjectResources from '~/components/project/modules/Resources/BaseProjectResources.vue'
-import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
+import type { TranslatedProject, TranslatedProjectTab } from 'shared-projects-frontend/models'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
-import type { TranslatedProject } from 'shared-projects-frontend/models'
 
-const props = defineProps<{ project: TranslatedProject }>()
-
-const resources = computed(() => props.project.modules.links + props.project.modules.files)
+defineProps<{ project: TranslatedProject; tab: TranslatedProjectTab }>()
 </script>
 
 <template>
   <BaseModulePreview
-    :title="$t(PROJECT_MODULE_TITLE.resources)"
-    :icon="PROJECT_MODULE_ICON.links"
-    :total="resources"
+    :title="tab.$t.title"
+    :icon="tab.icon"
+    :total="tab.modules.items"
     :see-more="{
       name: 'projectResources',
       params: { slugOrId: project.slug || project.id },

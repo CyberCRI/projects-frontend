@@ -33,7 +33,7 @@ export default function useProjectPagesRoutes() {
           redirect: 'blog-entries',
         },
         {
-          path: 'blog-entries',
+          path: 'blogs',
           name: 'projectBlog',
           component: () =>
             import('../pages/ProjectPageV2/Tabs/BlogEntries/ProjectBlogEntriesTab.vue'),
@@ -59,6 +59,12 @@ export default function useProjectPagesRoutes() {
           component: () => import('../pages/ProjectPageV2/Tabs/Resources/ProjectResourcesTab.vue'),
         },
         {
+          path: 'linked_projects',
+          redirect: {
+            name: 'projectLinkedProjects',
+          },
+        },
+        {
           path: 'linked-projects',
           name: 'projectLinkedProjects',
           component: () =>
@@ -70,7 +76,7 @@ export default function useProjectPagesRoutes() {
           component: () => import('../pages/ProjectPageV2/Tabs/Comments/ProjectCommentsTab.vue'),
         },
         {
-          path: 'private-exchange',
+          path: 'messages',
           name: 'projectPrivateExchange',
           component: () =>
             import('../pages/ProjectPageV2/Tabs/PrivateExchange/ProjectPrivateExchangeTab.vue'),
@@ -146,7 +152,7 @@ export default function useProjectPagesRoutes() {
         //   },
         // },
         {
-          path: 'blog-entries/edit',
+          path: 'blogs/edit',
           name: 'projectBlogEdit',
           component: () =>
             import('../pages/ProjectPageV2/Tabs/BlogEntries/ProjectBlogEntriesTab.vue'),
@@ -184,6 +190,12 @@ export default function useProjectPagesRoutes() {
           component: () => import('../pages/ProjectPageV2/Tabs/Resources/ProjectResourcesTab.vue'),
           meta: {
             requiresAuth: true,
+          },
+        },
+        {
+          path: 'linked_projects/edit',
+          redirect: {
+            name: 'projectLinkedProjectsEdit',
           },
         },
         {
