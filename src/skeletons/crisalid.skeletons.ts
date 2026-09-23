@@ -50,6 +50,8 @@ export const researchDocumentSkeleton = (
   // @ts-expect-error ignore not id
   identifiers: factoriesSkeleton(identifierSkeleton, randomInt(5)),
   publication_date: null,
-  similars: 0,
+  modules: {
+    similars: 0,
+  },
   ...def,
 })

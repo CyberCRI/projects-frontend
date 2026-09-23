@@ -154,15 +154,20 @@ const SORTING_DEFAULT = '-publication_date'
 // filter backend query
 const { query, toggleQuery, setQuery } = useQuery<QueryFilterDocument>({
   ordering: SORTING_DEFAULT,
+  modules: 'none',
 })
 
 const emit = defineEmits<{
   onFilter: [QueryFilterDocument]
 }>()
 
-watch(query, (n) => {
-  emit('onFilter', toRaw(n))
-})
+watch(
+  query,
+  (n) => {
+    emit('onFilter', toRaw(n))
+  },
+  { deep: true }
+)
 
 // this create years graph
 const yearsInfo = computed(() => {
