@@ -12,15 +12,18 @@ const props = withDefaults(
     project: TranslatedProject
     tab?: ProjectTabForm
     asyncing?: boolean
+    formExtraIsEqual?: boolean
   }>(),
   {
     asyncing: false,
     tab: null,
+    formExtraIsEqual: true,
   }
 )
 
 const emit = defineEmits<{
   submit: [ProjectTabForm]
+  cancel: []
 }>()
 
 const defaultLocalForm = () => {
@@ -53,31 +56,32 @@ const defaultLocalForm = () => {
   return newForm
 }
 
-const model = defineModel<ProjectTabForm>({ default: defaultProjectTabForm })
+const model = defineModel<ProjectTabForm>()
 
-const { form, validate, cleanedData, errors, reset, formFieldTargetIds } = useProjectTabForm({
-  model,
-  default: defaultLocalForm(),
-})
-
-const isFormEqual = useBlockNavigation(() =>
-  formEqual(form.value, defaultLocalForm(), {
-    exclude: ['uuid'],
-    html: ['description'],
+const { form, errors, cleanedData, resetToInitialValue, v$, jumpToFirstError, formFieldTargetIds } =
+  useProjectTabForm({
+    model,
+    default: defaultLocalForm(),
   })
+
+const isFormEqual = useBlockNavigation(
+  () =>
+    formEqual(toRaw(form.value), defaultLocalForm(), {
+      exclude: ['uuid'],
+      html: ['description'],
+    }) && props.formExtraIsEqual
 )
 
-watch(
-  () => [props.project, props.tab],
-  () => reset(defaultLocalForm()),
-  { immediate: true, deep: true }
-)
+watch(() => [props.project, props.tab], resetToInitialValue, { immediate: true, deep: true })
 
-const onConfirm = async () => {
-  if (await validate()) {
-    emit('submit', cleanedData.value)
-  }
-}
+const onConfirm = () => emit('submit', cleanedData.value)
+const onCancel = () => emit('cancel')
+
+defineExpose({
+  jumpToFirstError,
+  v$,
+  resetToInitialValue,
+})
 </script>
 
 <template>
@@ -85,13 +89,16 @@ const onConfirm = async () => {
     :asyncing="asyncing"
     :is-form-equal="isFormEqual"
     :confirm-action-name="$t('common.save')"
-    :show-cancel="false"
+    show-cancel
     @confirm="onConfirm"
+    @close="onCancel"
   >
+    <!-- hide choices type if already created (you can't change type after create it) -->
+    <TabFormTypeSwitch v-if="!form.id" v-model="form" />
     <TabFormRaw v-model="form" :errors="errors" :form-field-target-ids="formFieldTargetIds" />
     <slot />
-    <template #footer:extra>
-      <slot name="footer" />
+    <template #footer-extra>
+      <slot name="footer-extra" />
     </template>
   </FormPanel>
 </template>

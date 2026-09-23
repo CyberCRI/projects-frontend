@@ -21,7 +21,7 @@
               @click="close"
             />
 
-            <slot name="footer:extra" />
+            <slot name="footer-extra" />
 
             <LpiButton
               :disabled="confirmActionDisabled || asyncing"
@@ -77,7 +77,7 @@ const confirm = () => {
     hideUnmodifiedWarningTimeout.value = setTimeout(() => {
       showUnmodifiedWarning.value = false
       hideUnmodifiedWarningTimeout.value = null
-    }, 5_000)
+    }, 10_000)
     return
   }
   emit('confirm')
