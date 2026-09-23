@@ -6,7 +6,9 @@
       </main>
 
       <footer v-if="!noFooter" class="form-panel-footer">
-        <UnmodifiedFormWarning v-if="isFormEqual" />
+        <Transition name="fade">
+          <UnmodifiedFormWarning v-if="showUnmodifiedWarning" />
+        </Transition>
         <div class="form-panel-actions">
           <slot name="footer">
             <LpiButton
@@ -22,7 +24,7 @@
             <slot name="footer:extra" />
 
             <LpiButton
-              :disabled="isFormEqual || confirmActionDisabled || asyncing"
+              :disabled="confirmActionDisabled || asyncing"
               :label="confirmActionName || t('common.confirm')"
               :btn-icon="asyncing ? 'LoaderSimple' : null"
               class="footer__right-button skeletons-background"
@@ -41,7 +43,7 @@ import type { StyleValue } from 'vue'
 
 const { t } = useNuxtI18n()
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     confirmActionName?: string
     noFooter?: boolean
@@ -61,13 +63,29 @@ withDefaults(
   }
 )
 
+const showUnmodifiedWarning = ref(false)
+const hideUnmodifiedWarningTimeout = ref(null)
 const emit = defineEmits<{
   close: []
   confirm: []
 }>()
 
 const close = () => emit('close')
-const confirm = () => emit('confirm')
+const confirm = () => {
+  if (props.isFormEqual) {
+    showUnmodifiedWarning.value = true
+    hideUnmodifiedWarningTimeout.value = setTimeout(() => {
+      showUnmodifiedWarning.value = false
+      hideUnmodifiedWarningTimeout.value = null
+    }, 5_000)
+    return
+  }
+  emit('confirm')
+}
+
+onBeforeUnmount(() => {
+  if (hideUnmodifiedWarningTimeout.value) clearTimeout(hideUnmodifiedWarningTimeout.value)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -103,5 +121,15 @@ const confirm = () => emit('confirm')
   .drawer__main {
     margin: 1rem 0;
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
