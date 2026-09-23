@@ -89,7 +89,7 @@ const search = () => {
   }
 
   @media (min-width: variables.$min-tablet) {
-    margin-bottom: 0;
+    margin-block: 0;
 
     &.has-sections :deep(.search-input) {
       border-top-left-radius: 0 !important;
