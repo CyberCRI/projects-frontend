@@ -37,7 +37,6 @@ const {
   data: tabs,
   status,
   isSkeleton,
-  refresh,
 } = getAllProjectTab(
   organizationCode,
   computed(() => props.project.id),
@@ -58,6 +57,7 @@ const allTabs = computed(() => sanitizeTabs(tabs.value, props.project.modules))
 const DRAG_OPTIONS = {
   animation: 200,
   disabled: false,
+  ghostClass: 'child-ghost',
 }
 
 const defaultLocaleForm = () => {
@@ -66,14 +66,14 @@ const defaultLocaleForm = () => {
   allTabs.value.forEach((tab) => {
     localForm[tab.id || tab.type] = tab.show_tab
   })
-
+  console.log('hi reset', localForm)
   return localForm
 }
 
 const { form, reset } = userProjectTabSettings()
 
 watch(
-  () => [tabs.value],
+  () => [allTabs.value, isSkeleton.value],
   () => {
     if (!isSkeleton.value) {
       reset(defaultLocaleForm())
@@ -89,9 +89,7 @@ const { stateModals, openModals, closeAllModals } = useModals({
 })
 
 const fullRefresh = () => {
-  return refreshProjectData(props.project)
-    .then(() => refreshProjectTabs(props.project))
-    .then(() => refresh())
+  return refreshProjectData(props.project).then(() => refreshProjectTabs(props.project))
 }
 
 const selectTab = ref<ProjectTab>(null)
@@ -135,16 +133,7 @@ const onUpdateOrCreate = (modelKey: ProjectTabType | ProjectTab['id'], form: Pro
     })
   }
 
-  asyncing.value = true
   return updateProjectTab(props.project.id, modelKey, form)
-    .then(() => {
-      toaster.pushSuccess(t('tab.toasts.tab-visibility.success'))
-      fullRefresh()
-    })
-    .catch(() => toaster.pushError(t('tab.toasts.tab-visibility.error')))
-    .then(() => {
-      asyncing.value = false
-    })
 }
 
 const onSubmit = async (modelKey: ProjectTabType | ProjectTab['id'], value: boolean) => {
@@ -231,6 +220,7 @@ const onDeleteConfirm = () => {
     <FetchLoader :status="status" :with-data="!isSkeleton">
       <BaseModuleHeader @add="openModals('add')" />
       <!-- actions -->
+
       <FetchAsync :asyncing="asyncing">
         <Sortable
           :list="fields"
@@ -241,29 +231,32 @@ const onDeleteConfirm = () => {
           @end="onDrag"
         >
           <template #item="{ element }">
-            <div :key="element.modelKey" class="item-draggable">
-              <GroupButtonField
-                v-model="form[element.modelKey]"
-                :label="element.label"
-                :options="element.options"
-                :has-icon="true"
-                @update:model-value="onSubmit(element.modelKey, $event)"
-              >
-                <template #label-left>
-                  <IconImage class="icon" name="DotsGrid" />
-                </template>
-                <template #actions-right>
-                  <ContextActionMenuInline
-                    class="context-actions"
-                    show-empty
-                    :can-delete="['text', 'blog'].includes(element.tab.type) && canDeleteTab"
-                    :can-edit="canDeleteEdit"
-                    @delete="onDelete(element.tab)"
-                    @edit="onEdit(element.tab)"
-                  />
-                </template>
-              </GroupButtonField>
-            </div>
+            <GroupButtonField
+              :key="element.modelKey"
+              v-model="form[element.modelKey]"
+              :label="element.label"
+              :options="element.options"
+              :has-icon="true"
+              class="sortable"
+              :class="{
+                asyncing,
+              }"
+              @update:model-value="onSubmit(element.modelKey, $event)"
+            >
+              <template #label-left>
+                <IconImage class="icon skeletons-background" name="DotsGrid" />
+              </template>
+              <template #actions-right>
+                <ContextActionMenuInline
+                  class="context-actions"
+                  show-empty
+                  :can-delete="['text', 'blog'].includes(element.tab.type) && canDeleteTab"
+                  :can-edit="canDeleteEdit"
+                  @delete="onDelete(element.tab)"
+                  @edit="onEdit(element.tab)"
+                />
+              </template>
+            </GroupButtonField>
           </template>
         </Sortable>
       </FetchAsync>
@@ -297,8 +290,17 @@ const onDeleteConfirm = () => {
   margin-left: 1rem;
 }
 
-.item-draggable {
-  // display: grid;
-  // grid-template-columns: auto 1fr;
+.sortable {
+  &.asyncing {
+    cursor: wait !important;
+  }
+
+  &:not(.asyncing, .child-ghost) {
+    cursor: grab !important;
+  }
+
+  &.child-ghost {
+    cursor: move !important;
+  }
 }
 </style>

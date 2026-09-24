@@ -18,18 +18,18 @@ withDefaults(
       'fetch-async': true,
     }"
   >
-    asyncing: {{ asyncing }}
     <slot />
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .fetch-async {
   display: contents;
 
-  &.asyncing {
+  &.asyncing * {
     pointer-events: none !important;
     user-select: none !important;
+    cursor: wait !important;
     opacity: v-bind('opacity') !important;
   }
 }

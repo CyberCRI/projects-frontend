@@ -152,12 +152,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     ...res,
     status,
     isLoading,
-    isSkeleton: computed(() => {
-      if (isLoading.value) {
-        return false
-      }
-      return isSkeleton.value
-    }),
+    isSkeleton: computed(() => isLoading.value && isSkeleton.value),
     data: dataWrapped,
     key,
   }

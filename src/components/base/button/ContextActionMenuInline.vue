@@ -2,27 +2,23 @@
   <div class="context-action-menu-inline">
     <slot />
     <LpiButton
-      v-if="canEdit || showEmpty"
+      v-if="canEdit"
       btn-icon="Pen"
       :aria-label="$t('common.edit')"
       class="skeletons-background"
       data-test="action-edit"
-      :class="{
-        'empty-button': !canEdit && showEmpty,
-      }"
       @click.prevent="$emit('edit')"
     />
+    <div v-else-if="showEmpty" />
     <LpiButton
-      v-if="canDelete || showEmpty"
+      v-if="canDelete"
       btn-icon="TrashCanOutline"
       :aria-label="$t('common.delete')"
       class="skeletons-background"
       data-test="action-delete"
-      :class="{
-        'empty-button': !canDelete && showEmpty,
-      }"
       @click.prevent="$emit('delete')"
     />
+    <div v-else-if="showEmpty" />
   </div>
 </template>
 <script setup lang="ts">
@@ -56,11 +52,5 @@ defineEmits<{
     width: 25px !important;
     height: 25px !important;
   }
-}
-
-.empty-button {
-  opacity: 0;
-  pointer-events: none;
-  user-select: none;
 }
 </style>
