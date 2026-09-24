@@ -228,13 +228,6 @@ export const PROJECT_MODULE_ICON: {
   tabs: 'Tab',
 }
 
-export const DEFAULT_ICONS_TABS: {
-  [key in ProjectTabType]: IconTabImageChoice
-} = {
-  blog: 'NewsLine',
-  text: 'Briefcase',
-}
-
 export const PROJECT_MODULE_TITLE: { [key in ProjectModuleExtra]: string } = {
   description: 'project.description',
   announcements: 'home.announcements',

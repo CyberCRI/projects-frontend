@@ -1,5 +1,5 @@
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
-import { ProjectModel, TranslatedProject } from 'shared-projects-frontend/models'
+import type { ProjectModel, TranslatedProject } from 'shared-projects-frontend/models'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'
@@ -13,7 +13,6 @@ export const useProjectTabs = (
   project: ComputedRef<TranslatedProject | null>
 ) => {
   const route = useRoute()
-  const routeSlugOrId = computed(() => route.params.slugOrId)
   const router = useRouter()
   const organizationCode = useOrganizationCode()
 
@@ -51,6 +50,8 @@ export const useProjectTabs = (
         condition = true
       } else if (tabType === 'linked_projects') {
         tabType = 'linked-projects'
+      } else if (tabType === 'reviews') {
+        condition = modules.value.reviews && project.value.life_status === 'toreview'
       }
 
       const base = {
@@ -103,7 +104,7 @@ export const useProjectTabs = (
       } else if (tabType === 'messages') {
         condition = isMemberOrAdmin.value
       } else if (tabType === 'reviews') {
-        condition = !!modules.value.reviews || project.value.life_status === 'toreview'
+        condition = canCreateReview && project.value.life_status === 'toreview'
       } else if (tabType === 'linked_projects') {
         tabType = 'linked-projects'
       }
