@@ -19,7 +19,7 @@ export type OptionsForm<T, CleanResult> = {
 
 export type UseFormResult<T, CleanResult> = {
   form: Ref<T>
-  formFieldTargetIds: Ref<Record<string, string>>
+  formFieldTargetIds: Ref<Record<keyof T, string>>
   isValid: Ref<boolean>
   errors: ComputedRef<Record<keyof T, ErrorObject[]>>
   cleanedData: null | Ref<CleanResult>
@@ -27,6 +27,7 @@ export type UseFormResult<T, CleanResult> = {
   rules?: RefOrRaw<ValidationArgs<T> | object>
   v$: ReturnType<typeof useVuelidate<T>>
   jumpToFirstError: () => void
+  validate: () => Promise<boolean>
 }
 
 const differencesObjects = (obj: any, obj2: any): string[] => {
@@ -97,13 +98,6 @@ const useForm = <T extends object, CleanResult = T>(
     { deep: true, immediate: !lazy }
   )
 
-  const formFieldTargetIds = ref(
-    Object.keys(form.value).reduce((acc, key) => {
-      acc[key] = 'form-field-target-' + uuidv4()
-      return acc
-    }, {})
-  )
-
   const errors = computed(() => {
     const err = {}
     Object.keys(form.value).forEach((k) => {
@@ -114,6 +108,24 @@ const useForm = <T extends object, CleanResult = T>(
       ...err,
       ...groupedErrors,
     } as Record<keyof T, ErrorObject[]>
+  })
+
+  const formFieldTargetIds = computed(() => {
+    const ids = {}
+    const genKey = (key: string) => `form-field-target-${key}` + uuidv4()
+
+    const rrules = unref(rules)
+    Object.keys(rrules).map((key) => {
+      if (rrules[key].$each) {
+        ids[key] = Array.from(Array(form.value[key]?.length)).map((_, index) => {
+          return genKey(`${key}-${index}`)
+        })
+      } else {
+        ids[key] = genKey(key)
+      }
+    })
+
+    return ids as Record<keyof T, string>
   })
 
   const cleanedData = ref<CleanResult>()
@@ -211,6 +223,14 @@ const useForm = <T extends object, CleanResult = T>(
     }
   }
 
+  const validate = async () => {
+    const result = await v$.value.$validate()
+    if (!result) {
+      jumpToFirstError()
+    }
+    return result
+  }
+
   return {
     form,
     formFieldTargetIds,
@@ -221,6 +241,7 @@ const useForm = <T extends object, CleanResult = T>(
     rules,
     v$,
     jumpToFirstError,
+    validate,
   }
 }
 
