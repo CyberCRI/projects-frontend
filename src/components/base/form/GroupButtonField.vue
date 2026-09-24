@@ -1,19 +1,27 @@
-<script lang="ts" setup>
+<script lang="ts" generic="TValue extends string | number | boolean" setup>
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
-import type { PrivacyValue } from 'shared-projects-frontend/models'
-defineProps<{ label: string; notice: string; options: GroupOption[]; hasIcon: boolean }>()
+withDefaults(
+  defineProps<{ label: string; notice?: string; options: GroupOption[]; hasIcon?: boolean }>(),
+  {
+    notice: '',
+    hasIcon: false,
+  }
+)
 const emit = defineEmits(['update:modelValue'])
-const modelValue = defineModel<PrivacyValue>()
+const modelValue = defineModel<TValue>()
 </script>
+
 <template>
-  <div class="privacy-field">
+  <div class="list-field">
+    <slot name="label-left" />
     <div class="wording">
       <label class="skeletons-text">{{ label }}</label>
-      <p class="notice skeletons-text">
+      <p v-if="notice" class="notice skeletons-text">
         {{ notice }}
       </p>
     </div>
     <div class="actions">
+      <slot name="actions-left" />
       <GroupButton
         :model-value="modelValue"
         :options="options"
@@ -21,14 +29,16 @@ const modelValue = defineModel<PrivacyValue>()
         size="default"
         @update:model-value="emit('update:modelValue', $event)"
       />
+      <slot name="actions-right" />
     </div>
   </div>
 </template>
+
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 @use '~/components/profile/modules/profile-form';
 
-.privacy-field {
+.list-field {
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -45,9 +45,11 @@ const defaultLocalForm = () => {
     newForm.title = tab.title || newForm.title
     newForm.description = getFirstTextNotEmpty([tab.description]) || newForm.description
     newForm.type = tab.type || newForm.type
+    newForm.order = tab.order || newForm.order
     newForm.icon = safeProjectIconTab(tab.icon, newForm.type)
     // not or || for boolean
     newForm.show_preview = tab.show_preview ?? newForm.show_preview
+    newForm.show_tab = tab.show_tab ?? newForm.show_tab
   }
 
   return newForm

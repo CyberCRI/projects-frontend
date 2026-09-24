@@ -15,6 +15,8 @@ export const ProjectTabFactory = createFactory<ProjectTab>((faker) => ({
   type: 'blog',
   show_preview: true,
   icon: 'Account',
+  order: 0,
+  show_tab: true,
   modules: {
     items: 0,
   },

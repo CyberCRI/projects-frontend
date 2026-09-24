@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import BaseProjectMemberList from '~/components/project/modules/Members/BaseProjectMemberList.vue'
-import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
+import type { TranslatedProject, TranslatedProjectTab } from 'shared-projects-frontend/models'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
-import type { TranslatedProject } from 'shared-projects-frontend/models'
 
-defineProps<{ project: TranslatedProject }>()
+defineProps<{ project: TranslatedProject; tab: TranslatedProjectTab }>()
 </script>
 
 <template>
   <BaseModulePreview
-    :title="$t(PROJECT_MODULE_TITLE.members)"
-    :icon="PROJECT_MODULE_ICON.members"
-    :total="project.modules.members"
+    :title="tab.$t.title"
+    :icon="tab.icon"
+    :total="tab.modules.items"
     :see-more="{
       name: 'projectMembers',
       params: { slugOrId: project.slug || project.id },

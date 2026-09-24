@@ -112,7 +112,7 @@ watchEffect(() => {
 
 <template>
   <FetchLoader :status="status" :error="error" only-error skeleton>
-    <BaseAdditionalsTab :project="project" :tab="tab" :editable="editable" :preview="preview">
+    <BaseAdditionalsTab :tab="tab" :editable="editable" :preview="preview">
       <BaseModuleHeader
         :editable="editable"
         :add-label="$t('tab.item.add')"

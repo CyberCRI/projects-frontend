@@ -70,7 +70,7 @@ const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
   <div class="list-container">
     <!-- hide choices type if already created (you can't change type after create it) -->
     <Field
-      v-if="!form.id || showType"
+      v-if="(!form.id || showType) && ['text', 'blog'].includes(form.type)"
       :label="$t('tab.form.type.label')"
       required
       :data-field-target="formFieldTargetIds?.type"

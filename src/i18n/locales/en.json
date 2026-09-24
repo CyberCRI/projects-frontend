@@ -3444,6 +3444,7 @@
       "delete": "Delete tab",
       "add": "Add a new Tab.",
       "edit": "Edit Tab",
+      "settings": "Tab Settings",
       "title": "Tab Creation",
       "label": "Tab | Tabs",
       "not-enabled": {
@@ -3484,6 +3485,11 @@
       "show_preview": {
         "label": "Show preview in summary page."
       },
+      "show_tab": {
+        "label": "Show tab in project.",
+        "hide": "Hide",
+        "show": "Show"
+      },
       "type": {
         "label": "Type",
         "required": "The type of tab is required.",
@@ -3521,6 +3527,14 @@
       "item-create": {
         "success": "The item has been created successfully.",
         "error": "Failed to create the item. Please try again."
+      },
+      "tab-visibility": {
+        "success": "The tab changed visibility successfully.",
+        "error": "Failed to change tab visibility. Please try again."
+      },
+      "tab-order": {
+        "success": "The tab has been ordered successfully.",
+        "error": "Failed to ordered the tab. Please try again."
       }
     }
   }

@@ -1,7 +1,8 @@
 import type { ProjectTabForm, ProjectTabItemForm } from 'shared-projects-frontend/models'
-import { DEFAULT_ICONS_TABS, NULL_CONTENT } from '~/functs/constants'
+import { DEFAULT_ICONS_TABS, NULL_CONTENT, PROJECT_TABS } from '~/functs/constants'
 import { helpers, required } from '@vuelidate/validators'
 import { requiredContent } from '~/form/base'
+import { mapValues } from 'es-toolkit'
 import { v4 as uuidv4 } from 'uuid'
 
 export const defaultProjectTabForm = (): ProjectTabForm => {
@@ -12,6 +13,7 @@ export const defaultProjectTabForm = (): ProjectTabForm => {
     icon: DEFAULT_ICONS_TABS.text,
     images_ids: [],
     show_preview: true,
+    show_tab: true,
     uuid: uuidv4(),
   }
 }
@@ -57,6 +59,19 @@ export const useProjectTabItemForm = (options = {}) => {
   return useForm<ProjectTabItemForm>({
     default: defaultProjectTabItemForm(),
     rules,
+    ...options,
+  })
+}
+
+type ProjectTabSettingsForm = Record<keyof typeof PROJECT_TABS, boolean>
+
+export const defaultProjectTabSettings = (): ProjectTabSettingsForm => {
+  return mapValues(PROJECT_TABS, () => true)
+}
+
+export const userProjectTabSettings = (options = {}) => {
+  return useForm<ProjectTabSettingsForm>({
+    default: defaultProjectTabSettings(),
     ...options,
   })
 }

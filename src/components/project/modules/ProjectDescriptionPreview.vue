@@ -1,15 +1,15 @@
 <script setup lang="ts">
+import type { TranslatedProject, TranslatedProjectTab } from 'shared-projects-frontend/models'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
-import type { TranslatedProject } from 'shared-projects-frontend/models'
 import ContentExpandable from '@/components/base/ContentExpandable.vue'
 
-defineProps<{ project: TranslatedProject }>()
+defineProps<{ project: TranslatedProject; tab: TranslatedProjectTab }>()
 </script>
 
 <template>
   <BaseModulePreview
-    :title="$t('project.description')"
-    icon="Briefcase"
+    :title="tab.$t.title"
+    :icon="tab.icon"
     :see-more="{
       name: 'projectDescription',
       params: {
