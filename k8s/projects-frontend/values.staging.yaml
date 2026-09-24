@@ -4,7 +4,6 @@ config:
     NUXT_PUBLIC_APP_VERSION: "{{ .Values.application.revision }}"
     NUXT_PUBLIC_APP_KEYCLOAK_REALM: lp-staging
     NUXT_PUBLIC_APP_ENVIRONMENT: staging
-    NUXT_PUBLIC_APP_NEW_COMMENT_DISABLED: 1
 
 domain: k8s.lp-i.xyz
 

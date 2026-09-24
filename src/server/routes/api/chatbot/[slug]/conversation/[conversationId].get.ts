@@ -1,3 +1,4 @@
+import filterSpecialTagFactory from '~/server/utils/filter-special-tag'
 import agentFindBySlug from '@/server/utils/agent-find-by-slug'
 import { getUser } from '@/server/utils/check-admin-rights.js'
 import { safeParseInt } from '@/functs/string'
@@ -71,6 +72,16 @@ export default defineLazyEventHandler(() => {
     if (limit && conversation?.messages?.length && conversation.messages.length > limit) {
       more = conversation.messages[limit].id
       conversation.messages = conversation.messages.slice(0, limit)
+    }
+
+    if (conversation?.messages) {
+      conversation.messages = conversation.messages.map((message) => {
+        if (message.role == 'assistant') {
+          const filterSpecialTag = filterSpecialTagFactory()
+          message.content = filterSpecialTag(message.content)
+        }
+        return message
+      })
     }
 
     return { conversation, more }

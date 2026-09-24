@@ -6,7 +6,6 @@ config:
     NUXT_PUBLIC_APP_MIXPANEL_API_URL: https://mixpanel-proxy.lp-i.org
     NUXT_PUBLIC_APP_VERSION: '{{ .Values.application.sourceTargetRevision | replace "_deploy" "" }}'
     NUXT_PUBLIC_APP_ENVIRONMENT: prod
-    NUXT_PUBLIC_APP_NEW_COMMENT_DISABLED: 1
 
 certManagerClusterIssuer: letsencrypt-prod
 

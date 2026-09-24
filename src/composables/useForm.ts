@@ -82,10 +82,12 @@ const useForm = <T extends object, CleanResult = T>(
   const isValid = computed(() => !v$.value.$invalid)
 
   const lazy = isNil(options.lazy) ? true : options.lazy
+  let silenceErrors = false
   watch(
     () => JSON.parse(JSON.stringify(form.value)),
     (newForm, oldForm) => {
       const diffKeys = differencesObjects(newForm, oldForm)
+      if (silenceErrors) return
 
       Object.keys(unref(options.rules ?? {})).forEach((key) => {
         if (!lazy || diffKeys.includes(key)) {
@@ -101,9 +103,10 @@ const useForm = <T extends object, CleanResult = T>(
     Object.keys(form.value).forEach((k) => {
       err[k] = []
     })
+    const groupedErrors = silenceErrors ? {} : groupBy(v$.value.$errors, (el) => el.$property)
     return {
       ...err,
-      ...groupBy(v$.value.$errors, (el) => el.$property),
+      ...groupedErrors,
     } as Record<keyof T, ErrorObject[]>
   })
 
@@ -154,8 +157,10 @@ const useForm = <T extends object, CleanResult = T>(
    * @returns {void}
    */
   const reset = (newData?: T) => {
+    silenceErrors = true
     form.value = newData ?? ({} as T)
     v$.value.$reset()
+    nextTick(() => (silenceErrors = false))
   }
 
   // re-set model/form

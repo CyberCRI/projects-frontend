@@ -4,6 +4,7 @@ import type {
   ResearcherDocument,
   ResearcherDocumentType,
   Researcher,
+  QueryFilterDocument,
 } from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
@@ -24,8 +25,8 @@ import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}
 
-type Config = UseAsyncApiConfig
-type ConfigPagination = UseAsyncPaginationApiConfig
+type Config = UseAsyncApiConfig<QueryFilterDocument>
+type ConfigPagination = UseAsyncPaginationApiConfig<QueryFilterDocument>
 
 export const getUserResearchDocument = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,

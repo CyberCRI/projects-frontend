@@ -1,9 +1,5 @@
-import type {
-  ProjectModel,
-  ProjectSlugOrId,
-  TranslatedProject,
-} from 'shared-projects-frontend/models'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
+import { ProjectModel, TranslatedProject } from 'shared-projects-frontend/models'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'
@@ -13,10 +9,11 @@ import { safeProjectIconTab } from '~/functs/projects'
 import { sanitizeTabs } from '~/functs/tabs'
 
 export const useProjectTabs = (
-  projectId: ComputedRef<ProjectSlugOrId>,
+  projectId: ComputedRef<ProjectModel['id']>, // NOT slug (permisions strings se only id)
   project: ComputedRef<TranslatedProject | null>
 ) => {
   const route = useRoute()
+  const routeSlugOrId = computed(() => route.params.slugOrId)
   const router = useRouter()
   const organizationCode = useOrganizationCode()
 
@@ -41,7 +38,7 @@ export const useProjectTabs = (
   )
 
   const { isAdmin } = usePermissions()
-  const { isMember, canCreateTab } = usePermissionProject(projectId, project)
+  const { isMember, canCreateTab, canCreateReview } = usePermissionProject(projectId, project)
 
   const isMemberOrAdmin = computed(() => isMember.value || isAdmin.value)
 

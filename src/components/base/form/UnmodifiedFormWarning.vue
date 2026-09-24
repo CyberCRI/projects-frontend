@@ -12,7 +12,7 @@
   display: flex;
   gap: 1rem;
   padding: 0.8rem;
-  color: variables.$yellow;
+  color: variables.$salmon;
   border: 1px solid currentcolor;
   align-items: center;
   justify-content: center;
