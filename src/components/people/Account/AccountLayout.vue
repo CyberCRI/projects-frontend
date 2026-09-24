@@ -40,6 +40,7 @@ const props = withDefaults(
   }
 )
 
+const organizationCode = useOrganizationCode()
 const emit = defineEmits(['close'])
 
 const currentUser = ref(null)
@@ -55,7 +56,7 @@ const mainTitleLabel = computed(() => {
 })
 
 const setFormFromSelectedUser = async () => {
-  const user = await getUser(props.selectedUser.id)
+  const user = await getUser(organizationCode, props.selectedUser.id)
   currentUser.value = {
     ...user,
     current_org_role: props.selectedUser.current_org_role,

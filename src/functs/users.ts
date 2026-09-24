@@ -1,6 +1,6 @@
 // project members can  be group or user
 import { patchUserPicture, postUserPicture, deleteUserPicture } from 'shared-projects-frontend/apis'
-import type { UserModel, UserForm } from 'shared-projects-frontend/models'
+import type { UserModel, UserForm, OrganizationModel } from 'shared-projects-frontend/models'
 import { imageAdded, imageDeleted, imageUpdated } from '~/form/base'
 import { imageSizesFormData } from '~/functs/imageSizesUtils'
 
@@ -32,6 +32,7 @@ export const isAnonymousUser = (user: UserModel) => {
  * @exports
  */
 export const checkProfilePicture = async (
+  organizationCode: OrganizationModel['code'],
   userId: number,
   new_profile_picture: UserForm['profile_picture'],
   imageSizes: UserForm['imageSizes'],
@@ -40,7 +41,7 @@ export const checkProfilePicture = async (
   let pictureId = old_profile_picture?.id
 
   if (imageDeleted({ picture: new_profile_picture, imageSizes: imageSizes }, old_profile_picture)) {
-    await deleteUserPicture(userId, old_profile_picture.id)
+    await deleteUserPicture(organizationCode, userId, old_profile_picture.id)
   }
 
   if (imageAdded({ picture: new_profile_picture, imageSizes: imageSizes }, old_profile_picture)) {
@@ -49,13 +50,13 @@ export const checkProfilePicture = async (
     imageSizesFormData(body, imageSizes)
     body.append('file', file, file.name)
 
-    pictureId = (await postUserPicture(userId, body)).id
+    pictureId = (await postUserPicture(organizationCode, userId, body)).id
   }
 
   if (imageUpdated({ picture: new_profile_picture, imageSizes: imageSizes }, old_profile_picture)) {
     const body = new FormData()
     imageSizesFormData(body, imageSizes)
 
-    await patchUserPicture(userId, pictureId, body)
+    await patchUserPicture(organizationCode, userId, pictureId, body)
   }
 }

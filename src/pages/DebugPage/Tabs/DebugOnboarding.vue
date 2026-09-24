@@ -44,7 +44,7 @@ const resetOnboardingStatus = async () => {
     }
     const user = usersStore.userFromApi
     const keycloak_id = user.keycloak_id
-    await patchUser(keycloak_id, payload)
+    await patchUser(organizationCode, keycloak_id, payload)
     await usersStore.refreshUser()
     toaster.pushSuccess(`Onboarding reseted for ${user.email}`)
   } catch (err) {
@@ -65,7 +65,7 @@ const resetTermsSigned = async () => {
         [organizationCode]: undefined,
       },
     }
-    await patchUser(user.id, payload)
+    await patchUser(organizationCode, user.id, payload)
     await usersStore.refreshUser()
     toaster.pushSuccess(`Terms approval reseted for ${user.email}`)
   } catch (err) {

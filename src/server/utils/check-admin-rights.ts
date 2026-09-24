@@ -2,6 +2,12 @@ import { getUser as globalGetUser, getOrganizationByCode } from 'shared-projects
 import { isAdmin, isSuperAdmin, userRights } from 'shared-projects-frontend/lib'
 import type { OrganizationModel } from 'shared-projects-frontend/models'
 
+// TODO(remi): do wee need that ? maybe use `useOrganiationCode`
+const getOrgCode = (): OrganizationModel['code'] => {
+  const runtimeConfig = useRuntimeConfig()
+  return runtimeConfig.public.appApiOrgCode
+}
+
 // TODO: add parseToken/jwt in shared-project-backend
 export function parseJwt(token) {
   try {
@@ -39,11 +45,9 @@ export function getKeycloakIdFromToken(tokenHeader) {
 }
 
 export async function getOrg(event): Promise<OrganizationModel | null> {
-  const runtimeConfig = useRuntimeConfig()
-  const orgCode = runtimeConfig.public.appApiOrgCode
   const tokenHeader = getRequestHeader(event, 'authorization') || ''
 
-  return getOrganizationByCode(orgCode, {
+  return getOrganizationByCode(getOrgCode(), {
     headers: { Authorization: tokenHeader },
   }).catch((e) => {
     throw createError({
@@ -58,7 +62,7 @@ export async function getUser(event) {
   const tokenHeader = getRequestHeader(event, 'authorization') || ''
   const kcId = getKeycloakIdFromToken(tokenHeader)
 
-  return globalGetUser(kcId, {
+  return globalGetUser(getOrgCode(), kcId, {
     headers: { Authorization: tokenHeader },
   }).catch((e) => {
     throw createError({
