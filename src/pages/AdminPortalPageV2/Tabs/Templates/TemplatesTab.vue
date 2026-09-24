@@ -13,7 +13,7 @@
     </template>
 
     <FetchLoader :status="status" only-error skeleton :with-data="!!templates">
-      <div class="list">
+      <div class="list-templates">
         <ul>
           <AdminList
             v-for="template in templates"
@@ -107,7 +107,7 @@ const confirmDelete = () => {
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 
-.list {
+.list-templates {
   ul {
     flex-grow: 1;
   }
