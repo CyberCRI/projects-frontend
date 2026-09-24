@@ -2,7 +2,7 @@
   <BaseDrawer
     :is-opened="!!document"
     data-test="add-default-skills-drawer"
-    :title="`${t(`profile.${documentType}-similars`)} (${countElement})`"
+    :title="`${t(`profile.${documentType}-similars`)} ${countElement ? `(${countElement})` : ''}`"
     class="medium"
     :no-footer="!havePagination"
     @close="emit('close')"
@@ -17,6 +17,7 @@
           :similar="false"
         />
       </div>
+      <NothingHere v-if="documents.length === 0" />
     </FetchLoader>
     <template #footer>
       <div class="documents-paginations">
@@ -40,6 +41,7 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import { researchDocumentSkeleton } from '~/skeletons/crisalid.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
+import NothingHere from '~/components/base/NothingHere.vue'
 
 defineOptions({ name: 'ResearcherDocumentSimilars' })
 
@@ -61,10 +63,18 @@ const {
   paginationConfig: {
     limit: LIMIT,
   },
+  query: {
+    modules: 'none',
+  },
   default: () =>
-    factoryPagination(researchDocumentSkeleton, Math.min(props.document?.similars ?? 0, LIMIT)),
+    factoryPagination(
+      researchDocumentSkeleton,
+      Math.min(props.document?.modules?.similars ?? 10, LIMIT)
+    ),
 })
-const countElement = computed(() => pagination.count.value || props.document?.similars || 0)
+const countElement = computed(
+  () => pagination.count.value || props.document?.modules?.similars || 0
+)
 
 const havePagination = computed(() => pagination.canNext.value || pagination.canPrev.value)
 </script>
