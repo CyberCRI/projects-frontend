@@ -76,7 +76,6 @@ const addToConversation = (...args) => {
 // (and still preserve chat messages when switching lang)
 const conversation = () => {
   const res = [...props.history, ...liveMessages.value]
-  console.log('conversation()', res)
   return res
 }
 
