@@ -24,8 +24,15 @@ export default async function useChatbotContext({
     }
   }
 
-  const skillsRequest = await fetchUserSkills(unref(usersStore.userFromApi?.id))
-  const skills = skillsRequest.results || []
+  let skills = []
+  if (import.meta.client) {
+    try {
+      const skillsRequest = await fetchUserSkills(unref(usersStore.userFromApi?.id))
+      skills = skillsRequest.results || []
+    } catch (err) {
+      console.error(err)
+    }
+  }
   const userContextPrefix =
     '# Use the following information about the user to tailor your response toward the user interests'
   const userContext = computed(() => {
