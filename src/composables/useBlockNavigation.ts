@@ -30,6 +30,8 @@ export const useBlockNavigation = (func: () => boolean): ComputedRef<boolean> =>
     }
   })
 
-  onClientMounted(() => (mounted.value = true))
+  onClientMounted(() => {
+    mounted.value = true
+  })
   return isEqual
 }

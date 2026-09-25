@@ -160,13 +160,13 @@
         :icon="tab.icon"
         @delete="onDeleteTab(idx)"
       >
-        <TabFormRaw
-          show-type
+        <TabFormTypeSwitch
           :model-value="form.tabs[idx]"
           :errors="errors.tabs[0]?.$message?.[idx]"
           :data-field-target="formFieldTargetIds.tabs[idx]"
           @update:model-value="updateTab(idx, $event)"
         />
+        <TabFormRaw :model-value="form.tabs[idx]" @update:model-value="updateTab(idx, $event)" />
         <br />
         <h2 class="title-template">
           {{ $t('tab.form.template.title') }}

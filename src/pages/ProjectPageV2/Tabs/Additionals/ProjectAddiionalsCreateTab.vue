@@ -21,14 +21,48 @@ const router = useRouter()
 const asyncing = ref(false)
 const gobals = useGlobals()
 
-const { form: formTab, validate: validateTab } = useProjectTabForm()
-const { form: formTabItem, validate: validatTabItem } = useProjectTabItemForm()
+const { form: formTab /* , validate: validateTab*/ } = useProjectTabForm()
+const { form: formTabItem, resetToInitialValue /* , validate: validatTabItem*/ } =
+  useProjectTabItemForm()
 
-const onSubmit = async (form: ProjectTabForm) => {
-  if (!(await validateTab()) || !(await validatTabItem())) {
-    return
+// const onSubmit = async (form: ProjectTabForm) => {
+//   if (!(await validateTab()) || !(await validatTabItem())) {
+//     return
+//   }
+// }
+
+const tabFormRawRef = useTemplateRef('tabFormRawRef')
+const tabItemFormRawRef = useTemplateRef('tabItemFormRawRef')
+
+const resetAllToInitial = () => {
+  tabFormRawRef.value?.resetToInitialValue()
+  tabItemFormRawRef.value?.resetToInitialValue()
+}
+
+const formExtraIsEqual = computed(
+  () =>
+    formTab.value.type !== 'text' ||
+    !tabItemFormRawRef.value ||
+    tabItemFormRawRef.value.isFormEqual()
+)
+watch(
+  () => formTab.value?.type,
+  (neo, old) => {
+    if (neo && neo != old) resetToInitialValue()
   }
-
+)
+const onSubmit = async (form: ProjectTabForm) => {
+  // exposed ref are automagicalyy unwrapped
+  if (!(await tabFormRawRef.value?.v$.$validate())) {
+    tabFormRawRef.value?.jumpToFirstError()
+    return
+  } else if (form.type === 'text') {
+    // exposed ref are automagicalyy unwrapped
+    if (!(await tabItemFormRawRef.value?.v$.$validate())) {
+      tabItemFormRawRef.value?.jumpToFirstError()
+      return
+    }
+  }
   asyncing.value = true
 
   createProjectTab(props.project.id, form)
@@ -51,6 +85,7 @@ const onSubmit = async (form: ProjectTabForm) => {
         .then(() => projectTab)
     })
     .then((projectTab) => {
+      resetAllToInitial()
       toaster.pushSuccess(t('tab.toasts.tab-create.success'))
       refreshProjectData(props.project)
         .then(() => refreshProjectTabs(props.project))
@@ -97,12 +132,20 @@ watchEffect(() => {
       {{ $t('tab.tab.not-enabled.admin') }}
     </LpiSnackbar>
 
-    <TabForm v-model="formTab" :asyncing="asyncing" :project="project" @submit="onSubmit">
+    <TabForm
+      ref="tabFormRawRef"
+      v-model="formTab"
+      :asyncing="asyncing"
+      :project="project"
+      :form-extra-is-equal="formExtraIsEqual"
+      @submit="onSubmit"
+      @cancel="resetAllToInitial"
+    >
       <!-- you can create description in create tabs only if type is text -->
       <template v-if="formTab.type === 'text'">
         <br />
         <Title :title="$t('tab.item.create')" />
-        <TabItemFormRaw v-model="formTabItem" />
+        <TabItemFormRaw ref="tabItemFormRawRef" v-model="formTabItem" />
       </template>
     </TabForm>
   </BaseModuleTab>
