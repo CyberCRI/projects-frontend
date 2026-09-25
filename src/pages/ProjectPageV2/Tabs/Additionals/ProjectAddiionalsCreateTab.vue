@@ -21,13 +21,15 @@ const router = useRouter()
 const asyncing = ref(false)
 const gobals = useGlobals()
 
-const { form: formTab, validate: validateTab } = useProjectTabForm()
-const { form: formTabItem, validate: validatTabItem } = useProjectTabItemForm()
+const { form: formTab /* , validate: validateTab*/ } = useProjectTabForm()
+const { form: formTabItem, resetToInitialValue /* , validate: validatTabItem*/ } =
+  useProjectTabItemForm()
 
-const onSubmit = async (form: ProjectTabForm) => {
-  if (!(await validateTab()) || !(await validatTabItem())) {
-    return
-  }
+// const onSubmit = async (form: ProjectTabForm) => {
+//   if (!(await validateTab()) || !(await validatTabItem())) {
+//     return
+//   }
+// }
 
 const tabFormRawRef = useTemplateRef('tabFormRawRef')
 const tabItemFormRawRef = useTemplateRef('tabItemFormRawRef')
@@ -43,7 +45,12 @@ const formExtraIsEqual = computed(
     !tabItemFormRawRef.value ||
     tabItemFormRawRef.value.isFormEqual()
 )
-
+watch(
+  () => formTab.value?.type,
+  (neo, old) => {
+    if (neo && neo != old) resetToInitialValue()
+  }
+)
 const onSubmit = async (form: ProjectTabForm) => {
   // exposed ref are automagicalyy unwrapped
   if (!(await tabFormRawRef.value?.v$.$validate())) {
