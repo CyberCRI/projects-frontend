@@ -78,12 +78,15 @@ const $translateAgent = (data: Agent, locale: Language | null): TranslatedAgent 
 
 export default function useAutoTranslate() {
   // TODO: memoize in local storage / user prefs
+  // TODO(remi): default value from organization 'auto_translate_content`
   const isAutoTranslateActivated = useState('isAutoTranslateActivated', () => true)
 
   const { locale } = useNuxtI18n()
 
   const language = computed(() => {
-    if (isAutoTranslateActivated.value) {
+    // if autoTranslated is not enabled, we return null to get "organigal content from translated function
+    // otherwise, we return locale value
+    if (!isAutoTranslateActivated.value) {
       return null
     }
     return locale.value

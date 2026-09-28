@@ -183,11 +183,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { getAnnouncements, patchUser } from 'shared-projects-frontend/apis'
 import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
 
-import HeaderItemList from '~/components/base/navigation/HeaderItemList.vue'
+import type { MenuItem } from '~/components/base/navigation/HeaderDropDown.vue'
 import HeaderDropDown from '~/components/base/navigation/HeaderDropDown.vue'
 import HeaderLink from '~/components/base/navigation/HeaderLink.vue'
 import NotificationList from '~/components/app/NotificationList.vue'
@@ -201,6 +201,7 @@ import useProjectCategories from '~/stores/useProjectCategories'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useUsersStore from '~/stores/useUsers'
 
+import type { HeaderItem } from '~/components/base/navigation/HeaderItemList.vue'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import { nowDate } from '~/functs/date'
 
@@ -209,7 +210,6 @@ export default {
 
   components: {
     ContactDrawer,
-    HeaderItemList,
     BadgeItem,
     NotificationList,
     LinkButton,
@@ -227,6 +227,8 @@ export default {
     const { isAdmin, isFacilitator, isSuperAdmin } = usePermissions()
     const { locale, setLocale } = useNuxtI18n()
     const { isAutoTranslateActivated } = useAutoTranslate()
+
+    const organisationCode = useOrganizationCode()
     return {
       appHasChatbotPromptDb,
       projectCategoriesStore,
@@ -238,6 +240,7 @@ export default {
       locale,
       isAutoTranslateActivated,
       setLocale,
+      organisationCode,
     }
   },
 
@@ -260,17 +263,20 @@ export default {
     },
 
     langMenu() {
-      const menu = this.organizationsStore.languages
-        .map((lang) => ({
-          label: `${lang.toUpperCase()} - ${this.$t('language.label-' + lang)}`,
-          action: () => this.updateLanguage(lang),
-        }))
+      const menu: MenuItem[] = this.organizationsStore.languages
+        .map(
+          (lang) =>
+            ({
+              label: `${lang.toUpperCase()} - ${this.$t('language.label-' + lang)}`,
+              action: () => this.updateLanguage(lang),
+            }) satisfies MenuItem
+        )
         .filter((lang) => lang.label !== this.locale.toUpperCase())
       if (this.showAutoTranslateOption)
         menu.push({
           label: this.isAutoTranslateActivated
             ? this.$t('language.auto-translate-on')
-            : this.$t('language.auto-translate-on'),
+            : this.$t('language.auto-translate-off'),
           action: () => {
             this.isAutoTranslateActivated = !this.isAutoTranslateActivated
           },
@@ -290,208 +296,215 @@ export default {
 
     showDocumentsLink() {
       // admin should always access to documents, so they can add the first one...
+      // @ts-expect-error attachment_files_count not defined in organization
       return this.isAdmin || (this.isConnected && this.organization?.attachment_files_count > 0)
     },
 
     userMenu() {
-      return [
-        {
-          label: this.$t('me.page-title').toUpperCase(),
-          to: {
-            name: 'ProfileUser',
-            params: {
-              userIdOrSlug: this.usersStore.userFromApi?.slug || this.usersStore.userFromApi?.id,
+      return (
+        [
+          {
+            label: this.$t('me.page-title').toUpperCase(),
+            to: {
+              name: 'ProfileUser',
+              params: {
+                userIdOrSlug: this.usersStore.userFromApi?.slug || this.usersStore.userFromApi?.id,
+              },
             },
+            leftIcon: 'Account',
+            condition: true,
+            dataTest: 'my-profile',
           },
-          leftIcon: 'Account',
-          condition: true,
-          dataTest: 'my-profile',
-        },
-        {
-          label: this.$t('me.my-projects').toUpperCase(),
-          to: {
-            name: 'ProfileProjects',
-            params: {
-              userIdOrSlug: this.usersStore.userFromApi?.slug || this.usersStore.userFromApi?.id,
+          {
+            label: this.$t('me.my-projects').toUpperCase(),
+            to: {
+              name: 'ProfileProjects',
+              params: {
+                userIdOrSlug: this.usersStore.userFromApi?.slug || this.usersStore.userFromApi?.id,
+              },
             },
+            leftIcon: 'Briefcase',
+            condition: this.isConnected,
+            dataTest: 'my-projects',
           },
-          leftIcon: 'Briefcase',
-          condition: this.isConnected,
-          dataTest: 'my-projects',
-        },
-        {
-          label: this.$t('notifications.header').toUpperCase(),
-          to: { name: 'settings' },
-          leftIcon: 'Cog',
-          condition: this.isConnected,
-          dataTest: 'notifications',
-        },
-        {
-          label: this.$t('stats.page-title').toUpperCase(),
-          to: {
-            name: 'stats',
+          {
+            label: this.$t('notifications.header').toUpperCase(),
+            to: { name: 'settings' },
+            leftIcon: 'Cog',
+            condition: this.isConnected,
+            dataTest: 'notifications',
           },
-          leftIcon: 'Poll',
-          condition: this.isAdmin,
-          dataTest: 'stats',
-        },
-        {
-          label: this.$t('admin.page-title').toUpperCase(),
-          to: { name: 'Admin' },
-          leftIcon: 'Tune',
-          condition: this.isAdmin,
-          dataTest: 'admin',
-        },
-        {
-          label: this.$t('common.disconnect').toUpperCase(),
-          action: () => this.logOutUser(),
-          leftIcon: 'Logout',
-          condition: true,
-          dataTest: 'disconnect',
-        },
-      ].filter((menu) => menu.condition)
+          {
+            label: this.$t('stats.page-title').toUpperCase(),
+            to: {
+              name: 'stats',
+            },
+            leftIcon: 'Poll',
+            condition: this.isAdmin,
+            dataTest: 'stats',
+          },
+          {
+            label: this.$t('admin.page-title').toUpperCase(),
+            to: { name: 'Admin' },
+            leftIcon: 'Tune',
+            condition: this.isAdmin,
+            dataTest: 'admin',
+          },
+          {
+            label: this.$t('common.disconnect').toUpperCase(),
+            action: () => this.logOutUser(),
+            leftIcon: 'Logout',
+            condition: true,
+            dataTest: 'disconnect',
+          },
+        ] satisfies (MenuItem & { condition: boolean })[]
+      ).filter((menu) => menu.condition)
     },
 
     moreMenu() {
-      return [
-        {
-          label: this.$t('home.documents').toUpperCase(),
-          to: { name: 'DocumentsPage' },
-          leftIcon: 'File',
-          condition: this.showDocumentsLink, // TODO: check also if there's any document or if we are admin
-          dataTest: 'more-documents',
-        },
-        {
-          label: this.$t('home.calendar').toUpperCase(),
-          to: { name: 'CalendarPage' },
-          leftIcon: 'Calendar',
-          condition: true, // TODO ?
-          dataTest: 'more-calendar',
-        },
-        {
-          label: this.$t('home.instructions').toUpperCase(),
-          to: { name: 'InstructionListPage' },
-          leftIcon: 'BookmarkBoxOutline',
-          condition: true, // TODO ?
-          dataTest: 'more-instructions',
-        },
-        {
-          label: this.$t('home.news').toUpperCase(),
-          to: { name: 'NewsListPage' },
-          leftIcon: 'Article',
-          condition: true, // TODO ?
-          dataTest: 'more-instructions',
-        },
-        {
-          label: this.$t('home.announcements').toUpperCase(),
-          to: { name: 'AnnouncementsPage' },
-          leftIcon: 'BullhornOutline',
-          condition: this.announcements.length > 0,
-          dataTest: 'announcements',
-        },
-        {
-          label: this.$t('home.our-locations').toUpperCase(),
-          to: { name: 'map' },
-          leftIcon: 'Map',
-          condition: true,
-          dataTest: 'map',
-        },
-        {
-          label: this.$t('home.agents').toUpperCase(),
-          to: { name: 'AgentsHomePage' },
-          leftIcon: 'ChatBubble',
-          condition: this.appHasChatbotPromptDb,
-          dataTest: 'agents',
-        },
-        {
-          label: this.$t('home.communities').toUpperCase(),
-          to: { name: 'Portal' },
-          leftIcon: 'Globe',
-          condition: true,
-          dataTest: 'portals',
-        },
-        {
-          label: this.$t('faq.portal').toUpperCase(),
-          to: { name: 'Help' },
-          leftIcon: 'Lifebuoy',
-          condition: true,
-          dataTest: 'help',
-        },
-        {
-          label: this.$t('footer.contact').toUpperCase(),
-          action: () => (this.showContactUsDrawer = true),
-          leftIcon: 'EmailOutline',
-          condition: true,
-          dataTest: 'contact-us',
-        },
-      ].filter((menu) => menu.condition)
+      return (
+        [
+          {
+            label: this.$t('home.documents').toUpperCase(),
+            to: { name: 'DocumentsPage' },
+            leftIcon: 'File',
+            condition: this.showDocumentsLink, // TODO: check also if there's any document or if we are admin
+            dataTest: 'more-documents',
+          },
+          {
+            label: this.$t('home.calendar').toUpperCase(),
+            to: { name: 'CalendarPage' },
+            leftIcon: 'Calendar',
+            condition: true, // TODO ?
+            dataTest: 'more-calendar',
+          },
+          {
+            label: this.$t('home.instructions').toUpperCase(),
+            to: { name: 'InstructionListPage' },
+            leftIcon: 'BookmarkBoxOutline',
+            condition: true, // TODO ?
+            dataTest: 'more-instructions',
+          },
+          {
+            label: this.$t('home.news').toUpperCase(),
+            to: { name: 'NewsListPage' },
+            leftIcon: 'Article',
+            condition: true, // TODO ?
+            dataTest: 'more-instructions',
+          },
+          {
+            label: this.$t('home.announcements').toUpperCase(),
+            to: { name: 'AnnouncementsPage' },
+            leftIcon: 'BullhornOutline',
+            condition: this.announcements.length > 0,
+            dataTest: 'announcements',
+          },
+          {
+            label: this.$t('home.our-locations').toUpperCase(),
+            to: { name: 'map' },
+            leftIcon: 'Map',
+            condition: true,
+            dataTest: 'map',
+          },
+          {
+            label: this.$t('home.agents').toUpperCase(),
+            to: { name: 'AgentsHomePage' },
+            leftIcon: 'ChatBubble',
+            condition: !!this.appHasChatbotPromptDb,
+            dataTest: 'agents',
+          },
+          {
+            label: this.$t('home.communities').toUpperCase(),
+            to: { name: 'Portal' },
+            leftIcon: 'Globe',
+            condition: true,
+            dataTest: 'portals',
+          },
+          {
+            label: this.$t('faq.portal').toUpperCase(),
+            to: { name: 'Help' },
+            leftIcon: 'Lifebuoy',
+            condition: true,
+            dataTest: 'help',
+          },
+          {
+            label: this.$t('footer.contact').toUpperCase(),
+            action: () => (this.showContactUsDrawer = true),
+            leftIcon: 'EmailOutline',
+            condition: true,
+            dataTest: 'contact-us',
+          },
+        ] satisfies (MenuItem & { condition: boolean })[]
+      ).filter((menu) => menu.condition)
     },
 
     mobileMenu() {
-      return [
-        {
-          label: this.$t('search.search-title'),
-          action: () => this.goTo('Search'),
-          leftIcon: null,
-          condition: true,
-          dataTest: 'search',
-        },
-        {
-          label: this.$t('projects'),
-          action: () => this.goTo('Categories'),
-          leftIcon: null,
-          condition: this.projectCategoriesStore.all?.length,
-          dataTest: 'search',
-        },
-        {
-          label: this.$t('common.people'),
-          action: () => this.goTo('People'),
-          leftIcon: null,
-          condition: true,
-          dataTest: 'people',
-        },
-        {
-          label: this.$t('common.groups'),
-          action: () => this.goTo('Groups'),
-          leftIcon: null,
-          condition: true,
-          dataTest: 'people',
-        },
-        {
-          label: this.$t('common.more'),
-          childItems: this.moreMenu,
-          condition: true,
-          dataTest: 'more',
-        },
-        {
-          label: this.$t('notifications.header'),
-          action: () => {
-            this.showNotificationDrawer = true
+      return (
+        [
+          {
+            label: this.$t('search.search-title'),
+            action: () => this.goTo('Search'),
+            leftIcon: null,
+            condition: true,
+            dataTest: 'search',
           },
-          leftIcon: 'Bell',
-          condition: this.isConnected,
-          dataTest: 'notifications',
-        },
-        {
-          label: this.loginName,
-          childItems: this.userMenu,
-          condition: this.isConnected && !(this.isAdmin || this.isFacilitator),
-          dataTest: 'user-dropdown-menu',
-        },
-        {
-          label: this.loginName,
-          childItems: this.userMenu,
-          badge: this.AdminLabel,
-          condition: this.isConnected && (this.isAdmin || this.isFacilitator),
-          dataTest: 'user-dropdown-menu',
-        },
-        {
-          label: this.locale.toUpperCase(),
-          childItems: this.langMenu,
-          condition: true,
-          dataTest: 'lang',
-        },
-      ].filter((item) => item.condition)
+          {
+            label: this.$t('projects'),
+            action: () => this.goTo('Categories'),
+            leftIcon: null,
+            condition: !!this.projectCategoriesStore.all?.length,
+            dataTest: 'search',
+          },
+          {
+            label: this.$t('common.people'),
+            action: () => this.goTo('People'),
+            leftIcon: null,
+            condition: true,
+            dataTest: 'people',
+          },
+          {
+            label: this.$t('common.groups'),
+            action: () => this.goTo('Groups'),
+            leftIcon: null,
+            condition: true,
+            dataTest: 'people',
+          },
+          {
+            label: this.$t('common.more'),
+            childItems: this.moreMenu,
+            condition: true,
+            dataTest: 'more',
+          },
+          {
+            label: this.$t('notifications.header'),
+            action: () => {
+              this.showNotificationDrawer = true
+            },
+            leftIcon: 'Bell',
+            condition: this.isConnected,
+            dataTest: 'notifications',
+          },
+          {
+            label: this.loginName,
+            childItems: this.userMenu,
+            condition: this.isConnected && !(this.isAdmin || this.isFacilitator),
+            dataTest: 'user-dropdown-menu',
+          },
+          {
+            label: this.loginName,
+            childItems: this.userMenu,
+            badge: this.AdminLabel,
+            condition: this.isConnected && (this.isAdmin || this.isFacilitator),
+            dataTest: 'user-dropdown-menu',
+          },
+          {
+            label: this.locale.toUpperCase(),
+            childItems: this.langMenu,
+            condition: true,
+            dataTest: 'lang',
+          },
+        ] satisfies (HeaderItem & { condition: boolean })[]
+      ).filter((item) => item.condition)
     },
 
     loginName() {
@@ -586,7 +599,7 @@ export default {
         }
         // dont wait for termination, user update take a while
         // and we dont want the UI to freeze meanwhile
-        patchUser(this.usersStore.id, body)
+        patchUser(this.organisationCode, this.usersStore.id, body)
       }
 
       this.setLocale(lang)

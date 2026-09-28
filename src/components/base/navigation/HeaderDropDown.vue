@@ -46,7 +46,7 @@
                 </span>
               </Component>
 
-              <div class="sub-menu drop-down-menu custom-scrollbar">
+              <div v-if="item.subSection" class="sub-menu drop-down-menu custom-scrollbar">
                 <ul>
                   <li
                     v-for="(subItem, indexItem) in item.subSection"
@@ -75,14 +75,14 @@ import type { IconImageChoice } from '~/functs/IconImage'
 import type { RouteLocationRaw } from 'vue-router'
 import type { StyleValue } from 'vue'
 
-type MenuItem = {
+export type MenuItem = {
   to?: RouteLocationRaw
   dataTest?: string
   leftIcon?: IconImageChoice
   rightIcon?: IconImageChoice
   label: string
-  action?: boolean
-  subSection: { src: string; label: string }[]
+  action?: any
+  subSection?: { src: string; label: string }[]
 }
 
 withDefaults(

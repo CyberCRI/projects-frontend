@@ -1,5 +1,5 @@
 <template>
-  <li class="list-item">
+  <li :dataTest="item.dataTest" class="list-item">
     <AccordionItem v-if="item.childItems && item.childItems.length > 0" @is-active="setActive">
       <template #header>
         <IconImage
@@ -36,15 +36,16 @@ import BadgeItem from '~/components/base/BadgeItem.vue'
 import type { IconImageChoice } from '~/functs/IconImage'
 import type { RouteLocationRaw } from 'vue-router'
 
-type Item = {
+export type HeaderItem = {
   leftIcon?: IconImageChoice
   label: string
   badge?: string
   to?: RouteLocationRaw
   action?: () => void
-  childItems?: Item[]
+  childItems?: HeaderItem[]
+  dataTest?: string
 }
-const props = defineProps<{ item: Item }>()
+const props = defineProps<{ item: HeaderItem }>()
 
 const emit = defineEmits<{ close: [] }>()
 const isActive = ref(false)
