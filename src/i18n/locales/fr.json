@@ -2898,7 +2898,7 @@
   },
   "pdf": {
     "blog-entries-limited-warning": "Seuls les {max} premiers articles de blog sont inclus dans l'export PDF (sur un total de {total}).",
-    "download-pdf": "PDF",
+    "download-pdf": "Télécharger au format PDF",
     "generated-on": "Généré le {date}",
     "confirm": "Voulez-vous générer des pdf pour ce {type} ?",
     "choices": "Sélectionnez les éléments que vous voulez ajouter au PDF."

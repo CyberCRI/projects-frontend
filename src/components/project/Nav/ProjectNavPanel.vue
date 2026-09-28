@@ -53,16 +53,6 @@
           params: { slugOrId: project.slug || project.id },
         }"
       />
-      <template v-if="appGotenbergEnabled && usersStore.isConnected">
-        <ExternalLabelButton
-          class="space-button"
-          :label="$t('pdf.download-pdf')"
-          btn-icon="FilePdfLine"
-          vertical-layout
-          label-on-hover
-          @click="openModals('pdf')"
-        />
-      </template>
       <SocialShareButton :shared-url="sharedUrl" />
     </div>
 
@@ -200,6 +190,15 @@ const { appGotenbergEnabled } = useRuntimeConfig().public
 const actionMenu = computed(
   () =>
     [
+      {
+        icon: 'FilePdfLine' as IconImageChoice,
+        key: 'dowload-pdf',
+        condition: appGotenbergEnabled && usersStore.isConnected,
+        label: t('pdf.download-pdf'),
+        isAddAction: true,
+        addModal: 'pdf',
+        dataTest: 'dowload-pdf',
+      },
       {
         icon: 'Copy' as IconImageChoice,
         key: 'duplicate',
