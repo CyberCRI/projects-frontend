@@ -9,6 +9,8 @@ import type { ProviderParams } from 'shared-projects-frontend/interfaces'
 import type { PropsDefinitions } from '~/composables/tiptap'
 import { isNil } from 'es-toolkit'
 
+import { formEqual } from '~/form/base'
+
 withDefaults(
   defineProps<{
     asyncing?: boolean
@@ -34,14 +36,24 @@ const inOfflineMode = ref(false)
 const model = defineModel<ProjectTabItemForm>({ default: defaultProjectTabItemForm })
 const isCreated = computed(() => isNil(model.value?.id) || inOfflineMode.value)
 
-const { form, errors } = useProjectTabItemForm({
-  model,
-  default: defaultProjectTabItemForm(),
-})
+const { form, errors, resetToInitialValue, v$, jumpToFirstError, formFieldTargetIds } =
+  useProjectTabItemForm({
+    model,
+    default: defaultProjectTabItemForm(),
+  })
+
+const isFormEqual = () => formEqual(form.value, defaultProjectTabItemForm())
 
 const handleImage = (img: ImageModel) => {
   model.value.images_ids.push(img.id)
 }
+
+defineExpose({
+  jumpToFirstError,
+  v$,
+  resetToInitialValue,
+  isFormEqual,
+})
 </script>
 
 <template>
@@ -53,6 +65,7 @@ const handleImage = (img: ImageModel) => {
       class="input-field"
       required
       :errors="errors.title"
+      :data-field-target="formFieldTargetIds.title"
     />
     <Field :label="$t('tab.form.content.label')" required class="editor-section">
       <TipTapEditor
@@ -63,6 +76,7 @@ const handleImage = (img: ImageModel) => {
         mode="full"
         :save-image-callback="saveImageCallback"
         :errors="errors.content"
+        :data-field-target="formFieldTargetIds.content"
         @image="handleImage"
       />
       <TipTapCollaborativeEditor

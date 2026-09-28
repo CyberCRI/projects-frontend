@@ -17,6 +17,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 0.4em;
+  font-weight: bold;
 
   .icon {
     fill: currentcolor;

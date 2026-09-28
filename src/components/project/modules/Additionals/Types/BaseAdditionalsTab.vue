@@ -31,6 +31,9 @@ const emit = defineEmits<{
   refresh: []
 }>()
 
+const tabForm = useTemplateRef('tabForm')
+const resetTabForm = () => tabForm.value?.resetToInitialValue()
+
 const { t } = useNuxtI18n()
 const toaster = useToaster()
 const router = useRouter()
@@ -79,6 +82,11 @@ const onPatchTab = (form: ProjectTabForm) => {
       clean()
       openModals('editTab')
     })
+}
+
+const onClose = () => {
+  resetTabForm()
+  closeModals('editTab')
 }
 
 const onConfirmDeleteTab = () => {
@@ -136,8 +144,8 @@ const onConfirmDeleteTab = () => {
       hide-see-more
     >
       <Title :title="$t('tab.tab.edit')" />
-      <TabForm :project="project" :tab="tab" @submit="onPatchTab" @close="closeModals('editTab')">
-        <template #footer>
+      <TabForm ref="tabForm" :project="project" :tab="tab" @submit="onPatchTab" @close="onClose">
+        <template #footer-extra>
           <LpiButton
             class="w-fit"
             btn-icon="TrashCanOutline"

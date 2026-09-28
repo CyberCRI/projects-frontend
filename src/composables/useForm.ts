@@ -24,6 +24,8 @@ export type UseFormResult<T, CleanResult> = {
   errors: ComputedRef<Record<keyof T, ErrorObject[]>>
   cleanedData: null | Ref<CleanResult>
   reset: (data?: T) => void
+  initialValueFactory: () => T
+  resetToInitialValue: () => void
   rules?: RefOrRaw<ValidationArgs<T> | object>
   v$: ReturnType<typeof useVuelidate<T>>
   jumpToFirstError: () => void
@@ -66,10 +68,13 @@ const onClean = (d) => d
 const useForm = <T extends object, CleanResult = T>(
   options: OptionsForm<T, CleanResult> = { onClean }
 ): UseFormResult<T, CleanResult> => {
-  const form = ref<T>({
+  const modelSnapShot = { ...(options.model?.value || {}) }
+  const initialValueFactory = () => ({
     ...options.default,
-    ...(options.model?.value || {}),
-  }) as Ref<T>
+    ...modelSnapShot,
+  })
+
+  const form = ref<T>(initialValueFactory()) as Ref<T>
 
   const _onClean = options.onClean ?? onClean
 
@@ -103,7 +108,7 @@ const useForm = <T extends object, CleanResult = T>(
     Object.keys(form.value).forEach((k) => {
       err[k] = []
     })
-    const groupedErrors = silenceErrors ? {} : groupBy(v$.value.$errors, (el) => el.$property)
+    const groupedErrors = groupBy(v$.value.$errors, (el) => el.$property)
     return {
       ...err,
       ...groupedErrors,
@@ -163,6 +168,8 @@ const useForm = <T extends object, CleanResult = T>(
     nextTick(() => (silenceErrors = false))
   }
 
+  const resetToInitialValue = () => reset(initialValueFactory())
+
   // re-set model/form
   if (options.model) {
     const model = options.model
@@ -180,7 +187,7 @@ const useForm = <T extends object, CleanResult = T>(
     watch(
       form,
       (value) => {
-        if (!isEqual(value, model.value)) {
+        if (model?.value && !isEqual(value, model.value)) {
           model.value = { ...value }
         }
       },
@@ -242,6 +249,8 @@ const useForm = <T extends object, CleanResult = T>(
     v$,
     jumpToFirstError,
     validate,
+    initialValueFactory,
+    resetToInitialValue,
   }
 }
 

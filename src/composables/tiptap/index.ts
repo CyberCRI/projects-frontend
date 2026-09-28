@@ -132,6 +132,13 @@ export const useTipTap = ({ props, emit, t, extraOptions }: Options): TipTapResu
     return props.modelValue
   }
 
+  watch(
+    () => props.modelValue,
+    (neo, old) => {
+      if (neo && neo !== old) editor.value?.commands.setContent(neo)
+    }
+  )
+
   function initEditor() {
     // this prevents multiple init of editor
     // (that causes duplicate user/content bugs)
