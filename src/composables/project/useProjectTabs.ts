@@ -1,5 +1,9 @@
+import type {
+  ProjectModel,
+  TranslatedProject,
+  ProjectSlugOrId,
+} from 'shared-projects-frontend/models'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
-import type { ProjectModel, TranslatedProject } from 'shared-projects-frontend/models'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'
@@ -9,7 +13,7 @@ import { safeProjectIconTab } from '~/functs/projects'
 import { sanitizeTabs } from '~/functs/tabs'
 
 export const useProjectTabs = (
-  projectId: ComputedRef<ProjectModel['id']>, // NOT slug (permisions strings se only id)
+  projectSlugOrId: ComputedRef<ProjectSlugOrId>, // NOT slug (permisions strings se only id)
   project: ComputedRef<TranslatedProject | null>
 ) => {
   const route = useRoute()
@@ -25,7 +29,7 @@ export const useProjectTabs = (
     }
   })
 
-  const { data: tabs } = getAllProjectTab(organizationCode, projectId, {
+  const { data: tabs } = getAllProjectTab(organizationCode, projectSlugOrId, {
     default: () => factoryPagination(projectTabSkeleton, project?.value?.modules?.tabs || 0),
     uniqueKey: 'menu',
     paginationConfig: {
@@ -37,7 +41,8 @@ export const useProjectTabs = (
   )
 
   const { isAdmin } = usePermissions()
-  const { isMember, canCreateTab, canCreateReview } = usePermissionProject(projectId, project)
+  // we add null in projetId, projectSlugOrId is slug or id, so we wait to have project to fetch
+  const { isMember, canCreateTab, canCreateReview } = usePermissionProject(projectSlugOrId, project)
 
   const isMemberOrAdmin = computed(() => isMember.value || isAdmin.value)
 
@@ -57,8 +62,8 @@ export const useProjectTabs = (
       const base = {
         key: `project-${tab.type}`,
         label: tab.$t.title,
-        view: `/projects/${projectId.value}/${tabType}`,
-        altView: `/projects/${projectId.value}/${tabType}/edit`,
+        view: `/projects/${projectSlugOrId.value}/${tabType}`,
+        altView: `/projects/${projectSlugOrId.value}/${tabType}/edit`,
         condition,
         dataTest: `project-${tab.type}`,
         icon: safeProjectIconTab(tab.icon, tab.type),
@@ -70,8 +75,8 @@ export const useProjectTabs = (
       if (['blog', 'text'].includes(tab.type)) {
         return {
           ...base,
-          view: `/projects/${projectId.value}/additionals/${tab.slug || tab.id}`,
-          altView: `/projects/${projectId.value}/additionals/${tab.slug || tab.id}/edit`,
+          view: `/projects/${projectSlugOrId.value}/additionals/${tab.slug || tab.id}`,
+          altView: `/projects/${projectSlugOrId.value}/additionals/${tab.slug || tab.id}/edit`,
           dataTest: `project-additionals-${tab.slug || tab.id}`,
         }
       }
@@ -82,8 +87,8 @@ export const useProjectTabs = (
       {
         key: 'project-summary',
         label: t('project.summary'),
-        view: `/projects/${projectId.value}/summary`,
-        altView: `/projects/${projectId.value}/summary/edit`,
+        view: `/projects/${projectSlugOrId.value}/summary`,
+        altView: `/projects/${projectSlugOrId.value}/summary/edit`,
         condition: true,
         dataTest: 'project-summary',
         icon: 'Home',
@@ -112,8 +117,8 @@ export const useProjectTabs = (
       const base = {
         key: `project-${tab.type}-edit`,
         label: tab.$t.title,
-        view: `/projects/${projectId.value}/${tabType}/edit`,
-        altView: `/projects/${projectId.value}/${tabType}`,
+        view: `/projects/${projectSlugOrId.value}/${tabType}/edit`,
+        altView: `/projects/${projectSlugOrId.value}/${tabType}`,
         condition,
         dataTest: `project-${tab.type}-edit`,
         icon: safeProjectIconTab(tab.icon, tab.type),
@@ -125,8 +130,8 @@ export const useProjectTabs = (
       if (['blog', 'text'].includes(tab.type)) {
         return {
           ...base,
-          view: `/projects/${projectId.value}/additionals/${tab.slug || tab.id}/edit`,
-          altView: `/projects/${projectId.value}/additionals/${tab.slug || tab.id}`,
+          view: `/projects/${projectSlugOrId.value}/additionals/${tab.slug || tab.id}/edit`,
+          altView: `/projects/${projectSlugOrId.value}/additionals/${tab.slug || tab.id}`,
           dataTest: `project-additionals-${tab.slug || tab.id}`,
         }
       }
@@ -137,8 +142,8 @@ export const useProjectTabs = (
       {
         key: 'project-summary',
         label: t('project.summary'),
-        view: `/projects/${projectId.value}/summary/edit`,
-        altView: `/projects/${projectId.value}/summary`,
+        view: `/projects/${projectSlugOrId.value}/summary/edit`,
+        altView: `/projects/${projectSlugOrId.value}/summary`,
         condition: true,
         dataTest: 'project-summary',
         icon: 'Home',
@@ -147,7 +152,7 @@ export const useProjectTabs = (
       {
         key: 'project-settings-tabs',
         label: t('tab.tab.settings'),
-        view: `/projects/${projectId.value}/settings-tabs/edit`,
+        view: `/projects/${projectSlugOrId.value}/settings-tabs/edit`,
         altView: ``,
         condition: canCreateTab.value || isAdmin.value,
         dataTest: 'project-settings-tabs',
@@ -157,8 +162,8 @@ export const useProjectTabs = (
       {
         key: 'project-settings',
         label: t('project.settings'),
-        view: `/projects/${projectId.value}/project-settings/edit`,
-        altView: `/projects/${projectId.value}/summary`,
+        view: `/projects/${projectSlugOrId.value}/project-settings/edit`,
+        altView: `/projects/${projectSlugOrId.value}/summary`,
         condition: true,
         dataTest: 'project-settings',
         icon: 'Cog',
