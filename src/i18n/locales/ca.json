@@ -2821,7 +2821,7 @@
   },
   "pdf": {
     "blog-entries-limited-warning": "Només s' inclouen les primeres entrades del bloc {max} en l' exportació PDF (de {total} total).",
-    "download-pdf": "PDF",
+    "download-pdf": "Descarrega com a PDF",
     "generated-on": "Generat el {date}",
     "confirm": "Voleu generar pdf per aquest {type}?",
     "choices": "Seleccioneu els elements que voleu afegir al PDF."

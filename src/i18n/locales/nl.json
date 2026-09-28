@@ -2821,7 +2821,7 @@
   },
   "pdf": {
     "blog-entries-limited-warning": "Alleen de eerste {max} blogvermeldingen zijn opgenomen in de PDF-export (van {total} totaal).",
-    "download-pdf": "PDF",
+    "download-pdf": "Downloaden als pdf",
     "generated-on": "Gegenereerd op {date}",
     "confirm": "Wilt u pdf genereren voor deze {type} ?",
     "choices": "Selecteer de items die u wilt toevoegen aan de PDF."

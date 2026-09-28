@@ -2821,7 +2821,7 @@
   },
   "pdf": {
     "blog-entries-limited-warning": "PDF-i ekspordi hulka kuuluvad ainult esimesed {max} blogikirjed (kokku {total}).",
-    "download-pdf": "PDF",
+    "download-pdf": "Laadi alla PDF-ina",
     "generated-on": "Geneeritud {date}",
     "confirm": "Kas soovite luua pdf selle {type} jaoks?",
     "choices": "Valige elemendid, mida soovite PDF-i lisada."

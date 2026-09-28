@@ -3212,7 +3212,7 @@
   },
   "pdf": {
     "blog-entries-limited-warning": "Only the first {max} blog entries are included in the PDF export (of {total} total).",
-    "download-pdf": "PDF",
+    "download-pdf": "Download as PDF",
     "confirm": "Do you want to generate pdf for this {type} ?",
     "generated-on": "Generated on {date}",
     "choices": "Select the items you want to add to the PDF."
