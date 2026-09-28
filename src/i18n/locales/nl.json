@@ -3275,13 +3275,39 @@
     "unfollow": "Onvolgbaar"
   },
   "role": {
-    "owners": {
-      "label": "Editor | Editors",
-      "help": "Heeft alle bewerken rechten voor deze groep."
+    "none": {
+      "label": "Aucun",
+      "help": "Gebruiker geen recht.",
+      "notice": "Kan alleen openbare projecten bekijken, maar kan wel reacties achterlaten."
+    },
+    "viewers": {
+      "label": "Viewer | Viewers",
+      "help": "Kijker: Hij heeft geen bewerkingsrechten.",
+      "notice": "Kan projecten met openbare of portaalzichtbaarheid bekijken, maar kan geen nieuwe aanmaken."
+    },
+    "users": {
+      "label": "Gebruiker | Gebruikers",
+      "help": "Gebruiker: een gebruiker maakt deel uit van uw community. Ze kunnen projecten maken, hun projecten bewerken en commentaar schrijven op elk project. Ze zien een privé project als ze deel uitmaken van het team van deze projecten, ze zien alle projecten met de zichtbaarheid van de gemeenschap, en alle openbare projecten.",
+      "notice": "Kan alle projecten met openbare zichtbaarheid of zichtbaarheid via de portal bekijken en nieuwe projecten aanmaken."
     },
     "reviewers": {
       "label": "Reviewer | Reviewers",
-      "help": "Wanneer het project is gemarkeerd als 'ready for review', kan de beoordelaar feedback geven en een project vergrendelen om verdere bewerkingen in het project te voorkomen. Een recensent heeft ook edit rechten."
+      "help": "Wanneer het project is gemarkeerd als 'ready for review', kan de beoordelaar feedback geven en een project vergrendelen om verdere bewerkingen in het project te voorkomen. Een recensent heeft ook edit rechten.",
+      "notice": "Kan projecten bewerken waarvoor de gebruiker als beoordelaar is aangewezen, en een beoordeling schrijven."
+    },
+    "facilitators": {
+      "label": "Vergemakkelijking | Bevorderaars",
+      "help": "Facilitator: Deze rol is weggelegd voor docenten of docenten: Ze zien alle particuliere projecten in het portaal en ze kunnen ze bewerken. Ze hebben ook alle rechten van gebruikers.",
+      "notice": "Kan alle projecten bekijken en bewerken, maar heeft geen toegang tot administratieve functies."
+    },
+    "admins": {
+      "label": "Beheerder | Beheerders",
+      "help": "org admin: Deze rol maakt het mogelijk om uw portal te configureren en gebruikers in uw portal te beheren. Org admins hebben toegang tot het admin menu van het portaal om het portaal op te zetten en de gebruikers ervan te beheren. Zij hebben ook alle rechten van facilitatoren.",
+      "notice": "Kan elk project bekijken en bewerken, en administratieve functies gebruiken."
+    },
+    "owners": {
+      "label": "Editor | Editors",
+      "help": "Heeft alle bewerken rechten voor deze groep."
     },
     "members": {
       "label": "Deelnemer | Deelnemers",
@@ -3303,18 +3329,6 @@
       "label": "Deelnemersgroep | Deelnemersgroep",
       "help": "Verschijnt als groepslid. Hun projecten worden tot de projecten van de groep gerekend."
     },
-    "facilitators": {
-      "label": "Vergemakkelijking | Bevorderaars",
-      "help": "Facilitator: Deze rol is weggelegd voor docenten of docenten: Ze zien alle particuliere projecten in het portaal en ze kunnen ze bewerken. Ze hebben ook alle rechten van gebruikers."
-    },
-    "admins": {
-      "label": "Beheerdersgroep | Beheerdersgroep",
-      "help": "org admin: Deze rol maakt het mogelijk om uw portal te configureren en gebruikers in uw portal te beheren. Org admins hebben toegang tot het admin menu van het portaal om het portaal op te zetten en de gebruikers ervan te beheren. Zij hebben ook alle rechten van facilitatoren."
-    },
-    "users": {
-      "label": "Gebruiker | Gebruikers",
-      "help": "Gebruiker: een gebruiker maakt deel uit van uw community. Ze kunnen projecten maken, hun projecten bewerken en commentaar schrijven op elk project. Ze zien een privé project als ze deel uitmaken van het team van deze projecten, ze zien alle projecten met de zichtbaarheid van de gemeenschap, en alle openbare projecten."
-    },
     "managers": {
       "label": "Uitgever | Uitgevers",
       "help": ""
@@ -3322,15 +3336,7 @@
     "label": "Rol | Rol",
     "edit": "Modifier les roles",
     "select": "De rechten selecteren",
-    "help": "Informatie over rollen.",
-    "viewers": {
-      "label": "Viewer | Viewers",
-      "help": "Kijker: Hij heeft geen bewerkingsrechten."
-    },
-    "none": {
-      "label": "Aucun",
-      "help": "Gebruiker geen recht."
-    }
+    "help": "Informatie over rollen."
   },
   "prompts": {
     "create-prompt": "Prompt aanmaken",

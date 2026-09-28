@@ -1886,13 +1886,39 @@
     "contact-us": "Contact us"
   },
   "role": {
-    "owners": {
-      "label": "Editor | Editors",
-      "help": "Has all edit rights for this group."
+    "none": {
+      "label": "Aucun",
+      "help": "User a no right.",
+      "notice": "Can only view public projects, but can leave comments."
+    },
+    "viewers": {
+      "label": "Viewer | Viewers",
+      "help": "Viewer: He has no edit rights.",
+      "notice": "Can view projects with public or portal visibility, but cannot create new ones."
+    },
+    "users": {
+      "label": "User | Users",
+      "help": "User: a user is part of your community. They can create projects, edit their projects, and write comments on any project. They see a private project when they are part of the team of this projects, they see all projects with the community visibility, and all public projects.",
+      "notice": "Can view all projects with public or portal visibility and can create new projects."
     },
     "reviewers": {
       "label": "Reviewer | Reviewers",
-      "help": "When the project has been marked as 'ready for review', the reviewer can give feedback, and can lock a project to prevent further edits in the project. A reviewer also has edit rights."
+      "help": "When the project has been marked as 'ready for review', the reviewer can give feedback, and can lock a project to prevent further edits in the project. A reviewer also has edit rights.",
+      "notice": "Can edit projects for which they have been designated as an evaluator, and write an evaluation."
+    },
+    "facilitators": {
+      "label": "Facilitator | Facilitators",
+      "help": "Facilitator: This role is for teachers or tutors: They see all private projects in the portal and they can edit them. They also have all the rights of Users.",
+      "notice": "Can view and edit all projects, but does not have access to administrative functions."
+    },
+    "admins": {
+      "label": "Admin | Admins",
+      "help": "Org admin: This role allows to configure your portal and manage users in your portal. Org admins have access to the admin menu of the portal to set up the portal and manage its users. They also have all the rights of Facilitators.",
+      "notice": "Can view and edit any project, and use administrative functions."
+    },
+    "owners": {
+      "label": "Editor | Editors",
+      "help": "Has all edit rights for this group."
     },
     "members": {
       "label": "Participant | Participants",
@@ -1914,29 +1940,9 @@
       "label": "Participant group | Participants group",
       "help": "Appears as group member. Their projects appear among the projects of the group."
     },
-    "facilitators": {
-      "label": "Facilitator | Facilitators",
-      "help": "Facilitator: This role is for teachers or tutors: They see all private projects in the portal and they can edit them. They also have all the rights of Users."
-    },
-    "viewers": {
-      "label": "Viewer | Viewers",
-      "help": "Viewer: He has no edit rights."
-    },
-    "admins": {
-      "label": "Admin group | Admins group",
-      "help": "Org admin: This role allows to configure your portal and manage users in your portal. Org admins have access to the admin menu of the portal to set up the portal and manage its users. They also have all the rights of Facilitators."
-    },
-    "users": {
-      "label": "User | Users",
-      "help": "User: a user is part of your community. They can create projects, edit their projects, and write comments on any project. They see a private project when they are part of the team of this projects, they see all projects with the community visibility, and all public projects."
-    },
     "managers": {
       "label": "Publisher | Publishers",
       "help": ""
-    },
-    "none": {
-      "label": "Aucun",
-      "help": "User a no right."
     },
     "help": "Information about roles.",
     "label": "Role | Roles",

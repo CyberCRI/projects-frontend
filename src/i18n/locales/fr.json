@@ -274,7 +274,7 @@
         "description-limit": "300 caractères maximum.",
         "edit": "Modifier une catégorie",
         "is-reviewable": "Autoriser les évaluations",
-        "limit-publication-to-reviewers": "Limiter la publication aux correcteurs",
+        "limit-publication-to-reviewers": "Limiter la publication aux évaluateurs",
         "preview-categories": "Pré-visualiser",
         "display-projects": "Afficher les projets",
         "hide-projects": "Masquer les projets",
@@ -2204,7 +2204,7 @@
     "background-color": "Cette couleur sera affichée derrière le texte.",
     "category-image": "Image affichée pour illustrer la catégorie. Elle n’est pas nécessaire si vous préférez plutôt afficher une couleur. Largeur minimale : 1024px, Hauteur minimale : 400px",
     "category-delete": "Vous pouvez supprimer une catégorie que si la catégorie ne contient aucun projet. Veuillez transférer tous les projets de la catégorie vers d'autres catégories.",
-    "limit-publication-to-reviewers": "Souhaitez-vous limiter la publication des projets aux correcteurs ?",
+    "limit-publication-to-reviewers": "Souhaitez-vous limiter la publication des projets aux évaluateurs ?",
     "organization-name": "Ce nom servira à identifier votre communauté dans les pages communautés-spécifiques (ex : page de statistiques)",
     "organization-title": "Le titre de votre portail apparaît sur la bannière de la page d'accueil. Aperçu ci-dessus.",
     "organization-email": "Email de contact de votre portail.",
@@ -3275,13 +3275,39 @@
     "unfollow": "Ne pas suivre"
   },
   "role": {
-    "owners": {
-      "label": "Éditeur | Éditeurs",
-      "help": "A tous les droits d'édition pour ce groupe."
+    "none": {
+      "label": "Aucun",
+      "help": "L'utilisateur n'a pas le droit.",
+      "notice": "Ne peut voir que les projets publiques, mais peut laisser des commentaires."
+    },
+    "viewers": {
+      "label": "Affichage | Affichages",
+      "help": "Il n'a aucun droit d'édition.",
+      "notice": "Peut voir les projets ayant la visibilité publique ou portail, mais pas en créer de nouveau."
+    },
+    "users": {
+      "label": "Utilisateur | Utilisateur",
+      "help": "Utilisateur : un utilisateur fait partie de votre communauté. Ils peuvent créer des projets, modifier leurs projets et écrire des commentaires sur tout projet. Ils voient un projet privé quand ils font partie de l'équipe de ces projets, ils voient tous les projets avec la visibilité communautaire, et tous les projets publics.",
+      "notice": "Peut voir tous les projets ayant la visibilité publique ou portail et peut créer de nouveaux projets."
     },
     "reviewers": {
       "label": "Évaluateur | Les évaluateurs",
-      "help": "Lorsque le projet a été marqué « prêt à faire l'objet d'un examen », l'évaluateur peut donner son avis et verrouiller un projet afin d'éviter d'autres modifications dans le projet. Un évaluateur a également des droits de modification."
+      "help": "Lorsque le projet a été marqué « prêt à faire l'objet d'un examen », l'évaluateur peut donner son avis et verrouiller un projet afin d'éviter d'autres modifications dans le projet. Un évaluateur a également des droits de modification.",
+      "notice": "Peut éditer les projets dont il a été designé évaluateur, et rédiger une évaluation."
+    },
+    "facilitators": {
+      "label": "Facilitateur | Facilitateurs",
+      "help": "Facilitateur : Ce rôle s'adresse aux enseignants ou aux tuteurs: Ils voient tous les projets privés dans le portail et ils peuvent les modifier. Ils ont également tous les droits des Utilisateurs.",
+      "notice": "Peut voir et éditer tous les projets, mais n'a pas accès aux fonctions admnistratives."
+    },
+    "admins": {
+      "label": "Admin | Admins",
+      "help": "Org administrateur: Ce rôle permet de configurer votre portail et de gérer les utilisateurs de votre portail. Org admins ont accès au menu admin du portail pour configurer le portail et gérer ses utilisateurs. Ils ont également tous les droits des facilitateurs.",
+      "notice": "Peut voir et modifier n'importe quel projet, et utiliser les fonctions administratives."
+    },
+    "owners": {
+      "label": "Éditeur | Éditeurs",
+      "help": "A tous les droits d'édition pour ce groupe."
     },
     "members": {
       "label": "Participant | Participants",
@@ -3303,18 +3329,6 @@
       "label": "Groupe de participants | Groupe des participants",
       "help": "Il apparaît comme membre du groupe. Leurs projets figurent parmi les projets du groupe."
     },
-    "facilitators": {
-      "label": "Facilitateur | Facilitateurs",
-      "help": "Facilitateur : Ce rôle s'adresse aux enseignants ou aux tuteurs: Ils voient tous les projets privés dans le portail et ils peuvent les modifier. Ils ont également tous les droits des Utilisateurs."
-    },
-    "admins": {
-      "label": "Groupe administratif | Groupe des administrateurs",
-      "help": "Org administrateur: Ce rôle permet de configurer votre portail et de gérer les utilisateurs de votre portail. Org admins ont accès au menu admin du portail pour configurer le portail et gérer ses utilisateurs. Ils ont également tous les droits des facilitateurs."
-    },
-    "users": {
-      "label": "Utilisateur | Utilisateur",
-      "help": "Utilisateur : un utilisateur fait partie de votre communauté. Ils peuvent créer des projets, modifier leurs projets et écrire des commentaires sur tout projet. Ils voient un projet privé quand ils font partie de l'équipe de ces projets, ils voient tous les projets avec la visibilité communautaire, et tous les projets publics."
-    },
     "managers": {
       "label": "Éditeur | Éditeurs",
       "help": ""
@@ -3322,15 +3336,7 @@
     "label": "Rôle | Rôles",
     "edit": "Modifier les rôles",
     "select": "Sélectionnez le(s) rôle(s)",
-    "help": "Informations sur les rôles.",
-    "viewers": {
-      "label": "Affichage | Affichages",
-      "help": "Il n'a aucun droit d'édition."
-    },
-    "none": {
-      "label": "Aucun",
-      "help": "L'utilisateur n'a pas le droit."
-    }
+    "help": "Informations sur les rôles."
   },
   "prompts": {
     "create-prompt": "Créer une invite",
