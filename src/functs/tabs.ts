@@ -66,5 +66,13 @@ export const sanitizeTabs = (tabs: TranslatedProjectTab[], modules: ProjectModel
   Object.keys(PROJECT_TABS).forEach((type: ProjectTabType) => addTab(type))
   customTabs.push(...tabs)
 
-  return sortBy(customTabs, ['order'])
+  return sortBy(customTabs, [
+    'order',
+    (tab) => {
+      if (tab.type !== 'text' && tab.type !== 'blog') {
+        return DEFAULT_PROJECT_TABS_ORDER.indexOf(tab.type)
+      }
+      return tab.$t.title
+    },
+  ])
 }

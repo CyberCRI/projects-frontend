@@ -2,7 +2,7 @@
 import IconImage from '~/components/base/media/IconImage.vue'
 import type { IconImageChoice } from '~/functs/IconImage'
 import { onClient } from '~/composables/onClient'
-import { debounce } from 'es-toolkit'
+import { throttle } from 'es-toolkit'
 
 export type GroupOption = {
   iconName?: IconImageChoice
@@ -99,13 +99,17 @@ const setSliderStyle = onClient(() => {
   }
 })
 
-const debounceSetSliderStyle = debounce(setSliderStyle, 100)
+const debounceSetSliderStyle = throttle(setSliderStyle, 100)
 onUnmounted(() => {
   debounceSetSliderStyle.cancel()
 })
 
 onResize(debounceSetSliderStyle, { immediate: true })
-watch(model, () => setSliderStyle(), { immediate: true })
+watch(
+  () => model.value,
+  () => debounceSetSliderStyle(),
+  { immediate: true }
+)
 </script>
 
 <template>

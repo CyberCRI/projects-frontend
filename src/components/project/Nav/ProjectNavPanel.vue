@@ -247,9 +247,13 @@ const onDuplicate = () => {
     .then((project) => {
       // update projects title (to add copy)
       // TODO add this in backend ?
-      return patchProject(project.id, {
-        title: `${project.title} ${t('project.copy')}`,
-      })
+      return patchProject(
+        project.id,
+        {
+          title: `${project.title} ${t('project.copy')}`,
+        },
+        { query: { modules: 'none' } }
+      )
     })
     .then((project) => {
       return usersStore.refreshUser().then(() => {

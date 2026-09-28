@@ -1,8 +1,8 @@
 import type { ProjectTabForm, ProjectTabItemForm } from 'shared-projects-frontend/models'
-import { DEFAULT_ICONS_TABS, NULL_CONTENT, PROJECT_TABS } from '~/functs/constants'
+import { DEFAULT_ICONS_TABS, NULL_CONTENT } from '~/functs/constants'
 import { helpers, required } from '@vuelidate/validators'
+import type { PROJECT_TABS } from '~/functs/constants'
 import { requiredContent } from '~/form/base'
-import { mapValues } from 'es-toolkit'
 import { v4 as uuidv4 } from 'uuid'
 
 export const defaultProjectTabForm = (): ProjectTabForm => {
@@ -63,10 +63,12 @@ export const useProjectTabItemForm = (options = {}) => {
   })
 }
 
-type ProjectTabSettingsForm = Record<keyof typeof PROJECT_TABS, boolean>
+type ProjectTabSettingsForm = {
+  [key in keyof typeof PROJECT_TABS]?: boolean
+}
 
 export const defaultProjectTabSettings = (): ProjectTabSettingsForm => {
-  return mapValues(PROJECT_TABS, () => true)
+  return {}
 }
 
 export const userProjectTabSettings = (options = {}) => {

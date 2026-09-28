@@ -104,7 +104,7 @@ const onSubmit = () => {
     description: form.value.description,
   }
 
-  patchProject(props.project.id, body)
+  patchProject(props.project.id, body, { query: { modules: 'none' } })
     .then(() => {
       // TODO notify + analytics
       toaster.pushSuccess(t('toasts.description-update.success'))

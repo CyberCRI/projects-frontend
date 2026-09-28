@@ -39,7 +39,7 @@ const {
   isSkeleton,
 } = getAllProjectTab(
   organizationCode,
-  computed(() => props.project.id),
+  computed(() => props.project.slug || props.project.id),
   {
     paginationConfig: {
       limit: 999,
@@ -66,18 +66,16 @@ const defaultLocaleForm = () => {
   allTabs.value.forEach((tab) => {
     localForm[tab.id || tab.type] = tab.show_tab
   })
-  console.log('hi reset', localForm)
+
   return localForm
 }
 
 const { form, reset } = userProjectTabSettings()
 
 watch(
-  () => [allTabs.value, isSkeleton.value],
+  () => [allTabs.value],
   () => {
-    if (!isSkeleton.value) {
-      reset(defaultLocaleForm())
-    }
+    reset(defaultLocaleForm())
   },
   { immediate: true, deep: true }
 )
@@ -126,17 +124,27 @@ const fields = computed(() => {
 
 const onUpdateOrCreate = (modelKey: ProjectTabType | ProjectTab['id'], form: ProjectTabForm) => {
   if (typeof modelKey === 'string') {
-    return createProjectTab(props.project.id, {
-      ...defaultTab(modelKey),
-      order: 0,
-      ...form,
-    })
+    return createProjectTab(
+      props.project.id,
+      {
+        ...defaultTab(modelKey),
+        order: 0,
+        ...form,
+      },
+      {
+        query: { modules: 'none' },
+      }
+    )
   }
 
-  return updateProjectTab(props.project.id, modelKey, form)
+  return updateProjectTab(props.project.id, modelKey, form, {
+    query: {
+      modules: 'none',
+    },
+  })
 }
 
-const onSubmit = async (modelKey: ProjectTabType | ProjectTab['id'], value: boolean) => {
+const onVisibilityChange = async (modelKey: ProjectTabType | ProjectTab['id'], value: boolean) => {
   form.value[modelKey] = value
   const body: ProjectTabForm = {
     show_tab: value,
@@ -241,7 +249,7 @@ const onDeleteConfirm = () => {
               :class="{
                 asyncing,
               }"
-              @update:model-value="onSubmit(element.modelKey, $event)"
+              @update:model-value="onVisibilityChange(element.modelKey, $event)"
             >
               <template #label-left>
                 <IconImage class="icon skeletons-background" name="DotsGrid" />
