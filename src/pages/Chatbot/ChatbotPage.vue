@@ -169,7 +169,7 @@ watch(conversationData, (cData) => {
 const hasUserContext = computed(() => !!agent.value?.useProfileData)
 const hasPageContext = ref(false)
 const contextMessageRole = 'retriever'
-const { contextMessages, filterContextMesssages } = useChatbotContext({
+const { contextMessages, filterContextMesssages } = await useChatbotContext({
   hasUserContext,
   hasPageContext,
   contextMessageRole,
