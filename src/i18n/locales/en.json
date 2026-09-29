@@ -233,7 +233,8 @@
       "agents": "Agents",
       "conversations": "Conversations",
       "checkpoints": "Checkpoints",
-      "side-assistant": "Side assistant"
+      "side-assistant": "Side assistant",
+      "assistants": "Assistants"
     },
     "page-title": "Admin",
     "portal": {

@@ -226,7 +226,8 @@
       "agents": "Agenten",
       "conversations": "Gesprekken",
       "checkpoints": "Checkpoints",
-      "side-assistant": "Zij-assistent"
+      "side-assistant": "Zij-assistent",
+      "assistants": "Assistenten"
     },
     "page-title": "Beheerder",
     "portal": {

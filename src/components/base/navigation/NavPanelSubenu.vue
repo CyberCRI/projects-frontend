@@ -47,8 +47,8 @@ export type MenuEntry = {
   isEditing?: boolean
   condition: boolean
   label: string
-  icon: IconImageChoice
-  actionIcon?: IconImageChoice | IconTabImageChoice
+  icon: IconImageChoice & IconTabImageChoice
+  actionIcon?: IconImageChoice
   key: string
   view?: RouteLocationRaw
   altView?: RouteLocationRaw

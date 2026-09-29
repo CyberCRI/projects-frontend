@@ -226,7 +226,8 @@
       "agents": "Agendid",
       "conversations": "Vestlused",
       "checkpoints": "Checkpoints",
-      "side-assistant": "Külgne assistent"
+      "side-assistant": "Külgne assistent",
+      "assistants": "Assistentid"
     },
     "page-title": "Admin",
     "portal": {
