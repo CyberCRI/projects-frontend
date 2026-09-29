@@ -507,7 +507,7 @@ export default {
     },
 
     notificationCount() {
-      return this.usersStore.user.modules.notifications
+      return this.usersStore.notificationsCount
     },
     organisation() {
       return this.organizationsStore.current

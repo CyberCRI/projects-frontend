@@ -49,7 +49,7 @@ const organizationCode = useOrganizationCode()
 const userStore = useUsersStore()
 const userId = computed(() => userStore.id)
 
-const limitSkeletons = computed(() => maxSkeleton(userStore.user.modules.notifications, 10))
+const limitSkeletons = computed(() => maxSkeleton(userStore.notificationsCount, 10))
 
 const {
   status,
