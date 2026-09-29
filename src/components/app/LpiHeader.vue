@@ -300,7 +300,7 @@ export default {
           to: {
             name: 'ProfileUser',
             params: {
-              userIdOrSlug: this.usersStore.userFromApi?.slug || this.usersStore.userFromApi?.id,
+              userIdOrSlug: this.usersStore.slugOrId,
             },
           },
           leftIcon: 'Account',
@@ -312,7 +312,7 @@ export default {
           to: {
             name: 'ProfileProjects',
             params: {
-              userIdOrSlug: this.usersStore.userFromApi?.slug || this.usersStore.userFromApi?.id,
+              userIdOrSlug: this.usersStore.slugOrId,
             },
           },
           leftIcon: 'Briefcase',
@@ -507,7 +507,7 @@ export default {
     },
 
     notificationCount() {
-      return this.usersStore.user.modules.notifications
+      return this.usersStore.notificationsCount
     },
     organisation() {
       return this.organizationsStore.current
