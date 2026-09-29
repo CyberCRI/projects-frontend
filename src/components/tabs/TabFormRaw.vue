@@ -12,6 +12,7 @@ import { DEFAULT_ICONS_TABS } from '~/functs/constants'
 import { safeProjectIconTab } from '~/functs/projects'
 import type { ErrorObject } from '@vuelidate/core'
 import { ICONS_TABS } from '~/functs/IconImage'
+import { isCustomTab } from '~/functs/tabs'
 
 withDefaults(
   defineProps<{
@@ -70,7 +71,7 @@ const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
   <div class="list-container">
     <!-- hide choices type if already created (you can't change type after create it) -->
     <Field
-      v-if="(!form.id || showType) && ['text', 'blog'].includes(form.type)"
+      v-if="(!form.id || showType) && !isCustomTab(form.type)"
       :label="$t('tab.form.type.label')"
       required
       :data-field-target="formFieldTargetIds?.type"

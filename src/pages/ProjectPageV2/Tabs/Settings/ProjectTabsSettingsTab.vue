@@ -13,10 +13,10 @@ import { defaultProjectTabSettings, userProjectTabSettings } from '~/form/projec
 import GroupButtonField from '~/components/base/form/GroupButtonField.vue'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
+import { defaultTab, isCustomTab, sanitizeTabs } from '~/functs/tabs'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import type { IconImageChoice } from '~/functs/IconImage'
-import { defaultTab, sanitizeTabs } from '~/functs/tabs'
 import { debounce, isEqual } from 'es-toolkit'
 import { Sortable } from 'sortablejs-vue3'
 import { deepToRaw } from '~/functs/utils'
@@ -265,7 +265,7 @@ const onDeleteConfirm = () => {
                 <ContextActionMenuInline
                   class="context-actions"
                   show-empty
-                  :can-delete="['text', 'blog'].includes(element.tab.type) && canDeleteTab"
+                  :can-delete="isCustomTab(element.tab.type) && canDeleteTab"
                   :can-edit="canDeleteEdit"
                   @delete="onDelete(element.tab)"
                   @edit="onEdit(element.tab)"

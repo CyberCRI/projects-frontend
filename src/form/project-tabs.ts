@@ -14,6 +14,7 @@ export const defaultProjectTabForm = (): ProjectTabForm => {
     images_ids: [],
     show_preview: true,
     show_tab: true,
+    order: 0,
     uuid: uuidv4(),
   }
 }

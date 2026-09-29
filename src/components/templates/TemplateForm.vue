@@ -147,14 +147,11 @@
       </Field>
     </TemplateFormSection>
 
-    {{ JSON.stringify(formFieldTargetIds) }}
-
     <template v-for="(tab, idx) in form.tabs || []">
       <TemplateFormSection
         v-if="tab"
         :key="tab.id || tab.uuid"
-        can-delete
-        :opened="!tab.id"
+        :can-delete="!isCustomTab(tab.type)"
         :title="tab.title"
         :errors="!!errors.tabs[0]?.$message?.[idx]?.length"
         :icon="tab.icon"
@@ -167,17 +164,19 @@
           :data-field-target="formFieldTargetIds.tabs[idx]"
           @update:model-value="updateTab(idx, $event)"
         />
-        <br />
-        <h2 class="title-template">
-          {{ $t('tab.form.template.title') }}
-        </h2>
-        <TabItemFormRaw
-          :model-value="{
-            title: form.tabs[idx].title_item,
-            content: form.tabs[idx].content_item,
-          }"
-          @update:model-value="onUpdateTemplate(idx, $event)"
-        />
+        <template v-if="!isCustomTab(form.tabs[idx].type)">
+          <br />
+          <h2 class="title-template">
+            {{ $t('tab.form.template.title') }}
+          </h2>
+          <TabItemFormRaw
+            :model-value="{
+              title: form.tabs[idx].title_item,
+              content: form.tabs[idx].content_item,
+            }"
+            @update:model-value="onUpdateTemplate(idx, $event)"
+          />
+        </template>
       </TemplateFormSection>
     </template>
 
@@ -211,6 +210,7 @@ import type {
 import { defaultTemplateForm, defaultTemplateTabForm, useTemplateForm } from '~/form/template'
 import TemplateFormSection from '~/components/templates/TemplateFormSection.vue'
 import TabItemFormRaw from '~/components/tabs/TabItemFormRaw.vue'
+import { isCustomTab, sanitizeTabsTemplate } from '~/functs/tabs'
 import SwitchInput from '~/components/base/form/SwitchInput.vue'
 import type { PropsDefinitions } from '~/composables/tiptap'
 import TabFormRaw from '~/components/tabs/TabFormRaw.vue'
@@ -238,11 +238,15 @@ const { stateModals, openModals, closeModals } = useModals({ category: false })
 
 // form utils
 const localeDefaultForm = () => {
-  return {
+  const localForm = {
     ...defaultTemplateForm(),
     ...(props.template || {}),
     tabs: [...(props?.template?.tabs || [])],
   }
+
+  localForm.tabs = sanitizeTabsTemplate(localForm.tabs)
+
+  return localForm
 }
 const model = defineModel<TemplateForm>()
 const { form, errors, isValid, validate, cleanedData, reset, formFieldTargetIds } = useTemplateForm(

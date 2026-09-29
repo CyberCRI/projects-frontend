@@ -1,18 +1,28 @@
+import type {
+  ProjectModel,
+  ProjectTab,
+  ProjectTabType,
+  TemplateTabForm,
+  TranslatedProjectTab,
+} from 'shared-projects-frontend/models'
 import {
   DEFAULT_PROJECT_TABS_ORDER,
   PROJECT_MODULE_ICON,
   PROJECT_MODULE_TITLE,
   PROJECT_TABS,
 } from '~/functs/constants'
-import type {
-  ProjectModel,
-  ProjectTab,
-  ProjectTabType,
-  TranslatedProjectTab,
-} from 'shared-projects-frontend/models'
 import { translateProjectTab } from 'shared-projects-frontend/translate'
 import { defaultProjectTabForm } from '~/form/project-tabs'
-import { sortBy } from 'es-toolkit'
+import { defaultTemplateTabForm } from '~/form/template'
+import { omit, sortBy } from 'es-toolkit'
+
+// check if tabtyp is a custom tab (not projectTab "fixed")
+export const isCustomTab = (type: ProjectTabType) => {
+  if (type === 'text' || type === 'blog') {
+    return false
+  }
+  return true
+}
 
 export const defaultTab = (key: ProjectTab['type']) => {
   const { t } = useNuxtI18n()
@@ -26,7 +36,7 @@ export const defaultTab = (key: ProjectTab['type']) => {
       show_tab: true,
       description: '',
       id: null,
-      order: -100 - DEFAULT_PROJECT_TABS_ORDER.findIndex((type) => type === key),
+      order: DEFAULT_PROJECT_TABS_ORDER.findIndex((type) => type === key),
       slug: '',
       uuid: null,
       modules: {
@@ -37,10 +47,10 @@ export const defaultTab = (key: ProjectTab['type']) => {
   )
 }
 
-export const getTab = (
-  tabs: TranslatedProjectTab[],
+export const getTab = <T extends { id?: ProjectTab['id']; type?: ProjectTab['type'] }>(
+  tabs: T[],
   key: ProjectTab['id'] | ProjectTab['type']
-): TranslatedProjectTab => {
+): T => {
   // key is 'id'
   if (typeof key === 'number') {
     return tabs.find((el) => el.id === key)
@@ -69,10 +79,38 @@ export const sanitizeTabs = (tabs: TranslatedProjectTab[], modules: ProjectModel
   return sortBy(customTabs, [
     'order',
     (tab) => {
-      if (tab.type !== 'text' && tab.type !== 'blog') {
+      if (isCustomTab(tab.type)) {
+        // @ts-expect-error ignore tab.type is filtered in isCustomTab
         return DEFAULT_PROJECT_TABS_ORDER.indexOf(tab.type)
       }
       return tab.$t.title
+    },
+  ])
+}
+
+export const sanitizeTabsTemplate = (tabs: TemplateTabForm[]) => {
+  const customTabs: TemplateTabForm[] = []
+
+  const addTab = (type: ProjectTabType) => {
+    if (!getTab(tabs, type)) {
+      customTabs.push({
+        ...defaultTemplateTabForm(),
+        ...omit(defaultTab(type), ['$t', 'project']),
+      })
+    }
+  }
+
+  Object.keys(PROJECT_TABS).forEach((type: ProjectTabType) => addTab(type))
+  customTabs.push(...tabs)
+
+  return sortBy(customTabs, [
+    'order',
+    (tab) => {
+      if (isCustomTab(tab.type)) {
+        // @ts-expect-error ignore tab.type is filtered in isCustomTab
+        return DEFAULT_PROJECT_TABS_ORDER.indexOf(tab.type)
+      }
+      return tab.title
     },
   ])
 }

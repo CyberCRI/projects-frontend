@@ -9,8 +9,8 @@ import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
+import { isCustomTab, sanitizeTabs } from '~/functs/tabs'
 import { safeProjectIconTab } from '~/functs/projects'
-import { sanitizeTabs } from '~/functs/tabs'
 
 export const useProjectTabs = (
   projectSlugOrId: ComputedRef<ProjectSlugOrId>, // NOT slug (permisions strings se only id)
@@ -72,7 +72,7 @@ export const useProjectTabs = (
         },
       }
 
-      if (['blog', 'text'].includes(tab.type)) {
+      if (!isCustomTab(tab.type)) {
         return {
           ...base,
           view: `/projects/${projectSlugOrId.value}/additionals/${tab.slug || tab.id}`,
@@ -127,7 +127,7 @@ export const useProjectTabs = (
         },
       }
 
-      if (['blog', 'text'].includes(tab.type)) {
+      if (isCustomTab(tab.type)) {
         return {
           ...base,
           view: `/projects/${projectSlugOrId.value}/additionals/${tab.slug || tab.id}/edit`,
