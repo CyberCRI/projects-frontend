@@ -3275,13 +3275,39 @@
     "unfollow": "Unfollow"
   },
   "role": {
-    "owners": {
-      "label": "Toimetaja | Toimetajad",
-      "help": "Sellel grupil on kõik redigeerimisõigused."
+    "none": {
+      "label": "Aucuni",
+      "help": "Kasuta õigust.",
+      "notice": "Saab vaadata ainult avalikke projekte, kuid saab jätta kommentaare."
+    },
+    "viewers": {
+      "label": "Vaataja | Vaatajad",
+      "help": "Vaataja: tal ei ole redigeerimisõigusi.",
+      "notice": "Saab vaadata avaliku või portaali nähtavusega projekte, kuid ei saa luua uusi."
+    },
+    "users": {
+      "label": "Kasutaja | Kasutajad",
+      "help": "Kasutaja: kasutaja on osa teie kogukonnast. Nad saavad luua projekte, redigeerida oma projekte ja kirjutada kommentaare mis tahes projekti kohta. Nad näevad eraprojekti, kui nad on osa selle projekti meeskonnast, nad näevad kõiki projekte kogukonna nähtavusega ja kõiki avalikke projekte.",
+      "notice": "Saab vaadata kõiki avaliku või portaali nähtavusega projekte ning luua uusi projekte."
     },
     "reviewers": {
       "label": "Hindaja | Hindajad",
-      "help": "Kui projekt on märgitud kui \"läbivaatamiseks valmis\", saab hindaja anda tagasisidet ja lukustada projekti, et vältida projekti edasisi muudatusi. Retsensendil on ka redigeerimisõigused."
+      "help": "Kui projekt on märgitud kui \"läbivaatamiseks valmis\", saab hindaja anda tagasisidet ja lukustada projekti, et vältida projekti edasisi muudatusi. Retsensendil on ka redigeerimisõigused.",
+      "notice": "Saab muuta projekte, mille puhul on määratud hindajaks, ja koostada hinnangu; samuti saab luua uusi projekte."
+    },
+    "facilitators": {
+      "label": "Vahendaja | Vahendajad",
+      "help": "Korraldaja: See roll on õpetajatele või juhendajatele: Nad näevad portaalis kõiki eraprojekte ja saavad neid redigeerida. Neil on ka kõik kasutajate õigused.",
+      "notice": "Saab vaadata ja muuta kõiki projekte, kuid tal puudub juurdepääs haldusfunktsioonidele."
+    },
+    "admins": {
+      "label": "Administraator | Administraatorid",
+      "help": "Org admin: See funktsioon võimaldab seadistada oma portaali ja hallata kasutajaid oma portaalis. Orgi administraatoritel on portaali seadistamiseks ja selle kasutajate haldamiseks juurdepääs portaali administraatori menüüle. Neil on ka kõik vahendajate õigused.",
+      "notice": "Saab vaadata ja muuta mis tahes projekti ning kasutada haldusfunktsioone."
+    },
+    "owners": {
+      "label": "Toimetaja | Toimetajad",
+      "help": "Sellel grupil on kõik redigeerimisõigused."
     },
     "members": {
       "label": "Osaleja | Osalejad",
@@ -3303,18 +3329,6 @@
       "label": "Osalejate rühm | Osalejate rühm",
       "help": "Ilmub grupi liikmena. Nende projektid kuuluvad rühma projektide hulka."
     },
-    "facilitators": {
-      "label": "Vahendaja | Vahendajad",
-      "help": "Korraldaja: See roll on õpetajatele või juhendajatele: Nad näevad portaalis kõiki eraprojekte ja saavad neid redigeerida. Neil on ka kõik kasutajate õigused."
-    },
-    "admins": {
-      "label": "Admin grupp | Haldusrühm",
-      "help": "Org admin: See funktsioon võimaldab seadistada oma portaali ja hallata kasutajaid oma portaalis. Orgi administraatoritel on portaali seadistamiseks ja selle kasutajate haldamiseks juurdepääs portaali administraatori menüüle. Neil on ka kõik vahendajate õigused."
-    },
-    "users": {
-      "label": "Kasutaja | Kasutajad",
-      "help": "Kasutaja: kasutaja on osa teie kogukonnast. Nad saavad luua projekte, redigeerida oma projekte ja kirjutada kommentaare mis tahes projekti kohta. Nad näevad eraprojekti, kui nad on osa selle projekti meeskonnast, nad näevad kõiki projekte kogukonna nähtavusega ja kõiki avalikke projekte."
-    },
     "managers": {
       "label": "Kirjastaja | Kirjastus",
       "help": ""
@@ -3322,15 +3336,7 @@
     "label": "Roll | Rollid",
     "edit": "Modifier les rôles",
     "select": "Õiguste valimine",
-    "help": "Teave rollide kohta.",
-    "viewers": {
-      "label": "Vaataja | Vaatajad",
-      "help": "Vaataja: tal ei ole redigeerimisõigusi."
-    },
-    "none": {
-      "label": "Aucuni",
-      "help": "Kasuta õigust."
-    }
+    "help": "Teave rollide kohta."
   },
   "prompts": {
     "create-prompt": "Loo käsk",

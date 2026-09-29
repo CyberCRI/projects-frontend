@@ -3275,13 +3275,39 @@
     "unfollow": "Unfollow"
   },
   "role": {
-    "owners": {
-      "label": "Editor | Editores",
-      "help": "Tiene todos los derechos de edición para este grupo."
+    "none": {
+      "label": "Aucun",
+      "help": "Usuario no derecho.",
+      "notice": "Solo puede ver los proyectos públicos, pero puede dejar comentarios."
+    },
+    "viewers": {
+      "label": "Viewer | Viewers",
+      "help": "Viewer: No tiene derechos de edición.",
+      "notice": "Puede ver los proyectos con visibilidad pública o de portal, pero no crear otros nuevos."
+    },
+    "users": {
+      "label": "Usuario | Usuarios",
+      "help": "Usuario: un usuario es parte de su comunidad. Pueden crear proyectos, editar sus proyectos y escribir comentarios sobre cualquier proyecto. Ellos ven un proyecto privado cuando son parte del equipo de estos proyectos, ven todos los proyectos con visibilidad comunitaria, y todos los proyectos públicos.",
+      "notice": "Puede ver todos los proyectos con visibilidad pública o de portal y puede crear nuevos proyectos."
     },
     "reviewers": {
       "label": "Reviewer | Revisores",
-      "help": "Cuando el proyecto ha sido marcado como 'listo para revisión', el revisor puede dar retroalimentación, y puede bloquear un proyecto para evitar nuevas ediciones en el proyecto. Un revisor también tiene derechos de edición."
+      "help": "Cuando el proyecto ha sido marcado como 'listo para revisión', el revisor puede dar retroalimentación, y puede bloquear un proyecto para evitar nuevas ediciones en el proyecto. Un revisor también tiene derechos de edición.",
+      "notice": "Puede editar los proyectos para los que ha sido designado evaluador y redactar una evaluación."
+    },
+    "facilitators": {
+      "label": "Facilitador | Facilitadores",
+      "help": "Facilitador: Este papel es para profesores o tutores: Ellos ven todos los proyectos privados en el portal y pueden editarlos. También tienen todos los derechos de los Usuarios.",
+      "notice": "Puede ver y editar todos los proyectos, pero no tiene acceso a las funciones administrativas."
+    },
+    "admins": {
+      "label": "Administrador | Administradores",
+      "help": "Org admin: Este papel permite configurar su portal y gestionar usuarios en su portal. Los administradores de org tienen acceso al menú de administración del portal para configurar el portal y administrar sus usuarios. También tienen todos los derechos de los facilitadores.",
+      "notice": "Puede ver y modificar cualquier proyecto, y utilizar las funciones administrativas."
+    },
+    "owners": {
+      "label": "Editor | Editores",
+      "help": "Tiene todos los derechos de edición para este grupo."
     },
     "members": {
       "label": "Participante | Participantes",
@@ -3303,18 +3329,6 @@
       "label": "Grupo participante | Grupo de participantes",
       "help": "Parece miembro del grupo. Sus proyectos aparecen entre los proyectos del grupo."
     },
-    "facilitators": {
-      "label": "Facilitador | Facilitadores",
-      "help": "Facilitador: Este papel es para profesores o tutores: Ellos ven todos los proyectos privados en el portal y pueden editarlos. También tienen todos los derechos de los Usuarios."
-    },
-    "admins": {
-      "label": "Grupo admin | Grupo de administradores",
-      "help": "Org admin: Este papel permite configurar su portal y gestionar usuarios en su portal. Los administradores de org tienen acceso al menú de administración del portal para configurar el portal y administrar sus usuarios. También tienen todos los derechos de los facilitadores."
-    },
-    "users": {
-      "label": "Usuario | Usuarios",
-      "help": "Usuario: un usuario es parte de su comunidad. Pueden crear proyectos, editar sus proyectos y escribir comentarios sobre cualquier proyecto. Ellos ven un proyecto privado cuando son parte del equipo de estos proyectos, ven todos los proyectos con visibilidad comunitaria, y todos los proyectos públicos."
-    },
     "managers": {
       "label": "Editorial | Editores",
       "help": ""
@@ -3322,15 +3336,7 @@
     "label": "Función | Funciones",
     "edit": "Modifier les rôles",
     "select": "Seleccione los derechos",
-    "help": "Información sobre roles.",
-    "viewers": {
-      "label": "Viewer | Viewers",
-      "help": "Viewer: No tiene derechos de edición."
-    },
-    "none": {
-      "label": "Aucun",
-      "help": "Usuario no derecho."
-    }
+    "help": "Información sobre roles."
   },
   "prompts": {
     "create-prompt": "Crear indicación",
