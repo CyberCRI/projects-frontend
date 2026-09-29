@@ -100,7 +100,7 @@ const useUsersStore = defineStore('users', () => {
   })
 
   const isConnected = computed(
-    (): boolean => userFromToken.value && userFromApi.value && !isNil(user.value?.id)
+    (): boolean => !!(userFromToken.value && userFromApi.value && !isNil(user.value?.id))
   )
 
   const slugOrId = computed<UserSlugOrId | undefined>(() => user.value?.slug || user.value?.id)
