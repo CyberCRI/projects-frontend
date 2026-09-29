@@ -18,6 +18,7 @@ const props = defineProps<{
   project: TranslatedProject
   tab?: TranslatedProjectTab | ProjectTab
   isOpened?: boolean
+  asyncing?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -29,7 +30,7 @@ const toaster = useToaster()
 const { t } = useNuxtI18n()
 const router = useRouter()
 
-const asyncing = ref(false)
+const localAsyncing = ref(false)
 const gobals = useGlobals()
 
 const defaultLocalForm = () => {
@@ -86,7 +87,7 @@ const onSubmit = async (form: ProjectTabForm) => {
     return
   }
 
-  asyncing.value = true
+  localAsyncing.value = true
   createOrUpdate(form)
     .then(() => {
       if (isNil(form.id)) {
@@ -115,7 +116,7 @@ const onSubmit = async (form: ProjectTabForm) => {
       }
     })
     .then(() => {
-      asyncing.value = false
+      localAsyncing.value = false
     })
 }
 
@@ -153,7 +154,7 @@ watchEffect(() => {
 
     <TabForm
       v-model="formTab"
-      :asyncing="asyncing"
+      :asyncing="asyncing || localAsyncing"
       :project="project"
       :tab="tab"
       @submit="onSubmit"

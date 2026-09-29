@@ -7,6 +7,7 @@ import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { flushPromises } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
+import { defaultTab } from '~/functs/tabs'
 
 describe('ProjectAnnouncementsTab.vue', () => {
   it('should render component', async () => {
@@ -18,7 +19,7 @@ describe('ProjectAnnouncementsTab.vue', () => {
       })
     })
 
-    const props = { project }
+    const props = { project, tab: defaultTab('announcements') }
 
     const wrapper = await lpiMountSuspended(ProjectAnnouncementsTab, {
       props,

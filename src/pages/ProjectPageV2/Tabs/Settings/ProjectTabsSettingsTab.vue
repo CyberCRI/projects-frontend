@@ -19,6 +19,7 @@ import type { IconImageChoice } from '~/functs/IconImage'
 import { defaultTab, sanitizeTabs } from '~/functs/tabs'
 import { Sortable } from 'sortablejs-vue3'
 import { deepToRaw } from '~/functs/utils'
+import { debounce } from 'es-toolkit'
 import analytics from '~/analytics'
 
 const props = defineProps<{
@@ -73,10 +74,12 @@ const defaultLocaleForm = () => {
 const { form, reset } = userProjectTabSettings()
 
 watch(
-  () => [allTabs.value],
-  () => {
-    reset(defaultLocaleForm())
-  },
+  () => [allTabs.value, isSkeleton.value],
+  debounce(() => {
+    if (!isSkeleton.value) {
+      reset(defaultLocaleForm())
+    }
+  }, 300),
   { immediate: true, deep: true }
 )
 
@@ -91,13 +94,13 @@ const fullRefresh = () => {
 }
 
 const selectTab = ref<ProjectTab>(null)
+const asyncing = ref(false)
 const clean = () => {
   selectTab.value = null
   asyncing.value = false
   closeAllModals()
 }
 
-const asyncing = ref(false)
 const fields = computed(() => {
   const newOption = (tab) => ({
     label: tab.$t.title,
@@ -226,10 +229,9 @@ const onDeleteConfirm = () => {
 <template>
   <BaseModuleTab :title="project.$t.title">
     <FetchLoader :status="status" :with-data="!isSkeleton">
-      <BaseModuleHeader @add="openModals('add')" />
-      <!-- actions -->
-
       <FetchAsync :asyncing="asyncing">
+        <!-- actions -->
+        <BaseModuleHeader @add="openModals('add')" />
         <Sortable
           :list="fields"
           :options="DRAG_OPTIONS"
@@ -275,6 +277,7 @@ const onDeleteConfirm = () => {
         :is-opened="stateModals.edit || stateModals.add"
         :project="project"
         :tab="selectTab"
+        :asyncing="asyncing"
         @close="clean"
         @refresh="fullRefresh().then(() => clean())"
       />

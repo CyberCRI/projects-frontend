@@ -7,6 +7,7 @@ import { CommentFactory } from '~~/tests/factories/comment.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { flushPromises } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
+import { defaultTab } from '~/functs/tabs'
 
 describe('ProjectCommentsTab.vue', () => {
   it('should render component', async () => {
@@ -18,7 +19,7 @@ describe('ProjectCommentsTab.vue', () => {
       })
     })
 
-    const props = { project }
+    const props = { project, tab: defaultTab('comments') }
 
     const wrapper = await lpiMountSuspended(ProjectCommentsTab, {
       props,
