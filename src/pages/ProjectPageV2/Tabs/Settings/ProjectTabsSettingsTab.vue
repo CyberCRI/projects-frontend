@@ -17,9 +17,9 @@ import { getAllProjectTab } from '~/api/v2/project-tabs.service'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import type { IconImageChoice } from '~/functs/IconImage'
 import { defaultTab, sanitizeTabs } from '~/functs/tabs'
+import { debounce, isEqual } from 'es-toolkit'
 import { Sortable } from 'sortablejs-vue3'
 import { deepToRaw } from '~/functs/utils'
-import { debounce } from 'es-toolkit'
 import analytics from '~/analytics'
 
 const props = defineProps<{
@@ -127,13 +127,17 @@ const fields = computed(() => {
 
 const onUpdateOrCreate = (modelKey: ProjectTabType | ProjectTab['id'], form: ProjectTabForm) => {
   if (typeof modelKey === 'string') {
+    const body = {
+      ...defaultTab(modelKey),
+      ...form,
+    }
+    if (body.order < 0) {
+      body.order = 0
+    }
     return createProjectTab(
       props.project.id,
-      {
-        ...defaultTab(modelKey),
-        order: 0,
-        ...form,
-      },
+      body,
+
       {
         query: { modules: 'none' },
       }
@@ -147,27 +151,46 @@ const onUpdateOrCreate = (modelKey: ProjectTabType | ProjectTab['id'], form: Pro
   })
 }
 
-const onVisibilityChange = async (modelKey: ProjectTabType | ProjectTab['id'], value: boolean) => {
-  form.value[modelKey] = value
-  const body: ProjectTabForm = {
-    show_tab: value,
+const onChange = (tabs: ProjectTab[]) => {
+  // filter only with element changed
+  const tabsChanged = tabs
+    .map((tab, idx) => ({ ...tab, order: idx }))
+    .filter((tab, idx) => !isEqual(tab, allTabs.value[idx]))
+
+  if (tabsChanged.length === 0) {
+    asyncing.value = false
+    return
   }
 
-  asyncing.value = true
-  onUpdateOrCreate(modelKey, body)
+  Promise.all(
+    tabsChanged.map((item) =>
+      // add only order/show_tab to update
+      onUpdateOrCreate(item.id || item.type, {
+        order: item.order,
+        show_tab: item.show_tab,
+      })
+    )
+  )
     .then(() => fullRefresh())
-    .then(() => toaster.pushSuccess(t('tab.toasts.tab-visibility.success')))
-    .catch(() => toaster.pushError(t('tab.toasts.tab-visibility.error')))
+    .then(() => toaster.pushSuccess(t('tab.toasts.tab-update.success')))
+    .catch(() => toaster.pushError(t('tab.toasts.tab-update.error')))
     .finally(() => clean())
 }
 
-const onDelete = (element: ProjectTab) => {
-  selectTab.value = element
-  openModals('delete')
-}
-const onEdit = (element: ProjectTab) => {
-  selectTab.value = element
-  openModals('edit')
+const onVisibilityChange = (modelKey: ProjectTabType | ProjectTab['id'], value: boolean) => {
+  asyncing.value = true
+
+  form.value[modelKey] = value
+  const copyAllTabs = deepToRaw(allTabs.value)
+  copyAllTabs.forEach((tab) => {
+    console.log(tab.id, tab.type, modelKey)
+    if (tab.id === modelKey || tab.type === modelKey) {
+      console.log('set', value)
+      tab.show_tab = value
+    }
+  })
+
+  onChange(copyAllTabs)
 }
 
 const onDrag = (ev) => {
@@ -180,34 +203,16 @@ const onDrag = (ev) => {
   const [element] = copyAllTabs.splice(oldIndex, 1)
   copyAllTabs.splice(newIndex, 0, element)
 
-  // filter only with element changed new oder
-  const newTabs = []
-  copyAllTabs.forEach((tab, idx) => {
-    if (tab.order === idx) {
-      return
-    }
-    newTabs.push({
-      ...tab,
-      order: idx,
-    })
-  })
+  onChange(copyAllTabs)
+}
 
-  if (newTabs.length === 0) {
-    asyncing.value = false
-    return
-  }
-
-  Promise.all(
-    newTabs.map((item) =>
-      onUpdateOrCreate(item.id || item.type, {
-        order: item.order,
-      })
-    )
-  )
-    .then(() => fullRefresh())
-    .then(() => toaster.pushSuccess(t('tab.toasts.tab-order.success')))
-    .catch(() => toaster.pushError(t('tab.toasts.tab-order.error')))
-    .finally(() => clean())
+const onDelete = (element: ProjectTab) => {
+  selectTab.value = element
+  openModals('delete')
+}
+const onEdit = (element: ProjectTab) => {
+  selectTab.value = element
+  openModals('edit')
 }
 
 const onDeleteConfirm = () => {
