@@ -38,6 +38,7 @@ const {
   data: tabs,
   status,
   isSkeleton,
+  isLoading,
 } = getAllProjectTab(
   organizationCode,
   computed(() => props.project.slug || props.project.id),
@@ -233,8 +234,8 @@ const onDeleteConfirm = () => {
 
 <template>
   <BaseModuleTab :title="project.$t.title">
-    <FetchLoader :status="status" :with-data="!isSkeleton">
-      <FetchAsync :asyncing="asyncing">
+    <FetchLoader :status="status" only-error skeleton>
+      <FetchAsync :asyncing="asyncing || isLoading">
         <!-- actions -->
         <BaseModuleHeader @add="openModals('add')" />
         <Sortable
@@ -265,7 +266,7 @@ const onDeleteConfirm = () => {
                 <ContextActionMenuInline
                   class="context-actions"
                   show-empty
-                  :can-delete="isCustomTab(element.tab.type) && canDeleteTab"
+                  :can-delete="!isCustomTab(element.tab.type) && canDeleteTab"
                   :can-edit="canDeleteEdit"
                   @delete="onDelete(element.tab)"
                   @edit="onEdit(element.tab)"
