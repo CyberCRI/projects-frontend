@@ -227,7 +227,10 @@
       "conversations": "Gesprekken",
       "checkpoints": "Checkpoints",
       "side-assistant": "Zij-assistent",
-      "assistants": "Assistenten"
+      "assistants": "Assistenten",
+      "people": "Mensen",
+      "projects": "Projecten",
+      "organization": "Organisatie"
     },
     "page-title": "Beheerder",
     "portal": {

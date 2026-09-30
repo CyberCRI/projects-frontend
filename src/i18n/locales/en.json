@@ -234,7 +234,10 @@
       "conversations": "Conversations",
       "checkpoints": "Checkpoints",
       "side-assistant": "Side assistant",
-      "assistants": "Assistants"
+      "assistants": "Assistants",
+      "people": "People",
+      "projects": "Projects",
+      "organization": "Organization"
     },
     "page-title": "Admin",
     "portal": {

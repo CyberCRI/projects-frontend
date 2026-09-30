@@ -15,13 +15,15 @@
         name="ChevronDown"
       />
     </summary>
-    <NavPanelMenu
-      class="submenu"
-      :menu-entries="entry.submenu"
-      :current-tab="currentTab"
-      @action-triggered="$emit('action-triggered', $event)"
-      @navigated="$emit('navigated')"
-    />
+    <div class="submenu-wrapper">
+      <NavPanelMenu
+        class="submenu"
+        :menu-entries="entry.submenu"
+        :current-tab="currentTab"
+        @action-triggered="$emit('action-triggered', $event)"
+        @navigated="$emit('navigated')"
+      />
+    </div>
   </details>
 </template>
 
@@ -60,6 +62,7 @@ menu {
     width: 1.5em;
     height: 1.5em;
     fill: var(--primary-dark);
+    margin-left: auto;
   }
 
   .submenu-chevron-up {
@@ -72,10 +75,8 @@ menu {
 
   &[open] {
     .submenu {
-      background-color: #fff;
       padding-left: 1.2rem;
       border-left: 1px dotted var(--primary-dark);
-      margin-left: 0.8rem;
     }
 
     .submenu-chevron-up {
@@ -85,6 +86,11 @@ menu {
     .submenu-chevron-down {
       display: none;
     }
+  }
+
+  .submenu-wrapper {
+    background-color: #fff;
+    padding-left: 0.8rem;
   }
 }
 </style>

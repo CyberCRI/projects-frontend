@@ -227,7 +227,10 @@
       "conversations": "Vestlused",
       "checkpoints": "Checkpoints",
       "side-assistant": "Külgne assistent",
-      "assistants": "Assistentid"
+      "assistants": "Assistentid",
+      "people": "Inimesed",
+      "projects": "Projektid",
+      "organization": "Organisatsioon"
     },
     "page-title": "Admin",
     "portal": {

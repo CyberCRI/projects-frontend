@@ -227,7 +227,10 @@
       "conversations": "Converses",
       "checkpoints": "Checkpoints",
       "side-assistant": "Ajudant lateral",
-      "assistants": "Assistents"
+      "assistants": "Assistents",
+      "people": "Persones",
+      "projects": "Projectes",
+      "organization": "Organització"
     },
     "page-title": "Administrador",
     "portal": {
