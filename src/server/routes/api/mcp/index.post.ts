@@ -4,19 +4,23 @@ export default defineLazyEventHandler(() => {
   const { appApiOrgCode } = useRuntimeConfig().public
   return defineEventHandler(async (event) => {
     await checkAdminRights(event)
+
     const body = await readBody(event)
     // console.log(JSON.stringify(body, null, 2))
 
-    const prompt = await chatbotPrisma.prompt.create({
+    const mcp = await chatbotPrisma.mcp.create({
       data: {
-        title: body.title,
         orgCode: appApiOrgCode,
-        promptContents: {
-          create: [{ content: body.content, version: 1 }],
-        },
+        title: body.title,
+        description: body.description,
+        transport: body.transport,
+        url: body.url,
+        // TODO:
+        command: '', //body.command,
+        args: '', //body.args,
       },
     })
     // console.log(prompt)
-    return prompt
+    return mcp
   })
 })
