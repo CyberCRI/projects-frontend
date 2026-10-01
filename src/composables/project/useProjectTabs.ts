@@ -72,7 +72,7 @@ export const useProjectTabs = (
         },
       }
 
-      if (!isCustomTab(tab.type)) {
+      if (isCustomTab(tab.type)) {
         return {
           ...base,
           view: `/projects/${projectSlugOrId.value}/additionals/${tab.slug || tab.id}`,

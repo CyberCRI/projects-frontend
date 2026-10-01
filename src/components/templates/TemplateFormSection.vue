@@ -9,12 +9,14 @@ const props = withDefaults(
     errors?: boolean
     opened?: boolean
     canDelete?: boolean
+    canVisibility?: boolean
     icon?: IconImageChoice
   }>(),
   {
     errors: false,
     opened: false,
     canDelete: false,
+    canVisibility: false,
     icon: null,
   }
 )
@@ -23,6 +25,8 @@ defineEmits<{
   delete: []
 }>()
 const { stateModal, openModal, toggleModal } = useModal(props.opened)
+
+const visibility = defineModel<boolean>('visibility', { default: true })
 
 watchEffect(() => {
   if (props.errors || props.opened) {
@@ -34,6 +38,7 @@ watchEffect(() => {
 <template>
   <section class="list-container shadowed-box">
     <div class="section-header" :class="{ errors }">
+      <slot name="left" />
       <LpiButton
         secondary
         :aria-label="$t('common.expand')"
@@ -63,6 +68,23 @@ watchEffect(() => {
         btn-icon="TrashCanOutline"
         :aria-label="$t('common.delete')"
         @click.prevent="$emit('delete')"
+      />
+      <GroupButton
+        v-if="canVisibility"
+        v-model="visibility"
+        :options="[
+          {
+            label: $t('tab.form.show_tab.show'),
+            iconName: 'Eye' satisfies IconImageChoice as IconImageChoice,
+            value: true,
+          },
+          {
+            label: $t('tab.form.show_tab.hide'),
+            iconName: 'EyeSlash' satisfies IconImageChoice as IconImageChoice,
+            value: false,
+          },
+        ]"
+        :has-icon="true"
       />
     </div>
 
@@ -94,12 +116,12 @@ watchEffect(() => {
 
 .section-header {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto auto 1fr auto auto;
   align-items: center;
+  gap: 0.5rem;
 
   &.errors {
-    grid-template-columns: auto auto 1fr auto;
-    gap: 0.5rem;
+    grid-template-columns: auto auto auto 1fr auto auto;
   }
 }
 

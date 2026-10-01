@@ -266,7 +266,7 @@ const onDeleteConfirm = () => {
                 <ContextActionMenuInline
                   class="context-actions"
                   show-empty
-                  :can-delete="!isCustomTab(element.tab.type) && canDeleteTab"
+                  :can-delete="isCustomTab(element.tab.type) && canDeleteTab"
                   :can-edit="canDeleteEdit"
                   @delete="onDelete(element.tab)"
                   @edit="onEdit(element.tab)"

@@ -14,11 +14,13 @@ withDefaults(
     asyncing?: boolean
     providerParams?: ProviderParams
     room?: string
+    showTitle?: boolean
     saveImageCallback?: PropsDefinitions['saveImageCallback']
   }>(),
   {
     asyncing: false,
     providerParams: null,
+    showTitle: true,
     saveImageCallback: null,
     room: null,
   }
@@ -47,6 +49,7 @@ const handleImage = (img: ImageModel) => {
 <template>
   <div class="list-container">
     <TextInput
+      v-if="showTitle"
       v-model="form.title"
       :label="$t('tab.form.title-content.label')"
       :placeholder="$t('tab.form.title-content.label')"

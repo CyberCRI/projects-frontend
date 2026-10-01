@@ -52,7 +52,7 @@
 
     <TemplateFormSection
       :title="$t('template.title-project')"
-      :errors="haveError(errors.project_title, errors.project_purpose, errors.project_description)"
+      :errors="haveError(errors.project_title, errors.project_purpose)"
     >
       <TextInput
         v-model="form.project_title"
@@ -66,19 +66,8 @@
         :errors="errors.project_purpose"
         :data-field-target="formFieldTargetIds.project_purpose"
       />
-
-      <Field :label="$t('template.project-description')">
-        <TipTapEditor
-          v-model="form.project_description"
-          :save-image-callback="saveImageCallback"
-          mode="full"
-          class="w-full"
-          :errors="errors.project_description"
-          :data-field-target="formFieldTargetIds.project_description"
-        />
-      </Field>
     </TemplateFormSection>
-
+    <!--
     <TemplateFormSection
       :title="$t('template.title-blog')"
       :icon="PROJECT_MODULE_ICON.blogs"
@@ -145,40 +134,59 @@
           :errors="errors.comment_content"
         />
       </Field>
-    </TemplateFormSection>
+    </TemplateFormSection> -->
 
-    <template v-for="(tab, idx) in form.tabs || []">
-      <TemplateFormSection
-        v-if="tab"
-        :key="tab.id || tab.uuid"
-        :can-delete="!isCustomTab(tab.type)"
-        :title="tab.title"
-        :errors="!!errors.tabs[0]?.$message?.[idx]?.length"
-        :icon="tab.icon"
-        @delete="onDeleteTab(idx)"
-      >
-        <TabFormRaw
-          show-type
-          :model-value="form.tabs[idx]"
-          :errors="errors.tabs[0]?.$message?.[idx]"
-          :data-field-target="formFieldTargetIds.tabs[idx]"
-          @update:model-value="updateTab(idx, $event)"
-        />
-        <template v-if="!isCustomTab(form.tabs[idx].type)">
-          <br />
-          <h2 class="title-template">
-            {{ $t('tab.form.template.title') }}
-          </h2>
-          <TabItemFormRaw
-            :model-value="{
-              title: form.tabs[idx].title_item,
-              content: form.tabs[idx].content_item,
-            }"
-            @update:model-value="onUpdateTemplate(idx, $event)"
+    <Sortable
+      :list="form.tabs || []"
+      :options="DRAG_OPTIONS"
+      group="category-children"
+      tag="transition-group"
+      :item-key="(tab) => tab.id || tab.uuid"
+      @end="onDrag"
+    >
+      <template #item="{ element: tab, index }">
+        <TemplateFormSection
+          v-if="tab"
+          :key="tab.id || tab.uuid"
+          v-model:visibility="tab.show_tab"
+          :can-delete="isCustomTab(tab.type)"
+          :can-visibility="true"
+          :title="tab.title"
+          :errors="!!errors.tabs[0]?.$message?.[index]?.length"
+          :icon="tab.icon"
+          class="sortable"
+          :class="{
+            'visibility-hide': !tab.show_tab,
+          }"
+          @delete="onDeleteTab(index)"
+        >
+          <template #left>
+            <IconImage class="icon skeletons-background" name="DotsGrid" />
+          </template>
+          <TabFormRaw
+            show-type
+            :model-value="form.tabs[index]"
+            :errors="errors.tabs[0]?.$message?.[index]"
+            :data-field-target="formFieldTargetIds.tabs[index]"
+            @update:model-value="updateTab(index, $event)"
           />
-        </template>
-      </TemplateFormSection>
-    </template>
+          <template v-if="tabHaveTemplate(form.tabs[index].type)">
+            <br />
+            <h2 class="title-template">
+              {{ $t('tab.form.template.title') }}
+            </h2>
+            <TabItemFormRaw
+              :show-title="tabHaveTemplateTitle(form.tabs[index].type)"
+              :model-value="{
+                title: form.tabs[index].title_item,
+                content: form.tabs[index].content_item,
+              }"
+              @update:model-value="onUpdateTemplate(index, $event)"
+            />
+          </template>
+        </TemplateFormSection>
+      </template>
+    </Sortable>
 
     <LpiButton btn-icon="Plus" class="my4 tab-add" :label="$t('tab.tab.add')" @click="addNewTab" />
 
@@ -201,7 +209,14 @@ import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import { Sortable } from 'sortablejs-vue3'
 
+import {
+  isCustomTab,
+  sanitizeTabsTemplate,
+  tabHaveTemplate,
+  tabHaveTemplateTitle,
+} from '~/functs/tabs'
 import type {
   ProjectTabItemForm,
   TemplateForm,
@@ -210,14 +225,13 @@ import type {
 import { defaultTemplateForm, defaultTemplateTabForm, useTemplateForm } from '~/form/template'
 import TemplateFormSection from '~/components/templates/TemplateFormSection.vue'
 import TabItemFormRaw from '~/components/tabs/TabItemFormRaw.vue'
-import { isCustomTab, sanitizeTabsTemplate } from '~/functs/tabs'
 import SwitchInput from '~/components/base/form/SwitchInput.vue'
 import type { PropsDefinitions } from '~/composables/tiptap'
 import TabFormRaw from '~/components/tabs/TabFormRaw.vue'
-import { PROJECT_MODULE_ICON } from '~/functs/constants'
+import { isEqual, isNil, omit, sortBy } from 'es-toolkit'
 import Field from '~/components/base/form/Field.vue'
 import type { ErrorObject } from '@vuelidate/core'
-import { isEqual } from 'es-toolkit'
+import { deepToRaw } from '~/functs/utils'
 
 const props = withDefaults(
   defineProps<{
@@ -234,6 +248,13 @@ const emit = defineEmits<{
   isFormEqual: [boolean]
 }>()
 
+// sortable
+const DRAG_OPTIONS = {
+  animation: 200,
+  disabled: false,
+  ghostClass: 'child-ghost',
+}
+
 const { stateModals, openModals, closeModals } = useModals({ category: false })
 
 // form utils
@@ -244,7 +265,10 @@ const localeDefaultForm = () => {
     tabs: [...(props?.template?.tabs || [])],
   }
 
-  localForm.tabs = sanitizeTabsTemplate(localForm.tabs)
+  localForm.tabs = sortBy(
+    sanitizeTabsTemplate(localForm.tabs).map((tab) => (isNil(tab.id) ? omit(tab, ['id']) : tab)),
+    ['order']
+  )
 
   return localForm
 }
@@ -313,6 +337,21 @@ const onDeleteTab = (idx: number) => {
   tabs.splice(idx, 1)
   form.value.tabs = tabs
 }
+
+const onDrag = (ev) => {
+  const { oldIndex, newIndex } = ev
+
+  // // move old index element to new positions
+  const localForm: TemplateForm = deepToRaw(form.value)
+  const tabs = localForm.tabs
+  const [element] = tabs.splice(oldIndex, 1)
+  tabs.splice(newIndex, 0, element)
+
+  // console.log(tabs, element, oldIndex, newIndex)
+  tabs.forEach((tab, idx) => (tab.order = idx))
+
+  reset(localForm)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -334,5 +373,25 @@ const onDeleteTab = (idx: number) => {
 
 .tab-add {
   width: fit-content;
+}
+
+.sortable {
+  margin: 1rem 0;
+
+  &.visibility-hide {
+    opacity: 0.7;
+  }
+
+  &.asyncing {
+    cursor: wait !important;
+  }
+
+  &:not(.asyncing, .child-ghost) {
+    cursor: grab !important;
+  }
+
+  &.child-ghost {
+    cursor: move !important;
+  }
 }
 </style>

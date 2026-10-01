@@ -18,10 +18,19 @@ import { omit, sortBy } from 'es-toolkit'
 
 // check if tabtyp is a custom tab (not projectTab "fixed")
 export const isCustomTab = (type: ProjectTabType) => {
-  if (type === 'text' || type === 'blog') {
-    return false
-  }
-  return true
+  const types: ProjectTabType[] = ['text', 'blog']
+  return types.includes(type)
+}
+
+// check if tab have templates prefix
+export const tabHaveTemplate = (type: ProjectTabType) => {
+  const types: ProjectTabType[] = ['text', 'blog', 'blogs', 'goals', 'description', 'comments']
+  return types.includes(type)
+}
+
+export const tabHaveTemplateTitle = (type: ProjectTabType) => {
+  const types: ProjectTabType[] = ['text', 'blog', 'blogs', 'goals']
+  return types.includes(type)
 }
 
 export const defaultTab = (key: ProjectTab['type']) => {
