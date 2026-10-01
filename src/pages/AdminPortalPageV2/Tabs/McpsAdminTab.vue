@@ -57,7 +57,7 @@ const onCloseAdminForm = () => {
     <div class="actions">
       <LpiButton
         btn-icon="Plus"
-        :label="$t('agent-mcps.add-document')"
+        :label="$t('agent-mcps.add-mcp')"
         @click="addEntityIsOpen = true"
       />
     </div>

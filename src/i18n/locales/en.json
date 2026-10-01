@@ -237,7 +237,8 @@
       "assistants": "Assistants",
       "people": "People",
       "projects": "Projects",
-      "organization": "Organization"
+      "organization": "Organization",
+      "agent-mcp": "MCP"
     },
     "page-title": "Admin",
     "portal": {
@@ -3382,6 +3383,35 @@
       "title-required": "Title is required",
       "content-required": "Content is required",
       "description-required": "The description is required"
+    }
+  },
+  "agent-mcps": {
+    "form": {
+      "title-required": "The \"title\" field is required",
+      "description-required": "The \"description\" field is required",
+      "transport-required": "The \"transport\" field is required",
+      "url-required": "The \"URL\" field is required"
+    },
+    "edit-success": "The MCP is uptdated.",
+    "create-success": "The MCP is created.",
+    "edit-error": "Error updatding the MCP.",
+    "create-error": "Error creating the MCP.",
+    "edit-mcp": "Edit MCP",
+    "create-mcp": "Add a new MCP",
+    "title": "Title",
+    "title-exists": "This title already exists",
+    "description": "Description",
+    "transport": "Transport",
+    "deleted": "The MCP was deleted.",
+    "delete-error": "Error deleting the MCP",
+    "add-mcp": "Add a new MCP",
+    "confirm-deletion": "You are about to delete a MCP",
+    "confirm-deletion-of": "Do you confirm you want to delete \"{title}\" MCP ?",
+    "api-key": "API key (if needed)",
+    "test-config": {
+      "button": "Test the configuration",
+      "success": "It's working :)",
+      "fail": "Test failed"
     }
   },
   "agents": {

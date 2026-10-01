@@ -33,6 +33,17 @@ const defaultForm = (mcp?) => ({
   // args: mcp?.args ?? '',
 })
 
+const oldApiKey = ref('')
+const oldApiKeyDeleted = ref(false)
+const newApiKey = ref('')
+const editApiKey = () => {
+  oldApiKeyDeleted.value = true
+}
+const cancelEditApiKey = () => {
+  oldApiKeyDeleted.value = false
+  newApiKey.value = ''
+}
+
 const form = ref(defaultForm())
 
 const rules = computed(() => ({
@@ -61,6 +72,7 @@ watch(
     isAsyncing.value = true
     try {
       form.value = defaultForm(props.mcp)
+      oldApiKey.value = props.mcp.apiKeyLast4 || ''
     } catch (e) {
       console.error(e)
     } finally {
@@ -68,6 +80,13 @@ watch(
     }
   }
 )
+
+const transportOptions = ref([
+  { label: 'SSE', value: 'sse', dataTest: 'transort-option-sse' },
+  { label: 'HTTP', value: 'http', dataTest: 'transort-option-http' },
+  // TODO: ?
+  //{ label: 'StdIo', value: 'stdio', dataTest: 'transort-option-stdio' },
+])
 
 const isAsyncing = ref(false)
 
@@ -85,10 +104,14 @@ const submit = async () => {
   const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
   if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 
+  let apiKey = undefined
+  if (oldApiKeyDeleted.value) apiKey = ''
+  if (newApiKey.value) apiKey = newApiKey.value
   try {
     const body = {
       ...form.value,
       description: html2md(form.value.description),
+      apiKey,
     }
     if (isEdit.value) {
       await $fetch(`/api/mcp/${props.mcp.id}`, {
@@ -113,6 +136,38 @@ const submit = async () => {
   } finally {
     isAsyncing.value = false
     close()
+  }
+}
+
+const testConfigResult = ref(null)
+const isTestingConfig = ref(false)
+
+const testResulttBox = useTemplateRef('test-result')
+
+const testConfig = async () => {
+  const body = {
+    id: props.mcp?.id || undefined,
+    url: form.value.url,
+    transport: form.value.transport,
+    apiKey: newApiKey.value || undefined,
+  }
+  let headers = {}
+  const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
+  if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
+  isTestingConfig.value = true
+  testConfigResult.value = null
+  try {
+    testConfigResult.value = await $fetch('/api/test-mcp-config', {
+      method: 'post',
+      body,
+      headers,
+    })
+    console.log(testConfigResult.value)
+    nextTick(() => testResulttBox.value?.scrollIntoView({ behavior: 'smooth', block: 'center' }))
+  } catch (err) {
+    console.error(err)
+  } finally {
+    isTestingConfig.value = false
   }
 }
 </script>
@@ -156,13 +211,50 @@ const submit = async () => {
       <FieldErrors :errors="v$.url.$errors" />
     </div>
     <div class="form-section">
-      <!-- TODO: use select   sse | stdio | http -->
-      <TextInput
-        v-model.trim="form.transport"
-        :label="$t('agent-mcps.title')"
-        @blur="v$.transport.$validate"
+      <Field :label="$t('agent-mcps.transport')" required :errors="v$.transport.$errors">
+        <LpiSelect
+          v-model="form.transport"
+          :options="transportOptions"
+          @change="v$.transport.$validate"
+        />
+      </Field>
+    </div>
+    <div class="form-section">
+      <Field :label="$t('agent-mcps.api-key')">
+        <div class="apikey-field">
+          <TextInput v-if="oldApiKey && !oldApiKeyDeleted" :model-value="oldApiKey" disabled />
+          <LpiButton
+            v-if="oldApiKey && !oldApiKeyDeleted"
+            btn-icon="TrashCanOutline"
+            @click="editApiKey"
+          />
+          <TextInput v-if="!oldApiKey || oldApiKeyDeleted" v-model.trim="newApiKey" />
+          <LpiButton
+            v-if="oldApiKey && oldApiKeyDeleted"
+            btn-icon="arrowGoBackLine"
+            @click="cancelEditApiKey"
+          />
+        </div>
+      </Field>
+    </div>
+    <div class="form-section test-config">
+      <LpiButton
+        secondary
+        :diabled="isTestingConfig"
+        :label="$t('agent-mcps.test-config.button')"
+        :btn-icon="isTestingConfig ? 'LoaderSimple' : 'Flask'"
+        @click="testConfig"
       />
-      <FieldErrors :errors="v$.transport.$errors" />
+    </div>
+    <div v-if="testConfigResult" ref="test-result" class="form-section test-result">
+      <p v-if="testConfigResult.ok" class="test-result success">
+        {{ $t('agent-mcps.test-config.success') }}
+      </p>
+      <p v-if="!testConfigResult.ok" class="test-result fail">
+        {{ $t('agent-mcps.test-config.fail') }}:
+        <br />
+        {{ testConfigResult.error }}
+      </p>
     </div>
   </BaseDrawer>
 </template>
@@ -175,5 +267,34 @@ const submit = async () => {
 
 .form-section ~ .form-section {
   margin-top: 1rem;
+}
+
+.test-config {
+  display: flex;
+  justify-content: center;
+}
+
+.test-result {
+  padding: 1rem;
+
+  &.success {
+    background-color: variables.$primary-light;
+  }
+
+  &.fail {
+    background-color: variables.$salmon;
+  }
+}
+
+.apikey-field {
+  display: flex;
+  width: 100%;
+  flex-flow: row nowrap;
+  gap: 1rem;
+  align-items: flex-end;
+
+  > *:first-child {
+    flex-grow: 1;
+  }
 }
 </style>
