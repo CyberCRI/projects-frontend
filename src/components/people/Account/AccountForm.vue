@@ -62,6 +62,9 @@
           :value="roleOption.value"
         />
       </div>
+      <p v-if="currentRoleNotice" class="role-notice">
+        {{ currentRoleNotice }}
+      </p>
     </AccountSection>
 
     <div class="spacer" />
@@ -271,15 +274,17 @@ export default {
         value: 0,
         name: 'none',
         label: roleI18n('none'),
+        notice: `role.none.notice`,
       }
     },
 
     roleOptions() {
       const res = []
-      const roles = ['users', 'facilitators', 'viewers', 'admins'].map((role) => ({
+      const roles = ['viewers', 'users', 'facilitators', 'admins'].map((role) => ({
         name: role,
         label: roleI18n(role),
         value: `organization:#${this.organizationsStore.current.id}:${role}`,
+        notice: `role.${role}.notice`,
       }))
 
       // user created in google can't have "none" role
@@ -288,6 +293,11 @@ export default {
       }
       res.push(...roles)
       return res
+    },
+    currentRoleNotice() {
+      const currentRole = this.roleOptions.find((r) => r.value === this.selectedRole)
+      if (currentRole && currentRole.notice) return this.$t(currentRole.notice)
+      return ''
     },
   },
   watch: {
@@ -628,5 +638,10 @@ export default {
     cursor: pointer;
     margin-left: variables.$space-s;
   }
+}
+
+.role-notice {
+  padding-top: 1rem;
+  font-style: italic;
 }
 </style>

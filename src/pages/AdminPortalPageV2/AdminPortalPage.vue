@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import useOrganizationsStore from '~/stores/useOrganizations'
-
 const organizationsStore = useOrganizationsStore()
 const { isSuperAdmin, isAdmin } = usePermissions()
 
@@ -9,7 +9,7 @@ const hasVectorTabs = useRuntimeConfig().public.appHasVectorDb
 const hasAgentTabs = useRuntimeConfig().public.appHasChatbotPromptDb
 
 const { t } = useNuxtI18n()
-const tabs = computed(() => {
+const tabs = computed((): MenuEntry[] => {
   const requestAdminTab = organizationsStore.current?.access_request_enabled
     ? [
         {
@@ -34,7 +34,7 @@ const tabs = computed(() => {
         label: t('admin.tabs.vector-store'),
         view: { name: 'VectorStoreAdminTab' },
         props: {},
-        icon: 'Article', // TODO: use a bulb or db icon
+        icon: 'Archive', // TODO: use a bulb or db icon
         condition: true,
       },
     ]
@@ -54,7 +54,7 @@ const tabs = computed(() => {
         label: t('admin.tabs.agent-skills'),
         view: { name: 'AgentSkillsAdminTab' },
         props: {},
-        icon: 'Article', // TODO: use a bulb or db icon
+        icon: 'paletteLine', // TODO: use a bulb or db icon
         condition: true,
       },
       {
@@ -62,7 +62,7 @@ const tabs = computed(() => {
         label: t('admin.tabs.agents'),
         view: { name: 'AgentsAdminTab' },
         props: {},
-        icon: 'Article', // TODO: use a bulb or db icon
+        icon: 'Cog', // TODO: use a bulb or db icon
         condition: true,
       },
       {
@@ -70,7 +70,7 @@ const tabs = computed(() => {
         label: t('admin.tabs.side-assistant'),
         view: { name: 'SideAssistantAdminTab' },
         props: {},
-        icon: 'Article', // TODO: use a bulb or db icon
+        icon: 'SparklingFill', // TODO: use a bulb or db icon
         condition: true,
       },
       {
@@ -78,7 +78,7 @@ const tabs = computed(() => {
         label: t('admin.tabs.conversations'),
         view: { name: 'ConversationsAdminTab' },
         props: {},
-        icon: 'Article', // TODO: use a bulb or db icon
+        icon: 'ChatBubble', // TODO: use a bulb or db icon
         condition: true,
       },
       // TODO: keeping for now
@@ -93,96 +93,124 @@ const tabs = computed(() => {
     ]
   }
 
-  return [
-    {
-      key: 'admin-infos',
-      label: t('admin.tabs.information'),
-      view: { name: 'general' },
-      props: {},
-      icon: 'Globe',
-      condition: true,
-    },
-    {
-      key: 'admin-settings',
-      label: t('admin.tabs.settings'),
-      view: { name: 'AdminSettings' },
-      props: {},
-      icon: 'Cog',
-      condition: true,
-    },
-    {
-      key: 'admin-categories',
-      label: t('admin.tabs.categories'),
-      view: { name: 'categories' },
-      props: {},
-      icon: 'FileTreeOutline',
-      condition: true,
-    },
-    {
-      key: 'admin-tags',
-      label: t('admin.tabs.tags'),
-      view: { name: 'tags' },
-      props: {},
-      icon: 'Flag',
-      condition: true,
-    },
-    {
-      key: 'admin-skills',
-      label: t('admin.tabs.skills'),
-      view: { name: 'skills' },
-      props: {},
-      icon: 'VipCrownLine',
-      condition: true,
-    },
-    // {
-    //     key: 'admin-help',
-    //     label: this.$t('admin.tabs.help'),
-    //     view: { name: 'faq' },
-    // },
-    {
-      key: 'admin-templates',
-      label: t('admin.tabs.templates'),
-      view: { name: 'templates' },
-      props: {},
-      icon: 'ClipBoard',
-      condition: true,
-    },
-    {
-      key: 'admin-roles',
-      label: t('admin.tabs.users'),
-      view: { name: 'Accounts' },
-      props: {},
-      icon: 'Account',
-      condition: true,
-    },
-    {
-      key: 'admin-links',
-      label: t('admin.tabs.links'),
-      view: { name: 'links' },
-      props: {},
-      icon: 'LinkRotated',
-      condition: true,
-    },
-    ...requestAdminTab,
-    {
-      key: 'admin-groups',
-      label: t('admin.tabs.groups'),
-      view: { name: 'groups' },
-      props: {},
-      icon: 'Users',
-      condition: true,
-    },
-    {
-      key: 'admin-terms',
-      label: t('admin.tabs.terms'),
-      view: { name: 'termsAdmin' },
-      props: {},
-      icon: 'Scales',
-      condition: true,
-    },
-    ...vectorStoreTab,
-    ...agentTabs,
-  ].map((entry) => ({ ...entry, dataTest: entry.key }))
+  return (
+    [
+      {
+        key: 'admin-organization-ctn',
+        label: t('admin.tabs.organization'),
+        icon: 'Bank',
+        submenu: [
+          {
+            key: 'admin-infos',
+            label: t('admin.tabs.information'),
+            view: { name: 'general' },
+            props: {},
+            icon: 'Globe',
+            condition: true,
+          },
+          {
+            key: 'admin-settings',
+            label: t('admin.tabs.settings'),
+            view: { name: 'AdminSettings' },
+            props: {},
+            icon: 'Cog',
+            condition: true,
+          },
+          {
+            key: 'admin-terms',
+            label: t('admin.tabs.terms'),
+            view: { name: 'termsAdmin' },
+            props: {},
+            icon: 'Scales',
+            condition: true,
+          },
+          // {
+          //     key: 'admin-help',
+          //     label: this.$t('admin.tabs.help'),
+          //     view: { name: 'faq' },
+          // },
+        ],
+      },
+      {
+        key: 'admin-projects-ctn',
+        label: t('admin.tabs.projects'),
+        icon: 'Atom',
+        submenu: [
+          {
+            key: 'admin-categories',
+            label: t('admin.tabs.categories'),
+            view: { name: 'categories' },
+            props: {},
+            icon: 'FileTreeOutline',
+            condition: true,
+          },
+          {
+            key: 'admin-templates',
+            label: t('admin.tabs.templates'),
+            view: { name: 'templates' },
+            props: {},
+            icon: 'ClipBoard',
+            condition: true,
+          },
+          {
+            key: 'admin-tags',
+            label: t('admin.tabs.tags'),
+            view: { name: 'tags' },
+            props: {},
+            icon: 'Flag',
+            condition: true,
+          },
+        ],
+      },
+      {
+        key: 'admin-people-ctn',
+        label: t('admin.tabs.people'),
+        icon: 'MultiplePerson',
+        submenu: [
+          {
+            key: 'admin-groups',
+            label: t('admin.tabs.groups'),
+            view: { name: 'groups' },
+            props: {},
+            icon: 'Users',
+            condition: true,
+          },
+          {
+            key: 'admin-roles',
+            label: t('admin.tabs.users'),
+            view: { name: 'Accounts' },
+            props: {},
+            icon: 'Account',
+            condition: true,
+          },
+          {
+            key: 'admin-skills',
+            label: t('admin.tabs.skills'),
+            view: { name: 'skills' },
+            props: {},
+            icon: 'VipCrownLine',
+            condition: true,
+          },
+          {
+            key: 'admin-links',
+            label: t('admin.tabs.links'),
+            view: { name: 'links' },
+            props: {},
+            icon: 'LinkRotated',
+            condition: true,
+          },
+          ...requestAdminTab,
+        ],
+      },
+      {
+        key: 'admin-assistants',
+        label: t('admin.tabs.assistants'),
+        icon: 'Robot',
+        submenu: [...vectorStoreTab, ...agentTabs],
+        condition: vectorStoreTab.length || agentTabs.length,
+      },
+    ] as MenuEntry[]
+  ).map((entry) => ({ ...entry, dataTest: entry.key }))
 })
 
 const uniqueId = 'admin-nav-panel'
@@ -193,8 +221,16 @@ const onNavigated = collapseIfUnderBreakpoint
 
 const route = useRoute()
 
+const flatTabs = computed(() =>
+  (tabs.value || []).reduce((acc, current) => {
+    if (current.submenu) acc.push(...current.submenu)
+    else acc.push(current)
+    return acc
+  }, [])
+)
+
 const currentTab = computed(() =>
-  tabs.value.find((tab) => route?.matched?.find((m) => m?.name === tab?.view?.name))
+  flatTabs.value.find((tab) => route?.matched?.find((m) => m?.name === tab?.view?.name))
 )
 
 const breadcrumbs = computed(() => [

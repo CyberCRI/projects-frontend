@@ -226,7 +226,11 @@
       "agents": "Agents",
       "conversations": "Converses",
       "checkpoints": "Checkpoints",
-      "side-assistant": "Ajudant lateral"
+      "side-assistant": "Ajudant lateral",
+      "assistants": "Assistents",
+      "people": "Persones",
+      "projects": "Projectes",
+      "organization": "Organització"
     },
     "page-title": "Administrador",
     "portal": {
@@ -2821,7 +2825,7 @@
   },
   "pdf": {
     "blog-entries-limited-warning": "Només s' inclouen les primeres entrades del bloc {max} en l' exportació PDF (de {total} total).",
-    "download-pdf": "PDF",
+    "download-pdf": "Descarrega com a PDF",
     "generated-on": "Generat el {date}",
     "confirm": "Voleu generar pdf per aquest {type}?",
     "choices": "Seleccioneu els elements que voleu afegir al PDF."
@@ -3275,13 +3279,39 @@
     "unfollow": "Sense ningú"
   },
   "role": {
-    "owners": {
-      "label": "Editor | Editors",
-      "help": "Té tots els drets d' edició per aquest grup."
+    "none": {
+      "label": "Aucunstar name",
+      "help": "Usuari no correcte.",
+      "notice": "Només es poden veure els projectes públics, però es poden deixar comentaris."
+    },
+    "viewers": {
+      "label": "Visor | Visors",
+      "help": "Visor: no té drets d' edició.",
+      "notice": "Pot veure projectes amb visibilitat pública o de portal, però no en pot crear de nous."
+    },
+    "users": {
+      "label": "Usuari | Usuaris",
+      "help": "Usuari: un usuari forma part de la vostra comunitat. Poden crear projectes, editar els seus projectes i escriure comentaris en qualsevol projecte. Veuen un projecte privat quan formen part de l'equip d'aquests projectes, veuen tots els projectes amb la visibilitat de la comunitat, i tots els projectes públics.",
+      "notice": "Pot veure tots els projectes amb visibilitat pública o de portal i pot crear projectes nous."
     },
     "reviewers": {
       "label": "Revisor | Revisor",
-      "help": "Quan el projecte s' ha marcat com a \" Jack per a revisar,\" el revisor pot donar comentaris, i pot bloquejar un projecte per a evitar més edició al projecte. Un revisor també té drets d' edició."
+      "help": "Quan el projecte s' ha marcat com a \" Jack per a revisar,\" el revisor pot donar comentaris, i pot bloquejar un projecte per a evitar més edició al projecte. Un revisor també té drets d' edició.",
+      "notice": "Pot editar els projectes per als quals ha estat designat avaluador i redactar una avaluació."
+    },
+    "facilitators": {
+      "label": "Facilitor | Facilitors",
+      "help": "Facilitor: Aquest paper és per professors o tutors: Veuen tots els projectes privats al portal i els poden editar. També tenen tots els drets d'usuaris.",
+      "notice": "Pot veure i editar tots els projectes, però no té accés a les funcions administratives."
+    },
+    "admins": {
+      "label": "Administrador | Administradors",
+      "help": "Org administrador: Aquest paper permet configurar el vostre portal i gestionar els usuaris del portal. Els administradors d' Org tenen accés al menú administrador del portal per establir el portal i gestionar els seus usuaris. També tenen tots els drets dels faculitadors.",
+      "notice": "Pot veure i editar qualsevol projecte i utilitzar funcions administratives."
+    },
+    "owners": {
+      "label": "Editor | Editors",
+      "help": "Té tots els drets d' edició per aquest grup."
     },
     "members": {
       "label": "Participant | Participants",
@@ -3303,18 +3333,6 @@
       "label": "Grup Participant | Grup participants",
       "help": "Sembla membre del grup. Els seus projectes apareixen entre els projectes del grup."
     },
-    "facilitators": {
-      "label": "Facilitor | Facilitors",
-      "help": "Facilitor: Aquest paper és per professors o tutors: Veuen tots els projectes privats al portal i els poden editar. També tenen tots els drets d'usuaris."
-    },
-    "admins": {
-      "label": "Grup d' administració | Grup d' administració",
-      "help": "Org administrador: Aquest paper permet configurar el vostre portal i gestionar els usuaris del portal. Els administradors d' Org tenen accés al menú administrador del portal per establir el portal i gestionar els seus usuaris. També tenen tots els drets dels faculitadors."
-    },
-    "users": {
-      "label": "Usuari | Usuaris",
-      "help": "Usuari: un usuari forma part de la vostra comunitat. Poden crear projectes, editar els seus projectes i escriure comentaris en qualsevol projecte. Veuen un projecte privat quan formen part de l'equip d'aquests projectes, veuen tots els projectes amb la visibilitat de la comunitat, i tots els projectes públics."
-    },
     "managers": {
       "label": "Editor | Editors",
       "help": ""
@@ -3322,15 +3340,7 @@
     "label": "Funció | Rols",
     "edit": "Modificadors de rôles",
     "select": "Seleccioneu els drets",
-    "help": "Informació sobre funcions.",
-    "viewers": {
-      "label": "Visor | Visors",
-      "help": "Visor: no té drets d' edició."
-    },
-    "none": {
-      "label": "Aucunstar name",
-      "help": "Usuari no correcte."
-    }
+    "help": "Informació sobre funcions."
   },
   "prompts": {
     "create-prompt": "Crea una indicació",

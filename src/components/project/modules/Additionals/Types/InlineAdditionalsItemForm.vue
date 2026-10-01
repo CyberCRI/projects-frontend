@@ -69,7 +69,7 @@ const defaultLocalForm = () => {
 }
 
 const { t } = useNuxtI18n()
-const { stateModals, closeModals, closeAllModals, openModals } = useModals({
+const { stateModals, closeModals, closeAllModals } = useModals({
   saveSolo: false,
   saveChange: false,
 })
@@ -80,7 +80,7 @@ const close = () => {
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
-const { form, isValid, cleanedData, reset } = useProjectTabItemForm({
+const { form, isValid, cleanedData, reset, resetToInitialValue } = useProjectTabItemForm({
   default: defaultLocalForm(),
 })
 watch(
@@ -154,14 +154,6 @@ const save = () => {
     postTabItem(body)
   }
 }
-
-const checkClose = () => {
-  if (isFormEqual.value) {
-    close()
-  } else {
-    openModals('saveChange')
-  }
-}
 </script>
 
 <template>
@@ -169,7 +161,7 @@ const checkClose = () => {
     :is-form-equal="isFormEqual"
     :confirm-action-disabled="!isValid"
     :asyncing="asyncing"
-    @close="checkClose"
+    @close="resetToInitialValue"
     @confirm="save"
   >
     <TabItemFormRaw

@@ -226,7 +226,11 @@
       "agents": "Agenten",
       "conversations": "Gespräche",
       "checkpoints": "Checkpoints",
-      "side-assistant": "Nebenassistent"
+      "side-assistant": "Nebenassistent",
+      "assistants": "Assistenten",
+      "people": "Personen",
+      "projects": "Projekte",
+      "organization": "Organisation"
     },
     "page-title": "Admin",
     "portal": {
@@ -2821,7 +2825,7 @@
   },
   "pdf": {
     "blog-entries-limited-warning": "Nur die ersten {max} Blogeinträge sind im PDF-Export enthalten (von {total} insgesamt).",
-    "download-pdf": "PDF",
+    "download-pdf": "Als PDF herunterladen",
     "generated-on": "Erstellt am {date}",
     "confirm": "Möchten Sie pdf für diesen {type} generieren?",
     "choices": "Wählen Sie die Elemente aus, die Sie dem PDF hinzufügen möchten."
@@ -3275,13 +3279,39 @@
     "unfollow": "Unfollow"
   },
   "role": {
-    "owners": {
-      "label": "Herausgeber | Herausgeber",
-      "help": "Hat alle Bearbeitungsrechte für diese Gruppe."
+    "none": {
+      "label": "Aucun",
+      "help": "Benutzer kein Recht.",
+      "notice": "Kann nur öffentliche Projekte sehen, aber Kommentare hinterlassen."
+    },
+    "viewers": {
+      "label": "Blick | Sichter",
+      "help": "Viewer: Er hat keine Bearbeitungsrechte.",
+      "notice": "Kann Projekte mit öffentlicher Sichtbarkeit oder Portal-Sichtbarkeit sehen, aber keine neuen erstellen."
+    },
+    "users": {
+      "label": "Benutzer | Benutzer",
+      "help": "Benutzer: Ein Benutzer ist Teil Ihrer Community. Sie können Projekte erstellen, ihre Projekte bearbeiten und Kommentare zu jedem Projekt schreiben. Sie sehen ein privates Projekt, wenn sie Teil des Teams dieser Projekte sind, sehen alle Projekte mit der Gemeinschaftssicht und alle öffentlichen Projekte.",
+      "notice": "Kann alle Projekte mit der Sichtbarkeit „öffentlich“ oder „Portal“ sehen und neue Projekte erstellen."
     },
     "reviewers": {
       "label": "Rückblick | Bewertungen",
-      "help": "Wenn das Projekt als \"ready for review\" gekennzeichnet wurde, kann der Reviewer Feedback geben und ein Projekt sperren, um weitere Bearbeitungen im Projekt zu verhindern. Ein Reviewer hat auch Bearbeitungsrechte."
+      "help": "Wenn das Projekt als \"ready for review\" gekennzeichnet wurde, kann der Reviewer Feedback geben und ein Projekt sperren, um weitere Bearbeitungen im Projekt zu verhindern. Ein Reviewer hat auch Bearbeitungsrechte.",
+      "notice": "Kann Projekte bearbeiten, für die er als Gutachter benannt wurde, und eine Bewertung verfassen."
+    },
+    "facilitators": {
+      "label": "Fazit | Fazit",
+      "help": "Fazit: Diese Rolle ist für Lehrer oder Tutoren: Sie sehen alle privaten Projekte im Portal und können sie bearbeiten. Sie haben auch alle Rechte der Nutzer.",
+      "notice": "Kann alle Projekte einsehen und bearbeiten, hat jedoch keinen Zugriff auf Verwaltungsfunktionen."
+    },
+    "admins": {
+      "label": "Admin | Administratoren",
+      "help": "Org admin: Diese Rolle ermöglicht es, Ihr Portal zu konfigurieren und Benutzer in Ihrem Portal zu verwalten. Org Admins haben Zugriff auf das Admin-Menü des Portals, um das Portal einzurichten und seine Benutzer zu verwalten. Sie haben auch alle Rechte der Facilitatoren.",
+      "notice": "Kann jedes Projekt einsehen und bearbeiten sowie Verwaltungsfunktionen nutzen."
+    },
+    "owners": {
+      "label": "Herausgeber | Herausgeber",
+      "help": "Hat alle Bearbeitungsrechte für diese Gruppe."
     },
     "members": {
       "label": "Teilnehmer | Teilnehmer",
@@ -3303,18 +3333,6 @@
       "label": "Teilnehmergruppe | Teilnehmergruppe",
       "help": "Erscheint als Gruppenmitglied. Ihre Projekte erscheinen unter den Projekten der Gruppe."
     },
-    "facilitators": {
-      "label": "Fazit | Fazit",
-      "help": "Fazit: Diese Rolle ist für Lehrer oder Tutoren: Sie sehen alle privaten Projekte im Portal und können sie bearbeiten. Sie haben auch alle Rechte der Nutzer."
-    },
-    "admins": {
-      "label": "Admin Gruppe | Admins Gruppe",
-      "help": "Org admin: Diese Rolle ermöglicht es, Ihr Portal zu konfigurieren und Benutzer in Ihrem Portal zu verwalten. Org Admins haben Zugriff auf das Admin-Menü des Portals, um das Portal einzurichten und seine Benutzer zu verwalten. Sie haben auch alle Rechte der Facilitatoren."
-    },
-    "users": {
-      "label": "Benutzer | Benutzer",
-      "help": "Benutzer: Ein Benutzer ist Teil Ihrer Community. Sie können Projekte erstellen, ihre Projekte bearbeiten und Kommentare zu jedem Projekt schreiben. Sie sehen ein privates Projekt, wenn sie Teil des Teams dieser Projekte sind, sehen alle Projekte mit der Gemeinschaftssicht und alle öffentlichen Projekte."
-    },
     "managers": {
       "label": "Verlag | Verlag",
       "help": ""
@@ -3322,15 +3340,7 @@
     "label": "Laufsohle | Roggen",
     "edit": "Modifier les rôles",
     "select": "Wählen Sie die Rechte",
-    "help": "Informationen zu Rollen.",
-    "viewers": {
-      "label": "Blick | Sichter",
-      "help": "Viewer: Er hat keine Bearbeitungsrechte."
-    },
-    "none": {
-      "label": "Aucun",
-      "help": "Benutzer kein Recht."
-    }
+    "help": "Informationen zu Rollen."
   },
   "prompts": {
     "create-prompt": "Prompt erstellen",
