@@ -9,17 +9,15 @@ import type {
 import ProjectAddiionalsCreateTab from '~/pages/ProjectPageV2/Tabs/Additionals/ProjectAddiionalsCreateTab.vue'
 import { createProjectTab, deleteProjectTab, updateProjectTab } from 'shared-projects-frontend/apis'
 import { refreshProjectData, refreshProjectTabs } from '~/composables/project/refreshProject'
-import { defaultProjectTabSettings, userProjectTabSettings } from '~/form/project-tabs'
-import GroupButtonField from '~/components/base/form/GroupButtonField.vue'
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { defaultTab, isCustomTab, sanitizeTabs } from '~/functs/tabs'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'
 import { factoryPagination } from '~/skeletons/base.skeletons'
-import type { IconImageChoice } from '~/functs/IconImage'
-import { debounce, isEqual } from 'es-toolkit'
 import { Sortable } from 'sortablejs-vue3'
 import { deepToRaw } from '~/functs/utils'
+import { isEqual } from 'es-toolkit'
 import analytics from '~/analytics'
 
 const props = defineProps<{
@@ -31,28 +29,27 @@ const toaster = useToaster()
 
 const organizationCode = useOrganizationCode()
 
-const canDeleteTab = true
-const canDeleteEdit = true
+const projectId = computed(() => props.project.id)
+
+const { canCreateTab } = usePermissionProject(
+  projectId,
+  computed(() => props.project)
+)
 
 const {
   data: tabs,
   status,
-  isSkeleton,
   isLoading,
-} = getAllProjectTab(
-  organizationCode,
-  computed(() => props.project.slug || props.project.id),
-  {
-    paginationConfig: {
-      limit: 999,
-    },
-    query: {
-      modules: 'none',
-    },
-    default: () => factoryPagination(projectTabSkeleton, 0, 0),
-    uniqueKey: 'settings',
-  }
-)
+} = getAllProjectTab(organizationCode, projectId, {
+  paginationConfig: {
+    limit: 999,
+  },
+  query: {
+    modules: 'none',
+  },
+  default: () => factoryPagination(projectTabSkeleton, 0, 0),
+  uniqueKey: 'settings',
+})
 const allTabs = computed(() => sanitizeTabs(tabs.value, props.project.modules))
 
 // sortable
@@ -61,28 +58,6 @@ const DRAG_OPTIONS = {
   disabled: false,
   ghostClass: 'child-ghost',
 }
-
-const defaultLocaleForm = () => {
-  const localForm = defaultProjectTabSettings()
-
-  allTabs.value.forEach((tab) => {
-    localForm[tab.id || tab.type] = tab.show_tab
-  })
-
-  return localForm
-}
-
-const { form, reset } = userProjectTabSettings()
-
-watch(
-  () => [allTabs.value, isSkeleton.value],
-  debounce(() => {
-    if (!isSkeleton.value) {
-      reset(defaultLocaleForm())
-    }
-  }, 300),
-  { immediate: true, deep: true }
-)
 
 const { stateModals, openModals, closeAllModals } = useModals({
   add: false,
@@ -94,6 +69,11 @@ const fullRefresh = () => {
   return refreshProjectData(props.project).then(() => refreshProjectTabs(props.project))
 }
 
+const onEditRefresh = () => {
+  clean()
+  fullRefresh().then(() => clean())
+}
+
 const selectTab = ref<ProjectTab>(null)
 const asyncing = ref(false)
 const clean = () => {
@@ -101,30 +81,6 @@ const clean = () => {
   asyncing.value = false
   closeAllModals()
 }
-
-const fields = computed(() => {
-  const newOption = (tab) => ({
-    label: tab.$t.title,
-    modelKey: tab.id || tab.type,
-    tab,
-    options: [
-      {
-        label: t('tab.form.show_tab.show'),
-        iconName: 'Eye' satisfies IconImageChoice as IconImageChoice,
-        value: true,
-        rank: 0,
-      },
-      {
-        label: t('tab.form.show_tab.hide'),
-        iconName: 'EyeSlash' satisfies IconImageChoice as IconImageChoice,
-        value: false,
-        rank: 1,
-      },
-    ],
-    hasIcon: true,
-  })
-  return allTabs.value.map((tab) => newOption(tab))
-})
 
 const onUpdateOrCreate = (modelKey: ProjectTabType | ProjectTab['id'], form: ProjectTabForm) => {
   if (typeof modelKey === 'string') {
@@ -178,22 +134,6 @@ const onChange = (tabs: ProjectTab[]) => {
     .finally(() => clean())
 }
 
-const onVisibilityChange = (modelKey: ProjectTabType | ProjectTab['id'], value: boolean) => {
-  asyncing.value = true
-
-  form.value[modelKey] = value
-  const copyAllTabs = deepToRaw(allTabs.value)
-  copyAllTabs.forEach((tab) => {
-    console.log(tab.id, tab.type, modelKey)
-    if (tab.id === modelKey || tab.type === modelKey) {
-      console.log('set', value)
-      tab.show_tab = value
-    }
-  })
-
-  onChange(copyAllTabs)
-}
-
 const onDrag = (ev) => {
   asyncing.value = true
 
@@ -207,10 +147,21 @@ const onDrag = (ev) => {
   onChange(copyAllTabs)
 }
 
+const onVisibilityChange = (modifiedTab: ProjectTab, value: boolean) => {
+  asyncing.value = true
+
+  const copyAllTabs = deepToRaw(allTabs.value)
+  const index = allTabs.value.findIndex((t) => isEqual(t, modifiedTab))
+
+  copyAllTabs[index].show_tab = value
+  onChange(copyAllTabs)
+}
+
 const onDelete = (element: ProjectTab) => {
   selectTab.value = element
   openModals('delete')
 }
+
 const onEdit = (element: ProjectTab) => {
   selectTab.value = element
   openModals('edit')
@@ -238,41 +189,50 @@ const onDeleteConfirm = () => {
       <FetchAsync :asyncing="asyncing || isLoading">
         <!-- actions -->
         <BaseModuleHeader @add="openModals('add')" />
+
+        <!--  -->
+
         <Sortable
-          :list="fields"
+          :list="[...allTabs]"
           :options="DRAG_OPTIONS"
           group="category-children"
           tag="transition-group"
           item-key="modelKey"
           @end="onDrag"
         >
-          <template #item="{ element }">
-            <GroupButtonField
-              :key="element.modelKey"
-              v-model="form[element.modelKey]"
-              :label="element.label"
-              :options="element.options"
-              :has-icon="true"
+          <template #item="{ element: tab }">
+            <TemplateFormSection
+              :key="tab.id || tab.type"
+              :visibility="tab.show_tab"
+              :can-delete="isCustomTab(tab.type) && canCreateTab"
+              :can-edit="canCreateTab"
+              :content-expandable="false"
+              :can-visibility="true"
+              :title="tab.$t.title"
+              :icon="tab.icon"
               class="sortable"
               :class="{
-                asyncing,
+                'visibility-hide': !tab.show_tab,
               }"
-              @update:model-value="onVisibilityChange(element.modelKey, $event)"
+              @update:visibility="onVisibilityChange(tab, $event)"
+              @edit="onEdit(tab)"
+              @delete="onDelete(tab)"
             >
-              <template #label-left>
-                <IconImage class="icon skeletons-background" name="DotsGrid" />
+              <template #left>
+                <IconImage class="icon skeletons-background sortable-icon" name="DotsGrid" />
               </template>
-              <template #actions-right>
+              <template #right>
                 <ContextActionMenuInline
                   class="context-actions"
                   show-empty
-                  :can-delete="isCustomTab(element.tab.type) && canDeleteTab"
-                  :can-edit="canDeleteEdit"
-                  @delete="onDelete(element.tab)"
-                  @edit="onEdit(element.tab)"
+                  :can-delete="isCustomTab(tab.type) && canCreateTab"
+                  :can-edit="canCreateTab"
+                  @delete="onDelete(tab)"
+                  @edit="onEdit(tab)"
                 />
               </template>
-            </GroupButtonField>
+              <TabFormRaw show-type :model-value="tab" />
+            </TemplateFormSection>
           </template>
         </Sortable>
       </FetchAsync>
@@ -280,12 +240,12 @@ const onDeleteConfirm = () => {
       <!-- drawer -->
 
       <ProjectAddiionalsCreateTab
-        :is-opened="stateModals.edit || stateModals.add"
+        :is-opened="stateModals.add || stateModals.edit"
         :project="project"
         :tab="selectTab"
         :asyncing="asyncing"
         @close="clean"
-        @refresh="fullRefresh().then(() => clean())"
+        @refresh="onEditRefresh"
       />
     </FetchLoader>
 
@@ -308,16 +268,14 @@ const onDeleteConfirm = () => {
 }
 
 .sortable {
-  &.asyncing {
-    cursor: wait !important;
+  margin: 1rem 0;
+
+  &.visibility-hide {
+    opacity: 0.7;
   }
 
-  &:not(.asyncing, .child-ghost) {
+  .sortable-icon {
     cursor: grab !important;
-  }
-
-  &.child-ghost {
-    cursor: move !important;
   }
 }
 </style>

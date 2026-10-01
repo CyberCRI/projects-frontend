@@ -137,7 +137,7 @@
     </TemplateFormSection> -->
 
     <Sortable
-      :list="form.tabs || []"
+      :list="[...(form.tabs || [])]"
       :options="DRAG_OPTIONS"
       group="category-children"
       tag="transition-group"
@@ -161,7 +161,7 @@
           @delete="onDeleteTab(index)"
         >
           <template #left>
-            <IconImage class="icon skeletons-background" name="DotsGrid" />
+            <IconImage class="icon skeletons-background sortable-icon" name="DotsGrid" />
           </template>
           <TabFormRaw
             show-type
@@ -212,6 +212,7 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import { Sortable } from 'sortablejs-vue3'
 
 import {
+  getTab,
   isCustomTab,
   sanitizeTabsTemplate,
   tabHaveTemplate,
@@ -269,6 +270,20 @@ const localeDefaultForm = () => {
     sanitizeTabsTemplate(localForm.tabs).map((tab) => (isNil(tab.id) ? omit(tab, ['id']) : tab)),
     ['order']
   )
+
+  const blogsTemplate = getTab(localForm.tabs, 'blogs')
+  blogsTemplate.title_item = localForm.blogentry_title
+  blogsTemplate.content_item = localForm.blogentry_content
+
+  const commentTemplate = getTab(localForm.tabs, 'comments')
+  commentTemplate.content_item = localForm.comment_content
+
+  const goalsTemplate = getTab(localForm.tabs, 'goals')
+  goalsTemplate.content_item = localForm.goal_description
+  goalsTemplate.title_item = localForm.goal_title
+
+  const descriptionTemplate = getTab(localForm.tabs, 'description')
+  descriptionTemplate.content_item = localForm.project_description
 
   return localForm
 }
@@ -347,7 +362,6 @@ const onDrag = (ev) => {
   const [element] = tabs.splice(oldIndex, 1)
   tabs.splice(newIndex, 0, element)
 
-  // console.log(tabs, element, oldIndex, newIndex)
   tabs.forEach((tab, idx) => (tab.order = idx))
 
   reset(localForm)
@@ -382,16 +396,8 @@ const onDrag = (ev) => {
     opacity: 0.7;
   }
 
-  &.asyncing {
-    cursor: wait !important;
-  }
-
-  &:not(.asyncing, .child-ghost) {
+  .sortable-icon {
     cursor: grab !important;
-  }
-
-  &.child-ghost {
-    cursor: move !important;
   }
 }
 </style>

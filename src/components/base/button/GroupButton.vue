@@ -42,13 +42,6 @@ const groupButtonStyle = computed(() => {
 
 const selectButton = (groupOption: GroupOption) => (model.value = groupOption.value)
 
-const onIconMounted = (icon) => {
-  mountedIcons.value.push(icon)
-  if (mountedIcons.value.length === props.options.filter((el) => el.iconName).length) {
-    setSliderStyle()
-  }
-}
-
 const setSliderStyle = onClient(() => {
   if (!props.options.some((button) => button.value === model.value)) return
 
@@ -100,15 +93,23 @@ const setSliderStyle = onClient(() => {
 })
 
 const debounceSetSliderStyle = throttle(setSliderStyle, 100)
+
+const onIconMounted = (icon) => {
+  mountedIcons.value.push(icon)
+  if (mountedIcons.value.length === props.options.filter((el) => el.iconName).length) {
+    debounceSetSliderStyle()
+  }
+}
+
 onUnmounted(() => {
   debounceSetSliderStyle.cancel()
 })
 
 onResize(debounceSetSliderStyle, { immediate: true })
+onClientMounted(() => setSliderStyle())
 watch(
   () => model.value,
-  () => debounceSetSliderStyle(),
-  { immediate: true }
+  () => debounceSetSliderStyle()
 )
 </script>
 
@@ -129,7 +130,10 @@ watch(
       v-for="(button, index) in options"
       :key="index"
       class="button-container skeletons-background"
-      :class="[{ selected: button.value === modelValue }, size]"
+      :class="[
+        { selected: button.value === model, 'temporay-activate': sliderStyle === null },
+        size,
+      ]"
       :title="button.title || button.label"
       :tabIndex="index + 1"
       @click="selectButton(button)"
@@ -141,13 +145,13 @@ watch(
           :id="button.iconName"
           class="icon"
           :name="button.iconName"
-          :class="{ 'icon-selected': button.value === modelValue }"
+          :class="{ 'icon-selected': button.value === model }"
         />
       </transition>
       <label
         v-if="button.label"
         class="label"
-        :class="[{ 'label-selected': button.value === modelValue }, modelValue]"
+        :class="[{ 'label-selected': button.value === model }, model]"
       >
         {{ button.label }}
       </label>
@@ -244,7 +248,8 @@ watch(
   font-size: variables.$font-size-m;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.15s ease-in-out;
+
+  // transition: all 0.15s ease-in-out;
 
   &:not(.selected) {
     color: var(--primary-dark);
@@ -256,6 +261,11 @@ watch(
 
   *:not(:last-child) {
     margin-right: variables.$space-s;
+  }
+
+  &.temporay-activate.selected {
+    background-color: var(--primary-dark);
+    border-radius: 99px;
   }
 }
 

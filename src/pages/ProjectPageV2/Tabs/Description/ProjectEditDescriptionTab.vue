@@ -1,20 +1,22 @@
 <script setup lang="ts">
+import type { TranslatedProject, TranslatedProjectTab } from 'shared-projects-frontend/models'
 import { patchProject, postProjectImage } from 'shared-projects-frontend/apis'
 import { defaultProjectForm, useProjectDescriptionForm } from '~/form/project'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import type { ProviderParams } from 'shared-projects-frontend/interfaces'
-import type { TranslatedProject } from 'shared-projects-frontend/models'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
 import { roomKeyFromParams } from 'shared-projects-frontend/lib'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import FormPanel from '~/components/base/FormPanel.vue'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'
+import { getTemplateType } from '~/functs/tabs'
 import { formEqual } from '~/form/base'
 import { pick } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
     project: TranslatedProject
+    tab: TranslatedProjectTab
     // eslint-disable-next-line vue/no-unused-properties
     editable?: boolean
     loading?: boolean
@@ -49,8 +51,7 @@ const defaultLocalForm = () => {
   newForm.description =
     getFirstTextNotEmpty([
       props.project.description,
-      props.project.template?.$t?.project_description,
-      props.project.template?.project_description,
+      getTemplateType('description', props.project.template)?.content_item,
     ]) || newForm.description
   return newForm
 }
@@ -134,7 +135,7 @@ const checkSubmit = () => {
 </script>
 
 <template>
-  <BaseModuleTab :title="project.$t.title">
+  <BaseModuleTab :title="tab.$t.title">
     <FormPanel
       :confirm-action-disabled="!isValid || (!inSoloMode && !socketReady)"
       :is-form-equal="isFormEqual"

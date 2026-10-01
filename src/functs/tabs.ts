@@ -2,8 +2,10 @@ import type {
   ProjectModel,
   ProjectTab,
   ProjectTabType,
+  TemplateTab,
   TemplateTabForm,
   TranslatedProjectTab,
+  TranslatedTemplate,
 } from 'shared-projects-frontend/models'
 import {
   DEFAULT_PROJECT_TABS_ORDER,
@@ -14,6 +16,7 @@ import {
 import { translateProjectTab } from 'shared-projects-frontend/translate'
 import { defaultProjectTabForm } from '~/form/project-tabs'
 import { defaultTemplateTabForm } from '~/form/template'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import { omit, sortBy } from 'es-toolkit'
 
 // check if tabtyp is a custom tab (not projectTab "fixed")
@@ -122,4 +125,50 @@ export const sanitizeTabsTemplate = (tabs: TemplateTabForm[]) => {
       return tab.title
     },
   ])
+}
+
+export const getTemplateType = (
+  tabType: ProjectTabType,
+  template: TranslatedTemplate | null
+): Pick<TemplateTab, 'content_item' | 'title_item'> => {
+  const base = { title_item: '', content_item: '' }
+
+  if (template) {
+    if (tabType === 'goals') {
+      base.title_item = template.goal_title
+      base.content_item = template.goal_description
+    } else if (tabType === 'comments') {
+      base.content_item = template.comment_content
+    } else if (tabType === 'blogs') {
+      base.title_item = template.blogentry_title
+      base.content_item = template.blogentry_content
+    } else if (tabType === 'description') {
+      base.content_item = template.project_description
+    }
+
+    const findedTab = template?.tabs?.find((tabTemplate) => tabTemplate.type === tabType)
+    if (findedTab) {
+      return {
+        title_item: getFirstTextNotEmpty([findedTab.title_item, base.title_item]) || '',
+        content_item: getFirstTextNotEmpty([findedTab.content_item, base.content_item]) || '',
+      }
+    }
+  }
+  return { title_item: '', content_item: '' }
+}
+
+export const getTemplateUUID = (
+  tabUUID: TranslatedProjectTab['uuid'],
+  template: TranslatedTemplate | null
+): Pick<TemplateTab, 'content_item' | 'title_item'> => {
+  if (template) {
+    const findedTab = template?.tabs?.find((tabTemplate) => tabTemplate.uuid === tabUUID)
+    if (findedTab) {
+      return {
+        title_item: findedTab.title_item,
+        content_item: findedTab.content_item,
+      }
+    }
+  }
+  return { title_item: '', content_item: '' }
 }

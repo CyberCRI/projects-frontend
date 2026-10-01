@@ -9,6 +9,8 @@ const props = withDefaults(
     errors?: boolean
     opened?: boolean
     canDelete?: boolean
+    contentExpandable?: boolean
+    canEdit?: boolean
     canVisibility?: boolean
     icon?: IconImageChoice
   }>(),
@@ -16,6 +18,8 @@ const props = withDefaults(
     errors: false,
     opened: false,
     canDelete: false,
+    contentExpandable: true,
+    canEdit: false,
     canVisibility: false,
     icon: null,
   }
@@ -23,6 +27,7 @@ const props = withDefaults(
 
 defineEmits<{
   delete: []
+  edit: []
 }>()
 const { stateModal, openModal, toggleModal } = useModal(props.opened)
 
@@ -40,6 +45,7 @@ watchEffect(() => {
     <div class="section-header" :class="{ errors }">
       <slot name="left" />
       <LpiButton
+        v-if="contentExpandable"
         secondary
         :aria-label="$t('common.expand')"
         class="no-border skeletons-background"
@@ -69,6 +75,14 @@ watchEffect(() => {
         :aria-label="$t('common.delete')"
         @click.prevent="$emit('delete')"
       />
+      <LpiButton
+        v-if="canEdit"
+        secondary
+        class="no-border skeletons-background"
+        btn-icon="Pen"
+        :aria-label="$t('common.edit')"
+        @click.prevent="$emit('edit')"
+      />
       <GroupButton
         v-if="canVisibility"
         v-model="visibility"
@@ -88,7 +102,12 @@ watchEffect(() => {
       />
     </div>
 
-    <ContentExpandable :opened="stateModal" :height-limit="0" :hide-see-more="true">
+    <ContentExpandable
+      v-if="contentExpandable"
+      :opened="stateModal"
+      :height-limit="0"
+      :hide-see-more="true"
+    >
       <div class="list-container p4">
         <slot />
       </div>
@@ -105,23 +124,18 @@ watchEffect(() => {
   padding: 0.5rem;
 }
 
-.title {
-  display: flex;
-  place-items: center center;
-  gap: 0.5rem;
-  margin: 0 1rem;
-  color: var(--primary-dark);
-  fill: var(--primary-dark);
-}
-
 .section-header {
-  display: grid;
-  grid-template-columns: auto auto 1fr auto auto;
-  align-items: center;
+  display: flex;
   gap: 0.5rem;
 
-  &.errors {
-    grid-template-columns: auto auto auto 1fr auto auto;
+  .title {
+    flex: 1;
+    display: flex;
+    place-items: center center;
+    gap: 0.5rem;
+    margin: 0 1rem;
+    color: var(--primary-dark);
+    fill: var(--primary-dark);
   }
 }
 
