@@ -1,5 +1,6 @@
 import type { ErrorObject, useVuelidate, ValidationArgs } from '@vuelidate/core'
 import { difference, groupBy, isEqual, isNil } from 'es-toolkit'
+import { getCurrentScope, onScopeDispose } from 'vue'
 import type { RefOrRaw } from '~/interfaces/utils'
 import { deepToRaw } from '~/functs/utils'
 import useValidate from '@vuelidate/core'
@@ -30,6 +31,7 @@ export type UseFormResult<T, CleanResult> = {
   v$: ReturnType<typeof useVuelidate<T>>
   jumpToFirstError: () => void
   validate: () => Promise<boolean>
+  onReset: (string) => (arg0: (data: T) => void) => void
 }
 
 const differencesObjects = (obj: any, obj2: any): string[] => {
@@ -75,6 +77,8 @@ const useForm = <T extends object, CleanResult = T>(
   })
 
   const form = ref<T>(initialValueFactory()) as Ref<T>
+
+  const formEvents = import.meta.client ? new EventTarget() : null
 
   const _onClean = options.onClean ?? onClean
 
@@ -163,12 +167,29 @@ const useForm = <T extends object, CleanResult = T>(
    */
   const reset = (newData?: T) => {
     silenceErrors = true
-    form.value = newData ?? ({} as T)
+    const _newData = newData ?? initialValueFactory()
+    form.value = _newData
     v$.value.$reset()
+    if (formEvents) {
+      for (const key of formKeys) {
+        formEvents.dispatchEvent(new CustomEvent(`form-reset-${key}`, { detail: _newData[key] }))
+      }
+    }
     nextTick(() => (silenceErrors = false))
   }
 
   const resetToInitialValue = () => reset(initialValueFactory())
+
+  const formKeys = Object.keys(initialValueFactory())
+  const onReset = (key: string) => {
+    return (cb: (data: T) => void) => {
+      const handler = (e: Event) => cb((e as CustomEvent<T>).detail)
+      formEvents?.addEventListener(`form-reset-${key}`, handler)
+      const stop = () => formEvents?.removeEventListener(`form-reset-${key}`, handler)
+      if (getCurrentScope()) onScopeDispose(stop) // auto-cleanup in components/effectScopes
+      return stop // manual cleanup otherwise
+    }
+  }
 
   // re-set model/form
   if (options.model) {
@@ -251,6 +272,7 @@ const useForm = <T extends object, CleanResult = T>(
     validate,
     initialValueFactory,
     resetToInitialValue,
+    onReset,
   }
 }
 
