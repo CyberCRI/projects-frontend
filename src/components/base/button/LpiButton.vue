@@ -99,7 +99,7 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
 
     &.white-bg {
       // temp fix class used is ProjectDescriptionTab. TODO: fix cleanly while refactoring this component
-      background-color: variables.$white;
+      background-color: var(--white);
     }
   }
 

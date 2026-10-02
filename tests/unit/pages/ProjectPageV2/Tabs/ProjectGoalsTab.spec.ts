@@ -7,6 +7,7 @@ import { GoalFactory } from '~~/tests/factories/goal.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { flushPromises } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
+import { defaultTab } from '~/functs/tabs'
 
 describe('ProjectGoalsTab.vue', () => {
   it('should render component', async () => {
@@ -18,7 +19,7 @@ describe('ProjectGoalsTab.vue', () => {
       })
     })
 
-    const props = { project }
+    const props = { project, tab: defaultTab('goals') }
 
     const wrapper = await lpiMountSuspended(ProjectGoalsTab, {
       props,

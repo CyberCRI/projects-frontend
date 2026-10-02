@@ -2391,8 +2391,8 @@
       "error": "Er is een fout opgetreden bij het aanmaken van de PDF. Neem contact op met een beheerder."
     },
     "template-update": {
-      "success": "template is succesvol bijgewerkt",
-      "error": "Fout tijdens sjabloon-update"
+      "error": "Fout tijdens sjabloon-update",
+      "success": "template is succesvol bijgewerkt, alle gekoppelde projecten zullen binnenkort worden bijgewerkt."
     },
     "template-create": {
       "success": "template is succesvol aangemaakt",
@@ -3505,6 +3505,11 @@
       "title-content": {
         "label": "Volledige titel",
         "required": "De titel is vereist."
+      },
+      "show_tab": {
+        "label": "Tabblad tonen in project.",
+        "hide": "Verbergen",
+        "show": "Tonen"
       }
     },
     "toasts": {
@@ -3531,6 +3536,14 @@
       "item-create": {
         "success": "Het item is succesvol aangemaakt.",
         "error": "Aanmaken van het item is mislukt. Probeer het nog eens."
+      },
+      "tab-visibility": {
+        "success": "Het tabblad veranderde de zichtbaarheid succesvol.",
+        "error": "Tabbladzicht wijzigen is mislukt. Probeer het nog eens."
+      },
+      "tab-order": {
+        "success": "Het tabblad is succesvol besteld.",
+        "error": "Kon het tabblad niet bestellen. Probeer het nog eens."
       }
     }
   }

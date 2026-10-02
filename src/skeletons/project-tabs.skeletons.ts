@@ -10,6 +10,8 @@ export const projectTabSkeleton = (def?: Partial<ProjectTab>): ProjectTab => {
     icon: DEFAULT_ICONS_TABS.text,
     type: 'text',
     show_preview: true,
+    show_tab: true,
+    order: 0,
     modules: {
       items: 0,
     },

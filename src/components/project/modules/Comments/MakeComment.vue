@@ -60,6 +60,7 @@ import { usePermissionProject } from '~/composables/usePermissions/useProjectPer
 import { defaultProjectMessageForm, useProjectMessageForm } from '~/form/messages'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'
+import { getTemplateType } from '~/functs/tabs'
 import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
 
@@ -107,8 +108,7 @@ const defaultLocalForm = () => {
   newForm.content =
     getFirstTextNotEmpty([
       props.originalComment?.content,
-      props.project.template?.$t?.comment_content,
-      props.project.template?.comment_content,
+      getTemplateType('comments', props.project.template)?.content_item,
     ]) || newForm.content
 
   return newForm

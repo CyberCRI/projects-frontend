@@ -22,6 +22,7 @@ import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import { roomKeyFromParams } from 'shared-projects-frontend/lib'
 import { defaultBlogForm, useBlogEntryForm } from '~/form/blog'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'
+import { getTemplateType } from '~/functs/tabs'
 import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
 import { isNil } from 'es-toolkit'
@@ -49,7 +50,6 @@ const defaultLocalForm = () => {
     ...baseForm,
   }
   const blog = props.blog
-  const template = props.project.template
   if (blog) {
     newForm.id = blog.id
     newForm.created_at = blog.created_at
@@ -59,16 +59,10 @@ const defaultLocalForm = () => {
   // add projectId in form
   newForm.project_id = props.project.id
 
+  const template = getTemplateType('blogs', props.project.template)
   // set default content from template
-  newForm.title =
-    getFirstTextNotEmpty([blog?.title, template?.$t?.blogentry_title, template?.blogentry_title]) ||
-    newForm.title
-  newForm.content =
-    getFirstTextNotEmpty([
-      blog?.content,
-      template?.$t?.blogentry_content,
-      template?.blogentry_content,
-    ]) || newForm.content
+  newForm.title = getFirstTextNotEmpty([blog?.title, template.title_item]) || newForm.title
+  newForm.content = getFirstTextNotEmpty([blog?.content, template.content_item]) || newForm.content
   return newForm
 }
 

@@ -224,7 +224,7 @@ const onUpdate = () => {
   asyncing.value = true
   const body = { ...cleanedData.value }
 
-  patchProject(props.project.id, body)
+  patchProject(props.project.id, body, { query: { modules: 'none' } })
     .then(() => {
       toaster.pushSuccess(t('toasts.project-edit.success'))
       refresh()

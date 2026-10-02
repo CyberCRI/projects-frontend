@@ -2391,8 +2391,8 @@
       "error": "PDF-i genereerimisel tekkis viga. Palun võtke ühendust administraatoriga."
     },
     "template-update": {
-      "success": "malli uuendati edukalt",
-      "error": "Viga malli uuendamisel"
+      "error": "Viga malli uuendamisel",
+      "success": "Mall on edukalt uuendatud, kõik seotud projektid uuendatakse varsti."
     },
     "template-create": {
       "success": "mall on edukalt loodud",
@@ -3505,6 +3505,11 @@
       "title-content": {
         "label": "Pealkiri",
         "required": "Pealkiri on vajalik."
+      },
+      "show_tab": {
+        "label": "Kaardi näitamine projektis.",
+        "hide": "Peida",
+        "show": "Näita"
       }
     },
     "toasts": {
@@ -3531,6 +3536,14 @@
       "item-create": {
         "success": "Ese on edukalt loodud.",
         "error": "Elemendi loomine nurjus. Palun proovi uuesti."
+      },
+      "tab-visibility": {
+        "success": "Vahekaart muutis nähtavust edukalt.",
+        "error": "Kaardi nähtavuse muutmine nurjus. Palun proovi uuesti."
+      },
+      "tab-order": {
+        "success": "Kaart on tellitud edukalt.",
+        "error": "Kaardi tellimine nurjus. Palun proovi uuesti."
       }
     }
   }

@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import BaseProjectComments from '@/components/project/modules/Comments/BaseProjectComments.vue'
-import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
-import type { TranslatedProject } from 'shared-projects-frontend/models'
+import type { TranslatedProject, TranslatedProjectTab } from 'shared-projects-frontend/models'
 
-defineProps<{ project: TranslatedProject }>()
+defineProps<{ project: TranslatedProject; tab: TranslatedProjectTab }>()
 </script>
 
 <template>
   <BaseModulePreview
-    :title="$t(PROJECT_MODULE_TITLE.comments)"
-    :icon="PROJECT_MODULE_ICON.comments"
-    :total="project.modules.comments"
+    :title="tab.$t.title"
+    :icon="tab.icon"
+    :total="tab.modules.items"
     :see-more="{
       name: 'projectComments',
       params: { slugOrId: project.slug || project.id },

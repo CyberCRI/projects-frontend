@@ -35,7 +35,8 @@ export const usePermissionProject = (
   const organizationStore = useOrganizationsStore()
   const userStore = useUsersStore()
 
-  const internalProjectId = computed(() => unref(projectId))
+  // if project is defined, return project.id or projectId (porjectId can be null)
+  const internalProjectId = computed(() => unref(project)?.id || unref(projectId))
 
   const permissions = computed(() => internalProjectId.value && userStore.isConnected)
 

@@ -2391,8 +2391,8 @@
       "error": "Hi ha hagut un error en generar el PDF. Si us plau, contacteu amb un administrador."
     },
     "template-update": {
-      "success": "la plantilla s' ha actualitzat correctament",
-      "error": "Error durant l' actualització de la plantilla"
+      "error": "Error durant l' actualització de la plantilla",
+      "success": "La plantilla s' ha actualitzat correctament, tots els projectes enllaçats s' actualitzaran aviat."
     },
     "template-create": {
       "success": "s' ha creat amb èxit la plantillaName",
@@ -3505,6 +3505,11 @@
       "title-content": {
         "label": "Títol complet",
         "required": "Es requereix el títol."
+      },
+      "show_tab": {
+        "label": "Mostra la pestanya al projecte.",
+        "hide": "Oculta",
+        "show": "Mostra"
       }
     },
     "toasts": {
@@ -3531,6 +3536,14 @@
       "item-create": {
         "success": "L' element s' ha creat amb èxit.",
         "error": "Ha fallat en crear l' element. Torneu-ho a provar."
+      },
+      "tab-visibility": {
+        "success": "La pestanya ha canviat la visibilitat correctament.",
+        "error": "Ha fallat en canviar la visibilitat de les pestanyes. Torneu-ho a provar."
+      },
+      "tab-order": {
+        "success": "La pestanya s' ha ordenat amb èxit.",
+        "error": "No s' ha pogut ordenar la pestanya. Torneu-ho a provar."
       }
     }
   }

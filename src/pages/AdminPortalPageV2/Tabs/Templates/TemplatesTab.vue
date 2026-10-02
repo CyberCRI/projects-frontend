@@ -100,7 +100,9 @@ const confirmDelete = () => {
       toaster.pushError(t('toasts.template-delete.error'))
       console.error(error)
     })
-  templateToDelete.value = null
+    .finally(() => {
+      templateToDelete.value = null
+    })
 }
 </script>
 

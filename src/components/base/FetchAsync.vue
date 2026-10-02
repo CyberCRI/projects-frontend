@@ -22,14 +22,15 @@ withDefaults(
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .fetch-async {
   display: contents;
 
-  &.asyncing {
-    pointer-events: none;
-    user-select: none;
-    opacity: v-bind('opacity');
+  &.asyncing * {
+    pointer-events: none !important;
+    user-select: none !important;
+    cursor: wait !important;
+    opacity: v-bind('opacity') !important;
   }
 }
 </style>

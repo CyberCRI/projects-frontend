@@ -18,12 +18,13 @@
         v-else-if="entry.condition"
         class="navpanel-menu-link"
         :data-test="entry.dataTest"
+        :title="entry.label"
         :to="entry.view"
         @click="onMenuEntryClicked(entry)"
       >
         <IconImage class="icon skeletons-background" :name="entry.icon || 'Article'" />
 
-        <span class="skeletons-text">
+        <span class="skeletons-text text-ellipsis">
           {{ entry.label }}
         </span>
 

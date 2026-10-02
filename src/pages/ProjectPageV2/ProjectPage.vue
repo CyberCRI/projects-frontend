@@ -23,14 +23,12 @@ const {
   error,
   isLoading,
 } = getProject(organizationCode, projectIdOrSlug, {
-  default: projectSkeleton,
+  default: () => projectSkeleton(),
 })
 
-const projectId = computed(() => project.value?.id)
+const { canEditProject } = usePermissionProject(projectIdOrSlug, project)
 
-const { canEditProject } = usePermissionProject(projectId)
-
-const { tabs, currentTab, isEditing, toggleEditing } = useProjectTabs(projectId, project)
+const { tabs, currentTab, isEditing, toggleEditing } = useProjectTabs(projectIdOrSlug, project)
 
 // set headers
 watchEffect(() => {

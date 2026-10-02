@@ -2220,7 +2220,7 @@
       "error": "Error during getting template"
     },
     "template-update": {
-      "success": "template has been updated successfully",
+      "success": "template has been updated successfully, all projects linked will be updated soon.",
       "error": "Error during template update"
     },
     "template-create": {
@@ -3458,7 +3458,8 @@
       "label": "Tab | Tabs",
       "not-enabled": {
         "admin": "Tab creation is not enabled by default. However, as an administrator, you have the required permissions to access this feature and create new tabs."
-      }
+      },
+      "settings": "Tab Settings"
     },
     "item": {
       "delete-confirm": "Are you sure you want to delete this item.",
@@ -3493,6 +3494,11 @@
       },
       "show_preview": {
         "label": "Show preview in summary page."
+      },
+      "show_tab": {
+        "label": "Show tab in project.",
+        "hide": "Hide",
+        "show": "Show"
       },
       "type": {
         "label": "Type",
@@ -3531,6 +3537,14 @@
       "item-create": {
         "success": "The item has been created successfully.",
         "error": "Failed to create the item. Please try again."
+      },
+      "tab-visibility": {
+        "success": "The tab changed visibility successfully.",
+        "error": "Failed to change tab visibility. Please try again."
+      },
+      "tab-order": {
+        "success": "The tab has been ordered successfully.",
+        "error": "Failed to ordered the tab. Please try again."
       }
     }
   }

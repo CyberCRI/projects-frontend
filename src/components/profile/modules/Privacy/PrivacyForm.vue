@@ -1,7 +1,7 @@
 <template>
   <div class="profile-edit-privacy" :class="{ frozen: asyncing }">
     <FetchAsync :asyncing="asyncing">
-      <PrivacyField
+      <GroupButtonField
         v-for="field in fields"
         :key="field.modelKey"
         v-model="form[field.modelKey]"
@@ -17,6 +17,7 @@
 <script lang="ts" setup>
 import type { TranslatedUserModel, PrivacySettings } from 'shared-projects-frontend/models'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
+import GroupButtonField from '~/components/base/form/GroupButtonField.vue'
 import { patchUserPrivacy } from 'shared-projects-frontend/apis'
 import useToasterStore from '~/stores/useToaster'
 
