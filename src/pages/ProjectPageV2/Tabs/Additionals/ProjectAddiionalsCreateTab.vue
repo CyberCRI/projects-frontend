@@ -44,8 +44,8 @@ const defaultLocalForm = () => {
     local.icon = props.tab.icon || local.icon
     local.order = props.tab.order || local.order
     local.project = props.tab.project || local.project
-    local.show_preview = props.tab.show_preview || local.show_preview
-    local.show_tab = props.tab.show_tab || local.show_tab
+    local.show_preview = props.tab.show_preview ?? local.show_preview
+    local.show_tab = props.tab.show_tab ?? local.show_tab
   }
   return local
 }
