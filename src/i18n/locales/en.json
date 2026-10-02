@@ -2220,7 +2220,7 @@
       "error": "Error during getting template"
     },
     "template-update": {
-      "success": "template has been updated successfully",
+      "success": "template has been updated successfully, all projects linked will be updated soon.",
       "error": "Error during template update"
     },
     "template-create": {
