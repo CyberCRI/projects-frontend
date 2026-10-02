@@ -3458,8 +3458,7 @@
       "label": "Pestanya | Pestanyes",
       "not-enabled": {
         "admin": "La creació de tabulació no està habilitada per omissió. No obstant això, com a administrador, teniu els permisos requerits per accedir a aquesta característica i crear pestanyes noves."
-      },
-      "settings": "Arranjament de pestanya"
+      }
     },
     "item": {
       "delete-confirm": "Esteu segur que voleu eliminar aquest element.",

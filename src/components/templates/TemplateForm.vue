@@ -69,17 +69,16 @@
     </TemplateFormSection>
 
     <Sortable
-      :list="[...(form.tabs || [])]"
+      :key="sortableKeys"
+      :list="form.tabs || []"
       :options="DRAG_OPTIONS"
       group="category-children"
       tag="transition-group"
-      :item-key="(tab) => tab.id || tab.uuid"
+      :item-key="(tab) => `${tab.id || tab.uuid}-${tab.order}`"
       @end="onDrag"
     >
       <template #item="{ element: tab, index }">
         <TemplateFormSection
-          v-if="tab"
-          :key="tab.id || tab.uuid"
           v-model:visibility="tab.show_tab"
           :can-delete="isCustomTab(tab.type)"
           :can-visibility="true"
@@ -298,6 +297,11 @@ const onDrag = (ev) => {
 
   reset(localForm)
 }
+
+// need to force sortable to reload list
+const sortableKeys = computed(() =>
+  form.value.tabs.map((tab) => `${tab.id || tab.uuid}-${tab.order}`).join('::')
+)
 </script>
 
 <style lang="scss" scoped>

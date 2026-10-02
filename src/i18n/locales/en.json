@@ -3454,12 +3454,12 @@
       "delete": "Delete tab",
       "add": "Add a new Tab.",
       "edit": "Edit Tab",
-      "settings": "Tab Settings",
       "title": "Tab Creation",
       "label": "Tab | Tabs",
       "not-enabled": {
         "admin": "Tab creation is not enabled by default. However, as an administrator, you have the required permissions to access this feature and create new tabs."
-      }
+      },
+      "settings": "Tab Settings"
     },
     "item": {
       "delete-confirm": "Are you sure you want to delete this item.",

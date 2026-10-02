@@ -3459,7 +3459,7 @@
       "not-enabled": {
         "admin": "La création d'onglets n'est pas activée par défaut. Cependant, en tant qu'administrateur, vous avez les autorisations requises pour accéder à cette fonctionnalité et créer de nouveaux onglets."
       },
-      "settings": "Paramètres de l'onglet"
+      "settings": "Paramètres des onglets"
     },
     "item": {
       "delete-confirm": "Voulez-vous vraiment supprimer cet élément.",

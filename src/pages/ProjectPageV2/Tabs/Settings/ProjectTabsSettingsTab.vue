@@ -181,6 +181,11 @@ const onDeleteConfirm = () => {
     .catch(() => toaster.pushError(t(`tab.toasts.tab-delete.error`)))
     .finally(() => clean())
 }
+
+// need to force sortable to reload list
+const sortableKeys = computed(() =>
+  allTabs.value.map((tab) => `${tab.id || tab.type}-${tab.order}`).join('::')
+)
 </script>
 
 <template>
@@ -190,19 +195,17 @@ const onDeleteConfirm = () => {
         <!-- actions -->
         <BaseModuleHeader @add="openModals('add')" />
 
-        <!--  -->
-
         <Sortable
-          :list="[...allTabs]"
+          :key="sortableKeys"
+          :list="allTabs"
           :options="DRAG_OPTIONS"
           group="category-children"
           tag="transition-group"
-          item-key="modelKey"
+          :item-key="(tab) => `${tab.id || tab.type}-${tab.order}`"
           @end="onDrag"
         >
           <template #item="{ element: tab }">
             <TemplateFormSection
-              :key="tab.id || tab.type"
               :visibility="tab.show_tab"
               :can-delete="isCustomTab(tab.type) && canCreateTab"
               :can-edit="canCreateTab"

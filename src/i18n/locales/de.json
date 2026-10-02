@@ -3458,8 +3458,7 @@
       "label": "Register | Tabs",
       "not-enabled": {
         "admin": "Die Tab-Erstellung ist nicht standardmäßig aktiviert. Als Administrator haben Sie jedoch die erforderlichen Berechtigungen, um auf diese Funktion zuzugreifen und neue Registerkarten zu erstellen."
-      },
-      "settings": "Tab Einstellungen"
+      }
     },
     "item": {
       "delete-confirm": "Sind Sie sicher, dass Sie diesen Artikel löschen möchten.",

@@ -3458,8 +3458,7 @@
       "label": "Tab | Tabs",
       "not-enabled": {
         "admin": "Kaardi loomine ei ole vaikimisi lubatud. Kuid administraatorina on teil vajalikud õigused selle funktsiooni kasutamiseks ja uute vahekaartide loomiseks."
-      },
-      "settings": "Kaardi seadistused"
+      }
     },
     "item": {
       "delete-confirm": "Kas tõesti kustutada see element?",

@@ -3458,8 +3458,7 @@
       "label": "Tab | Tabbladen",
       "not-enabled": {
         "admin": "Tabblad aanmaken is standaard niet ingeschakeld. Als beheerder hebt u echter de benodigde toegangsrechten om toegang te krijgen tot deze functie en nieuwe tabbladen aan te maken."
-      },
-      "settings": "Tabbladinstellingen"
+      }
     },
     "item": {
       "delete-confirm": "Weet u zeker dat u dit item wilt verwijderen.",

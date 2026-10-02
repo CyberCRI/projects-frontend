@@ -37,10 +37,11 @@ const defaultLocalForm = () => {
   const local = defaultProjectTabForm()
   if (props.tab) {
     local.id = props.tab.id || local.id
+    local.type = props.tab.type || local.type
     local.uuid = props.tab.uuid || local.uuid
-    local.description = props.tab.title || local.title
+    local.title = props.tab.title || local.title
     local.description = props.tab.description || local.description
-    local.description = props.tab.icon || local.icon
+    local.icon = props.tab.icon || local.icon
     local.order = props.tab.order || local.order
     local.project = props.tab.project || local.project
     local.show_preview = props.tab.show_preview || local.show_preview
