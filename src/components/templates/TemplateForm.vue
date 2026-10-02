@@ -217,7 +217,7 @@ const localeDefaultForm = () => {
   const descriptionTemplate = getTab(localForm.tabs, 'description')
   descriptionTemplate.content_item = localForm.project_description
 
-  return structuredClone(localForm)
+  return structuredClone(deepToRaw(localForm))
 }
 const model = defineModel<TemplateForm>()
 const { form, errors, isValid, validate, cleanedData, reset, formFieldTargetIds } = useTemplateForm(
