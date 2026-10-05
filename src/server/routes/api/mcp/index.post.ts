@@ -16,6 +16,7 @@ export default defineLazyEventHandler(() => {
       description: body.description,
       transport: body.transport,
       url: body.url,
+      apiKey: body.apiKey,
       // TODO:
       command: '', //body.command,
       args: '',

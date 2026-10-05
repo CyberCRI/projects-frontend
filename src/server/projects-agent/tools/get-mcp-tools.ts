@@ -1,14 +1,13 @@
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import { MultiServerMCPClient } from '@langchain/mcp-adapters'
 
-const runtimeConfig = useRuntimeConfig()
-const { appMcpServerUrl } = runtimeConfig
-
 export default async function getMcpTools(
   agentData: any,
   event: any,
   userToken: string
 ): Promise<any[]> {
+  const runtimeConfig = useRuntimeConfig()
+  const { appMcpServerUrl } = runtimeConfig
   const mcpConfigs = {}
 
   if (agentData.useProjectsMcp) {
@@ -33,8 +32,14 @@ export default async function getMcpTools(
       traceMcp('Adding MCP tool with command:', mcp.command, mcp.args)
     } else {
       aConfig['url'] = mcp.url
-      traceMcp('Adding MCP tool with server URL:', mcp.url)
-      // TODO: auth
+      if (mcp.apikey) {
+        aConfig['headers'] = {
+          Authorization: `Bearer ${mcp.apikey}`,
+        }
+      }
+      traceMcp(
+        `Adding MCP tool with ${mcp.apikey ? 'authorization api key and' : ''} server URL: ${mcp.url}`
+      )
     }
 
     const slug = mcp.title.replace(/\s+/gim, '_')

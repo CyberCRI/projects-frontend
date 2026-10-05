@@ -11,13 +11,8 @@ export default defineLazyEventHandler(() => {
         error: 'Missing required "id" query parameter',
       }
     }
-    const id = parseInt(_id)
-    if (isNaN(id)) {
-      setResponseStatus(event, 400)
-      return {
-        error: 'Wrong type for "id" query parameter',
-      }
-    }
+    const id = _id
+
     const mcp = await getMcpById(appApiOrgCode, id)
 
     // console.log(agent)

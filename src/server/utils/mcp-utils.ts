@@ -1,4 +1,5 @@
-import * as secretUtils from '~/server/utils/sercet-utils'
+import type { Mcp } from '~~/prisma-chatbot-db/generated/prisma/client'
+import * as secretUtils from '~/server/utils/secret-utils'
 import crypto from 'node:crypto'
 
 export function redactApiKey(mcp) {
@@ -12,9 +13,10 @@ export function updateApikey(mcp) {
     if (!mcp.id) {
       throw Error('MCP id is required')
     }
-    mcp.apiKeyLast4 = mcp.apiKey.mcp.apiKey.slice(-4)
-    mcp.apiKeyVersion = secretUtils.getAgentSecretKeyCurrentVersion()
-    mcp.apiKeyCiphertext = secretUtils.encrypt(mcp.apiKey, mcp.id)
+    mcp.apiKeyLast4 = mcp.apiKey.slice(-4)
+    const { keyVersion, ciphertext } = secretUtils.encrypt(mcp.apiKey, mcp.id)
+    mcp.apiKeyVersion = keyVersion
+    mcp.apiKeyCiphertext = ciphertext
   } else {
     // safeguard against incoherent payloads
     mcp.apiKeyLast4 = undefined
@@ -25,7 +27,7 @@ export function updateApikey(mcp) {
   return mcp
 }
 
-export function dangerouslyDecryptApiKey(mcp) {
+export function dangerouslyDecryptApiKey(mcp): Mcp & { apiKey: string } {
   let apiKey = ''
   if (mcp.apiKeyCiphertext?.length) {
     apiKey = decrypt(mcp.apiKeyCiphertext, mcp.apiKeyVersion, mcp.id)
@@ -38,7 +40,11 @@ export function createId() {
   return crypto.randomUUID()
 }
 
-export async function getMcpById(appApiOrgCode, id, dontRedact = false) {
+export async function getMcpById(
+  appApiOrgCode: string,
+  id: string,
+  dontRedact = false
+): Promise<Mcp & { apiKey?: string }> {
   const mcp = await chatbotPrisma.mcp.findUnique({
     where: {
       id: id,
@@ -50,17 +56,26 @@ export async function getMcpById(appApiOrgCode, id, dontRedact = false) {
   return mcp
 }
 
-export async function getAllMcp(appApiOrgCode) {
+export async function getAllMcp(appApiOrgCode: string) {
   const mcp = await chatbotPrisma.mcp.findMany({
     where: {
       orgCode: appApiOrgCode,
     },
     orderBy: { title: 'asc' },
   })
+  mcp.map(redactApiKey)
   return mcp
 }
 
-export async function rotateAll(appApiOrgCode) {
+export async function getPendingRotationCount(appApiOrgCode: string) {
+  const CURRENT = getAgentSecretKeyCurrentVersion()
+  const staleCount = await chatbotPrisma.mcp.count({
+    where: { orgCode: appApiOrgCode, keyVersion: { not: CURRENT } },
+  })
+  return staleCount
+}
+
+export async function rotateAll(appApiOrgCode: string) {
   const CURRENT = getAgentSecretKeyCurrentVersion()
   // TODO: filter those without pai key
   const stale = await chatbotPrisma.mcp.findMany({
@@ -71,7 +86,11 @@ export async function rotateAll(appApiOrgCode) {
     const aad = mcp.id
     const oldKeyVersion = mcp.apiKeyVersion
     const plain = secretUtils.decrypt(mcp.apiKeyCiphertext, oldKeyVersion, aad)
-    const { ciphertext, keyVersion } = secretUtils.rotate(plain, oldKeyVersion, aad)
+    const { ciphertext, keyVersion } = secretUtils.rotate(
+      Buffer.from(plain, 'base64'),
+      oldKeyVersion,
+      aad
+    )
     await chatbotPrisma.mcp.update({
       where: { id: mcp.id },
       data: { apiKeyCiphertext: ciphertext, apiKeyVersion: keyVersion },

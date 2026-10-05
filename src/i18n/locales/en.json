@@ -3401,6 +3401,7 @@
     "title": "Title",
     "title-exists": "This title already exists",
     "description": "Description",
+    "url": "URL",
     "transport": "Transport",
     "deleted": "The MCP was deleted.",
     "delete-error": "Error deleting the MCP",
@@ -3408,6 +3409,7 @@
     "confirm-deletion": "You are about to delete a MCP",
     "confirm-deletion-of": "Do you confirm you want to delete \"{title}\" MCP ?",
     "api-key": "API key (if needed)",
+    "empty-list": "No MCP configured yet.",
     "test-config": {
       "button": "Test the configuration",
       "success": "It's working :)",

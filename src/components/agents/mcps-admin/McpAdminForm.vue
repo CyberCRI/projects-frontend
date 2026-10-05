@@ -72,7 +72,9 @@ watch(
     isAsyncing.value = true
     try {
       form.value = defaultForm(props.mcp)
-      oldApiKey.value = props.mcp.apiKeyLast4 || ''
+      oldApiKey.value = props.mcp?.apiKeyLast4 || ''
+      oldApiKeyDeleted.value = false
+      newApiKey.value = ''
     } catch (e) {
       console.error(e)
     } finally {
@@ -207,7 +209,7 @@ const testConfig = async () => {
       <FieldErrors :errors="v$.description.$errors" />
     </div>
     <div class="form-section">
-      <TextInput v-model.trim="form.url" :label="$t('agent-mcps.title')" @blur="v$.url.$validate" />
+      <TextInput v-model.trim="form.url" :label="$t('agent-mcps.url')" @blur="v$.url.$validate" />
       <FieldErrors :errors="v$.url.$errors" />
     </div>
     <div class="form-section">
@@ -228,7 +230,11 @@ const testConfig = async () => {
             btn-icon="TrashCanOutline"
             @click="editApiKey"
           />
-          <TextInput v-if="!oldApiKey || oldApiKeyDeleted" v-model.trim="newApiKey" />
+          <TextInput
+            v-if="!oldApiKey || oldApiKeyDeleted"
+            v-model="newApiKey"
+            input-type="password"
+          />
           <LpiButton
             v-if="oldApiKey && oldApiKeyDeleted"
             btn-icon="arrowGoBackLine"

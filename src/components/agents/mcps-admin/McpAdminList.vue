@@ -15,7 +15,7 @@ const countAgents = (m) => m.agents?.length
   <EntityAdminList
     ref="entityList"
     entity-icon="Article"
-    :no-entity-label="$t('agent-skills.empty-list')"
+    :no-entity-label="$t('agent-mcps.empty-list')"
     :deletable-check="cannotDeleteMcp"
     :fetch-entities="fetchMcps"
   >

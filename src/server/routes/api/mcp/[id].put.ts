@@ -12,16 +12,12 @@ export default defineLazyEventHandler(() => {
         error: 'Missing required "id" query parameter',
       }
     }
-    const id = parseInt(_id)
-    if (isNaN(id)) {
-      setResponseStatus(event, 400)
-      return {
-        error: 'Wrong type for "id" query parameter',
-      }
-    }
+    const id = _id
+
     const body = await readBody(event)
 
     const data = updateApikey({
+      id: _id,
       title: body.title,
       description: body.description,
       transport: body.transport,
@@ -31,6 +27,8 @@ export default defineLazyEventHandler(() => {
       // args: body.args,
       apiKey: body.apiKey,
     })
+
+    console.log('data', data)
 
     const mcp = await chatbotPrisma.mcp.update({
       where: {
