@@ -300,7 +300,7 @@ export default {
           to: {
             name: 'ProfileUser',
             params: {
-              userIdOrSlug: this.usersStore.userFromApi?.slug || this.usersStore.userFromApi?.id,
+              userIdOrSlug: this.usersStore.slugOrId,
             },
           },
           leftIcon: 'Account',
@@ -312,7 +312,7 @@ export default {
           to: {
             name: 'ProfileProjects',
             params: {
-              userIdOrSlug: this.usersStore.userFromApi?.slug || this.usersStore.userFromApi?.id,
+              userIdOrSlug: this.usersStore.slugOrId,
             },
           },
           leftIcon: 'Briefcase',
@@ -507,27 +507,27 @@ export default {
     },
 
     notificationCount() {
-      return this.usersStore.user.modules.notifications
+      return this.usersStore.notificationsCount
     },
     organisation() {
       return this.organizationsStore.current
     },
 
-    // langFromUser() {
-    //   return this.usersStore.userFromApi?.language
-    // },
+    langFromUser() {
+      return this.usersStore.userFromApi?.language
+    },
   },
   // TODO: this seem to crash i18n reactivity on rest of page... keep for further investigation
-  // watch: {
-  //   langFromUser: {
-  //     handler: function (neo, old) {
-  //       if (neo && neo != old && neo != this.locale) {
-  //         this.setLocale(neo)
-  //       }
-  //     },
-  //     immediate: true,
-  //   },
-  // },
+  watch: {
+    langFromUser: {
+      handler: function (neo, old) {
+        if (neo && neo != old && neo != this.locale) {
+          this.setLocale(neo)
+        }
+      },
+      immediate: true,
+    },
+  },
 
   async mounted() {
     await this.projectCategoriesStore.getAllProjectCategories()
