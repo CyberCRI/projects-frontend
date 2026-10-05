@@ -22,11 +22,11 @@ withDefaults(
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .fetch-async {
   display: contents;
 
-  &.asyncing * {
+  &:deep(.asyncing *) {
     pointer-events: none !important;
     user-select: none !important;
     cursor: wait !important;
