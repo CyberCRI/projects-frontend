@@ -27,7 +27,7 @@ export const deepToRaw = (value: any, seen = new WeakMap()) => {
     return value
   }
 
-  const raw = isReactive(value) || isReadonly(value) ? toRaw(value) : value
+  const raw = isReactive(value) || isReadonly(value) ? unref(value) : value
 
   if (seen.has(raw)) {
     return seen.get(raw)

@@ -45,7 +45,7 @@ const defaultLocalForm = () => {
     }
 
     newForm.id = tab.id
-    newForm.uuid = tab.uuid
+    newForm.uuid = tab.uuid || newForm.uuid
     newForm.title = tab.title || newForm.title
     newForm.description = getFirstTextNotEmpty([tab.description]) || newForm.description
     newForm.type = tab.type || newForm.type
@@ -69,7 +69,7 @@ const { form, errors, cleanedData, resetToInitialValue, v$, jumpToFirstError, fo
 
 const isFormEqual = useBlockNavigation(
   () =>
-    formEqual(toRaw(form.value), defaultLocalForm(), {
+    formEqual(deepToRaw(form.value), defaultLocalForm(), {
       exclude: ['uuid'],
       html: ['description'],
     }) && props.formExtraIsEqual
@@ -97,10 +97,6 @@ defineExpose({
     @close="onCancel"
   >
     <TabFormRaw v-model="form" :errors="errors" :form-field-target-ids="formFieldTargetIds" />
-    <slot />
-    <template #footer-extra>
-      <slot name="footer-extra" />
-    </template>
   </FormPanel>
 </template>
 
