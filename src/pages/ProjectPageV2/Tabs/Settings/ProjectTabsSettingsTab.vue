@@ -6,7 +6,6 @@ import type {
   TranslatedProject,
   TranslatedProjectTab,
 } from 'shared-projects-frontend/models'
-import ProjectAddiionalsCreateTab from '~/pages/ProjectPageV2/Tabs/Additionals/ProjectAddiionalsCreateTab.vue'
 import { createProjectTab, deleteProjectTab, updateProjectTab } from 'shared-projects-frontend/apis'
 import { refreshProjectData, refreshProjectTabs } from '~/composables/project/refreshProject'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
@@ -244,7 +243,7 @@ const sortableKeys = computed(() =>
 
       <!-- drawer -->
 
-      <ProjectAddiionalsCreateTab
+      <TabDrawer
         :is-opened="stateModals.add || stateModals.edit"
         :project="project"
         :tab="selectTab"

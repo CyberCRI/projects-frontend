@@ -57,7 +57,7 @@ const {
 } = useProjectTabForm({ default: defaultLocalForm() })
 
 watch(
-  () => props.tab,
+  () => [props.tab, props.isOpened],
   () => reset(defaultLocalForm()),
   { immediate: true, deep: true }
 )
