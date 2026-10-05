@@ -101,7 +101,6 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     const uniqueKey = (unref(params[2].uniqueKey) || '').toString()
     let parentKey = `${unref(params[0])}${uniqueKey ? `+${uniqueKey}` : ''}`
 
-    console.log('inparents', parentKey)
     const fixed = unref(params[2].keyFixed)
     if (fixed) {
       return parentKey

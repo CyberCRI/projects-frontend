@@ -47,6 +47,7 @@ export const OrganizationOutputFactory = createFactory<OrganizationOutput>((fake
   tags: TagFactory.generateMany(2),
   children: [],
   chat_url: faker.internet.url(),
+  google_sync_enabled: false,
 }))
 
 export const OrganizationPatchInputFactory = createFactory<OrganizationPatchInput>(() => ({

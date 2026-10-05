@@ -77,7 +77,8 @@
     </BaseDrawer>
   </div>
 </template>
-<script>
+
+<script lang="ts">
 import { getMentorshipDetails, respondMentorship } from 'shared-projects-frontend/apis'
 
 import useUsersStore from '~/stores/useUsers'
@@ -159,6 +160,7 @@ export default {
 
     try {
       // TODO: Call API to get the mentorship request
+      // @ts-expect-error token is string ? legacy ?
       this.mentorship = await getMentorshipDetails(this.organizationsCode, this.token)
       this.responseWasSent = !!this.mentorship.status
       this.isLoading = false

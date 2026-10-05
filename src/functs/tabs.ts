@@ -37,7 +37,7 @@ export const tabHaveTemplateTitle = (type: ProjectTabType) => {
 }
 
 export const defaultTab = (key: ProjectTab['type']) => {
-  const { t } = useNuxtI18n()
+  const { t, locale } = useNuxtI18n()
   return translateProjectTab(
     {
       ...defaultProjectTabForm(),
@@ -55,7 +55,7 @@ export const defaultTab = (key: ProjectTab['type']) => {
         items: 0,
       },
     },
-    'en'
+    locale.value
   )
 }
 

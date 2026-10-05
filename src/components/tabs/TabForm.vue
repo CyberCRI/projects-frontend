@@ -95,8 +95,6 @@ defineExpose({
     @confirm="onConfirm"
     @close="onCancel"
   >
-    <!-- hide choices type if already created (you can't change type after create it) -->
-    <TabFormTypeSwitch v-if="!form.id" v-model="form" />
     <TabFormRaw v-model="form" :errors="errors" :form-field-target-ids="formFieldTargetIds" />
     <slot />
     <template #footer-extra>

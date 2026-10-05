@@ -48,7 +48,8 @@
     </ul>
   </template>
 </template>
-<script>
+
+<script lang="ts">
 import { getHierarchyGroups } from 'shared-projects-frontend/apis'
 
 import FilterSearchInput from '~/components/search/Filters/FilterSearchInput.vue'
@@ -56,6 +57,8 @@ import FilterValue from '~/components/search/Filters/FilterValue.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
 import MultiGroupPickerElement from './MultiGroupPickerElement.vue'
+import type { GroupPicker } from './MultiGroupPickerElement.vue'
+import { groupSkeleton } from '~/skeletons/group.skeletons.js'
 import { throttle } from 'es-toolkit'
 
 export default {
@@ -119,6 +122,7 @@ export default {
         name: this.$t('event.form.people_groups.all'),
         children: [],
         disabled: this.pseudoGroupModelValue['-1'],
+        ...groupSkeleton(),
       }
     },
 
@@ -135,7 +139,11 @@ export default {
         name: this.$t('event.form.people_groups.public'),
         children: [],
         disabled: this.publicPseudoGroupModelValue['-1'],
-      }
+        // slug
+        ...groupSkeleton(),
+        // description
+        // short_description
+      } satisfies GroupPicker
     },
 
     publicPseudoGroupModelValue() {

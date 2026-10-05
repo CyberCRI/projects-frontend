@@ -162,6 +162,7 @@ import {
 } from '~/functs/imageSizesUtils'
 import { VALID_NAME_REGEX } from '~/functs/constants'
 import { roleI18n } from '~/functs/rolesUtils'
+import { isEqual } from 'es-toolkit'
 
 export default {
   name: 'AccountForm',
@@ -199,10 +200,12 @@ export default {
   emits: ['close'],
   setup() {
     const toaster = useToasterStore()
+    const organizationCode = useOrganizationCode()
     const organizationsStore = useOrganizationsStore()
     return {
       toaster,
       organizationsStore,
+      organizationCode,
     }
   },
 
@@ -261,9 +264,6 @@ export default {
     organization() {
       return this.organizationsStore.current
     },
-    hasRoleInCurrentOrg() {
-      return this.selectedRole && this.selectedRole != 0
-    },
 
     hasGoogleSync() {
       // whether to give option to create user in google too
@@ -278,8 +278,14 @@ export default {
       }
     },
 
+    hasRoleInCurrentOrg() {
+      // @ts-expect-error selectedRole is string
+      return !!this.selectedRole && this.selectedRole != 0
+    },
+
     roleOptions() {
       const res = []
+
       const roles = ['viewers', 'users', 'facilitators', 'admins'].map((role) => ({
         name: role,
         label: roleI18n(role),
@@ -313,7 +319,7 @@ export default {
         if (neo !== old) {
           if (neo) {
             // creating user in google forbid having role "none"
-            if (this.selectedRole && this.selectedRole === this.roleNone.value) {
+            if (this.selectedRole && isEqual(this.selectedRole, this.roleNone.value)) {
               // using roles[0] instead of roleOptions[0]
               // avoid trouble with awaiting computed value to be ready
               this.selectedRole = this.roleOptions[0].value
@@ -418,7 +424,7 @@ export default {
 
     async deleteUser() {
       try {
-        await deleteUser(this.selectedUser.id)
+        await deleteUser(this.organizationCode, this.selectedUser.id)
         this.toaster.pushSuccess(this.$t('account.delete-success'))
       } catch (err) {
         this.toaster.pushError(`${this.$t('account.error')} (${err})`)
@@ -450,7 +456,7 @@ export default {
         const allRolesToAdd = [...groupRolesToAdd]
         const allRolesToRemove = [...groupRolesToRemove]
 
-        if (this.selectedRole != 0) {
+        if (this.hasRoleInCurrentOrg) {
           allRolesToAdd.push(this.selectedRole)
         } else if (this.selectedUser) {
           allRolesToRemove.push(
@@ -475,7 +481,7 @@ export default {
             // note true will convert to "true" and be coerced to True by backend
             // we dont add the key if it is false, as backend will receive "false" (the string)
             // that will be coerced to boolean True
-            formData.append('create_in_google', true)
+            formData.append('create_in_google', 'true')
             formData.append('google_organizational_unit', this.form.google_organizational_unit)
           }
 
@@ -518,18 +524,24 @@ export default {
             formData.append('file', this.form['profile_picture'], this.form['profile_picture'].name)
           }
 
-          const user = await patchUser(this.selectedUser.id, payload)
+          const user = await patchUser(this.organizationCode, this.selectedUser.id, payload)
 
           try {
             if (payload.profile_picture instanceof File) {
-              const image = await postUserPicture(user.id, formData)
+              const image = await postUserPicture(this.organizationCode, user.id, formData)
 
               formData.delete('file')
+              // @ts-expect-error legacy ???
               payload.profile_picture.id = image.id
 
-              await patchUserPicture(user.id, image.id, formData)
+              await patchUserPicture(this.organizationCode, user.id, image.id, formData)
             } else if (user && user.profile_picture) {
-              await patchUserPicture(user.id, user.profile_picture.id, formData)
+              await patchUserPicture(
+                this.organizationCode,
+                user.id,
+                user.profile_picture.id,
+                formData
+              )
             }
           } catch (error) {
             this.toaster.pushError(`${this.$t('profile.edit.general.save-image-error')} (${error})`)
