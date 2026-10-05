@@ -2115,8 +2115,8 @@
     "placeholder-title": "Titel Vor Ort",
     "edit-category": "Kategorie bearbeiten.",
     "enable-tab": {
-      "label": "Neue Tab-Erstellung ermöglichen",
-      "help": "Ermöglicht Benutzern, neue Registerkarten in diesem Projekt zu erstellen"
+      "label": "Erlauben Sie neue Tab-Erstellung/Erstellung",
+      "help": "Ermöglicht Benutzern, innerhalb dieses Projekts Registerkarten zu erstellen/erarbeiten"
     }
   },
   "tips": {
@@ -3458,7 +3458,8 @@
       "label": "Register | Tabs",
       "not-enabled": {
         "admin": "Die Tab-Erstellung ist nicht standardmäßig aktiviert. Als Administrator haben Sie jedoch die erforderlichen Berechtigungen, um auf diese Funktion zuzugreifen und neue Registerkarten zu erstellen."
-      }
+      },
+      "settings": "Tab Einstellungen"
     },
     "item": {
       "delete-confirm": "Sind Sie sicher, dass Sie diesen Artikel löschen möchten.",

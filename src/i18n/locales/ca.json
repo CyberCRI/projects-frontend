@@ -2115,8 +2115,8 @@
     "placeholder-title": "Títol en ordre",
     "edit-category": "Edita la categoria.",
     "enable-tab": {
-      "label": "Permet la nova creació de pestanyes",
-      "help": "Permet als usuaris crear pestanyes noves dins d' aquest projecte"
+      "label": "Permet nova creació/ edició de pestanyes",
+      "help": "Permet als usuaris crear/edit tornar a ordenar pestanyes dins d' aquest projecte"
     }
   },
   "tips": {
@@ -3458,7 +3458,8 @@
       "label": "Pestanya | Pestanyes",
       "not-enabled": {
         "admin": "La creació de tabulació no està habilitada per omissió. No obstant això, com a administrador, teniu els permisos requerits per accedir a aquesta característica i crear pestanyes noves."
-      }
+      },
+      "settings": "Arranjament de pestanya"
     },
     "item": {
       "delete-confirm": "Esteu segur que voleu eliminar aquest element.",

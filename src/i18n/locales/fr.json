@@ -2200,8 +2200,8 @@
     "placeholder-title": "Titre Sur place",
     "edit-category": "Modifier la catégorie.",
     "enable-tab": {
-      "label": "Permettre la création de nouveaux onglets",
-      "help": "Permet aux utilisateurs de créer de nouveaux onglets dans ce projet"
+      "label": "Permettre la création/édition de nouveaux onglets",
+      "help": "Permet aux utilisateurs de créer/éditer des onglets de ré-commande dans ce projet"
     }
   },
   "tips": {

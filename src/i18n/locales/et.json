@@ -2115,8 +2115,8 @@
     "project-title": "Projekti nimetuse vorm",
     "edit-category": "Kategooria muutmine.",
     "enable-tab": {
-      "label": "Uue kaardi loomise lubamine",
-      "help": "Võimaldab kasutajatel luua projektis uusi kaarte"
+      "label": "Uue kaardi loomise/ redigeerimise lubamine",
+      "help": "Võimaldab kasutajatel projektis kaarte luua/ muuta"
     }
   },
   "tips": {
@@ -3458,7 +3458,8 @@
       "label": "Tab | Tabs",
       "not-enabled": {
         "admin": "Kaardi loomine ei ole vaikimisi lubatud. Kuid administraatorina on teil vajalikud õigused selle funktsiooni kasutamiseks ja uute vahekaartide loomiseks."
-      }
+      },
+      "settings": "Kaardi seadistused"
     },
     "item": {
       "delete-confirm": "Kas tõesti kustutada see element?",

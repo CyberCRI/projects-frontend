@@ -2115,8 +2115,8 @@
     "placeholder-title": "Titel ter plaatse",
     "edit-category": "Categorie bewerken.",
     "enable-tab": {
-      "label": "Nieuw tabblad aanmaken toestaan",
-      "help": "Laat gebruikers toe om nieuwe tabbladen aan te maken binnen dit project"
+      "label": "Nieuw tabblad aanmaken/editie toestaan",
+      "help": "Laat gebruikers toe om tabbladen te maken/bewerken binnen dit project"
     }
   },
   "tips": {
@@ -3458,7 +3458,8 @@
       "label": "Tab | Tabbladen",
       "not-enabled": {
         "admin": "Tabblad aanmaken is standaard niet ingeschakeld. Als beheerder hebt u echter de benodigde toegangsrechten om toegang te krijgen tot deze functie en nieuwe tabbladen aan te maken."
-      }
+      },
+      "settings": "Tabbladinstellingen"
     },
     "item": {
       "delete-confirm": "Weet u zeker dat u dit item wilt verwijderen.",

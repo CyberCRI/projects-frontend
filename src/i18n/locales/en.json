@@ -2179,8 +2179,8 @@
     "placeholder-purpose": "Purpose of the project",
     "placeholder-title": "Title On-site",
     "enable-tab": {
-      "label": "Allow new tab creation",
-      "help": "Allows users to create new tabs within this project"
+      "label": "Allow new tab creation/edition",
+      "help": "Allows users to create/edit re-order tabs within this project"
     }
   },
   "tips": {
