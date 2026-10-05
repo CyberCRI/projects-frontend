@@ -5,6 +5,7 @@ import TabFormRaw from '~/components/tabs/TabFormRaw.vue'
 import FormPanel from '~/components/base/FormPanel.vue'
 import { safeProjectIconTab } from '~/functs/projects'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'
+import { deepToRaw } from '~/functs/utils'
 import { formEqual } from '~/form/base'
 
 const props = withDefaults(
@@ -55,7 +56,7 @@ const defaultLocalForm = () => {
     newForm.show_tab = tab.show_tab ?? newForm.show_tab
   }
 
-  return newForm
+  return structuredClone(deepToRaw(newForm))
 }
 
 const model = defineModel<ProjectTabForm>()
