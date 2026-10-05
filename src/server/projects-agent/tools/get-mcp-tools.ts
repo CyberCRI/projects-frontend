@@ -32,9 +32,9 @@ export default async function getMcpTools(
       traceMcp('Adding MCP tool with command:', mcp.command, mcp.args)
     } else {
       aConfig['url'] = mcp.url
-      if (mcp.apikey) {
+      if (mcp.apiKey) {
         aConfig['headers'] = {
-          Authorization: `Bearer ${mcp.apikey}`,
+          Authorization: `Bearer ${mcp.apiKey}`,
         }
       }
       traceMcp(
