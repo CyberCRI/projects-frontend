@@ -189,6 +189,8 @@ const DRAG_OPTIONS = {
 
 const { stateModals, openModals, closeModals } = useModals({ category: false })
 
+const { locale } = useNuxtI18n()
+
 // form utils
 const localeDefaultForm = () => {
   const localForm = {
@@ -198,7 +200,9 @@ const localeDefaultForm = () => {
   }
 
   localForm.tabs = sortBy(
-    sanitizeTabsTemplate(localForm.tabs).map((tab) => (isNil(tab.id) ? omit(tab, ['id']) : tab)),
+    sanitizeTabsTemplate(localForm.tabs, locale.value).map((tab) =>
+      isNil(tab.id) ? omit(tab, ['id']) : tab
+    ),
     ['order']
   )
 

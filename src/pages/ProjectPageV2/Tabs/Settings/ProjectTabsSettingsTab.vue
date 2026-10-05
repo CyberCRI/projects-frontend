@@ -36,6 +36,8 @@ const { canCreateTab } = usePermissionProject(
   computed(() => props.project)
 )
 
+const { locale } = useNuxtI18n()
+
 const {
   data: tabs,
   status,
@@ -50,7 +52,7 @@ const {
   default: () => factoryPagination(projectTabSkeleton, 0, 0),
   uniqueKey: 'settings',
 })
-const allTabs = computed(() => sanitizeTabs(tabs.value, props.project.modules))
+const allTabs = computed(() => sanitizeTabs(tabs.value, props.project.modules, locale.value))
 
 // sortable
 const DRAG_OPTIONS = {

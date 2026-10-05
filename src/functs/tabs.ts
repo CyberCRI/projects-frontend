@@ -1,4 +1,5 @@
 import type {
+  Language,
   ProjectModel,
   ProjectTab,
   ProjectTabType,
@@ -36,13 +37,13 @@ export const tabHaveTemplateTitle = (type: ProjectTabType) => {
   return types.includes(type)
 }
 
-export const defaultTab = (key: ProjectTab['type']) => {
-  const { t, locale } = useNuxtI18n()
+export const defaultTab = (key: ProjectTab['type'], locale: Language = null) => {
+  const { t } = useNuxtI18n()
   return translateProjectTab(
     {
       ...defaultProjectTabForm(),
       type: key,
-      title: t(PROJECT_MODULE_TITLE[key]),
+      title: t(PROJECT_MODULE_TITLE[key]) + ' --orig',
       icon: PROJECT_MODULE_ICON[key],
       show_preview: true,
       show_tab: true,
@@ -55,7 +56,7 @@ export const defaultTab = (key: ProjectTab['type']) => {
         items: 0,
       },
     },
-    locale.value
+    locale
   )
 }
 
@@ -71,13 +72,17 @@ export const getTab = <T extends { id?: ProjectTab['id']; type?: ProjectTab['typ
   return tabs.find((tab) => tab.type === key)
 }
 
-export const sanitizeTabs = (tabs: TranslatedProjectTab[], modules: ProjectModel['modules']) => {
+export const sanitizeTabs = (
+  tabs: TranslatedProjectTab[],
+  modules: ProjectModel['modules'],
+  locale: Language = null
+) => {
   const customTabs: TranslatedProjectTab[] = []
 
   const addTab = (type: ProjectTabType) => {
     if (!getTab(tabs, type)) {
       customTabs.push({
-        ...defaultTab(type),
+        ...defaultTab(type, locale),
         modules: {
           items: modules[type] || 0,
         },
@@ -100,14 +105,14 @@ export const sanitizeTabs = (tabs: TranslatedProjectTab[], modules: ProjectModel
   ])
 }
 
-export const sanitizeTabsTemplate = (tabs: TemplateTabForm[]) => {
+export const sanitizeTabsTemplate = (tabs: TemplateTabForm[], locale: Language = null) => {
   const customTabs: TemplateTabForm[] = []
 
   const addTab = (type: ProjectTabType) => {
     if (!getTab(tabs, type)) {
       customTabs.push({
         ...defaultTemplateTabForm(),
-        ...omit(defaultTab(type), ['$t', 'project']),
+        ...omit(defaultTab(type, locale), ['$t', 'project']),
       })
     }
   }

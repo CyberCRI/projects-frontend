@@ -20,7 +20,7 @@ export const useProjectTabs = (
   const router = useRouter()
   const organizationCode = useOrganizationCode()
 
-  const { t } = useNuxtI18n()
+  const { t, locale } = useNuxtI18n()
 
   const modules = computed<ProjectModel['modules']>(() => {
     return {
@@ -36,15 +36,13 @@ export const useProjectTabs = (
       limit: 999,
     },
   })
-  const allTabs = computed(() =>
-    sanitizeTabs(tabs.value, modules.value).filter((tab) => tab.show_tab)
-  )
+  const allTabs = computed(() => {
+    return sanitizeTabs(tabs.value, modules.value, locale.value).filter((tab) => tab.show_tab)
+  })
 
   const { isAdmin } = usePermissions()
   // we add null in projetId, projectSlugOrId is slug or id, so we wait to have project to fetch
-  const { isMember, canCreateTab, canCreateReview } = usePermissionProject(projectSlugOrId, project)
-
-  const isMemberOrAdmin = computed(() => isMember.value || isAdmin.value)
+  const { canCreateTab, canCreateReview } = usePermissionProject(projectSlugOrId, project)
 
   const TabsDisplay = computed(() => {
     const display = allTabs.value.map((tab) => {
@@ -107,7 +105,7 @@ export const useProjectTabs = (
       if (tabType === 'comments') {
         condition = false
       } else if (tabType === 'messages') {
-        condition = isMemberOrAdmin.value
+        condition = isAdmin.value
       } else if (tabType === 'reviews') {
         condition = canCreateReview && project.value.life_status === 'toreview'
       } else if (tabType === 'linked_projects') {

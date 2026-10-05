@@ -1,5 +1,5 @@
 import type { OrganizationModel } from 'shared-projects-frontend/models'
-import { isReactive, isReadonly, toRaw } from 'vue'
+import { isReactive, isReadonly } from 'vue'
 
 import { DEFAULT_ORGANIZATION_CODE } from '~/functs/constants'
 

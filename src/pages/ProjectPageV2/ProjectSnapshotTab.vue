@@ -27,6 +27,7 @@ const props = defineProps<{
   project: TranslatedProject
 }>()
 
+const { locale } = useNuxtI18n()
 const organizationCode = useOrganizationCode()
 const projectId = computed(() => props.project.id)
 const {
@@ -42,7 +43,9 @@ const {
 })
 
 const allTabs = computed(() =>
-  sanitizeTabs(tabs.value, props.project.modules).filter((tab) => tab.show_preview && tab.show_tab)
+  sanitizeTabs(tabs.value, props.project.modules, locale.value).filter(
+    (tab) => tab.show_preview && tab.show_tab
+  )
 )
 </script>
 
