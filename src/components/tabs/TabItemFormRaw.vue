@@ -38,7 +38,7 @@ const inOfflineMode = ref(false)
 const model = defineModel<ProjectTabItemForm>({ default: defaultProjectTabItemForm })
 const isCreated = computed(() => isNil(model.value?.id) || inOfflineMode.value)
 
-const { form, errors, resetToInitialValue, v$, jumpToFirstError, formFieldTargetIds } =
+const { form, errors, resetToInitialValue, onReset, v$, jumpToFirstError, formFieldTargetIds } =
   useProjectTabItemForm({
     model,
     default: defaultProjectTabItemForm(),
@@ -80,6 +80,7 @@ defineExpose({
         :save-image-callback="saveImageCallback"
         :errors="errors.content"
         :data-field-target="formFieldTargetIds.content"
+        :reset-signal="onReset('content')"
         @image="handleImage"
       />
       <TipTapCollaborativeEditor
@@ -94,6 +95,7 @@ defineExpose({
         :save-image-callback="saveImageCallback"
         :disable-save="asyncing"
         :errors="errors.content"
+        :reset-signal="onReset('content')"
         @unauthorized="$emit('unauthorized')"
         @image="handleImage"
         @saved="$emit('save')"

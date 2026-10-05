@@ -18,6 +18,7 @@ export type PropsDefinitions = {
   // function must take a file argument and return a promise resolving to an {url, width, height} object
   saveImageCallback?: (image: File) => Promise<ImageModelCreated>
   disableSave?: boolean
+  resetSignal?: (string) => void
 }
 
 export const PropsDefault: ExtractDefaultPropTypes<PropsDefinitions> = {
@@ -44,6 +45,7 @@ type TipTapResult = {
   getContent: () => string
   initialContent: Ref<string>
   resetContent: () => void
+  resetContentTo: (string) => void
   onUpdate: EditorOptions['onUpdate']
   onBlur: EditorOptions['onBlur']
   onDrop: EditorOptions['onDrop']
@@ -132,13 +134,6 @@ export const useTipTap = ({ props, emit, t, extraOptions }: Options): TipTapResu
     return props.modelValue
   }
 
-  watch(
-    () => props.modelValue,
-    (neo, old) => {
-      if (neo && neo !== old) editor.value?.commands.setContent(neo)
-    }
-  )
-
   function initEditor() {
     // this prevents multiple init of editor
     // (that causes duplicate user/content bugs)
@@ -184,9 +179,13 @@ export const useTipTap = ({ props, emit, t, extraOptions }: Options): TipTapResu
     }
   }
 
+  function resetContentTo(newContent) {
+    emit('update:modelValue', newContent)
+    editor.value?.commands.setContent(newContent)
+  }
+
   function resetContent() {
-    emit('update:modelValue', initialContent.value)
-    editor.value?.commands.setContent(initialContent.value)
+    resetContentTo(initialContent.value)
   }
 
   return {
@@ -198,6 +197,7 @@ export const useTipTap = ({ props, emit, t, extraOptions }: Options): TipTapResu
     getContent,
     initialContent,
     resetContent,
+    resetContentTo,
     onUpdate,
     onBlur,
     onDrop,
