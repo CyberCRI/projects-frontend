@@ -13,9 +13,9 @@ import type { AuthResult } from '~/api/auth/keycloak'
 
 import type { Right } from 'shared-projects-frontend/interfaces'
 import { userRights } from 'shared-projects-frontend/lib'
+import { isNil, pick } from 'es-toolkit'
 import analytics from '~/analytics'
 import { defineStore } from 'pinia'
-import { pick } from 'es-toolkit'
 
 // fix undefined localStorage on sever
 let _localStorage = null
@@ -70,14 +70,7 @@ const useUsersStore = defineStore('users', () => {
   const notificationsSettings = ref(null)
   const userDataRefreshLoop = ref(null)
 
-  const isConnected = computed((): boolean => {
-    return !!userFromToken.value
-  })
-
   const id = computed<UserModel['id'] | undefined>(() => userFromApi.value?.id)
-  const slugOrId = computed<UserSlugOrId | undefined>(
-    () => userFromApi.value?.slug || userFromApi.value?.id
-  )
 
   const user = computed((): UserModel | null => {
     if (userFromToken.value) {
@@ -108,6 +101,12 @@ const useUsersStore = defineStore('users', () => {
     }
     return null
   })
+
+  const isConnected = computed(
+    (): boolean => !!(userFromToken.value && userFromApi.value && !isNil(user.value?.id))
+  )
+
+  const slugOrId = computed<UserSlugOrId | undefined>(() => user.value?.slug || user.value?.id)
 
   function stopUserDataRefreshLoop() {
     if (userDataRefreshLoop.value) {
