@@ -201,6 +201,11 @@ const showEditDate = computed(() => {
   )
 })
 
+const clean = () => {
+  asyncing.value = false
+  closeModals('delete')
+}
+
 const onDeleteComment = async () => {
   asyncing.value = true
 
@@ -217,7 +222,7 @@ const onDeleteComment = async () => {
         emit('project-message-deleted', props.comment)
       })
       .catch(() => toaster.pushError(t('toasts.project-message-delete.error')))
-      .finally(() => (asyncing.value = false))
+      .finally(() => clean())
   } else {
     deleteComment(props.project.id, props.comment.id)
       .then(() => {
@@ -232,7 +237,7 @@ const onDeleteComment = async () => {
         emit('comment-deleted', props.comment)
       })
       .catch(() => toaster.pushError(t('toasts.comment-delete.error')))
-      .finally(() => (asyncing.value = false))
+      .finally(() => clean())
   }
 }
 </script>
