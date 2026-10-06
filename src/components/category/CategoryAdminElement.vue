@@ -42,14 +42,13 @@ const chevronImage = computed(() => {
   return !hasChildren.value ? 'ChevronRight' : showChild.value ? 'ChevronUp' : 'ChevronDown'
 })
 
-const dragOptions = computed(() => {
-  return {
-    animation: 200,
-    group: 'categories',
-    disabled: false,
-    ghostClass: 'category-ghost',
-  }
-})
+// sortable
+const DRAG_OPTIONS = {
+  animation: 200,
+  group: 'categories',
+  disabled: false,
+  ghostClass: 'category-ghost',
+}
 
 function onDragStart(event) {
   const dragged = event.target.closest('[data-category-id]')
@@ -166,7 +165,7 @@ watch(
     <div class="child-list">
       <Sortable
         :list="category.children"
-        :options="dragOptions"
+        :options="DRAG_OPTIONS"
         group="categories"
         tag="ul"
         item-key="id"

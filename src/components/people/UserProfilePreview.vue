@@ -20,7 +20,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { getUser } from 'shared-projects-frontend/apis'
 
 import useUsersStore from '~/stores/useUsers'
@@ -34,15 +34,10 @@ export default {
   components: {
     ProfileSummaryTab,
   },
-  provide() {
-    return {
-      tabsLayoutSelectTab: this.selectTab,
-    }
-  },
 
   props: {
     userId: {
-      type: [Number, String, null],
+      type: [Number, null],
       default: null,
     },
   },

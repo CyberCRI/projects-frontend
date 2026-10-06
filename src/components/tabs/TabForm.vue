@@ -5,6 +5,7 @@ import TabFormRaw from '~/components/tabs/TabFormRaw.vue'
 import FormPanel from '~/components/base/FormPanel.vue'
 import { safeProjectIconTab } from '~/functs/projects'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'
+import { deepToRaw } from '~/functs/utils'
 import { formEqual } from '~/form/base'
 
 const props = withDefaults(
@@ -44,16 +45,18 @@ const defaultLocalForm = () => {
     }
 
     newForm.id = tab.id
-    newForm.uuid = tab.uuid
+    newForm.uuid = tab.uuid || newForm.uuid
     newForm.title = tab.title || newForm.title
     newForm.description = getFirstTextNotEmpty([tab.description]) || newForm.description
     newForm.type = tab.type || newForm.type
+    newForm.order = tab.order || newForm.order
     newForm.icon = safeProjectIconTab(tab.icon, newForm.type)
     // not or || for boolean
     newForm.show_preview = tab.show_preview ?? newForm.show_preview
+    newForm.show_tab = tab.show_tab ?? newForm.show_tab
   }
 
-  return newForm
+  return structuredClone(deepToRaw(newForm))
 }
 
 const model = defineModel<ProjectTabForm>()
@@ -66,7 +69,7 @@ const { form, errors, cleanedData, resetToInitialValue, v$, jumpToFirstError, fo
 
 const isFormEqual = useBlockNavigation(
   () =>
-    formEqual(toRaw(form.value), defaultLocalForm(), {
+    formEqual(deepToRaw(form.value), defaultLocalForm(), {
       exclude: ['uuid'],
       html: ['description'],
     }) && props.formExtraIsEqual
@@ -93,13 +96,7 @@ defineExpose({
     @confirm="onConfirm"
     @close="onCancel"
   >
-    <!-- hide choices type if already created (you can't change type after create it) -->
-    <TabFormTypeSwitch v-if="!form.id" v-model="form" />
     <TabFormRaw v-model="form" :errors="errors" :form-field-target-ids="formFieldTargetIds" />
-    <slot />
-    <template #footer-extra>
-      <slot name="footer-extra" />
-    </template>
   </FormPanel>
 </template>
 

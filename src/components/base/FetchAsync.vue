@@ -26,10 +26,11 @@ withDefaults(
 .fetch-async {
   display: contents;
 
-  &.asyncing {
-    pointer-events: none;
-    user-select: none;
-    opacity: v-bind('opacity');
+  &:deep(.asyncing *) {
+    pointer-events: none !important;
+    user-select: none !important;
+    cursor: wait !important;
+    opacity: v-bind('opacity') !important;
   }
 }
 </style>

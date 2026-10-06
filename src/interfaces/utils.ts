@@ -7,6 +7,8 @@ export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
 export type ExtractKeys<T, K extends T> = Extract<T, K>
 
+export type ExcludeKeys<T, K extends T> = Exclude<T, K>
+
 // LPi Date used in all apps
 export type LpiDate = string | Date | Date[] | string[] | null
 

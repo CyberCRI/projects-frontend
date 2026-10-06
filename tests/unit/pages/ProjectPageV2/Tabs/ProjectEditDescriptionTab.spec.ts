@@ -1,6 +1,7 @@
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
 import ProjectEditDescriptionTab from '~/pages/ProjectPageV2/Tabs/Description/ProjectEditDescriptionTab.vue'
+import { TranslatedProjectTabFactory } from '~~/tests/factories/projects-tabs.factory'
 import { OrganizationFactory } from '~~/tests/factories/organization.factory'
 import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
@@ -18,7 +19,7 @@ describe('ProjectEditDescriptionTab.vue', () => {
     organizationStore._current = OrganizationFactory.generate()
 
     const project = TranslatedProjectFactory.generate()
-    const props = { project }
+    const props = { project, tab: TranslatedProjectTabFactory.generate({ type: 'description' }) }
 
     const user = UserFactory.generate()
     const userStore = useUsersStore()

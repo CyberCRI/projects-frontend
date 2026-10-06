@@ -46,15 +46,15 @@ import type { GroupModel, HierarchyGroupModel } from 'shared-projects-frontend/m
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
-type Group = Omit<HierarchyGroupModel, 'children'> & {
+export type GroupPicker = Omit<HierarchyGroupModel, 'children'> & {
   hidden?: boolean
   disabled?: boolean
-  children: Group[]
+  children: GroupPicker[]
 }
 
 const props = withDefaults(
   defineProps<{
-    group: Group
+    group: GroupPicker
     selectedGroups?: {
       [key: GroupModel['id']]: boolean
     }

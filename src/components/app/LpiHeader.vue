@@ -227,6 +227,7 @@ export default {
     const { isAdmin, isFacilitator, isSuperAdmin } = usePermissions()
     const { locale, setLocale } = useNuxtI18n()
     const { isAutoTranslateActivated } = useAutoTranslate()
+    const organizationCode = useOrganizationCode()
     return {
       appHasChatbotPromptDb,
       projectCategoriesStore,
@@ -238,6 +239,7 @@ export default {
       locale,
       isAutoTranslateActivated,
       setLocale,
+      organizationCode,
     }
   },
 
@@ -586,7 +588,7 @@ export default {
         }
         // dont wait for termination, user update take a while
         // and we dont want the UI to freeze meanwhile
-        patchUser(this.usersStore.id, body)
+        patchUser(this.organizationCode, this.usersStore.id, body)
       }
 
       this.setLocale(lang)

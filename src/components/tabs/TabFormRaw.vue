@@ -1,35 +1,62 @@
 <script setup lang="ts">
-import { defaultProjectTabForm, useProjectTabForm } from '~/form/project-tabs'
-import type { ProjectTabForm } from 'shared-projects-frontend/models'
+import type { ProjectTabForm, ProjectTabType } from 'shared-projects-frontend/models'
+import type { GroupOption } from '~/components/base/button/GroupButton.vue'
+import GroupButton from '~/components/base/button/GroupButton.vue'
 import IconDrawer from '~/components/drawer/Icon/IconDrawer.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
+import HelpField from '~/components/base/form/HelpField.vue'
 import type { IconTabImageChoice } from '~/functs/IconImage'
-import type { UseFormResult } from '~/composables/useForm'
+import { defaultProjectTabForm } from '~/form/project-tabs'
+import { DEFAULT_ICONS_TABS } from '~/functs/constants'
 import { safeProjectIconTab } from '~/functs/projects'
+import type { ErrorObject } from '@vuelidate/core'
 import { ICONS_TABS } from '~/functs/IconImage'
-
-const model = defineModel<ProjectTabForm>({ default: defaultProjectTabForm })
-
-type TabFormFiledTargets = UseFormResult<
-  ProjectTabForm,
-  ProjectTabForm
->['formFieldTargetIds']['value']
-type TabFormError = UseFormResult<ProjectTabForm, ProjectTabForm>['errors']['value']
+import { isCustomTab } from '~/functs/tabs'
 
 withDefaults(
   defineProps<{
-    formFieldTargetIds?: TabFormFiledTargets
-    errors?: TabFormError
+    showType?: boolean
+    formFieldTargetIds?: Record<keyof ProjectTabForm, string>
+    errors?: Record<keyof ProjectTabForm, ErrorObject[]>
   }>(),
-  { formFieldTargetIds: () => ({}) as TabFormFiledTargets, errors: () => ({}) as TabFormError }
+  {
+    showType: false,
+    formFieldTargetIds: null,
+    errors: () => null,
+  }
 )
+
+const form = defineModel<ProjectTabForm>({ default: defaultProjectTabForm })
 
 const { stateModals, closeModals, toggleModals } = useModals({
   editIcon: false,
 })
 
-const { form } = useProjectTabForm({ model })
+const optionsType = computed<GroupOption[]>(
+  () =>
+    [
+      {
+        label: $t('tab.form.type.text.label'),
+        value: 'text',
+        title: $t('tab.form.type.text.help'),
+      },
+      {
+        label: $t('tab.form.type.blog.label'),
+        value: 'blog',
+        title: $t('tab.form.type.blog.help'),
+      },
+    ] satisfies Array<Omit<GroupOption, 'value'> & { value: ProjectTabType }>
+)
+
+const selectedTypeDescription = computed(
+  () => optionsType.value.find((option) => option.value === form.value.type)?.title
+)
+
+// reset icons is we change tab type
+const onChangeType = (type: ProjectTabForm['type']) => {
+  form.value.icon = DEFAULT_ICONS_TABS[type]
+}
 
 onBeforeMount(() => {
   form.value.icon = safeProjectIconTab(form.value.icon, form.value.type)
@@ -42,6 +69,17 @@ const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
 
 <template>
   <div class="list-container">
+    <!-- hide choices type if already created (you can't change type after create it) -->
+    <Field
+      v-if="(!form.id || showType) && isCustomTab(form.type)"
+      :label="$t('tab.form.type.label')"
+      required
+      :data-field-target="formFieldTargetIds?.type"
+    >
+      <GroupButton v-model="form.type" :options="optionsType" @update:model-value="onChangeType" />
+      <HelpField :description="selectedTypeDescription" />
+    </Field>
+
     <div class="inline-field">
       <Field
         :label="$t('tab.form.icon.label')"
@@ -53,7 +91,6 @@ const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
           class="tab-icon shadow-drop"
           :name="safeProjectIconTab(form.icon, form.type)"
           :title="$t('common.select')"
-          :data-field-target="formFieldTargetIds.icon"
           @click="toggleModals('editIcon')"
         />
         <FieldErrors :errors="errors?.icon" />
@@ -70,8 +107,8 @@ const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
         class="inline-title"
         :label="$t('tab.form.title.label')"
         required
-        :errors="errors.title"
-        :data-field-target="formFieldTargetIds.title"
+        :errors="errors?.title"
+        :data-field-target="formFieldTargetIds?.title"
       />
     </div>
 

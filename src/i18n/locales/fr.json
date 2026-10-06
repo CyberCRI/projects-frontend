@@ -2200,8 +2200,8 @@
     "placeholder-title": "Titre Sur place",
     "edit-category": "Modifier la catégorie.",
     "enable-tab": {
-      "label": "Permettre la création de nouveaux onglets",
-      "help": "Permet aux utilisateurs de créer de nouveaux onglets dans ce projet"
+      "label": "Permettre la création/édition de nouveaux onglets",
+      "help": "Permet aux utilisateurs de créer/éditer des onglets de ré-commande dans ce projet"
     }
   },
   "tips": {
@@ -2476,8 +2476,8 @@
       "error": "Une erreur s'est produite lors de la génération du PDF. Veuillez contacter un administrateur."
     },
     "template-update": {
-      "success": "modèle a été mis à jour avec succès",
-      "error": "Erreur lors de la mise à jour du modèle"
+      "error": "Erreur lors de la mise à jour du modèle",
+      "success": "Le modèle a été mis à jour avec succès, tous les projets liés seront mis à jour prochainement."
     },
     "template-create": {
       "success": "modèle a été créé avec succès",
@@ -3458,7 +3458,8 @@
       "label": "onglet | Tables",
       "not-enabled": {
         "admin": "La création d'onglets n'est pas activée par défaut. Cependant, en tant qu'administrateur, vous avez les autorisations requises pour accéder à cette fonctionnalité et créer de nouveaux onglets."
-      }
+      },
+      "settings": "Paramètres des onglets"
     },
     "item": {
       "delete-confirm": "Voulez-vous vraiment supprimer cet élément.",
@@ -3505,6 +3506,11 @@
       "title-content": {
         "label": "Titre complet",
         "required": "Le titre est requis."
+      },
+      "show_tab": {
+        "label": "Afficher l'onglet dans le projet.",
+        "hide": "Masquer",
+        "show": "Afficher"
       }
     },
     "toasts": {
@@ -3531,6 +3537,14 @@
       "item-create": {
         "success": "L'article a été créé avec succès.",
         "error": "Impossible de créer l'élément. Veuillez réessayer."
+      },
+      "tab-visibility": {
+        "success": "L'onglet a changé la visibilité avec succès.",
+        "error": "Impossible de modifier la visibilité de l'onglet. Veuillez réessayer."
+      },
+      "tab-order": {
+        "success": "L'onglet a été commandé avec succès.",
+        "error": "Il a échoué à commander l'onglet. Veuillez réessayer."
       }
     }
   }

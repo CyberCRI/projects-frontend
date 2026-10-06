@@ -52,7 +52,7 @@
 
     <TemplateFormSection
       :title="$t('template.title-project')"
-      :errors="haveError(errors.project_title, errors.project_purpose, errors.project_description)"
+      :errors="haveError(errors.project_title, errors.project_purpose)"
     >
       <TextInput
         v-model="form.project_title"
@@ -66,120 +66,58 @@
         :errors="errors.project_purpose"
         :data-field-target="formFieldTargetIds.project_purpose"
       />
-
-      <Field :label="$t('template.project-description')">
-        <TipTapEditor
-          v-model="form.project_description"
-          :save-image-callback="saveImageCallback"
-          mode="full"
-          class="w-full"
-          :errors="errors.project_description"
-          :data-field-target="formFieldTargetIds.project_description"
-        />
-      </Field>
     </TemplateFormSection>
 
-    <TemplateFormSection
-      :title="$t('template.title-blog')"
-      :icon="PROJECT_MODULE_ICON.blogs"
-      :errors="haveError(errors.blogentry_title, errors.blogentry_content)"
+    <Sortable
+      :key="sortableKeys"
+      :list="form.tabs || []"
+      :options="DRAG_OPTIONS"
+      group="category-children"
+      tag="transition-group"
+      :item-key="(tab) => `${tab.id || tab.uuid}-${tab.order}`"
+      @end="onDrag"
     >
-      <TextInput
-        v-model="form.blogentry_title"
-        :data-field-target="formFieldTargetIds.blogentry_title"
-        :label="$t('template.blog-title')"
-      />
-
-      <Field :label="$t('template.blog-content')">
-        <TipTapEditor
-          v-model="form.blogentry_content"
-          :save-image-callback="saveImageCallback"
-          mode="full"
-          class="w-full"
-          :errors="errors.blogentry_content"
-          :data-field-target="formFieldTargetIds.blogentry_content"
-        />
-      </Field>
-    </TemplateFormSection>
-
-    <TemplateFormSection
-      :title="$t('template.title-goal')"
-      :icon="PROJECT_MODULE_ICON.goals"
-      :errors="haveError(errors.goal_title, errors.goal_description)"
-    >
-      <TextInput
-        v-model="form.goal_title"
-        :label="$t('template.advancement-goal-title')"
-        :errors="errors.goal_title"
-        :data-field-target="formFieldTargetIds.goal_title"
-      />
-
-      <Field :label="$t('template.advancement-goal-content')">
-        <TipTapEditor
-          v-model="form.goal_description"
-          :save-image-callback="saveImageCallback"
-          data-test="template-advancement-goal-content-editor"
-          class="w-full"
-          mode="full"
-          :errors="errors.goal_description"
-          :data-field-target="formFieldTargetIds.goal_description"
-        />
-      </Field>
-    </TemplateFormSection>
-
-    <TemplateFormSection
-      :title="$t('template.title-comment')"
-      :icon="PROJECT_MODULE_ICON.comments"
-      :errors="haveError(errors.comment_content)"
-    >
-      <Field
-        :label="$t('template.comment')"
-        :data-field-target="formFieldTargetIds.comment_content"
-      >
-        <TipTapEditor
-          v-model="form.comment_content"
-          :save-image-callback="saveImageCallback"
-          class="comment-description w-full"
-          mode="full"
-          data-test="template-comment-editor"
-          :errors="errors.comment_content"
-        />
-      </Field>
-    </TemplateFormSection>
-
-    {{ JSON.stringify(formFieldTargetIds) }}
-
-    <template v-for="(tab, idx) in form.tabs || []">
-      <TemplateFormSection
-        v-if="tab"
-        :key="tab.id || tab.uuid"
-        can-delete
-        :opened="!tab.id"
-        :title="tab.title"
-        :errors="!!errors.tabs[0]?.$message?.[idx]?.length"
-        :icon="tab.icon"
-        @delete="onDeleteTab(idx)"
-      >
-        <TabFormTypeSwitch
-          :model-value="form.tabs[idx]"
-          :errors="errors.tabs[0]?.$message?.[idx]"
-          :data-field-target="formFieldTargetIds.tabs[idx]"
-          @update:model-value="updateTab(idx, $event)"
-        />
-        <TabFormRaw :model-value="form.tabs[idx]" @update:model-value="updateTab(idx, $event)" />
-        <br />
-        <h2 class="title-template">
-          {{ $t('tab.form.template.title') }}
-        </h2>
-        <TabItemFormRaw
-          :model-value="{
-            title: form.tabs[idx].title_item,
-            content: form.tabs[idx].content_item,
+      <template #item="{ element: tab, index }">
+        <TemplateFormSection
+          v-model:visibility="tab.show_tab"
+          :can-delete="isCustomTab(tab.type)"
+          :can-visibility="true"
+          :title="tab.title"
+          :errors="!!errors.tabs[0]?.$message?.[index]?.length"
+          :icon="tab.icon"
+          class="sortable"
+          :class="{
+            'visibility-hide': !tab.show_tab,
           }"
-          @update:model-value="onUpdateTemplate(idx, $event)"
-        />
-      </TemplateFormSection>
-    </template>
+          @delete="onDeleteTab(index)"
+        >
+          <template #left>
+            <IconImage class="icon skeletons-background sortable-icon" name="DotsGrid" />
+          </template>
+          <TabFormRaw
+            show-type
+            :model-value="form.tabs[index]"
+            :errors="errors.tabs[0]?.$message?.[index]"
+            :data-field-target="formFieldTargetIds.tabs[index]"
+            @update:model-value="updateTab(index, $event)"
+          />
+          <template v-if="tabHaveTemplate(form.tabs[index].type)">
+            <br />
+            <h2 class="title-template">
+              {{ $t('tab.form.template.title') }}
+            </h2>
+            <TabItemFormRaw
+              :show-title="tabHaveTemplateTitle(form.tabs[index].type)"
+              :model-value="{
+                title: form.tabs[index].title_item,
+                content: form.tabs[index].content_item,
+              }"
+              @update:model-value="onUpdateTemplate(index, $event)"
+            />
+          </template>
+        </TemplateFormSection>
+      </template>
+    </Sortable>
 
     <LpiButton btn-icon="Plus" class="my4 tab-add" :label="$t('tab.tab.add')" @click="addNewTab" />
 
@@ -202,7 +140,15 @@ import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import { Sortable } from 'sortablejs-vue3'
 
+import {
+  getTab,
+  isCustomTab,
+  sanitizeTabsTemplate,
+  tabHaveTemplate,
+  tabHaveTemplateTitle,
+} from '~/functs/tabs'
 import type {
   ProjectTabItemForm,
   TemplateForm,
@@ -214,10 +160,10 @@ import TabItemFormRaw from '~/components/tabs/TabItemFormRaw.vue'
 import SwitchInput from '~/components/base/form/SwitchInput.vue'
 import type { PropsDefinitions } from '~/composables/tiptap'
 import TabFormRaw from '~/components/tabs/TabFormRaw.vue'
-import { PROJECT_MODULE_ICON } from '~/functs/constants'
+import { isEqual, isNil, omit, sortBy } from 'es-toolkit'
 import Field from '~/components/base/form/Field.vue'
 import type { ErrorObject } from '@vuelidate/core'
-import { isEqual } from 'es-toolkit'
+import { deepToRaw } from '~/functs/utils'
 
 const props = withDefaults(
   defineProps<{
@@ -234,15 +180,47 @@ const emit = defineEmits<{
   isFormEqual: [boolean]
 }>()
 
+// sortable
+const DRAG_OPTIONS = {
+  animation: 200,
+  disabled: false,
+  ghostClass: 'child-ghost',
+}
+
 const { stateModals, openModals, closeModals } = useModals({ category: false })
+
+const { locale } = useNuxtI18n()
 
 // form utils
 const localeDefaultForm = () => {
-  return {
+  const localForm = {
     ...defaultTemplateForm(),
     ...(props.template || {}),
     tabs: [...(props?.template?.tabs || [])],
   }
+
+  localForm.tabs = sortBy(
+    sanitizeTabsTemplate(localForm.tabs, locale.value).map((tab) =>
+      isNil(tab.id) ? omit(tab, ['id']) : tab
+    ),
+    ['order']
+  )
+
+  const blogsTemplate = getTab(localForm.tabs, 'blogs')
+  blogsTemplate.title_item = localForm.blogentry_title
+  blogsTemplate.content_item = localForm.blogentry_content
+
+  const commentTemplate = getTab(localForm.tabs, 'comments')
+  commentTemplate.content_item = localForm.comment_content
+
+  const goalsTemplate = getTab(localForm.tabs, 'goals')
+  goalsTemplate.content_item = localForm.goal_description
+  goalsTemplate.title_item = localForm.goal_title
+
+  const descriptionTemplate = getTab(localForm.tabs, 'description')
+  descriptionTemplate.content_item = localForm.project_description
+
+  return structuredClone(deepToRaw(localForm))
 }
 const model = defineModel<TemplateForm>()
 const { form, errors, isValid, validate, cleanedData, reset, formFieldTargetIds } = useTemplateForm(
@@ -309,6 +287,25 @@ const onDeleteTab = (idx: number) => {
   tabs.splice(idx, 1)
   form.value.tabs = tabs
 }
+
+const onDrag = (ev) => {
+  const { oldIndex, newIndex } = ev
+
+  // // move old index element to new positions
+  const localForm: TemplateForm = deepToRaw(form.value)
+  const tabs = localForm.tabs
+  const [element] = tabs.splice(oldIndex, 1)
+  tabs.splice(newIndex, 0, element)
+
+  tabs.forEach((tab, idx) => (tab.order = idx))
+
+  reset(localForm)
+}
+
+// need to force sortable to reload list
+const sortableKeys = computed(() =>
+  form.value.tabs.map((tab) => `${tab.id || tab.uuid}-${tab.order}`).join('::')
+)
 </script>
 
 <style lang="scss" scoped>
@@ -330,5 +327,17 @@ const onDeleteTab = (idx: number) => {
 
 .tab-add {
   width: fit-content;
+}
+
+.sortable {
+  margin: 1rem 0;
+
+  &.visibility-hide {
+    opacity: 0.7;
+  }
+
+  .sortable-icon {
+    cursor: grab !important;
+  }
 }
 </style>
