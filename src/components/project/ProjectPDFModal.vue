@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { TranslatedProject } from 'shared-projects-frontend/models'
-import { DEFAULT_PDF_OPTIONS } from '~/composables/useProjectToPdf'
-import { PROJECT_MODULE_TITLE } from '~/functs/constants'
+import { getAllProjectTab } from '~/api/v2/project-tabs.service'
+import type { PDFChoies } from '~/composables/useProjectToPdf'
+import { textIsEmpty } from '~/functs/tiptap'
+import { sanitizeTabs } from '~/functs/tabs'
 
 const props = defineProps<{
   project: TranslatedProject
@@ -10,10 +12,35 @@ const emit = defineEmits<{
   close: []
 }>()
 
+const { t, locale } = useNuxtI18n()
 const toaster = useToaster()
-const { t } = useNuxtI18n()
 const asyncing = ref(false)
-const form = ref(structuredClone(DEFAULT_PDF_OPTIONS))
+
+const organizationCode = useOrganizationCode()
+const { data: tabs, isLoading } = getAllProjectTab(
+  organizationCode,
+  computed(() => props.project.id),
+  {
+    default: () => [],
+    uniqueKey: 'pdf',
+    paginationConfig: {
+      limit: 999,
+    },
+  }
+)
+
+const allTabs = computed(() =>
+  sanitizeTabs(tabs.value, props.project.modules, locale.value)
+    .map((tab) => {
+      if (tab.type === 'description') {
+        tab.modules.items = textIsEmpty(props.project.$t.description) ? 0 : 1
+      }
+      return tab
+    })
+    .filter((tab) => tab.show_tab && tab.modules.items > 0)
+)
+
+const form = ref<PDFChoies>([])
 
 // generate PDF
 const onGeneratePDF = () => {
@@ -30,11 +57,26 @@ const onGeneratePDF = () => {
     })
 }
 
-// add resources in modules (concat links/files)
-const modules = computed(() => ({
-  ...props.project.modules,
-  resources: props.project.modules.files + props.project.modules.links,
-}))
+watch(
+  () => [allTabs.value, isLoading.value],
+  () => {
+    if (!isLoading.value) {
+      const newForm: PDFChoies = []
+      allTabs.value.forEach((tab) => {
+        newForm.push({
+          visibility: true,
+          tab,
+        })
+      })
+      form.value = newForm
+      // if not new tabs is enabled, auto confirm generate pdf
+      if (newForm.length === 0) {
+        onGeneratePDF()
+      }
+    }
+  },
+  { immediate: true, deep: true }
+)
 </script>
 
 <template>
@@ -50,16 +92,16 @@ const modules = computed(() => ({
         {{ $t('pdf.choices') }}
       </h3>
       <ul class="list-options-pdf">
-        <template v-for="(value, name) in form">
-          <!-- hide choices if project a empty modules values -->
-          <li v-if="modules[name] > 0" :key="name">
-            <LpiCheckbox
-              v-model="form[name]"
-              :label="$t(PROJECT_MODULE_TITLE[name], 10)"
-              as-button
-            />
-          </li>
-        </template>
+        <!-- hide choices if project a empty modules values -->
+        <TemplateFormSection
+          v-for="(info, id) in form"
+          :key="id"
+          v-model:visibility="info.visibility"
+          :icon="info.tab.icon"
+          :title="info.tab.$t.title"
+          can-visibility
+          :content-expandable="false"
+        />
       </ul>
     </div>
   </ConfirmModal>

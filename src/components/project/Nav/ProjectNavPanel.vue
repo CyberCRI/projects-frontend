@@ -95,7 +95,12 @@
     </FetchLoader>
 
     <!-- drawer/modal -->
-    <ProjectPDFModal v-if="stateModals.pdf" :project="project" @close="closeModals('pdf')" />
+    <ProjectPDFModal
+      v-if="stateModals.pdf"
+      :project="project"
+      :tabs="projectTabs"
+      @close="closeModals('pdf')"
+    />
 
     <ConfirmModal
       v-if="stateModals.duplicate"
