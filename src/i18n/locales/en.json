@@ -3402,6 +3402,7 @@
     "title-exists": "This title already exists",
     "description": "Description",
     "url": "URL",
+    "auth-header": "Authorization header type",
     "transport": "Transport",
     "deleted": "The MCP was deleted.",
     "delete-error": "Error deleting the MCP",

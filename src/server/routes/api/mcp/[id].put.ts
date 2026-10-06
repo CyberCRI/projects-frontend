@@ -26,6 +26,7 @@ export default defineLazyEventHandler(() => {
       // command: body.command,
       // args: body.args,
       apiKey: body.apiKey,
+      authHeader: body.authHeader,
     })
 
     console.log('data', data)

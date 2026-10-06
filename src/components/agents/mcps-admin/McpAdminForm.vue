@@ -28,6 +28,7 @@ const defaultForm = (mcp?) => ({
   description: md2html(mcp?.description ?? ''),
   transport: mcp?.transport ?? '',
   url: mcp?.url ?? '',
+  authHeader: mcp?.authHeader ?? null,
   // TODO:
   // command: mcp?.command ?? '',
   // args: mcp?.args ?? '',
@@ -49,9 +50,6 @@ const form = ref(defaultForm())
 const rules = computed(() => ({
   title: {
     required: helpers.withMessage(t('agent-mcps.form.title-required'), required),
-  },
-  description: {
-    required: helpers.withMessage(t('agent-mcps.form.description-required'), requiredContent),
   },
   transport: {
     required: helpers.withMessage(t('agent-mcps.form.transport-required'), requiredContent),
@@ -84,10 +82,15 @@ watch(
 )
 
 const transportOptions = ref([
-  { label: 'SSE', value: 'sse', dataTest: 'transort-option-sse' },
-  { label: 'HTTP', value: 'http', dataTest: 'transort-option-http' },
+  { label: 'SSE', value: 'sse', dataTest: 'transport-option-sse' },
+  { label: 'HTTP', value: 'http', dataTest: 'transport-option-http' },
   // TODO: ?
   //{ label: 'StdIo', value: 'stdio', dataTest: 'transort-option-stdio' },
+])
+
+const authHeaderOptions = ref([
+  { label: 'Bearer', value: 'bearer', dataTest: 'auth-header-option-bearer' },
+  { label: 'x-api-key', value: 'xapi', dataTest: 'auth-header-option-xapi' },
 ])
 
 const isAsyncing = ref(false)
@@ -204,9 +207,7 @@ const testConfig = async () => {
         v-model.trim="form.description"
         class="input-field content-editor"
         mode="medium"
-        @blur="v$.description.$validate"
       />
-      <FieldErrors :errors="v$.description.$errors" />
     </div>
     <div class="form-section">
       <TextInput v-model.trim="form.url" :label="$t('agent-mcps.url')" @blur="v$.url.$validate" />
@@ -219,6 +220,12 @@ const testConfig = async () => {
           :options="transportOptions"
           @change="v$.transport.$validate"
         />
+      </Field>
+    </div>
+    authHeaderOptions
+    <div class="form-section">
+      <Field :label="$t('agent-mcps.auth-header')">
+        <LpiSelect v-model="form.authHeader" :options="authHeaderOptions" />
       </Field>
     </div>
     <div class="form-section">

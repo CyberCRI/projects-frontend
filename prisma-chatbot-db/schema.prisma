@@ -67,6 +67,11 @@ enum TransportType {
   http
 }
 
+enum AuthHeaderType {
+  bearer
+  xapi
+}
+
 model Mcp {
   id      String @id
   orgCode String
@@ -78,6 +83,7 @@ model Mcp {
   command     String
   args        String
 
+  authHeader       AuthHeaderType?
   apiKeyCiphertext Bytes? // IV + authTag + encrypted payload
   apiKeyVersion    Int?
   apiKeyLast4      String?

@@ -33,8 +33,14 @@ export default async function getMcpTools(
     } else {
       aConfig['url'] = mcp.url
       if (mcp.apiKey) {
-        aConfig['headers'] = {
-          Authorization: `Bearer ${mcp.apiKey}`,
+        if (mcp.authHeader === 'bearer') {
+          aConfig['headers'] = {
+            Authorization: `Bearer ${mcp.apiKey}`,
+          }
+        } else {
+          aConfig['headers'] = {
+            'x-api-key': mcp.apiKey,
+          }
         }
       }
       traceMcp(
