@@ -2,8 +2,12 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 
 // TODO: blog are disabled for now (as per client request) keep code for later use
 
+import type {
+  ProjectTabType,
+  TranslatedProject,
+  TranslatedProjectTab,
+} from 'shared-projects-frontend/models'
 import addPageLinkedProjectsFactory from '~/composables/project-pdf-components/addPageLinkedProjects'
-import type { TranslatedProject, TranslatedProjectTab } from 'shared-projects-frontend/models'
 import addAdditionalPage from '~/composables/project-pdf-components/addPageAdditional'
 import addPageResourceFactory from '~/composables/project-pdf-components/PageResource'
 import addGoalsSection from '~/composables/project-pdf-components/addGoalsSection.ts'
@@ -14,6 +18,19 @@ import addPageBlogFactory from '~/composables/project-pdf-components/PageBlog'
 import addPageOneFactory from '~/composables/project-pdf-components/PageOne'
 import { fetchPdf } from '~/composables/pdf-helpers/usePdfHelpers'
 import { Doc } from '~/composables/pdf-helpers/doc-builder'
+
+// list of enabled tabs to generate in pdf
+export const ENABLE_TAB_TYPE_PDF: ProjectTabType[] = [
+  'description',
+  'members',
+  'groups',
+  'blogs',
+  'resources',
+  'linked_projects',
+  'goals',
+  'blog',
+  'text',
+]
 
 export type PDFChoies = {
   visibility: boolean
@@ -76,6 +93,8 @@ export const useProjectToPdf = async (project: TranslatedProject, options: PDFCh
         mainDoc.add(await addAdditionalPage(project, option.tab))
         break
       }
+      default:
+        console.error(`type ${option.tab.type} is not enabled in pdf generator`)
     }
   }
 
