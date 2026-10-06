@@ -43,15 +43,18 @@ export const useProjectTabs = (
 
   const { isAdmin } = usePermissions()
   // we add null in projetId, projectSlugOrId is slug or id, so we wait to have project to fetch
-  const { canCreateTab, canCreateReview } = usePermissionProject(projectSlugOrId, project)
+  const { canCreateTab, canCreateReview, isMember } = usePermissionProject(projectSlugOrId, project)
+  const isMemberOrAdmin = computed(() => isMember.value || isAdmin.value)
 
   const TabsDisplay = computed(() => {
     const display = allTabs.value.map((tab) => {
       let condition = tab.show_tab && (!!tab.modules.items || !!modules.value[tab.type])
 
       let tabType = tab.type as string
-      if (tabType === 'comments' || tabType === 'messages') {
+      if (tabType === 'comments') {
         condition = true
+      } else if (tabType === 'messages') {
+        condition = isMemberOrAdmin.value
       } else if (tabType === 'linked_projects') {
         tabType = 'linked-projects'
       } else if (tabType === 'reviews') {
@@ -105,10 +108,8 @@ export const useProjectTabs = (
     const display = allTabs.value.map((tab) => {
       let condition = tab.show_tab
       let tabType: string = tab.type
-      if (tabType === 'comments') {
+      if (tabType === 'comments' || tabType === 'messages') {
         condition = false
-      } else if (tabType === 'messages') {
-        condition = isAdmin.value
       } else if (tabType === 'reviews') {
         condition = canCreateReview && project.value.life_status === 'toreview'
       } else if (tabType === 'linked_projects') {
