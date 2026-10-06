@@ -895,7 +895,8 @@
     },
     "blog": {
       "title": "Se requiere el campo de título",
-      "description": "El campo de descripción es necesario"
+      "description": "El campo de descripción es necesario",
+      "created_at": "El campo de la fecha es necesario"
     },
     "resources": {
       "title": "Se requiere el campo de título",

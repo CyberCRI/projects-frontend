@@ -895,7 +895,8 @@
     },
     "blog": {
       "title": "Cal el camp de títol",
-      "description": "Cal el camp de descripció"
+      "description": "Cal el camp de descripció",
+      "created_at": "Cal el camp de data"
     },
     "resources": {
       "title": "Cal el camp de títol",

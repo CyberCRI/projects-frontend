@@ -895,7 +895,8 @@
     },
     "blog": {
       "title": "Le champ titre est obligatoire",
-      "description": "Le champ description est obligatoire"
+      "description": "Le champ description est obligatoire",
+      "created_at": "Le champ de date est requis"
     },
     "resources": {
       "title": "Le champ titre est obligatoire",

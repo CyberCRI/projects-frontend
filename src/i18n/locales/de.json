@@ -895,7 +895,8 @@
     },
     "blog": {
       "title": "Das Titelfeld ist erforderlich",
-      "description": "Das Beschreibungsfeld ist erforderlich"
+      "description": "Das Beschreibungsfeld ist erforderlich",
+      "created_at": "Das Datumsfeld ist erforderlich"
     },
     "resources": {
       "title": "Das Titelfeld ist erforderlich",
