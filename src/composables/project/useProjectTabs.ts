@@ -11,6 +11,7 @@ import { projectSkeleton } from '@/skeletons/project.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import { isCustomTab, sanitizeTabs } from '~/functs/tabs'
 import { safeProjectIconTab } from '~/functs/projects'
+import useUsersStore from '~/stores/useUsers'
 import { textIsEmpty } from '~/functs/tiptap'
 
 export const useProjectTabs = (
@@ -46,6 +47,8 @@ export const useProjectTabs = (
   const { canCreateTab, canCreateReview, isMember } = usePermissionProject(projectSlugOrId, project)
   const isMemberOrAdmin = computed(() => isMember.value || isAdmin.value)
 
+  const { isConnected } = useUsersStore()
+
   const TabsDisplay = computed(() => {
     const display = allTabs.value.map((tab) => {
       let condition = tab.show_tab && (!!tab.modules.items || !!modules.value[tab.type])
@@ -58,7 +61,7 @@ export const useProjectTabs = (
       } else if (tabType === 'linked_projects') {
         tabType = 'linked-projects'
       } else if (tabType === 'reviews') {
-        condition = modules.value.reviews && project.value.life_status === 'toreview'
+        condition = isConnected && modules.value.reviews && project.value.life_status === 'toreview'
       } else if (tabType === 'description') {
         condition = !textIsEmpty(project.value.$t.description)
       }
