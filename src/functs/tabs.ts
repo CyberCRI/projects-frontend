@@ -43,7 +43,7 @@ export const defaultTab = (key: ProjectTab['type'], locale: Language = null) => 
     {
       ...defaultProjectTabForm(),
       type: key,
-      title: t(PROJECT_MODULE_TITLE[key]) + ' --orig',
+      title: t(PROJECT_MODULE_TITLE[key]),
       icon: PROJECT_MODULE_ICON[key],
       show_preview: true,
       show_tab: true,
