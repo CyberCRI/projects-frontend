@@ -4,12 +4,11 @@ import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
 
-import type { TranslatedProject } from 'shared-projects-frontend/models'
+import type { TranslatedProject, TranslatedProjectTab } from 'shared-projects-frontend/models'
 import { textIsEmpty } from '~/functs/tiptap'
 
-export default async function addPageDescriptionFactory(project: TranslatedProject) {
-  const { t } = useNuxtI18n()
-  let fixedDescription = await convertImages(project.description)
+export async function addPageTextFactory(tab: TranslatedProjectTab, content: string) {
+  let fixedDescription = await convertImages(content)
   // TODO: replace with a link to video ?
   fixedDescription = fixedDescription.replaceAll(/<video.*?>.*?<\/video>/g, '')
 
@@ -20,7 +19,7 @@ export default async function addPageDescriptionFactory(project: TranslatedProje
     this.addContainer(Page)
       .addContainer(PageTitle)
       .add(function (this: PageTitle) {
-        this.content.push(t('form.description'))
+        this.content.push(tab.$t.title)
         this.styles.add(tiptapContentStyles)
       })
       .render()
@@ -31,4 +30,11 @@ export default async function addPageDescriptionFactory(project: TranslatedProje
       })
       .render()
   }
+}
+
+export default async function addPageDescriptionFactory(
+  project: TranslatedProject,
+  tab: TranslatedProjectTab
+) {
+  return addPageTextFactory(tab, project.$t.description)
 }

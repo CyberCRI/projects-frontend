@@ -1,13 +1,14 @@
 import addGoalsSectionFactory from '~/composables/project-pdf-components/addGoalsSectionFactory'
-import type { TranslatedProject } from 'shared-projects-frontend/models'
+import type { TranslatedProject, TranslatedProjectTab } from 'shared-projects-frontend/models'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
 import { getProjectGoals } from 'shared-projects-frontend/apis'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
 
-export default async function addGoalsSection(project: TranslatedProject) {
-  const { t } = useNuxtI18n()
-
+export default async function addGoalsSection(
+  project: TranslatedProject,
+  tab: TranslatedProjectTab
+) {
   const { translateGoals } = useAutoTranslate()
 
   const goals = unref(translateGoals((await getProjectGoals(project.id)).results))
@@ -33,7 +34,7 @@ export default async function addGoalsSection(project: TranslatedProject) {
     this.addContainer(Page)
       .addContainer(PageTitle)
       .add(function (this: PageTitle) {
-        this.content.push(t('goal.goals'))
+        this.content.push(tab.$t.title)
       })
       .render()
       .add(addGoalsSection)

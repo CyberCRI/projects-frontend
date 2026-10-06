@@ -895,7 +895,8 @@
     },
     "blog": {
       "title": "Het titelveld is vereist",
-      "description": "Het beschrijvingsveld is vereist"
+      "description": "Het beschrijvingsveld is vereist",
+      "created_at": "Het datumveld is vereist"
     },
     "resources": {
       "title": "Het titelveld is vereist",

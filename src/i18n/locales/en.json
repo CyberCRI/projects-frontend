@@ -898,7 +898,8 @@
     },
     "blog": {
       "title": "The title field is required",
-      "description": "The description field is required"
+      "description": "The description field is required",
+      "created_at": "The date field is required"
     },
     "resources": {
       "title": "The title field is required",

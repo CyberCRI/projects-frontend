@@ -895,7 +895,8 @@
     },
     "blog": {
       "title": "Tiitliväli on nõutav",
-      "description": "Kirjeldusväli on nõutav"
+      "description": "Kirjeldusväli on nõutav",
+      "created_at": "Kuupäevaväli on nõutav"
     },
     "resources": {
       "title": "Tiitliväli on nõutav",

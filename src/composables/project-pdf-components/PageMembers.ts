@@ -1,4 +1,8 @@
-import type { TranslatedProjectMember, TranslatedProject } from 'shared-projects-frontend/models'
+import type {
+  TranslatedProjectMember,
+  TranslatedProject,
+  TranslatedProjectTab,
+} from 'shared-projects-frontend/models'
 import addTeamSectionFactory from '~/composables/project-pdf-components/addTeamSectionFactory'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import { getProjectMembers } from 'shared-projects-frontend/apis'
@@ -7,8 +11,10 @@ import { Page } from '~/composables/pdf-helpers/doc-builder'
 import { roleI18n } from '~/functs/rolesUtils'
 import { groupBy } from 'es-toolkit'
 
-export default async function addPageMembersFactory(project: TranslatedProject) {
-  const { t } = useNuxtI18n()
+export default async function addPageMembersFactory(
+  project: TranslatedProject,
+  tab: TranslatedProjectTab
+) {
   const { translateUsers } = useAutoTranslate()
 
   // add limit to 999 to have all users
@@ -38,7 +44,7 @@ export default async function addPageMembersFactory(project: TranslatedProject) 
     this.addContainer(Page)
       .addContainer(PageTitle)
       .add(function (this: PageTitle) {
-        this.content.push(t('team.team'))
+        this.content.push(tab.$t.title)
       })
       .render()
       .add(addOwnerTeamSection)

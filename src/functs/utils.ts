@@ -22,7 +22,8 @@ export const deepToRaw = (value: any, seen = new WeakMap()) => {
     typeof value !== 'object' ||
     value === null ||
     value instanceof Blob ||
-    value instanceof File
+    value instanceof File ||
+    value instanceof Date
   ) {
     return value
   }
