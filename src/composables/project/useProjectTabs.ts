@@ -11,6 +11,7 @@ import { projectSkeleton } from '@/skeletons/project.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import { isCustomTab, sanitizeTabs } from '~/functs/tabs'
 import { safeProjectIconTab } from '~/functs/projects'
+import { textIsEmpty } from '~/functs/tiptap'
 
 export const useProjectTabs = (
   projectSlugOrId: ComputedRef<ProjectSlugOrId>, // NOT slug (permisions strings se only id)
@@ -55,6 +56,8 @@ export const useProjectTabs = (
         tabType = 'linked-projects'
       } else if (tabType === 'reviews') {
         condition = modules.value.reviews && project.value.life_status === 'toreview'
+      } else if (tabType === 'description') {
+        condition = !textIsEmpty(project.value.$t.description)
       }
 
       const base = {

@@ -2,14 +2,7 @@
   <div class="project-summary">
     <ProjectHeaderV2 :project="project" class="project-header v2" />
     <FetchLoader :status="status" :error="error" only-error skeleton>
-      <template v-for="tab in allTabs">
-        <ProjectTabItemPreview
-          v-if="tab.modules.items"
-          :key="tab.id"
-          :tab="tab"
-          :project="project"
-        />
-      </template>
+      <ProjectTabItemPreview v-for="tab in allTabs" :key="tab.id" :tab="tab" :project="project" />
     </FetchLoader>
   </div>
 </template>
@@ -44,7 +37,7 @@ const {
 
 const allTabs = computed(() =>
   sanitizeTabs(tabs.value, props.project.modules, locale.value).filter(
-    (tab) => tab.show_preview && tab.show_tab
+    (tab) => tab.show_preview && tab.show_tab && tab.modules.items > 0
   )
 )
 </script>
