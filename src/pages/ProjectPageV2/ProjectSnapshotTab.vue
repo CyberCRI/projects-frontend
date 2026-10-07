@@ -36,9 +36,12 @@ const {
 })
 
 const allTabs = computed(() =>
-  sanitizeTabs(tabs.value, props.project.modules, locale.value).filter(
-    (tab) => tab.show_preview && tab.show_tab && tab.modules.items > 0
-  )
+  sanitizeTabs(
+    tabs.value,
+    props.project.modules,
+    locale.value,
+    props.project.$t.description
+  ).filter((tab) => tab.show_preview && tab.show_tab && tab.modules.items > 0)
 )
 </script>
 

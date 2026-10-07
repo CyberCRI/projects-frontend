@@ -15,9 +15,9 @@ import {
   PROJECT_TABS,
 } from '~/functs/constants'
 import { translateProjectTab } from 'shared-projects-frontend/translate'
+import { getFirstTextNotEmpty, textIsEmpty } from '~/functs/tiptap'
 import { defaultProjectTabForm } from '~/form/project-tabs'
 import { defaultTemplateTabForm } from '~/form/template'
-import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import { omit, sortBy } from 'es-toolkit'
 
 // check if tabtyp is a custom tab (not projectTab "fixed")
@@ -75,7 +75,8 @@ export const getTab = <T extends { id?: ProjectTab['id']; type?: ProjectTab['typ
 export const sanitizeTabs = (
   tabs: TranslatedProjectTab[],
   modules: ProjectModel['modules'],
-  locale: Language = null
+  locale: Language = null,
+  projectDescription: string | null = null
 ) => {
   const customTabs: TranslatedProjectTab[] = []
 
@@ -92,6 +93,13 @@ export const sanitizeTabs = (
 
   Object.keys(PROJECT_TABS).forEach((type: ProjectTabType) => addTab(type))
   customTabs.push(...tabs)
+
+  // this is a fix to set number items for descriptions projects (need change to backend)
+  tabs.forEach((tab) => {
+    if (tab.type === 'description') {
+      tab.modules.items = textIsEmpty(projectDescription) ? 0 : 1
+    }
+  })
 
   return sortBy(customTabs, [
     'order',

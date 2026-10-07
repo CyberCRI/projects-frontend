@@ -38,9 +38,11 @@ export const useProjectTabs = (
       limit: 999,
     },
   })
-  const allTabs = computed(() => {
-    return sanitizeTabs(tabs.value, modules.value, locale.value).filter((tab) => tab.show_tab)
-  })
+  const allTabs = computed(() =>
+    sanitizeTabs(tabs.value, modules.value, locale.value, project?.value?.$t?.description).filter(
+      (tab) => tab.show_tab
+    )
+  )
 
   const { isAdmin } = usePermissions()
   // we add null in projetId, projectSlugOrId is slug or id, so we wait to have project to fetch
