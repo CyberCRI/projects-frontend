@@ -37,7 +37,7 @@ const notEditable = computed(() => t(`profile.edit.${props.documentType}.no-edit
         :document-type="documentType"
         :user="user"
       />
-      <EmptyLabel />
+      <EmptyLabel v-else />
     </template>
     <template v-else>
       <div class="documents-warning">
