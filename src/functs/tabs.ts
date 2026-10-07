@@ -185,26 +185,3 @@ export const getTemplateUUID = (
   }
   return { title_item: '', content_item: '' }
 }
-
-/**
- * this is a fix for descriptions tabs when is not alreadyset
- *
- * @function
- * @name fixDescriptionTabs
- * @kind variable
- * @param {TranslatedProjectTab[]} tabs
- * @param {string | null} description
- * @returns {TranslatedProjectTab[]}
- * @exports
- */
-export const fixDescriptionTabs = (
-  tabs: TranslatedProjectTab[],
-  description: string | null
-): TranslatedProjectTab[] => {
-  return tabs.map((tab) => {
-    if (tab.type === 'description') {
-      tab.modules.items = textIsEmpty(description) ? 0 : 1
-    }
-    return tab
-  })
-}
