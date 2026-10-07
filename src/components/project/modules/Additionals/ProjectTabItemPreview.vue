@@ -7,24 +7,16 @@ import type { TranslatedProjectTab, TranslatedProject } from 'shared-projects-fr
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import useUsersStore from '~/stores/useUsers'
-import { textIsEmpty } from '~/functs/tiptap'
-
 const props = defineProps<{ project: TranslatedProject; tab: TranslatedProjectTab }>()
 const { isAdmin } = usePermissions()
 const { isMember } = usePermissionProject(computed(() => props.project.id))
 
 const isMemberOrAdmin = computed(() => isMember.value || isAdmin.value)
 const { isConnected } = useUsersStore()
-
-const descripitonEmpty = computed(() => textIsEmpty(props.project.$t.description))
 </script>
 
 <template>
-  <ProjectDescriptionPreview
-    v-if="tab.type === 'description' && !descripitonEmpty"
-    :project="project"
-    :tab="tab"
-  />
+  <ProjectDescriptionPreview v-if="tab.type === 'description'" :project="project" :tab="tab" />
   <ProjectMembersPreview v-else-if="tab.type === 'members'" :project="project" :tab="tab" />
   <ProjectGroupsPreview v-else-if="tab.type === 'groups'" :project="project" :tab="tab" />
   <ProjectLocationsPreview v-else-if="tab.type === 'locations'" :project="project" :tab="tab" />

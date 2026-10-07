@@ -4,7 +4,6 @@ import type { TranslatedProject } from 'shared-projects-frontend/models'
 import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'
 import { factoryPagination } from '~/skeletons/base.skeletons'
-import { textIsEmpty } from '~/functs/tiptap'
 import { sanitizeTabs } from '~/functs/tabs'
 
 const props = defineProps<{
@@ -36,13 +35,7 @@ const {
 )
 
 const allTabs = computed(() =>
-  sanitizeTabs(tabs.value, props.project.modules, locale.value)
-    .map((tab) => {
-      if (tab.type === 'description') {
-        tab.modules.items = textIsEmpty(props.project.$t.description) ? 0 : 1
-      }
-      return tab
-    })
+  sanitizeTabs(tabs.value, props.project.modules, locale.value, props.project.$t.description)
     // remove not show tab and no items availible
     .filter((tab) => tab.show_tab && tab.modules.items > 0)
     .filter((tab) => ENABLE_TAB_TYPE_PDF.includes(tab.type))
