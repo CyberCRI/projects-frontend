@@ -95,7 +95,7 @@ export const sanitizeTabs = (
   customTabs.push(...tabs)
 
   // this is a fix to set number items for descriptions projects (need change to backend)
-  tabs.forEach((tab) => {
+  customTabs.forEach((tab) => {
     if (tab.type === 'description') {
       tab.modules.items = textIsEmpty(projectDescription) ? 0 : 1
     }
