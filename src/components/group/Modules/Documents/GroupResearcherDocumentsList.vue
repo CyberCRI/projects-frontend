@@ -15,6 +15,7 @@
 import type {
   TranslatedPeopleGroupModel,
   ResearcherDocumentType,
+  QueryFilterDocument,
 } from 'shared-projects-frontend/models'
 
 import {
@@ -38,7 +39,9 @@ const props = withDefaults(
 const orgaCode = useOrganizationCode()
 
 const groupId = computed(() => props.group.id)
-const query = ref({})
+const query = ref<QueryFilterDocument>({
+  modules: 'none',
+})
 const onFilter = (filters) => (query.value = { ...filters })
 
 const { data: documentAnalytics, status: statusAnalytics } = getGroupResearchDocumentAnalytics(

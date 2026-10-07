@@ -12,7 +12,11 @@
 </template>
 
 <script setup lang="ts">
-import type { ResearcherDocumentType, TranslatedUserModel } from 'shared-projects-frontend/models'
+import type {
+  QueryFilterDocument,
+  ResearcherDocumentType,
+  TranslatedUserModel,
+} from 'shared-projects-frontend/models'
 
 import {
   getUserResearchDocument,
@@ -35,7 +39,9 @@ const props = withDefaults(
 const orgaCode = useOrganizationCode()
 
 const researchId = computed(() => props.user.researcher.id)
-const query = ref({})
+const query = ref<QueryFilterDocument>({
+  modules: 'none',
+})
 const onFilter = (filters) => (query.value = { ...filters })
 
 const { data: documentAnalytics, status: statusAnalytics } = getUserResearchDocumentAnalytics(
