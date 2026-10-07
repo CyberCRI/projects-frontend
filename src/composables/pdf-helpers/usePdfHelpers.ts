@@ -59,6 +59,10 @@ export async function croppedImageData({ ratio, imgDataUrl, imageSizes }) {
         reader.readAsDataURL(blob)
       }, 'image/png')
     }
+    img.onerror = () => {
+      console.error('Error reading blob as data URL for image resizing')
+      resolve('')
+    }
     img.src = imgDataUrl
   })
 }
