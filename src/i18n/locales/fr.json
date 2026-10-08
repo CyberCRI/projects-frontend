@@ -1625,11 +1625,11 @@
       },
       "publications": {
         "tab": "Publications",
-        "no-editable": "L'édition des publications seront bientôt disponibles"
+        "no-editable": "L'édition des publications sera bientôt disponible"
       },
       "conferences": {
         "tab": "Conférences",
-        "no-editable": "L'édition des conférences seront bientôt disponibles"
+        "no-editable": "L'édition des conférences sera bientôt disponible"
       }
     },
     "go-to-page": "Voir la page du profil",
