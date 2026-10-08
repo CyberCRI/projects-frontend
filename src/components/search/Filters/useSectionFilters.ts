@@ -1,15 +1,13 @@
+import type { QueryFilterSearch } from 'shared-projects-frontend/models'
 import type { IconImageChoice } from '~/functs/IconImage'
 
+type SearchSection = QueryFilterSearch['types'][number]
 export const ALL_SECTION_KEY = 'all'
-export const PROJECT_SECTION_KEY = 'projects'
-export const GROUP_SECTION_KEY = 'groups'
-export const PEOPLE_SECTION_KEY = 'people'
+export const PROJECT_SECTION_KEY: SearchSection = 'project'
+export const GROUP_SECTION_KEY: SearchSection = 'people_group'
+export const PEOPLE_SECTION_KEY: SearchSection = 'user'
 
-export type ALL_SECTIONS =
-  | typeof ALL_SECTION_KEY
-  | typeof PROJECT_SECTION_KEY
-  | typeof GROUP_SECTION_KEY
-  | typeof PEOPLE_SECTION_KEY
+export type AllSearchSections = 'all' | SearchSection
 
 type Section = {
   action: (key: string) => void
@@ -24,14 +22,24 @@ type Section = {
   isUnused: boolean
 }
 
-export default function useSectionFilters({ selectedSection }) {
+export default function useSectionFilters({
+  selectedSection,
+}: {
+  selectedSection: Ref<AllSearchSections>
+}) {
   const { t } = useNuxtI18n()
 
   function toggleSectionFilter(key) {
+    console.log(key, selectedSection.value)
     selectedSection.value = selectedSection.value == key ? ALL_SECTION_KEY : key
   }
 
   const sectionFilters = computed(() => {
+    const isAllSection = !selectedSection.value || selectedSection.value === ALL_SECTION_KEY
+    const isProjectSection = selectedSection.value === PROJECT_SECTION_KEY
+    const isGroupSection = selectedSection.value === GROUP_SECTION_KEY
+    const isUserSection = selectedSection.value === PEOPLE_SECTION_KEY
+
     return {
       [ALL_SECTION_KEY]: {
         action: toggleSectionFilter,
@@ -41,7 +49,7 @@ export default function useSectionFilters({ selectedSection }) {
         label: t('search.all-section'),
         dataTest: 'all-sections-button',
         condition: false,
-        isSelected: !selectedSection.value || selectedSection.value === ALL_SECTION_KEY,
+        isSelected: isAllSection,
         isUnused: false,
       },
       [PROJECT_SECTION_KEY]: {
@@ -51,9 +59,8 @@ export default function useSectionFilters({ selectedSection }) {
         leftIcon: 'Briefcase',
         label: t('search.projects-section'),
         dataTest: 'project-section-button',
-        condition:
-          selectedSection.value == ALL_SECTION_KEY || selectedSection.value == PROJECT_SECTION_KEY,
-        isSelected: selectedSection.value === PROJECT_SECTION_KEY,
+        condition: isAllSection || isProjectSection,
+        isSelected: isProjectSection,
         isUnused: false,
       },
       [GROUP_SECTION_KEY]: {
@@ -63,9 +70,8 @@ export default function useSectionFilters({ selectedSection }) {
         leftIcon: 'PeopleGroup',
         label: t('search.groups'),
         dataTest: 'group-section-button',
-        condition:
-          selectedSection.value == ALL_SECTION_KEY || selectedSection.value == GROUP_SECTION_KEY,
-        isSelected: selectedSection.value === GROUP_SECTION_KEY,
+        condition: isAllSection || isGroupSection,
+        isSelected: isGroupSection,
         isUnused: false,
       },
       [PEOPLE_SECTION_KEY]: {
@@ -74,9 +80,8 @@ export default function useSectionFilters({ selectedSection }) {
         leftIcon: 'Account',
         label: t('search.peoples'),
         dataTest: 'person-section-button',
-        condition:
-          selectedSection.value == ALL_SECTION_KEY || selectedSection.value == PEOPLE_SECTION_KEY,
-        isSelected: selectedSection.value === PEOPLE_SECTION_KEY,
+        condition: isAllSection || isUserSection,
+        isSelected: isUserSection,
         isUnused: false,
       },
     } as {

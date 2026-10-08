@@ -37,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+import type { AllSearchSections } from '~/components/search/Filters/useSectionFilters'
 import type { QueryFilterSearch } from 'shared-projects-frontend/models'
 import SearchResults from '~/components/project/SearchResults.vue'
 import ProjectCard from '~/components/project/ProjectCard.vue'
@@ -48,12 +49,12 @@ withDefaults(
   defineProps<{
     query?: QueryFilterSearch
     search?: string
-    mode?: 'global' | QueryFilterSearch['types'][number]
+    mode?: AllSearchSections
   }>(),
   {
     query: () => ({}),
     search: '',
-    mode: 'global',
+    mode: 'all',
   }
 )
 </script>

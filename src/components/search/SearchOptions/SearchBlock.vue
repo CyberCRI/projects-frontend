@@ -8,25 +8,25 @@
 </template>
 
 <script setup lang="ts">
-import type { ALL_SECTIONS } from '~/components/search/Filters/useSectionFilters'
+import type { AllSearchSections } from '~/components/search/Filters/useSectionFilters'
 
 withDefaults(
   defineProps<{
     showSectionFilter?: boolean
     // ALL_SECTION_KEY,
-    section?: ALL_SECTIONS
+    section?: AllSearchSections
     // filters we dont want to show/edit but are still active (i.e. categories in category page)
     filterBlackList?: any[]
   }>(),
   {
     showSectionFilter: false,
-    section: null,
+    section: 'all',
     filterBlackList: () => [],
   }
 )
 
 defineEmits<{
-  'search-options-updated': [ALL_SECTIONS]
+  'search-options-updated': [AllSearchSections]
 }>()
 </script>
 

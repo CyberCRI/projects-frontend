@@ -1,8 +1,10 @@
 <script setup lang="ts">
-const { query, search } = useSearch(null)
+import type { AllSearchSections } from '~/components/search/Filters/useSectionFilters'
 
 const { onboardingTrap } = useOnboardingStatus()
 const { t } = useNuxtI18n()
+
+const route = useRoute()
 
 onMounted(async () => {
   onboardingTrap('explore_projects', false)
@@ -15,9 +17,13 @@ useLpiHead2({
 
 <template>
   <div :key="$route.name" class="page-section-extra-wide browse-layout">
-    <SearchBlock :limit="30" show-section-filter />
+    <SearchBlock show-section-filter />
 
-    <GlobalSearchTab :search="search" :query="query" mode="global" />
+    <GlobalSearchTab
+      :search="route.query?.search?.toString()"
+      :query="route.query"
+      :mode="route.query?.types?.toString() as AllSearchSections"
+    />
   </div>
 </template>
 

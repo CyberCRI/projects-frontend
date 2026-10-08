@@ -2,6 +2,7 @@
 import { getHierarchyGroups } from '~/api/v2/group.service'
 
 import { useLpiHead2 } from '~/composables/useLpiHead'
+import { useSearchV2 } from '~/composables/useSearch'
 
 import { factoriesSkeleton } from '~/skeletons/base.skeletons'
 import { groupSkeleton } from '~/skeletons/group.skeletons'
@@ -9,9 +10,10 @@ import { groupSkeleton } from '~/skeletons/group.skeletons'
 const props = withDefaults(defineProps<{ groupIdOrSlug?: string }>(), {
   groupIdOrSlug: '',
 })
+
+const route = useRoute()
 const organizationCode = useOrganizationCode()
 
-const { search, query } = useSearch('groups')
 const { t } = useNuxtI18n()
 
 const {
@@ -44,7 +46,7 @@ const hierarchy = computed(() => {
   })
 })
 
-const hasSearch = computed(() => !!search.value)
+const hasSearch = computed(() => !!route.query?.search)
 
 const showGroups = () => navigateTo({ query: {} })
 
@@ -60,10 +62,18 @@ useLpiHead2({
     </h1>
 
     <div v-if="!groupIdOrSlug" class="search-input-container">
-      <SearchBlock :limit="30" section="groups" />
+      <SearchBlock
+        :search="route.query?.search?.toString()"
+        :query="route.query"
+        section="people_group"
+      />
     </div>
     <div v-if="hasSearch" class="page-section-wide">
-      <GlobalSearchTab :query="query" :search="search" mode="people_group" />
+      <GlobalSearchTab
+        :search="route.query?.search?.toString()"
+        :query="route.query"
+        mode="people_group"
+      />
       <div class="btn-ctn">
         <LpiButton :label="$t('people-groups.browse-tree')" @click="showGroups" />
       </div>

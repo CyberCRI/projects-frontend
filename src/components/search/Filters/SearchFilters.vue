@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { AllSearchSections } from '~/components/search/Filters/useSectionFilters'
 import { getProjectCategory, getAllTagsById } from 'shared-projects-frontend/apis'
 
 import useContextualFilters, {
@@ -23,7 +24,7 @@ function defaultFilters() {
 const emit = defineEmits(['update:selectedFilters'])
 
 const props = defineProps({
-  search: {
+  query: {
     type: Object, // here filters are array of id (whereas in slectedFiletrs they are array of object)
     default: null,
   },
@@ -40,7 +41,7 @@ const props = defineProps({
   },
 })
 
-const selectedSection = defineModel<string>('selectedSection', {
+const selectedSection = defineModel<AllSearchSections>('selectedSection', {
   default: ALL_SECTION_KEY,
 })
 
@@ -90,7 +91,7 @@ const cache = reactive({
 })
 
 async function hydrateFilters() {
-  const rawFilters = props.search || {}
+  const rawFilters = props.query || {}
   const filters = defaultFilters()
   const organizationCode = useOrganizationCode()
 
@@ -138,7 +139,7 @@ async function hydrateFilters() {
 }
 
 onMounted(hydrateFilters)
-watch(() => props.search, hydrateFilters)
+watch(() => props.query, hydrateFilters)
 </script>
 
 <template>

@@ -7,7 +7,9 @@ import useProjectCategories from '~/stores/useProjectCategories'
 const { canCreateProject } = usePermissionProject(null)
 const { isAdmin } = usePermissions()
 const projectCategoriesStore = useProjectCategories()
-const { search, query } = useSearch('projects')
+
+const route = useRoute()
+
 const { t } = useNuxtI18n()
 
 const forceSearch = ref(false)
@@ -22,9 +24,9 @@ const categories = computed(() => {
 
 const hasSearch = computed(() => {
   return (
-    !!search.value ||
+    !!route.query?.search ||
     ['sdgs', 'categories', 'tags', 'languages'].reduce(
-      (acc, key) => acc || query.value[key]?.length > 0,
+      (acc, key) => acc || (route.query || {})[key]?.length > 0,
       false
     )
   )
@@ -56,7 +58,12 @@ useLpiHead2({
         {{ $t('projects') }}
       </h1>
 
-      <SearchBlock :limit="30" section="projects" :freeze-search="isNavigating" />
+      <SearchBlock
+        :search="route.query?.search?.toString()"
+        :query="route.query"
+        section="project"
+        :freeze-search="isNavigating"
+      />
     </div>
 
     <div v-if="canCreateProject" class="action-ctn page-section-extra-wide">
@@ -79,8 +86,8 @@ useLpiHead2({
 
     <div v-if="hasSearch || forceSearch" class="page-section-wide">
       <GlobalSearchTab
-        :search="search"
-        :query="query"
+        :search="route.query?.search?.toString()"
+        :query="route.query"
         mode="project"
         :freeze-search="isNavigating"
       />

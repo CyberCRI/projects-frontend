@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { search, query } = useSearch('people')
+const route = useRoute()
+
 const { t } = useNuxtI18n()
 
 useLpiHead2({
@@ -13,9 +14,9 @@ useLpiHead2({
       {{ $t('common.people') }}
     </h1>
     <div class="main-ctn">
-      <SearchBlock :limit="30" section="people" />
+      <SearchBlock section="user" />
 
-      <GlobalSearchTab :search="search" :query="query" mode="user" />
+      <GlobalSearchTab :search="route.query?.search?.toString()" :query="route.query" mode="user" />
     </div>
   </div>
 </template>
