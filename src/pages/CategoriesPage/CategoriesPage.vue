@@ -7,7 +7,7 @@ import useProjectCategories from '~/stores/useProjectCategories'
 const { canCreateProject } = usePermissionProject(null)
 const { isAdmin } = usePermissions()
 const projectCategoriesStore = useProjectCategories()
-const { searchFromQuery } = useSearch('projects')
+const { search, query } = useSearch('projects')
 const { t } = useNuxtI18n()
 
 const forceSearch = ref(false)
@@ -22,19 +22,12 @@ const categories = computed(() => {
 
 const hasSearch = computed(() => {
   return (
-    !!searchFromQuery.value.search ||
+    !!search.value ||
     ['sdgs', 'categories', 'tags', 'languages'].reduce(
-      (acc, key) => acc || searchFromQuery.value[key]?.length > 0,
+      (acc, key) => acc || query.value[key]?.length > 0,
       false
     )
   )
-})
-
-const fixedSearch = computed(() => {
-  return {
-    ...searchFromQuery.value,
-    section: 'projects',
-  }
 })
 
 const isNavigating = ref(false)
@@ -85,7 +78,12 @@ useLpiHead2({
     </div>
 
     <div v-if="hasSearch || forceSearch" class="page-section-wide">
-      <GlobalSearchTab :search="fixedSearch" :freeze-search="isNavigating" />
+      <GlobalSearchTab
+        :search="search"
+        :query="query"
+        mode="project"
+        :freeze-search="isNavigating"
+      />
       <div class="btn-ctn">
         <LpiButton :label="$t('category.all-categories')" @click="showCategories" />
       </div>

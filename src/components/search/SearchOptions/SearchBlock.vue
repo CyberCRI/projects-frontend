@@ -17,13 +17,11 @@ withDefaults(
     section?: ALL_SECTIONS
     // filters we dont want to show/edit but are still active (i.e. categories in category page)
     filterBlackList?: any[]
-    freezeSearch?: boolean
   }>(),
   {
     showSectionFilter: false,
     section: null,
     filterBlackList: () => [],
-    freezeSearch: false,
   }
 )
 

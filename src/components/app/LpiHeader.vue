@@ -61,6 +61,7 @@
         <HeaderLink
           :label="$t('common.people')"
           :routes="[
+            'People',
             'ProfileUser',
             'ProfileBio',
             'ProfileProjects',

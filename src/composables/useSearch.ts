@@ -1,4 +1,5 @@
 import { ALL_SECTION_KEY } from '~/components/search/Filters/useSectionFilters'
+import type { QueryFilterSearch } from 'shared-projects-frontend/models'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 
@@ -13,19 +14,18 @@ export default function useSearch(forcedSection = null) {
 
   const disallowSectionChange = computed(() => !!forcedSection)
 
-  const getDefaultSearch = () => ({
-    search: route.query.search || '',
+  const search = computed(() => (route?.query?.search || '').toString())
+
+  const getDefaultSearch = (): QueryFilterSearch => ({
     categories: [],
     tags: [],
     members: [],
     sdgs: [],
     languages: [],
     skills: [],
-    section: route.query.section || ALL_SECTION_KEY,
     organizations: [organizationsStore.current.code],
-    ordering: '-updated_at',
+    ordering: '-last_update',
     limit: MAX_RESULTS,
-    page: route.query.page || 1,
   })
 
   const validQueryParams = computed(() => {
@@ -36,14 +36,12 @@ export default function useSearch(forcedSection = null) {
     const isPeople = selectedSection.value === 'people'
     const isAll = selectedSection.value === ALL_SECTION_KEY
     const map = {
-      search: true,
       categories: isProject,
       tags: isProject || isGroups || isAll,
       members: false,
       sdgs: true,
       languages: isProject,
       skills: isPeople,
-      page: true,
       section: !disallowSectionChange.value,
     }
 
@@ -62,8 +60,8 @@ export default function useSearch(forcedSection = null) {
     return adaptedFilters
   }
 
-  const searchFromQuery = computed(() => {
-    const res: Record<string, any> = {}
+  const query = computed(() => {
+    const res: QueryFilterSearch = {}
 
     for (const [key, isValid] of Object.entries(validQueryParams.value)) {
       const defaultValue = key === 'page' ? '1' : ''
@@ -143,7 +141,8 @@ export default function useSearch(forcedSection = null) {
 
   return {
     getDefaultSearch,
-    searchFromQuery,
+    query,
+    search,
     updateSelectedQuery,
     updatdeSelectedFilters,
     updatdeSelectedSection,

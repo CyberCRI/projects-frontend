@@ -1,17 +1,11 @@
 <script setup lang="ts">
-const { searchFromQuery } = useSearch(null)
+const { query, search } = useSearch(null)
 
 const { onboardingTrap } = useOnboardingStatus()
 const { t } = useNuxtI18n()
 
 onMounted(async () => {
   onboardingTrap('explore_projects', false)
-})
-
-const isNavigating = ref(false)
-onBeforeRouteLeave((to, from, next) => {
-  isNavigating.value = true
-  next()
 })
 
 useLpiHead2({
@@ -21,9 +15,9 @@ useLpiHead2({
 
 <template>
   <div :key="$route.name" class="page-section-extra-wide browse-layout">
-    <SearchBlock :limit="30" show-section-filter :freeze-search="isNavigating" />
+    <SearchBlock :limit="30" show-section-filter />
 
-    <GlobalSearchTab :search="searchFromQuery" :freeze-search="isNavigating" />
+    <GlobalSearchTab :search="search" :query="query" mode="global" />
   </div>
 </template>
 
