@@ -1,19 +1,6 @@
 <script setup lang="ts">
-const { searchFromQuery } = useSearch('people')
+const { search, query } = useSearch('people')
 const { t } = useNuxtI18n()
-
-const fixedSearch = computed(() => {
-  return {
-    ...searchFromQuery.value,
-    section: 'people',
-  }
-})
-
-const isNavigating = ref(false)
-onBeforeRouteLeave((to, from, next) => {
-  isNavigating.value = true
-  next()
-})
 
 useLpiHead2({
   title: computed(() => t('common.people')),
@@ -26,9 +13,9 @@ useLpiHead2({
       {{ $t('common.people') }}
     </h1>
     <div class="main-ctn">
-      <SearchBlock :limit="30" section="people" :freeze-search="isNavigating" />
+      <SearchBlock :limit="30" section="people" />
 
-      <GlobalSearchTab :search="fixedSearch" :freeze-search="isNavigating" />
+      <GlobalSearchTab :search="search" :query="query" mode="user" />
     </div>
   </div>
 </template>

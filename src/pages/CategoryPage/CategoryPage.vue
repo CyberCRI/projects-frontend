@@ -12,7 +12,7 @@ const { t } = useNuxtI18n()
 const route = useRoute()
 const { canCreateProject } = usePermissionProject(null)
 const projectCategoriesStore = useProjectCategories()
-const { searchFromQuery } = useSearch('projects')
+const { query, search } = useSearch('projects')
 
 if (!projectCategoriesStore.all || !projectCategoriesStore.all.length) {
   await projectCategoriesStore.getAllProjectCategories()
@@ -67,15 +67,9 @@ const categoryHierarchy = computed(() => {
 
 const fixedSearch = computed(() => {
   return {
-    ...searchFromQuery.value,
+    ...query.value,
     categories: [category.value?.id],
-    section: 'projects',
   }
-})
-const isNavigating = ref(false)
-onBeforeRouteLeave((to, from, next) => {
-  isNavigating.value = true
-  next()
 })
 
 const bannerRatio = ref(16 / 9)
@@ -128,7 +122,6 @@ watchEffect(() => {
               class="container inline stretch"
               section="projects"
               :filter-black-list="['categories']"
-              :freeze-search="isNavigating"
             />
           </div>
         </div>
@@ -167,7 +160,7 @@ watchEffect(() => {
         />
       </div>
       <ClientOnly>
-        <GlobalSearchTab :search="fixedSearch" :freeze-search="isNavigating" />
+        <GlobalSearchTab :search="search" :query="fixedSearch" mode="project" />
       </ClientOnly>
     </div>
   </div>

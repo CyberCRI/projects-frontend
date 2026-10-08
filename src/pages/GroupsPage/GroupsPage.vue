@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<{ groupIdOrSlug?: string }>(), {
 })
 const organizationCode = useOrganizationCode()
 
-const { searchFromQuery } = useSearch('groups')
+const { search, query } = useSearch('groups')
 const { t } = useNuxtI18n()
 
 const {
@@ -44,19 +44,7 @@ const hierarchy = computed(() => {
   })
 })
 
-const hasSearch = computed(() => !!searchFromQuery.value.search)
-const fixedSearch = computed(() => {
-  return {
-    ...searchFromQuery.value,
-    section: 'groups',
-  }
-})
-
-const isNavigating = ref(false)
-onBeforeRouteLeave((to, from, next) => {
-  isNavigating.value = true
-  next()
-})
+const hasSearch = computed(() => !!search.value)
 
 const showGroups = () => navigateTo({ query: {} })
 
@@ -72,10 +60,10 @@ useLpiHead2({
     </h1>
 
     <div v-if="!groupIdOrSlug" class="search-input-container">
-      <SearchBlock :limit="30" section="groups" :freeze-search="isNavigating" />
+      <SearchBlock :limit="30" section="groups" />
     </div>
     <div v-if="hasSearch" class="page-section-wide">
-      <GlobalSearchTab :search="fixedSearch" :freeze-search="isNavigating" />
+      <GlobalSearchTab :query="query" :search="search" mode="people_group" />
       <div class="btn-ctn">
         <LpiButton :label="$t('people-groups.browse-tree')" @click="showGroups" />
       </div>

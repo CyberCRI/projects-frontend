@@ -1,10 +1,5 @@
 <template>
-  <SearchResults
-    :search="search"
-    :mode="search.section || 'global'"
-    :freeze-search="freezeSearch"
-    @pagination-changed="onPaginationChange"
-  >
+  <SearchResults class="list-container" :query="query" :search="search" :mode="mode">
     <template #default="SearchResultsSlotProps">
       <CardList
         :is-loading="SearchResultsSlotProps.isLoading"
@@ -42,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+import type { QueryFilterSearch } from 'shared-projects-frontend/models'
 import SearchResults from '~/components/project/SearchResults.vue'
 import ProjectCard from '~/components/project/ProjectCard.vue'
 import GroupCard from '~/components/group/GroupCard.vue'
@@ -50,35 +46,22 @@ import CardList from '~/components/base/CardList.vue'
 
 withDefaults(
   defineProps<{
-    search?: any
-    freezeSearch?: boolean
+    query?: QueryFilterSearch
+    search?: string
+    mode?: 'global' | QueryFilterSearch['types'][number]
   }>(),
   {
-    search: null,
-    freezeSearch: false,
+    query: () => ({}),
+    search: '',
+    mode: 'global',
   }
 )
-
-const route = useRoute()
-const router = useRouter()
-
-const onPaginationChange = (pagination) => {
-  if (
-    route.query.page === pagination.currentPage ||
-    (!route.query.page && pagination.currentPage === 1)
-  )
-    return
-  router.push({
-    path: route.path,
-    query: { ...route.query, page: pagination.currentPage },
-  })
-}
 </script>
 
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 
 .list-container {
-  margin-top: variables.$space-l;
+  margin: variables.$space-l;
 }
 </style>

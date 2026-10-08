@@ -4,9 +4,10 @@
       <div class="search-group">
         <SearchInput
           class="search-input"
-          :model-value="managedSearch.search"
+          :model-value="search"
           :full="true"
           :placeholder="$t('browse.placeholder')"
+          :debounce="300"
           @update:model-value="updateSelectedQuery"
           @delete-query="deleteQuery"
         />
@@ -38,13 +39,11 @@ const props = withDefaults(
     section?: ALL_SECTIONS
     // filters we dont want to show/edit but are still active (i.e. categories in category page)
     filterBlackList?: any[]
-    freezeSearch?: boolean
   }>(),
   {
     showSectionFilter: false,
     section: null,
     filterBlackList: () => [],
-    freezeSearch: false,
   }
 )
 
@@ -52,26 +51,14 @@ const emit = defineEmits<{
   'filter-section-update': [ALL_SECTIONS]
 }>()
 
-const { searchFromQuery, updateSelectedQuery, updatdeSelectedFilters, updatdeSelectedSection } =
-  useSearch(props.section)
-
-const managedSearch = ref<{
-  search?: string
-  section?: string
-}>({})
-
-watch(
-  searchFromQuery,
-  (neo) => {
-    if (!props.freezeSearch) {
-      managedSearch.value = neo
-    }
-  },
-  {
-    immediate: true,
-    deep: true,
-  }
+const { search, updateSelectedQuery, updatdeSelectedFilters, updatdeSelectedSection } = useSearch(
+  props.section
 )
+
+const managedSearch = computed(() => ({
+  search: search.value,
+  section: props.section,
+}))
 
 watch(
   () => props.section,
