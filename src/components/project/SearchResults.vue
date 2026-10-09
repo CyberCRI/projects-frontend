@@ -32,17 +32,14 @@ const props = withDefaults(
   }
 )
 
-const emit = defineEmits<{
-  loading: [boolean]
-}>()
-
 const organizationCode = useOrganizationCode()
 const search = computed<string>(() => props.search)
 
 const query = computed(() => {
   const q: QueryFilterSearch = deepToRaw(props.query)
-  // q.organizations = [organizationCode]
+  q.organizations = [organizationCode]
 
+  // if not all add mode
   if (props.mode !== 'all') {
     q.types = [props.mode]
   }
@@ -57,9 +54,9 @@ const {
 } = getSearchAll(organizationCode, search, {
   query,
   paginationConfig: computed(() => ({ limit: props.query.limit, offset: props.query.offset })),
+  uniqueKey: computed(() => props.mode),
+  keyFixed: true,
 })
-
-watchEffect(() => emit('loading', isLoading.value))
 </script>
 
 <style lang="scss" scoped>

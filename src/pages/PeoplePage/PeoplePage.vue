@@ -1,11 +1,14 @@
 <script setup lang="ts">
-const route = useRoute()
+import type { QueryFilterSearch } from 'shared-projects-frontend/models'
 
 const { t } = useNuxtI18n()
 
 useLpiHead2({
   title: computed(() => t('common.people')),
 })
+
+const query = ref<QueryFilterSearch>({})
+const search = ref('')
 </script>
 
 <template>
@@ -14,9 +17,9 @@ useLpiHead2({
       {{ $t('common.people') }}
     </h1>
     <div class="main-ctn">
-      <SearchBlock section="user" />
+      <SearchBlock section="user" @on-query="query = $event" @on-search="search = $event" />
 
-      <GlobalSearchTab :search="route.query?.search?.toString()" :query="route.query" mode="user" />
+      <GlobalSearchTab :search="search" :query="query" mode="user" />
     </div>
   </div>
 </template>

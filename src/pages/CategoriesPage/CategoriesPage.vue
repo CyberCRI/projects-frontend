@@ -18,28 +18,7 @@ if (!projectCategoriesStore._root?.value?.id) {
   await projectCategoriesStore.getRootProjectCategory()
 }
 
-const categories = computed(() => {
-  return projectCategoriesStore.hierarchy
-})
-
-const hasSearch = computed(() => {
-  return (
-    !!route.query?.search ||
-    ['sdgs', 'categories', 'tags', 'languages'].reduce(
-      (acc, key) => acc || (route.query || {})[key]?.length > 0,
-      false
-    )
-  )
-})
-
-const isNavigating = ref(false)
-onBeforeRouteLeave((to, from, next) => {
-  isNavigating.value = true
-  if (hasSearch.value) {
-    forceSearch.value = true
-  }
-  next()
-})
+const categories = computed(() => projectCategoriesStore.hierarchy)
 
 const showCategories = () => {
   forceSearch.value = false
@@ -48,6 +27,19 @@ const showCategories = () => {
 
 useLpiHead2({
   title: computed(() => t('projects')),
+})
+
+const query = ref({})
+const search = ref('')
+
+const hasSearch = computed(() => {
+  return (
+    !!search.value ||
+    ['sdgs', 'categories', 'tags', 'languages'].reduce(
+      (acc, key) => acc || (route.query || {})[key]?.length > 0,
+      false
+    )
+  )
 })
 </script>
 
@@ -58,12 +50,7 @@ useLpiHead2({
         {{ $t('projects') }}
       </h1>
 
-      <SearchBlock
-        :search="route.query?.search?.toString()"
-        :query="route.query"
-        section="project"
-        :freeze-search="isNavigating"
-      />
+      <SearchBlock section="project" @on-query="query = $event" @on-search="search = $event" />
     </div>
 
     <div v-if="canCreateProject" class="action-ctn page-section-extra-wide">
@@ -85,12 +72,7 @@ useLpiHead2({
     </div>
 
     <div v-if="hasSearch || forceSearch" class="page-section-wide">
-      <GlobalSearchTab
-        :search="route.query?.search?.toString()"
-        :query="route.query"
-        mode="project"
-        :freeze-search="isNavigating"
-      />
+      <GlobalSearchTab :search="search" :query="query" mode="project" />
       <div class="btn-ctn">
         <LpiButton :label="$t('category.all-categories')" @click="showCategories" />
       </div>
@@ -115,6 +97,7 @@ useLpiHead2({
       </div>
     </template>
   </div>
+  <NothingHere v-else />
 </template>
 
 <style lang="scss" scoped>

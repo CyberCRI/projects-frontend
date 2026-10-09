@@ -8,14 +8,10 @@
           :full="true"
           :placeholder="$t('browse.placeholder')"
           :debounce="300"
-          @delete-query="search = ''"
         />
       </div>
     </div>
 
-    iciicic
-    {{ query }}
-    {{ selectedSection }}
     <SearchFilters
       ref="searchFilters"
       :selected-section="selectedSection"
@@ -32,6 +28,7 @@
 <script setup lang="ts">
 import type { AllSearchSections } from '~/components/search/Filters/useSectionFilters'
 import SearchFilters from '~/components/search/Filters/SearchFilters.vue'
+import type { QueryFilterSearch } from 'shared-projects-frontend/models'
 import SearchInput from '~/components/base/form/SearchInput.vue'
 import { useSearchV2 } from '~/composables/useSearch'
 
@@ -39,20 +36,29 @@ const props = withDefaults(
   defineProps<{
     showSectionFilter?: boolean
     section?: AllSearchSections
+    defaultQuery?: QueryFilterSearch
     // filters we dont want to show/edit but are still active (i.e. categories in category page)
     filterBlackList?: any[]
   }>(),
   {
+    defaultQuery: null,
     showSectionFilter: false,
     section: null,
     filterBlackList: () => [],
   }
 )
 
+const emit = defineEmits<{
+  onQuery: [QueryFilterSearch]
+  onSearch: [string]
+}>()
+
 const selectedSection = ref(props.section)
 
 const { query, setQuerys, setQuery, search } = useSearchV2(
-  props.section && props.section !== 'all' ? { types: [props.section] } : null
+  props.section && props.section !== 'all'
+    ? { types: [props.section], ...(props.defaultQuery || {}) }
+    : props.defaultQuery
 )
 
 const searchFiltersRef = useTemplateRef('searchFilters')
@@ -74,6 +80,9 @@ const setSections = (section: AllSearchSections) => {
   selectedSection.value = section !== 'all' ? section : null
   setQuery('types', section !== 'all' ? [section] : null)
 }
+
+watch(query, () => emit('onQuery', query.value), { deep: true, immediate: true })
+watch(search, () => emit('onSearch', search.value), { deep: true, immediate: true })
 </script>
 
 <style lang="scss" scoped>

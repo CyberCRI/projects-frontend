@@ -64,13 +64,6 @@ const categoryHierarchy = computed(() => {
   ]
 })
 
-const fixedSearch = computed(() => {
-  return {
-    ...(route.query || {}),
-    categories: [category.value?.id],
-  }
-})
-
 const bannerRatio = ref(16 / 9)
 onResize(
   () => {
@@ -89,6 +82,9 @@ watchEffect(() => {
     image: category.value?.background_image,
   })
 })
+
+const query = ref({})
+const search = ref('')
 </script>
 <template>
   <div v-if="category" id="type" :key="category.id" class="category-layout">
@@ -121,6 +117,11 @@ watchEffect(() => {
               class="container inline stretch"
               section="project"
               :filter-black-list="['categories']"
+              :default-query="{
+                categories: category ? [category.id] : [],
+              }"
+              @on-query="query = $event"
+              @on-search="search = $event"
             />
           </div>
         </div>
@@ -159,11 +160,7 @@ watchEffect(() => {
         />
       </div>
       <ClientOnly>
-        <GlobalSearchTab
-          :search="route.query?.search?.toString()"
-          :query="fixedSearch"
-          mode="project"
-        />
+        <GlobalSearchTab :search="search" :query="query" mode="project" />
       </ClientOnly>
     </div>
   </div>

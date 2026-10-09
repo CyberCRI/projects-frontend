@@ -1,19 +1,58 @@
 import type { QueryFilterSearch } from 'shared-projects-frontend/models'
+import { deepToRaw } from '~/functs/utils'
+import { isEqual } from 'es-toolkit'
+
+const MAX_LIMIT_SEARCH = 30
+
+export const sanitizeSearchQuery = (query: QueryFilterSearch): QueryFilterSearch => {
+  if (!Array.isArray(query.tags)) {
+    query.tags = []
+  }
+
+  if (!Array.isArray(query.categories)) {
+    query.categories = []
+  }
+  if (!Array.isArray(query.skills)) {
+    query.skills = []
+  }
+
+  if (query.limit && typeof query.limit !== 'string') {
+    query.limit = parseInt(query.limit.toString()) || MAX_LIMIT_SEARCH
+  } else {
+    query.limit = MAX_LIMIT_SEARCH
+  }
+
+  return query
+}
 
 export const useSearchV2 = (defaultValue: QueryFilterSearch = {}) => {
   const { query, setQuery, setQuerys, toggleQuery, removeQuery } = useQuery<QueryFilterSearch>(
-    {
-      limit: 30,
+    sanitizeSearchQuery({
       ...(defaultValue || {}),
-    },
+      modules: ['members', 'subgroups'],
+    }),
     {
-      routeQuery: true,
+      getRouteQuery: true,
+      setRouteQuery: true,
     }
   )
   const search = ref('')
 
-  return {
+  const sanitizeQuery = computed(() => sanitizeSearchQuery(deepToRaw(query.value)))
+
+  // safeQuery
+  watch(
     query,
+    (nnew, old) => {
+      if (!isEqual(sanitizeSearchQuery(deepToRaw(nnew)), deepToRaw(old))) {
+        setQuerys(sanitizeSearchQuery(deepToRaw(nnew)))
+      }
+    },
+    { deep: true }
+  )
+
+  return {
+    query: sanitizeQuery,
     setQuery,
     toggleQuery,
     setQuerys,

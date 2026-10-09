@@ -3,11 +3,17 @@ import { isEqual } from 'es-toolkit'
 
 type QueryOptions = {
   // watch/set query to route
+  watchRouteQuery: boolean
+  setRouteQuery: boolean
+  getRouteQuery: boolean
   routeQuery: boolean
 }
 
 const defaultOptions = (): QueryOptions => {
   return {
+    watchRouteQuery: false,
+    setRouteQuery: false,
+    getRouteQuery: false,
     routeQuery: false,
   }
 }
@@ -25,8 +31,11 @@ export const useQuery = <DataQuery = { [key: string]: string | number | boolean 
   defaultValue: Partial<DataQuery>,
   options: Partial<QueryOptions> = null
 ) => {
-  options ??= defaultOptions()
-  if (options.routeQuery) {
+  options = {
+    ...defaultOptions(),
+    ...(options || {}),
+  }
+  if (options.getRouteQuery || options.routeQuery) {
     const route = useRoute()
     defaultValue = {
       ...deepToRaw(route?.query || {}),
@@ -41,10 +50,6 @@ export const useQuery = <DataQuery = { [key: string]: string | number | boolean 
   }
 
   const setQuery = <K extends keyof DataQuery>(key: K, value: DataQuery[K]) => {
-    console.log('push query', {
-      ...deepToRaw(query.value),
-      [key]: value,
-    })
     setQuerys({
       ...deepToRaw(query.value),
       [key]: value,
@@ -66,8 +71,7 @@ export const useQuery = <DataQuery = { [key: string]: string | number | boolean 
     }
   }
 
-  if (options.routeQuery) {
-    const router = useRouter()
+  if (options.watchRouteQuery || options.routeQuery) {
     const route = useRoute()
 
     watch(
@@ -77,23 +81,25 @@ export const useQuery = <DataQuery = { [key: string]: string | number | boolean 
           ...query.value,
           ...route.query,
         })
-        console.log('watchRouteQuery', nn)
         if (!isEqual(query.value, nn)) {
           query.value = nn
         }
       },
       { deep: true }
     )
+  }
+
+  if (options.setRouteQuery || options.routeQuery) {
+    const router = useRouter()
 
     watch(
       query,
       (old, nnew) => {
         if (!isEqual(old, nnew)) {
-          console.log('newWatch', route.query, deepToRaw(query.value))
           router.push({ query: deepToRaw(query.value) })
         }
       },
-      { deep: true }
+      { deep: true, immediate: true }
     )
   }
 
