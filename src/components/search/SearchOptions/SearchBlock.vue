@@ -1,34 +1,8 @@
 <template>
   <div class="search-input-container">
-    <SearchOptions
-      v-bind="$props"
-      @search-options-updated="$emit('search-options-updated', $event)"
-    />
+    <SearchOptions v-bind="$attrs" />
   </div>
 </template>
-
-<script setup lang="ts">
-import type { ALL_SECTIONS } from '~/components/search/Filters/useSectionFilters'
-
-withDefaults(
-  defineProps<{
-    showSectionFilter?: boolean
-    // ALL_SECTION_KEY,
-    section?: ALL_SECTIONS
-    // filters we dont want to show/edit but are still active (i.e. categories in category page)
-    filterBlackList?: any[]
-  }>(),
-  {
-    showSectionFilter: false,
-    section: null,
-    filterBlackList: () => [],
-  }
-)
-
-defineEmits<{
-  'search-options-updated': [ALL_SECTIONS]
-}>()
-</script>
 
 <style lang="scss" scoped>
 @use '~/design/scss/variables';

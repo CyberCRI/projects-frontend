@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { getProjectCategory, getAllTagsById } from 'shared-projects-frontend/apis'
-
 import useContextualFilters, {
   ALL_FILTERS_MODE,
   ALL_SECTION_KEY,
 } from '~/components/search/Filters/useContextualFilters'
-import FiltersDrawer from '~/components/search/Filters/FiltersDrawer.vue'
+import type { AllSearchSections } from '~/components/search/Filters/useSectionFilters'
+import { getProjectCategory, getAllTagsById } from 'shared-projects-frontend/apis'
+import type FiltersDrawer from '~/components/search/Filters/FiltersDrawer.vue'
+import type { QueryFilterSearch } from 'shared-projects-frontend/models'
 import FilterButton from '~/components/search/Filters/FilterButton.vue'
-
 type QUERY_FILTERS_SEARCH = 'categories' | 'languages' | 'sdgs' | 'tags' | 'skills'
 
 function defaultFilters() {
@@ -22,25 +22,22 @@ function defaultFilters() {
 
 const emit = defineEmits(['update:selectedFilters'])
 
-const props = defineProps({
-  search: {
-    type: Object, // here filters are array of id (whereas in slectedFiletrs they are array of object)
-    default: null,
-  },
-
-  showSectionFilter: {
-    type: Boolean,
-    default: false,
-  },
-
-  filterBlackList: {
+const props = withDefaults(
+  defineProps<{
+    // here filters are array of id (whereas in slectedFiletrs they are array of object)
+    query?: QueryFilterSearch
+    showSectionFilter?: boolean
     // filters we dont want to show/edit but are still active (i.e. categories in category page)
-    type: Array,
-    default: () => [],
-  },
-})
+    filterBlackList?: string[]
+  }>(),
+  {
+    query: null,
+    showSectionFilter: false,
+    filterBlackList: () => [],
+  }
+)
 
-const selectedSection = defineModel<string>('selectedSection', {
+const selectedSection = defineModel<AllSearchSections>('selectedSection', {
   default: ALL_SECTION_KEY,
 })
 
@@ -65,7 +62,14 @@ function openDrawer(drawer) {
 
 function updateFiltersFromDrawer(event) {
   selectedFilters.value = { ...event }
-  emit('update:selectedFilters', selectedFilters.value)
+
+  // fix selectedTags
+  const v = selectedFilters.value
+  v.tags = v.tags.map((tag) => tag.id)
+  v.skills = v.skills.map((skill) => skill.id)
+  v.categories = v.categories.map((cat) => cat.id)
+
+  emit('update:selectedFilters', v)
 }
 
 function confirm($event) {
@@ -90,7 +94,7 @@ const cache = reactive({
 })
 
 async function hydrateFilters() {
-  const rawFilters = props.search || {}
+  const rawFilters = props.query || {}
   const filters = defaultFilters()
   const organizationCode = useOrganizationCode()
 
@@ -110,7 +114,7 @@ async function hydrateFilters() {
 
   // filter and remove duplicate sdg value and convert it to number
   filters.sdgs = [
-    ...new Set((rawFilters.sdgs || []).map((val) => parseInt(val, 10)).filter((v) => v)),
+    ...new Set((rawFilters.sdgs || []).map((val) => parseInt(val.toString(), 10)).filter((v) => v)),
   ]
 
   filters.languages = rawFilters.languages || []
@@ -138,7 +142,7 @@ async function hydrateFilters() {
 }
 
 onMounted(hydrateFilters)
-watch(() => props.search, hydrateFilters)
+watch(() => props.query, hydrateFilters)
 </script>
 
 <template>

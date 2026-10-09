@@ -12,7 +12,6 @@ const { t } = useNuxtI18n()
 const route = useRoute()
 const { canCreateProject } = usePermissionProject(null)
 const projectCategoriesStore = useProjectCategories()
-const { query, search } = useSearch('projects')
 
 if (!projectCategoriesStore.all || !projectCategoriesStore.all.length) {
   await projectCategoriesStore.getAllProjectCategories()
@@ -65,13 +64,6 @@ const categoryHierarchy = computed(() => {
   ]
 })
 
-const fixedSearch = computed(() => {
-  return {
-    ...query.value,
-    categories: [category.value?.id],
-  }
-})
-
 const bannerRatio = ref(16 / 9)
 onResize(
   () => {
@@ -90,6 +82,9 @@ watchEffect(() => {
     image: category.value?.background_image,
   })
 })
+
+const query = ref({})
+const search = ref('')
 </script>
 <template>
   <div v-if="category" id="type" :key="category.id" class="category-layout">
@@ -120,8 +115,13 @@ watchEffect(() => {
             <SearchOptions
               ref="searchOptions"
               class="container inline stretch"
-              section="projects"
+              section="project"
               :filter-black-list="['categories']"
+              :default-query="{
+                categories: category ? [category.id] : [],
+              }"
+              @on-query="query = $event"
+              @on-search="search = $event"
             />
           </div>
         </div>
@@ -160,7 +160,7 @@ watchEffect(() => {
         />
       </div>
       <ClientOnly>
-        <GlobalSearchTab :search="search" :query="fixedSearch" mode="project" />
+        <GlobalSearchTab :search="search" :query="query" mode="project" />
       </ClientOnly>
     </div>
   </div>

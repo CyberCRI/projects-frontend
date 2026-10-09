@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
 
+import type { AllSearchSections } from '~/components/search/Filters/useSectionFilters'
 import type { QueryFilterSearch } from 'shared-projects-frontend/models'
 import { getSearchAll } from '~/api/v2/search.service'
 import { deepToRaw } from '~/functs/utils'
@@ -22,27 +23,24 @@ const props = withDefaults(
   defineProps<{
     search?: string
     query?: QueryFilterSearch
-    mode?: 'global' | QueryFilterSearch['types'][number]
+    mode?: AllSearchSections
   }>(),
   {
     search: '',
     query: () => ({}),
-    mode: 'global',
+    mode: 'all',
   }
 )
 
-const emit = defineEmits<{
-  loading: [boolean]
-}>()
-
 const organizationCode = useOrganizationCode()
-
 const search = computed<string>(() => props.search)
 
 const query = computed(() => {
   const q: QueryFilterSearch = deepToRaw(props.query)
+  q.organizations = [organizationCode]
 
-  if (props.mode !== 'global') {
+  // if not all add mode
+  if (props.mode !== 'all') {
     q.types = [props.mode]
   }
 
@@ -56,21 +54,9 @@ const {
 } = getSearchAll(organizationCode, search, {
   query,
   paginationConfig: computed(() => ({ limit: props.query.limit, offset: props.query.offset })),
+  uniqueKey: computed(() => props.mode),
+  keyFixed: true,
 })
-
-watchEffect(() => emit('loading', isLoading.value))
-
-const router = useRouter()
-const route = useRoute()
-watch(
-  () => pagination.query(),
-  (nnew) => {
-    router.push({
-      path: route.path,
-      query: { ...route.query, ...nnew },
-    })
-  }
-)
 </script>
 
 <style lang="scss" scoped>

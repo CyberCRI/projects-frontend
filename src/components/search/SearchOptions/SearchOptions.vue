@@ -3,44 +3,45 @@
     <div class="search-container">
       <div class="search-group">
         <SearchInput
+          v-model="search"
           class="search-input"
-          :model-value="search"
           :full="true"
           :placeholder="$t('browse.placeholder')"
           :debounce="300"
-          @update:model-value="updateSelectedQuery"
-          @delete-query="deleteQuery"
         />
       </div>
     </div>
 
     <SearchFilters
       ref="searchFilters"
-      :selected-section="section || managedSearch.section"
-      :search="managedSearch"
+      :selected-section="selectedSection"
+      :search="search"
+      :query="query"
       :show-section-filter="showSectionFilter"
       :filter-black-list="filterBlackList"
-      @update:selected-filters="updatdeSelectedFilters"
-      @update:selected-section="updatdeSelectedSection"
+      @update:selected-filters="setFilters"
+      @update:selected-section="setSections"
     />
   </div>
 </template>
 
 <script setup lang="ts">
+import type { AllSearchSections } from '~/components/search/Filters/useSectionFilters'
 import SearchFilters from '~/components/search/Filters/SearchFilters.vue'
+import type { QueryFilterSearch } from 'shared-projects-frontend/models'
 import SearchInput from '~/components/base/form/SearchInput.vue'
-
-import type { ALL_SECTIONS } from '~/components/search/Filters/useSectionFilters'
-import useSearch from '~/composables/useSearch'
+import { useSearchV2 } from '~/composables/useSearch'
 
 const props = withDefaults(
   defineProps<{
     showSectionFilter?: boolean
-    section?: ALL_SECTIONS
+    section?: AllSearchSections
+    defaultQuery?: QueryFilterSearch
     // filters we dont want to show/edit but are still active (i.e. categories in category page)
     filterBlackList?: any[]
   }>(),
   {
+    defaultQuery: null,
     showSectionFilter: false,
     section: null,
     filterBlackList: () => [],
@@ -48,26 +49,17 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'filter-section-update': [ALL_SECTIONS]
+  onQuery: [QueryFilterSearch]
+  onSearch: [string]
 }>()
 
-const { search, updateSelectedQuery, updatdeSelectedFilters, updatdeSelectedSection } = useSearch(
-  props.section
+const selectedSection = ref(props.section)
+
+const { query, setQuerys, setQuery, search } = useSearchV2(
+  props.section && props.section !== 'all'
+    ? { types: [props.section], ...(props.defaultQuery || {}) }
+    : props.defaultQuery
 )
-
-const managedSearch = computed(() => ({
-  search: search.value,
-  section: props.section,
-}))
-
-watch(
-  () => props.section,
-  (newValue) => {
-    emit('filter-section-update', newValue)
-  }
-)
-
-const deleteQuery = () => updateSelectedQuery('')
 
 const searchFiltersRef = useTemplateRef('searchFilters')
 // this method is used by CategoriesPage and GroupsPage via a ref
@@ -75,6 +67,22 @@ const clearSelectedFilters = () => {
   searchFiltersRef.value?.clearSelectedFilters()
 }
 defineExpose({ clearSelectedFilters })
+
+const setFilters = (f) => {
+  setQuerys({
+    ...query.value,
+    ...(f || {}),
+    types: selectedSection.value !== 'all' ? [selectedSection.value] : null,
+  })
+}
+
+const setSections = (section: AllSearchSections) => {
+  selectedSection.value = section !== 'all' ? section : null
+  setQuery('types', section !== 'all' ? [section] : null)
+}
+
+watch(query, () => emit('onQuery', query.value), { deep: true, immediate: true })
+watch(search, () => emit('onSearch', search.value), { deep: true, immediate: true })
 </script>
 
 <style lang="scss" scoped>

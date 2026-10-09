@@ -1,150 +1,62 @@
-import { ALL_SECTION_KEY } from '~/components/search/Filters/useSectionFilters'
 import type { QueryFilterSearch } from 'shared-projects-frontend/models'
+import { deepToRaw } from '~/functs/utils'
+import { isEqual } from 'es-toolkit'
 
-import useOrganizationsStore from '~/stores/useOrganizations'
+const MAX_LIMIT_SEARCH = 30
 
-export default function useSearch(forcedSection = null) {
-  const MAX_RESULTS = 30
-
-  const organizationsStore = useOrganizationsStore()
-  const route = useRoute()
-  const router = useRouter()
-
-  const selectedSection = computed(() => forcedSection || route.query.section || ALL_SECTION_KEY)
-
-  const disallowSectionChange = computed(() => !!forcedSection)
-
-  const search = computed(() => (route?.query?.search || '').toString())
-
-  const getDefaultSearch = (): QueryFilterSearch => ({
-    categories: [],
-    tags: [],
-    members: [],
-    sdgs: [],
-    languages: [],
-    skills: [],
-    organizations: [organizationsStore.current.code],
-    ordering: '-last_update',
-    limit: MAX_RESULTS,
-  })
-
-  const validQueryParams = computed(() => {
-    // compute allowed filters according to current section
-    // so that filter of one section (ie skills on people) dont persist on other section (ie skills on project)
-    const isProject = selectedSection.value === 'projects'
-    const isGroups = selectedSection.value === 'groups'
-    const isPeople = selectedSection.value === 'people'
-    const isAll = selectedSection.value === ALL_SECTION_KEY
-    const map = {
-      categories: isProject,
-      tags: isProject || isGroups || isAll,
-      members: false,
-      sdgs: true,
-      languages: isProject,
-      skills: isPeople,
-      section: !disallowSectionChange.value,
-    }
-
-    return map
-  })
-
-  function adaptFilers(filters) {
-    const adaptedFilters = {
-      categories: filters.categories?.map((cat) => cat.id) || [],
-      languages: filters.languages ? [...filters.languages] : [], // need to deconstruct to avoid reactivity issue when removing language
-      sdgs: filters.sdgs ? [...filters.sdgs] : [], // need to deconstruct to avoid reactivity issue when removing sdg
-      tags: filters.tags?.map((tag) => tag.id) || [],
-      organizations: [organizationsStore.current.code],
-      skills: filters.skills?.map((tag) => tag.id) || [],
-    }
-    return adaptedFilters
+export const sanitizeSearchQuery = (query: QueryFilterSearch): QueryFilterSearch => {
+  if (!Array.isArray(query.tags)) {
+    query.tags = []
   }
 
-  const query = computed(() => {
-    const res: QueryFilterSearch = {}
-
-    for (const [key, isValid] of Object.entries(validQueryParams.value)) {
-      const defaultValue = key === 'page' ? '1' : ''
-
-      const val = route.query[key]
-      if (isValid && val && val !== defaultValue) res[key] = val
-    }
-
-    for (const arrKey of ['categories', 'tags', 'skills', 'languages', 'sdgs']) {
-      if (res[arrKey] && !Array.isArray(res[arrKey])) {
-        res[arrKey] = [res[arrKey]]
-      }
-    }
-
-    res.limit = MAX_RESULTS
-    return res
-  })
-
-  const updateUrl = function _updateUrl(query) {
-    router.replace({ query: query })
+  if (!Array.isArray(query.categories)) {
+    query.categories = []
+  }
+  if (!Array.isArray(query.skills)) {
+    query.skills = []
   }
 
-  const updateSelectedQuery = function _updateSelectedQuery(search) {
-    const query = { ...route.query } // destructure to break reactivity
-    const oldSearch = query.search || ''
-    const _search = search || ''
-    if (_search !== oldSearch) {
-      if (!_search) {
-        delete query.search
-      } else {
-        query.search = _search
-      }
-      updateUrl(query)
-    }
+  if (query.limit && typeof query.limit !== 'string') {
+    query.limit = parseInt(query.limit.toString()) || MAX_LIMIT_SEARCH
+  } else {
+    query.limit = MAX_LIMIT_SEARCH
   }
 
-  function updatdeSelectedFilters(rawFilters) {
-    const filters = adaptFilers(rawFilters)
-    const query: Record<string, any> = { ...route.query } // destructure to break reactivity
-    for (const [key, isValid] of Object.entries(validQueryParams.value)) {
-      if (!isValid) {
-        delete query[key]
-      } else if (key != 'search' && key != 'section') {
-        const defaultValue = key === 'page' ? '1' : ''
-        if (!filters[key] || filters[key] === defaultValue || filters[key].length === 0) {
-          delete query[key]
-        } else {
-          query[key] = filters[key]
-        }
-      }
-    }
-    query.limit = MAX_RESULTS
-    updateUrl(query)
-  }
+  return query
+}
 
-  function updatdeSelectedSection(section) {
-    if (disallowSectionChange.value) return
-    const query = { ...route.query } // destructure to break reactivity
-    const oldSection = query.section || ''
-    const _section = section == 'all' ? '' : section || ''
-    if (_section !== oldSection) {
-      if (!_section) {
-        delete query.section
-      } else {
-        query.section = _section
-      }
-      updateUrl(query)
-      // cleanup now invalid query params
-      for (const [key, isValid] of Object.entries(validQueryParams.value)) {
-        if (!isValid) {
-          delete query[key]
-        }
-      }
-      updateUrl(query)
+export const useSearchV2 = (defaultValue: QueryFilterSearch = {}) => {
+  const { query, setQuery, setQuerys, toggleQuery, removeQuery } = useQuery<QueryFilterSearch>(
+    sanitizeSearchQuery({
+      ...(defaultValue || {}),
+      modules: ['members', 'subgroups'],
+    }),
+    {
+      getRouteQuery: true,
+      setRouteQuery: true,
     }
-  }
+  )
+  const search = ref('')
+
+  const sanitizeQuery = computed(() => sanitizeSearchQuery(deepToRaw(query.value)))
+
+  // safeQuery
+  watch(
+    query,
+    (nnew, old) => {
+      if (!isEqual(sanitizeSearchQuery(deepToRaw(nnew)), deepToRaw(old))) {
+        setQuerys(sanitizeSearchQuery(deepToRaw(nnew)))
+      }
+    },
+    { deep: true }
+  )
 
   return {
-    getDefaultSearch,
-    query,
+    query: sanitizeQuery,
+    setQuery,
+    toggleQuery,
+    setQuerys,
+    removeQuery,
     search,
-    updateSelectedQuery,
-    updatdeSelectedFilters,
-    updatdeSelectedSection,
   }
 }
