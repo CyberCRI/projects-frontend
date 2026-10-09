@@ -30,7 +30,6 @@ export default function useSectionFilters({
   const { t } = useNuxtI18n()
 
   function toggleSectionFilter(key) {
-    console.log(key, selectedSection.value)
     selectedSection.value = selectedSection.value == key ? ALL_SECTION_KEY : key
   }
 
