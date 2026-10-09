@@ -358,6 +358,19 @@ export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
   resources: 'resource.resources',
   groups: 'profile.groups',
   privacy: 'profile.edit.privacy.tab',
+  affiliate: 'profile.affiliate',
+  availabilities: 'profile.availabilities',
+  badges: 'profile.badges',
+  domain: 'profile.domain',
+  fundings: 'profile.fundings',
+  needs: 'profile.needs',
+  network: 'profile.network',
+  patents: 'profile.patents',
+  positions: 'profile.positions',
+  presentation: 'profile.presentation',
+  publications: 'profile.publications',
+  similar: 'profile.similar',
+  team: 'profile.team',
 }
 
 // max skill steps
