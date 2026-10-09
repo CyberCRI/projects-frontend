@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import SectionHeader from '~/components/base/SectionHeader.vue'
-import ProjectCard from '~/components/project/ProjectCard.vue'
+import ProjectRow from '~/components/project/ProjectRow.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 
 withDefaults(
   defineProps<{
     status: any
-    projects: Array
+    projects: Array<TranslatedProject>
     isLoading: boolean
     pagination: any
     preview?: boolean
@@ -43,7 +44,7 @@ withDefaults(
     <EmptyCard
       v-if="!isLoading && projects.length === 0 && !preview"
       class="empty-card"
-      :label="$t('me.no-project-reviewing')"
+      :label="emptyLabel"
     />
 
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />

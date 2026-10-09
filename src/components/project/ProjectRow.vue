@@ -1,6 +1,7 @@
 <template>
   <div class="separator"></div>
   <RouterLink class="project-row" :to="toLink" :data-test="`project-row-${project.id}`">
+    <!-- picture -->
     <div class="card-image">
       <CroppedApiImage
         :picture-data="project.header_image"
@@ -10,36 +11,32 @@
         class="picture picture-project skeletons-background"
       />
     </div>
-    <div class="card-content">
-      <!-- header row -->
-      <div ref="type" class="card-type">
-        <div v-if="mainCategory" class="category-name skeletons-text">
-          <span class="main-category">{{ mainCategory.name }}</span>
-        </div>
+    <!-- header row -->
+    <div ref="type" class="card-type">
+      <div v-if="mainCategory" class="category-name skeletons-text">
+        <span class="main-category">{{ mainCategory.name }}</span>
       </div>
-      <div class="card-action">
-        <ProjectFollowIcon
-          v-if="showFollowButton"
-          ref="follow"
-          :project="project"
-          :target-user-id="targetUserId"
-        />
-      </div>
-      <!-- main row -->
-      <div class="card-texts">
-        <h2 class="card-title skeletons-text">
-          {{ translatedTitle }}
-        </h2>
-        <p class="card-description skeletons-text">
-          {{ translatedPurpose }}
-        </p>
-      </div>
-      <!-- footer row -->
-      <div class="card-tags">
-        <ProjectHeaderTagList class="tag-list" :project="project" />
-      </div>
-      <div class="card-last-update skeletons-text">Last updated {{ lastUpdate }}</div>
     </div>
+    <div class="card-action">
+      <ProjectFollowIcon
+        v-if="showFollowButton"
+        ref="follow"
+        :project="project"
+        :target-user-id="targetUserId"
+      />
+    </div>
+    <!-- main row -->
+    <h2 class="card-title skeletons-text">
+      {{ translatedTitle }}
+    </h2>
+    <p class="card-description skeletons-text">
+      {{ translatedPurpose }}
+    </p>
+    <!-- footer row -->
+    <div class="card-tags">
+      <ProjectHeaderTagList class="tag-list" :project="project" />
+    </div>
+    <div class="card-last-update skeletons-text">Last updated {{ lastUpdate }}</div>
   </RouterLink>
 </template>
 
@@ -87,58 +84,68 @@ const lastUpdate = computed(() =>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 
-.picture-project {
-  width: 10rem;
-  height: 10rem;
-}
+$picture-size: 10rem;
 
 .project-row {
-  display: flex;
+  min-height: $picture-size;
+  display: grid;
+  grid-template: min-content min-content 1fr min-content / $picture-size 1fr max-content;
+  grid-template-areas:
+    'pict header action'
+    'pict title title'
+    'pict content content'
+    'pict footer date';
   gap: 1rem;
   align-items: stretch;
+
   @media screen and (max-width: variables.$min-tablet) {
-    flex-flow: column nowrap;
+    grid-template: min-content min-content $picture-size min-content min-content min-content / 1fr min-content;
+    grid-template-areas:
+      'header action'
+      'title title'
+      'pict pict'
+      'content content'
+      'footer footer'
+      'date date';
   }
 }
 
 .card-image {
-  flex-basis: 12rem;
-  flex-grow: 0;
-  flex-shrink: 0;
+  grid-area: pict;
+  align-content: center;
 
   @media screen and (max-width: variables.$min-tablet) {
-    align-self: center;
+    justify-self: center;
   }
 }
 
-.card-content {
-  flex-grow: 1;
-  display: grid;
-  grid-template-columns: 1fr max-content;
-  grid-template-rows: min-content 1fr min-content;
-  gap: 1rem;
+.picture-project {
+  width: $picture-size;
+  height: $picture-size;
 }
 
 .card-type {
-  grid-row: 1;
-  grid-column: 1;
+  grid-area: header;
 }
+
 .card-action {
-  grid-row: 1;
-  grid-column: 2;
+  grid-area: action;
   justify-self: flex-end;
 }
 
-.card-texts {
-  grid-row: 2;
-  grid-column: 1/2;
+.card-title {
+  grid-area: title;
+}
+
+.card-description {
+  grid-area: content;
 }
 
 .card-tags {
-  grid-row: 3;
-  grid-column: 1;
+  grid-area: footer;
   position: relative;
   height: 2rem;
+
   .tag-list {
     position: absolute;
     inset: 0;
@@ -146,8 +153,7 @@ const lastUpdate = computed(() =>
 }
 
 .card-last-update {
-  grid-row: 3;
-  grid-column: 2;
+  grid-area: date;
   justify-self: flex-end;
 }
 
@@ -168,10 +174,12 @@ const lastUpdate = computed(() =>
   background-color: variables.$light-gray;
   height: 1px;
   margin-right: 66%;
+
   @media screen and (max-width: variables.$min-tablet) {
     margin-inline: 17%;
   }
 }
+
 .project-row ~ .separator {
   display: block;
 }
