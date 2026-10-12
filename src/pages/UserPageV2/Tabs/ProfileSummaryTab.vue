@@ -49,12 +49,6 @@ const bioEmpty = computed(() => textIsEmpty(props.user.$t.description))
     />
     <ProfileGroupsPreview v-if="user.modules.groups" :user="user" />
 
-    <ResearcherPublicationsPreview :user="user" />
-
-    <div class="profile-row">
-      <ResearcherDomainPreview class="researcher-domain" :user="user" />
-      <ResearcherNetworkPreview class="researcher-network" :user="user" />
-    </div>
     <!-- researcher -->
     <ProfileDocumentsPreview
       v-if="user.modules.publications"
@@ -66,6 +60,11 @@ const bioEmpty = computed(() => textIsEmpty(props.user.$t.description))
       document-type="conferences"
       :user="user"
     />
+
+    <div class="profile-row">
+      <ResearcherDomainPreview class="researcher-domain" :user="user" />
+      <ResearcherNetworkPreview class="researcher-network" :user="user" />
+    </div>
 
     <ProfileResourcesPreview v-if="user.modules.files || user.modules.links" :user="user" />
 
@@ -95,9 +94,11 @@ $layout-gap: 1rem;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: $layout-gap;
 }
+
 .resarcher-presentaion {
   grid-column: 1/6;
 }
+
 .resarcher-simalar {
   grid-column: 6;
 }
@@ -105,6 +106,7 @@ $layout-gap: 1rem;
 .researcher-domain {
   grid-column: 1/3;
 }
+
 .researcher-network {
   grid-column: 3/7;
 }
