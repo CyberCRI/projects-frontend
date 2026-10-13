@@ -1,9 +1,6 @@
 <template>
   <div v-if="user.researcher" class="domain-list">
-    <span v-for="domain in domains" :key="domain.id" class="domain-item">
-      <PieProgress class="progress" :progress="domain.progress" />
-      <span class="domain-label">{{ domain.label }}</span>
-    </span>
+    <ResearcherDomain v-for="domain in domains" :key="domain.id" :domain="domain" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -27,24 +24,5 @@ const domains = ref([
   flex-flow: column nowrap;
   gap: 1rem;
   align-items: flex-start;
-}
-
-.domain-item {
-  display: inline-flex;
-  align-items: center;
-  flex-basis: max-content;
-  flex-grow: 0;
-  gap: 0.6rem;
-  border-radius: 1rem;
-  background-color: variables.$primary-lighter;
-  padding: 0.4rem 0.8rem;
-  color: variables.$primary-dark;
-  font-size: 0.8rem;
-}
-
-.progress {
-  width: 1em;
-  height: 1em;
-  fill: variables.$primary-dark;
 }
 </style>

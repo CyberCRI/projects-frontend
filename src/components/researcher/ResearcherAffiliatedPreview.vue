@@ -1,9 +1,9 @@
 <template>
   <BaseModulePreview
     v-if="user.researcher"
-    :title="$t(USER_MODULE_TITLE.affiliate, user.modules.skills)"
-    :icon="USER_MODULE_ICON.skills"
-    :total="user.modules.skills"
+    :title="$t(USER_MODULE_TITLE.affiliate, user.modules.affiliate)"
+    :icon="USER_MODULE_ICON.affiliate"
+    :total="user.modules.affiliate"
     :see-more="{
       name: 'ProfileSkills',
       params: {
@@ -12,7 +12,7 @@
     }"
   >
     <template #content>
-      <BaseResearcherAffiliate :user="user" />
+      <BaseResearcherAffiliated :user="user" />
     </template>
   </BaseModulePreview>
 </template>

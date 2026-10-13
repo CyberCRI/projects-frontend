@@ -27,8 +27,13 @@ const bioEmpty = computed(() => textIsEmpty(props.user.$t.description))
     </div>
     <ProfileBioPreview v-if="!bioEmpty && !user.researcher" :user="user" />
 
-    <ResearcherTeamPreview :user="user" />
-    <ResearcherAffiliatePreview :user="user" />
+    <!-- team -->
+    <!--ResearcherTeamPreview :user="user" /-->
+    <ProfileGroupsPreview v-if="user.modules.groups" :user="user" />
+
+    <!-- affiliate -->
+    <ResearcherAffiliatedPreview :user="user" />
+
     <ProfileSkillsPreview v-if="user.modules.skills && !user.researcher" :user="user" />
 
     <ProfileProjectsPreview v-if="user.modules.projects" type="projects" :user="user" />
@@ -47,7 +52,6 @@ const bioEmpty = computed(() => textIsEmpty(props.user.$t.description))
       type="follows_categories"
       :user="user"
     />
-    <ProfileGroupsPreview v-if="user.modules.groups" :user="user" />
 
     <!-- researcher -->
     <ProfileDocumentsPreview

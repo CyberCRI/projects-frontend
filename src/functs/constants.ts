@@ -344,6 +344,8 @@ export const USER_MODULE_ICON: {
   fundings: 'Euro',
   patents: 'Dna',
   domain: 'TagOutline',
+  network: 'Globe',
+  affiliate: 'UserCommunityLine',
 }
 
 export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {

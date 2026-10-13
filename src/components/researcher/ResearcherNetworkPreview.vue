@@ -2,7 +2,7 @@
   <BaseModulePreview
     v-if="user.researcher"
     :title="$t(USER_MODULE_TITLE.network, user.modules.skills)"
-    :icon="USER_MODULE_ICON.skills"
+    :icon="USER_MODULE_ICON.network"
     :total="user.modules.skills"
     :see-more="{
       name: 'ProfileSkills',
