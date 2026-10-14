@@ -1,5 +1,6 @@
 <template>
   <div v-if="user.researcher">
+    <AIGeneratedMark class="ai-mark" />
     <div v-html="content"></div>
     <div class="actions">
       <LinkButton :label="$t('common.see-more')" btn-icon="Plus" />
@@ -18,6 +19,10 @@ const content = ref(`
 </script>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
+
+.ai-mark {
+  margin-left: auto;
+}
 
 .actions {
   display: flex;
