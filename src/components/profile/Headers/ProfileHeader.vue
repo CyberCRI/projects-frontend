@@ -25,20 +25,28 @@
         {{ capitalize(user.$t.job) }}
       </div>
 
+      <div v-if="user.researcher" class="researcher-roles">
+        <p v-for="(role, idx) in researcherRoles" :key="idx" class="researcher-role">
+          <span class="role-label">{{ role.label }} —&nbsp;</span>
+          <LinkButton class="role-structure" :label="role.structure" btn-icon="Building4" />
+        </p>
+      </div>
+      <div v-if="user.researcher && domains.length" class="domain-list">
+        <ResearcherDomain v-for="domain in domains" :key="domain.id" :domain="domain" />
+      </div>
+      <!--div v-if="user.researcher" class="sdg-ctn">
+      <IdentifierLink
+        v-for="identifier in user.researcher.identifiers"
+        :key="identifier.value"
+        :identifier="identifier"
+        type="researcher"
+      />
+      </div-->
       <p
-        v-if="user.short_description"
+        v-if="!user.researcher && user.short_description"
         class="short-description skeletons-text"
         v-html="user.short_description"
       />
-
-      <div v-if="user.researcher" class="sdg-ctn">
-        <IdentifierLink
-          v-for="identifier in user.researcher.identifiers"
-          :key="identifier.value"
-          :identifier="identifier"
-          type="researcher"
-        />
-      </div>
     </div>
 
     <div v-if="user.researcher" class="researcher-aside">
@@ -110,6 +118,13 @@ const props = defineProps<{
 
 const userFullName = useUserFullName(computed(() => props.user))
 
+const researcherRoles = ref([
+  { label: 'Research Director, co-founder CRI and INSERM U1284 director', structure: 'INSERM' },
+  { label: 'Co-Founder, Research Director of ELiS', structure: 'Learning Planet Institute' },
+  { label: 'Member Board of Directors', structure: 'iGem' },
+  { label: 'Member', structure: 'International Bioethics Committee (UNESCO)' },
+])
+
 const contacts = ref([
   { icon: 'ExternalLink', label: 'Contact', link: 'https://google.com' },
   { icon: 'ExternalLink', label: 'Website', link: 'https://google.com' },
@@ -118,6 +133,14 @@ const contacts = ref([
   { icon: 'ExternalLink', label: 'Scopus', link: 'https://google.com' },
   { icon: 'BlueSkyLine', label: '', link: 'https://google.com' },
   { icon: 'Linkedin', label: '', link: 'https://google.com' },
+])
+
+const domains = ref([
+  { id: 1, label: 'Neuronal Morphogenesis', progress: 1 },
+  { id: 2, label: 'SYSTEM BIOLOGY', progress: 1 },
+  { id: 3, label: 'SYNTHETIC BIOLOGY', progress: 1 },
+  { id: 4, label: 'Autism Spectrum Disorders (ASD)', progress: 0.8 },
+  { id: 5, label: 'Neurodevelopmental Disorders (ND)', progress: 0.6 },
 ])
 </script>
 
@@ -155,75 +178,32 @@ const contacts = ref([
 
   .main {
     grid-area: main;
-    flex-grow: 1;
-    flex-basis: 100%;
     display: flex;
     flex-flow: column;
-
-    > *:last-child {
-      margin-bottom: 0 !important;
-    }
+    gap: 1rem;
 
     .job {
       font-size: variables.$font-size-l;
       font-weight: 400;
-      margin-bottom: variables.$space-l;
     }
 
     .short-description {
       font-weight: 400;
       font-size: variables.$font-size-m;
-      margin-bottom: variables.$space-l;
-    }
-
-    .short-bio {
-      font-size: variables.$font-size-m;
-      margin-bottom: variables.$space-l;
-      display: flex;
-    }
-
-    .group-ctn {
-      display: flex;
-      gap: variables.$space-m;
-      flex-wrap: wrap;
-      margin-bottom: variables.$space-l;
-    }
-
-    .group-anim {
-      transition: transform 0.3s ease-in-out;
-      transform-origin: center bottom;
-      display: inline-block;
-      transform: translateZ(0);
-
-      &:hover {
-        transform: translateZ(0) scaleY(1.3);
-      }
-    }
-
-    .group {
-      cursor: pointer;
-    }
-
-    .sdg-ctn {
-      display: flex;
-      flex-wrap: wrap;
-      gap: variables.$space-s;
-      margin-top: variables.$space-l;
-
-      .sdg-img {
-        width: variables.pxtorem(40px);
-        height: variables.pxtorem(40px);
-        transition: all 0.2s ease-in-out;
-        transform: translateZ(0);
-
-        &:hover {
-          transform: translateZ(0) scale(1.2);
-        }
-      }
     }
   }
 }
 
+.sdg-img {
+  width: variables.pxtorem(40px);
+  height: variables.pxtorem(40px);
+  transition: all 0.2s ease-in-out;
+  transform: translateZ(0);
+
+  &:hover {
+    transform: translateZ(0) scale(1.2);
+  }
+}
 .researcher-aside {
   grid-area: aside;
   display: flex;
@@ -239,7 +219,7 @@ const contacts = ref([
   .researcher-stats {
     display: flex;
     flex-flow: column nowrap;
-    gap: 1rem;
+    gap: 0.4rem;
   }
 
   .researcher-stat {
@@ -253,17 +233,39 @@ const contacts = ref([
 
   .researcher-short-bio {
     font-size: 0.8rem;
+    padding-bottom: 0.8rem;
   }
+}
+.researcher-roles {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.5rem;
+  .researcher-role {
+    display: inline-flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    .role-label {
+      font-weight: 600;
+    }
+  }
+}
+
+.domain-list {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 0.6rem;
+  align-items: flex-start;
 }
 
 .profile-footer {
   grid-area: footer;
   display: flex;
-  gap: 1rem;
   justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
   border: variables.$border-width-s solid variables.$primary;
-  border-radius: variables.$border-radius-l;
-  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  padding: 0.2rem 1rem;
 
   .contacts {
     display: flex;
@@ -286,9 +288,8 @@ const contacts = ref([
 
   .name {
     flex-grow: 1;
-    font-size: variables.$font-size-5xl;
+    font-size: variables.pxtorem(40px);
     font-weight: 700;
-    margin-bottom: variables.$space-l;
     text-transform: capitalize;
   }
 
@@ -308,10 +309,6 @@ const contacts = ref([
       'footer footer footer';
     gap: 1rem;
     padding: 1rem;
-
-    .name {
-      margin-bottom: variables.$space-s;
-    }
 
     .short-bio {
       font-size: variables.$font-size-s;

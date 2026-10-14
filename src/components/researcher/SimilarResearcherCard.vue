@@ -37,10 +37,19 @@ const translatedJob = getTranslatableField(
   align-items: center;
 }
 
+.card-title {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.card-description {
+  font-size: 1rem;
+}
+
 .picture {
   border-radius: 100%;
-  height: 6rem;
-  width: 6rem;
+  height: variables.pxtorem(60px);
+  width: variables.pxtorem(60px);
 }
 
 .cropped {
