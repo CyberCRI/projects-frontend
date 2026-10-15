@@ -346,6 +346,9 @@ export const USER_MODULE_ICON: {
   domain: 'TagOutline',
   network: 'Globe',
   affiliate: 'UserCommunityLine',
+  awards: 'Licence',
+  teaching: 'SchoolOutline',
+  tarde: 'ThumbUpLine',
 }
 
 export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
@@ -375,6 +378,9 @@ export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
   presentation: 'researcher.tabs.presentation',
   similar: 'researcher.tabs.similar',
   team: 'researcher.tabs.team',
+  awards: 'researcher.tabs.awards',
+  teaching: 'researcher.tabs.teaching',
+  trade: 'researcher.tabs.trade',
 }
 
 // max skill steps

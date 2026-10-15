@@ -109,7 +109,7 @@ import SdgList from '~/components/sdgs/SdgList.vue'
 import { useUserFullName } from '~/composables/user/useUserFullName'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
-import IdentifierLink from '~/components/profile/modules/Documents/IdentifierLink.vue'
+// import IdentifierLink from '~/components/profile/modules/Documents/IdentifierLink.vue'
 import { capitalize } from '~/functs/string'
 
 const props = defineProps<{
@@ -204,6 +204,7 @@ const domains = ref([
     transform: translateZ(0) scale(1.2);
   }
 }
+
 .researcher-aside {
   grid-area: aside;
   display: flex;
@@ -236,14 +237,17 @@ const domains = ref([
     padding-bottom: 0.8rem;
   }
 }
+
 .researcher-roles {
   display: flex;
   flex-flow: column nowrap;
   gap: 0.5rem;
+
   .researcher-role {
     display: inline-flex;
     flex-flow: row wrap;
     justify-content: flex-start;
+
     .role-label {
       font-weight: 600;
     }

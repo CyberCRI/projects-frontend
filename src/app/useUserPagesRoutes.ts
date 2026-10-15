@@ -38,6 +38,47 @@ export default function useProfilePagesRoutes() {
       name: 'ProfileResources',
       component: () => import('../pages/UserPageV2/Tabs/ProfileResourcesTab.vue'),
     },
+
+    {
+      path: 'network',
+      name: 'ProfileNetwork',
+      component: () => import('../pages/UserPageV2/Tabs/ProfileNetworkTab.vue'),
+    },
+    {
+      path: 'affiliate',
+      name: 'ProfileAffiliate',
+      component: () => import('../pages/UserPageV2/Tabs/ProfileAffiliateTab.vue'),
+    },
+    {
+      path: 'awards',
+      name: 'ProfileAwards',
+      component: () => import('../pages/UserPageV2/Tabs/ProfileAwardsTab.vue'),
+    },
+    {
+      path: 'patents',
+      name: 'ProfilePatents',
+      component: () => import('../pages/UserPageV2/Tabs/ProfilePatentsTab.vue'),
+    },
+    {
+      path: 'fundings',
+      name: 'ProfileFundings',
+      component: () => import('../pages/UserPageV2/Tabs/ProfileFundingsTab.vue'),
+    },
+    {
+      path: 'teaching',
+      name: 'ProfileTeaching',
+      component: () => import('../pages/UserPageV2/Tabs/ProfileTeachingTab.vue'),
+    },
+    {
+      path: 'positions',
+      name: 'ProfilePositions',
+      component: () => import('../pages/UserPageV2/Tabs/ProfilePositionsTab.vue'),
+    },
+    {
+      path: 'trade',
+      name: 'ProfileTrade',
+      component: () => import('../pages/UserPageV2/Tabs/ProfileTradeTab.vue'),
+    },
   ]
 
   const profileEditTabs = [
