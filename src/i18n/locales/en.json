@@ -2879,6 +2879,26 @@
     "previous-messages": "Previous messages"
   },
   "researcher": {
+    "badges": {
+      "projects": "{count} project | {count} projects",
+      "publications": "{count} publication | {count} publications",
+      "affiliated": "{count} affiliated researcher | {count} affiliated researchers",
+      "teachings": "{count} teaching | {count} teachings",
+      "awards": "{count} award | {count} awards"
+    },
+    "tabs": {
+      "affiliate": "{count} affiliated researcher | {count} affiliated researchers",
+      "availabilities": "Availabilities",
+      "domain": "{count} research domain | {count} research domains",
+      "fundings": "{count} funding | {count} fundings",
+      "needs": "Needs",
+      "network": "researcher.tabs.network",
+      "patents": "{count} patent | {count} patents",
+      "positions": "{count} open position | {count} open positions",
+      "presentation": "Presentation",
+      "similar": "researcher.tabs.similar",
+      "team": "{ count } team | {count} teams"
+    },
     "relators": {
       "abr": "abridger",
       "acp": "art copyist",

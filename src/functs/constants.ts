@@ -340,6 +340,15 @@ export const USER_MODULE_ICON: {
   resources: 'Globe',
   groups: 'PeopleGroup',
   privacy: 'Eye',
+  positions: 'BullhornOutline',
+  fundings: 'Euro',
+  patents: 'Dna',
+  domain: 'TagOutline',
+  network: 'Globe',
+  affiliate: 'UserCommunityLine',
+  awards: 'Licence',
+  teaching: 'SchoolOutline',
+  tarde: 'ThumbUpLine',
 }
 
 export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
@@ -358,6 +367,20 @@ export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
   resources: 'resource.resources',
   groups: 'profile.groups',
   privacy: 'profile.edit.privacy.tab',
+  affiliate: 'researcher.tabs.affiliate',
+  availabilities: 'researcher.tabs.availabilities',
+  domain: 'researcher.tabs.domain',
+  fundings: 'researcher.tabs.fundings',
+  needs: 'researcher.tabs.needs',
+  network: 'researcher.tabs.network',
+  patents: 'researcher.tabs.patents',
+  positions: 'researcher.tabs.positions',
+  presentation: 'researcher.tabs.presentation',
+  similar: 'researcher.tabs.similar',
+  team: 'researcher.tabs.team',
+  awards: 'researcher.tabs.awards',
+  teaching: 'researcher.tabs.teaching',
+  trade: 'researcher.tabs.trade',
 }
 
 // max skill steps
