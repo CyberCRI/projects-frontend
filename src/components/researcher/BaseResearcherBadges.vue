@@ -1,24 +1,57 @@
 <template>
   <div v-if="user.researcher" class="badge-list">
-    <div v-for="badge in badges" :key="badge.label" class="badge">
-      <IconImage class="badge-icon" :name="badge.icon" />
-      <span class="badge-label">
-        {{ $t(`researcher.badges.${badge.label}`, { count: badge.count }) }}
-      </span>
-    </div>
+    <template v-for="badge in badges" :key="badge.label">
+      <NuxtLink v-if="badge.link" :to="badge.link" class="badge">
+        <IconImage class="badge-icon" :name="badge.icon" />
+        <span class="badge-label">
+          {{ $t(`researcher.badges.${badge.label}`, { count: badge.count }) }}
+        </span>
+      </NuxtLink>
+      <div v-else class="badge">
+        <IconImage class="badge-icon" :name="badge.icon" />
+        <span class="badge-label">
+          {{ $t(`researcher.badges.${badge.label}`, { count: badge.count }) }}
+        </span>
+      </div>
+    </template>
   </div>
 </template>
 <script lang="ts" setup>
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
-defineProps<{ user: TranslatedUserModel }>()
+const props = defineProps<{ user: TranslatedUserModel }>()
 
-const badges = ref([
-  { label: 'projects', icon: 'Briefcase', count: 5 },
-  { label: 'publications', icon: 'BookLine', count: 38 },
-  { label: 'affiliated', icon: 'AccountCircle', count: 7 },
-  { label: 'teachings', icon: 'SchoolOutline', count: 2 },
-  { label: 'awards', icon: 'Licence', count: 10 },
+const badges = computed(() => [
+  {
+    label: 'projects',
+    icon: 'Briefcase',
+    count: 5,
+    link: `/profile/${props.user.slug || props.user.id}/projects`,
+  },
+  {
+    label: 'publications',
+    icon: 'BookLine',
+    count: 38,
+    link: `/profile/${props.user.slug || props.user.id}/documents/publication`,
+  },
+  {
+    label: 'affiliated',
+    icon: 'AccountCircle',
+    count: 7,
+    link: `/profile/${props.user.slug || props.user.id}/affiliate`,
+  },
+  {
+    label: 'teachings',
+    icon: 'SchoolOutline',
+    count: 2,
+    link: `/profile/${props.user.slug || props.user.id}/teaching`,
+  },
+  {
+    label: 'awards',
+    icon: 'Licence',
+    count: 10,
+    link: `/profile/${props.user.slug || props.user.id}/awards`,
+  },
 ])
 </script>
 <style lang="scss" scoped>
@@ -45,7 +78,7 @@ const badges = ref([
 }
 
 .badge-label {
-  font-weight: 700;
+  font-weight: 600;
   color: variables.$primary-dark;
 }
 </style>
