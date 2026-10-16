@@ -45,6 +45,10 @@ const defaultForm = (agent = null) => ({
       vectorStoreKey,
       isGlobal,
     })) ?? [],
+  mcps:
+    agent?.mcps?.map(({ title }) => ({
+      title,
+    })) ?? [],
   useLatestPromptVersion: agent?.useLatestPromptVersion ?? true,
   useProfileData: agent?.useProfileData ?? false,
   useProjectsMcp: agent?.useProjectsMcp ?? false,
@@ -156,6 +160,19 @@ const documents = ref([])
 const documentOptions = ref([])
 const cannotDeactivate = ref(false)
 
+const fetchMcps = async () => {
+  let headers = {}
+  const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
+  if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
+
+  const mcps = await $fetch(`/api/mcp/`, {
+    headers,
+  })
+  return mcps
+}
+const mcps = ref([])
+const mcpOptions = ref([])
+
 const isLoading = ref(false)
 watch(
   () => props.isOpened,
@@ -219,6 +236,28 @@ watch(
             }
           })
         })(),
+
+        (async () => {
+          mcps.value = await fetchMcps()
+          mcpOptions.value = mcps.value.map((mcp) => {
+            let opt = {
+              useMcp: false,
+            }
+            if (props.agent?.mcps) {
+              const original = props.agent?.mcps.find((d) => d.id === mcp.id)
+              if (original) {
+                opt = {
+                  useMcp: true,
+                }
+              }
+            }
+
+            return {
+              mcp,
+              model: opt,
+            }
+          })
+        })(),
       ])
 
       form.value = defaultForm(props.agent)
@@ -271,6 +310,13 @@ const submit = async () => {
       documentTitle: o.document.title,
       vectorStoreKey: o.document.vectorStoreKey,
       isGlobal: o.document.org_code == '',
+    }))
+
+  form.value.mcps = mcpOptions.value
+    .filter((o) => o.model.useMcp)
+    .map((o) => ({
+      id: o.mcp.id,
+      orgCode: o.mcp.orgCode,
     }))
 
   try {
@@ -433,6 +479,13 @@ const submit = async () => {
           <lpiCheckbox v-model="form.useProfileData" :label="$t('agents.use-profile-data')" />
         </div>
       </div>
+      <template v-if="mcpOptions.length">
+        <div v-for="opt in mcpOptions" :key="opt.mcp.id" class="form-section">
+          <div class="agent-tool-picker">
+            <lpiCheckbox v-model="opt.model.useMcp" :label="opt.mcp.title" />
+          </div>
+        </div>
+      </template>
       <h4 class="form-section-title">{{ $t('agents.docs-section') }}</h4>
       <div class="form-section agent-documents-section">
         <AgentDocumentPicker

@@ -67,15 +67,26 @@ enum TransportType {
   http
 }
 
+enum AuthHeaderType {
+  bearer
+  xapi
+}
+
 model Mcp {
-  id          Int           @id @default(autoincrement())
-  orgCode     String
+  id      String @id
+  orgCode String
+
   title       String
   description String
   transport   TransportType
   url         String
   command     String
   args        String
+
+  authHeader       AuthHeaderType?
+  apiKeyCiphertext Bytes? // IV + authTag + encrypted payload
+  apiKeyVersion    Int?
+  apiKeyLast4      String?
 
   agents Agent[]
 
