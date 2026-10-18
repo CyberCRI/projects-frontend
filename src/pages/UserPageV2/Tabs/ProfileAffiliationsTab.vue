@@ -7,6 +7,6 @@ withDefaults(defineProps<{ user: TranslatedUserModel; editable?: boolean }>(), {
 
 <template>
   <BaseModuleTab :title="$t('profile.bio')">
-    <BaseResearcherAffiliated v-if="!editable" title="" :user="user" />
+    <BaseResearcherAffiliations v-if="!editable" title="" :user="user" />
   </BaseModuleTab>
 </template>

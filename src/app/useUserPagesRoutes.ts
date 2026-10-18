@@ -45,9 +45,9 @@ export default function useProfilePagesRoutes() {
       component: () => import('../pages/UserPageV2/Tabs/ProfileNetworkTab.vue'),
     },
     {
-      path: 'affiliate',
+      path: 'affiliations',
       name: 'ProfileAffiliate',
-      component: () => import('../pages/UserPageV2/Tabs/ProfileAffiliateTab.vue'),
+      component: () => import('../pages/UserPageV2/Tabs/ProfileAffiliationsTab.vue'),
     },
     {
       path: 'awards',
