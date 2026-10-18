@@ -3,6 +3,7 @@ import { factoryPagination } from '~/skeletons/base.skeletons.ts'
 import { formatDateTime } from '~/functs/date.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 
+const { translateAgents } = useAutoTranslate()
 const { locale } = useNuxtI18n()
 
 const emit = defineEmits(['show-document'])
@@ -21,6 +22,19 @@ const conversationSkeleton = () => ({
   lastActiveAt: '1970-01-01T00:00:00',
 })
 
+const key = computed(() => `admin-agents`)
+const getAgents = () =>
+  useAsyncAPI(key, () => $fetch('/api/agent', { headers }), {
+    translate: (data) => translateAgents(data),
+  })
+const { /*status,*/ /*isLoadingAgents,*/ data: agents /*error,*/ /*refreshAgents*/ } = getAgents()
+
+const agentOptions = computed(() => [
+  { label: 'ALL', value: 0 },
+  ...(agents.value || []).map((agent) => ({ value: agent.id, label: agent.title })),
+])
+const selectedAgent = ref(0)
+
 const LIMIT = 20
 const { data, status, refresh, pagination } = useAsyncPaginationAPI(
   'conversations',
@@ -30,6 +44,42 @@ const { data, status, refresh, pagination } = useAsyncPaginationAPI(
     default: () => factoryPagination(conversationSkeleton, LIMIT),
   }
 )
+
+const isExporting = ref(false)
+const exportCoversations = async () => {
+  isExporting.value = true
+  try {
+    const jsonData = await $fetch(
+      `/api/chat-conversation/?limit=100&agentId=${selectedAgent.value}`,
+      {
+        headers,
+      }
+    )
+    const filename = `agent-${selectedAgent.value}-conversations-${new Date().toISOString()}.json`
+    // Create a Blob from the JSON data
+    const blob = new Blob([JSON.stringify(jsonData.results, null, 2)], {
+      type: 'application/json',
+    })
+    // Create a download link
+    const downloadUrl = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = downloadUrl
+    link.download = filename
+
+    // Trigger the download
+    document.body.appendChild(link)
+    link.click()
+
+    // Cleanup
+    document.body.removeChild(link)
+    URL.revokeObjectURL(downloadUrl)
+  } catch (error) {
+    console.error('Error downloading data:', error)
+    throw error
+  } finally {
+    isExporting.value = false
+  }
+}
 
 // const isAsyncing = computed(() => status.value === 'pending')
 
@@ -43,6 +93,15 @@ refresh()
 refresh()
 </script>
 <template>
+  <div class="export">
+    <LpiSelect v-model="selectedAgent" :options="agentOptions" />
+    <LpiButton
+      :disabled="isExporting"
+      label="Export"
+      :btn-icon="isExporting ? 'LoaderSimple' : undefined"
+      @click="exportCoversations"
+    />
+  </div>
   <FetchLoader :status="status" skeleton only-error>
     <EmptyLabel v-if="!documentList.length" :label="$t('chat-conversation.no-conversation-yet')" />
     <ul>
@@ -129,5 +188,12 @@ refresh()
 .no-document {
   text-align: center;
   font-style: italic;
+}
+
+.export {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 </style>
