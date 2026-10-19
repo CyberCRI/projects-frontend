@@ -20,14 +20,12 @@ const organizationCode = useOrganizationCode()
 const usersStore = useUsersStore()
 const { onboardingTrap } = useOnboardingStatus()
 
-const { form, isValid } = useProjectTemplatesForm({
-  default: {
-    // pre add category from queryparams
-    categorie: route.query.category
-      ? { id: parseInt(route.query.category.toString(), 10), templates: [] }
-      : null,
-  },
-})
+const { form, isValid } = useProjectTemplatesForm({})
+
+// pre add category from queryparams
+const forcedCategory = ref(
+  route.query.category ? parseInt(route.query.category.toString(), 10) : null
+)
 
 const toaster = useToasterStore()
 
@@ -105,6 +103,7 @@ const updateForm = (f) => {
 
     <div class="list-container">
       <ProjectTemplateForm
+        :forced-category="forcedCategory"
         :model-value="pick(form, ['template', 'categorie'])"
         @update:model-value="updateForm"
       />
