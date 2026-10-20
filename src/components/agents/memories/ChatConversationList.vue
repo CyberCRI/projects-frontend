@@ -99,6 +99,7 @@ refresh()
 </script>
 <template>
   <div class="export">
+    <label>With agent</label>
     <LpiSelect v-model="selectedAgent" :options="agentOptions" />
     <LpiButton
       :disabled="isExporting"
