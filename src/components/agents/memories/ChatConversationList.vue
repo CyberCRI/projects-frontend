@@ -2,6 +2,7 @@
 import { factoryPagination } from '~/skeletons/base.skeletons.ts'
 import { formatDateTime } from '~/functs/date.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import { onlyRefs } from '@/functs/onlyRefs'
 
 const { translateAgents } = useAutoTranslate()
 const { locale } = useNuxtI18n()
@@ -34,23 +35,27 @@ const agentOptions = computed(() => [
   ...(agents.value || []).map((agent) => ({ value: agent.id, label: agent.title })),
 ])
 const selectedAgent = ref(0)
+const searchQuery = computed(() => ({ agentId: selectedAgent.value || undefined }))
 
 const LIMIT = 20
 const { data, status, refresh, pagination } = useAsyncPaginationAPI(
   'conversations',
   ({ config }) => $fetch('/api/chat-conversation/', { headers, ...config }),
   {
+    query: searchQuery,
     paginationConfig: { limit: LIMIT },
     default: () => factoryPagination(conversationSkeleton, LIMIT),
+    watch: onlyRefs([searchQuery]),
   }
 )
 
 const isExporting = ref(false)
 const exportCoversations = async () => {
   isExporting.value = true
+  const _limit = 250
   try {
     const jsonData = await $fetch(
-      `/api/chat-conversation/?limit=100&agentId=${selectedAgent.value}`,
+      `/api/chat-conversation/?limit=${_limit}&agentId=${selectedAgent.value}`,
       {
         headers,
       }
@@ -103,6 +108,7 @@ refresh()
     />
   </div>
   <FetchLoader :status="status" skeleton only-error>
+    <h4 class="conversation-count skeletons-text">{{ pagination.count }} conversations</h4>
     <EmptyLabel v-if="!documentList.length" :label="$t('chat-conversation.no-conversation-yet')" />
     <ul>
       <li
@@ -117,6 +123,8 @@ refresh()
           {{ document.agent?.title }} - {{ document.title }}
           <br />
 
+          <span class="chunk-count">Agent: {{ document.agent.title?.substring(0, 16) }}</span>
+          -
           <span class="chunk-count">User #{{ document.userId }}</span>
           -
           <span class="chunk-count">{{ prettyDate(document.lastActiveAt) }}</span>
@@ -195,5 +203,10 @@ refresh()
   align-items: center;
   gap: 1rem;
   margin-bottom: 2rem;
+}
+
+.conversation-count {
+  text-align: center;
+  margin-bottom: 1rem;
 }
 </style>
