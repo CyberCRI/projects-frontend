@@ -13,10 +13,15 @@ export default async function useChatbotContext({
 }) {
   const usersStore = useUsersStore()
 
-  const allowProfile = computed(() => unref(hasUserContext) && _allowProfile.value)
   if (import.meta.client) {
-    _allowProfile.value = !!localStorage?.getItem('lpi-chatbot-allow-profile')
+    const val = localStorage?.getItem('lpi-chatbot-allow-profile')
+    if (val === null) {
+      _allowProfile.value = true
+    } else {
+      _allowProfile.value = !!val
+    }
   }
+  const allowProfile = computed(() => unref(hasUserContext) && _allowProfile.value)
   const updateAllowProfile = () => {
     _allowProfile.value = !_allowProfile.value
     if (import.meta.client) {
@@ -64,10 +69,17 @@ export default async function useChatbotContext({
     `
   })
 
-  const allowCurrentPage = computed(() => unref(hasPageContext) && _allowCurrentPage.value)
   if (import.meta.client) {
-    _allowCurrentPage.value = !!localStorage?.getItem('lpi-chatbot-allow-current-page')
+    const val = localStorage?.getItem('lpi-chatbot-allow-current-page')
+    if (val === null) {
+      _allowCurrentPage.value = true
+    } else {
+      _allowCurrentPage.value = !!val
+    }
   }
+  const allowCurrentPage = computed(() => {
+    return unref(hasPageContext) && _allowCurrentPage.value
+  })
   const updateAllowCurrentPage = () => {
     _allowCurrentPage.value = !_allowCurrentPage.value
     if (import.meta.client) {

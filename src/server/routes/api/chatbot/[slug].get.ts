@@ -34,7 +34,6 @@ export default defineLazyEventHandler(() => {
     }
 
     const agent = await agentFindBySlug(chatbotPrisma, slug, appApiOrgCode, agentFields)
-    // console.log(agent)
     if (!agent) {
       setResponseStatus(event, 400)
       return {
