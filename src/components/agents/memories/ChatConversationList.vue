@@ -55,7 +55,7 @@ const exportCoversations = async () => {
   const _limit = 250
   try {
     const jsonData = await $fetch(
-      `/api/chat-conversation/?limit=${_limit}&agentId=${selectedAgent.value}`,
+      `/api/chat-conversation/?withMessages=true&limit=${_limit}&agentId=${selectedAgent.value}`,
       {
         headers,
       }

@@ -12,7 +12,7 @@ export default defineLazyEventHandler(() => {
     const offset = safeParseInt(getQuery(event)?.offset, 0)
     const agentId = safeParseInt(getQuery(event)?.agentId, 0)
 
-    const messages = !!agentId
+    const messages = !!getQuery(event)?.withMessages
     let selectAgent = {}
     if (agentId) selectAgent = { agentId }
 
