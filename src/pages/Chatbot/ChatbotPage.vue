@@ -142,7 +142,6 @@ const { data: conversationData, status: conversationStatus } = useFetch(
 const isLoadingConversation = computed(() => conversationStatus.value == 'pending')
 
 watch(conversationData, (cData) => {
-  // console.log('cData', cData)
   if (!cData) return
   if (conversationId.value) {
     if (cData?.conversation) {
@@ -182,7 +181,6 @@ const displayableMessages = computed(() =>
 const history = computed(() => {
   const h = displayableMessages.value || []
   return h.map((message) => {
-    // console.log(message)
     return {
       role: message.role,
       text: message.content,
