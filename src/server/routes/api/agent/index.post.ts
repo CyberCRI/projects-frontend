@@ -24,6 +24,8 @@ export default defineLazyEventHandler(() => {
     else body.skillContents = { create: body.skillContents }
     if (!body.documents?.length) delete body.documents
     else body.documents = { create: body.documents }
+    if (!body.mcps?.length) delete body.mcps
+    else body.mcps = { connect: body.mcps }
 
     const agent = await chatbotPrisma.$transaction(async (tx) => {
       const homonym = await tx.agent.findFirst({

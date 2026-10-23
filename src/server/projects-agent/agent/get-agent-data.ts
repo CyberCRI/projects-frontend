@@ -1,3 +1,5 @@
+import { dangerouslyDecryptApiKey } from '~/server/utils/mcp-utils'
+
 const runtimeConfig = useRuntimeConfig()
 const { appApiOrgCode } = runtimeConfig.public
 
@@ -18,5 +20,6 @@ export default async function getAgentData(id) {
       mcps: true,
     },
   })
+  ;(agentData.mcps || []).map(dangerouslyDecryptApiKey)
   return agentData
 }
