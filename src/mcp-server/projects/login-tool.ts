@@ -1,7 +1,7 @@
-import type { TypeMcpServer } from '~/interfaces/mcp'
+import type { McpServer, ServerContext } from '@modelcontextprotocol/server'
 import { getUserToken } from './base'
 
-export default (server: TypeMcpServer) => {
+export default (server: McpServer) => {
   // Add an search tool
   server.registerTool(
     'login',
@@ -10,8 +10,8 @@ export default (server: TypeMcpServer) => {
       description:
         'Allow the user to login to unlock extra data. If this tool is present, always first propose the user to use it.',
     },
-    (extras) => {
-      if (!getUserToken(extras))
+    (ctx: ServerContext) => {
+      if (!getUserToken(ctx))
         return {
           content: [
             {
