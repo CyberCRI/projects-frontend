@@ -2,6 +2,7 @@
 import type { ProjectForm as ProjectFormType } from 'shared-projects-frontend/models'
 import ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
 import { postProject, postProjectHeader } from 'shared-projects-frontend/apis'
+import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import ProjectForm from '~/components/project/ProjectForm.vue'
 import { imageSizesFormData } from '~/functs/imageSizesUtils'
 import { useProjectTemplatesForm } from '~/form/project'
@@ -19,6 +20,8 @@ const loading = ref(false)
 const organizationCode = useOrganizationCode()
 const usersStore = useUsersStore()
 const { onboardingTrap } = useOnboardingStatus()
+
+const isConnected = computed(() => usersStore.isConnected)
 
 const { form, isValid } = useProjectTemplatesForm({})
 
@@ -91,17 +94,33 @@ const updateForm = (f) => {
     ...(f || {}),
   }
 }
+
+const login = () => {
+  goToKeycloakLoginPage()
+}
 </script>
 
 <template>
-  <BasePage :title="$t('project.create.title')" :notice="$t('project.create.notice')">
+  <BasePage
+    :title="$t('project.create.title')"
+    :notice="isConnected ? $t('project.create.notice') : undefined"
+  >
+    <div v-if="!isConnected">
+      <p class="login-notice centered">
+        {{ $t('common.need-login') }}
+      </p>
+      <div class="login-button centered">
+        <LpiButton :label="$t('common.login')" @click="login" />
+      </div>
+    </div>
+
     <template #notice>
-      <NuxtLink :to="{ name: 'Help' }" class="help-link">
+      <NuxtLink v-if="isConnected" :to="{ name: 'Help' }" class="help-link">
         {{ $t('project.create.help-link') }}
       </NuxtLink>
     </template>
 
-    <div class="list-container">
+    <div v-if="isConnected" class="list-container">
       <ProjectTemplateForm
         :forced-category="forcedCategory"
         :model-value="pick(form, ['template', 'categorie'])"
@@ -122,5 +141,15 @@ const updateForm = (f) => {
 
 .help-link {
   color: variables.$primary-dark;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+}
+
+.login-notice {
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
 }
 </style>

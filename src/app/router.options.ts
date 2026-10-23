@@ -241,7 +241,6 @@ const routes = ({
 
       meta: {
         resetScroll: true,
-        requiresAuth: true,
       },
     },
     ...projectPageRoutes,
