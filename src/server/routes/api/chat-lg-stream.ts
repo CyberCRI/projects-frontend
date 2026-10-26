@@ -3,9 +3,9 @@ import { createRetrieverTool } from '@langchain/classic/tools/retriever'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import type { BaseMessageChunk } from '@langchain/core/messages'
 import { initChatModel } from 'langchain/chat_models/universal'
-import { MultiServerMCPClient } from '@langchain/mcp-adapters'
 import getVectorStore from '~/server/utils/vector-db-new'
 import { createAgent, createMiddleware } from 'langchain'
+import { MCPAdapter } from '@langchain/mcp-adapters'
 import { MemorySaver } from '@langchain/langgraph'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -88,17 +88,19 @@ export default defineLazyEventHandler(() => {
 
     if (appMcpServerUrl) {
       traceMcp('Adding MCP tool with server URL:', appMcpServerUrl)
-      const client = new MultiServerMCPClient({
-        mcp: {
-          transport: 'http', // HTTP-based remote server
-          url: appMcpServerUrl,
-          headers: {
-            Authorization: `${tokenHeader}`,
+      const client = new MCPAdapter({
+        servers: {
+          mcp: {
+            transport: 'http', // HTTP-based remote server
+            url: appMcpServerUrl,
+            headers: {
+              Authorization: `${tokenHeader}`,
+            },
           },
         },
       })
 
-      const mcpTools = await client.getTools()
+      const mcpTools = await client.listTools()
       traceMcp('mcp tool', JSON.stringify(mcpTools, null, 2))
       tools.unshift(...mcpTools)
     }
