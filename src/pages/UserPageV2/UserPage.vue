@@ -146,7 +146,12 @@ const hasSubPageTitle = computed(
         </template>
         <template #content>
           <BreadCrumbs :breadcrumbs="breadcrumbs" :is-loading="isLoading" />
-          <SubPageTitle v-if="hasSubPageTitle" class="skeletons-text" :current-tab="currentTab" />
+          <SubPageTitle v-if="hasSubPageTitle" class="skeletons-text" :current-tab="currentTab">
+            <AIGeneratedMark
+              v-if="!!user.researcher && currentTab.key == 'profile-bio'"
+              class="ai-mark"
+            />
+          </SubPageTitle>
           <NuxtPage v-if="currentTab" v-bind="propsTab" />
         </template>
       </NavPanelLayout>

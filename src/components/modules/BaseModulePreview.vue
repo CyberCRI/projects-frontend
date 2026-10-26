@@ -26,6 +26,7 @@
         v-if="seeMore && seeMorePosition === 'bottom'"
         class="see-more-button skeletons-background"
         :to="seeMore"
+        :label="seeMoreLabel"
       />
     </slot>
   </div>
@@ -46,6 +47,7 @@ withDefaults(
     loading?: boolean
     icon?: IconImageChoice
     seeMorePosition?: 'bottom' | 'top'
+    seeMoreLabel?: string | null
   }>(),
   {
     loading: false,
@@ -53,6 +55,7 @@ withDefaults(
     total: null,
     seeMore: null,
     seeMorePosition: 'top',
+    seeMoreLabel: undefined,
   }
 )
 </script>

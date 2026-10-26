@@ -1,11 +1,6 @@
 <template>
   <div v-if="user.researcher">
-    <AIGeneratedMark class="ai-mark" />
     <div v-html="content"></div>
-    <div class="actions">
-      <LinkButton :label="$t('common.see-more')" btn-icon="Plus" />
-      <LinkButton :label="$t('researcher.download-resume')" btn-icon="TrayArrowDown" />
-    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -22,11 +17,5 @@ const content = ref(`
 
 .ai-mark {
   margin-left: auto;
-}
-
-.actions {
-  display: flex;
-  gap: 1rem;
-  padding-top: 1rem;
 }
 </style>

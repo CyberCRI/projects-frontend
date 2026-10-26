@@ -12,12 +12,17 @@ withDefaults(
 </script>
 <template>
   <h2 v-if="currentTab && !currentTab.noTitle" class="sub-page-title">
+    <div class="title-main">
+      <span v-if="titlePrefix" class="title-prefix">{{ titlePrefix }}</span>
+      <template v-if="currentTab.label">
+        <span v-if="titlePrefix" class="separator">-</span>
+        <span class="specific-title">{{ currentTab.label }}</span>
+      </template>
+    </div>
     <!--span v-if="currentTab.icon" class="icon"><IconImage :name="currentTab.icon" /></span-->
-    <span v-if="titlePrefix" class="title-prefix">{{ titlePrefix }}</span>
-    <template v-if="currentTab.label">
-      <span v-if="titlePrefix" class="separator">-</span>
-      <span class="specific-title">{{ currentTab.label }}</span>
-    </template>
+    <div class="title-aside">
+      <slot />
+    </div>
   </h2>
 </template>
 <style lang="scss" scoped>
@@ -38,6 +43,14 @@ withDefaults(
     width: 1.2em;
     height: 1.2em;
     fill: variables.$primary-dark;
+  }
+
+  .title-main {
+    flex-grow: 1;
+  }
+
+  .title-aside {
+    flex-shrink: 1;
   }
 }
 </style>
