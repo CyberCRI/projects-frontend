@@ -5,7 +5,7 @@
     :icon="USER_MODULE_ICON.network"
     :total="user.modules.skills"
     :see-more="{
-      name: 'ProfileSkills',
+      name: 'ProfileNetwork',
       params: {
         userIdOrSlug: user.slug || user.id,
       },

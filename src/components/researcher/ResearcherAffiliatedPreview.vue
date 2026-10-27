@@ -5,7 +5,7 @@
     :icon="USER_MODULE_ICON.affiliate"
     :total="user.modules.affiliate"
     :see-more="{
-      name: 'ProfileSkills',
+      name: 'ProfileAffiliate',
       params: {
         userIdOrSlug: user.slug || user.id,
       },

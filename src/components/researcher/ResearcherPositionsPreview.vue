@@ -5,7 +5,7 @@
     :icon="USER_MODULE_ICON.positions"
     :total="user.modules.skills"
     :see-more="{
-      name: 'ProfileSkills',
+      name: 'ProfilePositions',
       params: {
         userIdOrSlug: user.slug || user.id,
       },
