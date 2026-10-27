@@ -3255,7 +3255,50 @@
       "BookOfChapters": "Boek van hoofdstukken",
       "Presentation": "Presentatie",
       "UNKNOWN": "Onbekend"
-    }
+    },
+    "badges": {
+      "projects": "{count} project | {count} projecten",
+      "publications": "{count} publicatie | {count} publicaties",
+      "affiliated": "{count} aangesloten onderzoeker | {count} aangesloten onderzoekers",
+      "teachings": "{count} onderwijsactiviteit | {count} onderwijsactiviteiten",
+      "awards": "{count} prijs | {count} prijzen"
+    },
+    "title": {
+      "affiliate": "{count} aangesloten onderzoeker | {count} aangesloten onderzoekers",
+      "availabilities": "Beschikbaarheden",
+      "domain": "{count} onderzoeksdomein | {count} onderzoeksdomeinen",
+      "fundings": "{count} financiering | {count} financieringen",
+      "needs": "Behoeften",
+      "network": "Netwerk",
+      "patents": "{count} octrooi | {count} octrooien",
+      "patent-tabs": "Octrooi",
+      "positions": "{count} openstaande vacature | {count} openstaande vacatures",
+      "positions-tab": "Openstaande vacatures",
+      "presentation": "Presentatie",
+      "similar": "Vergelijkbaar",
+      "team": "{count} team | {count} teams",
+      "similar-researchers": "Vergelijkbare onderzoekers",
+      "affiliations": "Affiliaties",
+      "awards": "Prijzen",
+      "trade": "Behoeften / Beschikbaarheden",
+      "teaching": "Onderwijs"
+    },
+    "view": {
+      "all": "Alles bekijken",
+      "all-researchers": "Alle onderzoekers bekijken",
+      "all-publications": "Alle publicaties bekijken",
+      "all-conferences": "Alle conferenties bekijken",
+      "all-domains": "Domeinen bekijken",
+      "all-network": "Netwerk bekijken",
+      "all-job-offers": "Alle vacatures bekijken"
+    },
+    "stats": {
+      "citations": "Citaties",
+      "h-index": "h-index",
+      "i10-index": "i10-index"
+    },
+    "download-resume": "CV downloaden",
+    "top-collaborations": "Belangrijkste samenwerkingen"
   },
   "vector-store": {
     "confirm-deletion": "Verwijdering bevestigen",

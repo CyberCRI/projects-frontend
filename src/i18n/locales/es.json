@@ -3255,7 +3255,50 @@
       "BookOfChapters": "Libro de Capítulos",
       "Presentation": "Presentación",
       "UNKNOWN": "Desconocida"
-    }
+    },
+    "badges": {
+      "projects": "{count} proyecto | {count} proyectos",
+      "publications": "{count} publicación | {count} publicaciones",
+      "affiliated": "{count} investigador afiliado | {count} investigadores afiliados",
+      "teachings": "{count} docencia | {count} docencias",
+      "awards": "{count} premio | {count} premios"
+    },
+    "title": {
+      "affiliate": "{count} investigador afiliado | {count} investigadores afiliados",
+      "availabilities": "Disponibilidades",
+      "domain": "{count} área de investigación | {count} áreas de investigación",
+      "fundings": "{count} financiación | {count} financiaciones",
+      "needs": "Necesidades",
+      "network": "Red",
+      "patents": "{count} patente | {count} patentes",
+      "patent-tabs": "Patente",
+      "positions": "{count} puesto abierto | {count} puestos abiertos",
+      "positions-tab": "Puestos abiertos",
+      "presentation": "Presentación",
+      "similar": "Similares",
+      "team": "{count} equipo | {count} equipos",
+      "similar-researchers": "Investigadores similares",
+      "affiliations": "Afiliaciones",
+      "awards": "Premios",
+      "trade": "Necesidades / Disponibilidades",
+      "teaching": "Docencia"
+    },
+    "view": {
+      "all": "Ver todo",
+      "all-researchers": "Ver todos los investigadores",
+      "all-publications": "Ver todas las publicaciones",
+      "all-conferences": "Ver todas las conferencias",
+      "all-domains": "Ver áreas",
+      "all-network": "Ver la red",
+      "all-job-offers": "Ver todas las ofertas de empleo"
+    },
+    "stats": {
+      "citations": "Citas",
+      "h-index": "índice h",
+      "i10-index": "índice i10"
+    },
+    "download-resume": "Descargar CV",
+    "top-collaborations": "Principales colaboraciones"
   },
   "vector-store": {
     "confirm-deletion": "Confirmar eliminación",

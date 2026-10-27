@@ -3255,7 +3255,50 @@
       "BookOfChapters": "Peatükkide raamat",
       "Presentation": "Esitlus",
       "UNKNOWN": "Tundmatu"
-    }
+    },
+    "badges": {
+      "projects": "{count} projekt | {count} projekti",
+      "publications": "{count} publikatsioon | {count} publikatsiooni",
+      "affiliated": "{count} seotud teadlane | {count} seotud teadlast",
+      "teachings": "{count} õpetamistegevus | {count} õpetamistegevust",
+      "awards": "{count} auhind | {count} auhinda"
+    },
+    "title": {
+      "affiliate": "{count} seotud teadlane | {count} seotud teadlast",
+      "availabilities": "Saadavus",
+      "domain": "{count} uurimisvaldkond | {count} uurimisvaldkonda",
+      "fundings": "{count} rahastus | {count} rahastust",
+      "needs": "Vajadused",
+      "network": "Võrgustik",
+      "patents": "{count} patent | {count} patenti",
+      "patent-tabs": "Patent",
+      "positions": "{count} avatud ametikoht | {count} avatud ametikohta",
+      "positions-tab": "Avatud ametikohad",
+      "presentation": "Tutvustus",
+      "similar": "Sarnased",
+      "team": "{count} meeskond | {count} meeskonda",
+      "similar-researchers": "Sarnased teadlased",
+      "affiliations": "Seotused",
+      "awards": "Auhinnad",
+      "trade": "Vajadused / Saadavus",
+      "teaching": "Õpetamine"
+    },
+    "view": {
+      "all": "Vaata kõiki",
+      "all-researchers": "Vaata kõiki teadlasi",
+      "all-publications": "Vaata kõiki publikatsioone",
+      "all-conferences": "Vaata kõiki konverentse",
+      "all-domains": "Vaata valdkondi",
+      "all-network": "Vaata võrgustikku",
+      "all-job-offers": "Vaata kõiki tööpakkumisi"
+    },
+    "stats": {
+      "citations": "Tsitaadid",
+      "h-index": "h-indeks",
+      "i10-index": "i10-indeks"
+    },
+    "download-resume": "Laadi CV alla",
+    "top-collaborations": "Peamised koostööpartnerid"
   },
   "vector-store": {
     "confirm-deletion": "Kinnita kustutamine",

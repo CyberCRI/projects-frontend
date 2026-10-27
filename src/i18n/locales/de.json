@@ -3255,7 +3255,50 @@
       "BookOfChapters": "Bücher von Kapiteln",
       "Presentation": "Präsentation",
       "UNKNOWN": "Unbekannt"
-    }
+    },
+    "badges": {
+      "projects": "{count} Projekt | {count} Projekte",
+      "publications": "{count} Veröffentlichung | {count} Veröffentlichungen",
+      "affiliated": "{count} angeschlossener Forscher | {count} angeschlossene Forscher",
+      "teachings": "{count} Lehrveranstaltung | {count} Lehrveranstaltungen",
+      "awards": "{count} Auszeichnung | {count} Auszeichnungen"
+    },
+    "title": {
+      "affiliate": "{count} angeschlossener Forscher | {count} angeschlossene Forscher",
+      "availabilities": "Verfügbarkeiten",
+      "domain": "{count} Forschungsgebiet | {count} Forschungsgebiete",
+      "fundings": "{count} Förderung | {count} Förderungen",
+      "needs": "Bedarfe",
+      "network": "Netzwerk",
+      "patents": "{count} Patent | {count} Patente",
+      "patent-tabs": "Patent",
+      "positions": "{count} offene Stelle | {count} offene Stellen",
+      "positions-tab": "Offene Stellen",
+      "presentation": "Präsentation",
+      "similar": "Ähnliche",
+      "team": "{count} Team | {count} Teams",
+      "similar-researchers": "Ähnliche Forscher",
+      "affiliations": "Zugehörigkeiten",
+      "awards": "Auszeichnungen",
+      "trade": "Bedarfe / Verfügbarkeiten",
+      "teaching": "Lehre"
+    },
+    "view": {
+      "all": "Alle anzeigen",
+      "all-researchers": "Alle Forscher anzeigen",
+      "all-publications": "Alle Veröffentlichungen anzeigen",
+      "all-conferences": "Alle Konferenzen anzeigen",
+      "all-domains": "Gebiete anzeigen",
+      "all-network": "Netzwerk anzeigen",
+      "all-job-offers": "Alle Stellenangebote anzeigen"
+    },
+    "stats": {
+      "citations": "Zitationen",
+      "h-index": "h-Index",
+      "i10-index": "i10-Index"
+    },
+    "download-resume": "Lebenslauf herunterladen",
+    "top-collaborations": "Top-Kooperationen"
   },
   "vector-store": {
     "confirm-deletion": "Löschung bestätigen",

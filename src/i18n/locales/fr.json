@@ -3255,7 +3255,50 @@
       "BookOfChapters": "Livre des Chapitres",
       "Presentation": "Présentation",
       "UNKNOWN": "Inconnu"
-    }
+    },
+    "badges": {
+      "projects": "{count} projet | {count} projets",
+      "publications": "{count} publication | {count} publications",
+      "affiliated": "{count} chercheur affilié | {count} chercheurs affiliés",
+      "teachings": "{count} enseignement | {count} enseignements",
+      "awards": "{count} prix | {count} prix"
+    },
+    "title": {
+      "affiliate": "{count} chercheur affilié | {count} chercheurs affiliés",
+      "availabilities": "Disponibilités",
+      "domain": "{count} domaine de recherche | {count} domaines de recherche",
+      "fundings": "{count} financement | {count} financements",
+      "needs": "Besoins",
+      "network": "Réseau",
+      "patents": "{count} brevet | {count} brevets",
+      "patent-tabs": "Brevet",
+      "positions": "{count} poste ouvert | {count} postes ouverts",
+      "positions-tab": "Postes ouverts",
+      "presentation": "Présentation",
+      "similar": "Similaires",
+      "team": "{count} équipe | {count} équipes",
+      "similar-researchers": "Chercheurs similaires",
+      "affiliations": "Affiliations",
+      "awards": "Prix",
+      "trade": "Besoins / Disponibilités",
+      "teaching": "Enseignement"
+    },
+    "view": {
+      "all": "Voir tout",
+      "all-researchers": "Voir tous les chercheurs",
+      "all-publications": "Voir toutes les publications",
+      "all-conferences": "Voir toutes les conférences",
+      "all-domains": "Voir les domaines",
+      "all-network": "Voir le réseau",
+      "all-job-offers": "Voir toutes les offres d'emploi"
+    },
+    "stats": {
+      "citations": "Citations",
+      "h-index": "indice h",
+      "i10-index": "indice i10"
+    },
+    "download-resume": "Télécharger le CV",
+    "top-collaborations": "Principales collaborations"
   },
   "vector-store": {
     "confirm-deletion": "Confirmer la suppression",
