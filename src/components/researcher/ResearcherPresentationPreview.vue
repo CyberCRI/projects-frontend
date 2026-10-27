@@ -13,12 +13,12 @@
     </template>
     <template #footer>
       <div class="actions">
-        <LinkButton
+        <BaseModuleButton
           :label="$t('common.see-more')"
           :to="`/profile/${userSlugOrId}/bio`"
           btn-icon="Plus"
         />
-        <LinkButton :label="$t('researcher.download-resume')" btn-icon="TrayArrowDown" />
+        <BaseModuleButton :label="$t('researcher.download-resume')" btn-icon="TrayArrowDown" />
       </div>
     </template>
   </BaseModulePreview>

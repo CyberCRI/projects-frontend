@@ -52,15 +52,15 @@
     <div v-if="user.researcher" class="researcher-aside">
       <div class="researcher-stats researcher-aside-block">
         <dl class="researcher-stat">
-          <dt class="stat-label">Citations</dt>
+          <dt class="stat-label">{{ $t('researcher.stats.citations') }}</dt>
           <dd class="stat-metric">3 376</dd>
         </dl>
         <dl class="researcher-stat">
-          <dt class="stat-label">h-index</dt>
+          <dt class="stat-label">{{ $t('researcher.stats.h-index') }}</dt>
           <dd class="stat-metric">34</dd>
         </dl>
         <dl class="researcher-stat">
-          <dt class="stat-label">i10-index</dt>
+          <dt class="stat-label">{{ $t('researcher.stats.i10-index') }}</dt>
           <dd class="stat-metric">51</dd>
         </dl>
       </div>
@@ -77,8 +77,8 @@
 
     <div class="profile-footer">
       <div class="contacts">
-        <LinkButton btn-icon="BookmarkLine" label="follow" />
-        <LinkButton
+        <BaseModuleButton btn-icon="BookmarkLine" label="follow" />
+        <BaseModuleButton
           v-for="(contact, idx) in contacts"
           :key="idx"
           :btn-icon="contact.icon"

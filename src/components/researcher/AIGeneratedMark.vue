@@ -1,7 +1,7 @@
 <template>
   <span class="ai-warning">
     <IconImage class="logo" name="AiGenerate2" />
-    <span class="label">AI-GENERATED</span>
+    <span class="label">{{ $t('common.ai-generated') }}</span>
   </span>
 </template>
 <script lang="ts" setup></script>
@@ -28,6 +28,7 @@
 
   .label {
     font-weight: 500;
+    text-transform: uppercase;
   }
 }
 </style>

@@ -10,6 +10,7 @@
         userIdOrSlug: user.slug || user.id,
       },
     }"
+    :see-more-label="$t('researcher.view.all-researchers')"
   >
     <template #content>
       <BaseResearcherAffiliated :user="user" />

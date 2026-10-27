@@ -511,6 +511,7 @@
     "delete-description": "Kas tõesti kustutada oma kommentaarid jäädavalt? See tegevus on pöördumatu."
   },
   "common": {
+    "ai-generated": "Tehisintellekti loodud",
     "activate": "Aktiveeri",
     "activated": "Aktiveeritud",
     "add": "Lisa",

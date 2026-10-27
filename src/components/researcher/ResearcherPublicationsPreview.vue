@@ -5,9 +5,10 @@
     :icon="USER_MODULE_ICON.skills"
     :total="user.modules.skills"
     :see-more="{
-      name: 'ProfileSkills',
+      name: 'ProfileDocumentsTab',
       params: {
         userIdOrSlug: user.slug || user.id,
+        documentType: 'publications',
       },
     }"
   >

@@ -511,6 +511,7 @@
     "delete-description": "Esteu segur que voleu esborrar permanentment els comentaris? Aquesta acció serà irreversible."
   },
   "common": {
+    "ai-generated": "Generat per IA",
     "activate": "Activa",
     "activated": "Activat",
     "add": "Afegeix",

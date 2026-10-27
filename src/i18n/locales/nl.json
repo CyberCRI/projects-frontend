@@ -511,6 +511,7 @@
     "delete-description": "Weet u zeker dat u uw opmerkingen definitief wilt verwijderen? Deze actie zal onomkeerbaar zijn."
   },
   "common": {
+    "ai-generated": "Door AI gegenereerd",
     "activate": "Activeer",
     "activated": "Geactiveerd",
     "add": "Voeg toe",

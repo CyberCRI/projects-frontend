@@ -511,6 +511,7 @@
     "delete-description": "¿Estás seguro de que quieres eliminar permanentemente tus comentarios? Esta acción será irreversible."
   },
   "common": {
+    "ai-generated": "Generado Ai",
     "activate": "Activar",
     "activated": "Activado",
     "add": "Añadir",

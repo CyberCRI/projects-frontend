@@ -511,6 +511,7 @@
     "delete-description": "Sind Sie sicher, dass Sie Ihre Kommentare dauerhaft löschen möchten? Diese Aktion wird irreversibel sein."
   },
   "common": {
+    "ai-generated": "KI-generiert",
     "activate": "Aktivieren",
     "activated": "Aktiviert",
     "add": "Hinzufügen",
