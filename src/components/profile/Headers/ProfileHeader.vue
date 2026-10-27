@@ -125,15 +125,24 @@ const researcherRoles = ref([
   { label: 'Member', structure: 'International Bioethics Committee (UNESCO)' },
 ])
 
-const contacts = ref([
-  { icon: 'ExternalLink', label: 'Contact', link: 'https://google.com' },
-  { icon: 'ExternalLink', label: 'Website', link: 'https://google.com' },
-  { icon: 'ExternalLink', label: 'Google Scholar', link: 'https://google.com' },
-  { icon: 'ExternalLink', label: 'ORCID', link: 'https://google.com' },
-  { icon: 'ExternalLink', label: 'Scopus', link: 'https://google.com' },
-  { icon: 'BlueSkyLine', label: '', link: 'https://google.com' },
-  { icon: 'Linkedin', label: '', link: 'https://google.com' },
-])
+const contacts = computed(() => {
+  const res = []
+
+  if (props.user.email) res.push({ icon: 'ExternalLink', label: 'Contact', link: props.user.email })
+  if (props.user.website)
+    res.push({ icon: 'ExternalLink', label: 'Website', link: props.user.website })
+  // TODO
+  res.push({ icon: 'ExternalLink', label: 'Google Scholar', link: 'https://google.com' })
+  // TODO
+  res.push({ icon: 'ExternalLink', label: 'ORCID', link: 'https://google.com' })
+  // TODO
+  res.push({ icon: 'ExternalLink', label: 'Scopus', link: 'https://google.com' })
+  // TODO
+  res.push({ icon: 'BlueSkyLine', label: '', link: 'https://google.com' })
+  if (props.user.linkedin) res.push({ icon: 'Linkedin', label: '', link: props.user.linkedin })
+
+  return res
+})
 
 const domains = ref([
   { id: 1, label: 'Neuronal Morphogenesis', progress: 1 },

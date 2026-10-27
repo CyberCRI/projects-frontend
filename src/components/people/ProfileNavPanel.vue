@@ -17,53 +17,9 @@
 
     <NavPanelMenu :menu-entries="profileTabs" :current-tab="currentTab" @navigated="navigated" />
 
-    <div
-      v-if="!hasNoContact"
-      class="user-contacts-ctn"
-      :class="{
-        'mail-only': hasOnlyMail,
-      }"
-    >
-      <div v-if="user && user.email" class="social skeletons-text">
-        <IconImage class="icon" name="Email" />
-        <a :href="`mailto:${user.email}`">{{ $t('complete-profile.personal.email') }}</a>
-      </div>
-
-      <!-- TODO: Use privacy settings -->
-      <a v-if="mobilePhone" :href="mobilePhone.getURI()" class="social">
-        <IconImage class="icon" name="Phone" />
-        <span>{{ mobilePhone.formatInternational() }}</span>
-      </a>
-
-      <a v-if="landlinePhone" :href="landlinePhone.getURI()" class="social">
-        <IconImage class="icon" name="Phone" />
-        <span>{{ landlinePhone.formatInternational() }}</span>
-      </a>
-
-      <div v-if="user && user.location" class="social">
-        <IconImage class="icon" name="MapMarker" />
-        <span v-html="fixLocation(user.location)" />
-      </div>
-
-      <a v-if="user.facebook" class="social" :href="user.facebook" target="_blank">
-        <IconImage class="icon" name="Facebook" />
-        <span>{{ socialName(user.facebook) }}</span>
-      </a>
-
-      <a v-if="user.linkedin" class="social" :href="user.linkedin" target="_blank">
-        <IconImage class="icon" name="Linkedin" />
-        <span>{{ socialName(user.linkedin) }}</span>
-      </a>
-
-      <a v-if="user.skype" class="social" :href="user.skype" target="_blank">
-        <IconImage class="icon" name="Skype" />
-        <span>{{ user.skype }}</span>
-      </a>
-
-      <a v-if="user.website" class="social" :href="user.website" target="_blank">
-        <IconImage class="icon" name="Globe" />
-        <span>{{ user.website }}</span>
-      </a>
+    <div class="user-actions-ctn">
+      <BaseModuleButton btn-icon="BookmarkLine" />
+      <BaseModuleButton btn-icon="ShareLink" />
     </div>
   </NavPanelAside>
 </template>
@@ -72,8 +28,6 @@
 import { usePermissionUser } from '~/composables/usePermissions/useUserPermissions'
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
-import parsePhoneNumber from 'libphonenumber-js'
-
 const props = withDefaults(
   defineProps<{
     user: TranslatedUserModel
@@ -95,57 +49,6 @@ const emit = defineEmits<{
 
 const { canEditUser } = usePermissionUser(computed(() => props.user.id))
 
-const mobilePhone = computed(() => {
-  if (!props.user?.mobile_phone) {
-    return null
-  }
-  const phone = parsePhoneNumber(props.user.mobile_phone)
-  if (!phone) {
-    return null
-  }
-
-  return phone
-})
-
-const landlinePhone = computed(() => {
-  if (!props.user?.landline_phone) {
-    return null
-  }
-  const phone = parsePhoneNumber(props.user.landline_phone)
-  if (!phone) {
-    return null
-  }
-
-  return phone
-})
-
-const hasOnlyMail = computed(() => {
-  return (
-    !props.user?.mobile_phone &&
-    !props.user?.location &&
-    !props.user?.facebook &&
-    !props.user?.twitter &&
-    !props.user?.linkedin &&
-    !props.user?.skype
-  )
-})
-const hasNoContact = computed(() => {
-  return !props.user?.email && hasOnlyMail.value
-})
-
-const socialName = (url) => {
-  const socialArr = url.split('/')
-  // if url end with a "/" last item is empty
-  if (socialArr.length > 0 && socialArr[socialArr.length - 1])
-    return socialArr[socialArr.length - 1]
-  // so fallback to the second last item
-  if (socialArr.length > 1 && socialArr[socialArr.length - 2])
-    return socialArr[socialArr.length - 2]
-  // or fallback to the url itself
-  return url
-}
-
-const fixLocation = (l) => l.split('\n').join('<br />')
 const navigated = () => emit('navigated')
 const switchView = () => emit('toggle-editing', !props.isEditing)
 </script>
@@ -159,43 +62,17 @@ const switchView = () => emit('toggle-editing', !props.isEditing)
   justify-content: center;
 }
 
-.user-contacts-ctn {
-  border: 1px solid variables.$lighter-gray;
-  border-radius: 1rem;
-  padding: 1rem;
+.user-actions-ctn {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid variables.$lighter-gray;
   display: flex;
-  flex-flow: column;
-  gap: 1rem;
-  margin-top: 3rem;
+  justify-content: space-between;
 
-  &.mail-only {
-    justify-content: center;
-  }
-
-  .social {
-    display: flex;
-    align-items: flex-start;
-    word-break: normal;
-    overflow-wrap: break-word;
-    gap: variables.$space-xs;
-
-    .icon {
-      flex-shrink: 0;
-      vertical-align: baseline;
-      width: 22px;
-      height: 22px;
-      fill: variables.$primary-dark;
-    }
-
-    a {
-      font-weight: 500;
-      font-size: variables.$font-size-m;
-      color: variables.$primary-dark;
-    }
-  }
-
-  a.social:hover {
-    text-decoration: underline;
+  button {
+    border: 1px solid variables.$primary;
+    border-radius: 100%;
+    padding: 0;
   }
 }
 </style>
