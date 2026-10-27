@@ -35,7 +35,7 @@
 <script lang="ts" setup>
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
-const props = defineProps<{ user: TranslatedUserModel }>()
+defineProps<{ user: TranslatedUserModel }>()
 
 const editorialBoards = computed(() => [
   {
@@ -94,6 +94,7 @@ const scientificSocieties = computed(() => [
     margin-bottom: 2rem;
     display: inline-flex;
     gap: 0.6rem;
+
     .affiliation-icon {
       width: 1.2em;
       aspect-ratio: 1;
@@ -101,15 +102,19 @@ const scientificSocieties = computed(() => [
     }
   }
 }
+
 .affiliations-list {
   list-style: outside disc;
   padding: 1.2rem;
+
   ::marker {
     color: variables.$primary-dark;
   }
+
   li {
     margin-bottom: 1em;
   }
+
   .affiliation-link {
     color: variables.$primary-dark;
     font-weight: 600;

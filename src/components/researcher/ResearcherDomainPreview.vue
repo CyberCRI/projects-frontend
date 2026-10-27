@@ -34,6 +34,7 @@ defineProps<{ user: TranslatedUserModel }>()
 </script>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
+
 .top-buttons {
   display: flex;
   justify-content: space-between;

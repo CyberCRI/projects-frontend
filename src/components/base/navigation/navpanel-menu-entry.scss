@@ -7,6 +7,7 @@
   &:hover,
   &.active {
     background-color: var(--primary-light);
+
     .navpanel-menu-link .icon {
       fill: var(--primary-dark);
     }

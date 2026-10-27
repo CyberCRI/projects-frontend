@@ -17,6 +17,7 @@ withDefaults(defineProps<{ user: TranslatedUserModel; editable?: boolean }>(), {
 
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
+
 .inter-title {
   font-size: 1.2rem;
   font-weight: 600;

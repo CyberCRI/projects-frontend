@@ -512,6 +512,7 @@
   },
   "common": {
     "ai-generated": "AI Generated",
+    "see-top-n": "See top {n}",
     "error": "error",
     "select-placeholder": "Select...",
     "file": "file | files",

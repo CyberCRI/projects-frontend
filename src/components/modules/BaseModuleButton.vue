@@ -40,7 +40,6 @@ const iconOnly = computed(() => (!props.label || !props.label.length) && props.b
   justify-content: center;
   align-items: center;
   font-weight: 700;
-  font-size: variables.$font-size-m;
   transition: 0.15s all ease-in-out;
   cursor: pointer;
   will-change: transform;
@@ -61,7 +60,6 @@ const iconOnly = computed(() => (!props.label || !props.label.length) && props.b
 
 .link-button :deep(svg) {
   transition: 0.15s fill ease-in-out;
-  fill: variables.$primary-dark;
   width: 1.4em;
   height: 1.4em;
   fill: variables.$primary;

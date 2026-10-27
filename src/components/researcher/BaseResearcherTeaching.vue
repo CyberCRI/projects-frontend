@@ -90,7 +90,7 @@ const teachings = ref([
 .teaching-footer {
   display: flex;
   gap: 1rem;
-  align_items: center;
+  align-items: center;
 }
 
 .teaching-header-item {
@@ -98,6 +98,7 @@ const teachings = ref([
   gap: 0.8rem;
   align-items: center;
 }
+
 .teaching-header-icon {
   fill: variables.$primary;
   width: 1.2em;
