@@ -36,7 +36,8 @@ export const useSearchV2 = (defaultValue: QueryFilterSearch = {}) => {
       setRouteQuery: true,
     }
   )
-  const search = ref('')
+  console.log('query', query)
+  const search = ref(query.value?.search || '')
 
   const sanitizeQuery = computed(() => sanitizeSearchQuery(deepToRaw(query.value)))
 
