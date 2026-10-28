@@ -75,6 +75,17 @@ useLpiHead2({
         </thead>
         <tbody>
           <tr class="odd">
+            <td style="text-align: left">Cyber - Géopolitique</td>
+            <td style="text-align: left">Interruption de service par une entité étrangère</td>
+            <td style="text-align: left">
+              Coupure totale du service, perte de donnée, perte de crédibilité de la plateforme
+            </td>
+            <td style="text-align: left">Faible</td>
+            <td style="text-align: left">
+              Migration en cours vers des outils souverains
+            </td>
+          </tr>
+          <tr class="odd">
             <td style="text-align: left">Cyber attaque - intrusion</td>
             <td style="text-align: left">Vol de données</td>
             <td style="text-align: left">
@@ -199,6 +210,21 @@ useLpiHead2({
       <h3 id="stratégies-de-continuité">3. Stratégies de Continuité</h3>
       <ul>
         <li>
+          <strong>Sauvegarde du Code</strong>
+          :
+          <ul>
+            <li>
+              <strong>Fréquence</strong>
+              : Synchrone
+              <br />
+            </li>
+            <li>
+              <strong>Méthode</strong>
+              : Mirroring des dépôts de code publics vers une forge interne
+            </li>
+          </ul>
+        </li>
+        <li>
           <strong>Sauvegarde des Données</strong>
           :
           <ul>
@@ -251,8 +277,8 @@ useLpiHead2({
       <ul>
         <li>
           <p>
-            <strong>Responsable de la Continuité d’Activité</strong>
-            : Stanislas Bruhière, DevOps, chargé de la mise en œuvre et de la gestion du PCA.
+            <strong>Coordinateur de la Continuité d’Activité</strong>
+            : Bastien Ogier, DevOps, chargé de la mise en œuvre et de la gestion du PCA.
           </p>
         </li>
         <li>
@@ -419,6 +445,6 @@ useLpiHead2({
         </li>
       </ul>
     </section>
-    <p class="last-updated">Dernière mise à jour : 29 septembre 2025</p>
+    <p class="last-updated">Dernière mise à jour : 28 octobre 2026</p>
   </div>
 </template>

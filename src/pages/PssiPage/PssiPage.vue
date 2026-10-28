@@ -50,8 +50,8 @@ useLpiHead2({
       <h3 id="organisation-de-la-sécurité">3. Organisation de la Sécurité</h3>
       <ul>
         <li>
-          <strong>Responsable Sécurité</strong>
-          : Stanislas Bruhière, chargé de la gestion de la sécurité des systèmes d’information.
+          <strong>Coordinateur Sécurité</strong>
+          : Bastien Ogier, chargé de la gestion de la sécurité des systèmes d’information.
           <br />
         </li>
         <li>
@@ -101,7 +101,7 @@ useLpiHead2({
             </li>
             <li>
               <strong>Protection</strong>
-              : Pare-feu, antivirus, et systèmes de détection d’intrusion.
+              : Pare-feu, antivirus, et systèmes de détection d’intrusion en cours d'implémentation.
               <br />
             </li>
             <li>
@@ -126,18 +126,18 @@ useLpiHead2({
               <br />
             </li>
             <li>
-              Signature de la charte informatique par les employés
+              Distribution de la charte informatique aux employés
               <br />
             </li>
             <li>
-              Signature de la carte administrateur par les personnes habilitées
+              Signature de la charte administrateur par les personnes habilitées
               <br />
             </li>
             <li>
               Processus de nettoyage des comptes obsolète (en continu et audit tous les 6 mois)
               <br />
             </li>
-            <li>Processus de rotation des mots de passe</li>
+            <li>Processus de rotation des mots de passe en cours d'implémentation</li>
           </ul>
         </li>
       </ul>
@@ -219,6 +219,6 @@ useLpiHead2({
         </li>
       </ul>
     </section>
-    <p class="last-updated">Dernière révision: 29 septembre 2025</p>
+    <p class="last-updated">Dernière révision: 28 octobre 2026</p>
   </div>
 </template>
