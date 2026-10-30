@@ -21,38 +21,46 @@ import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
 const props = defineProps<{ user: TranslatedUserModel }>()
 
-const badges = computed(() => [
-  {
-    label: 'projects',
-    icon: 'Briefcase',
-    count: 5,
-    link: `/profile/${props.user.slug || props.user.id}/projects`,
-  },
-  {
-    label: 'publications',
-    icon: 'BookLine',
-    count: 38,
-    link: `/profile/${props.user.slug || props.user.id}/documents/publication`,
-  },
-  {
-    label: 'affiliated',
-    icon: 'AccountCircle',
-    count: 7,
-    link: `/profile/${props.user.slug || props.user.id}/affiliate`,
-  },
-  {
+const badges = computed(() => {
+  const res = []
+  if (props.user.modules.projects)
+    res.push({
+      label: 'projects',
+      icon: 'Briefcase',
+      count: props.user.modules.projects,
+      link: `/profile/${props.user.slug || props.user.id}/projects`,
+    })
+  if (props.user.researcher?.modules.publications)
+    res.push({
+      label: 'publications',
+      icon: 'BookLine',
+      count: props.user.researcher?.modules.publications,
+      link: `/profile/${props.user.slug || props.user.id}/documents/publication`,
+    })
+  if (props.user.researcher?.modules.affiliated)
+    res.push({
+      label: 'affiliated',
+      icon: 'AccountCircle',
+      count: props.user.researcher?.modules.affiliated,
+      link: `/profile/${props.user.slug || props.user.id}/affiliate`,
+    })
+  // TODO:
+  res.push({
     label: 'teachings',
     icon: 'SchoolOutline',
     count: 2,
     link: `/profile/${props.user.slug || props.user.id}/teaching`,
-  },
-  {
-    label: 'awards',
-    icon: 'Licence',
-    count: 10,
-    link: `/profile/${props.user.slug || props.user.id}/awards`,
-  },
-])
+  })
+  if (props.user.researcher?.modules.awards)
+    res.push({
+      label: 'awards',
+      icon: 'Licence',
+      count: props.user.researcher?.modules.awards,
+      link: `/profile/${props.user.slug || props.user.id}/awards`,
+    })
+
+  return res
+})
 </script>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';

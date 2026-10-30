@@ -31,8 +31,8 @@
           <LinkButton class="role-structure" :label="role.structure" btn-icon="Building4" />
         </p>
       </div>
-      <div v-if="user.researcher && domains.length" class="domain-list">
-        <ResearcherDomain v-for="domain in domains" :key="domain.id" :domain="domain" />
+      <div v-if="user.researcher && sortedDomains.length" class="domain-list">
+        <ResearcherDomain v-for="domain in sortedDomains" :key="domain.id" :domain="domain" />
       </div>
       <!--div v-if="user.researcher" class="sdg-ctn">
       <IdentifierLink
@@ -49,27 +49,25 @@
       />
     </div>
 
-    <div v-if="user.researcher" class="researcher-aside">
+    <div v-if="hasResearcherStat" class="researcher-aside">
       <div class="researcher-stats researcher-aside-block">
-        <dl class="researcher-stat">
+        <dl v-if="user.researcher.modules.citations" class="researcher-stat">
           <dt class="stat-label">{{ $t('researcher.stats.citations') }}</dt>
-          <dd class="stat-metric">3 376</dd>
+          <dd class="stat-metric">{{ user.researcher.modules.citations }}</dd>
         </dl>
-        <dl class="researcher-stat">
+        <dl v-if="user.researcher.h_index" class="researcher-stat">
           <dt class="stat-label">{{ $t('researcher.stats.h-index') }}</dt>
-          <dd class="stat-metric">34</dd>
+          <dd class="stat-metric">{{ user.researcher.h_index }}</dd>
         </dl>
-        <dl class="researcher-stat">
+        <dl v-if="user.researcher.i10_index" class="researcher-stat">
           <dt class="stat-label">{{ $t('researcher.stats.i10-index') }}</dt>
-          <dd class="stat-metric">51</dd>
+          <dd class="stat-metric">{{ user.researcher.i10_index }}</dd>
         </dl>
       </div>
 
       <div class="researcher-aside-block">
         <p class="researcher-short-bio">
-          Ariel Lindner is a researcher in biology (INSERM) and co-founder of the Learning Planet
-          Institute. He uses synthetic biology to study the fundamental mechanisms of aging at the
-          cellular level.
+          {{ user.researcher.short_bio }}
         </p>
         <AIGeneratedMark />
       </div>
@@ -118,6 +116,14 @@ const props = defineProps<{
 
 const userFullName = useUserFullName(computed(() => props.user))
 
+const hasResearcherStat = computed(
+  () =>
+    props.user.researcher &&
+    (props.user.researcher.modules.citations ||
+      props.user.researcher.h_index ||
+      props.user.researcher.i10_index)
+)
+
 const researcherRoles = ref([
   { label: 'Research Director, co-founder CRI and INSERM U1284 director', structure: 'INSERM' },
   { label: 'Co-Founder, Research Director of ELiS', structure: 'Learning Planet Institute' },
@@ -144,13 +150,8 @@ const contacts = computed(() => {
   return res
 })
 
-const domains = ref([
-  { id: 1, label: 'Neuronal Morphogenesis', progress: 1 },
-  { id: 2, label: 'SYSTEM BIOLOGY', progress: 1 },
-  { id: 3, label: 'SYNTHETIC BIOLOGY', progress: 1 },
-  { id: 4, label: 'Autism Spectrum Disorders (ASD)', progress: 0.8 },
-  { id: 5, label: 'Neurodevelopmental Disorders (ND)', progress: 0.6 },
-])
+const domains = computed(() => props.user?.researcher?.domains || [])
+const sortedDomains = computed(() => domains.value.toSorted((a, b) => b.level - a.level))
 </script>
 
 <style lang="scss" scoped>

@@ -1,11 +1,17 @@
 <template>
   <span class="domain-item">
-    <PieProgress class="progress" :progress="domain.progress" />
-    <span class="domain-label">{{ domain.label }}</span>
+    <PieProgress class="progress" :progress="progress" />
+    <span class="domain-label">{{ title }}</span>
   </span>
 </template>
 <script lang="ts" setup>
-defineProps<{ domain: { id: number; label: string; progress: number } }>()
+import type { TranslatedResearcherDomain } from 'shared-projects-frontend/models'
+
+const props = defineProps<{ domain: TranslatedResearcherDomain }>()
+
+// TODO: use translation
+const title = computed(() => props.domain.domain./*$t.*/ title)
+const progress = computed(() => props.domain.level / 100)
 </script>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';

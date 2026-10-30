@@ -6,15 +6,9 @@
 <script lang="ts" setup>
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
-defineProps<{ user: TranslatedUserModel }>()
+const props = defineProps<{ user: TranslatedUserModel }>()
 
-const domains = ref([
-  { id: 1, label: 'Neuronal Morphogenesis', progress: 1 },
-  { id: 2, label: 'SYSTEM BIOLOGY', progress: 1 },
-  { id: 3, label: 'SYNTHETIC BIOLOGY', progress: 1 },
-  { id: 4, label: 'Autism Spectrum Disorders (ASD)', progress: 0.8 },
-  { id: 5, label: 'Neurodevelopmental Disorders (ND)', progress: 0.6 },
-])
+const domains = computed(() => props.user.researcher?.domains || [])
 </script>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
