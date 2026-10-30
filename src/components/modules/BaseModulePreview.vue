@@ -9,23 +9,27 @@
         </h2>
       </div>
       <slot v-if="!loading" name="header">
-        <SeeMoreArrow
+        <BaseModuleButton
           v-if="seeMore && seeMorePosition === 'top'"
-          class="see-more-button skeletons-text"
+          class="bicolor see-more-button skeletons-text"
           :to="seeMore"
+          :label="moreLabel"
+          :btn-icon="moreIcon"
         />
       </slot>
     </div>
-
+    <slot name="top-row" />
     <div class="module-container">
       <slot v-if="loading" name="skeleton" />
       <slot v-else name="content" />
     </div>
     <slot v-if="!loading" name="footer">
-      <SeeMoreArrow
+      <BaseModuleButton
         v-if="seeMore && seeMorePosition === 'bottom'"
-        class="see-more-button skeletons-background"
+        class="bicolor see-more-button skeletons-background"
         :to="seeMore"
+        :label="moreLabel"
+        :btn-icon="moreIcon"
       />
     </slot>
   </div>
@@ -38,7 +42,7 @@ import type { IconImageChoice } from '~/functs/IconImage'
 import type { RouteLocationRaw } from 'vue-router'
 import { isNil } from 'es-toolkit'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     title: string
     total?: number
@@ -46,6 +50,8 @@ withDefaults(
     loading?: boolean
     icon?: IconImageChoice
     seeMorePosition?: 'bottom' | 'top'
+    seeMoreLabel?: string | null
+    seeMoreIcon?: IconImageChoice | null
   }>(),
   {
     loading: false,
@@ -53,8 +59,14 @@ withDefaults(
     total: null,
     seeMore: null,
     seeMorePosition: 'top',
+    seeMoreLabel: undefined,
+    seeMoreIcon: undefined,
   }
 )
+
+const { t } = useNuxtI18n()
+const moreLabel = computed(() => props.seeMoreLabel || t('common.see-more'))
+const moreIcon = computed(() => props.seeMoreIcon || 'ArrowRight')
 </script>
 
 <style lang="scss" scoped>
@@ -85,11 +97,13 @@ withDefaults(
   fill: variables.$primary-dark;
   display: flex;
   align-items: center;
+  gap: 0.4rem;
 
   .icon {
     display: inline-block;
-    width: 1.5rem;
-    margin: 0 0.3rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    fill: variables.$primary;
   }
 
   .title {

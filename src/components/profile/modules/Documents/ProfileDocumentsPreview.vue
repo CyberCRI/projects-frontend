@@ -21,6 +21,11 @@ const DOCUMENTS_LIMIT = 3
         documentType: documentType,
       },
     }"
+    :see-more-label="
+      documentType === 'publications'
+        ? $t('researcher.view.all-publications')
+        : $t('researcher.view.all-conferences')
+    "
   >
     <template #content>
       <UserResearcherDocumentsList

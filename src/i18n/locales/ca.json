@@ -511,6 +511,7 @@
     "delete-description": "Esteu segur que voleu esborrar permanentment els comentaris? Aquesta acció serà irreversible."
   },
   "common": {
+    "ai-generated": "Generat per IA",
     "activate": "Activa",
     "activated": "Activat",
     "add": "Afegeix",
@@ -3254,7 +3255,50 @@
       "BookOfChapters": "Llibre de capítols",
       "Presentation": "Presentació",
       "UNKNOWN": "Desconegut"
-    }
+    },
+    "badges": {
+      "projects": "{count} projecte | {count} projectes",
+      "publications": "{count} publicació | {count} publicacions",
+      "affiliated": "{count} investigador afiliat | {count} investigadors afiliats",
+      "teachings": "{count} docència | {count} docències",
+      "awards": "{count} premi | {count} premis"
+    },
+    "title": {
+      "affiliate": "{count} investigador afiliat | {count} investigadors afiliats",
+      "availabilities": "Disponibilitats",
+      "domain": "{count} àmbit de recerca | {count} àmbits de recerca",
+      "fundings": "{count} finançament | {count} finançaments",
+      "needs": "Necessitats",
+      "network": "Xarxa",
+      "patents": "{count} patent | {count} patents",
+      "patent-tabs": "Patent",
+      "positions": "{count} lloc vacant | {count} llocs vacants",
+      "positions-tab": "Llocs vacants",
+      "presentation": "Presentació",
+      "similar": "Similars",
+      "team": "{count} equip | {count} equips",
+      "similar-researchers": "Investigadors similars",
+      "affiliations": "Afiliacions",
+      "awards": "Premis",
+      "trade": "Necessitats / Disponibilitats",
+      "teaching": "Docència"
+    },
+    "view": {
+      "all": "Veure-ho tot",
+      "all-researchers": "Veure tots els investigadors",
+      "all-publications": "Veure totes les publicacions",
+      "all-conferences": "Veure totes les conferències",
+      "all-domains": "Veure els àmbits",
+      "all-network": "Veure la xarxa",
+      "all-job-offers": "Veure totes les ofertes de feina"
+    },
+    "stats": {
+      "citations": "Cites",
+      "h-index": "índex h",
+      "i10-index": "índex i10"
+    },
+    "download-resume": "Descarrega el CV",
+    "top-collaborations": "Principals col·laboracions"
   },
   "vector-store": {
     "confirm-deletion": "Confirmar supressió",

@@ -21,12 +21,14 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
   const userId = computed(() => user.value?.id)
   const userSlugOrId = computed(() => user.value?.slug || user.value?.id)
 
+  const isResearcher = computed(() => user.value.researcher)
+
   const { canEditUser } = usePermissionUser(userId)
 
   const TabsDisplay = computed(() => {
     return [
       {
-        key: 'profile-summary',
+        key: 'profile-summary', //  TODO: "home"
         label: t('profile.snapshot'),
         view: `/profile/${userSlugOrId.value}/summary`,
         altView: `/profile/${userSlugOrId.value}/summary/edit`,
@@ -36,7 +38,7 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         noTitle: true,
       },
       {
-        key: 'profile-bio',
+        key: 'profile-bio', // TODO: "overview"
         label: t('profile.bio'),
         view: `/profile/${userSlugOrId.value}/bio`,
         altView: `/profile/${userSlugOrId.value}/bio/edit`,
@@ -63,7 +65,7 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         icon: USER_MODULE_ICON.skills,
       },
       {
-        key: 'profile-groups',
+        key: 'profile-groups', //  TODO: "labo" ?
         label: t(USER_MODULE_TITLE.groups, modules.value.groups),
         view: `/profile/${userSlugOrId.value}/groups`,
         altView: `/profile/${userSlugOrId.value}/groups/edit`,
@@ -88,6 +90,81 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         condition: !!modules.value.conferences,
         dataTest: 'profile-conferences',
         icon: USER_MODULE_ICON.conferences,
+      },
+      {
+        key: 'profile-network',
+        label: t(USER_MODULE_TITLE.network, modules.network),
+        view: `/profile/${userSlugOrId.value}/network`,
+        altView: `/profile/${userSlugOrId.value}/network/edit`,
+        condition: isResearcher.value, // && !!modules.value.network,
+        dataTest: 'profile-resources',
+        icon: USER_MODULE_ICON.network,
+      },
+      {
+        key: 'profile-affiliations',
+        label: t(USER_MODULE_TITLE.affiliations, modules.affiliate),
+        view: `/profile/${userSlugOrId.value}/affiliations`,
+        altView: `/profile/${userSlugOrId.value}/affiliations/edit`,
+        condition: isResearcher.value, // && !!modules.value.affiliate,
+        dataTest: 'profile-affiliations',
+        icon: USER_MODULE_ICON.affiliations,
+      },
+      {
+        key: 'profile-awards',
+        label: t(USER_MODULE_TITLE.awards, modules.awards),
+        view: `/profile/${userSlugOrId.value}/awards`,
+        altView: `/profile/${userSlugOrId.value}/awards/edit`,
+        condition: isResearcher.value, // && !!modules.value.awards,
+        dataTest: 'profile-awards',
+        icon: USER_MODULE_ICON.awards,
+      },
+      {
+        key: 'profile-patents',
+        label: t(USER_MODULE_TITLE.patents, modules.patents),
+        view: `/profile/${userSlugOrId.value}/patents`,
+        altView: `/profile/${userSlugOrId.value}/patents/edit`,
+        condition: isResearcher.value, // && !!modules.value.patents,
+        dataTest: 'profile-patents',
+        icon: USER_MODULE_ICON.patents,
+      },
+
+      {
+        key: 'profile-fundings',
+        label: t(USER_MODULE_TITLE.fundings, modules.fundings),
+        view: `/profile/${userSlugOrId.value}/fundings`,
+        altView: `/profile/${userSlugOrId.value}/fundings/edit`,
+        condition: isResearcher.value, // && !!modules.value.fundings,
+        dataTest: 'profile-fundings',
+        icon: USER_MODULE_ICON.fundings,
+      },
+
+      {
+        key: 'profile-teaching',
+        label: t(USER_MODULE_TITLE.teaching, modules.teaching),
+        view: `/profile/${userSlugOrId.value}/teaching`,
+        altView: `/profile/${userSlugOrId.value}/teaching/edit`,
+        condition: isResearcher.value, // && !!modules.value.teaching,
+        dataTest: 'profile-teaching',
+        icon: USER_MODULE_ICON.teaching,
+      },
+
+      {
+        key: 'profile-positions',
+        label: t(USER_MODULE_TITLE.positions, modules.positons),
+        view: `/profile/${userSlugOrId.value}/positions`,
+        altView: `/profile/${userSlugOrId.value}/positions/edit`,
+        condition: isResearcher.value, // && !!modules.value.positions,
+        dataTest: 'profile-positions',
+        icon: USER_MODULE_ICON.positions,
+      },
+      {
+        key: 'profile-trade',
+        label: t(USER_MODULE_TITLE.trade, modules.value.needs + modules.value.availabilitie),
+        view: `/profile/${userSlugOrId.value}/trade`,
+        altView: `/profile/${userSlugOrId.value}/trade/edit`,
+        condition: isResearcher.value, // && (!!modules.value.needs || !!modules.value.availabilities),
+        dataTest: 'profile-trade',
+        icon: USER_MODULE_ICON.trade,
       },
       {
         key: 'profile-resources',

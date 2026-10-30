@@ -511,6 +511,8 @@
     "delete-description": "Are you sure you want to permanently delete your comments? This action will be irreversible."
   },
   "common": {
+    "ai-generated": "AI Generated",
+    "see-top-n": "See top {n}",
     "error": "error",
     "select-placeholder": "Select...",
     "file": "file | files",
@@ -2879,6 +2881,33 @@
     "previous-messages": "Previous messages"
   },
   "researcher": {
+    "badges": {
+      "projects": "{count} project | {count} projects",
+      "publications": "{count} publication | {count} publications",
+      "affiliated": "{count} affiliated researcher | {count} affiliated researchers",
+      "teachings": "{count} teaching | {count} teachings",
+      "awards": "{count} award | {count} awards"
+    },
+    "title": {
+      "affiliate": "{count} affiliated researcher | {count} affiliated researchers",
+      "availabilities": "Availabilities",
+      "domain": "{count} research domain | {count} research domains",
+      "fundings": "{count} funding | {count} fundings",
+      "needs": "Needs",
+      "network": "Network",
+      "patents": "{count} patent | {count} patents",
+      "patent-tabs": "Patent",
+      "positions": "{count} open position | {count} open positions",
+      "positions-tab": "Open positions",
+      "presentation": "Presentation",
+      "similar": "Similar",
+      "team": "{ count } team | {count} teams",
+      "similar-researchers": "Similar researchers",
+      "affiliations": "Affiliations",
+      "awards": "Awards",
+      "trade": "Needs / Availabilities",
+      "teaching": "Teaching"
+    },
     "relators": {
       "abr": "abridger",
       "acp": "art copyist",
@@ -3202,7 +3231,23 @@
       "BookOfChapters": "Book Of Chapters",
       "Presentation": "Presentation",
       "UNKNOWN": "Unknown"
-    }
+    },
+    "view": {
+      "all": "View all",
+      "all-researchers": "View all researchers",
+      "all-publications": "View all publications",
+      "all-conferences": "View all conferences",
+      "all-domains": "View domains",
+      "all-network": "View network",
+      "all-job-offers": "View all job offers"
+    },
+    "stats": {
+      "citations": "Citations",
+      "h-index": "h-index",
+      "i10-index": "i10-index"
+    },
+    "download-resume": "Download Resume",
+    "top-collaborations": "Top collaborations"
   },
   "tos": {
     "evolved": "Our Terms and Conditions have been updated, please take a moment to review and approve them.",
