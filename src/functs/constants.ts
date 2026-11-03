@@ -383,6 +383,8 @@ export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
   awards: 'researcher.title.awards',
   teaching: 'researcher.title.teaching',
   trade: 'researcher.title.trade',
+  researchAreas: 'researcher.title.research-areas',
+  researchAreasSkills: 'researcher.title.research-areas-skills',
 }
 
 // max skill steps

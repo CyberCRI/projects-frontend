@@ -26,6 +26,11 @@ export default function useProfilePagesRoutes() {
       component: () => import('../pages/UserPageV2/Tabs/ProfileSkillsTab.vue'),
     },
     {
+      path: 'domains',
+      name: 'ProfileDomains',
+      component: () => import('../pages/UserPageV2/Tabs/ProfileDomainsTab.vue'),
+    },
+    {
       path: 'documents/:documentType',
       name: 'ProfileDocuments',
       component: () => import('../pages/UserPageV2/Tabs/ProfileDocumentsTab.vue'),

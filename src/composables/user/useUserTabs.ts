@@ -60,10 +60,22 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         label: t(USER_MODULE_TITLE.skills, modules.value.skills),
         view: `/profile/${userSlugOrId.value}/skills`,
         altView: `/profile/${userSlugOrId.value}/skills/edit`,
-        condition: !!modules.value.skills,
+        condition: !isResearcher.value && !!modules.value.skills,
         dataTest: 'profile-skills',
         icon: USER_MODULE_ICON.skills,
       },
+      {
+        key: 'profile-domains',
+        label: t(USER_MODULE_TITLE.researchAreas),
+        view: `/profile/${userSlugOrId.value}/domains`,
+        altView: `/profile/${userSlugOrId.value}/skills/edit`,
+        condition:
+          isResearcher.value &&
+          (!!modules.value.skills || !!user.value.researcher?.modules.domains),
+        dataTest: 'profile-domains',
+        icon: USER_MODULE_ICON.skills,
+      },
+
       {
         key: 'profile-groups', //  TODO: "labo" ?
         label: t(USER_MODULE_TITLE.groups, modules.value.groups),

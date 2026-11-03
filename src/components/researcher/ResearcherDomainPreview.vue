@@ -21,7 +21,7 @@
       </div>
     </template>
     <template #content>
-      <BaseResearcherDomain :user="user" />
+      <BaseResearcherDomain :user="user" preview />
     </template>
   </BaseModulePreview>
 </template>
