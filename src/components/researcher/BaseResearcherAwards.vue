@@ -30,8 +30,8 @@
 <script lang="ts" setup>
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
-import { awardSkeleton } from '~/skeletons/researcher.skeletons'
-import { getAwards } from '~/api/v2/researcher.service'
+import { awardSkeleton } from '~/skeletons/crisalid.skeletons'
+import { getResearcherAward } from '~/api/v2/crisalid.service'
 const props = withDefaults(
   defineProps<{ user: TranslatedUserModel; preview?: boolean; limit?: number }>(),
   { limit: 20, preview: false }
@@ -47,7 +47,7 @@ const {
   data: awards,
   pagination,
   // refresh,
-} = getAwards(organizationCode, researcherId, {
+} = getResearcherAward(organizationCode, researcherId, {
   paginationConfig: {
     limit: props.limit,
   },

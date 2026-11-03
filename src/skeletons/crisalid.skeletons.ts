@@ -2,6 +2,8 @@ import type {
   ResearcherDocument,
   ResearcherIdentifier,
   ResearcherDocumentAnalytics,
+  ResearcherAward,
+  Researcher,
 } from 'shared-projects-frontend/models'
 
 import { factoriesSkeleton } from '~/skeletons/base.skeletons'
@@ -54,4 +56,23 @@ export const researchDocumentSkeleton = (
     similars: 0,
   },
   ...def,
+})
+
+export const awardSkeleton = (def?: Partial<ResearcherAward>): ResearcherAward => ({
+  award: {
+    id: -1,
+    name: 'name',
+    description: 'Ipsum nostrud offciia dolor esse execitation mollit',
+  },
+  description: 'Ipsum nostrud officia dolor esse exercitation mollit',
+  date: '1970-01-01T00:00:00',
+  link: 'http://dev.local',
+  ...def,
+})
+
+export const similarResearcherSkeleton = (def?: Partial<Researcher>): Researcher => ({
+  id: -1,
+  family_name: 'family_name',
+  given_name: 'given_name',
+  job: 'job',
 })

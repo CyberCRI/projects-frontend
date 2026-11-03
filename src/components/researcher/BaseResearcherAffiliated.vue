@@ -1,21 +1,39 @@
 <template>
   <div v-if="user.researcher">
-    <div class="affiliates">
-      <UserRow v-for="affiliate in affiliates" :key="affiliate.id" :user="affiliate" />
-    </div>
+    <FetchLoader :status="status" only-error skeleton>
+      <div class="affiliates">
+        <UserRow v-for="affiliate in affiliated" :key="affiliate.id" :user="affiliate" />
+      </div>
+    </FetchLoader>
   </div>
 </template>
 <script lang="ts" setup>
+import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
+import { similarResearcherSkeleton } from '~/skeletons/crisalid.skeletons'
+import { getResearchAffiliated } from '~/api/v2/crisalid.service'
 
-const props = defineProps<{ user: TranslatedUserModel }>()
+const props = withDefaults(
+  defineProps<{ user: TranslatedUserModel; preview?: boolean; limit?: number }>(),
+  { limit: 12, preview: false }
+)
 
-const affiliates = computed(() => [
-  { ...props.user, id: 1 },
-  { ...props.user, id: 2 },
-  { ...props.user, id: 3 },
-  { ...props.user, id: 4 },
-])
+const researcherId = computed(() => props.user.researcher?.id)
+const organizationCode = useOrganizationCode()
+const limitSkeletons = computed(() => maxSkeleton(props.limit, props.limit))
+
+const {
+  status,
+  // isLoading,
+  data: affiliated,
+  // pagination,
+  // refresh,
+} = getResearchAffiliated(organizationCode, researcherId.value, {
+  paginationConfig: {
+    limit: props.limit,
+  },
+  default: () => factoryPagination(similarResearcherSkeleton, limitSkeletons.value),
+})
 </script>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';

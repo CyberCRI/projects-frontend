@@ -15,6 +15,10 @@ import {
   getUserResearchDocument as fetchUserResearchDocument,
   getUserResearchDocumentAnalytics as fetchUserResearchDocumentAnalytics,
   getResearchDocumentSimilars as fetchResearchDocumentSimilars,
+  getResearcherAffiliated as fetchResearcherAffiliated,
+  getResearcherSimilar as fetchResearcherSimilar,
+  getResearcherPatent as fetchResearcherPatent,
+  getResearcherAward as fetchResearcherAward,
 } from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
@@ -158,6 +162,104 @@ export const getResearchDocumentSimilars = (
       translate: (data) => translateResearcherDocuments(data),
       watch: onlyRefs([organizationCode, documentId]),
       checkArgs: true,
+      ...config,
+    }
+  )
+}
+
+export const getResearchAffiliated = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  researcherId: RefOrRaw<Researcher['id']>,
+  config: ConfigPagination = {}
+) => {
+  const { translateUsers } = useAutoTranslate()
+  const key = computed(
+    () => `${unref(organizationCode)}::crisalid::affiliated::${unref(researcherId)}`
+  )
+
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) =>
+      fetchResearcherAffiliated(unref(organizationCode), unref(researcherId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: (data) => translateUsers(data),
+      watch: onlyRefs([organizationCode, researcherId]),
+      checkArgs: true,
+      ...config,
+    }
+  )
+}
+
+export const getResearcherSimilar = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  researcherId: RefOrRaw<Researcher['id']>,
+  config: ConfigPagination = {}
+) => {
+  const { translateUsers } = useAutoTranslate()
+  const key = computed(
+    () => `${unref(organizationCode)}::crisalid::similar::${unref(researcherId)}`
+  )
+
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) =>
+      fetchResearcherSimilar(unref(organizationCode), unref(researcherId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: (data) => translateUsers(data),
+      watch: onlyRefs([organizationCode, researcherId]),
+      checkArgs: true,
+      ...config,
+    }
+  )
+}
+
+export const getResearcherAward = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  researcherId: RefOrRaw<UserModel['id']>,
+  config: UseAsyncApiConfig<QueryFilterAward> = {}
+) => {
+  // const { translateAward } = useAutoTranslate()
+  const key = computed(() => `${unref(organizationCode)}::awards::${unref(researcherId)}`)
+
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) =>
+      fetchResearcherAward(unref(organizationCode), unref(researcherId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      // translate: translateAward,
+      watch: onlyRefs([organizationCode, researcherId]),
+      ...config,
+    }
+  )
+}
+
+export const getResearcherPatent = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  researcherId: RefOrRaw<UserModel['id']>,
+  config: UseAsyncApiConfig<QueryFilterAward> = {}
+) => {
+  // const { translateAward } = useAutoTranslate()
+  const key = computed(() => `${unref(organizationCode)}::patents::${unref(researcherId)}`)
+
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) =>
+      fetchResearcherPatent(unref(organizationCode), unref(researcherId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      // translate: translateAward,
+      watch: onlyRefs([organizationCode, researcherId]),
       ...config,
     }
   )
