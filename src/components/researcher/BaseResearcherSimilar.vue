@@ -10,7 +10,13 @@
         />
       </FetchLoader>
     </div>
-    <BaseModuleButton :to="'/'" btn-icon="ArrowRight" :label="$t('researcher.view.all')" />
+    <BaseModuleButton
+      v-if="preview"
+      :to="'/'"
+      btn-icon="ArrowRight"
+      :label="$t('researcher.view.all')"
+    />
+    <PaginationButtonsV2 v-else :pagination="pagination" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -33,7 +39,7 @@ const {
   status,
   // isLoading,
   data: similarResearchers,
-  // pagination,
+  pagination,
   // refresh,
 } = getResearcherSimilar(organizationCode, researcherId, {
   paginationConfig: {

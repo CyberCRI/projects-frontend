@@ -75,4 +75,5 @@ export const similarResearcherSkeleton = (def?: Partial<Researcher>): Researcher
   family_name: 'family_name',
   given_name: 'given_name',
   job: 'job',
+  ...def,
 })

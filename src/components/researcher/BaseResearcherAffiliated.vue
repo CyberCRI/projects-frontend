@@ -5,6 +5,7 @@
         <UserRow v-for="affiliate in affiliated" :key="affiliate.id" :user="affiliate" />
       </div>
     </FetchLoader>
+    <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -26,7 +27,7 @@ const {
   status,
   // isLoading,
   data: affiliated,
-  // pagination,
+  pagination,
   // refresh,
 } = getResearchAffiliated(organizationCode, researcherId.value, {
   paginationConfig: {
