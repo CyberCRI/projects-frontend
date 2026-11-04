@@ -18,7 +18,11 @@
           {{ teaching.description }}
         </p>
         <div class="teaching-domains">
-          <ResearcherDomain v-for="domain in teaching.domains" :key="domain.id" :domain="domain" />
+          <ResearcherDomain
+            v-for="domain in teaching.domains"
+            :key="domain.domain.id"
+            :domain="domain"
+          />
         </div>
         <div class="teaching-footer">
           <LinkButton
@@ -50,8 +54,8 @@ const teachings = ref([
     description:
       'Ce cours explore les approches expérimentales et conceptuelles permettant de concevoir et reprogrammer des systèmes biologiques. Les étudiants apprennent à utiliser la biologie de synthèse pour répondre à des questions fondamentales en biologie cellulaire et en vieillissement.',
     domains: [
-      { id: 2, label: 'SYSTEM BIOLOGY', progress: 1 },
-      { id: 5, label: 'Neurodevelopmental Disorders (ND)', progress: 0.6 },
+      { domain: { id: 2, title: 'SYSTEM BIOLOGY' }, level: 100 },
+      { domain: { id: 5, title: 'Neurodevelopmental Disorders (ND)' }, level: 60 },
     ],
     syllabus: 'https://google.com',
     similars: { count: 4, link: 'https://google.com' },
@@ -64,8 +68,8 @@ const teachings = ref([
     description:
       'Ce cours aborde les approches multi-échelles utilisées pour comprendre les mécanismes du vieillissement, de la cellule unique aux réseaux de régulation. Une attention particulière est portée aux technologies de microfluidique et d’imagerie à haut débit.',
     domains: [
-      { id: 3, label: 'SYNTHETIC BIOLOGY', progress: 1 },
-      { id: 4, label: 'Autism Spectrum Disorders (ASD)', progress: 0.8 },
+      { domain: { id: 3, title: 'SYNTHETIC BIOLOGY' }, level: 100 },
+      { domain: { id: 4, title: 'Autism Spectrum Disorders (ASD)' }, level: 80 },
     ],
     syllabus: 'https://google.com',
     similars: { count: 2, link: 'https://google.com' },

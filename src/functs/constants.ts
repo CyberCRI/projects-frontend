@@ -6,7 +6,7 @@ import type {
   ProjectTabType,
   PeopleGroupModulesKeys,
   ProjectModuleExtra,
-  UserModuleExtra,
+  // UserModuleExtra,
 } from 'shared-projects-frontend/models'
 import type { IconImageChoice, IconTabImageChoice } from '~/functs/IconImage'
 import { omit, pick } from 'es-toolkit'
@@ -322,9 +322,7 @@ export const LOCATION_TYPE_TITLE: { [key in LocationType]: string } = {
 
 // user
 
-export const USER_MODULE_ICON: {
-  [key in UserModuleExtra]: IconImageChoice
-} = {
+export const USER_MODULE_ICON: Record<string, IconImageChoice> = {
   conferences: 'Article',
   publications: 'Article',
   reviews_projects: 'Briefcase',
@@ -351,9 +349,11 @@ export const USER_MODULE_ICON: {
   trade: 'ThumbUpLine',
 }
 
-export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
-  conferences: 'profile.conferences',
-  publications: 'profile.publications',
+export const USER_MODULE_TITLE = {
+  conferences: 'researcher.title.conferences',
+  conferencesTab: 'researcher.title.conferences-tab',
+  publications: 'researcher.title.publications',
+  publicationsTab: 'researcher.title.publications-tab',
   reviews_projects: 'me.projects-reviewing',
   follows_categories: 'me.follow-category',
   follows_projects: 'me.follow',
@@ -367,23 +367,34 @@ export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
   resources: 'resource.resources',
   groups: 'profile.groups',
   privacy: 'profile.edit.privacy.tab',
-  affiliate: 'researcher.title.affiliate',
+  affiliated: 'researcher.title.affiliated',
+  affiliatedTab: 'researcher.title.affiliated-tab',
   affiliations: 'researcher.title.affiliations',
   availabilities: 'researcher.title.availabilities',
   domain: 'researcher.title.domain',
+  domainTab: 'researcher.title.domain-tab',
   fundings: 'researcher.title.fundings',
+  fundingsTab: 'researcher.title.fundings-tab',
   needs: 'researcher.title.needs',
   network: 'researcher.title.network',
+  networkTab: 'researcher.title.network-tab',
   patents: 'researcher.title.patents',
+  patentsTab: 'researcher.title.patents-tab',
   positions: 'researcher.title.positions',
+  positionsTab: 'researcher.title.positions-tab',
   presentation: 'researcher.title.presentation',
   similar: 'researcher.title.similar',
   similarResearchers: 'researcher.title.similar-researchers',
   team: 'researcher.title.team',
+  teamTab: 'researcher.title.team-tab',
   awards: 'researcher.title.awards',
+  awardsTab: 'researcher.title.awards-tab',
   teaching: 'researcher.title.teaching',
+  teachingTab: 'researcher.title.teaching-tab',
   trade: 'researcher.title.trade',
+  tradeTab: 'researcher.title.trade-tab',
   researchAreas: 'researcher.title.research-areas',
+  researchAreasTab: 'researcher.title.research-areas-tab',
   researchAreasSkills: 'researcher.title.research-areas-skills',
 }
 

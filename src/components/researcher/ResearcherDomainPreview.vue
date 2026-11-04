@@ -10,7 +10,7 @@
         <AIGeneratedMark class="ai-mark" />
         <BaseModuleButton
           :to="{
-            name: 'ProfileSkills',
+            name: 'ProfileDomains',
             params: {
               userIdOrSlug: user.slug || user.id,
             },

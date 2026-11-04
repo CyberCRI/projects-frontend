@@ -84,17 +84,18 @@
           :to="contact.link"
         />
       </div>
-      <div v-if="user?.sdgs?.length" class="main-sdgs">
+      <template v-if="sdgs?.length">
         <SdgList
-          :sdgs="user.sdgs.slice(0, 3) || []"
+          :sdgs="sdgs.slice(0, 3) || []"
           :to="{
             name: 'PeopleSearch',
             query: {
               section: 'people',
             },
           }"
+          class="main-sdgs"
         />
-      </div>
+      </template>
     </div>
   </div>
 </template>
@@ -130,6 +131,9 @@ const researcherRoles = ref([
   { label: 'Member Board of Directors', structure: 'iGem' },
   { label: 'Member', structure: 'International Bioethics Committee (UNESCO)' },
 ])
+
+// TODO: use real sdg only TranslatedUserModel
+const sdgs = computed(() => (props.user.researcher ? [1, 4, 7, 11] : props.user.sdgs))
 
 const contacts = computed(() => {
   const res = []
@@ -285,12 +289,14 @@ const sortedDomains = computed(() => domains.value.toSorted((a, b) => b.level - 
     display: flex;
     gap: 1rem;
     justify-content: flex-start;
+    align-items: center;
   }
 
   .main-sdgs {
     display: flex;
     gap: 1rem;
     justify-content: flex-start;
+    align-items: center;
   }
 }
 

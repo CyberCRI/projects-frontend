@@ -14,9 +14,9 @@ withDefaults(
   <h2 v-if="currentTab && !currentTab.noTitle" class="sub-page-title">
     <div class="title-main">
       <span v-if="titlePrefix" class="title-prefix">{{ titlePrefix }}</span>
-      <template v-if="currentTab.label">
+      <template v-if="currentTab.pageLabel || currentTab.label">
         <span v-if="titlePrefix" class="separator">-</span>
-        <span class="specific-title">{{ currentTab.label }}</span>
+        <span class="specific-title">{{ currentTab.pageLabel || currentTab.label }}</span>
       </template>
     </div>
     <!--span v-if="currentTab.icon" class="icon"><IconImage :name="currentTab.icon" /></span-->

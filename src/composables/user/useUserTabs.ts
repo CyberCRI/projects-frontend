@@ -21,7 +21,13 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
   const userId = computed(() => user.value?.id)
   const userSlugOrId = computed(() => user.value?.slug || user.value?.id)
 
-  const isResearcher = computed(() => user.value.researcher)
+  const isResearcher = computed(() => !!user.value.researcher)
+
+  const getUserModule = (key: string) => modules.value?.[key] || 0
+  const hasUserModule = (key: string) => !!getUserModule(key)
+
+  const getResearcherModule = (key: string) => user.value?.researcher?.modules[key] || 0
+  const hasResearcherModule = (_key: string): boolean => isResearcher.value // && !!getResearcherModule(_key)
 
   const { canEditUser } = usePermissionUser(userId)
 
@@ -48,142 +54,159 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
       },
       {
         key: 'profile-projects',
-        label: t(USER_MODULE_TITLE.projects, modules.value.projects),
+        label: t(USER_MODULE_TITLE.projects, getUserModule('projects')),
         view: `/profile/${userSlugOrId.value}/projects`,
         altView: `/profile/${userSlugOrId.value}/projects/edit`,
-        condition: !!modules.value.projects,
+        condition: hasUserModule('projects'),
         dataTest: 'profile-projects',
         icon: USER_MODULE_ICON.projects,
       },
       {
         key: 'profile-skills',
-        label: t(USER_MODULE_TITLE.skills, modules.value.skills),
+        label: t(USER_MODULE_TITLE.skills, getUserModule('skills')),
         view: `/profile/${userSlugOrId.value}/skills`,
         altView: `/profile/${userSlugOrId.value}/skills/edit`,
-        condition: !isResearcher.value && !!modules.value.skills,
+        condition: !isResearcher.value && hasUserModule('skills'),
         dataTest: 'profile-skills',
         icon: USER_MODULE_ICON.skills,
       },
       {
         key: 'profile-domains',
         label: t(USER_MODULE_TITLE.researchAreas),
+        pageLabel: t(USER_MODULE_TITLE.researchAreas, {
+          count: getUserModule('skills') + getResearcherModule('domains'),
+        }),
+        tabLabel: t(USER_MODULE_TITLE.researchAreasTab),
         view: `/profile/${userSlugOrId.value}/domains`,
         altView: `/profile/${userSlugOrId.value}/skills/edit`,
         condition:
-          isResearcher.value &&
-          (!!modules.value.skills || !!user.value.researcher?.modules.domains),
+          isResearcher.value && (hasUserModule('skills') || hasResearcherModule('domains')),
         dataTest: 'profile-domains',
         icon: USER_MODULE_ICON.skills,
       },
 
       {
         key: 'profile-groups', //  TODO: "labo" ?
-        label: t(USER_MODULE_TITLE.groups, modules.value.groups),
+        label: t(USER_MODULE_TITLE.groups, getUserModule('groups')),
         view: `/profile/${userSlugOrId.value}/groups`,
         altView: `/profile/${userSlugOrId.value}/groups/edit`,
-        condition: !!modules.value.groups,
+        condition: hasUserModule('groups'),
         dataTest: 'profile-groups',
         icon: USER_MODULE_ICON.groups,
       },
       {
         key: 'profile-publications',
-        label: t(USER_MODULE_TITLE.publications, modules.value.publications),
+        pageLabel: t(USER_MODULE_TITLE.publications, {
+          count: getResearcherModule('publications'),
+        }),
+        tabLabel: t(USER_MODULE_TITLE.publicationsTab),
         view: `/profile/${userSlugOrId.value}/documents/publications`,
         altView: `/profile/${userSlugOrId.value}/documents/publications/edit`,
-        condition: !!user.value?.researcher?.modules.publications,
+        condition: hasResearcherModule('publications'),
         dataTest: 'profile-publications',
         icon: USER_MODULE_ICON.publications,
       },
       {
         key: 'profile-conferences',
-        label: t(USER_MODULE_TITLE.conferences, modules.value.conferences),
+        pageLabel: t(USER_MODULE_TITLE.conferences, { count: getResearcherModule('conferences') }),
+        tabLabel: t(USER_MODULE_TITLE.conferencesTab),
         view: `/profile/${userSlugOrId.value}/documents/conferences`,
         altView: `/profile/${userSlugOrId.value}/documents/conferences/edit`,
-        condition: !!user.value?.researcher?.modules.conferences,
+        condition: hasResearcherModule('conferences'),
         dataTest: 'profile-conferences',
         icon: USER_MODULE_ICON.conferences,
       },
       {
         key: 'profile-network',
-        label: t(USER_MODULE_TITLE.network, modules.network),
+        label: t(USER_MODULE_TITLE.network, { count: getResearcherModule('network') }),
+        tabLabel: t(USER_MODULE_TITLE.networkTab),
         view: `/profile/${userSlugOrId.value}/network`,
         altView: `/profile/${userSlugOrId.value}/network/edit`,
-        condition: isResearcher.value, // && !!modules.value.network,
+        condition: hasResearcherModule('network'),
         dataTest: 'profile-resources',
         icon: USER_MODULE_ICON.network,
       },
       {
         key: 'profile-affiliations',
-        label: t(USER_MODULE_TITLE.affiliations, modules.affiliate),
+        label: t(USER_MODULE_TITLE.affiliated, { count: getResearcherModule('affiliate') }),
+        tabLabel: t(USER_MODULE_TITLE.affiliatedTab),
         view: `/profile/${userSlugOrId.value}/affiliations`,
         altView: `/profile/${userSlugOrId.value}/affiliations/edit`,
-        condition: isResearcher.value, // && !!modules.value.affiliate,
+        condition: hasResearcherModule('affiliate'),
         dataTest: 'profile-affiliations',
         icon: USER_MODULE_ICON.affiliations,
       },
       {
         key: 'profile-awards',
-        label: t(USER_MODULE_TITLE.awards, modules.awards),
+        label: t(USER_MODULE_TITLE.awards, { count: getResearcherModule('awards') }),
+        tabLabel: t(USER_MODULE_TITLE.awardsTab),
         view: `/profile/${userSlugOrId.value}/awards`,
         altView: `/profile/${userSlugOrId.value}/awards/edit`,
-        condition: isResearcher.value, // && !!modules.value.awards,
+        condition: hasResearcherModule('awards'),
         dataTest: 'profile-awards',
         icon: USER_MODULE_ICON.awards,
       },
       {
         key: 'profile-patents',
-        label: t(USER_MODULE_TITLE.patents, modules.patents),
+        label: t(USER_MODULE_TITLE.patents, { count: getResearcherModule('patents') }),
+        tabLabel: t(USER_MODULE_TITLE.patentsTab),
         view: `/profile/${userSlugOrId.value}/patents`,
         altView: `/profile/${userSlugOrId.value}/patents/edit`,
-        condition: isResearcher.value, // && !!modules.value.patents,
+        condition: hasResearcherModule('patents'),
         dataTest: 'profile-patents',
         icon: USER_MODULE_ICON.patents,
       },
 
       {
         key: 'profile-fundings',
-        label: t(USER_MODULE_TITLE.fundings, modules.fundings),
+        label: t(USER_MODULE_TITLE.fundings, { count: getResearcherModule('fundings') }),
+        tabLabel: t(USER_MODULE_TITLE.fundingsTab),
         view: `/profile/${userSlugOrId.value}/fundings`,
         altView: `/profile/${userSlugOrId.value}/fundings/edit`,
-        condition: isResearcher.value, // && !!modules.value.fundings,
+        condition: hasResearcherModule('fundings'),
         dataTest: 'profile-fundings',
         icon: USER_MODULE_ICON.fundings,
       },
 
       {
         key: 'profile-teaching',
-        label: t(USER_MODULE_TITLE.teaching, modules.teaching),
+        label: t(USER_MODULE_TITLE.teaching, { count: getResearcherModule('teaching') }),
+        tabLabel: t(USER_MODULE_TITLE.teachingTab),
         view: `/profile/${userSlugOrId.value}/teaching`,
         altView: `/profile/${userSlugOrId.value}/teaching/edit`,
-        condition: isResearcher.value, // && !!modules.value.teaching,
+        condition: hasResearcherModule('teaching'),
         dataTest: 'profile-teaching',
         icon: USER_MODULE_ICON.teaching,
       },
 
       {
         key: 'profile-positions',
-        label: t(USER_MODULE_TITLE.positions, modules.positons),
+        label: t(USER_MODULE_TITLE.positions, { count: getResearcherModule('positons') }),
+        tabLabel: t(USER_MODULE_TITLE.positionsTab),
         view: `/profile/${userSlugOrId.value}/positions`,
         altView: `/profile/${userSlugOrId.value}/positions/edit`,
-        condition: isResearcher.value, // && !!modules.value.positions,
+        condition: hasResearcherModule('positions'),
         dataTest: 'profile-positions',
         icon: USER_MODULE_ICON.positions,
       },
       {
         key: 'profile-trade',
-        label: t(USER_MODULE_TITLE.trade, modules.value.needs + modules.value.availabilitie),
+        label: t(USER_MODULE_TITLE.trade, {
+          count: getResearcherModule('needs') + getResearcherModule('availabilitie'),
+        }),
+        tabLabel: t(USER_MODULE_TITLE.tradeTab),
         view: `/profile/${userSlugOrId.value}/trade`,
         altView: `/profile/${userSlugOrId.value}/trade/edit`,
-        condition: isResearcher.value, // && (!!modules.value.needs || !!modules.value.availabilities),
+        condition: hasResearcherModule('needs') || hasResearcherModule('availabilities'),
         dataTest: 'profile-trade',
         icon: USER_MODULE_ICON.trade,
       },
       {
         key: 'profile-resources',
-        label: t(USER_MODULE_TITLE.resources, modules.value.files + modules.value.links),
+        label: t(USER_MODULE_TITLE.resources, getUserModule('files') + getUserModule('links')),
         view: `/profile/${userSlugOrId.value}/resources`,
         altView: `/profile/${userSlugOrId.value}/resources/edit`,
-        condition: !!(modules.value.files || modules.value.links),
+        condition: hasUserModule('files') || hasUserModule('links'),
         dataTest: 'profile-resources',
         icon: USER_MODULE_ICON.resources,
       },

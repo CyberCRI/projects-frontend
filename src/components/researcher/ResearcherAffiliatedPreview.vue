@@ -1,9 +1,9 @@
 <template>
   <BaseModulePreview
     v-if="user.researcher"
-    :title="$t(USER_MODULE_TITLE.affiliate, user.modules.affiliate)"
-    :icon="USER_MODULE_ICON.affiliate"
-    :total="user.modules.affiliate"
+    :title="$t(USER_MODULE_TITLE.affiliated, { count: user.researcher?.modules.affiliate })"
+    :icon="USER_MODULE_ICON.affiliated"
+    :total="user.researcher?.modules.affiliate"
     :see-more="{
       name: 'ProfileAffiliate',
       params: {
