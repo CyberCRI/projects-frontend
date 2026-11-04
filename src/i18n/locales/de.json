@@ -3281,7 +3281,9 @@
       "affiliations": "Zugehörigkeiten",
       "awards": "Auszeichnungen",
       "trade": "Bedarfe / Verfügbarkeiten",
-      "teaching": "Lehre"
+      "teaching": "Lehre",
+      "research-areas": "Forschungsgebiete",
+      "research-areas-skills": "Forschungsgebiete und Kompetenzen"
     },
     "view": {
       "all": "Alle anzeigen",

@@ -3281,7 +3281,9 @@
       "affiliations": "Affiliaties",
       "awards": "Prijzen",
       "trade": "Behoeften / Beschikbaarheden",
-      "teaching": "Onderwijs"
+      "teaching": "Onderwijs",
+      "research-areas": "Onderzoeksgebieden",
+      "research-areas-skills": "Onderzoeksgebieden en vaardigheden"
     },
     "view": {
       "all": "Alles bekijken",

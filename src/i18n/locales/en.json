@@ -2906,7 +2906,9 @@
       "affiliations": "Affiliations",
       "awards": "Awards",
       "trade": "Needs / Availabilities",
-      "teaching": "Teaching"
+      "teaching": "Teaching",
+      "research-areas": "Research areas",
+      "research-areas-skills": "Research areas & skills"
     },
     "relators": {
       "abr": "abridger",

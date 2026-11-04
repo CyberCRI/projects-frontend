@@ -3281,7 +3281,9 @@
       "affiliations": "Affiliations",
       "awards": "Prix",
       "trade": "Besoins / Disponibilités",
-      "teaching": "Enseignement"
+      "teaching": "Enseignement",
+      "research-areas": "Domaines de recherche",
+      "research-areas-skills": "Domaines de recherche et compétences"
     },
     "view": {
       "all": "Voir tout",

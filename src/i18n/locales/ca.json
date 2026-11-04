@@ -3281,7 +3281,9 @@
       "affiliations": "Afiliacions",
       "awards": "Premis",
       "trade": "Necessitats / Disponibilitats",
-      "teaching": "Docència"
+      "teaching": "Docència",
+      "research-areas": "Àmbits de recerca",
+      "research-areas-skills": "Àmbits de recerca i competències"
     },
     "view": {
       "all": "Veure-ho tot",

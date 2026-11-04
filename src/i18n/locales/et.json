@@ -3281,7 +3281,9 @@
       "affiliations": "Seotused",
       "awards": "Auhinnad",
       "trade": "Vajadused / Saadavus",
-      "teaching": "Õpetamine"
+      "teaching": "Õpetamine",
+      "research-areas": "Uurimisvaldkonnad",
+      "research-areas-skills": "Uurimisvaldkonnad ja oskused"
     },
     "view": {
       "all": "Vaata kõiki",
