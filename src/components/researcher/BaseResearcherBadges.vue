@@ -1,24 +1,19 @@
 <template>
   <div v-if="user.researcher" class="badge-list">
     <template v-for="badge in badges" :key="badge.label">
-      <NuxtLink v-if="badge.link" :to="badge.link" class="badge">
+      <component :is="badge.link ? NuxtLink : 'div'" :to="badge.link" class="badge">
         <IconImage class="badge-icon" :name="badge.icon" />
         <span class="badge-label">
-          {{ $t(`researcher.badges.${badge.label}`, { count: badge.count }) }}
+          {{ badge.label }}
         </span>
-      </NuxtLink>
-      <div v-else class="badge">
-        <IconImage class="badge-icon" :name="badge.icon" />
-        <span class="badge-label">
-          {{ $t(`researcher.badges.${badge.label}`, { count: badge.count }) }}
-        </span>
-      </div>
+      </component>
     </template>
   </div>
 </template>
 <script lang="ts" setup>
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { USER_MODULE_ICON, USER_MODULE_TITLE } from '~/functs/constants'
+import { NuxtLink } from '#components'
 
 const { t } = useNuxtI18n()
 const props = defineProps<{ user: TranslatedUserModel }>()
