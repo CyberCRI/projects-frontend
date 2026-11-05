@@ -6,6 +6,7 @@ import type {
   ProjectTabType,
   PeopleGroupModulesKeys,
   ProjectModuleExtra,
+  Currency,
   // UserModuleExtra,
 } from 'shared-projects-frontend/models'
 import type { IconImageChoice, IconTabImageChoice } from '~/functs/IconImage'
@@ -400,3 +401,8 @@ export const USER_MODULE_TITLE = {
 
 // max skill steps
 export const DEFAULT_SKILL_STEPS = 4
+
+export const ICON_CURRENCY: { [key in Currency]: IconImageChoice } = {
+  EUR: 'Euro',
+  USD: 'Dollar',
+}

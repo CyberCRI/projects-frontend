@@ -1,70 +1,75 @@
 <template>
   <div v-if="user.researcher" class="funding-list">
-    <template v-for="funding in fundings" :key="funding.id">
-      <div class="separator"></div>
-      <div class="funding-card">
-        <div class="funding-main">
-          <h3 class="funding-title">{{ funding.title }}</h3>
-          <div class="funding-description">{{ funding.description }}</div>
-          <div class="funding-data">
-            <span class="funding-datum">
-              <IconImage name="Euro" class="icon" />
-              <span>{{ funding.amount }}</span>
-            </span>
-            <span class="funding-datum">
-              <IconImage name="Calendar" class="icon" />
-              <span>{{ funding.date }}</span>
-            </span>
-          </div>
-        </div>
-        <div v-if="funding.researchers" class="funding-aside">
-          <div class="funding-team">
-            <div class="funding-team-head">
-              <IconImage class="funding-team-icon" name="Link" />
-              <span class="researcher-count">{{ funding.researchers }}</span>
+    <FetchLoader :status="status" only-error skeleton>
+      <template v-for="funding in fundings" :key="funding.id">
+        <div class="separator"></div>
+        <div class="funding-card">
+          <div class="funding-main">
+            <h3 class="funding-title">{{ funding.$t.name }}</h3>
+            <div class="funding-description">{{ funding.$t.description }}</div>
+            <div class="funding-data">
+              <span v-if="funding.prices" class="funding-datum">
+                <IconImage
+                  v-if="ICON_CURRENCY[funding.currency]"
+                  :name="ICON_CURRENCY[funding.currency]"
+                  class="icon"
+                />
+                <span>{{ funding.prices }}</span>
+              </span>
+              <span v-if="funding.start_date || funding.end_date" class="funding-datum">
+                <IconImage name="Calendar" class="icon" />
+                <span v-if="funding.start_date">{{ funding.start_date }}</span>
+                <span v-if="funding.end_date">{{ funding.end_date }}</span>
+              </span>
             </div>
-            <div class="funding-team-label">{{ $t('researcher.researchers') }}</div>
+          </div>
+          <div v-if="funding.researchers?.length" class="funding-aside">
+            <div class="funding-team">
+              <div class="funding-team-head">
+                <IconImage class="funding-team-icon" name="Link" />
+                <span class="researcher-count">{{ funding.researchers.length }}</span>
+              </div>
+              <div class="funding-team-label">{{ $t('researcher.researchers') }}</div>
+            </div>
           </div>
         </div>
-      </div>
-    </template>
+      </template>
+      <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
+    </FetchLoader>
   </div>
 </template>
 <script lang="ts" setup>
+import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
+import { getResearcherFundings } from '~/api/v2/crisalid.service'
+import { fundingSkeleton } from '~/skeletons/crisalid.skeletons'
+import FetchLoader from '~/components/base/FetchLoader.vue'
+import { ICON_CURRENCY } from '~/functs/constants'
 
-defineProps<{ user: TranslatedUserModel }>()
-
-const fundings = ref([
+const props = withDefaults(
+  defineProps<{ user: TranslatedUserModel; preview?: boolean; limit?: number }>(),
   {
-    title: 'Projet PATTERN - Horizon Europe Grant',
-    description: 'Promoting Open and Responsible Research and Innovation Practices (ORRI)',
-    amount: '8.3M€',
-    date: '2022-2029',
-    researchers: 9,
-    lab: null,
-  },
+    limit: 20,
+    preview: false,
+  }
+)
 
-  {
-    title: 'ERC Consolidator Grant – “SynAge: Synthetic Biology of Aging”',
-    description:
-      'Financement européen soutenant un programme visant à recréer artificiellement les dynamiques du vieillissement cellulaire pour mieux les comprendre et les moduler.',
-    amount: '8.3M€',
-    date: '2022-2029',
-    researchers: 12,
-    lab: null,
-  },
+const researcherId = computed(() => props.user.researcher?.id)
+const organizationCode = useOrganizationCode()
+const limitSkeletons = computed(() =>
+  maxSkeleton(props.user.researcher.modules.fundings, props.limit)
+)
 
-  {
-    title: 'NIH–INSERM Collaborative Grant – “Engineering Robust Aging Models Across Species”',
-    description:
-      'Projet bilatéral franco-américain entre le Learning Planet Institute et plusieurs laboratoires du NIH, explorant comment des principes de biologie de synthèse peuvent être appliqués pour comparer les processus de vieillissement chez différentes espèces.',
-    amount: '8.3M€',
-    date: '2022-2029',
-    researchers: 0,
-    lab: null,
+const {
+  status,
+  data: fundings,
+  pagination,
+} = getResearcherFundings(organizationCode, researcherId, {
+  paginationConfig: {
+    limit: props.limit,
   },
-])
+  default: () => factoryPagination(fundingSkeleton, limitSkeletons.value),
+})
 </script>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';

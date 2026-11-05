@@ -4,6 +4,7 @@ import ProfileDocumentsPreview from '~/components/profile/modules/Documents/Prof
 import ProfileProjectsPreview from '~/components/profile/modules/Projects/ProfileProjectsPreview.vue'
 import ProfileSkillsPreview from '~/components/profile/modules/Skills/ProfileSkillsPreview.vue'
 import ProfileGroupsPreview from '~/components/profile/modules/Groups/ProfileGroupsPreview.vue'
+import ResearcherTeachingsPreview from '~/components/researcher/ResearcherTeachingsPreview.vue'
 import ProfileBioPreview from '~/components/profile/modules/Bio/ProfileBioPreview.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { textIsEmpty } from '@/functs/tiptap'
@@ -23,7 +24,11 @@ const bioEmpty = computed(() => textIsEmpty(props.user.$t.description))
 
     <div class="profile-row">
       <ResearcherPresentationPreview class="resarcher-presentaion" :user="user" />
-      <ResearcherSimilarPreview class="resarcher-similar" :user="user" />
+      <ResearcherSimilarPreview
+        v-if="user.researcher?.modules?.similars"
+        class="resarcher-similar"
+        :user="user"
+      />
     </div>
     <ProfileBioPreview v-if="!bioEmpty && !user.researcher" :user="user" />
 
@@ -32,7 +37,7 @@ const bioEmpty = computed(() => textIsEmpty(props.user.$t.description))
     <ProfileGroupsPreview v-if="user.modules.groups" :user="user" />
 
     <!-- affiliate -->
-    <ResearcherAffiliatedPreview :user="user" />
+    <ResearcherAffiliatedPreview v-if="user.researcher?.modules?.affiliated" :user="user" />
 
     <ProfileSkillsPreview v-if="user.modules.skills && !user.researcher" :user="user" />
 
@@ -55,30 +60,39 @@ const bioEmpty = computed(() => textIsEmpty(props.user.$t.description))
 
     <!-- researcher -->
     <ProfileDocumentsPreview
-      v-if="user.modules.publications"
+      v-if="user.researcher?.modules?.publications"
       document-type="publications"
       :user="user"
     />
     <ProfileDocumentsPreview
-      v-if="user.modules.conferences"
+      v-if="user.researcher?.modules?.conferences"
       document-type="conferences"
       :user="user"
     />
 
     <div class="profile-row">
-      <ResearcherDomainPreview class="researcher-domain" :user="user" />
-      <ResearcherNetworkPreview class="researcher-network" :user="user" />
+      <ResearcherDomainPreview
+        v-if="user.researcher?.modules?.domains"
+        class="researcher-domain"
+        :user="user"
+      />
+      <!-- <ResearcherNetworkPreview
+        v-if="user.researcher?.modules?.preview"
+        class="researcher-network"
+        :user="user"
+      /> -->
     </div>
 
     <ProfileResourcesPreview v-if="user.modules.files || user.modules.links" :user="user" />
 
-    <ResearcherPatentsPreview :user="user" />
-    <ResearcherFundingsPreview :user="user" />
+    <ResearcherPatentsPreview v-if="user.researcher?.modules?.patents" :user="user" />
+    <ResearcherFundingsPreview v-if="user.researcher?.modules?.fundings" :user="user" />
+    <ResearcherTeachingsPreview v-if="user.researcher?.modules?.teachings" :user="user" />
 
-    <ResearcherPositionsPreview :user="user" />
+    <!-- <ResearcherPositionsPreview v-if="user.researcher?.modules?.positions"  :user="user" /> -->
 
-    <ResearcherNeedsPreview :user="user" />
-    <ResearcherAvailabilitiesPreview :user="user" />
+    <!-- <ResearcherNeedsPreview v-if="user.researcher?.modules?.needs" :user="user" /> -->
+    <!-- <ResearcherAvailabilitiesPreview v-if="user.researcher?.modules?.availabilities" :user="user" /> -->
   </div>
 </template>
 

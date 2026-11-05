@@ -1,31 +1,25 @@
 <template>
   <div class="similar-profile">
     <CroppedApiImage
-      :alt="`${user.given_name} ${user.family_name} image`"
+      :alt="`${researcher.display_name} image`"
       class="picture picture-user skeletons-background"
-      :picture-data="user.profile_picture"
+      :picture-data="researcher.user.profile_picture"
       picture-size="medium"
       :default-picture="DEFAULT_USER_PATATOID"
     />
     <div class="card-title skeletons-text cropped">
-      {{ user.given_name }} {{ user.family_name }}
+      {{ researcher.display_name }}
     </div>
     <div class="card-description skeletons-text cropped">
-      {{ translatedJob }}
+      {{ researcher.user.$t.job }}
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+import type { TranslatedResearcher } from 'shared-projects-frontend/models'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
-import type { UserModel } from 'shared-projects-frontend/models'
 
-const props = defineProps<{ user: UserModel }>()
-
-const { getTranslatableField } = useAutoTranslate()
-const translatedJob = getTranslatableField(
-  computed(() => props.user),
-  'job'
-)
+defineProps<{ researcher: TranslatedResearcher }>()
 </script>
 
 <style lang="scss" scoped>

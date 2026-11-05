@@ -1,7 +1,8 @@
-import type { UserModel, TranslatedUserModel } from 'shared-projects-frontend/models'
+import type { UserModel, TranslatedUserModel, Researcher } from 'shared-projects-frontend/models'
 import { usePermissionUser } from '~/composables/usePermissions/useUserPermissions'
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
 import { USER_MODULE_ICON, USER_MODULE_TITLE } from '~/functs/constants'
+import { researcherSkeleton } from '~/skeletons/crisalid.skeletons'
 import { userSkeleton } from '~/skeletons/user.skeletons'
 import { textIsEmpty } from '~/functs/tiptap'
 
@@ -17,17 +18,17 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
       ...(user.value?.modules ?? {}),
     }
   })
+  const modulesResearcher = computed<Researcher['modules']>(() => {
+    return {
+      ...researcherSkeleton().modules,
+      ...(user.value?.researcher?.modules ?? {}),
+    }
+  })
 
   const userId = computed(() => user.value?.id)
   const userSlugOrId = computed(() => user.value?.slug || user.value?.id)
 
   const isResearcher = computed(() => !!user.value.researcher)
-
-  const getUserModule = (key: string) => modules.value?.[key] || 0
-  const hasUserModule = (key: string) => !!getUserModule(key)
-
-  const getResearcherModule = (key: string) => user.value?.researcher?.modules[key] || 0
-  const hasResearcherModule = (_key: string): boolean => isResearcher.value // && !!getResearcherModule(_key)
 
   const { canEditUser } = usePermissionUser(userId)
 
@@ -54,19 +55,19 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
       },
       {
         key: 'profile-projects',
-        label: t(USER_MODULE_TITLE.projects, getUserModule('projects')),
+        label: t(USER_MODULE_TITLE.projects, modules.value.projects),
         view: `/profile/${userSlugOrId.value}/projects`,
         altView: `/profile/${userSlugOrId.value}/projects/edit`,
-        condition: hasUserModule('projects'),
+        condition: !!modules.value.projects,
         dataTest: 'profile-projects',
         icon: USER_MODULE_ICON.projects,
       },
       {
         key: 'profile-skills',
-        label: t(USER_MODULE_TITLE.skills, getUserModule('skills')),
+        label: t(USER_MODULE_TITLE.skills, modules.value.skills),
         view: `/profile/${userSlugOrId.value}/skills`,
         altView: `/profile/${userSlugOrId.value}/skills/edit`,
-        condition: !isResearcher.value && hasUserModule('skills'),
+        condition: !isResearcher.value && !!modules.value.skills,
         dataTest: 'profile-skills',
         icon: USER_MODULE_ICON.skills,
       },
@@ -74,139 +75,139 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         key: 'profile-domains',
         label: t(USER_MODULE_TITLE.researchAreas),
         pageLabel: t(USER_MODULE_TITLE.researchAreas, {
-          count: getUserModule('skills') + getResearcherModule('domains'),
+          count: modules.value.skills + modulesResearcher.value.domains,
         }),
         tabLabel: t(USER_MODULE_TITLE.researchAreasTab),
         view: `/profile/${userSlugOrId.value}/domains`,
         altView: `/profile/${userSlugOrId.value}/skills/edit`,
         condition:
-          isResearcher.value && (hasUserModule('skills') || hasResearcherModule('domains')),
+          isResearcher.value && (!!modules.value.skills || !!modulesResearcher.value.domains),
         dataTest: 'profile-domains',
         icon: USER_MODULE_ICON.skills,
       },
 
       {
         key: 'profile-groups', //  TODO: "labo" ?
-        label: t(USER_MODULE_TITLE.groups, getUserModule('groups')),
+        label: t(USER_MODULE_TITLE.groups, modules.value.groups),
         view: `/profile/${userSlugOrId.value}/groups`,
         altView: `/profile/${userSlugOrId.value}/groups/edit`,
-        condition: hasUserModule('groups'),
+        condition: !!modules.value.groups,
         dataTest: 'profile-groups',
         icon: USER_MODULE_ICON.groups,
       },
       {
         key: 'profile-publications',
         pageLabel: t(USER_MODULE_TITLE.publications, {
-          count: getResearcherModule('publications'),
+          count: modulesResearcher.value.publications,
         }),
         tabLabel: t(USER_MODULE_TITLE.publicationsTab),
         view: `/profile/${userSlugOrId.value}/documents/publications`,
         altView: `/profile/${userSlugOrId.value}/documents/publications/edit`,
-        condition: hasResearcherModule('publications'),
+        condition: !!modulesResearcher.value.publications,
         dataTest: 'profile-publications',
         icon: USER_MODULE_ICON.publications,
       },
       {
         key: 'profile-conferences',
-        pageLabel: t(USER_MODULE_TITLE.conferences, { count: getResearcherModule('conferences') }),
+        pageLabel: t(USER_MODULE_TITLE.conferences, { count: modulesResearcher.value.conferences }),
         tabLabel: t(USER_MODULE_TITLE.conferencesTab),
         view: `/profile/${userSlugOrId.value}/documents/conferences`,
         altView: `/profile/${userSlugOrId.value}/documents/conferences/edit`,
-        condition: hasResearcherModule('conferences'),
+        condition: !!modulesResearcher.value.conferences,
         dataTest: 'profile-conferences',
         icon: USER_MODULE_ICON.conferences,
       },
       {
         key: 'profile-network',
-        label: t(USER_MODULE_TITLE.network, { count: getResearcherModule('network') }),
+        label: t(USER_MODULE_TITLE.network, { count: modulesResearcher.value.network }),
         tabLabel: t(USER_MODULE_TITLE.networkTab),
         view: `/profile/${userSlugOrId.value}/network`,
         altView: `/profile/${userSlugOrId.value}/network/edit`,
-        condition: hasResearcherModule('network'),
+        condition: !!modulesResearcher.value.network,
         dataTest: 'profile-resources',
         icon: USER_MODULE_ICON.network,
       },
       {
         key: 'profile-affiliations',
-        label: t(USER_MODULE_TITLE.affiliated, { count: getResearcherModule('affiliate') }),
+        label: t(USER_MODULE_TITLE.affiliated, { count: modulesResearcher.value.affiliated }),
         tabLabel: t(USER_MODULE_TITLE.affiliatedTab),
         view: `/profile/${userSlugOrId.value}/affiliations`,
         altView: `/profile/${userSlugOrId.value}/affiliations/edit`,
-        condition: hasResearcherModule('affiliate'),
+        condition: !!modulesResearcher.value.affiliated,
         dataTest: 'profile-affiliations',
         icon: USER_MODULE_ICON.affiliations,
       },
       {
         key: 'profile-awards',
-        label: t(USER_MODULE_TITLE.awards, { count: getResearcherModule('awards') }),
+        label: t(USER_MODULE_TITLE.awards, { count: modulesResearcher.value.awards }),
         tabLabel: t(USER_MODULE_TITLE.awardsTab),
         view: `/profile/${userSlugOrId.value}/awards`,
         altView: `/profile/${userSlugOrId.value}/awards/edit`,
-        condition: hasResearcherModule('awards'),
+        condition: !!modulesResearcher.value.awards,
         dataTest: 'profile-awards',
         icon: USER_MODULE_ICON.awards,
       },
       {
         key: 'profile-patents',
-        label: t(USER_MODULE_TITLE.patents, { count: getResearcherModule('patents') }),
+        label: t(USER_MODULE_TITLE.patents, { count: modulesResearcher.value.patents }),
         tabLabel: t(USER_MODULE_TITLE.patentsTab),
         view: `/profile/${userSlugOrId.value}/patents`,
         altView: `/profile/${userSlugOrId.value}/patents/edit`,
-        condition: hasResearcherModule('patents'),
+        condition: !!modulesResearcher.value.patents,
         dataTest: 'profile-patents',
         icon: USER_MODULE_ICON.patents,
       },
 
       {
         key: 'profile-fundings',
-        label: t(USER_MODULE_TITLE.fundings, { count: getResearcherModule('fundings') }),
+        label: t(USER_MODULE_TITLE.fundings, { count: modulesResearcher.value.fundings }),
         tabLabel: t(USER_MODULE_TITLE.fundingsTab),
         view: `/profile/${userSlugOrId.value}/fundings`,
         altView: `/profile/${userSlugOrId.value}/fundings/edit`,
-        condition: hasResearcherModule('fundings'),
+        condition: !!modulesResearcher.value.fundings,
         dataTest: 'profile-fundings',
         icon: USER_MODULE_ICON.fundings,
       },
 
       {
         key: 'profile-teaching',
-        label: t(USER_MODULE_TITLE.teaching, { count: getResearcherModule('teaching') }),
+        label: t(USER_MODULE_TITLE.teaching, { count: modulesResearcher.value.teachings }),
         tabLabel: t(USER_MODULE_TITLE.teachingTab),
         view: `/profile/${userSlugOrId.value}/teaching`,
         altView: `/profile/${userSlugOrId.value}/teaching/edit`,
-        condition: hasResearcherModule('teaching'),
+        condition: !!modulesResearcher.value.teachings,
         dataTest: 'profile-teaching',
         icon: USER_MODULE_ICON.teaching,
       },
 
       {
         key: 'profile-positions',
-        label: t(USER_MODULE_TITLE.positions, { count: getResearcherModule('positons') }),
+        label: t(USER_MODULE_TITLE.positions, { count: modulesResearcher.value.positons }),
         tabLabel: t(USER_MODULE_TITLE.positionsTab),
         view: `/profile/${userSlugOrId.value}/positions`,
         altView: `/profile/${userSlugOrId.value}/positions/edit`,
-        condition: hasResearcherModule('positions'),
+        condition: !!modulesResearcher.value.positions,
         dataTest: 'profile-positions',
         icon: USER_MODULE_ICON.positions,
       },
       {
         key: 'profile-trade',
         label: t(USER_MODULE_TITLE.trade, {
-          count: getResearcherModule('needs') + getResearcherModule('availabilitie'),
+          count: modulesResearcher.value.needs + modulesResearcher.value.availabilitie,
         }),
         tabLabel: t(USER_MODULE_TITLE.tradeTab),
         view: `/profile/${userSlugOrId.value}/trade`,
         altView: `/profile/${userSlugOrId.value}/trade/edit`,
-        condition: hasResearcherModule('needs') || hasResearcherModule('availabilities'),
+        condition: modulesResearcher.value.needs || modulesResearcher.value.availabilities,
         dataTest: 'profile-trade',
         icon: USER_MODULE_ICON.trade,
       },
       {
         key: 'profile-resources',
-        label: t(USER_MODULE_TITLE.resources, getUserModule('files') + getUserModule('links')),
+        label: t(USER_MODULE_TITLE.resources, modules.value.files + modules.value.links),
         view: `/profile/${userSlugOrId.value}/resources`,
         altView: `/profile/${userSlugOrId.value}/resources/edit`,
-        condition: hasUserModule('files') || hasUserModule('links'),
+        condition: !!modules.value.files || !!modules.value.links,
         dataTest: 'profile-resources',
         icon: USER_MODULE_ICON.resources,
       },
@@ -255,7 +256,7 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         },
         {
           key: 'profile-publications-edit',
-          label: t(USER_MODULE_TITLE.publications, modules.value.publications),
+          label: t(USER_MODULE_TITLE.publications, modulesResearcher.value.publications),
           view: `/profile/${userSlugOrId.value}/documents/publications/edit`,
           altView: `/profile/${userSlugOrId.value}/documents/publications`,
           condition: true,
@@ -264,7 +265,7 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         },
         {
           key: 'profile-conferences-edit',
-          label: t(USER_MODULE_TITLE.conferences, modules.value.conferences),
+          label: t(USER_MODULE_TITLE.conferences, modulesResearcher.value.conferences),
           view: `/profile/${userSlugOrId.value}/documents/conferences/edit`,
           altView: `/profile/${userSlugOrId.value}/documents/conferences`,
           condition: true,

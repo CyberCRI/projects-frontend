@@ -5,6 +5,11 @@ import type {
   ResearcherDocumentType,
   Researcher,
   QueryFilterDocument,
+  QueryFilterAward,
+  UserModel,
+  QueryFilterPatent,
+  QueryFilterFunding,
+  QueryFilterTeaching,
 } from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
@@ -19,6 +24,8 @@ import {
   getResearcherSimilars as fetchResearcherSimilars,
   getResearcherPatents as fetchResearcherPatent,
   getResearcherAwards as fetchResearcherAward,
+  getResearcherTeachings as fetchResearcherTeachings,
+  getResearcherFundings as fetchResearcherFundings,
 } from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
@@ -172,9 +179,9 @@ export const getResearchAffiliated = (
   researcherId: RefOrRaw<Researcher['id']>,
   config: ConfigPagination = {}
 ) => {
-  const { translateUsers } = useAutoTranslate()
+  const { translateResearchers } = useAutoTranslate()
   const key = computed(
-    () => `${unref(organizationCode)}::crisalid::affiliated::${unref(researcherId)}`
+    () => `${unref(organizationCode)}::researcher::${unref(researcherId)}::affiliated`
   )
 
   return useAsyncPaginationAPI(
@@ -185,7 +192,7 @@ export const getResearchAffiliated = (
         ...config,
       }),
     {
-      translate: (data) => translateUsers(data),
+      translate: (data) => translateResearchers(data),
       watch: onlyRefs([organizationCode, researcherId]),
       checkArgs: true,
       ...config,
@@ -196,11 +203,11 @@ export const getResearchAffiliated = (
 export const getResearcherSimilars = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   researcherId: RefOrRaw<Researcher['id']>,
-  config: ConfigPagination = {}
+  config: UseAsyncPaginationApiConfig = {}
 ) => {
-  const { translateUsers } = useAutoTranslate()
+  const { translateResearchers } = useAutoTranslate()
   const key = computed(
-    () => `${unref(organizationCode)}::crisalid::similar::${unref(researcherId)}`
+    () => `${unref(organizationCode)}::researcher::${unref(researcherId)}::similars`
   )
 
   return useAsyncPaginationAPI(
@@ -211,7 +218,7 @@ export const getResearcherSimilars = (
         ...config,
       }),
     {
-      translate: (data) => translateUsers(data),
+      translate: (data) => translateResearchers(data),
       watch: onlyRefs([organizationCode, researcherId]),
       checkArgs: true,
       ...config,
@@ -219,13 +226,15 @@ export const getResearcherSimilars = (
   )
 }
 
-export const getResearcherAward = (
+export const getResearcherAwards = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   researcherId: RefOrRaw<UserModel['id']>,
-  config: UseAsyncApiConfig<QueryFilterAward> = {}
+  config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
 ) => {
-  // const { translateAward } = useAutoTranslate()
-  const key = computed(() => `${unref(organizationCode)}::awards::${unref(researcherId)}`)
+  const { translateResearcherAwards } = useAutoTranslate()
+  const key = computed(
+    () => `${unref(organizationCode)}::researcher::${unref(researcherId)}::awards`
+  )
 
   return useAsyncPaginationAPI(
     key,
@@ -235,20 +244,22 @@ export const getResearcherAward = (
         ...config,
       }),
     {
-      // translate: translateAward,
+      translate: (data) => translateResearcherAwards(data),
       watch: onlyRefs([organizationCode, researcherId]),
       ...config,
     }
   )
 }
 
-export const getResearcherPatent = (
+export const getResearcherPatents = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   researcherId: RefOrRaw<UserModel['id']>,
-  config: UseAsyncApiConfig<QueryFilterAward> = {}
+  config: UseAsyncPaginationApiConfig<QueryFilterPatent> = {}
 ) => {
-  // const { translateAward } = useAutoTranslate()
-  const key = computed(() => `${unref(organizationCode)}::patents::${unref(researcherId)}`)
+  const { translatePatents } = useAutoTranslate()
+  const key = computed(
+    () => `${unref(organizationCode)}::researcher::${unref(researcherId)}::patents`
+  )
 
   return useAsyncPaginationAPI(
     key,
@@ -258,7 +269,57 @@ export const getResearcherPatent = (
         ...config,
       }),
     {
-      // translate: translateAward,
+      translate: (data) => translatePatents(data),
+      watch: onlyRefs([organizationCode, researcherId]),
+      ...config,
+    }
+  )
+}
+
+export const getResearcherFundings = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  researcherId: RefOrRaw<UserModel['id']>,
+  config: UseAsyncPaginationApiConfig<QueryFilterFunding> = {}
+) => {
+  const { translateFundings } = useAutoTranslate()
+  const key = computed(
+    () => `${unref(organizationCode)}::researcher::${unref(researcherId)}::fundings`
+  )
+
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) =>
+      fetchResearcherFundings(unref(organizationCode), unref(researcherId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: (data) => translateFundings(data),
+      watch: onlyRefs([organizationCode, researcherId]),
+      ...config,
+    }
+  )
+}
+
+export const getResearcherTeachings = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  researcherId: RefOrRaw<UserModel['id']>,
+  config: UseAsyncPaginationApiConfig<QueryFilterTeaching> = {}
+) => {
+  const { translateTeachings } = useAutoTranslate()
+  const key = computed(
+    () => `${unref(organizationCode)}::researcher::${unref(researcherId)}::teachings`
+  )
+
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) =>
+      fetchResearcherTeachings(unref(organizationCode), unref(researcherId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: (data) => translateTeachings(data),
       watch: onlyRefs([organizationCode, researcherId]),
       ...config,
     }

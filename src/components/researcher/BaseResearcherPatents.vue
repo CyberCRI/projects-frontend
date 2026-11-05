@@ -1,42 +1,50 @@
 <template>
   <div v-if="user.researcher" class="patent-list">
-    <template v-for="patent in patents" :key="patent.id">
-      <div class="separator"></div>
-      <div class="patent-card">
-        <h3 class="patent-title">{{ patent.title }}</h3>
-        <div class="patent-description">{{ patent.description }}</div>
-        <div v-if="patent.link" class="patent-link">
-          <LinkButton :label="patent.link.label" btn-icon="" :to="patent.link.url" />
+    <FetchLoader :status="status" only-error skeleton>
+      <template v-for="patent in patents" :key="patent.id">
+        <div class="separator"></div>
+        <div class="patent-card">
+          <h3 class="patent-title">{{ patent.$t.name }}</h3>
+          <div class="patent-description">{{ patent.$t.description }}</div>
+          <div v-if="patent.link" class="patent-link">
+            <LinkButton :label="$t('common.see-more')" :to="patent.link" />
+          </div>
         </div>
-      </div>
-    </template>
+      </template>
+      <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
+    </FetchLoader>
   </div>
 </template>
 <script lang="ts" setup>
+import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
+import { getResearcherPatents } from '~/api/v2/crisalid.service'
+import { patentSkeleton } from '~/skeletons/crisalid.skeletons'
 
-defineProps<{ user: TranslatedUserModel }>()
+const props = withDefaults(
+  defineProps<{ user: TranslatedUserModel; preview?: boolean; limit?: number }>(),
+  {
+    limit: 20,
+    preview: false,
+  }
+)
 
-const patents = ref([
-  {
-    title: 'Système microfluidique pour l’observation de cellules uniques sur le long terme',
-    description:
-      'Permet d’étudier les dynamiques du vieillissement cellulaire en conditions contrôlées.',
-    link: {
-      label: 'Dépôt : Inserm / Learning Planet Institute – 2018',
-      url: 'https://google.com',
-    },
+const researcherId = computed(() => props.user.researcher?.id)
+const organizationCode = useOrganizationCode()
+const limitSkeletons = computed(() =>
+  maxSkeleton(props.user.researcher.modules.patents, props.limit)
+)
+
+const {
+  status,
+  data: patents,
+  pagination,
+} = getResearcherPatents(organizationCode, researcherId, {
+  paginationConfig: {
+    limit: props.limit,
   },
-  {
-    title: 'Circuits génétiques de détection de la sénescence cellulaire',
-    description:
-      'Utilisés pour identifier et suivre les cellules vieillissantes ou soumises à un stress.',
-    link: {
-      label: 'Dépôt : Inserm / CNRS / Université Paris Cité – 2021',
-      url: 'https://google.com',
-    },
-  },
-])
+  default: () => factoryPagination(patentSkeleton, limitSkeletons.value),
+})
 </script>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';

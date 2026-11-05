@@ -1,5 +1,5 @@
 <template>
-  <BaseModulePreview v-if="user.researcher">
+  <BaseModulePreview v-if="user.researcher" title="">
     <template #content>
       <BaseResearcherSimilar :user="user" />
     </template>

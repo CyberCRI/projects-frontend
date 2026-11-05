@@ -6,7 +6,7 @@
         <SimilarResearcherCard
           v-for="(similar, index) in similarResearchers"
           :key="index"
-          :user="similar"
+          :researcher="similar"
         />
       </FetchLoader>
     </div>
@@ -22,7 +22,7 @@
 <script lang="ts" setup>
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
-import { similarResearcherSkeleton } from '~/skeletons/crisalid.skeletons'
+import { researcherSkeleton } from '~/skeletons/crisalid.skeletons'
 import { getResearcherSimilars } from '~/api/v2/crisalid.service'
 import { USER_MODULE_TITLE } from '~/functs/constants'
 
@@ -33,7 +33,9 @@ const props = withDefaults(
 
 const researcherId = computed(() => props.user.researcher?.id)
 const organizationCode = useOrganizationCode()
-const limitSkeletons = computed(() => maxSkeleton(props.limit, props.limit))
+const limitSkeletons = computed(() =>
+  maxSkeleton(props.user.researcher.modules.similars, props.limit)
+)
 
 const {
   status,
@@ -45,7 +47,7 @@ const {
   paginationConfig: {
     limit: props.limit,
   },
-  default: () => factoryPagination(similarResearcherSkeleton, limitSkeletons.value),
+  default: () => factoryPagination(researcherSkeleton, limitSkeletons.value),
 })
 </script>
 <style lang="scss" scoped>

@@ -13,10 +13,10 @@
     <!-- header row -->
     <h2 class="card-title skeletons-text">{{ user.given_name }} {{ user.family_name }}</h2>
     <p class="card-job skeletons-text">
-      {{ translatedJob }}
+      {{ user.$t.job }}
     </p>
     <p class="card-bio skeletons-text">
-      {{ translatedShortBio }}
+      {{ user.$t.short_description }}
     </p>
   </RouterLink>
 </template>
@@ -24,22 +24,12 @@
 <script setup lang="ts">
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
-import type { UserModel } from 'shared-projects-frontend/models'
 
 const props = defineProps<{
-  user: UserModel
+  user: TranslatedUserModel
 }>()
-
-const { getTranslatableField } = useAutoTranslate()
-const translatedJob = getTranslatableField(
-  computed(() => props.user),
-  'job'
-)
-const translatedShortBio = getTranslatableField(
-  computed(() => props.user),
-  'short_bio'
-)
 
 const toLink = computed(() => {
   return {

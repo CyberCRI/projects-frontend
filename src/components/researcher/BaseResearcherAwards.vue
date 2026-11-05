@@ -4,22 +4,13 @@
       <template v-for="award in awards" :key="award.award.id">
         <div class="separator"></div>
         <div class="award">
-          <h2 class="award-title">{{ award.date }} - {{ award.name }}</h2>
+          <h2 class="award-title">{{ award.date }} - {{ award.award.$t.name }}</h2>
           <p>
-            <span v-if="award.associates?.length" class="associates">
-              With
-              <span v-for="(associate, index) in award.associates" :key="index">
-                <span v-if="index">and</span>
-                <NuxtLink :to="associate.link" class="associate-link">
-                  {{ associate.name }}
-                </NuxtLink>
-              </span>
-            </span>
-            {{ award.award.name }}
+            {{ award.$t.description || award.award.$t.description }}
           </p>
-          <div v-if="award.project">
-            <LinkedProjectRow :project="award.project" />
-          </div>
+          <a v-if="award.link" :href="award.link">
+            {{ $t('common.see-more') }}
+          </a>
         </div>
       </template>
       <NothingHere v-if="!isLoading && awards.length === 0" />
@@ -30,8 +21,8 @@
 <script lang="ts" setup>
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
-import { awardSkeleton } from '~/skeletons/crisalid.skeletons'
-import { getResearcherAward } from '~/api/v2/crisalid.service'
+import { researcherAwardSkeleton } from '~/skeletons/crisalid.skeletons'
+import { getResearcherAwards } from '~/api/v2/crisalid.service'
 const props = withDefaults(
   defineProps<{ user: TranslatedUserModel; preview?: boolean; limit?: number }>(),
   { limit: 20, preview: false }
@@ -39,19 +30,20 @@ const props = withDefaults(
 
 const researcherId = computed(() => props.user.researcher?.id)
 const organizationCode = useOrganizationCode()
-const limitSkeletons = computed(() => maxSkeleton(props.user.modules.awards, props.limit))
+const limitSkeletons = computed(() =>
+  maxSkeleton(props.user.researcher.modules.awards, props.limit)
+)
 
 const {
   status,
   isLoading,
   data: awards,
   pagination,
-  // refresh,
-} = getResearcherAward(organizationCode, researcherId, {
+} = getResearcherAwards(organizationCode, researcherId, {
   paginationConfig: {
     limit: props.limit,
   },
-  default: () => factoryPagination(awardSkeleton, limitSkeletons.value),
+  default: () => factoryPagination(researcherAwardSkeleton, limitSkeletons.value),
 })
 </script>
 <style lang="scss" scoped>

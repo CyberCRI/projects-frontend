@@ -84,9 +84,9 @@
           :to="contact.link"
         />
       </div>
-      <template v-if="sdgs?.length">
+      <template v-if="user.sdgs?.length">
         <SdgList
-          :sdgs="sdgs.slice(0, 3) || []"
+          :sdgs="user.sdgs.slice(0, 3) || []"
           :to="{
             name: 'PeopleSearch',
             query: {
@@ -109,6 +109,7 @@ import { useUserFullName } from '~/composables/user/useUserFullName'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
 // import IdentifierLink from '~/components/profile/modules/Documents/IdentifierLink.vue'
+import { researcherHarvesterToUrl } from '~/functs/researcher'
 import { capitalize } from '~/functs/string'
 
 const props = defineProps<{
@@ -132,23 +133,40 @@ const researcherRoles = ref([
   { label: 'Member', structure: 'International Bioethics Committee (UNESCO)' },
 ])
 
-// TODO: use real sdg only TranslatedUserModel
-const sdgs = computed(() => (props.user.researcher ? [1, 4, 7, 11] : props.user.sdgs))
-
 const contacts = computed(() => {
   const res = []
 
-  if (props.user.email) res.push({ icon: 'ExternalLink', label: 'Contact', link: props.user.email })
-  if (props.user.website)
+  if (props.user.email) {
+    res.push({ icon: 'ExternalLink', label: 'Contact', link: props.user.email })
+  }
+  if (props.user.website) {
     res.push({ icon: 'ExternalLink', label: 'Website', link: props.user.website })
-  // TODO
-  res.push({ icon: 'ExternalLink', label: 'Google Scholar', link: 'https://google.com' })
-  // TODO
-  res.push({ icon: 'ExternalLink', label: 'ORCID', link: 'https://google.com' })
-  // TODO
-  res.push({ icon: 'ExternalLink', label: 'Scopus', link: 'https://google.com' })
-  // TODO
-  res.push({ icon: 'BlueSkyLine', label: '', link: 'https://google.com' })
+  }
+
+  const researcher = props.user.researcher
+  if (!researcher) {
+    return res
+  }
+
+  const googleScholar = researcher.identifiers.find((iden) => iden.harvester === 'googlescholar')
+  const orcid = researcher.identifiers.find((iden) => iden.harvester === 'orcid')
+  const scopus = researcher.identifiers.find((iden) => iden.harvester === 'googlescholar')
+
+  if (googleScholar) {
+    res.push({
+      icon: 'ExternalLink',
+      label: 'Google Scholar',
+      link: researcherHarvesterToUrl(googleScholar),
+    })
+  }
+  if (orcid) {
+    res.push({ icon: 'ExternalLink', label: 'ORCID', link: researcherHarvesterToUrl(orcid) })
+  }
+
+  if (scopus) {
+    res.push({ icon: 'ExternalLink', label: 'Scopus', link: researcherHarvesterToUrl(scopus) })
+  }
+
   if (props.user.linkedin) res.push({ icon: 'Linkedin', label: '', link: props.user.linkedin })
 
   return res
