@@ -22,6 +22,7 @@
               >
                 <IconImage name="Calendar" class="icon" />
                 <span v-if="funding.start_date">{{ funding.start_date }}</span>
+                <span v-if="funding.start_date && funding.end_date">-</span>
                 <span v-if="funding.end_date">{{ funding.end_date }}</span>
               </span>
             </div>

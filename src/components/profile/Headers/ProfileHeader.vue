@@ -151,6 +151,8 @@ const contacts = computed(() => {
   const googleScholar = researcher.identifiers.find((iden) => iden.harvester === 'googlescholar')
   const orcid = researcher.identifiers.find((iden) => iden.harvester === 'orcid')
   const scopus = researcher.identifiers.find((iden) => iden.harvester === 'googlescholar')
+  const hal = researcher.identifiers.find((iden) => iden.harvester === 'hal')
+  const idref = researcher.identifiers.find((iden) => iden.harvester === 'idref')
 
   if (googleScholar) {
     res.push({
@@ -165,6 +167,13 @@ const contacts = computed(() => {
 
   if (scopus) {
     res.push({ icon: 'ExternalLink', label: 'Scopus', link: researcherHarvesterToUrl(scopus) })
+  }
+  if (hal) {
+    res.push({ icon: 'ExternalLink', label: 'Hal', link: researcherHarvesterToUrl(hal) })
+  }
+
+  if (idref) {
+    res.push({ icon: 'ExternalLink', label: 'Idref', link: researcherHarvesterToUrl(idref) })
   }
 
   if (props.user.linkedin) res.push({ icon: 'Linkedin', label: '', link: props.user.linkedin })
