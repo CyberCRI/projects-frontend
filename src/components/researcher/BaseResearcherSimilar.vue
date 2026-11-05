@@ -23,7 +23,7 @@
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { similarResearcherSkeleton } from '~/skeletons/crisalid.skeletons'
-import { getResearcherSimilar } from '~/api/v2/crisalid.service'
+import { getResearcherSimilars } from '~/api/v2/crisalid.service'
 import { USER_MODULE_TITLE } from '~/functs/constants'
 
 const props = withDefaults(
@@ -41,7 +41,7 @@ const {
   data: similarResearchers,
   pagination,
   // refresh,
-} = getResearcherSimilar(organizationCode, researcherId, {
+} = getResearcherSimilars(organizationCode, researcherId, {
   paginationConfig: {
     limit: props.limit,
   },

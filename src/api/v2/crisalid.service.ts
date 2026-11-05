@@ -16,7 +16,7 @@ import {
   getUserResearchDocumentAnalytics as fetchUserResearchDocumentAnalytics,
   getResearchDocumentSimilars as fetchResearchDocumentSimilars,
   getResearcherAffiliated as fetchResearcherAffiliated,
-  getResearcherSimilar as fetchResearcherSimilar,
+  getResearcherSimilars as fetchResearcherSimilars,
   getResearcherPatent as fetchResearcherPatent,
   getResearcherAward as fetchResearcherAward,
 } from 'shared-projects-frontend/apis'
@@ -193,7 +193,7 @@ export const getResearchAffiliated = (
   )
 }
 
-export const getResearcherSimilar = (
+export const getResearcherSimilars = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   researcherId: RefOrRaw<Researcher['id']>,
   config: ConfigPagination = {}
@@ -206,7 +206,7 @@ export const getResearcherSimilar = (
   return useAsyncPaginationAPI(
     key,
     ({ config }) =>
-      fetchResearcherSimilar(unref(organizationCode), unref(researcherId), {
+      fetchResearcherSimilars(unref(organizationCode), unref(researcherId), {
         ...DEFAULT_CONFIG,
         ...config,
       }),
