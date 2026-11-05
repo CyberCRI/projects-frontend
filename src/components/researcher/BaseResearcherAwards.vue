@@ -32,7 +32,7 @@ const { locale } = useNuxtI18n()
 
 const props = withDefaults(
   defineProps<{ user: TranslatedUserModel; preview?: boolean; limit?: number }>(),
-  { limit: 20, preview: false }
+  { limit: null, preview: false }
 )
 
 const researcherId = computed(() => props.user.researcher?.id)

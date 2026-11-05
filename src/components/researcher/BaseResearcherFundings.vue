@@ -54,7 +54,7 @@ import { ICON_CURRENCY } from '~/functs/constants'
 const props = withDefaults(
   defineProps<{ user: TranslatedUserModel; preview?: boolean; limit?: number }>(),
   {
-    limit: 20,
+    limit: null,
     preview: false,
   }
 )

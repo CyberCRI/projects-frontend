@@ -5,7 +5,7 @@
     :icon="USER_MODULE_ICON.fundings"
   >
     <template #content>
-      <BaseResearcherFundings :user="user" />
+      <BaseResearcherFundings :user="user" preview :limit="3" />
     </template>
   </BaseModulePreview>
 </template>

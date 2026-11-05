@@ -5,6 +5,7 @@ import ProfileProjectsPreview from '~/components/profile/modules/Projects/Profil
 import ProfileSkillsPreview from '~/components/profile/modules/Skills/ProfileSkillsPreview.vue'
 import ProfileGroupsPreview from '~/components/profile/modules/Groups/ProfileGroupsPreview.vue'
 import ResearcherTeachingsPreview from '~/components/researcher/ResearcherTeachingsPreview.vue'
+import ResearcherAwardPreview from '~/components/researcher/ResearcherAwardPreview.vue'
 import ProfileBioPreview from '~/components/profile/modules/Bio/ProfileBioPreview.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { textIsEmpty } from '@/functs/tiptap'
@@ -87,6 +88,7 @@ const bioEmpty = computed(() => textIsEmpty(props.user.$t.description))
 
     <ResearcherPatentsPreview v-if="user.researcher?.modules?.patents" :user="user" />
     <ResearcherFundingsPreview v-if="user.researcher?.modules?.fundings" :user="user" />
+    <ResearcherAwardPreview v-if="user.researcher?.modules?.awards" :user="user" />
     <ResearcherTeachingsPreview v-if="user.researcher?.modules?.teachings" :user="user" />
 
     <!-- <ResearcherPositionsPreview v-if="user.researcher?.modules?.positions"  :user="user" /> -->

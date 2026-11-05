@@ -7,7 +7,7 @@
           <h3 class="patent-title skeletons-text">{{ patent.$t.name }}</h3>
           <div class="patent-description skeletons-text">{{ patent.$t.description }}</div>
           <div v-if="patent.link" class="patent-link">
-            <LinkButton :label="$t('common.see-more')" :to="patent.link" />
+            <LinkButton :label="$t('common.see-more')" btn-icon="ExternalLink" :to="patent.link" />
           </div>
         </div>
       </template>
@@ -24,7 +24,7 @@ import { patentSkeleton } from '~/skeletons/crisalid.skeletons'
 const props = withDefaults(
   defineProps<{ user: TranslatedUserModel; preview?: boolean; limit?: number }>(),
   {
-    limit: 20,
+    limit: null,
     preview: false,
   }
 )

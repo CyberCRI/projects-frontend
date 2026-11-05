@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
+import { USER_MODULE_TITLE } from '~/functs/constants'
 
 const props = withDefaults(defineProps<{ user: TranslatedUserModel; editable?: boolean }>(), {
   editable: false,
@@ -95,7 +96,7 @@ const collabs = ref([
 </script>
 
 <template>
-  <BaseModuleTab :title="$t('profile.bio')">
+  <BaseModuleTab :title="$t(USER_MODULE_TITLE.networkTab)">
     <div class="network-map">
       <GeneralMap
         ref="map"

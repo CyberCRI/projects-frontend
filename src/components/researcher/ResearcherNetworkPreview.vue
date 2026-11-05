@@ -1,9 +1,8 @@
 <template>
   <BaseModulePreview
     v-if="user.researcher"
-    :title="$t(USER_MODULE_TITLE.network, user.modules.skills)"
+    :title="$t(USER_MODULE_TITLE.network)"
     :icon="USER_MODULE_ICON.network"
-    :total="user.modules.skills"
     :see-more="{
       name: 'ProfileNetwork',
       params: {

@@ -346,7 +346,7 @@ export const USER_MODULE_ICON: Record<string, IconImageChoice> = {
   network: 'Globe',
   affiliations: 'UserCommunityLine',
   awards: 'Licence',
-  teaching: 'SchoolOutline',
+  teachings: 'SchoolOutline',
   trade: 'ThumbUpLine',
 }
 
@@ -390,7 +390,7 @@ export const USER_MODULE_TITLE = {
   teamTab: 'researcher.title.team-tab',
   awards: 'researcher.title.awards',
   awardsTab: 'researcher.title.awards-tab',
-  teaching: 'researcher.title.teaching',
+  teachings: 'researcher.title.teaching',
   teachingTab: 'researcher.title.teaching-tab',
   trade: 'researcher.title.trade',
   tradeTab: 'researcher.title.trade-tab',

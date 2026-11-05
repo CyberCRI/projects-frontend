@@ -1,9 +1,8 @@
 <template>
   <BaseModulePreview
     v-if="user.researcher"
-    :title="$t(USER_MODULE_TITLE.presentation, user.modules.skills)"
-    :icon="USER_MODULE_ICON.skills"
-    :total="user.modules.skills"
+    :title="$t(USER_MODULE_TITLE.presentation)"
+    :icon="USER_MODULE_ICON.presentation"
   >
     <template #header>
       <AIGeneratedMark class="ai-mark" />

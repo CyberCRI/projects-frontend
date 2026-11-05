@@ -51,7 +51,7 @@ import { getResearcherTeachings } from '~/api/v2/crisalid.service'
 import { teachingSkeleton } from '~/skeletons/crisalid.skeletons'
 const props = withDefaults(
   defineProps<{ user: TranslatedUserModel; preview?: boolean; limit?: number }>(),
-  { limit: 20, preview: false }
+  { limit: null, preview: false }
 )
 
 const researcherId = computed(() => props.user.researcher?.id)

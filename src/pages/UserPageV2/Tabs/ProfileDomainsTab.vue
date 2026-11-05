@@ -9,7 +9,10 @@ withDefaults(defineProps<{ user: TranslatedUserModel; editable?: boolean }>(), {
 </script>
 
 <template>
-  <BaseModuleTab :title="$t(USER_MODULE_TITLE.researchAreasSkills)" :count="user.modules.skills">
+  <BaseModuleTab
+    :title="$t(USER_MODULE_TITLE.researchAreasSkills, user.researcher?.modules?.domains)"
+    :count="user.researcher?.modules?.domains"
+  >
     <div v-if="user.researcher?.modules.domains" class="section">
       <h3 class="inter-title">{{ $t(USER_MODULE_TITLE.researchAreas) }}</h3>
       <BaseResearcherDomain :user="user" />

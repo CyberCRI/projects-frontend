@@ -1,14 +1,18 @@
 <template>
-  <BaseModulePreview v-if="user.researcher" :title="$t(USER_MODULE_TITLE.availabilities)">
+  <BaseModulePreview
+    v-if="user.researcher"
+    :title="$t(USER_MODULE_TITLE.availabilities)"
+    :icon="USER_MODULE_ICON.availabilities"
+  >
     <template #content>
-      <BaseResearcherAvailabilities :user="user" />
+      <BaseResearcherAvailabilities :user="user" preview :limit="3" />
     </template>
   </BaseModulePreview>
 </template>
 <script lang="ts" setup>
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
-import { USER_MODULE_TITLE } from '~/functs/constants'
+import { USER_MODULE_ICON, USER_MODULE_TITLE } from '~/functs/constants'
 
 defineProps<{ user: TranslatedUserModel }>()
 </script>

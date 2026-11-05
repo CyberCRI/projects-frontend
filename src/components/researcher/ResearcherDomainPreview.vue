@@ -1,9 +1,9 @@
 <template>
   <BaseModulePreview
     v-if="user.researcher"
-    :title="$t(USER_MODULE_TITLE.domain, user.modules.skills)"
+    :title="$t(USER_MODULE_TITLE.domain, user.researcher.modules.domains)"
     :icon="USER_MODULE_ICON.domain"
-    :total="user.modules.skills"
+    :total="user.researcher.modules.domains"
   >
     <template #top-row>
       <div class="top-buttons">
