@@ -17,8 +17,8 @@ import {
   getResearchDocumentSimilars as fetchResearchDocumentSimilars,
   getResearcherAffiliated as fetchResearcherAffiliated,
   getResearcherSimilars as fetchResearcherSimilars,
-  getResearcherPatent as fetchResearcherPatent,
-  getResearcherAward as fetchResearcherAward,
+  getResearcherPatents as fetchResearcherPatent,
+  getResearcherAwards as fetchResearcherAward,
 } from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
