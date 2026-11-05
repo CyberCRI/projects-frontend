@@ -9,7 +9,7 @@
       <AIGeneratedMark class="ai-mark" />
     </template>
     <template #content>
-      <BaseResearcherPresentation :user="user" />
+      <BaseResearcherPresentation :user="user" preview />
     </template>
     <template #footer>
       <div class="actions">

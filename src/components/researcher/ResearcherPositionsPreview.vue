@@ -13,7 +13,7 @@
     :see-more-label="$t('researcher.view.all-job-offers')"
   >
     <template #content>
-      <BaseResearcherPositions :user="user" />
+      <BaseResearcherPositions :user="user" preview />
     </template>
   </BaseModulePreview>
 </template>

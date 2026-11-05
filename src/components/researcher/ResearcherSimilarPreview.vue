@@ -1,7 +1,7 @@
 <template>
   <BaseModulePreview v-if="user.researcher" title="">
     <template #content>
-      <BaseResearcherSimilar :user="user" />
+      <BaseResearcherSimilar :user="user" preview />
     </template>
   </BaseModulePreview>
 </template>

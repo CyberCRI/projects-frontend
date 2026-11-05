@@ -1,5 +1,5 @@
 <template>
-  <span class="domain-item">
+  <span class="domain-item skeletons-background">
     <PieProgress class="progress" :progress="progress" />
     <span class="domain-label">{{ title }}</span>
   </span>

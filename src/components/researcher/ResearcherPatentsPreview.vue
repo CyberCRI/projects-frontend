@@ -5,7 +5,7 @@
     :icon="USER_MODULE_ICON.patents"
   >
     <template #content>
-      <BaseResearcherPatents :user="user" />
+      <BaseResearcherPatents :user="user" preview />
     </template>
   </BaseModulePreview>
 </template>

@@ -4,8 +4,8 @@
       <template v-for="patent in patents" :key="patent.id">
         <div class="separator"></div>
         <div class="patent-card">
-          <h3 class="patent-title">{{ patent.$t.name }}</h3>
-          <div class="patent-description">{{ patent.$t.description }}</div>
+          <h3 class="patent-title skeletons-text">{{ patent.$t.name }}</h3>
+          <div class="patent-description skeletons-text">{{ patent.$t.description }}</div>
           <div v-if="patent.link" class="patent-link">
             <LinkButton :label="$t('common.see-more')" :to="patent.link" />
           </div>

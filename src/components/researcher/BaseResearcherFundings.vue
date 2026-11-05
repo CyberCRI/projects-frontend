@@ -5,10 +5,10 @@
         <div class="separator"></div>
         <div class="funding-card">
           <div class="funding-main">
-            <h3 class="funding-title">{{ funding.$t.name }}</h3>
-            <div class="funding-description">{{ funding.$t.description }}</div>
+            <h3 class="funding-title skeletons-text">{{ funding.$t.name }}</h3>
+            <div class="funding-description skeletons-text">{{ funding.$t.description }}</div>
             <div class="funding-data">
-              <span v-if="funding.prices" class="funding-datum">
+              <span v-if="funding.prices" class="funding-datum skeletons-background">
                 <IconImage
                   v-if="ICON_CURRENCY[funding.currency]"
                   :name="ICON_CURRENCY[funding.currency]"
@@ -16,7 +16,10 @@
                 />
                 <span>{{ funding.prices }}</span>
               </span>
-              <span v-if="funding.start_date || funding.end_date" class="funding-datum">
+              <span
+                v-if="funding.start_date || funding.end_date"
+                class="funding-datum skeletons-background"
+              >
                 <IconImage name="Calendar" class="icon" />
                 <span v-if="funding.start_date">{{ funding.start_date }}</span>
                 <span v-if="funding.end_date">{{ funding.end_date }}</span>
@@ -25,11 +28,13 @@
           </div>
           <div v-if="funding.researchers?.length" class="funding-aside">
             <div class="funding-team">
-              <div class="funding-team-head">
+              <div class="funding-team-head skeletons-background">
                 <IconImage class="funding-team-icon" name="Link" />
                 <span class="researcher-count">{{ funding.researchers.length }}</span>
               </div>
-              <div class="funding-team-label">{{ $t('researcher.researchers') }}</div>
+              <div class="funding-team-label skeletons-text">
+                {{ $t('researcher.researchers') }}
+              </div>
             </div>
           </div>
         </div>

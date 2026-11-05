@@ -4,18 +4,18 @@
       <template v-for="teaching in teachings" :key="teaching.id">
         <div class="separator"></div>
         <div class="teaching">
-          <h2 class="teaching-title">{{ teaching.$t.name }}</h2>
+          <h2 class="teaching-title skeletons-text">{{ teaching.$t.name }}</h2>
           <div class="teaching-header">
-            <span class="teaching-header-item">
+            <span class="teaching-header-item skeletons-background">
               <IconImage name="SchoolOutline" class="teaching-header-icon" />
               <span class="teaching-header-label">{{ teaching.level }}</span>
             </span>
-            <span class="teaching-header-item">
+            <span class="teaching-header-item skeletons-background">
               <IconImage name="Article" class="teaching-header-icon" />
               <span class="teaching-header-label">{{ teaching.$t.spec }}</span>
             </span>
           </div>
-          <p class="teaching-decription">
+          <p class="teaching-decription skeletons-text">
             {{ teaching.$t.description }}
           </p>
           <div class="teaching-domains">

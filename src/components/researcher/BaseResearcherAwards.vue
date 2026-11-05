@@ -4,11 +4,14 @@
       <template v-for="award in awards" :key="award.award.id">
         <div class="separator"></div>
         <div class="award">
-          <h2 class="award-title">{{ award.date }} - {{ award.award.$t.name }}</h2>
-          <p>
+          <h2 class="award-title skeletons-text">
+            <span v-if="award.date">{{ formatDate(award.date, locale) }} -</span>
+            {{ award.award.$t.name }}
+          </h2>
+          <p class="skeletons-text">
             {{ award.$t.description || award.award.$t.description }}
           </p>
-          <a v-if="award.link" :href="award.link">
+          <a v-if="award.link" :href="award.link" class="skeletons-background">
             {{ $t('common.see-more') }}
           </a>
         </div>
@@ -23,6 +26,10 @@ import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { researcherAwardSkeleton } from '~/skeletons/crisalid.skeletons'
 import { getResearcherAwards } from '~/api/v2/crisalid.service'
+import { formatDate } from '~/functs/date'
+
+const { locale } = useNuxtI18n()
+
 const props = withDefaults(
   defineProps<{ user: TranslatedUserModel; preview?: boolean; limit?: number }>(),
   { limit: 20, preview: false }
