@@ -1,5 +1,11 @@
 <template>
-  <div class="similar-profile">
+  <NuxtLink
+    :to="{
+      name: 'ProfileUser',
+      params: { userIdOrSlug: researcher.user.slug || researcher.user.id },
+    }"
+    class="similar-profile"
+  >
     <CroppedApiImage
       :alt="`${researcher.display_name} image`"
       class="picture picture-user skeletons-background"
@@ -13,7 +19,7 @@
     <div class="card-description skeletons-text cropped">
       {{ researcher.user.$t.job }}
     </div>
-  </div>
+  </NuxtLink>
 </template>
 <script lang="ts" setup>
 import type { TranslatedResearcher } from 'shared-projects-frontend/models'

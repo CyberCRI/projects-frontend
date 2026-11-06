@@ -1,22 +1,16 @@
 <template>
-  <div v-if="user.researcher" class="similar-researcher-preview">
-    <h3 class="similar-title">{{ $t(USER_MODULE_TITLE.similarResearchers) }}</h3>
+  <div class="similar-researcher-preview">
     <div class="similar-list">
       <FetchLoader :status="status" only-error skeleton>
         <SimilarResearcherCard
-          v-for="(similar, index) in similarResearchers"
-          :key="index"
-          :researcher="similar"
+          v-for="researcher in similars"
+          :key="researcher.id"
+          :researcher="researcher"
         />
+        <NothingHere v-if="similars.length === 0" />
       </FetchLoader>
     </div>
-    <BaseModuleButton
-      v-if="preview"
-      :to="'/'"
-      btn-icon="ArrowRight"
-      :label="$t('researcher.view.all')"
-    />
-    <PaginationButtonsV2 v-else :pagination="pagination" />
+    <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -24,11 +18,11 @@ import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { researcherSkeleton } from '~/skeletons/crisalid.skeletons'
 import { getResearcherSimilars } from '~/api/v2/crisalid.service'
-import { USER_MODULE_TITLE } from '~/functs/constants'
+import NothingHere from '~/components/base/NothingHere.vue'
 
 const props = withDefaults(
   defineProps<{ user: TranslatedUserModel; preview?: boolean; limit?: number }>(),
-  { limit: 3, preview: false }
+  { limit: null, preview: false }
 )
 
 const researcherId = computed(() => props.user.researcher?.id)
@@ -39,10 +33,8 @@ const limitSkeletons = computed(() =>
 
 const {
   status,
-  // isLoading,
-  data: similarResearchers,
+  data: similars,
   pagination,
-  // refresh,
 } = getResearcherSimilars(organizationCode, researcherId, {
   paginationConfig: {
     limit: props.limit,

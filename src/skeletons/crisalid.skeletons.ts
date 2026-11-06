@@ -11,6 +11,7 @@ import type {
 } from 'shared-projects-frontend/models'
 
 import { factoriesSkeleton } from '~/skeletons/base.skeletons'
+import { userSkeleton } from '~/skeletons/user.skeletons'
 import { randomInt } from 'es-toolkit'
 
 export const documentAnalyticsSkeleton = (
@@ -83,7 +84,7 @@ export const researcherSkeleton = (def?: Partial<Researcher>): Researcher => ({
     teachings: 0,
   },
   short_bio: '',
-  user: null,
+  user: userSkeleton(),
   bio: '',
   ...(def || {}),
 })
