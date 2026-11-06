@@ -24,7 +24,7 @@
 <script lang="ts" setup>
 import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
-import { structureAwardSkeleton } from '~/skeletons/crisalid.skeletons'
+import { reasearcherAwardSkeleton } from '~/skeletons/crisalid.skeletons'
 import { getStructureAwards } from '~/api/v2/crisalid.service'
 import { formatDate } from '~/functs/date'
 
@@ -50,7 +50,7 @@ const {
   paginationConfig: {
     limit: props.limit,
   },
-  default: () => factoryPagination(structureAwardSkeleton, limitSkeletons.value),
+  default: () => factoryPagination(researcherAwardSkeleton, limitSkeletons.value),
 })
 </script>
 <style lang="scss" scoped>

@@ -297,13 +297,11 @@ export const GROUP_MODULE_ICON: Record<string, IconImageChoice> = {
   teachings: 'SchoolOutline',
   trade: 'ThumbUpLine',
   teams: 'PeopleGroup',
-  platform: 'TestTube',
+  platform: 'Flask',
 }
 
 export const GROUP_MODULE_TITLE: { [key in PeopleGroupModulesKeys]: string } = {
-  conferences: 'group.conferences',
   featured_projects: 'group.projects',
-  publications: 'group.publications',
   members: 'group.members',
   similars: 'group.similars',
   subgroups: 'group.subgroups',
@@ -337,7 +335,7 @@ export const GROUP_MODULE_TITLE: { [key in PeopleGroupModulesKeys]: string } = {
   teamTab: 'structure.title.team-tab',
   awards: 'structure.title.awards',
   awardsTab: 'structure.title.awards-tab',
-  teachings: 'structure.title.teaching',
+  teaching: 'structure.title.teaching',
   teachingTab: 'structure.title.teaching-tab',
   trade: 'structure.title.trade',
   tradeTab: 'structure.title.trade-tab',
