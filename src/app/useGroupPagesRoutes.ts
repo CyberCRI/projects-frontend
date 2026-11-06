@@ -94,7 +94,7 @@ export default function useGroupPagesRoutes() {
         {
           path: 'funding',
           name: 'groupFunding',
-          component: () => import('../pages/GroupPageV2/Tabs/Funding/GroupFundingTab.vue'),
+          component: () => import('../pages/GroupPageV2/Tabs/Funding/GroupFundingsTab.vue'),
         },
         {
           path: 'teaching',
@@ -104,7 +104,7 @@ export default function useGroupPagesRoutes() {
         {
           path: 'plateform',
           name: 'groupPlatform',
-          component: () => import('../pages/GroupPageV2/Tabs/Platform/groupPlatformTab.vue'),
+          component: () => import('../pages/GroupPageV2/Tabs/Platform/GroupPlatformTab.vue'),
         },
 
         // retro compat

@@ -33,12 +33,12 @@
 
     <div class="profile-row">
       <StructureDomainPreview
-        v-if="user.structure?.modules?.domains"
+        v-if="group.structure?.modules?.domains"
         class="researcher-domain"
         :group="group"
       />
       <!-- <StructureNetworkPreview
-        v-if="user.structure?.modules?.preview"
+        v-if="group.structure?.modules?.preview"
         class="researcher-network"
         :group="group"
       /> -->
