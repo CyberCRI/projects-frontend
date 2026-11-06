@@ -13,6 +13,6 @@ withDefaults(defineProps<{ group: TranslatedPeopleGroupModel; editable?: boolean
     :title="$t(GROUP_MODULE_TITLE.fundingsTab, group.structure?.modules?.fundings)"
     :count="group.structure?.modules?.fundings"
   >
-    <BaseStructureFundings v-if="!editable" :user="user" />
+    <BaseStructureFundings v-if="!editable" :group="group" />
   </BaseModuleTab>
 </template>

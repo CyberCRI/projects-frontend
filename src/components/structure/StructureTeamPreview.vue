@@ -12,7 +12,7 @@
     }"
   >
     <template #content>
-      <BaseStructureTeam :user="user" />
+      <BaseStructureTeam :group="group" />
     </template>
   </BaseModulePreview>
 </template>
