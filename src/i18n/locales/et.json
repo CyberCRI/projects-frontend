@@ -2965,7 +2965,9 @@
       "teaching-tab": "Õpetamine",
       "research-areas": "{count} uurimissuund | {count} uurimissuunda",
       "research-areas-tab": "Uurimissuunad",
-      "research-areas-skills": "Uurimissuunad ja oskused"
+      "research-areas-skills": "Uurimissuunad ja oskused",
+      "platform": "Jagatud tööriistad ja meetodid ({count})",
+      "platform-tab": "Platvorm"
     }
   },
   "researcher": {
