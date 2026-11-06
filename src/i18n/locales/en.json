@@ -2880,6 +2880,43 @@
     "allow-current-page": "Allow me to see the page you are on - so I have a better sense of the context",
     "previous-messages": "Previous messages"
   },
+  "structure": {
+    "title": {
+      "affiliated": "{count} affiliated researcher | {count} affiliated researchers",
+      "affiliated-tab": "Affiliated",
+      "publications": "{count} publication | {count} publications",
+      "publications-tab": "Publications",
+      "conferences": "{count} conference | {count} conferences",
+      "conferences-tab": "Conferences",
+      "availabilities": "Availabilities",
+      "domain": "{count} research domain | {count} research domains",
+      "domain-tab": "Reasearch domains",
+      "fundings": "{count} funding | {count} fundings",
+      "fundings-tab": "Funding",
+      "needs": "Needs",
+      "network": "Network",
+      "network-tab": "Network",
+      "patents": "{count} patent | {count} patents",
+      "patents-tab": "Patent",
+      "positions": "{count} open position | {count} open positions",
+      "positions-tab": "Open positions",
+      "presentation": "Presentation",
+      "similar": "Similar",
+      "team": "{ count } team | {count} teams",
+      "team-tab": "Team",
+      "similar-structures": "Similar structures",
+      "affiliations": "Affiliations",
+      "awards": "{count} awards | {count} awards",
+      "awards-tab": "Awards",
+      "trade": "{count} need / Availabilitie | {count} needs / availabilities",
+      "trade-tab": "Needs / Availabilities",
+      "teaching": "{count} teaching | {count} teaching",
+      "teaching-tab": "Teaching",
+      "research-areas": "{count} research area | {count} research areas",
+      "research-areas-tab": "Research areas",
+      "research-areas-skills": "Research areas & skills"
+    }
+  },
   "researcher": {
     "affiliations": {
       "boards": "Boards",
