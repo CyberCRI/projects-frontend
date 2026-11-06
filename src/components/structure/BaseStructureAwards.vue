@@ -24,7 +24,7 @@
 <script lang="ts" setup>
 import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
-import { reasearcherAwardSkeleton } from '~/skeletons/crisalid.skeletons'
+import { researcherAwardSkeleton } from '~/skeletons/crisalid.skeletons'
 import { getStructureAwards } from '~/api/v2/crisalid.service'
 import { formatDate } from '~/functs/date'
 
