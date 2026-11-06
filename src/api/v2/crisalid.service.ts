@@ -10,6 +10,7 @@ import type {
   QueryFilterPatent,
   QueryFilterFunding,
   QueryFilterTeaching,
+  Structure,
 } from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
@@ -330,7 +331,7 @@ export const getResearcherTeachings = (
 
 export const getStructureAwards = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  structureId: RefOrRaw<UserModel['id']>,
+  structureId: RefOrRaw<Structure['id']>,
   config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
 ) => {
   console.log('TODO: getStructureAwards', organizationCode, structureId, config)
@@ -338,7 +339,7 @@ export const getStructureAwards = (
 
 export const getStructureFundings = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  structureId: RefOrRaw<UserModel['id']>,
+  structureId: RefOrRaw<Structure['id']>,
   config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
 ) => {
   console.log('TODO: getStructureFundings', organizationCode, structureId, config)
@@ -346,7 +347,7 @@ export const getStructureFundings = (
 
 export const getStructureSimilars = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  structureId: RefOrRaw<UserModel['id']>,
+  structureId: RefOrRaw<Structure['id']>,
   config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
 ) => {
   console.log('TODO: getStructureSimilars', organizationCode, structureId, config)
@@ -354,7 +355,7 @@ export const getStructureSimilars = (
 
 export const getStructureTeachings = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  structureId: RefOrRaw<UserModel['id']>,
+  structureId: RefOrRaw<Structure['id']>,
   config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
 ) => {
   console.log('TODO: getStructureTeachings', organizationCode, structureId, config)

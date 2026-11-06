@@ -25,7 +25,7 @@ const badges = computed(() => {
       label: t(GROUP_MODULE_TITLE.projects, props.group.modules.projects),
       icon: GROUP_MODULE_ICON.projects,
       count: props.group.modules.projects,
-      link: `/group/${props.group.slug || props.user.id}/projects`,
+      link: `/group/${props.group.slug || props.group.id}/projects`,
     })
   if (props.group.structure?.modules.conferences) {
     res.push({
@@ -73,7 +73,7 @@ const badges = computed(() => {
       label: t(GROUP_MODULE_TITLE.patents, props.group.structure.modules.patents),
       icon: GROUP_MODULE_ICON.patents,
       count: props.group.structure?.modules.patents,
-      link: `/group/${props.user.slug || props.user.id}/patents`,
+      link: `/group/${props.group.slug || props.group.id}/patents`,
     })
   }
 
