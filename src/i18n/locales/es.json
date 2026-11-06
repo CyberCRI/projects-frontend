@@ -2966,7 +2966,9 @@
       "teaching-tab": "Docencia",
       "research-areas": "{count} línea de investigación | {count} líneas de investigación",
       "research-areas-tab": "Líneas de investigación",
-      "research-areas-skills": "Líneas de investigación y competencias"
+      "research-areas-skills": "Líneas de investigación y competencias",
+      "platform": "Herramientas y métodos compartidos ({count})",
+      "platform-tab": "Plataforma"
     }
   },
   "researcher": {

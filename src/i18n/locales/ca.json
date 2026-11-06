@@ -2966,7 +2966,9 @@
       "teaching-tab": "Docència",
       "research-areas": "{count} línia de recerca | {count} línies de recerca",
       "research-areas-tab": "Línies de recerca",
-      "research-areas-skills": "Línies de recerca i competències"
+      "research-areas-skills": "Línies de recerca i competències",
+      "platform": "Eines i mètodes compartits ({count})",
+      "platform-tab": "Plataforma"
     }
   },
   "researcher": {

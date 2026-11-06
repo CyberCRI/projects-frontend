@@ -2966,7 +2966,9 @@
       "teaching-tab": "Enseignement",
       "research-areas": "{count} axe de recherche | {count} axes de recherche",
       "research-areas-tab": "Axes de recherche",
-      "research-areas-skills": "Axes de recherche et compétences"
+      "research-areas-skills": "Axes de recherche et compétences",
+      "platform": "Outils et méthodes partagés ({count})",
+      "platform-tab": "Plateforme"
     }
   },
   "researcher": {

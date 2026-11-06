@@ -2966,7 +2966,9 @@
       "teaching-tab": "Lehre",
       "research-areas": "{count} Forschungsgebiet | {count} Forschungsgebiete",
       "research-areas-tab": "Forschungsgebiete",
-      "research-areas-skills": "Forschungsgebiete und Kompetenzen"
+      "research-areas-skills": "Forschungsgebiete und Kompetenzen",
+      "platform": "Gemeinsame Werkzeuge und Methoden ({count})",
+      "platform-tab": "Plattform"
     }
   },
   "researcher": {

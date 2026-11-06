@@ -2966,7 +2966,9 @@
       "teaching-tab": "Onderwijs",
       "research-areas": "{count} onderzoeksgebied | {count} onderzoeksgebieden",
       "research-areas-tab": "Onderzoeksgebieden",
-      "research-areas-skills": "Onderzoeksgebieden en vaardigheden"
+      "research-areas-skills": "Onderzoeksgebieden en vaardigheden",
+      "platform": "Gedeelde tools en methoden ({count})",
+      "platform-tab": "Platform"
     }
   },
   "researcher": {
