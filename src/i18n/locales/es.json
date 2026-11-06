@@ -2931,6 +2931,43 @@
     "success-create": "Foto creada.",
     "error-create": "Un error ocurrió imagen creada."
   },
+  "structure": {
+    "title": {
+      "affiliated": "{count} investigador afiliado | {count} investigadores afiliados",
+      "affiliated-tab": "Afiliados",
+      "publications": "{count} publicación | {count} publicaciones",
+      "publications-tab": "Publicaciones",
+      "conferences": "{count} conferencia | {count} conferencias",
+      "conferences-tab": "Conferencias",
+      "availabilities": "Disponibilidades",
+      "domain": "{count} área de investigación | {count} áreas de investigación",
+      "domain-tab": "Áreas de investigación",
+      "fundings": "{count} financiación | {count} financiaciones",
+      "fundings-tab": "Financiación",
+      "needs": "Necesidades",
+      "network": "Red",
+      "network-tab": "Red",
+      "patents": "{count} patente | {count} patentes",
+      "patents-tab": "Patentes",
+      "positions": "{count} puesto abierto | {count} puestos abiertos",
+      "positions-tab": "Puestos abiertos",
+      "presentation": "Presentación",
+      "similar": "Similares",
+      "team": "{count} equipo | {count} equipos",
+      "team-tab": "Equipo",
+      "similar-structures": "Estructuras similares",
+      "affiliations": "Afiliaciones",
+      "awards": "{count} premio | {count} premios",
+      "awards-tab": "Premios",
+      "trade": "{count} necesidad / disponibilidad | {count} necesidades / disponibilidades",
+      "trade-tab": "Necesidades / Disponibilidades",
+      "teaching": "{count} docencia | {count} docencias",
+      "teaching-tab": "Docencia",
+      "research-areas": "{count} línea de investigación | {count} líneas de investigación",
+      "research-areas-tab": "Líneas de investigación",
+      "research-areas-skills": "Líneas de investigación y competencias"
+    }
+  },
   "researcher": {
     "relators": {
       "abr": "abridger",

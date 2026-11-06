@@ -2931,6 +2931,43 @@
     "success-create": "Photo créée.",
     "error-create": "Une erreur s'est produite image créée."
   },
+  "structure": {
+    "title": {
+      "affiliated": "{count} chercheur affilié | {count} chercheurs affiliés",
+      "affiliated-tab": "Affiliés",
+      "publications": "{count} publication | {count} publications",
+      "publications-tab": "Publications",
+      "conferences": "{count} conférence | {count} conférences",
+      "conferences-tab": "Conférences",
+      "availabilities": "Disponibilités",
+      "domain": "{count} domaine de recherche | {count} domaines de recherche",
+      "domain-tab": "Domaines de recherche",
+      "fundings": "{count} financement | {count} financements",
+      "fundings-tab": "Financements",
+      "needs": "Besoins",
+      "network": "Réseau",
+      "network-tab": "Réseau",
+      "patents": "{count} brevet | {count} brevets",
+      "patents-tab": "Brevets",
+      "positions": "{count} poste ouvert | {count} postes ouverts",
+      "positions-tab": "Postes ouverts",
+      "presentation": "Présentation",
+      "similar": "Similaires",
+      "team": "{count} équipe | {count} équipes",
+      "team-tab": "Équipes",
+      "similar-structures": "Structures similaires",
+      "affiliations": "Affiliations",
+      "awards": "{count} distinction | {count} distinctions",
+      "awards-tab": "Distinctions",
+      "trade": "{count} besoin / disponibilité | {count} besoins / disponibilités",
+      "trade-tab": "Besoins / Disponibilités",
+      "teaching": "{count} enseignement | {count} enseignements",
+      "teaching-tab": "Enseignement",
+      "research-areas": "{count} axe de recherche | {count} axes de recherche",
+      "research-areas-tab": "Axes de recherche",
+      "research-areas-skills": "Axes de recherche et compétences"
+    }
+  },
   "researcher": {
     "relators": {
       "abr": "abridgeer",

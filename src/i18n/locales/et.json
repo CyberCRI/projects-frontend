@@ -2931,6 +2931,43 @@
     "success-create": "Foto loodud.",
     "error-create": "Tekkis viga loodud pildis."
   },
+  "structure": {
+    "title": {
+      "affiliated": "{count} seotud teadlane | {count} seotud teadlast",
+      "affiliated-tab": "Seotud",
+      "publications": "{count} publikatsioon | {count} publikatsiooni",
+      "publications-tab": "Publikatsioonid",
+      "conferences": "{count} konverents | {count} konverentsi",
+      "conferences-tab": "Konverentsid",
+      "availabilities": "Saadavus",
+      "domain": "{count} uurimisvaldkond | {count} uurimisvaldkonda",
+      "domain-tab": "Uurimisvaldkonnad",
+      "fundings": "{count} rahastus | {count} rahastust",
+      "fundings-tab": "Rahastus",
+      "needs": "Vajadused",
+      "network": "Võrgustik",
+      "network-tab": "Võrgustik",
+      "patents": "{count} patent | {count} patenti",
+      "patents-tab": "Patendid",
+      "positions": "{count} vaba ametikoht | {count} vaba ametikohta",
+      "positions-tab": "Vabad ametikohad",
+      "presentation": "Tutvustus",
+      "similar": "Sarnased",
+      "team": "{count} meeskond | {count} meeskonda",
+      "team-tab": "Meeskond",
+      "similar-structures": "Sarnased struktuurid",
+      "affiliations": "Seotused",
+      "awards": "{count} auhind | {count} auhinda",
+      "awards-tab": "Auhinnad",
+      "trade": "{count} vajadus / saadavus | {count} vajadust / saadavust",
+      "trade-tab": "Vajadused / Saadavus",
+      "teaching": "{count} õpetamine | {count} õpetamist",
+      "teaching-tab": "Õpetamine",
+      "research-areas": "{count} uurimissuund | {count} uurimissuunda",
+      "research-areas-tab": "Uurimissuunad",
+      "research-areas-skills": "Uurimissuunad ja oskused"
+    }
+  },
   "researcher": {
     "relators": {
       "abr": "koondaja",
