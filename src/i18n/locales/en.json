@@ -2914,7 +2914,9 @@
       "teaching-tab": "Teaching",
       "research-areas": "{count} research area | {count} research areas",
       "research-areas-tab": "Research areas",
-      "research-areas-skills": "Research areas & skills"
+      "research-areas-skills": "Research areas & skills",
+      "platform": "Shared tools and methods ({count})",
+      "platform-tab": "Platform"
     }
   },
   "researcher": {
