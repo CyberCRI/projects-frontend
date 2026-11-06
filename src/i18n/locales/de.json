@@ -2932,6 +2932,43 @@
     "success-create": "Foto erstellt.",
     "error-create": "Ein Fehler wurde erstellt."
   },
+  "structure": {
+    "title": {
+      "affiliated": "{count} angeschlossener Forscher | {count} angeschlossene Forscher",
+      "affiliated-tab": "Angeschlossen",
+      "publications": "{count} Publikation | {count} Publikationen",
+      "publications-tab": "Publikationen",
+      "conferences": "{count} Konferenz | {count} Konferenzen",
+      "conferences-tab": "Konferenzen",
+      "availabilities": "Verfügbarkeiten",
+      "domain": "{count} Forschungsbereich | {count} Forschungsbereiche",
+      "domain-tab": "Forschungsbereiche",
+      "fundings": "{count} Förderung | {count} Förderungen",
+      "fundings-tab": "Förderung",
+      "needs": "Bedarf",
+      "network": "Netzwerk",
+      "network-tab": "Netzwerk",
+      "patents": "{count} Patent | {count} Patente",
+      "patents-tab": "Patente",
+      "positions": "{count} offene Stelle | {count} offene Stellen",
+      "positions-tab": "Offene Stellen",
+      "presentation": "Präsentation",
+      "similar": "Ähnliche",
+      "team": "{count} Team | {count} Teams",
+      "team-tab": "Team",
+      "similar-structures": "Ähnliche Strukturen",
+      "affiliations": "Zugehörigkeiten",
+      "awards": "{count} Auszeichnung | {count} Auszeichnungen",
+      "awards-tab": "Auszeichnungen",
+      "trade": "{count} Bedarf / Verfügbarkeit | {count} Bedarfe / Verfügbarkeiten",
+      "trade-tab": "Bedarf / Verfügbarkeiten",
+      "teaching": "{count} Lehrveranstaltung | {count} Lehrveranstaltungen",
+      "teaching-tab": "Lehre",
+      "research-areas": "{count} Forschungsgebiet | {count} Forschungsgebiete",
+      "research-areas-tab": "Forschungsgebiete",
+      "research-areas-skills": "Forschungsgebiete und Kompetenzen"
+    }
+  },
   "researcher": {
     "relators": {
       "abr": "abridger",
