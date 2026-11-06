@@ -1,6 +1,6 @@
 <template>
   <BaseModulePreview
-    :title="$t(USER_MODULE_TITLE.similarResearchers)"
+    :title="$t(USER_MODULE_TITLE.similarResearchers, user.researcher.modules.similars)"
     :total="user.researcher.modules.similars"
   >
     <template #content>
@@ -12,7 +12,7 @@
       />
       <BaseDrawer
         :is-opened="stateModal"
-        :title="$t(USER_MODULE_TITLE.similarResearchers)"
+        :title="$t(USER_MODULE_TITLE.similarResearchers, user.researcher.modules.similars)"
         @close="closeModal"
       >
         <BaseResearcherSimilar :user="user" />

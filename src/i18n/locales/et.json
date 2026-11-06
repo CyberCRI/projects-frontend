@@ -594,7 +594,8 @@
     "image": "pilt",
     "select-placeholder": "Valige...",
     "error": "viga",
-    "expand": "laiendada"
+    "expand": "laiendada",
+    "see-top-n": "Vt ülaosa {n}"
   },
   "complete-profile": {
     "bio": {
@@ -3256,51 +3257,9 @@
       "Presentation": "Esitlus",
       "UNKNOWN": "Tundmatu"
     },
-    "badges": {
-      "projects": "{count} projekt | {count} projekti",
-      "publications": "{count} publikatsioon | {count} publikatsiooni",
-      "affiliated": "{count} seotud teadlane | {count} seotud teadlast",
-      "teachings": "{count} õpetamistegevus | {count} õpetamistegevust",
-      "awards": "{count} auhind | {count} auhinda"
-    },
     "affiliations": {
       "boards": "Nõukogud",
       "societies": "Seltsid"
-    },
-    "title": {
-      "affiliated": "{count} seotud teadlane | {count} seotud teadlast",
-      "affiliated-tab": "Seotud",
-      "publications": "{count} publikatsioon | {count} publikatsiooni",
-      "publications-tab": "Publikatsioonid",
-      "conferences": "{count} konverents | {count} konverentsi",
-      "conferences-tab": "Konverentsid",
-      "availabilities": "Saadavus",
-      "domain": "{count} uurimisvaldkond | {count} uurimisvaldkonda",
-      "domain-tab": "Uurimisvaldkonnad",
-      "fundings": "{count} rahastus | {count} rahastust",
-      "fundings-tab": "Rahastus",
-      "needs": "Vajadused",
-      "network": "Võrgustik",
-      "network-tab": "Võrgustik",
-      "patents": "{count} patent | {count} patenti",
-      "patents-tab": "Patent",
-      "positions": "{count} avatud ametikoht | {count} avatud ametikohta",
-      "positions-tab": "Avatud ametikohad",
-      "presentation": "Tutvustus",
-      "similar": "Sarnased",
-      "team": "{count} meeskond | {count} meeskonda",
-      "team-tab": "Meeskond",
-      "similar-researchers": "Sarnased teadlased",
-      "affiliations": "Seotused",
-      "awards": "{count} auhind | {count} auhinda",
-      "awards-tab": "Auhinnad",
-      "trade": "{count} vajadus / saadavus | {count} vajadust / saadavust",
-      "trade-tab": "Vajadused / Saadavus",
-      "teaching": "{count} õpetamistegevus | {count} õpetamistegevust",
-      "teaching-tab": "Õpetamine",
-      "research-areas": "{count} uurimisvaldkond | {count} uurimisvaldkonda",
-      "research-areas-tab": "Uurimisvaldkonnad",
-      "research-areas-skills": "Uurimisvaldkonnad ja oskused"
     },
     "view": {
       "all": "Vaata kõiki",
@@ -3317,7 +3276,28 @@
       "i10-index": "i10-indeks"
     },
     "download-resume": "Laadi CV alla",
-    "top-collaborations": "Peamised koostööpartnerid"
+    "top-collaborations": "Peamised koostööpartnerid",
+    "title": {
+      "affiliated": "Seotud teadlane | Seotud teadlased",
+      "publications": "Avaldamine | Trükised",
+      "conferences": "Konverents | Konverentsid",
+      "availabilities": "Availabilitie | Saadavus",
+      "domain": "Uurimisvaldkond | Uurimisvaldkonnad",
+      "fundings": "Rahastamine | Rahastused",
+      "needs": "Vaja | Vajab",
+      "network": "Network | Võrgud",
+      "patents": "Patent | Patendid",
+      "positions": "Avatud positsioon | Avatud positsioonid",
+      "presentation": "Esitlus | Esitlused",
+      "team": "Meeskond | Meeskonnad",
+      "similar-researchers": "Sarnane teadlane | Sarnased uurijad",
+      "affiliations": "Kuulumine | Seosed",
+      "awards": "Auhind | Auhinnad",
+      "trade": "Vajadus / Availabilitie | Vajadused / kättesaadavus",
+      "teaching": "Õpetamine | Õpetamine",
+      "research-areas": "Uurimisvaldkond | Uurimisvaldkonnad",
+      "research-areas-skills": "Uurimisvaldkonnad ja -oskused"
+    }
   },
   "vector-store": {
     "confirm-deletion": "Kinnita kustutamine",

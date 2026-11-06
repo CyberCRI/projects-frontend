@@ -1,6 +1,5 @@
 <template>
   <BaseModulePreview
-    v-if="user.researcher"
     :title="$t(USER_MODULE_TITLE.availabilities)"
     :icon="USER_MODULE_ICON.availabilities"
   >

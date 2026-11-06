@@ -1,7 +1,7 @@
 <template>
   <BaseModulePreview
     v-if="user.researcher"
-    :title="$t(USER_MODULE_TITLE.affiliated, { count: user.researcher?.modules.affiliated })"
+    :title="$t(USER_MODULE_TITLE.affiliated, user.researcher?.modules.affiliated)"
     :icon="USER_MODULE_ICON.affiliated"
     :total="user.researcher?.modules.affiliated"
     :see-more="{

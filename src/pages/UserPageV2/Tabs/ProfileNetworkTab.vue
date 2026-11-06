@@ -96,7 +96,7 @@ const collabs = ref([
 </script>
 
 <template>
-  <BaseModuleTab :title="$t(USER_MODULE_TITLE.networkTab)">
+  <BaseModuleTab :title="$t(USER_MODULE_TITLE.network)">
     <div class="network-map">
       <GeneralMap
         ref="map"

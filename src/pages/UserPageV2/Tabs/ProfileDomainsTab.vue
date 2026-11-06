@@ -14,12 +14,14 @@ withDefaults(defineProps<{ user: TranslatedUserModel; editable?: boolean }>(), {
     :count="user.researcher?.modules?.domains"
   >
     <div v-if="user.researcher?.modules.domains" class="section">
-      <h3 class="inter-title">{{ $t(USER_MODULE_TITLE.researchAreas) }}</h3>
+      <h3 class="inter-title">
+        {{ $t(USER_MODULE_TITLE.researchAreas, user.researcher?.modules.domains) }}
+      </h3>
       <BaseResearcherDomain :user="user" />
     </div>
 
     <div v-if="user.modules.skills" class="section">
-      <h3 class="inter-title">{{ $t(USER_MODULE_TITLE.skills) }}</h3>
+      <h3 class="inter-title">{{ $t(USER_MODULE_TITLE.skills, user.modules.skills) }}</h3>
       <BaseSkill researcher-mode :user="user" :editable="editable" :limit="9" />
     </div>
   </BaseModuleTab>

@@ -1,8 +1,8 @@
 <template>
   <BaseModulePreview
-    v-if="user.researcher"
     :title="$t(USER_MODULE_TITLE.teachings, user.researcher.modules.teachings)"
     :icon="USER_MODULE_ICON.teachings"
+    :total="user.researcher.modules.teachings"
   >
     <template #content>
       <BaseResearcherTeaching :user="user" preview :limit="3" />

@@ -594,7 +594,8 @@
     "image": "imatge",
     "select-placeholder": "Selecciona...",
     "error": "error",
-    "expand": "expandit"
+    "expand": "expandit",
+    "see-top-n": "Veureu top {n}"
   },
   "complete-profile": {
     "bio": {
@@ -3256,51 +3257,9 @@
       "Presentation": "Presentació",
       "UNKNOWN": "Desconegut"
     },
-    "badges": {
-      "projects": "{count} projecte | {count} projectes",
-      "publications": "{count} publicació | {count} publicacions",
-      "affiliated": "{count} investigador afiliat | {count} investigadors afiliats",
-      "teachings": "{count} docència | {count} docències",
-      "awards": "{count} premi | {count} premis"
-    },
     "affiliations": {
       "boards": "Consells",
       "societies": "Societats"
-    },
-    "title": {
-      "affiliated": "{count} investigador afiliat | {count} investigadors afiliats",
-      "affiliated-tab": "Afiliats",
-      "publications": "{count} publicació | {count} publicacions",
-      "publications-tab": "Publicacions",
-      "conferences": "{count} conferència | {count} conferències",
-      "conferences-tab": "Conferències",
-      "availabilities": "Disponibilitats",
-      "domain": "{count} àmbit de recerca | {count} àmbits de recerca",
-      "domain-tab": "Àmbits de recerca",
-      "fundings": "{count} finançament | {count} finançaments",
-      "fundings-tab": "Finançament",
-      "needs": "Necessitats",
-      "network": "Xarxa",
-      "network-tab": "Xarxa",
-      "patents": "{count} patent | {count} patents",
-      "patents-tab": "Patent",
-      "positions": "{count} lloc vacant | {count} llocs vacants",
-      "positions-tab": "Llocs vacants",
-      "presentation": "Presentació",
-      "similar": "Similars",
-      "team": "{count} equip | {count} equips",
-      "team-tab": "Equip",
-      "similar-researchers": "Investigadors similars",
-      "affiliations": "Afiliacions",
-      "awards": "{count} premi | {count} premis",
-      "awards-tab": "Premis",
-      "trade": "{count} necessitat / disponibilitat | {count} necessitats / disponibilitats",
-      "trade-tab": "Necessitats / Disponibilitats",
-      "teaching": "{count} docència | {count} docències",
-      "teaching-tab": "Docència",
-      "research-areas": "{count} àmbit de recerca | {count} àmbits de recerca",
-      "research-areas-tab": "Àmbits de recerca",
-      "research-areas-skills": "Àmbits de recerca i competències"
     },
     "view": {
       "all": "Veure-ho tot",
@@ -3317,7 +3276,28 @@
       "i10-index": "índex i10"
     },
     "download-resume": "Descarrega el CV",
-    "top-collaborations": "Principals col·laboracions"
+    "top-collaborations": "Principals col·laboracions",
+    "title": {
+      "affiliated": "investigador afelicat | investigadors afliats",
+      "publications": "Públicació | Publicacions",
+      "conferences": "Conferència | Conferèncias",
+      "availabilities": "AvailabilitieCity name (optional, probably does not need a translation) | Availalitats",
+      "domain": "Domini de recerca | Dominis de recerca",
+      "fundings": "Fundació | Fundacions",
+      "needs": "Necessita | Necessita",
+      "network": "Xarxa | Xarxes",
+      "patents": "Patent | Patents",
+      "positions": "Obre la posició | Obre posicions",
+      "presentation": "Presentació | Presentacions",
+      "team": "Equip | Equips",
+      "similar-researchers": "investigador similar | investigadors similars",
+      "affiliations": "Afeliació | Afiliacions",
+      "awards": "Premi | Premis",
+      "trade": "Necessita / Availabilitie | Necessita / Availalitats",
+      "teaching": "Ensenyació | ensenyaments",
+      "research-areas": "Àrea de recerca | Àrees de recerca",
+      "research-areas-skills": "Estadístiques de la recerca"
+    }
   },
   "vector-store": {
     "confirm-deletion": "Confirmar supressió",

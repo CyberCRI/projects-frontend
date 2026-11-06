@@ -594,7 +594,8 @@
     "image": "afbeelding",
     "select-placeholder": "Selecteren...",
     "error": "fout",
-    "expand": "uitzetten"
+    "expand": "uitzetten",
+    "see-top-n": "Zie boven {n}"
   },
   "complete-profile": {
     "bio": {
@@ -3256,51 +3257,9 @@
       "Presentation": "Presentatie",
       "UNKNOWN": "Onbekend"
     },
-    "badges": {
-      "projects": "{count} project | {count} projecten",
-      "publications": "{count} publicatie | {count} publicaties",
-      "affiliated": "{count} aangesloten onderzoeker | {count} aangesloten onderzoekers",
-      "teachings": "{count} onderwijsactiviteit | {count} onderwijsactiviteiten",
-      "awards": "{count} prijs | {count} prijzen"
-    },
     "affiliations": {
       "boards": "Besturen",
       "societies": "Verenigingen"
-    },
-    "title": {
-      "affiliated": "{count} aangesloten onderzoeker | {count} aangesloten onderzoekers",
-      "affiliated-tab": "Aangesloten",
-      "publications": "{count} publicatie | {count} publicaties",
-      "publications-tab": "Publicaties",
-      "conferences": "{count} conferentie | {count} conferenties",
-      "conferences-tab": "Conferenties",
-      "availabilities": "Beschikbaarheden",
-      "domain": "{count} onderzoeksdomein | {count} onderzoeksdomeinen",
-      "domain-tab": "Onderzoeksdomeinen",
-      "fundings": "{count} financiering | {count} financieringen",
-      "fundings-tab": "Financiering",
-      "needs": "Behoeften",
-      "network": "Netwerk",
-      "network-tab": "Netwerk",
-      "patents": "{count} octrooi | {count} octrooien",
-      "patents-tab": "Octrooi",
-      "positions": "{count} openstaande vacature | {count} openstaande vacatures",
-      "positions-tab": "Openstaande vacatures",
-      "presentation": "Presentatie",
-      "similar": "Vergelijkbaar",
-      "team": "{count} team | {count} teams",
-      "team-tab": "Team",
-      "similar-researchers": "Vergelijkbare onderzoekers",
-      "affiliations": "Affiliaties",
-      "awards": "{count} prijs | {count} prijzen",
-      "awards-tab": "Prijzen",
-      "trade": "{count} behoefte / beschikbaarheid | {count} behoeften / beschikbaarheden",
-      "trade-tab": "Behoeften / Beschikbaarheden",
-      "teaching": "{count} onderwijsactiviteit | {count} onderwijsactiviteiten",
-      "teaching-tab": "Onderwijs",
-      "research-areas": "{count} onderzoeksgebied | {count} onderzoeksgebieden",
-      "research-areas-tab": "Onderzoeksgebieden",
-      "research-areas-skills": "Onderzoeksgebieden en vaardigheden"
     },
     "view": {
       "all": "Alles bekijken",
@@ -3317,7 +3276,28 @@
       "i10-index": "i10-index"
     },
     "download-resume": "CV downloaden",
-    "top-collaborations": "Belangrijkste samenwerkingen"
+    "top-collaborations": "Belangrijkste samenwerkingen",
+    "title": {
+      "affiliated": "Geaffilieerde onderzoeker | Geaffilieerde onderzoekers",
+      "publications": "Bekendmaking | Publicaties",
+      "conferences": "Conferentie | Conferenties",
+      "availabilities": "Availabilitie | Beschikbaarheden",
+      "domain": "Onderzoeksdomein | Onderzoeksgebieden",
+      "fundings": "Financiering | Financieringen",
+      "needs": "Noodzakelijk | Noodzakelijk",
+      "network": "Netwerk | Netwerken",
+      "patents": "Patent | Patenten",
+      "positions": "Open positie | Open posities",
+      "presentation": "Presentatie | Presentatie",
+      "team": "Team | teams",
+      "similar-researchers": "Soortgelijk onderzoeker | Soortgelijke onderzoekers",
+      "affiliations": "Affiliatie | Affiliaties",
+      "awards": "Toewijzing | Toewijzingen",
+      "trade": "Behoefte / Availabilitie | Behoeften / Beschikbaarheden",
+      "teaching": "Onderwijs | Onderwijs",
+      "research-areas": "Onderzoekgebied | Onderzoeksgebieden",
+      "research-areas-skills": "Onderzoeksgebieden en vaardigheden"
+    }
   },
   "vector-store": {
     "confirm-deletion": "Verwijdering bevestigen",

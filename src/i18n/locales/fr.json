@@ -594,7 +594,8 @@
     "image": "image",
     "select-placeholder": "Sélectionner...",
     "error": "erreur",
-    "expand": "élargir"
+    "expand": "élargir",
+    "see-top-n": "Voir haut {n}"
   },
   "complete-profile": {
     "bio": {
@@ -3256,51 +3257,9 @@
       "Presentation": "Présentation",
       "UNKNOWN": "Inconnu"
     },
-    "badges": {
-      "projects": "{count} projet | {count} projets",
-      "publications": "{count} publication | {count} publications",
-      "affiliated": "{count} chercheur affilié | {count} chercheurs affiliés",
-      "teachings": "{count} enseignement | {count} enseignements",
-      "awards": "{count} prix | {count} prix"
-    },
     "affiliations": {
       "boards": "Conseils",
       "societies": "Sociétés savantes"
-    },
-    "title": {
-      "affiliated": "{count} chercheur affilié | {count} chercheurs affiliés",
-      "affiliated-tab": "Affiliés",
-      "publications": "{count} publication | {count} publications",
-      "publications-tab": "Publications",
-      "conferences": "{count} conférence | {count} conférences",
-      "conferences-tab": "Conférences",
-      "availabilities": "Disponibilités",
-      "domain": "{count} domaine de recherche | {count} domaines de recherche",
-      "domain-tab": "Domaines de recherche",
-      "fundings": "{count} financement | {count} financements",
-      "fundings-tab": "Financement",
-      "needs": "Besoins",
-      "network": "Réseau",
-      "network-tab": "Réseau",
-      "patents": "{count} brevet | {count} brevets",
-      "patents-tab": "Brevet",
-      "positions": "{count} poste ouvert | {count} postes ouverts",
-      "positions-tab": "Postes ouverts",
-      "presentation": "Présentation",
-      "similar": "Similaires",
-      "team": "{count} équipe | {count} équipes",
-      "team-tab": "Équipe",
-      "similar-researchers": "Chercheurs similaires",
-      "affiliations": "Affiliations",
-      "awards": "{count} prix | {count} prix",
-      "awards-tab": "Prix",
-      "trade": "{count} besoin / disponibilité | {count} besoins / disponibilités",
-      "trade-tab": "Besoins / Disponibilités",
-      "teaching": "{count} enseignement | {count} enseignements",
-      "teaching-tab": "Enseignement",
-      "research-areas": "{count} domaine de recherche | {count} domaines de recherche",
-      "research-areas-tab": "Domaines de recherche",
-      "research-areas-skills": "Domaines de recherche et compétences"
     },
     "view": {
       "all": "Voir tout",
@@ -3317,7 +3276,28 @@
       "i10-index": "indice i10"
     },
     "download-resume": "Télécharger le CV",
-    "top-collaborations": "Principales collaborations"
+    "top-collaborations": "Principales collaborations",
+    "title": {
+      "affiliated": "Chercheur affilié | Chercheurs affiliés",
+      "publications": "Publication | Publications",
+      "conferences": "Conférence | Conférences",
+      "availabilities": "Disponibilité | Disponibilités",
+      "domain": "Domaine de recherche | Domaines de recherche",
+      "fundings": "Financement | Financement",
+      "needs": "Besoin | Besoins",
+      "network": "Réseau | Réseaux",
+      "patents": "Brevet | Brevets",
+      "positions": "Ouvrir la position | Ouvrir les positions",
+      "presentation": "Présentation | Exposés",
+      "team": "Équipe | Équipes",
+      "similar-researchers": "Chercheur similaire | Chercheurs similaires",
+      "affiliations": "Affiliation | Affiliations",
+      "awards": "Prix | Prix",
+      "trade": "Besoin / disponibilité | Besoins / disponibilités",
+      "teaching": "Enseignement | Enseignements",
+      "research-areas": "Domaine de recherche | Domaines de recherche",
+      "research-areas-skills": "Domaines de recherche et compétences"
+    }
   },
   "vector-store": {
     "confirm-deletion": "Confirmer la suppression",

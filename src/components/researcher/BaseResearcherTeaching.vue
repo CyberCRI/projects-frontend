@@ -34,7 +34,7 @@
             />
             <!-- <LinkButton
               :to="teaching.similars.link"
-              :label="$t('researcher.similar-teaching', { count: teaching.similars.count })"
+              :label="$t('researcher.similar-teaching', teaching.similars.count)"
               btn-icon="ArrowRight"
             /> -->
           </div>

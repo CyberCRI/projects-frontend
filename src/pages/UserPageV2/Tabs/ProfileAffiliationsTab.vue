@@ -8,7 +8,7 @@ withDefaults(defineProps<{ user: TranslatedUserModel; editable?: boolean }>(), {
 
 <template>
   <BaseModuleTab
-    :title="$t(USER_MODULE_TITLE.affiliatedTab, user.researcher?.modules?.affiliated)"
+    :title="$t(USER_MODULE_TITLE.affiliated, user.researcher?.modules?.affiliated)"
     :count="user.researcher?.modules?.affiliated"
   >
     <BaseResearcherAffiliations v-if="!editable" title="" :user="user" />

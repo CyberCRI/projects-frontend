@@ -77,7 +77,7 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         pageLabel: t(USER_MODULE_TITLE.researchAreas, {
           count: modules.value.skills + modulesResearcher.value.domains,
         }),
-        tabLabel: t(USER_MODULE_TITLE.researchAreasTab),
+        tabLabel: t(USER_MODULE_TITLE.researchAreas),
         view: `/profile/${userSlugOrId.value}/domains`,
         altView: `/profile/${userSlugOrId.value}/skills/edit`,
         condition:
@@ -100,7 +100,7 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         pageLabel: t(USER_MODULE_TITLE.publications, {
           count: modulesResearcher.value.publications,
         }),
-        tabLabel: t(USER_MODULE_TITLE.publicationsTab),
+        tabLabel: t(USER_MODULE_TITLE.publications),
         view: `/profile/${userSlugOrId.value}/documents/publications`,
         altView: `/profile/${userSlugOrId.value}/documents/publications/edit`,
         condition: !!modulesResearcher.value.publications,
@@ -109,8 +109,8 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
       },
       {
         key: 'profile-conferences',
-        pageLabel: t(USER_MODULE_TITLE.conferences, { count: modulesResearcher.value.conferences }),
-        tabLabel: t(USER_MODULE_TITLE.conferencesTab),
+        pageLabel: t(USER_MODULE_TITLE.conferences, modulesResearcher.value.conferences),
+        tabLabel: t(USER_MODULE_TITLE.conferences),
         view: `/profile/${userSlugOrId.value}/documents/conferences`,
         altView: `/profile/${userSlugOrId.value}/documents/conferences/edit`,
         condition: !!modulesResearcher.value.conferences,
@@ -119,8 +119,8 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
       },
       {
         key: 'profile-network',
-        label: t(USER_MODULE_TITLE.network, { count: modulesResearcher.value.network }),
-        tabLabel: t(USER_MODULE_TITLE.networkTab),
+        label: t(USER_MODULE_TITLE.network, modulesResearcher.value.network),
+        tabLabel: t(USER_MODULE_TITLE.network),
         view: `/profile/${userSlugOrId.value}/network`,
         altView: `/profile/${userSlugOrId.value}/network/edit`,
         condition: !!modulesResearcher.value.network,
@@ -129,8 +129,8 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
       },
       {
         key: 'profile-affiliations',
-        label: t(USER_MODULE_TITLE.affiliated, { count: modulesResearcher.value.affiliated }),
-        tabLabel: t(USER_MODULE_TITLE.affiliatedTab),
+        label: t(USER_MODULE_TITLE.affiliated, modulesResearcher.value.affiliated),
+        tabLabel: t(USER_MODULE_TITLE.affiliated),
         view: `/profile/${userSlugOrId.value}/affiliations`,
         altView: `/profile/${userSlugOrId.value}/affiliations/edit`,
         condition: !!modulesResearcher.value.affiliated,
@@ -139,8 +139,8 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
       },
       {
         key: 'profile-awards',
-        label: t(USER_MODULE_TITLE.awards, { count: modulesResearcher.value.awards }),
-        tabLabel: t(USER_MODULE_TITLE.awardsTab),
+        label: t(USER_MODULE_TITLE.awards, modulesResearcher.value.awards),
+        tabLabel: t(USER_MODULE_TITLE.awards),
         view: `/profile/${userSlugOrId.value}/awards`,
         altView: `/profile/${userSlugOrId.value}/awards/edit`,
         condition: !!modulesResearcher.value.awards,
@@ -149,8 +149,8 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
       },
       {
         key: 'profile-patents',
-        label: t(USER_MODULE_TITLE.patents, { count: modulesResearcher.value.patents }),
-        tabLabel: t(USER_MODULE_TITLE.patentsTab),
+        label: t(USER_MODULE_TITLE.patents, modulesResearcher.value.patents),
+        tabLabel: t(USER_MODULE_TITLE.patents),
         view: `/profile/${userSlugOrId.value}/patents`,
         altView: `/profile/${userSlugOrId.value}/patents/edit`,
         condition: !!modulesResearcher.value.patents,
@@ -160,8 +160,8 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
 
       {
         key: 'profile-fundings',
-        label: t(USER_MODULE_TITLE.fundings, { count: modulesResearcher.value.fundings }),
-        tabLabel: t(USER_MODULE_TITLE.fundingsTab),
+        label: t(USER_MODULE_TITLE.fundings, modulesResearcher.value.fundings),
+        tabLabel: t(USER_MODULE_TITLE.fundings),
         view: `/profile/${userSlugOrId.value}/fundings`,
         altView: `/profile/${userSlugOrId.value}/fundings/edit`,
         condition: !!modulesResearcher.value.fundings,
@@ -171,8 +171,8 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
 
       {
         key: 'profile-teaching',
-        label: t(USER_MODULE_TITLE.teachings, { count: modulesResearcher.value.teachings }),
-        tabLabel: t(USER_MODULE_TITLE.teachingTab),
+        label: t(USER_MODULE_TITLE.teachings, modulesResearcher.value.teachings),
+        tabLabel: t(USER_MODULE_TITLE.teaching),
         view: `/profile/${userSlugOrId.value}/teaching`,
         altView: `/profile/${userSlugOrId.value}/teaching/edit`,
         condition: !!modulesResearcher.value.teachings,
@@ -182,8 +182,8 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
 
       {
         key: 'profile-positions',
-        label: t(USER_MODULE_TITLE.positions, { count: modulesResearcher.value.positons }),
-        tabLabel: t(USER_MODULE_TITLE.positionsTab),
+        label: t(USER_MODULE_TITLE.positions, modulesResearcher.value.positons),
+        tabLabel: t(USER_MODULE_TITLE.positions),
         view: `/profile/${userSlugOrId.value}/positions`,
         altView: `/profile/${userSlugOrId.value}/positions/edit`,
         condition: !!modulesResearcher.value.positions,
@@ -195,7 +195,7 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         label: t(USER_MODULE_TITLE.trade, {
           count: modulesResearcher.value.needs + modulesResearcher.value.availabilitie,
         }),
-        tabLabel: t(USER_MODULE_TITLE.tradeTab),
+        tabLabel: t(USER_MODULE_TITLE.trade),
         view: `/profile/${userSlugOrId.value}/trade`,
         altView: `/profile/${userSlugOrId.value}/trade/edit`,
         condition: modulesResearcher.value.needs || modulesResearcher.value.availabilities,
