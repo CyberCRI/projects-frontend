@@ -297,6 +297,7 @@ export const GROUP_MODULE_ICON: Record<string, IconImageChoice> = {
   teachings: 'SchoolOutline',
   trade: 'ThumbUpLine',
   teams: 'PeopleGroup',
+  platform: 'TestTube',
 }
 
 export const GROUP_MODULE_TITLE: { [key in PeopleGroupModulesKeys]: string } = {
@@ -343,6 +344,8 @@ export const GROUP_MODULE_TITLE: { [key in PeopleGroupModulesKeys]: string } = {
   researchAreas: 'structure.title.research-areas',
   researchAreasTab: 'structure.title.research-areas-tab',
   researchAreasSkills: 'structure.title.research-areas-skills',
+  platform: 'structure.title.platform',
+  platformTab: 'structure.title.platform-tab',
 }
 
 // location
