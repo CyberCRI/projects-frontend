@@ -325,3 +325,37 @@ export const getResearcherTeachings = (
     }
   )
 }
+
+// structures
+
+export const getStructureAwards = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  structureId: RefOrRaw<UserModel['id']>,
+  config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
+) => {
+  console.log('TODO: getStructureAwards', organizationCode, structureId, config)
+}
+
+export const getStructureFundings = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  structureId: RefOrRaw<UserModel['id']>,
+  config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
+) => {
+  console.log('TODO: getStructureFundings', organizationCode, structureId, config)
+}
+
+export const getStructureSimilars = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  structureId: RefOrRaw<UserModel['id']>,
+  config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
+) => {
+  console.log('TODO: getStructureSimilars', organizationCode, structureId, config)
+}
+
+export const getStructureTeachings = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  structureId: RefOrRaw<UserModel['id']>,
+  config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
+) => {
+  console.log('TODO: getStructureTeachings', organizationCode, structureId, config)
+}
