@@ -276,9 +276,7 @@ export const DEFAULT_ICONS_TABS: {
 }
 
 // groups
-export const GROUP_MODULE_ICON: {
-  [key in PeopleGroupModulesKeys]: IconImageChoice
-} = {
+export const GROUP_MODULE_ICON: Record<string, IconImageChoice> = {
   conferences: 'Article',
   featured_projects: 'Briefcase',
   publications: 'Article',
@@ -289,12 +287,21 @@ export const GROUP_MODULE_ICON: {
   gallery: 'Gallery',
   news: 'NewsLine',
   event: 'Calendar',
+  positions: 'BullhornOutline',
+  fundings: 'Euro',
+  patents: 'Dna',
+  domain: 'TagOutline',
+  network: 'Globe',
+  affiliations: 'UserCommunityLine',
+  awards: 'Licence',
+  teachings: 'SchoolOutline',
+  trade: 'ThumbUpLine',
+  teams: 'PeopleGroup',
+  platform: 'Flask',
 }
 
 export const GROUP_MODULE_TITLE: { [key in PeopleGroupModulesKeys]: string } = {
-  conferences: 'group.conferences',
   featured_projects: 'group.projects',
-  publications: 'group.publications',
   members: 'group.members',
   similars: 'group.similars',
   subgroups: 'group.subgroups',
@@ -302,6 +309,41 @@ export const GROUP_MODULE_TITLE: { [key in PeopleGroupModulesKeys]: string } = {
   gallery: 'gallery.pictures',
   news: 'group.news',
   event: 'group.event',
+  conferences: 'researcher.title.conferences',
+  conferencesTab: 'structure.title.conferences-tab',
+  publications: 'structure.title.publications',
+  publicationsTab: 'structure.title.publications-tab',
+  affiliated: 'structure.title.affiliated',
+  affiliatedTab: 'structure.title.affiliated-tab',
+  affiliations: 'structure.title.affiliations',
+  availabilities: 'structure.title.availabilities',
+  domain: 'structure.title.domain',
+  domainTab: 'structure.title.domain-tab',
+  fundings: 'structure.title.fundings',
+  fundingsTab: 'structure.title.fundings-tab',
+  needs: 'structure.title.needs',
+  network: 'structure.title.network',
+  networkTab: 'structure.title.network-tab',
+  patents: 'structure.title.patents',
+  patentsTab: 'structure.title.patents-tab',
+  positions: 'structure.title.positions',
+  positionsTab: 'structure.title.positions-tab',
+  presentation: 'structure.title.presentation',
+  similar: 'structure.title.similar',
+  similarStructures: 'structure.title.similar-structures',
+  team: 'structure.title.team',
+  teamTab: 'structure.title.team-tab',
+  awards: 'structure.title.awards',
+  awardsTab: 'structure.title.awards-tab',
+  teaching: 'structure.title.teaching',
+  teachingTab: 'structure.title.teaching-tab',
+  trade: 'structure.title.trade',
+  tradeTab: 'structure.title.trade-tab',
+  researchAreas: 'structure.title.research-areas',
+  researchAreasTab: 'structure.title.research-areas-tab',
+  researchAreasSkills: 'structure.title.research-areas-skills',
+  platform: 'structure.title.platform',
+  platformTab: 'structure.title.platform-tab',
 }
 
 // location
@@ -348,6 +390,7 @@ export const USER_MODULE_ICON: Record<string, IconImageChoice> = {
   awards: 'Licence',
   teachings: 'SchoolOutline',
   trade: 'ThumbUpLine',
+  teams: 'PeopleGroup',
 }
 
 export const USER_MODULE_TITLE = {

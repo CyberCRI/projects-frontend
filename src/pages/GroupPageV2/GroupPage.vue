@@ -113,6 +113,11 @@ const defaultProps = computed(() => {
   }
 })
 
+// TODO:
+const isTeam = computed(() => true)
+// TODO:
+const isStructure = computed(() => true)
+
 const groupTabsDisplay = computed(() => {
   return [
     {
@@ -125,6 +130,18 @@ const groupTabsDisplay = computed(() => {
       condition: true,
       noTitle: true,
       icon: 'Home',
+    },
+    {
+      isEditing: false,
+      key: 'group-teams',
+      label: t(GROUP_MODULE_TITLE.team, groupModules.value.teams),
+      tabLabel: t(GROUP_MODULE_TITLE.teamTab),
+      label: t('group.teams'),
+      view: `/group/${route.params.groupIdOrSlug}/teams`,
+      altView: `/group/${route.params.groupIdOrSlug}/teams/edit`,
+      condition: isStructure.value,
+      noTitle: true,
+      icon: GROUP_MODULE_ICON.members,
     },
     {
       isEditing: false,
@@ -161,6 +178,7 @@ const groupTabsDisplay = computed(() => {
       key: 'group-publications',
       dataTest: 'group-publications',
       label: t(GROUP_MODULE_TITLE.publications, GROUP_MODULE_TITLE.publications),
+      tabLabel: t(GROUP_MODULE_TITLE.publicationsTab),
       view: `/group/${route.params.groupIdOrSlug}/publications`,
       altView: `/group/${route.params.groupIdOrSlug}/publications/edit`,
       props: {
@@ -174,6 +192,7 @@ const groupTabsDisplay = computed(() => {
       key: 'group-conferences',
       dataTest: 'group-conferences',
       label: t(GROUP_MODULE_TITLE.conferences, groupModules.value.conferences),
+      tabLabel: t(GROUP_MODULE_TITLE.conferencesTab),
       view: `/group/${route.params.groupIdOrSlug}/conferences`,
       altView: `/group/${route.params.groupIdOrSlug}/conferences/edit`,
       props: {
@@ -204,13 +223,26 @@ const groupTabsDisplay = computed(() => {
     },
     {
       isEditing: false,
+      key: 'group-domains',
+      dataTest: 'group-domains',
+      label: t(GROUP_MODULE_TITLE.domain, groupModules.value.domains),
+      tabLabel: t(GROUP_MODULE_TITLE.domainTab),
+      view: `/group/${route.params.groupIdOrSlug}/domains`,
+      altView: `/group/${route.params.groupIdOrSlug}/domains/edit`,
+      condition: isStructure.value,
+      noTitle: true,
+      icon: GROUP_MODULE_ICON.domain,
+    },
+    {
+      isEditing: false,
       key: 'group-locations',
       dataTest: 'group-locations',
-      label: t(GROUP_MODULE_TITLE.locations, groupModules.value.locations),
+      label: t(GROUP_MODULE_TITLE.network, groupModules.value.locations),
+      tabLabel: t(GROUP_MODULE_TITLE.networkTab),
       view: `/group/${route.params.groupIdOrSlug}/locations`,
       altView: `/group/${route.params.groupIdOrSlug}/locations/edit`,
       condition: !!groupModules.value.locations,
-      icon: GROUP_MODULE_ICON.locations,
+      icon: GROUP_MODULE_ICON.network,
     },
     {
       isEditing: false,
@@ -221,6 +253,66 @@ const groupTabsDisplay = computed(() => {
       altView: `/group/${route.params.groupIdOrSlug}/gallery/edit`,
       condition: !!groupModules.value.gallery,
       icon: GROUP_MODULE_ICON.gallery,
+    },
+    {
+      isEditing: false,
+      key: 'group-positions',
+      dataTest: 'group-positions',
+      label: t(GROUP_MODULE_TITLE.positions, groupModules.value.positions),
+      tabLabel: t(GROUP_MODULE_TITLE.positionsTab),
+      view: `/group/${route.params.groupIdOrSlug}/positions`,
+      altView: `/group/${route.params.groupIdOrSlug}/positions/edit`,
+      condition: isStructure.value || isTeam.value,
+      noTitle: true,
+      icon: GROUP_MODULE_ICON.positions,
+    },
+    {
+      isEditing: false,
+      key: 'group-awards',
+      dataTest: 'group-awards',
+      label: t(GROUP_MODULE_TITLE.awards, groupModules.value.awards),
+      tabLabel: t(GROUP_MODULE_TITLE.awardsTab),
+      view: `/group/${route.params.groupIdOrSlug}/awards`,
+      altView: `/group/${route.params.groupIdOrSlug}/awards/edit`,
+      condition: isStructure.value,
+      noTitle: true,
+      icon: GROUP_MODULE_ICON.awards,
+    },
+    {
+      isEditing: false,
+      key: 'group-funding',
+      dataTest: 'group-funding',
+      label: t(GROUP_MODULE_TITLE.fundings, groupModules.value.funding),
+      tabLabel: t(GROUP_MODULE_TITLE.fundingsTab),
+      view: `/group/${route.params.groupIdOrSlug}/funding`,
+      altView: `/group/${route.params.groupIdOrSlug}/funding/edit`,
+      condition: isStructure.value,
+      noTitle: true,
+      icon: GROUP_MODULE_ICON.fundings,
+    },
+    {
+      isEditing: false,
+      key: 'group-teaching',
+      dataTest: 'group-teaching',
+      label: t(GROUP_MODULE_TITLE.teaching, groupModules.value.teaching),
+      tabLabel: t(GROUP_MODULE_TITLE.teachingTab),
+      view: `/group/${route.params.groupIdOrSlug}/teaching`,
+      altView: `/group/${route.params.groupIdOrSlug}/teaching/edit`,
+      condition: isStructure.value,
+      noTitle: true,
+      icon: GROUP_MODULE_ICON.teachings,
+    },
+    {
+      isEditing: false,
+      key: 'group-platform',
+      dataTest: 'group-platform',
+      label: t(GROUP_MODULE_TITLE.platform, groupModules.value.tools),
+      tabLabel: t(GROUP_MODULE_TITLE.platformTab),
+      view: `/group/${route.params.groupIdOrSlug}/platform`,
+      altView: `/group/${route.params.groupIdOrSlug}/funding/platform`,
+      condition: isStructure.value,
+      noTitle: true,
+      icon: GROUP_MODULE_ICON.platform,
     },
   ] satisfies MenuEntry[]
 })
