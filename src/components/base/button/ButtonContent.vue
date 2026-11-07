@@ -1,11 +1,18 @@
 <template>
-  <IconImage v-if="btnIcon && btnIcon !== 'LoaderSimple'" :name="btnIcon" class="btn-icon" />
-  <LoaderSimple v-if="btnIcon && btnIcon === 'LoaderSimple'" class="btn-icon loader" />
+  <IconImage
+    v-if="btnIcon && btnIcon !== 'LoaderSimple'"
+    :name="btnIcon"
+    class="btn-icon skeletons-background"
+  />
+  <LoaderSimple
+    v-if="btnIcon && btnIcon === 'LoaderSimple'"
+    class="btn-icon loader skeletons-background"
+  />
 
   <span
     v-if="label"
     data-test="button-label"
-    class="label"
+    class="label skeletons-text"
     :class="{ 'no-text-transform': noTextTransform }"
   >
     {{ label }}

@@ -511,6 +511,7 @@
     "delete-description": "Weet u zeker dat u uw opmerkingen definitief wilt verwijderen? Deze actie zal onomkeerbaar zijn."
   },
   "common": {
+    "ai-generated": "Door AI gegenereerd",
     "activate": "Activeer",
     "activated": "Geactiveerd",
     "add": "Voeg toe",
@@ -593,7 +594,8 @@
     "image": "afbeelding",
     "select-placeholder": "Selecteren...",
     "error": "fout",
-    "expand": "uitzetten"
+    "expand": "uitzetten",
+    "see-top-n": "Zie boven {n}"
   },
   "complete-profile": {
     "bio": {
@@ -3254,6 +3256,47 @@
       "BookOfChapters": "Boek van hoofdstukken",
       "Presentation": "Presentatie",
       "UNKNOWN": "Onbekend"
+    },
+    "affiliations": {
+      "boards": "Besturen",
+      "societies": "Verenigingen"
+    },
+    "view": {
+      "all": "Alles bekijken",
+      "all-researchers": "Alle onderzoekers bekijken",
+      "all-publications": "Alle publicaties bekijken",
+      "all-conferences": "Alle conferenties bekijken",
+      "all-domains": "Domeinen bekijken",
+      "all-network": "Netwerk bekijken",
+      "all-job-offers": "Alle vacatures bekijken"
+    },
+    "stats": {
+      "citations": "Citaties",
+      "h-index": "h-index",
+      "i10-index": "i10-index"
+    },
+    "download-resume": "CV downloaden",
+    "top-collaborations": "Belangrijkste samenwerkingen",
+    "title": {
+      "affiliated": "Geaffilieerde onderzoeker | Geaffilieerde onderzoekers",
+      "publications": "Bekendmaking | Publicaties",
+      "conferences": "Conferentie | Conferenties",
+      "availabilities": "Availabilitie | Beschikbaarheden",
+      "domain": "Onderzoeksdomein | Onderzoeksgebieden",
+      "fundings": "Financiering | Financieringen",
+      "needs": "Noodzakelijk | Noodzakelijk",
+      "network": "Netwerk | Netwerken",
+      "patents": "Patent | Patenten",
+      "positions": "Open positie | Open posities",
+      "presentation": "Presentatie | Presentatie",
+      "team": "Team | teams",
+      "similar-researchers": "Soortgelijk onderzoeker | Soortgelijke onderzoekers",
+      "affiliations": "Affiliatie | Affiliaties",
+      "awards": "Toewijzing | Toewijzingen",
+      "trade": "Behoefte / Availabilitie | Behoeften / Beschikbaarheden",
+      "teaching": "Onderwijs | Onderwijs",
+      "research-areas": "Onderzoekgebied | Onderzoeksgebieden",
+      "research-areas-skills": "Onderzoeksgebieden en vaardigheden"
     }
   },
   "vector-store": {

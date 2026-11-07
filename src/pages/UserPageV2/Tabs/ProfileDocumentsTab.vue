@@ -33,7 +33,7 @@ const notEditable = computed(() => t(`profile.edit.${props.documentType}.no-edit
       <BaseModuleHeader :editable="editable" />
 
       <UserResearcherDocumentsList
-        v-if="user.modules[documentType] > 0"
+        v-if="user?.researcher?.modules[documentType] > 0"
         :document-type="documentType"
         :user="user"
       />

@@ -511,6 +511,7 @@
     "delete-description": "Esteu segur que voleu esborrar permanentment els comentaris? Aquesta acció serà irreversible."
   },
   "common": {
+    "ai-generated": "Generat per IA",
     "activate": "Activa",
     "activated": "Activat",
     "add": "Afegeix",
@@ -593,7 +594,8 @@
     "image": "imatge",
     "select-placeholder": "Selecciona...",
     "error": "error",
-    "expand": "expandit"
+    "expand": "expandit",
+    "see-top-n": "Veureu top {n}"
   },
   "complete-profile": {
     "bio": {
@@ -3254,6 +3256,47 @@
       "BookOfChapters": "Llibre de capítols",
       "Presentation": "Presentació",
       "UNKNOWN": "Desconegut"
+    },
+    "affiliations": {
+      "boards": "Consells",
+      "societies": "Societats"
+    },
+    "view": {
+      "all": "Veure-ho tot",
+      "all-researchers": "Veure tots els investigadors",
+      "all-publications": "Veure totes les publicacions",
+      "all-conferences": "Veure totes les conferències",
+      "all-domains": "Veure els àmbits",
+      "all-network": "Veure la xarxa",
+      "all-job-offers": "Veure totes les ofertes de feina"
+    },
+    "stats": {
+      "citations": "Cites",
+      "h-index": "índex h",
+      "i10-index": "índex i10"
+    },
+    "download-resume": "Descarrega el CV",
+    "top-collaborations": "Principals col·laboracions",
+    "title": {
+      "affiliated": "investigador afelicat | investigadors afliats",
+      "publications": "Públicació | Publicacions",
+      "conferences": "Conferència | Conferèncias",
+      "availabilities": "AvailabilitieCity name (optional, probably does not need a translation) | Availalitats",
+      "domain": "Domini de recerca | Dominis de recerca",
+      "fundings": "Fundació | Fundacions",
+      "needs": "Necessita | Necessita",
+      "network": "Xarxa | Xarxes",
+      "patents": "Patent | Patents",
+      "positions": "Obre la posició | Obre posicions",
+      "presentation": "Presentació | Presentacions",
+      "team": "Equip | Equips",
+      "similar-researchers": "investigador similar | investigadors similars",
+      "affiliations": "Afeliació | Afiliacions",
+      "awards": "Premi | Premis",
+      "trade": "Necessita / Availabilitie | Necessita / Availalitats",
+      "teaching": "Ensenyació | ensenyaments",
+      "research-areas": "Àrea de recerca | Àrees de recerca",
+      "research-areas-skills": "Estadístiques de la recerca"
     }
   },
   "vector-store": {

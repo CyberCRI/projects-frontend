@@ -26,6 +26,11 @@ export default function useProfilePagesRoutes() {
       component: () => import('../pages/UserPageV2/Tabs/ProfileSkillsTab.vue'),
     },
     {
+      path: 'domains',
+      name: 'ProfileDomains',
+      component: () => import('../pages/UserPageV2/Tabs/ProfileDomainsTab.vue'),
+    },
+    {
       path: 'documents/:documentType',
       name: 'ProfileDocuments',
       component: () => import('../pages/UserPageV2/Tabs/ProfileDocumentsTab.vue'),
@@ -37,6 +42,47 @@ export default function useProfilePagesRoutes() {
       path: 'resources',
       name: 'ProfileResources',
       component: () => import('../pages/UserPageV2/Tabs/ProfileResourcesTab.vue'),
+    },
+
+    {
+      path: 'network',
+      name: 'ProfileNetwork',
+      component: () => import('../pages/UserPageV2/Tabs/ProfileNetworkTab.vue'),
+    },
+    {
+      path: 'affiliations',
+      name: 'ProfileAffiliate',
+      component: () => import('../pages/UserPageV2/Tabs/ProfileAffiliationsTab.vue'),
+    },
+    {
+      path: 'awards',
+      name: 'ProfileAwards',
+      component: () => import('../pages/UserPageV2/Tabs/ProfileAwardsTab.vue'),
+    },
+    {
+      path: 'patents',
+      name: 'ProfilePatents',
+      component: () => import('../pages/UserPageV2/Tabs/ProfilePatentsTab.vue'),
+    },
+    {
+      path: 'fundings',
+      name: 'ProfileFundings',
+      component: () => import('../pages/UserPageV2/Tabs/ProfileFundingsTab.vue'),
+    },
+    {
+      path: 'teaching',
+      name: 'ProfileTeaching',
+      component: () => import('../pages/UserPageV2/Tabs/ProfileTeachingTab.vue'),
+    },
+    {
+      path: 'positions',
+      name: 'ProfilePositions',
+      component: () => import('../pages/UserPageV2/Tabs/ProfilePositionsTab.vue'),
+    },
+    {
+      path: 'trade',
+      name: 'ProfileTrade',
+      component: () => import('../pages/UserPageV2/Tabs/ProfileTradeTab.vue'),
     },
   ]
 

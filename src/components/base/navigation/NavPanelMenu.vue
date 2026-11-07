@@ -25,7 +25,7 @@
         <IconImage class="icon skeletons-background" :name="entry.icon || 'Article'" />
 
         <span class="skeletons-text text-ellipsis">
-          {{ entry.label }}
+          {{ entry.tabLabel || entry.label }}
         </span>
 
         <IconImage
@@ -47,7 +47,9 @@ import { NuxtLink } from '#components'
 export type MenuEntry = {
   isEditing?: boolean
   condition: boolean
-  label: string
+  label?: string
+  tabLabel?: string
+  pageLabel?: string
   icon: IconImageChoice
   actionIcon?: IconImageChoice | IconTabImageChoice
   key: string

@@ -511,6 +511,7 @@
     "delete-description": "Etes-vous sûr de vouloir supprimer définitivement votre commentaire ? Cette action sera irréversible."
   },
   "common": {
+    "ai-generated": "Généré par IA",
     "now": "aujourd'hui",
     "activate": "Activer",
     "activated": "Activé",
@@ -593,7 +594,8 @@
     "image": "image",
     "select-placeholder": "Sélectionner...",
     "error": "erreur",
-    "expand": "élargir"
+    "expand": "élargir",
+    "see-top-n": "Voir haut {n}"
   },
   "complete-profile": {
     "bio": {
@@ -3254,6 +3256,47 @@
       "BookOfChapters": "Livre des Chapitres",
       "Presentation": "Présentation",
       "UNKNOWN": "Inconnu"
+    },
+    "affiliations": {
+      "boards": "Conseils",
+      "societies": "Sociétés savantes"
+    },
+    "view": {
+      "all": "Voir tout",
+      "all-researchers": "Voir tous les chercheurs",
+      "all-publications": "Voir toutes les publications",
+      "all-conferences": "Voir toutes les conférences",
+      "all-domains": "Voir les domaines",
+      "all-network": "Voir le réseau",
+      "all-job-offers": "Voir toutes les offres d'emploi"
+    },
+    "stats": {
+      "citations": "Citations",
+      "h-index": "indice h",
+      "i10-index": "indice i10"
+    },
+    "download-resume": "Télécharger le CV",
+    "top-collaborations": "Principales collaborations",
+    "title": {
+      "affiliated": "Chercheur affilié | Chercheurs affiliés",
+      "publications": "Publication | Publications",
+      "conferences": "Conférence | Conférences",
+      "availabilities": "Disponibilité | Disponibilités",
+      "domain": "Domaine de recherche | Domaines de recherche",
+      "fundings": "Financement | Financement",
+      "needs": "Besoin | Besoins",
+      "network": "Réseau | Réseaux",
+      "patents": "Brevet | Brevets",
+      "positions": "Ouvrir la position | Ouvrir les positions",
+      "presentation": "Présentation | Exposés",
+      "team": "Équipe | Équipes",
+      "similar-researchers": "Chercheur similaire | Chercheurs similaires",
+      "affiliations": "Affiliation | Affiliations",
+      "awards": "Prix | Prix",
+      "trade": "Besoin / disponibilité | Besoins / disponibilités",
+      "teaching": "Enseignement | Enseignements",
+      "research-areas": "Domaine de recherche | Domaines de recherche",
+      "research-areas-skills": "Domaines de recherche et compétences"
     }
   },
   "vector-store": {

@@ -6,7 +6,8 @@ import type {
   ProjectTabType,
   PeopleGroupModulesKeys,
   ProjectModuleExtra,
-  UserModuleExtra,
+  Currency,
+  // UserModuleExtra,
 } from 'shared-projects-frontend/models'
 import type { IconImageChoice, IconTabImageChoice } from '~/functs/IconImage'
 import { omit, pick } from 'es-toolkit'
@@ -322,9 +323,7 @@ export const LOCATION_TYPE_TITLE: { [key in LocationType]: string } = {
 
 // user
 
-export const USER_MODULE_ICON: {
-  [key in UserModuleExtra]: IconImageChoice
-} = {
+export const USER_MODULE_ICON: Record<string, IconImageChoice> = {
   conferences: 'Article',
   publications: 'Article',
   reviews_projects: 'Briefcase',
@@ -340,13 +339,23 @@ export const USER_MODULE_ICON: {
   resources: 'Globe',
   groups: 'PeopleGroup',
   privacy: 'Eye',
+  positions: 'BullhornOutline',
+  fundings: 'Euro',
+  patents: 'Dna',
+  domain: 'TagOutline',
+  network: 'Globe',
+  affiliations: 'UserCommunityLine',
+  awards: 'Licence',
+  teachings: 'SchoolOutline',
+  trade: 'ThumbUpLine',
 }
 
-export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
-  conferences: 'profile.conferences',
-  publications: 'profile.publications',
+export const USER_MODULE_TITLE = {
+  conferences: 'researcher.title.conferences',
+  publications: 'researcher.title.publications',
   reviews_projects: 'me.projects-reviewing',
   follows_categories: 'me.follow-category',
+  privacy: 'profile.edit.privacy.tab',
   follows_projects: 'me.follow',
   notifications: '',
   projects: 'profile.projects',
@@ -357,8 +366,30 @@ export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
   files: '',
   resources: 'resource.resources',
   groups: 'profile.groups',
-  privacy: 'profile.edit.privacy.tab',
+  affiliated: 'researcher.title.affiliated',
+  affiliations: 'researcher.title.affiliations',
+  availabilities: 'researcher.title.availabilities',
+  domain: 'researcher.title.domain',
+  fundings: 'researcher.title.fundings',
+  needs: 'researcher.title.needs',
+  network: 'researcher.title.network',
+  patents: 'researcher.title.patents',
+  positions: 'researcher.title.positions',
+  presentation: 'researcher.title.presentation',
+  similar: 'researcher.title.similar',
+  similarResearchers: 'researcher.title.similar-researchers',
+  team: 'researcher.title.team',
+  awards: 'researcher.title.awards',
+  teachings: 'researcher.title.teaching',
+  trade: 'researcher.title.trade',
+  researchAreas: 'researcher.title.research-areas',
+  researchAreasSkills: 'researcher.title.research-areas-skills',
 }
 
 // max skill steps
 export const DEFAULT_SKILL_STEPS = 4
+
+export const ICON_CURRENCY: { [key in Currency]: IconImageChoice } = {
+  EUR: 'Euro',
+  USD: 'Dollar',
+}

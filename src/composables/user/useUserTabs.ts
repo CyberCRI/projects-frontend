@@ -1,7 +1,8 @@
-import type { UserModel, TranslatedUserModel } from 'shared-projects-frontend/models'
+import type { UserModel, TranslatedUserModel, Researcher } from 'shared-projects-frontend/models'
 import { usePermissionUser } from '~/composables/usePermissions/useUserPermissions'
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
 import { USER_MODULE_ICON, USER_MODULE_TITLE } from '~/functs/constants'
+import { researcherSkeleton } from '~/skeletons/crisalid.skeletons'
 import { userSkeleton } from '~/skeletons/user.skeletons'
 import { textIsEmpty } from '~/functs/tiptap'
 
@@ -17,16 +18,24 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
       ...(user.value?.modules ?? {}),
     }
   })
+  const modulesResearcher = computed<Researcher['modules']>(() => {
+    return {
+      ...researcherSkeleton().modules,
+      ...(user.value?.researcher?.modules ?? {}),
+    }
+  })
 
   const userId = computed(() => user.value?.id)
   const userSlugOrId = computed(() => user.value?.slug || user.value?.id)
+
+  const isResearcher = computed(() => !!user.value.researcher)
 
   const { canEditUser } = usePermissionUser(userId)
 
   const TabsDisplay = computed(() => {
     return [
       {
-        key: 'profile-summary',
+        key: 'profile-summary', //  TODO: "home"
         label: t('profile.snapshot'),
         view: `/profile/${userSlugOrId.value}/summary`,
         altView: `/profile/${userSlugOrId.value}/summary/edit`,
@@ -36,7 +45,7 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         noTitle: true,
       },
       {
-        key: 'profile-bio',
+        key: 'profile-bio', // TODO: "overview"
         label: t('profile.bio'),
         view: `/profile/${userSlugOrId.value}/bio`,
         altView: `/profile/${userSlugOrId.value}/bio/edit`,
@@ -58,12 +67,25 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         label: t(USER_MODULE_TITLE.skills, modules.value.skills),
         view: `/profile/${userSlugOrId.value}/skills`,
         altView: `/profile/${userSlugOrId.value}/skills/edit`,
-        condition: !!modules.value.skills,
+        condition: !isResearcher.value && !!modules.value.skills,
         dataTest: 'profile-skills',
         icon: USER_MODULE_ICON.skills,
       },
       {
-        key: 'profile-groups',
+        key: 'profile-domains',
+        label: t(USER_MODULE_TITLE.researchAreas, {
+          count: modules.value.skills + modulesResearcher.value.domains,
+        }),
+        view: `/profile/${userSlugOrId.value}/domains`,
+        altView: `/profile/${userSlugOrId.value}/skills/edit`,
+        condition:
+          isResearcher.value && (!!modules.value.skills || !!modulesResearcher.value.domains),
+        dataTest: 'profile-domains',
+        icon: USER_MODULE_ICON.skills,
+      },
+
+      {
+        key: 'profile-groups', //  TODO: "labo" ?
         label: t(USER_MODULE_TITLE.groups, modules.value.groups),
         view: `/profile/${userSlugOrId.value}/groups`,
         altView: `/profile/${userSlugOrId.value}/groups/edit`,
@@ -73,28 +95,107 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
       },
       {
         key: 'profile-publications',
-        label: t(USER_MODULE_TITLE.publications, modules.value.publications),
+        label: t(USER_MODULE_TITLE.publications, {
+          count: modulesResearcher.value.publications,
+        }),
         view: `/profile/${userSlugOrId.value}/documents/publications`,
         altView: `/profile/${userSlugOrId.value}/documents/publications/edit`,
-        condition: !!modules.value.publications,
+        condition: !!modulesResearcher.value.publications,
         dataTest: 'profile-publications',
         icon: USER_MODULE_ICON.publications,
       },
       {
         key: 'profile-conferences',
-        label: t(USER_MODULE_TITLE.conferences, modules.value.conferences),
+        label: t(USER_MODULE_TITLE.conferences, modulesResearcher.value.conferences),
         view: `/profile/${userSlugOrId.value}/documents/conferences`,
         altView: `/profile/${userSlugOrId.value}/documents/conferences/edit`,
-        condition: !!modules.value.conferences,
+        condition: !!modulesResearcher.value.conferences,
         dataTest: 'profile-conferences',
         icon: USER_MODULE_ICON.conferences,
+      },
+      {
+        key: 'profile-network',
+        label: t(USER_MODULE_TITLE.network, modulesResearcher.value.network),
+        view: `/profile/${userSlugOrId.value}/network`,
+        altView: `/profile/${userSlugOrId.value}/network/edit`,
+        condition: !!modulesResearcher.value.network,
+        dataTest: 'profile-resources',
+        icon: USER_MODULE_ICON.network,
+      },
+      {
+        key: 'profile-affiliations',
+        label: t(USER_MODULE_TITLE.affiliated, modulesResearcher.value.affiliated),
+        view: `/profile/${userSlugOrId.value}/affiliations`,
+        altView: `/profile/${userSlugOrId.value}/affiliations/edit`,
+        condition: !!modulesResearcher.value.affiliated,
+        dataTest: 'profile-affiliations',
+        icon: USER_MODULE_ICON.affiliations,
+      },
+      {
+        key: 'profile-awards',
+        label: t(USER_MODULE_TITLE.awards, modulesResearcher.value.awards),
+        view: `/profile/${userSlugOrId.value}/awards`,
+        altView: `/profile/${userSlugOrId.value}/awards/edit`,
+        condition: !!modulesResearcher.value.awards,
+        dataTest: 'profile-awards',
+        icon: USER_MODULE_ICON.awards,
+      },
+      {
+        key: 'profile-patents',
+        label: t(USER_MODULE_TITLE.patents, modulesResearcher.value.patents),
+        view: `/profile/${userSlugOrId.value}/patents`,
+        altView: `/profile/${userSlugOrId.value}/patents/edit`,
+        condition: !!modulesResearcher.value.patents,
+        dataTest: 'profile-patents',
+        icon: USER_MODULE_ICON.patents,
+      },
+
+      {
+        key: 'profile-fundings',
+        label: t(USER_MODULE_TITLE.fundings, modulesResearcher.value.fundings),
+        view: `/profile/${userSlugOrId.value}/fundings`,
+        altView: `/profile/${userSlugOrId.value}/fundings/edit`,
+        condition: !!modulesResearcher.value.fundings,
+        dataTest: 'profile-fundings',
+        icon: USER_MODULE_ICON.fundings,
+      },
+
+      {
+        key: 'profile-teaching',
+        label: t(USER_MODULE_TITLE.teachings, modulesResearcher.value.teachings),
+        view: `/profile/${userSlugOrId.value}/teaching`,
+        altView: `/profile/${userSlugOrId.value}/teaching/edit`,
+        condition: !!modulesResearcher.value.teachings,
+        dataTest: 'profile-teaching',
+        icon: USER_MODULE_ICON.teachings,
+      },
+
+      {
+        key: 'profile-positions',
+        label: t(USER_MODULE_TITLE.positions, modulesResearcher.value.positons),
+        view: `/profile/${userSlugOrId.value}/positions`,
+        altView: `/profile/${userSlugOrId.value}/positions/edit`,
+        condition: !!modulesResearcher.value.positions,
+        dataTest: 'profile-positions',
+        icon: USER_MODULE_ICON.positions,
+      },
+      {
+        key: 'profile-trade',
+        label: t(USER_MODULE_TITLE.trade, {
+          count: modulesResearcher.value.needs + modulesResearcher.value.availabilitie,
+        }),
+        view: `/profile/${userSlugOrId.value}/trade`,
+        altView: `/profile/${userSlugOrId.value}/trade/edit`,
+        condition: modulesResearcher.value.needs || modulesResearcher.value.availabilities,
+        dataTest: 'profile-trade',
+        icon: USER_MODULE_ICON.trade,
       },
       {
         key: 'profile-resources',
         label: t(USER_MODULE_TITLE.resources, modules.value.files + modules.value.links),
         view: `/profile/${userSlugOrId.value}/resources`,
         altView: `/profile/${userSlugOrId.value}/resources/edit`,
-        condition: !!(modules.value.files || modules.value.links),
+        condition: !!modules.value.files || !!modules.value.links,
         dataTest: 'profile-resources',
         icon: USER_MODULE_ICON.resources,
       },
@@ -143,7 +244,7 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         },
         {
           key: 'profile-publications-edit',
-          label: t(USER_MODULE_TITLE.publications, modules.value.publications),
+          label: t(USER_MODULE_TITLE.publications, modulesResearcher.value.publications),
           view: `/profile/${userSlugOrId.value}/documents/publications/edit`,
           altView: `/profile/${userSlugOrId.value}/documents/publications`,
           condition: true,
@@ -152,7 +253,7 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         },
         {
           key: 'profile-conferences-edit',
-          label: t(USER_MODULE_TITLE.conferences, modules.value.conferences),
+          label: t(USER_MODULE_TITLE.conferences, modulesResearcher.value.conferences),
           view: `/profile/${userSlugOrId.value}/documents/conferences/edit`,
           altView: `/profile/${userSlugOrId.value}/documents/conferences`,
           condition: true,

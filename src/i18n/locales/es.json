@@ -511,6 +511,7 @@
     "delete-description": "¿Estás seguro de que quieres eliminar permanentemente tus comentarios? Esta acción será irreversible."
   },
   "common": {
+    "ai-generated": "Generado Ai",
     "activate": "Activar",
     "activated": "Activado",
     "add": "Añadir",
@@ -593,7 +594,8 @@
     "image": "imagen",
     "select-placeholder": "Seleccione...",
     "error": "error",
-    "expand": "Ampliación"
+    "expand": "Ampliación",
+    "see-top-n": "Véase la parte superior {n}"
   },
   "complete-profile": {
     "bio": {
@@ -3254,6 +3256,47 @@
       "BookOfChapters": "Libro de Capítulos",
       "Presentation": "Presentación",
       "UNKNOWN": "Desconocida"
+    },
+    "affiliations": {
+      "boards": "Juntas",
+      "societies": "Sociedades"
+    },
+    "view": {
+      "all": "Ver todo",
+      "all-researchers": "Ver todos los investigadores",
+      "all-publications": "Ver todas las publicaciones",
+      "all-conferences": "Ver todas las conferencias",
+      "all-domains": "Ver áreas",
+      "all-network": "Ver la red",
+      "all-job-offers": "Ver todas las ofertas de empleo"
+    },
+    "stats": {
+      "citations": "Citas",
+      "h-index": "índice h",
+      "i10-index": "índice i10"
+    },
+    "download-resume": "Descargar CV",
+    "top-collaborations": "Principales colaboraciones",
+    "title": {
+      "affiliated": "Investigador afiliado | Investigadores afiliados",
+      "publications": "Publicación | Publicaciones",
+      "conferences": "Conferencia | Conferencias",
+      "availabilities": "Availabilitie | Availabilities",
+      "domain": "Dominio de investigación | Dominios de investigación",
+      "fundings": "Financiación | Financiación",
+      "needs": "Necesidad | Necesidades",
+      "network": "Red | Redes",
+      "patents": "Patentes | Patentes",
+      "positions": "Posición abierta | Posiciones abiertas",
+      "presentation": "Presentación | Presentaciones",
+      "team": "Equipo | Equipos",
+      "similar-researchers": "Investigador similar | Investigadores similares",
+      "affiliations": "Afiliación | Afiliaciones",
+      "awards": "Premio | Premios",
+      "trade": "Necesidad / Availabilitie | Necesidades / Availabilidades",
+      "teaching": "Enseñanza | Enseñanzas",
+      "research-areas": "Área de investigación | Áreas de investigación",
+      "research-areas-skills": "Esferas de investigación"
     }
   },
   "vector-store": {

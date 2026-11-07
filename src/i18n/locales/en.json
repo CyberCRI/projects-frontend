@@ -511,6 +511,8 @@
     "delete-description": "Are you sure you want to permanently delete your comments? This action will be irreversible."
   },
   "common": {
+    "ai-generated": "AI Generated",
+    "see-top-n": "See top {n}",
     "error": "error",
     "select-placeholder": "Select...",
     "file": "file | files",
@@ -2879,6 +2881,31 @@
     "previous-messages": "Previous messages"
   },
   "researcher": {
+    "affiliations": {
+      "boards": "Boards",
+      "societies": "Societies"
+    },
+    "title": {
+      "affiliated": "Affiliated researcher | Affiliated researchers",
+      "publications": "Publication | Publications",
+      "conferences": "Conference | Conferences",
+      "availabilities": "Availabilitie | Availabilities",
+      "domain": "Research domain | Research domains",
+      "fundings": "Funding | Fundings",
+      "needs": "Need | Needs",
+      "network": "Network | Networks",
+      "patents": "Patent | Patents",
+      "positions": "Open position | Open positions",
+      "presentation": "Presentation | Presentations",
+      "team": "Team | Teams",
+      "similar-researchers": "Similar researcher | Similar researchers",
+      "affiliations": "Affiliation | Affiliations",
+      "awards": "Award | Awards",
+      "trade": "Need / Availabilitie | Needs / Availabilities",
+      "teaching": "Teaching | Teachings",
+      "research-areas": "Research area | Research areas",
+      "research-areas-skills": "Research areas & skills"
+    },
     "relators": {
       "abr": "abridger",
       "acp": "art copyist",
@@ -3202,7 +3229,23 @@
       "BookOfChapters": "Book Of Chapters",
       "Presentation": "Presentation",
       "UNKNOWN": "Unknown"
-    }
+    },
+    "view": {
+      "all": "View all",
+      "all-researchers": "View all researchers",
+      "all-publications": "View all publications",
+      "all-conferences": "View all conferences",
+      "all-domains": "View domains",
+      "all-network": "View network",
+      "all-job-offers": "View all job offers"
+    },
+    "stats": {
+      "citations": "Citations",
+      "h-index": "h-index",
+      "i10-index": "i10-index"
+    },
+    "download-resume": "Download Resume",
+    "top-collaborations": "Top collaborations"
   },
   "tos": {
     "evolved": "Our Terms and Conditions have been updated, please take a moment to review and approve them.",

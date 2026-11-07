@@ -511,6 +511,7 @@
     "delete-description": "Sind Sie sicher, dass Sie Ihre Kommentare dauerhaft löschen möchten? Diese Aktion wird irreversibel sein."
   },
   "common": {
+    "ai-generated": "KI-generiert",
     "activate": "Aktivieren",
     "activated": "Aktiviert",
     "add": "Hinzufügen",
@@ -593,7 +594,8 @@
     "image": "Bild",
     "select-placeholder": "Wählen Sie...",
     "error": "Fehler",
-    "expand": "expandieren"
+    "expand": "expandieren",
+    "see-top-n": "Siehe oben {n}"
   },
   "complete-profile": {
     "bio": {
@@ -3254,6 +3256,47 @@
       "BookOfChapters": "Bücher von Kapiteln",
       "Presentation": "Präsentation",
       "UNKNOWN": "Unbekannt"
+    },
+    "affiliations": {
+      "boards": "Gremien",
+      "societies": "Fachgesellschaften"
+    },
+    "view": {
+      "all": "Alle anzeigen",
+      "all-researchers": "Alle Forscher anzeigen",
+      "all-publications": "Alle Veröffentlichungen anzeigen",
+      "all-conferences": "Alle Konferenzen anzeigen",
+      "all-domains": "Gebiete anzeigen",
+      "all-network": "Netzwerk anzeigen",
+      "all-job-offers": "Alle Stellenangebote anzeigen"
+    },
+    "stats": {
+      "citations": "Zitationen",
+      "h-index": "h-Index",
+      "i10-index": "i10-Index"
+    },
+    "download-resume": "Lebenslauf herunterladen",
+    "top-collaborations": "Top-Kooperationen",
+    "title": {
+      "affiliated": "Affiliierte Forscher | Verbundene Forscher",
+      "publications": "Veröffentlichung | Veröffentlichungen",
+      "conferences": "Konferenz | Konferenzen",
+      "availabilities": "Availabiliti | Verfügbarkeit",
+      "domain": "Forschungsbereich | Forschungsgebiete",
+      "fundings": "Finanzierung | Finanzierungen",
+      "needs": "Notwendigkeit | Bedarf",
+      "network": "Netzwerk | Netzwerke",
+      "patents": "Patent | Patente",
+      "positions": "Offene Position | Offene Positionen",
+      "presentation": "Präsentation | Präsentationen",
+      "team": "Team | Teams",
+      "similar-researchers": "Ähnliche Forscher | Ähnliche Forscher",
+      "affiliations": "Zugehörigkeit | Zugehörigkeiten",
+      "awards": "Preis | Auszeichnungen",
+      "trade": "Brauchen / Availabilitie | Bedürfnisse / Verfügbarkeiten",
+      "teaching": "Lehren | Lehren",
+      "research-areas": "Forschungsgebiet | Forschungsgebiete",
+      "research-areas-skills": "Forschungsbereiche und Kompetenzen"
     }
   },
   "vector-store": {

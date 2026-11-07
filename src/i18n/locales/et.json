@@ -511,6 +511,7 @@
     "delete-description": "Kas tõesti kustutada oma kommentaarid jäädavalt? See tegevus on pöördumatu."
   },
   "common": {
+    "ai-generated": "Tehisintellekti loodud",
     "activate": "Aktiveeri",
     "activated": "Aktiveeritud",
     "add": "Lisa",
@@ -593,7 +594,8 @@
     "image": "pilt",
     "select-placeholder": "Valige...",
     "error": "viga",
-    "expand": "laiendada"
+    "expand": "laiendada",
+    "see-top-n": "Vt ülaosa {n}"
   },
   "complete-profile": {
     "bio": {
@@ -3254,6 +3256,47 @@
       "BookOfChapters": "Peatükkide raamat",
       "Presentation": "Esitlus",
       "UNKNOWN": "Tundmatu"
+    },
+    "affiliations": {
+      "boards": "Nõukogud",
+      "societies": "Seltsid"
+    },
+    "view": {
+      "all": "Vaata kõiki",
+      "all-researchers": "Vaata kõiki teadlasi",
+      "all-publications": "Vaata kõiki publikatsioone",
+      "all-conferences": "Vaata kõiki konverentse",
+      "all-domains": "Vaata valdkondi",
+      "all-network": "Vaata võrgustikku",
+      "all-job-offers": "Vaata kõiki tööpakkumisi"
+    },
+    "stats": {
+      "citations": "Tsitaadid",
+      "h-index": "h-indeks",
+      "i10-index": "i10-indeks"
+    },
+    "download-resume": "Laadi CV alla",
+    "top-collaborations": "Peamised koostööpartnerid",
+    "title": {
+      "affiliated": "Seotud teadlane | Seotud teadlased",
+      "publications": "Avaldamine | Trükised",
+      "conferences": "Konverents | Konverentsid",
+      "availabilities": "Availabilitie | Saadavus",
+      "domain": "Uurimisvaldkond | Uurimisvaldkonnad",
+      "fundings": "Rahastamine | Rahastused",
+      "needs": "Vaja | Vajab",
+      "network": "Network | Võrgud",
+      "patents": "Patent | Patendid",
+      "positions": "Avatud positsioon | Avatud positsioonid",
+      "presentation": "Esitlus | Esitlused",
+      "team": "Meeskond | Meeskonnad",
+      "similar-researchers": "Sarnane teadlane | Sarnased uurijad",
+      "affiliations": "Kuulumine | Seosed",
+      "awards": "Auhind | Auhinnad",
+      "trade": "Vajadus / Availabilitie | Vajadused / kättesaadavus",
+      "teaching": "Õpetamine | Õpetamine",
+      "research-areas": "Uurimisvaldkond | Uurimisvaldkonnad",
+      "research-areas-skills": "Uurimisvaldkonnad ja -oskused"
     }
   },
   "vector-store": {
