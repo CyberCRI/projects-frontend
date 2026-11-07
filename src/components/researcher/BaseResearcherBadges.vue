@@ -3,9 +3,7 @@
     <template v-for="badge in badges" :key="badge.label">
       <component :is="badge.link ? NuxtLink : 'div'" :to="badge.link" class="badge">
         <IconImage class="badge-icon" :name="badge.icon" />
-        <span class="badge-label">
-          {{ badge.label }}
-        </span>
+        <span class="badge-label">{{ badge.count }} {{ badge.label }}</span>
       </component>
     </template>
   </div>
