@@ -27,8 +27,8 @@ import type {
 } from 'shared-projects-frontend/models'
 import { mapPeopleGroupPreview, mapUserPreview } from '~/mcp-server/projects/user-tool'
 import { addIfExists, tagMapPreview } from '~/mcp-server/projects/utils'
+import type { McpServer } from '@modelcontextprotocol/server'
 import { mcpOptions, orgCode, resultFromTool } from './base'
-import type { TypeMcpServer } from '~/interfaces/mcp'
 import { mapSDG } from './sdg-tool'
 import { pick } from 'es-toolkit'
 import { z } from 'zod'
@@ -87,19 +87,19 @@ export const mapBlogEntry = (blog: BlogEntryModel) => ({
 export const FETCH_PROJECT_SLUG_OR_ID =
   'If you dont have the slug (given under "slug" or "id" key in a previous tool call data) or id of the project, use the search tool with the project name, the project id or slug will be in the first result, else use the previously mentioned slug or id.'
 
-export default (server: TypeMcpServer) => {
+export default (server: McpServer) => {
   // Add an search tool
   server.registerTool(
     'project-general-data',
     {
       title: 'Project general data',
       description: `Get main general data (description, goals, blog entries, members...) about a project given its id or slug. ${FETCH_PROJECT_SLUG_OR_ID}`,
-      inputSchema: {
+      inputSchema: z.object({
         idOrSlug: z.string().describe('The id or slug of the project'),
-      },
+      }),
     },
-    resultFromTool(async ({ idOrSlug }, extras) => {
-      const opts = mcpOptions(extras)
+    resultFromTool(async ({ idOrSlug }, ctx) => {
+      const opts = mcpOptions(ctx)
 
       const onError = (error) => {
         console.error(error)
@@ -178,12 +178,12 @@ export default (server: TypeMcpServer) => {
     {
       title: 'Project similar projects',
       description: `Get projects that are similar to the one given by its id or slug.   ${FETCH_PROJECT_SLUG_OR_ID}`,
-      inputSchema: {
+      inputSchema: z.object({
         idOrSlug: z.string().describe('The id or slug of the project'),
-      },
+      }),
     },
-    resultFromTool(({ idOrSlug }, extras) => {
-      const opts = mcpOptions(extras)
+    resultFromTool(({ idOrSlug }, ctx) => {
+      const opts = mcpOptions(ctx)
       return getProjectSimilars(idOrSlug, {
         ...opts,
         query: {
@@ -199,12 +199,12 @@ export default (server: TypeMcpServer) => {
     {
       title: 'Project blog entries',
       description: `Get main blog entries about a project given its id or slug. ${FETCH_PROJECT_SLUG_OR_ID}`,
-      inputSchema: {
+      inputSchema: z.object({
         idOrSlug: z.string().describe('The id or slug of the project'),
-      },
+      }),
     },
-    resultFromTool(({ idOrSlug }, extras) => {
-      const opts = mcpOptions(extras)
+    resultFromTool(({ idOrSlug }, ctx) => {
+      const opts = mcpOptions(ctx)
       return getBlogEntries(idOrSlug, opts).then((page) => page.results.map(mapBlogEntry))
     })
   )
@@ -215,13 +215,13 @@ export default (server: TypeMcpServer) => {
     {
       title: 'Project blog entries',
       description: `Get main blog entries about a project given its id or slug. ${FETCH_PROJECT_SLUG_OR_ID}`,
-      inputSchema: {
+      inputSchema: z.object({
         idOrSlug: z.string().describe('The id or slug of the project'),
         blogEntryId: z.number().describe('The id of the blog entry'),
-      },
+      }),
     },
-    resultFromTool(({ idOrSlug, blogEntryId }, extras) => {
-      const opts = mcpOptions(extras)
+    resultFromTool(({ idOrSlug, blogEntryId }, ctx) => {
+      const opts = mcpOptions(ctx)
       return getBlogEntry(idOrSlug, blogEntryId, opts).then((blog) => mapBlogEntry(blog))
     })
   )

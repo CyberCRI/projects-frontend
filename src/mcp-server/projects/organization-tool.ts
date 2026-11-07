@@ -1,9 +1,9 @@
 import { getFeaturedProjects, getOrganizationByCode } from 'shared-projects-frontend/apis'
+import type { McpServer } from '@modelcontextprotocol/server'
 import { mcpOptions, orgCode, resultFromTool } from './base'
-import type { TypeMcpServer } from '~/interfaces/mcp'
 import { mapProjectPreview } from './project-tool'
 
-export default (server: TypeMcpServer) => {
+export default (server: McpServer) => {
   // Add an search tool
   server.registerTool(
     'organization-data',
@@ -12,8 +12,8 @@ export default (server: TypeMcpServer) => {
       description:
         'Get main general data about the platform organization such as its  description, title and terms and conditions. ',
     },
-    resultFromTool((_, extras) => {
-      const opts = mcpOptions(extras)
+    resultFromTool((_, ctx) => {
+      const opts = mcpOptions(ctx)
       return getOrganizationByCode(orgCode, opts).then((orgnization) => ({
         item_type: 'organization',
         id: orgnization.id,
@@ -36,8 +36,8 @@ export default (server: TypeMcpServer) => {
       title: 'Organization featured projects',
       description: 'Get a list of featured projects for the platform organization.',
     },
-    resultFromTool((_, extras) => {
-      const opts = mcpOptions(extras)
+    resultFromTool((_, ctx) => {
+      const opts = mcpOptions(ctx)
       return getFeaturedProjects(orgCode, opts).then((pages) =>
         pages.results.map(mapProjectPreview)
       )

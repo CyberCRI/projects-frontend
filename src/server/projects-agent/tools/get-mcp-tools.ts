@@ -1,5 +1,5 @@
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
-import { MultiServerMCPClient } from '@langchain/mcp-adapters'
+import { MCPAdapter } from '@langchain/mcp-adapters'
 
 const runtimeConfig = useRuntimeConfig()
 const { appMcpServerUrl } = runtimeConfig
@@ -42,10 +42,10 @@ export default async function getMcpTools(
     mcpConfigs[slug] = aConfig
   })
 
-  const client = new MultiServerMCPClient(mcpConfigs)
+  const client = new MCPAdapter({ servers: mcpConfigs })
 
   // TODO: add middlkewrae to select tools
-  const mcpTools = await client.getTools()
+  const mcpTools = await client.listTools()
   traceMcp('mcp tool', JSON.stringify(mcpTools, null, 2))
   event.node.res.on('close', () => {
     client.close().catch(() => {})
