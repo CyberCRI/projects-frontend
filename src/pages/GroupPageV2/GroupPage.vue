@@ -230,7 +230,7 @@ const groupTabsDisplay = computed(() => {
       view: `/group/${route.params.groupIdOrSlug}/domains`,
       altView: `/group/${route.params.groupIdOrSlug}/domains/edit`,
       condition: isStructure.value,
-      noTitle: true,
+      noTitle: false,
       icon: GROUP_MODULE_ICON.domain,
     },
     {
@@ -263,7 +263,7 @@ const groupTabsDisplay = computed(() => {
       view: `/group/${route.params.groupIdOrSlug}/positions`,
       altView: `/group/${route.params.groupIdOrSlug}/positions/edit`,
       condition: isStructure.value || isTeam.value,
-      noTitle: true,
+      noTitle: false,
       icon: GROUP_MODULE_ICON.positions,
     },
     {
@@ -275,7 +275,7 @@ const groupTabsDisplay = computed(() => {
       view: `/group/${route.params.groupIdOrSlug}/awards`,
       altView: `/group/${route.params.groupIdOrSlug}/awards/edit`,
       condition: isStructure.value,
-      noTitle: true,
+      noTitle: false,
       icon: GROUP_MODULE_ICON.awards,
     },
     {
@@ -287,7 +287,7 @@ const groupTabsDisplay = computed(() => {
       view: `/group/${route.params.groupIdOrSlug}/funding`,
       altView: `/group/${route.params.groupIdOrSlug}/funding/edit`,
       condition: isStructure.value,
-      noTitle: true,
+      noTitle: false,
       icon: GROUP_MODULE_ICON.fundings,
     },
     {
@@ -299,7 +299,7 @@ const groupTabsDisplay = computed(() => {
       view: `/group/${route.params.groupIdOrSlug}/teaching`,
       altView: `/group/${route.params.groupIdOrSlug}/teaching/edit`,
       condition: isStructure.value,
-      noTitle: true,
+      noTitle: false,
       icon: GROUP_MODULE_ICON.teachings,
     },
     {
@@ -310,8 +310,8 @@ const groupTabsDisplay = computed(() => {
       tabLabel: t(GROUP_MODULE_TITLE.platformTab),
       view: `/group/${route.params.groupIdOrSlug}/platform`,
       altView: `/group/${route.params.groupIdOrSlug}/funding/platform`,
-      condition: isStructure.value,
-      noTitle: true,
+      condition: false && isStructure.value,
+      noTitle: false,
       icon: GROUP_MODULE_ICON.platform,
     },
   ] satisfies MenuEntry[]

@@ -28,6 +28,7 @@ import {
   getResearcherTeachings as fetchResearcherTeachings,
   getResearcherFundings as fetchResearcherFundings,
   getResearcherStructures as fetchResearcherStructures,
+  getStructureResearcherDomains as fetchStructureResearcherDomains,
 } from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
@@ -356,12 +357,37 @@ export const getResearcherStructures = (
 
 // structures
 
+const mockPaginated = (v) =>
+  Promise.resolve({
+    count: 0,
+    total_page: 0,
+    current_page: 1,
+    next: null,
+    next_page: 2,
+    previous: null,
+    previous_page: null,
+    results: v || [],
+  })
+
 export const getStructureAwards = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   structureId: RefOrRaw<Structure['id']>,
   config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
 ) => {
-  console.log('TODO: getStructureAwards', organizationCode, structureId, config)
+  const key = computed(() => `${unref(organizationCode)}::structure::${unref(structureId)}::awards`)
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) => {
+      console.log('TODO: getStructureAwards', organizationCode, structureId, config)
+      return mockPaginated()
+    },
+
+    {
+      //      translate: (data) => translateTeachings(data),
+      watch: onlyRefs([organizationCode, structureId]),
+      ...config,
+    }
+  )
 }
 
 export const getStructureFundings = (
@@ -369,7 +395,22 @@ export const getStructureFundings = (
   structureId: RefOrRaw<Structure['id']>,
   config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
 ) => {
-  console.log('TODO: getStructureFundings', organizationCode, structureId, config)
+  const key = computed(
+    () => `${unref(organizationCode)}::structure::${unref(structureId)}::fundings`
+  )
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) => {
+      console.log('TODO: getStructureFundings', organizationCode, structureId, config)
+      return mockPaginated()
+    },
+
+    {
+      //      translate: (data) => translateTeachings(data),
+      watch: onlyRefs([organizationCode, structureId]),
+      ...config,
+    }
+  )
 }
 
 export const getStructureSimilars = (
@@ -377,7 +418,22 @@ export const getStructureSimilars = (
   structureId: RefOrRaw<Structure['id']>,
   config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
 ) => {
-  console.log('TODO: getStructureSimilars', organizationCode, structureId, config)
+  const key = computed(
+    () => `${unref(organizationCode)}::structure::${unref(structureId)}::similar`
+  )
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) => {
+      console.log('TODO: getStructureSimilars', organizationCode, structureId, config)
+      return mockPaginated()
+    },
+
+    {
+      //      translate: (data) => translateTeachings(data),
+      watch: onlyRefs([organizationCode, structureId]),
+      ...config,
+    }
+  )
 }
 
 export const getStructureTeachings = (
@@ -385,5 +441,44 @@ export const getStructureTeachings = (
   structureId: RefOrRaw<Structure['id']>,
   config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
 ) => {
-  console.log('TODO: getStructureTeachings', organizationCode, structureId, config)
+  const key = computed(
+    () => `${unref(organizationCode)}::structure::${unref(structureId)}::teachings`
+  )
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) => {
+      console.log('TODO: getStructureTeachings', organizationCode, structureId, config)
+      return mockPaginated()
+    },
+
+    {
+      //      translate: (data) => translateTeachings(data),
+      watch: onlyRefs([organizationCode, structureId]),
+      ...config,
+    }
+  )
+}
+
+export const getStructureDomains = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  structureId: RefOrRaw<Structure['id']>,
+  config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
+) => {
+  const key = computed(
+    () => `${unref(organizationCode)}::structure::${unref(structureId)}::domains`
+  )
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) =>
+      fetchStructureResearcherDomains(unref(organizationCode), unref(structureId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+
+    {
+      //      translate: (data) => translateTeachings(data),
+      watch: onlyRefs([organizationCode, structureId]),
+      ...config,
+    }
+  )
 }

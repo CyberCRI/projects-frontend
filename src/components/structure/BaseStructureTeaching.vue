@@ -54,10 +54,10 @@ const props = withDefaults(
   { limit: null, preview: false }
 )
 
-const structureId = computed(() => props.group.structure?.id)
+const structureId = computed(() => props.group.structure?.id || 0)
 const organizationCode = useOrganizationCode()
 const limitSkeletons = computed(() =>
-  maxSkeleton(props.group.structure.modules.teachings, props.limit)
+  maxSkeleton(props.group.structure?.modules?.teachings || 0, props.limit)
 )
 
 const {
