@@ -282,7 +282,6 @@ export default function useAutoTranslate() {
     computed(() => $translateResearcherStructure(unref(data), language.value))
   const translateResearcherStructures = (data: RefOrRaw<ResearcherStructure[]>) =>
     computed(() => translateMany($translateResearcherStructure, unref(data), language.value))
-
   return {
     isAutoTranslateActivated,
     getTranslatableField,
