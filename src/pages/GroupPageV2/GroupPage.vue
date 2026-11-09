@@ -119,6 +119,13 @@ const groupHierarchy = computed(() => {
 
 const groupModules = computed(() => group.value?.modules ?? groupSkeleton()['modules'])
 
+const modulesStructure = computed<Researcher['modules']>(() => {
+  return {
+    ...groupSkeleton()['modules'],
+    ...(group.value?.structure?.modules ?? {}),
+  }
+})
+
 const defaultProps = computed(() => {
   return {
     group: group.value,
@@ -153,7 +160,7 @@ const groupTabsDisplay = computed(() => {
       label: t('group.teams'),
       view: `/group/${route.params.groupIdOrSlug}/teams`,
       altView: `/group/${route.params.groupIdOrSlug}/teams/edit`,
-      condition: isStructure.value,
+      condition: isStructure.value && modulesStructure.value.sub_structures,
       noTitle: true,
       icon: GROUP_MODULE_ICON.members,
     },
@@ -162,6 +169,7 @@ const groupTabsDisplay = computed(() => {
       key: 'group-members',
       dataTest: 'group-members',
       label: t(GROUP_MODULE_TITLE.members, groupModules.value.members),
+      tabLabel: t(GROUP_MODULE_TITLE.membersTab),
       view: `/group/${route.params.groupIdOrSlug}/members`,
       altView: `/group/${route.params.groupIdOrSlug}/members/edit`,
       condition: !!groupModules.value.members,
@@ -243,7 +251,7 @@ const groupTabsDisplay = computed(() => {
       tabLabel: t(GROUP_MODULE_TITLE.domainTab),
       view: `/group/${route.params.groupIdOrSlug}/domains`,
       altView: `/group/${route.params.groupIdOrSlug}/domains/edit`,
-      condition: isStructure.value,
+      condition: isStructure.value && modulesStructure.value.research_domains,
       noTitle: false,
       icon: GROUP_MODULE_ICON.domain,
     },
@@ -276,7 +284,7 @@ const groupTabsDisplay = computed(() => {
       tabLabel: t(GROUP_MODULE_TITLE.positionsTab),
       view: `/group/${route.params.groupIdOrSlug}/positions`,
       altView: `/group/${route.params.groupIdOrSlug}/positions/edit`,
-      condition: isStructure.value || isTeam.value,
+      condition: (isStructure.value || isTeam.value) && modulesStructure.value.positions,
       noTitle: false,
       icon: GROUP_MODULE_ICON.positions,
     },
@@ -288,7 +296,7 @@ const groupTabsDisplay = computed(() => {
       tabLabel: t(GROUP_MODULE_TITLE.awardsTab),
       view: `/group/${route.params.groupIdOrSlug}/awards`,
       altView: `/group/${route.params.groupIdOrSlug}/awards/edit`,
-      condition: isStructure.value,
+      condition: isStructure.value && modulesStructure.value.awards,
       noTitle: false,
       icon: GROUP_MODULE_ICON.awards,
     },
@@ -300,7 +308,7 @@ const groupTabsDisplay = computed(() => {
       tabLabel: t(GROUP_MODULE_TITLE.fundingsTab),
       view: `/group/${route.params.groupIdOrSlug}/funding`,
       altView: `/group/${route.params.groupIdOrSlug}/funding/edit`,
-      condition: isStructure.value,
+      condition: isStructure.value && modulesStructure.value.fundings,
       noTitle: false,
       icon: GROUP_MODULE_ICON.fundings,
     },
@@ -312,7 +320,7 @@ const groupTabsDisplay = computed(() => {
       tabLabel: t(GROUP_MODULE_TITLE.teachingTab),
       view: `/group/${route.params.groupIdOrSlug}/teaching`,
       altView: `/group/${route.params.groupIdOrSlug}/teaching/edit`,
-      condition: isStructure.value,
+      condition: isStructure.value && modulesStructure.value.teachings,
       noTitle: false,
       icon: GROUP_MODULE_ICON.teachings,
     },
@@ -324,7 +332,7 @@ const groupTabsDisplay = computed(() => {
       tabLabel: t(GROUP_MODULE_TITLE.platformTab),
       view: `/group/${route.params.groupIdOrSlug}/platform`,
       altView: `/group/${route.params.groupIdOrSlug}/funding/platform`,
-      condition: false, // && isStructure.value,
+      condition: isStructure.value && modulesStructure.value.platform, // TODO: use real key when available
       noTitle: false,
       icon: GROUP_MODULE_ICON.platform,
     },

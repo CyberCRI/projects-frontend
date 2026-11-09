@@ -100,20 +100,25 @@
           class="main-sdgs"
         />
       </template>
+
+      <!-- drawer views -->
+      <div>
+        <LocationDrawer
+          v-if="group.locations.length"
+          :is-opened="stateModal"
+          :locations="group.locations"
+          @close="closeModal()"
+          class="emptyable"
+        />
+        <UserProfileDrawer
+          :is-opened="!!leaderIdDrawer"
+          :user-id="leaderIdDrawer"
+          @close="closeProfile"
+          class="emptyable"
+        />
+      </div>
     </div>
   </div>
-  <!-- drawer views -->
-  <LocationDrawer
-    v-if="group.locations.length"
-    :is-opened="stateModal"
-    :locations="group.locations"
-    @close="closeModal()"
-  />
-  <UserProfileDrawer
-    :is-opened="!!leaderIdDrawer"
-    :user-id="leaderIdDrawer"
-    @close="closeProfile"
-  />
 </template>
 
 <script setup lang="ts">
@@ -242,7 +247,116 @@ const sortedDomains = computed(() => [
       $t: { title: 'Artificial Intelligence', description: '' },
     },
   },
+  {
+    domain: {
+      title_nl: null,
+      description: '',
+      description_et: null,
+      description_nl: null,
+      title_fr: 'Cognitive science',
+      title_ca: null,
+      description_de: null,
+      description_ca: null,
+      description_en: null,
+      title_es: null,
+      id: 430,
+      type: 'Wikipedia',
+      title_de: null,
+      title_en: 'Cognitive science',
+      secondary_type: 'tag',
+      title: 'Cognitive science',
+      description_es: null,
+      title_et: null,
+      description_fr: null,
+    },
+    level: 80,
+    tag: {
+      title_nl: null,
+      description: '',
+      description_et: null,
+      description_nl: null,
+      title_fr: 'Cognitive science',
+      title_ca: null,
+      description_de: null,
+      description_ca: null,
+      description_en: null,
+      title_es: null,
+      id: 430,
+      type: 'Wikipedia',
+      title_de: null,
+      title_en: 'Cognitive science',
+      secondary_type: 'tag',
+      title: 'Cognitive science',
+      description_es: null,
+      title_et: null,
+      description_fr: null,
+      $t: { title: 'Cognitive science', description: '' },
+    },
+  },
+
+  {
+    domain: {
+      title_nl: null,
+      description: '',
+      description_et: null,
+      description_nl: null,
+      title_fr: 'Robotics',
+      title_ca: null,
+      description_de: null,
+      description_ca: null,
+      description_en: null,
+      title_es: null,
+      id: 430,
+      type: 'Wikipedia',
+      title_de: null,
+      title_en: 'Robotics',
+      secondary_type: 'tag',
+      title: 'Robotics',
+      description_es: null,
+      title_et: null,
+      description_fr: null,
+    },
+    level: 60,
+    tag: {
+      title_nl: null,
+      description: '',
+      description_et: null,
+      description_nl: null,
+      title_fr: 'Robotics',
+      title_ca: null,
+      description_de: null,
+      description_ca: null,
+      description_en: null,
+      title_es: null,
+      id: 430,
+      type: 'Wikipedia',
+      title_de: null,
+      title_en: 'Robotics',
+      secondary_type: 'tag',
+      title: 'Robotics',
+      description_es: null,
+      title_et: null,
+      description_fr: null,
+      $t: { title: 'Robotics', description: '' },
+    },
+  },
 ])
+
+const contacts = computed(() => {
+  const res = []
+
+  if (props.group.email) {
+    res.push({ icon: 'ExternalLink', label: 'Contact', link: props.group.email })
+  }
+  if (props.group.website) {
+    // TODO: does exists ?
+    res.push({ icon: 'ExternalLink', label: 'Website', link: props.group.website })
+  }
+
+  // TODO: social networks and other
+
+  return res
+})
 </script>
 
 <style lang="scss" scoped>
