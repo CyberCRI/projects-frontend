@@ -266,22 +266,22 @@ export default function useAutoTranslate() {
     computed(() => translateMany($translateTeaching, unref(data), language.value))
 
   const translateStructure = (data: RefOrRaw<Structure>) =>
-    $translateStructure(unref(data), language.value)
+    computed(() => $translateStructure(unref(data), language.value))
   const translateStructureResearcher = (data: RefOrRaw<StructureResearcher>) =>
-    $translateStructureResearcher(unref(data), language.value)
+    computed(() => $translateStructureResearcher(unref(data), language.value))
   const translateStructureRelation = (data: RefOrRaw<StructureRelation>) =>
-    $translateStructureRelation(unref(data), language.value)
+    computed(() => $translateStructureRelation(unref(data), language.value))
   const translateStructures = (data: RefOrRaw<Structure[]>) =>
-    translateMany($translateStructure, unref(data), language.value)
+    computed(() => translateMany($translateStructure, unref(data), language.value))
   const translateStructureResearchers = (data: RefOrRaw<StructureResearcher[]>) =>
-    translateMany($translateStructureResearcher, unref(data), language.value)
+    computed(() => translateMany($translateStructureResearcher, unref(data), language.value))
   const translateStructureRelations = (data: RefOrRaw<StructureRelation[]>) =>
-    translateMany($translateStructureRelation, unref(data), language.value)
+    computed(() => translateMany($translateStructureRelation, unref(data), language.value))
 
   const translateResearcherStructure = (data: RefOrRaw<ResearcherStructure>) =>
-    $translateResearcherStructure(unref(data), language.value)
+    computed(() => $translateResearcherStructure(unref(data), language.value))
   const translateResearcherStructures = (data: RefOrRaw<ResearcherStructure[]>) =>
-    translateMany($translateResearcherStructure, unref(data), language.value)
+    computed(() => translateMany($translateResearcherStructure, unref(data), language.value))
 
   return {
     isAutoTranslateActivated,

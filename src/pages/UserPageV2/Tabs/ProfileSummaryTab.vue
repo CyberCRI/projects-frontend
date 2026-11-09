@@ -23,7 +23,7 @@ const bioEmpty = computed(() => textIsEmpty(props.user.$t.description))
 
     <ResearcherBadgesPreview :user="user" />
 
-    <div class="profile-row">
+    <div v-if="user.researcher?.$t.bio" class="profile-row">
       <ResearcherPresentationPreview class="resarcher-presentaion" :user="user" />
       <ResearcherSimilarPreview
         v-if="user.researcher?.modules?.similars"

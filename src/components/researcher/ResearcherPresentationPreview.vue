@@ -7,15 +7,15 @@
       <AIGeneratedMark class="ai-mark" />
     </template>
     <template #content>
-      <BaseResearcherPresentation :user="user" preview />
+      <ContentExpandable :description="user.researcher.$t.bio" :height-limit="400" />
     </template>
     <template #footer>
       <div class="actions">
-        <BaseModuleButton
+        <!-- <BaseModuleButton
           :label="$t('common.see-more')"
           :to="`/profile/${userSlugOrId}/bio`"
           btn-icon="Plus"
-        />
+        /> -->
         <BaseModuleButton :label="$t('researcher.download-resume')" btn-icon="TrayArrowDown" />
       </div>
     </template>
@@ -26,9 +26,7 @@ import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { USER_MODULE_ICON, USER_MODULE_TITLE } from '~/functs/constants'
 
-const props = defineProps<{ user: TranslatedUserModel }>()
-
-const userSlugOrId = computed(() => props.user.slug || props.user.id)
+defineProps<{ user: TranslatedUserModel }>()
 </script>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';

@@ -28,12 +28,25 @@
       <div v-if="user.researcher" class="researcher-roles">
         <FetchLoader :status="status" only-error skeleton>
           <p v-for="structure in researcherStructures" :key="structure.id" class="researcher-role">
-            <span class="role-label skeletons-text">{{ structure.position }} —&nbsp;</span>
+            <span v-if="structure.position" class="role-label skeletons-text">
+              {{ structure.position }} —&nbsp;
+            </span>
             <LinkButton
+              v-if="structure.structure.people_group"
               class="role-structure"
+              :to="{
+                name: 'Group',
+                params: {
+                  groupIdOrSlug:
+                    structure.structure.people_group.slug || structure.structure.people_group.id,
+                },
+              }"
               :label="structure.structure.name"
               btn-icon="Building4"
             />
+            <span v-else class="role-structure">
+              {{ structure.structure.name }}
+            </span>
           </p>
         </FetchLoader>
       </div>
@@ -116,6 +129,7 @@ import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
 // import IdentifierLink from '~/components/profile/modules/Documents/IdentifierLink.vue'
 import { getResearcherStructures } from '~/api/v2/crisalid.service'
+import { factoryPagination } from '~/skeletons/base.skeletons'
 import { researcherHarvesterToUrl } from '~/functs/researcher'
 import { capitalize } from '~/functs/string'
 
@@ -148,11 +162,13 @@ const contacts = computed(() => {
     return res
   }
 
-  const googleScholar = researcher.identifiers.find((iden) => iden.harvester === 'googlescholar')
-  const orcid = researcher.identifiers.find((iden) => iden.harvester === 'orcid')
-  const scopus = researcher.identifiers.find((iden) => iden.harvester === 'googlescholar')
-  const hal = researcher.identifiers.find((iden) => iden.harvester === 'hal')
-  const idref = researcher.identifiers.find((iden) => iden.harvester === 'idref')
+  const googleScholar = (researcher.identifiers || []).find(
+    (iden) => iden.harvester === 'googlescholar'
+  )
+  const orcid = (researcher.identifiers || []).find((iden) => iden.harvester === 'orcid')
+  const scopus = (researcher.identifiers || []).find((iden) => iden.harvester === 'googlescholar')
+  const hal = (researcher.identifiers || []).find((iden) => iden.harvester === 'hal')
+  const idref = (researcher.identifiers || []).find((iden) => iden.harvester === 'idref')
 
   if (googleScholar) {
     res.push({
@@ -193,6 +209,7 @@ const { status, data: researcherStructures } = getResearcherStructures(
     paginationConfig: {
       limit: 3,
     },
+    default: () => factoryPagination(() => null, 0),
   }
 )
 </script>
