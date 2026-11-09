@@ -20,7 +20,7 @@
         <!--TODO: put this back once the new page is created-->
         <!--                <HeaderLink :label="$t('search.peoples')" route="people" :to="{name: 'People'}" />-->
         <HeaderLink
-          v-if="!!organisation.modules.categories"
+          v-if="!!organisation?.modules?.categories"
           :label="$t('projects')"
           :routes="[
             'Categories',
@@ -364,28 +364,28 @@ export default {
           label: this.$t('home.calendar').toUpperCase(),
           to: { name: 'CalendarPage' },
           leftIcon: 'Calendar',
-          condition: !!this.organisation.modules.events,
+          condition: !!this.organisation?.modules?.events,
           dataTest: 'more-calendar',
         },
         {
           label: this.$t('home.instructions').toUpperCase(),
           to: { name: 'InstructionListPage' },
           leftIcon: 'BookmarkBoxOutline',
-          condition: !!this.organisation.modules.instructions,
+          condition: !!this.organisation?.modules?.instructions,
           dataTest: 'more-instructions',
         },
         {
           label: this.$t('home.news').toUpperCase(),
           to: { name: 'NewsListPage' },
           leftIcon: 'Article',
-          condition: !!this.organisation.modules.news,
+          condition: !!this.organisation?.modules?.news,
           dataTest: 'more-instructions',
         },
         {
           label: this.$t('home.announcements').toUpperCase(),
           to: { name: 'AnnouncementsPage' },
           leftIcon: 'BullhornOutline',
-          condition: !!this.organisation.modules.announcements,
+          condition: !!this.organisation?.modules?.announcements,
           dataTest: 'announcements',
         },
         {
@@ -439,21 +439,21 @@ export default {
           label: this.$t('projects'),
           action: () => this.goTo('Categories'),
           leftIcon: null,
-          condition: !!this.organisation.modules.projects,
+          condition: !!this.organisation?.modules?.projects,
           dataTest: 'search',
         },
         {
           label: this.$t('common.people'),
           action: () => this.goTo('People'),
           leftIcon: null,
-          condition: !!this.organisation.modules.users,
+          condition: !!this.organisation?.modules?.users,
           dataTest: 'people',
         },
         {
           label: this.$t('common.groups'),
           action: () => this.goTo('Groups'),
           leftIcon: null,
-          condition: !!this.organisation.modules.groups,
+          condition: !!this.organisation?.modules?.groups,
           dataTest: 'people',
         },
         {
