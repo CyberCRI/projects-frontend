@@ -38,6 +38,10 @@ import {
   translateFunding as $translateFunding,
   translateTeaching as $translateTeaching,
   translateResearcherAward as $translateResearcherAward,
+  translateStructure as $translateStructure,
+  translateStructureResearcher as $translateStructureResearcher,
+  translateStructureRelation as $translateStructureRelation,
+  translateResearcherStructure as $translateResearcherStructure,
 } from 'shared-projects-frontend/translate'
 import type {
   GeneralLocationPeopleGroup,
@@ -76,6 +80,10 @@ import type {
   Funding,
   Teaching,
   ResearcherAward,
+  Structure,
+  StructureResearcher,
+  StructureRelation,
+  ResearcherStructure,
 } from 'shared-projects-frontend/models'
 import type { Agent } from '~~/prisma-chatbot-db/generated/prisma/browser'
 import type { TranslatedAgent } from '~/models/agent.model'
@@ -257,6 +265,24 @@ export default function useAutoTranslate() {
   const translateTeachings = (data: RefOrRaw<Teaching[]>) =>
     computed(() => translateMany($translateTeaching, unref(data), language.value))
 
+  const translateStructure = (data: RefOrRaw<Structure>) =>
+    $translateStructure(unref(data), language.value)
+  const translateStructureResearcher = (data: RefOrRaw<StructureResearcher>) =>
+    $translateStructureResearcher(unref(data), language.value)
+  const translateStructureRelation = (data: RefOrRaw<StructureRelation>) =>
+    $translateStructureRelation(unref(data), language.value)
+  const translateStructures = (data: RefOrRaw<Structure[]>) =>
+    translateMany($translateStructure, unref(data), language.value)
+  const translateStructureResearchers = (data: RefOrRaw<StructureResearcher[]>) =>
+    translateMany($translateStructureResearcher, unref(data), language.value)
+  const translateStructureRelations = (data: RefOrRaw<StructureRelation[]>) =>
+    translateMany($translateStructureRelation, unref(data), language.value)
+
+  const translateResearcherStructure = (data: RefOrRaw<ResearcherStructure>) =>
+    $translateResearcherStructure(unref(data), language.value)
+  const translateResearcherStructures = (data: RefOrRaw<ResearcherStructure[]>) =>
+    translateMany($translateResearcherStructure, unref(data), language.value)
+
   return {
     isAutoTranslateActivated,
     getTranslatableField,
@@ -365,5 +391,14 @@ export default function useAutoTranslate() {
     translateTeachings,
     translateResearcherAward,
     translateResearcherAwards,
+    translateResearcherStructure,
+    translateResearcherStructures,
+
+    translateStructure,
+    translateStructures,
+    translateStructureResearcher,
+    translateStructureResearchers,
+    translateStructureRelation,
+    translateStructureRelations,
   }
 }

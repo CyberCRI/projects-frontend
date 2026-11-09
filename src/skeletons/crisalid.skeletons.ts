@@ -1,6 +1,6 @@
 import type {
   ResearcherDocument,
-  ResearcherIdentifier,
+  Identifier,
   ResearcherDocumentAnalytics,
   ResearcherAward,
   Researcher,
@@ -39,9 +39,7 @@ export const documentAnalyticsSkeleton = (
   ...(def || {}),
 })
 
-export const identifierSkeleton = (
-  def?: Partial<ResearcherIdentifier>
-): Omit<ResearcherIdentifier, 'id'> => ({
+export const identifierSkeleton = (def?: Identifier): Omit<Identifier, 'id'> => ({
   value: 'lorem',
   harvester: 'hal',
   ...(def || {}),

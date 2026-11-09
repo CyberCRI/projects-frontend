@@ -1,9 +1,9 @@
 import type {
   ResearcherDocument,
-  ResearcherIdentifier,
   Researcher,
   HarvesterType,
   TranslatedResearcher,
+  Identifier,
 } from 'shared-projects-frontend/models'
 import { createFactory } from 'faker-create-factory'
 import { UserFactory } from './user.factory'
@@ -19,7 +19,7 @@ const CHOICES: HarvesterType[] = [
   'doi',
 ]
 
-export const IdentifierFactory = createFactory<ResearcherIdentifier>((faker) => ({
+export const IdentifierFactory = createFactory<Identifier<any>>((faker) => ({
   id: faker.datatype.number(),
   harvester: 'hal',
   value: '',

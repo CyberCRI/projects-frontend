@@ -26,10 +26,16 @@
       </div>
 
       <div v-if="user.researcher" class="researcher-roles">
-        <p v-for="(role, idx) in researcherRoles" :key="idx" class="researcher-role">
-          <span class="role-label">{{ role.label }} —&nbsp;</span>
-          <LinkButton class="role-structure" :label="role.structure" btn-icon="Building4" />
-        </p>
+        <FetchLoader :status="status" only-error skeleton>
+          <p v-for="structure in researcherStructures" :key="structure.id" class="researcher-role">
+            <span class="role-label skeletons-text">{{ structure.position }} —&nbsp;</span>
+            <LinkButton
+              class="role-structure"
+              :label="structure.structure.name"
+              btn-icon="Building4"
+            />
+          </p>
+        </FetchLoader>
       </div>
       <div v-if="user.researcher && sortedDomains.length" class="domain-list">
         <ResearcherDomain v-for="domain in sortedDomains" :key="domain.id" :domain="domain" />
@@ -67,7 +73,7 @@
 
       <div class="researcher-aside-block">
         <p class="researcher-short-bio">
-          {{ user.researcher.short_bio }}
+          {{ user.researcher.$t.short_bio }}
         </p>
         <AIGeneratedMark />
       </div>
@@ -109,6 +115,7 @@ import { useUserFullName } from '~/composables/user/useUserFullName'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
 // import IdentifierLink from '~/components/profile/modules/Documents/IdentifierLink.vue'
+import { getResearcherStructures } from '~/api/v2/crisalid.service'
 import { researcherHarvesterToUrl } from '~/functs/researcher'
 import { capitalize } from '~/functs/string'
 
@@ -125,13 +132,6 @@ const hasResearcherStat = computed(
       props.user.researcher.h_index ||
       props.user.researcher.i10_index)
 )
-
-const researcherRoles = ref([
-  { label: 'Research Director, co-founder CRI and INSERM U1284 director', structure: 'INSERM' },
-  { label: 'Co-Founder, Research Director of ELiS', structure: 'Learning Planet Institute' },
-  { label: 'Member Board of Directors', structure: 'iGem' },
-  { label: 'Member', structure: 'International Bioethics Committee (UNESCO)' },
-])
 
 const contacts = computed(() => {
   const res = []
@@ -183,6 +183,18 @@ const contacts = computed(() => {
 
 const domains = computed(() => props.user?.researcher?.domains || [])
 const sortedDomains = computed(() => domains.value.toSorted((a, b) => b.level - a.level))
+
+const organizationCode = useOrganizationCode()
+const researcherId = computed(() => props.user.researcher.id)
+const { status, data: researcherStructures } = getResearcherStructures(
+  organizationCode,
+  researcherId,
+  {
+    paginationConfig: {
+      limit: 3,
+    },
+  }
+)
 </script>
 
 <style lang="scss" scoped>

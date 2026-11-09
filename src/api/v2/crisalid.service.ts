@@ -26,6 +26,7 @@ import {
   getResearcherAwards as fetchResearcherAward,
   getResearcherTeachings as fetchResearcherTeachings,
   getResearcherFundings as fetchResearcherFundings,
+  getResearcherStructures as fetchResearcherStructures,
 } from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
@@ -320,6 +321,31 @@ export const getResearcherTeachings = (
       }),
     {
       translate: (data) => translateTeachings(data),
+      watch: onlyRefs([organizationCode, researcherId]),
+      ...config,
+    }
+  )
+}
+
+export const getResearcherStructures = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  researcherId: RefOrRaw<UserModel['id']>,
+  config: UseAsyncPaginationApiConfig = {}
+) => {
+  const { translateResearcherStructures } = useAutoTranslate()
+  const key = computed(
+    () => `${unref(organizationCode)}::researcher::${unref(researcherId)}::structures`
+  )
+
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) =>
+      fetchResearcherStructures(unref(organizationCode), unref(researcherId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: (data) => translateResearcherStructures(data),
       watch: onlyRefs([organizationCode, researcherId]),
       ...config,
     }
