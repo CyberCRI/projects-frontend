@@ -226,7 +226,7 @@ const { status, data: researcherStructures } = getResearcherStructures(
     grid-area: picture;
     overflow: hidden;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     flex: 0 0 $pic-size;
     width: $pic-size;
