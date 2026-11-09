@@ -107,14 +107,14 @@
           v-if="group.locations.length"
           :is-opened="stateModal"
           :locations="group.locations"
-          @close="closeModal()"
           class="emptyable"
+          @close="closeModal()"
         />
         <UserProfileDrawer
           :is-opened="!!leaderIdDrawer"
           :user-id="leaderIdDrawer"
-          @close="closeProfile"
           class="emptyable"
+          @close="closeProfile"
         />
       </div>
     </div>

@@ -15,7 +15,7 @@ withDefaults(
     <div class="title-main">
       <span v-if="titlePrefix" class="title-prefix">{{ titlePrefix }}</span>
       <template v-if="currentTab.pageLabel || currentTab.label">
-        <span v-if="titlePrefix" class="separator">-</span>
+        <span v-if="titlePrefix" class="separator">&nbsp;-&nbsp;</span>
         <span class="specific-title">{{ currentTab.pageLabel || currentTab.label }}</span>
       </template>
     </div>

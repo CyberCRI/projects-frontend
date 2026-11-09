@@ -354,7 +354,6 @@ export const getResearcherStructures = (
   )
 }
 
-
 // structures
 
 const mockPaginated = (v) =>
