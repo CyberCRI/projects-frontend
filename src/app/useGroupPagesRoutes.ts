@@ -43,6 +43,12 @@ export default function useGroupPagesRoutes() {
           name: 'groupLocations',
           component: () => import('../pages/GroupPageV2/Tabs/Locations/GroupLocationsTab.vue'),
         },
+
+        {
+          path: 'network',
+          name: 'groupNetwork',
+          component: () => import('../pages/GroupPageV2/Tabs/Network/GroupNetworkTab.vue'),
+        },
         {
           path: 'gallery',
           name: 'groupGallery',
@@ -62,6 +68,43 @@ export default function useGroupPagesRoutes() {
           path: 'event',
           name: 'groupEvent',
           component: () => import('../pages/GroupPageV2/Tabs/Event/GroupEventTab.vue'),
+        },
+        // teams
+        {
+          path: 'positions',
+          name: 'groupPositions',
+          component: () => import('../pages/GroupPageV2/Tabs/Positions/GroupPositionsTab.vue'),
+        },
+        // labs
+        {
+          path: 'teams',
+          name: 'groupTeams',
+          component: () => import('../pages/GroupPageV2/Tabs/Teams/GroupTeamsTab.vue'),
+        },
+        {
+          path: 'domains',
+          name: 'groupDomains',
+          component: () => import('../pages/GroupPageV2/Tabs/Domains/GroupDomainsTab.vue'),
+        },
+        {
+          path: 'awards',
+          name: 'groupAwards',
+          component: () => import('../pages/GroupPageV2/Tabs/Positions/GroupPositionsTab.vue'),
+        },
+        {
+          path: 'funding',
+          name: 'groupFunding',
+          component: () => import('../pages/GroupPageV2/Tabs/Funding/GroupFundingsTab.vue'),
+        },
+        {
+          path: 'teaching',
+          name: 'groupTeaching',
+          component: () => import('../pages/GroupPageV2/Tabs/Teaching/GroupTeachingTab.vue'),
+        },
+        {
+          path: 'plateform',
+          name: 'groupPlatform',
+          component: () => import('../pages/GroupPageV2/Tabs/Platform/GroupPlatformTab.vue'),
         },
 
         // retro compat

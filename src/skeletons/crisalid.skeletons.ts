@@ -8,6 +8,7 @@ import type {
   Award,
   Teaching,
   Funding,
+  Structure,
 } from 'shared-projects-frontend/models'
 
 import { factoriesSkeleton } from '~/skeletons/base.skeletons'
@@ -84,6 +85,23 @@ export const researcherSkeleton = (def?: Partial<Researcher>): Researcher => ({
   short_bio: '',
   user: userSkeleton(),
   bio: '',
+  ...(def || {}),
+})
+
+export const structureSkeleton = (def?: Partial<Structure>): Structure => ({
+  id: -1,
+  organization: '',
+  generic_type: '',
+  national_type: '',
+  main_mission: '',
+  name: '',
+  acronym: '',
+  description: '',
+  external: false,
+  identifiers: [],
+  related_structures: [],
+  researchers: [],
+  people_group: [],
   ...(def || {}),
 })
 
