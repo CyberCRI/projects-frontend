@@ -20,7 +20,7 @@
         <!--TODO: put this back once the new page is created-->
         <!--                <HeaderLink :label="$t('search.peoples')" route="people" :to="{name: 'People'}" />-->
         <HeaderLink
-          v-if="projectCategoriesStore.all?.length"
+          v-if="!!organisation.modules.categories"
           :label="$t('projects')"
           :routes="[
             'Categories',
@@ -184,9 +184,9 @@
   </div>
 </template>
 
-<script>
-import { getAnnouncements, patchUser } from 'shared-projects-frontend/apis'
+<script lang="ts">
 import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
+import { patchUser } from 'shared-projects-frontend/apis'
 
 import HeaderItemList from '~/components/base/navigation/HeaderItemList.vue'
 import HeaderDropDown from '~/components/base/navigation/HeaderDropDown.vue'
@@ -198,12 +198,10 @@ import ContactDrawer from '~/components/app/ContactDrawer.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import BadgeItem from '~/components/base/BadgeItem.vue'
 
-import useProjectCategories from '~/stores/useProjectCategories'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useUsersStore from '~/stores/useUsers'
 
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
-import { nowDate } from '~/functs/date'
 
 export default {
   name: 'LpiHeader',
@@ -222,7 +220,6 @@ export default {
 
   setup() {
     const appHasChatbotPromptDb = useRuntimeConfig().public.appHasChatbotPromptDb
-    const projectCategoriesStore = useProjectCategories()
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
     const { isAdmin, isFacilitator, isSuperAdmin } = usePermissions()
@@ -231,7 +228,6 @@ export default {
     const organizationCode = useOrganizationCode()
     return {
       appHasChatbotPromptDb,
-      projectCategoriesStore,
       organizationsStore,
       usersStore,
       isAdmin,
@@ -368,28 +364,28 @@ export default {
           label: this.$t('home.calendar').toUpperCase(),
           to: { name: 'CalendarPage' },
           leftIcon: 'Calendar',
-          condition: true, // TODO ?
+          condition: !!this.organisation.modules.events,
           dataTest: 'more-calendar',
         },
         {
           label: this.$t('home.instructions').toUpperCase(),
           to: { name: 'InstructionListPage' },
           leftIcon: 'BookmarkBoxOutline',
-          condition: true, // TODO ?
+          condition: !!this.organisation.modules.instructions,
           dataTest: 'more-instructions',
         },
         {
           label: this.$t('home.news').toUpperCase(),
           to: { name: 'NewsListPage' },
           leftIcon: 'Article',
-          condition: true, // TODO ?
+          condition: !!this.organisation.modules.news,
           dataTest: 'more-instructions',
         },
         {
           label: this.$t('home.announcements').toUpperCase(),
           to: { name: 'AnnouncementsPage' },
           leftIcon: 'BullhornOutline',
-          condition: this.announcements.length > 0,
+          condition: !!this.organisation.modules.announcements,
           dataTest: 'announcements',
         },
         {
@@ -443,21 +439,21 @@ export default {
           label: this.$t('projects'),
           action: () => this.goTo('Categories'),
           leftIcon: null,
-          condition: this.projectCategoriesStore.all?.length,
+          condition: !!this.organisation.modules.projects,
           dataTest: 'search',
         },
         {
           label: this.$t('common.people'),
           action: () => this.goTo('People'),
           leftIcon: null,
-          condition: true,
+          condition: !!this.organisation.modules.users,
           dataTest: 'people',
         },
         {
           label: this.$t('common.groups'),
           action: () => this.goTo('Groups'),
           leftIcon: null,
-          condition: true,
+          condition: !!this.organisation.modules.groups,
           dataTest: 'people',
         },
         {
@@ -533,10 +529,7 @@ export default {
   },
 
   async mounted() {
-    await this.projectCategoriesStore.getAllProjectCategories()
     document.addEventListener('scroll', this.onScroll)
-
-    await this.getGlobalAnnouncements()
   },
 
   unmounted() {
@@ -593,25 +586,6 @@ export default {
       }
 
       this.setLocale(lang)
-    },
-
-    async getGlobalAnnouncements() {
-      try {
-        const announcements = await getAnnouncements({
-          query: {
-            organizations: [this.organization.code],
-            ordering: '-updated_at',
-          },
-        })
-        this.announcements =
-          announcements.results?.filter(
-            (announcement) =>
-              (announcement.project.publication_status !== 'private' && !announcement.deadline) ||
-              new Date(announcement.deadline) >= nowDate()
-          ) || []
-      } catch (err) {
-        console.error(err)
-      }
     },
   },
 }
