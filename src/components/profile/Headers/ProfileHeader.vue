@@ -142,7 +142,7 @@ const userFullName = useUserFullName(computed(() => props.user))
 const hasResearcherStat = computed(
   () =>
     props.user.researcher &&
-    (props.user.researcher.modules.citations ||
+    (props.user.researcher.modules?.citations ||
       props.user.researcher.h_index ||
       props.user.researcher.i10_index)
 )
@@ -201,7 +201,7 @@ const domains = computed(() => props.user?.researcher?.domains || [])
 const sortedDomains = computed(() => domains.value.toSorted((a, b) => b.level - a.level))
 
 const organizationCode = useOrganizationCode()
-const researcherId = computed(() => props.user.researcher.id)
+const researcherId = computed(() => props.user.researcher?.id || null)
 const { status, data: researcherStructures } = getResearcherStructures(
   organizationCode,
   researcherId,
