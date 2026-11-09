@@ -121,6 +121,7 @@ const hasSubPageTitle = computed(
       :with-data="!!user?.id"
     >
       <NavPanelLayout
+        :is-loading="isLOading"
         :is-nav-collapsed="isNavCollapsed"
         :breadcrumbs="[
           {

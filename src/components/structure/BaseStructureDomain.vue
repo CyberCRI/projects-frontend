@@ -6,7 +6,7 @@
 <script lang="ts" setup>
 import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 
-import { getStructureDomains } from '~/api/v2/crisalid.service'
+// import { getStructureDomains } from '~/api/v2/crisalid.service'
 
 const props = withDefaults(
   defineProps<{ group: TranslatedPeopleGroupModel; preview?: boolean }>(),

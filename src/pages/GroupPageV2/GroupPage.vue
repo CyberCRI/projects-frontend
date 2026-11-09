@@ -91,7 +91,7 @@ const groupHierarchy = computed(() => {
     route: { name: 'Groups' },
   }
   if (!group.value) return [root]
-  return [
+  const res = [
     root,
     ...(group.value?.hierarchy || []).map((group) => ({
       name: group.name,
@@ -100,7 +100,21 @@ const groupHierarchy = computed(() => {
         params: { groupIdOrSlug: group.slug || group.id },
       },
     })),
+    {
+      name: group.value.name,
+      route: {
+        name: 'Group',
+        params: { groupIdOrSlug: group.value.slug || group.value.id },
+      },
+    },
   ]
+  if (currentTab.value) {
+    res.push({
+      name: currentTab.value.label,
+      route: currentTab.value.view,
+    })
+  }
+  return res
 })
 
 const groupModules = computed(() => group.value?.modules ?? groupSkeleton()['modules'])
@@ -310,7 +324,7 @@ const groupTabsDisplay = computed(() => {
       tabLabel: t(GROUP_MODULE_TITLE.platformTab),
       view: `/group/${route.params.groupIdOrSlug}/platform`,
       altView: `/group/${route.params.groupIdOrSlug}/funding/platform`,
-      condition: false && isStructure.value,
+      condition: false, // && isStructure.value,
       noTitle: false,
       icon: GROUP_MODULE_ICON.platform,
     },
