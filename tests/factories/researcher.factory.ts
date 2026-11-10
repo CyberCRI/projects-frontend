@@ -46,6 +46,7 @@ export const ResearcherFactory = createFactory<Researcher>((faker) => ({
     publications: 0,
     similars: 0,
     teachings: 0,
+    structures: 0,
   },
 }))
 

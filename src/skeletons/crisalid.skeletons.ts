@@ -81,6 +81,7 @@ export const researcherSkeleton = (def?: Partial<Researcher>): Researcher => ({
     publications: 0,
     similars: 0,
     teachings: 0,
+    structures: 0,
   },
   short_bio: '',
   user: userSkeleton(),

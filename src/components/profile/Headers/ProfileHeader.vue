@@ -44,7 +44,7 @@
               :label="structure.structure.name"
               btn-icon="Building4"
             />
-            <span v-else class="role-structure">
+            <span v-else class="role-structure skeletons-text">
               {{ structure.structure.name }}
             </span>
           </p>
@@ -128,8 +128,9 @@ import { useUserFullName } from '~/composables/user/useUserFullName'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
 // import IdentifierLink from '~/components/profile/modules/Documents/IdentifierLink.vue'
+import { researcherStructuresSkeleton } from '~/skeletons/structure.skeletons'
+import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import { getResearcherStructures } from '~/api/v2/crisalid.service'
-import { factoryPagination } from '~/skeletons/base.skeletons'
 import { researcherHarvesterToUrl } from '~/functs/researcher'
 import { capitalize } from '~/functs/string'
 
@@ -202,6 +203,8 @@ const sortedDomains = computed(() => domains.value.toSorted((a, b) => b.level - 
 
 const organizationCode = useOrganizationCode()
 const researcherId = computed(() => props.user.researcher?.id || null)
+
+const limitSkeletons = computed(() => maxSkeleton(props.user.researcher?.modules?.structures, 3))
 const { status, data: researcherStructures } = getResearcherStructures(
   organizationCode,
   researcherId,
@@ -209,7 +212,7 @@ const { status, data: researcherStructures } = getResearcherStructures(
     paginationConfig: {
       limit: 3,
     },
-    default: () => factoryPagination(() => null, 0),
+    default: () => factoryPagination(researcherStructuresSkeleton, limitSkeletons.value),
   }
 )
 </script>

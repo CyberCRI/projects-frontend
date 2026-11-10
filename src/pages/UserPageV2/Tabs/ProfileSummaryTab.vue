@@ -5,6 +5,7 @@ import ProfileProjectsPreview from '~/components/profile/modules/Projects/Profil
 import ProfileSkillsPreview from '~/components/profile/modules/Skills/ProfileSkillsPreview.vue'
 import ProfileGroupsPreview from '~/components/profile/modules/Groups/ProfileGroupsPreview.vue'
 import ResearcherTeachingsPreview from '~/components/researcher/ResearcherTeachingsPreview.vue'
+import ResearcherBadgesPreview from '~/components/researcher/ResearcherBadgesPreview.vue'
 import ResearcherAwardPreview from '~/components/researcher/ResearcherAwardPreview.vue'
 import ProfileBioPreview from '~/components/profile/modules/Bio/ProfileBioPreview.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
@@ -21,7 +22,7 @@ const bioEmpty = computed(() => textIsEmpty(props.user.$t.description))
   <div class="user-summary">
     <ProfileHeader :user="user" />
 
-    <ResearcherBadgesPreview :user="user" />
+    <ResearcherBadgesPreview v-if="user.researcher" :user="user" />
 
     <div v-if="user.researcher?.$t.bio" class="profile-row">
       <ResearcherPresentationPreview class="resarcher-presentaion" :user="user" />
