@@ -129,7 +129,7 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         altView: `/profile/${userSlugOrId.value}/affiliations/edit`,
         condition: !!modulesResearcher.value.affiliated,
         dataTest: 'profile-affiliations',
-        icon: USER_MODULE_ICON.affiliations,
+        icon: USER_MODULE_ICON.affiliated,
       },
       {
         key: 'profile-awards',

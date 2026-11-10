@@ -387,7 +387,7 @@ export const USER_MODULE_ICON: Record<string, IconImageChoice> = {
   patents: 'Dna',
   domain: 'TagOutline',
   network: 'Globe',
-  affiliations: 'UserCommunityLine',
+  affiliated: 'UserCommunityLine',
   awards: 'Licence',
   teachings: 'SchoolOutline',
   trade: 'ThumbUpLine',
