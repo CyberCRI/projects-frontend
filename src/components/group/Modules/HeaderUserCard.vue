@@ -9,7 +9,7 @@
     />
     <div class="text text-limit">
       <div class="name skeletons-text">{{ member.given_name }} {{ member.family_name }}</div>
-      <div v-if="role" class="role skeletons-text">
+      <div v-if="roleLabel" class="role skeletons-text">
         {{ roleLabel }}
       </div>
     </div>
@@ -18,6 +18,7 @@
 
 <script setup lang="ts">
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+// import { roleI18n } from '~/functs/rolesUtils'
 
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 import type { UserModel } from 'shared-projects-frontend/models'
@@ -37,7 +38,9 @@ const roleLabel = computed(() => {
   if (props.roleLabel !== undefined) {
     return props.roleLabel
   }
-  return roleI18n(props.member.role)
+  // TODO:
+  // return roleI18n(props.member.role) || prop.member.$t.job
+  return props.member.$t.job
 })
 </script>
 

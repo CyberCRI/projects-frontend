@@ -104,7 +104,6 @@ const content = computed(() => html2Text(props.news.$t.content))
 
   @media screen and (min-width: variables.$min-tablet) {
     flex-direction: row;
-    height: var(--news-dimension);
   }
 }
 
@@ -112,6 +111,7 @@ const content = computed(() => html2Text(props.news.$t.content))
   flex-shrink: 0;
   aspect-ratio: calc(4 / 3);
   width: 100%;
+  height: var(--news-dimension);
 
   @media screen and (min-width: variables.$min-tablet) {
     flex-basis: calc(var(--news-dimension) * var(--picture-ratio, 1));
