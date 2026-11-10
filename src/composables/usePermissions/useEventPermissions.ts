@@ -19,7 +19,7 @@ import useUsersStore from '~/stores/useUsers'
  * @returns {{ canCreateEvent: globalThis.ComputedRef<boolean>; canEditEvent: globalThis.ComputedRef<boolean>; canDeleteEvent: globalThis.ComputedRef<boolean>; }}
  * @exports
  */
-export const usePermissionEvent = (eventId: RefOrRaw<EventModel['id'] | null>) => {
+export const usePermissionEvent = (eventId: RefOrRaw<EventModel['id'] | null> | null = null) => {
   const organizationStore = useOrganizationsStore()
   const userStore = useUsersStore()
 
@@ -28,7 +28,9 @@ export const usePermissionEvent = (eventId: RefOrRaw<EventModel['id'] | null>) =
   const permissions = computed(() => internalEventId.value && userStore.isConnected)
 
   const canCreateEvent = computed(() => {
-    return permissions.value && globalCanCreateEvent(userStore.rights, organizationStore.current.id)
+    return (
+      userStore.isConnected && globalCanCreateEvent(userStore.rights, organizationStore.current.id)
+    )
   })
 
   const canEditEvent = computed(() => {

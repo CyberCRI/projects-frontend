@@ -16,6 +16,8 @@ const props = withDefaults(
   }
 )
 
+const { t } = useNuxtI18n()
+
 const route = useRoute()
 
 const uniqueId = 'user-nav-panel'
@@ -62,6 +64,39 @@ const propsTab = computed(() => ({
   loading: !user.value?.id && isLoading.value,
 }))
 
+const breadcrumbs = computed(() => {
+  const res = [
+    // {
+    //   name: t('home.home'),
+    //   route: { name: 'HomeRoot' },
+    // },
+    {
+      name: t('common.people'),
+      route: { name: 'People' },
+    },
+  ]
+
+  if (user.value) {
+    res.push({
+      name: user.value.given_name + ' ' + user.value.family_name,
+      route: {
+        name: 'ProfileUser',
+        params: {
+          userIdOrSlug: user.value.slug || user.value.id,
+        },
+      },
+    })
+    if (currentTab.value) {
+      res.push({
+        name: currentTab.value.label,
+        route: currentTab.value.view,
+      })
+    }
+  }
+
+  return res
+})
+
 const hasSubPageTitle = computed(
   () =>
     !!currentTab.value?.key &&
@@ -86,6 +121,7 @@ const hasSubPageTitle = computed(
       :with-data="!!user?.id"
     >
       <NavPanelLayout
+        :is-loading="isLOading"
         :is-nav-collapsed="isNavCollapsed"
         :breadcrumbs="[
           {
@@ -110,12 +146,13 @@ const hasSubPageTitle = computed(
           />
         </template>
         <template #content>
-          <SubPageTitle
-            v-if="hasSubPageTitle"
-            class="skeletons-text"
-            :title-prefix="userFullName"
-            :current-tab="currentTab"
-          />
+          <BreadCrumbs :breadcrumbs="breadcrumbs" :is-loading="isLoading" />
+          <SubPageTitle v-if="hasSubPageTitle" class="skeletons-text" :current-tab="currentTab">
+            <AIGeneratedMark
+              v-if="!!user.researcher && currentTab.key == 'profile-bio'"
+              class="ai-mark"
+            />
+          </SubPageTitle>
           <NuxtPage v-if="currentTab" v-bind="propsTab" />
         </template>
       </NavPanelLayout>

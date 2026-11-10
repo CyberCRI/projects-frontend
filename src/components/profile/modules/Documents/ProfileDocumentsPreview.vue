@@ -11,9 +11,9 @@ const DOCUMENTS_LIMIT = 3
 
 <template>
   <BaseModulePreview
-    :title="$t(USER_MODULE_TITLE[documentType], user.modules[documentType])"
+    :title="$t(USER_MODULE_TITLE[documentType], user.researcher.modules[documentType])"
     :icon="USER_MODULE_ICON[documentType]"
-    :total="user.modules[documentType]"
+    :total="user.researcher.modules[documentType]"
     :see-more="{
       name: 'ProfileDocuments',
       params: {
@@ -21,6 +21,11 @@ const DOCUMENTS_LIMIT = 3
         documentType: documentType,
       },
     }"
+    :see-more-label="
+      documentType === 'publications'
+        ? $t('researcher.view.all-publications')
+        : $t('researcher.view.all-conferences')
+    "
   >
     <template #content>
       <UserResearcherDocumentsList

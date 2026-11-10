@@ -20,7 +20,7 @@ import useUsersStore from '~/stores/useUsers'
  * @exports
  */
 export const usePermissionInstruction = (
-  instructionId: RefOrRaw<InstructionModel['id'] | null>
+  instructionId: RefOrRaw<InstructionModel['id'] | null> | null = null
 ) => {
   const organizationStore = useOrganizationsStore()
   const userStore = useUsersStore()
@@ -31,7 +31,7 @@ export const usePermissionInstruction = (
 
   const canCreateInstruction = computed(() => {
     return (
-      permissions.value &&
+      userStore.isConnected &&
       globalCanCreateInstruction(userStore.rights, organizationStore.current.id)
     )
   })

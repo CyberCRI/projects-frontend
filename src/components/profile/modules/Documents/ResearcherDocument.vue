@@ -47,11 +47,11 @@
         type="document"
       />
     </div>
-    <SeeMoreArrow
-      is="button"
+    <BaseModuleButton
       v-if="similar && (isNil(document.modules.similars) || document.modules.similars > 0)"
       :data-test="`see-more-${document.id}`"
       class="no-padding reset-btn"
+      btn-icon="ArrowRight"
       :label="`${document.modules.similars || ''} ${t(`profile.${documentType}-similars`)}`"
       @click="emit('similar', document)"
     />
@@ -63,8 +63,6 @@ import type {
   ResearcherDocumentType,
   TranslatedResearcherDocument,
 } from 'shared-projects-frontend/models'
-
-import SeeMoreArrow from '~/components/base/button/SeeMoreArrow.vue'
 
 import IdentifierLink from '~/components/profile/modules/Documents/IdentifierLink.vue'
 import PushPinSvg from '~/assets/svg/pushpin.svg'

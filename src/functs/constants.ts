@@ -6,7 +6,8 @@ import type {
   ProjectTabType,
   PeopleGroupModulesKeys,
   ProjectModuleExtra,
-  UserModuleExtra,
+  Currency,
+  // UserModuleExtra,
 } from 'shared-projects-frontend/models'
 import type { IconImageChoice, IconTabImageChoice } from '~/functs/IconImage'
 import { omit, pick } from 'es-toolkit'
@@ -275,9 +276,7 @@ export const DEFAULT_ICONS_TABS: {
 }
 
 // groups
-export const GROUP_MODULE_ICON: {
-  [key in PeopleGroupModulesKeys]: IconImageChoice
-} = {
+export const GROUP_MODULE_ICON: Record<string, IconImageChoice> = {
   conferences: 'Article',
   featured_projects: 'Briefcase',
   publications: 'Article',
@@ -288,19 +287,66 @@ export const GROUP_MODULE_ICON: {
   gallery: 'Gallery',
   news: 'NewsLine',
   event: 'Calendar',
+  positions: 'BullhornOutline',
+  fundings: 'Euro',
+  patents: 'Dna',
+  domain: 'TagOutline',
+  network: 'Globe',
+  affiliations: 'UserCommunityLine',
+  awards: 'Licence',
+  teachings: 'SchoolOutline',
+  trade: 'ThumbUpLine',
+  teams: 'PeopleGroup',
+  platform: 'Flask',
 }
 
 export const GROUP_MODULE_TITLE: { [key in PeopleGroupModulesKeys]: string } = {
-  conferences: 'group.conferences',
   featured_projects: 'group.projects',
-  publications: 'group.publications',
-  members: 'group.members',
+  members: 'structure.title.members',
+  membersTab: 'structure.title.members-tab',
   similars: 'group.similars',
-  subgroups: 'group.subgroups',
-  locations: 'group.locations',
+  subgroups: 'structure.title.subgroups',
+  locations: 'structure.title.locations',
   gallery: 'gallery.pictures',
   news: 'group.news',
+  newsTab: 'group.news-tab',
   event: 'group.event',
+  eventTab: 'group.event-tab',
+  conferences: 'structure.title.conferences',
+  conferencesTab: 'structure.title.conferences-tab',
+  publications: 'structure.title.publications',
+  publicationsTab: 'structure.title.publications-tab',
+  affiliated: 'structure.title.affiliated',
+  affiliatedTab: 'structure.title.affiliated-tab',
+  affiliations: 'structure.title.affiliations',
+  availabilities: 'structure.title.availabilities',
+  domain: 'structure.title.domain',
+  domainTab: 'structure.title.domain-tab',
+  fundings: 'structure.title.fundings',
+  fundingsTab: 'structure.title.fundings-tab',
+  needs: 'structure.title.needs',
+  network: 'structure.title.network',
+  networkTab: 'structure.title.network-tab',
+  patents: 'structure.title.patents',
+  patentsTab: 'structure.title.patents-tab',
+  positions: 'structure.title.positions',
+  positionsTab: 'structure.title.positions-tab',
+  presentation: 'structure.title.presentation',
+  similar: 'structure.title.similar',
+  similarStructures: 'structure.title.similar-structures',
+  team: 'structure.title.team',
+  teamTab: 'structure.title.team-tab',
+  awards: 'structure.title.awards',
+  awardsTab: 'structure.title.awards-tab',
+  teaching: 'structure.title.teaching',
+  teachingTab: 'structure.title.teaching-tab',
+  trade: 'structure.title.trade',
+  tradeTab: 'structure.title.trade-tab',
+  researchAreas: 'structure.title.research-areas',
+  researchAreasTab: 'structure.title.research-areas-tab',
+  researchAreasSkills: 'structure.title.research-areas-skills',
+  platform: 'structure.title.platform',
+  platformTab: 'structure.title.platform-tab',
 }
 
 // location
@@ -322,9 +368,7 @@ export const LOCATION_TYPE_TITLE: { [key in LocationType]: string } = {
 
 // user
 
-export const USER_MODULE_ICON: {
-  [key in UserModuleExtra]: IconImageChoice
-} = {
+export const USER_MODULE_ICON: Record<string, IconImageChoice> = {
   conferences: 'Article',
   publications: 'Article',
   reviews_projects: 'Briefcase',
@@ -340,13 +384,24 @@ export const USER_MODULE_ICON: {
   resources: 'Globe',
   groups: 'PeopleGroup',
   privacy: 'Eye',
+  positions: 'BullhornOutline',
+  fundings: 'Euro',
+  patents: 'Dna',
+  domain: 'TagOutline',
+  network: 'Globe',
+  affiliated: 'UserCommunityLine',
+  awards: 'Licence',
+  teachings: 'SchoolOutline',
+  trade: 'ThumbUpLine',
+  teams: 'PeopleGroup',
 }
 
-export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
-  conferences: 'profile.conferences',
-  publications: 'profile.publications',
+export const USER_MODULE_TITLE = {
+  conferences: 'researcher.title.conferences',
+  publications: 'researcher.title.publications',
   reviews_projects: 'me.projects-reviewing',
   follows_categories: 'me.follow-category',
+  privacy: 'profile.edit.privacy.tab',
   follows_projects: 'me.follow',
   notifications: '',
   projects: 'profile.projects',
@@ -357,8 +412,31 @@ export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
   files: '',
   resources: 'resource.resources',
   groups: 'profile.groups',
-  privacy: 'profile.edit.privacy.tab',
+  affiliated: 'researcher.title.affiliated',
+  affiliations: 'researcher.title.affiliations',
+  affiliationsTab: 'researcher.title.affiliations-tab',
+  availabilities: 'researcher.title.availabilities',
+  domain: 'researcher.title.domain',
+  fundings: 'researcher.title.fundings',
+  needs: 'researcher.title.needs',
+  network: 'researcher.title.network',
+  patents: 'researcher.title.patents',
+  positions: 'researcher.title.positions',
+  presentation: 'researcher.title.presentation',
+  similar: 'researcher.title.similar',
+  similarResearchers: 'researcher.title.similar-researchers',
+  team: 'researcher.title.team',
+  awards: 'researcher.title.awards',
+  teachings: 'researcher.title.teaching',
+  trade: 'researcher.title.trade',
+  researchAreas: 'researcher.title.research-areas',
+  researchAreasSkills: 'researcher.title.research-areas-skills',
 }
 
 // max skill steps
 export const DEFAULT_SKILL_STEPS = 4
+
+export const ICON_CURRENCY: { [key in Currency]: IconImageChoice } = {
+  EUR: 'Euro',
+  USD: 'Dollar',
+}

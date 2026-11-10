@@ -511,6 +511,8 @@
     "delete-description": "Are you sure you want to permanently delete your comments? This action will be irreversible."
   },
   "common": {
+    "ai-generated": "AI Generated",
+    "see-top-n": "See top {n}",
     "error": "error",
     "select-placeholder": "Select...",
     "file": "file | files",
@@ -1571,7 +1573,7 @@
     "research-output-year": "Research output year",
     "publications-similars": "Similar Publications",
     "publications-empty": "No Publications.",
-    "conferences-similars": "Conferences similars",
+    "conferences-similars": "Similar Conferences",
     "conferences-empty": "No conferences."
   },
   "profile-completed-modal": {
@@ -1930,7 +1932,7 @@
       "help": "He has no edit rights, but appears as member of the team."
     },
     "leaders": {
-      "label": "Leader group | Leaders group",
+      "label": "Leader | Leaders ",
       "help": "Is an Editor who will appear with a “Group Leader” tag."
     },
     "owner_groups": {
@@ -2878,7 +2880,75 @@
     "allow-current-page": "Allow me to see the page you are on - so I have a better sense of the context",
     "previous-messages": "Previous messages"
   },
+  "structure": {
+    "title": {
+      "affiliated": "{count} affiliated researcher | {count} affiliated researchers",
+      "affiliated-tab": "Affiliated",
+      "publications": "{count} publication | {count} publications",
+      "publications-tab": "Publications",
+      "members": "{count} member | {count} members",
+      "members-tab": "Members",
+      "locations": "{count} location | {count} locations",
+      "conferences": "{count} conference | {count} conferences",
+      "conferences-tab": "Conferences",
+      "availabilities": "{count} availability | {count} availabilities",
+      "domain": "{count} research domain | {count} research domains",
+      "domain-tab": "Reasearch domains",
+      "fundings": "{count} funding | {count} fundings",
+      "fundings-tab": "Funding",
+      "needs": "Needs",
+      "network": "Network",
+      "network-tab": "Network",
+      "patents": "{count} patent | {count} patents",
+      "patents-tab": "Patent",
+      "positions": "{count} open position | {count} open positions",
+      "positions-tab": "Open positions",
+      "presentation": "Presentation",
+      "similar": "Similar",
+      "team": "{ count } team | {count} teams",
+      "team-tab": "Team",
+      "similar-structures": "Similar structures",
+      "awards": "{count} awards | {count} awards",
+      "awards-tab": "Awards",
+      "trade": "{count} need / Availabilitie | {count} needs / availabilities",
+      "trade-tab": "Needs / Availabilities",
+      "teaching": "{count} teaching | {count} teaching",
+      "teaching-tab": "Teaching",
+      "research-areas": "{count} research area | {count} research areas",
+      "research-areas-tab": "Research areas",
+      "research-areas-skills": "Research areas & skills",
+      "platform": "Shared tools and methods ({count})",
+      "platform-tab": "Platform",
+      "subgroups": "Sub-groups"
+    }
+  },
   "researcher": {
+    "affiliations": {
+      "boards": "Boards",
+      "societies": "Societies"
+    },
+    "title": {
+      "affiliated": "Affiliated researcher | Affiliated researchers",
+      "publications": "Publication | Publications",
+      "conferences": "Conference | Conferences",
+      "availabilities": "Availabilitie | Availabilities",
+      "domain": "Research domain | Research domains",
+      "fundings": "Funding | Fundings",
+      "needs": "Need | Needs",
+      "network": "Network | Networks",
+      "patents": "Patent | Patents",
+      "positions": "Open position | Open positions",
+      "presentation": "Presentation | Presentations",
+      "team": "Team | Teams",
+      "similar-researchers": "Similar researcher | Similar researchers",
+      "affiliations": "{count} affiliations | {count} affiliations",
+      "affiliations-tab": "Affiliations",
+      "awards": "Award | Awards",
+      "trade": "Need / Availabilitie | Needs / Availabilities",
+      "teaching": "Teaching | Teachings",
+      "research-areas": "Research area | Research areas",
+      "research-areas-skills": "Research areas & skills"
+    },
     "relators": {
       "abr": "abridger",
       "acp": "art copyist",
@@ -3202,7 +3272,23 @@
       "BookOfChapters": "Book Of Chapters",
       "Presentation": "Presentation",
       "UNKNOWN": "Unknown"
-    }
+    },
+    "view": {
+      "all": "View all",
+      "all-researchers": "View all researchers",
+      "all-publications": "View all publications",
+      "all-conferences": "View all conferences",
+      "all-domains": "View domains",
+      "all-network": "View network",
+      "all-job-offers": "View all job offers"
+    },
+    "stats": {
+      "citations": "Citations",
+      "h-index": "h-index",
+      "i10-index": "i10-index"
+    },
+    "download-resume": "Download Resume",
+    "top-collaborations": "Top collaborations"
   },
   "tos": {
     "evolved": "Our Terms and Conditions have been updated, please take a moment to review and approve them.",
@@ -3236,8 +3322,10 @@
     "see-subgroups": "See {count} subgroup | See {count} subgroups",
     "share": "Share",
     "the-team": "Team ({users}4)",
-    "news": "News | News",
-    "event": "Event | Events",
+    "news": "{count} News | {count} News",
+    "news-tab": "News",
+    "event": "{count} Event | {count} Events",
+    "event-tab": "Events",
     "more": "More",
     "less": "Less",
     "see-more": "See more Groups",

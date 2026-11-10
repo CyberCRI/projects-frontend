@@ -30,6 +30,28 @@
       :group="group"
       :is-loading="isLoading"
     />
+
+    <div class="profile-row">
+      <StructureDomainPreview
+        v-if="group.structure?.modules?.domains"
+        class="researcher-domain"
+        :group="group"
+      />
+      <!-- <StructureNetworkPreview
+        v-if="group.structure?.modules?.preview"
+        class="researcher-network"
+        :group="group"
+      /> -->
+    </div>
+
+    <!-- <StructurePositionsPreview v-if="group.structure?.modules?.positions"  :group="group" /> -->
+
+    <StructureAwardPreview v-if="group.structure?.modules?.awards" :group="group" />
+
+    <StructureFundingsPreview v-if="group.structure?.modules?.fundings" :group="group" />
+
+    <!-- TODO -->
+    <!-- <StructurePlatformPreview v-if="group.structure?.modules?.tools" :group="group" /> -->
   </div>
 </template>
 
@@ -65,6 +87,13 @@ const props = withDefaults(
 const IGNORED_KEYS: PeopleGroupModulesKeys[] = ['similars']
 const GROUPS_KEYS = Object.keys(props.group.modules) as PeopleGroupModulesKeys[]
 const modulesRecap = difference(GROUPS_KEYS, IGNORED_KEYS)
+
+// TODO:
+// const isTeam = computed(() => true)
+// TODO:
+// const isStructure = computed(() => true)
+// TODO:
+// const isPlainGroup = computed(() => !isTeam.value && !isStructure.value)
 </script>
 
 <style lang="scss" scoped>

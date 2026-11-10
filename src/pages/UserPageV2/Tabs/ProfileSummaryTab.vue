@@ -4,6 +4,9 @@ import ProfileDocumentsPreview from '~/components/profile/modules/Documents/Prof
 import ProfileProjectsPreview from '~/components/profile/modules/Projects/ProfileProjectsPreview.vue'
 import ProfileSkillsPreview from '~/components/profile/modules/Skills/ProfileSkillsPreview.vue'
 import ProfileGroupsPreview from '~/components/profile/modules/Groups/ProfileGroupsPreview.vue'
+import ResearcherTeachingsPreview from '~/components/researcher/ResearcherTeachingsPreview.vue'
+import ResearcherBadgesPreview from '~/components/researcher/ResearcherBadgesPreview.vue'
+import ResearcherAwardPreview from '~/components/researcher/ResearcherAwardPreview.vue'
 import ProfileBioPreview from '~/components/profile/modules/Bio/ProfileBioPreview.vue'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { textIsEmpty } from '@/functs/tiptap'
@@ -18,9 +21,24 @@ const bioEmpty = computed(() => textIsEmpty(props.user.$t.description))
 <template>
   <div class="user-summary">
     <ProfileHeader :user="user" />
-    <ProfileBioPreview v-if="!bioEmpty" :user="user" />
 
-    <ProfileSkillsPreview v-if="user.modules.skills" :user="user" />
+    <ResearcherBadgesPreview v-if="user.researcher" :user="user" />
+
+    <div class="profile-presentations">
+      <ResearcherPresentationPreview v-if="user.researcher?.$t.bio" :user="user" />
+      <ResearcherSimilarPreview v-if="user.researcher?.modules?.similars" :user="user" />
+    </div>
+    <ProfileBioPreview v-if="!bioEmpty && !user.researcher" :user="user" />
+
+    <!-- team -->
+    <!--ResearcherTeamPreview :user="user" /-->
+    <ProfileGroupsPreview v-if="user.modules.groups" :user="user" />
+
+    <!-- affiliate -->
+    <ResearcherAffiliatedPreview v-if="user.researcher?.modules?.affiliated" :user="user" />
+
+    <ProfileSkillsPreview v-if="user.modules.skills && !user.researcher" :user="user" />
+
     <ProfileProjectsPreview v-if="user.modules.projects" type="projects" :user="user" />
     <ProfileProjectsPreview
       v-if="user.modules.reviews_projects"
@@ -37,30 +55,79 @@ const bioEmpty = computed(() => textIsEmpty(props.user.$t.description))
       type="follows_categories"
       :user="user"
     />
-    <ProfileGroupsPreview v-if="user.modules.groups" :user="user" />
 
     <!-- researcher -->
     <ProfileDocumentsPreview
-      v-if="user.modules.publications"
+      v-if="user.researcher?.modules?.publications"
       document-type="publications"
       :user="user"
     />
     <ProfileDocumentsPreview
-      v-if="user.modules.conferences"
+      v-if="user.researcher?.modules?.conferences"
       document-type="conferences"
       :user="user"
     />
 
+    <div class="profile-row">
+      <ResearcherDomainPreview
+        v-if="user.researcher?.modules?.domains"
+        class="researcher-domain"
+        :user="user"
+      />
+      <!-- <ResearcherNetworkPreview
+        v-if="user.researcher?.modules?.preview"
+        class="researcher-network"
+        :user="user"
+      /> -->
+    </div>
+
     <ProfileResourcesPreview v-if="user.modules.files || user.modules.links" :user="user" />
+
+    <ResearcherPatentsPreview v-if="user.researcher?.modules?.patents" :user="user" />
+    <ResearcherFundingsPreview v-if="user.researcher?.modules?.fundings" :user="user" />
+    <ResearcherAwardPreview v-if="user.researcher?.modules?.awards" :user="user" />
+    <ResearcherTeachingsPreview v-if="user.researcher?.modules?.teachings" :user="user" />
+
+    <!-- <ResearcherPositionsPreview v-if="user.researcher?.modules?.positions"  :user="user" /> -->
+
+    <!-- <ResearcherNeedsPreview v-if="user.researcher?.modules?.needs" :user="user" /> -->
+    <!-- <ResearcherAvailabilitiesPreview v-if="user.researcher?.modules?.availabilities" :user="user" /> -->
   </div>
 </template>
 
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 
+$layout-gap: 1rem;
+
 .user-summary {
   display: flex;
   flex-flow: column;
+  gap: $layout-gap;
+}
+
+.profile-presentations {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
   gap: 1rem;
+}
+
+// merge all cols if only one child
+.profile-presentations:has(> :only-child) {
+  grid-template-columns: 1fr;
+}
+
+@media screen and (max-width: variables.$min-desktop) {
+  .profile-presentations {
+    grid-template-columns: 1fr;
+  }
+}
+
+.researcher-domain {
+  grid-column: 1/3;
+}
+
+.researcher-network {
+  grid-column: 3/7;
 }
 </style>

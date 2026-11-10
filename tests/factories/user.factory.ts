@@ -5,6 +5,7 @@ import type {
   UserFromJWTModel,
   TranslatedUserModel,
 } from 'shared-projects-frontend/models'
+import { ResearcherTranslatedFactory } from '~~/tests/factories/researcher.factory'
 
 export const UserFactory = createFactory<UserModel>((faker) => ({
   id: faker.datatype.number(),
@@ -84,6 +85,7 @@ export const userTranslatedFactory = createFactory<TranslatedUserModel>(() => {
       job: user.job,
       short_description: user.short_description,
     },
+    researcher: ResearcherTranslatedFactory.generate(),
   }
 })
 

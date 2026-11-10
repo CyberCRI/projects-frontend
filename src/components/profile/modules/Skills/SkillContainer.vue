@@ -21,10 +21,12 @@ const props = withDefaults(
     skillType: SkillType
     user: TranslatedUserModel
     mentorShip: MentorShip
+    researcherMode?: boolean
   }>(),
   {
     editable: false,
     preview: false,
+    researcherMode: false,
   }
 )
 
@@ -119,21 +121,33 @@ const onAdd = () => {
   <div>
     <BaseModuleHeader v-if="!preview" :editable="editable" :add-label="addLabel" @add="onAdd" />
     <Title v-if="!preview" :title="title" :count="skills.length" />
-    <div class="skills" :class="{ 'list-divider': !preview }">
-      <SkillItem
-        v-for="skill in skills"
-        :key="skill.id"
-        :user="user"
-        :skill="skill"
-        :can-delete="editable"
-        :can-edit="editable"
-        :mode="preview ? 'minimal' : editable ? 'medium' : 'full'"
-        :show-extras="!editable"
-        :user-mentoring="mentorShip[skill.id]"
-        @delete="onDelete(skill)"
-        @edit="onEdit(skill)"
-        @mentorship-send="$emit('mentorship-send')"
-      />
+    <div
+      class="skills"
+      :class="{ 'list-divider': !preview && !researcherMode, 'researcher-mode': researcherMode }"
+    >
+      <template v-if="researcherMode">
+        <ResearcherDomain
+          v-for="skill in skills"
+          :key="skill.id"
+          :domain="{ domain: { title: skill.tag.title }, level: (100 * skill.level) / 4 }"
+        />
+      </template>
+      <template v-else>
+        <SkillItem
+          v-for="skill in skills"
+          :key="skill.id"
+          :user="user"
+          :skill="skill"
+          :can-delete="editable"
+          :can-edit="editable"
+          :mode="preview ? 'minimal' : editable ? 'medium' : 'full'"
+          :show-extras="!editable"
+          :user-mentoring="mentorShip[skill.id]"
+          @delete="onDelete(skill)"
+          @edit="onEdit(skill)"
+          @mentorship-send="$emit('mentorship-send')"
+        />
+      </template>
     </div>
     <EmptyLabel v-if="skills.length === 0" />
 
@@ -170,5 +184,11 @@ const onAdd = () => {
 <style lang="scss" scoped>
 .list-divider > :deep(*:not(:last-child)::after) {
   margin: 1rem;
+}
+
+.researcher-mode {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
 }
 </style>

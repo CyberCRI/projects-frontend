@@ -511,6 +511,7 @@
     "delete-description": "¿Estás seguro de que quieres eliminar permanentemente tus comentarios? Esta acción será irreversible."
   },
   "common": {
+    "ai-generated": "Generado Ai",
     "activate": "Activar",
     "activated": "Activado",
     "add": "Añadir",
@@ -593,7 +594,8 @@
     "image": "imagen",
     "select-placeholder": "Seleccione...",
     "error": "error",
-    "expand": "Ampliación"
+    "expand": "Ampliación",
+    "see-top-n": "Véase la parte superior {n}"
   },
   "complete-profile": {
     "bio": {
@@ -2930,6 +2932,49 @@
     "success-create": "Foto creada.",
     "error-create": "Un error ocurrió imagen creada."
   },
+  "structure": {
+    "title": {
+      "affiliated": "{count} investigador afiliado | {count} investigadores afiliados",
+      "affiliated-tab": "Afiliados",
+      "publications": "{count} publicación | {count} publicaciones",
+      "publications-tab": "Publicaciones",
+      "members": "{count} miembro | {count} miembros",
+      "members-tab": "Miembros",
+      "locations": "{count} ubicación | {count} ubicaciones",
+      "conferences": "{count} conferencia | {count} conferencias",
+      "conferences-tab": "Conferencias",
+      "availabilities": "{count} disponibilidad | {count} disponibilidades",
+      "domain": "{count} área de investigación | {count} áreas de investigación",
+      "domain-tab": "Áreas de investigación",
+      "fundings": "{count} financiación | {count} financiaciones",
+      "fundings-tab": "Financiación",
+      "needs": "Necesidades",
+      "network": "Red",
+      "network-tab": "Red",
+      "patents": "{count} patente | {count} patentes",
+      "patents-tab": "Patentes",
+      "positions": "{count} puesto abierto | {count} puestos abiertos",
+      "positions-tab": "Puestos abiertos",
+      "presentation": "Presentación",
+      "similar": "Similares",
+      "team": "{count} equipo | {count} equipos",
+      "team-tab": "Equipo",
+      "similar-structures": "Estructuras similares",
+      "affiliations": "Afiliaciones",
+      "awards": "{count} premio | {count} premios",
+      "awards-tab": "Premios",
+      "trade": "{count} necesidad / disponibilidad | {count} necesidades / disponibilidades",
+      "trade-tab": "Necesidades / Disponibilidades",
+      "teaching": "{count} docencia | {count} docencias",
+      "teaching-tab": "Docencia",
+      "research-areas": "{count} línea de investigación | {count} líneas de investigación",
+      "research-areas-tab": "Líneas de investigación",
+      "research-areas-skills": "Líneas de investigación y competencias",
+      "platform": "Herramientas y métodos compartidos ({count})",
+      "platform-tab": "Plataforma",
+      "subgroups": "Subgrupos"
+    }
+  },
   "researcher": {
     "relators": {
       "abr": "abridger",
@@ -3254,6 +3299,47 @@
       "BookOfChapters": "Libro de Capítulos",
       "Presentation": "Presentación",
       "UNKNOWN": "Desconocida"
+    },
+    "affiliations": {
+      "boards": "Juntas",
+      "societies": "Sociedades"
+    },
+    "view": {
+      "all": "Ver todo",
+      "all-researchers": "Ver todos los investigadores",
+      "all-publications": "Ver todas las publicaciones",
+      "all-conferences": "Ver todas las conferencias",
+      "all-domains": "Ver áreas",
+      "all-network": "Ver la red",
+      "all-job-offers": "Ver todas las ofertas de empleo"
+    },
+    "stats": {
+      "citations": "Citas",
+      "h-index": "índice h",
+      "i10-index": "índice i10"
+    },
+    "download-resume": "Descargar CV",
+    "top-collaborations": "Principales colaboraciones",
+    "title": {
+      "affiliated": "Investigador afiliado | Investigadores afiliados",
+      "publications": "Publicación | Publicaciones",
+      "conferences": "Conferencia | Conferencias",
+      "availabilities": "Availabilitie | Availabilities",
+      "domain": "Dominio de investigación | Dominios de investigación",
+      "fundings": "Financiación | Financiación",
+      "needs": "Necesidad | Necesidades",
+      "network": "Red | Redes",
+      "patents": "Patentes | Patentes",
+      "positions": "Posición abierta | Posiciones abiertas",
+      "presentation": "Presentación | Presentaciones",
+      "team": "Equipo | Equipos",
+      "similar-researchers": "Investigador similar | Investigadores similares",
+      "affiliations": "Afiliación | Afiliaciones",
+      "awards": "Premio | Premios",
+      "trade": "Necesidad / Availabilitie | Necesidades / Availabilidades",
+      "teaching": "Enseñanza | Enseñanzas",
+      "research-areas": "Área de investigación | Áreas de investigación",
+      "research-areas-skills": "Esferas de investigación"
     }
   },
   "vector-store": {
