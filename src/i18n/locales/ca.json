@@ -2971,7 +2971,8 @@
       "research-areas-tab": "Línies de recerca",
       "research-areas-skills": "Línies de recerca i competències",
       "platform": "Eines i mètodes compartits ({count})",
-      "platform-tab": "Plataforma"
+      "platform-tab": "Plataforma",
+      "subgroups": "Subgrups"
     }
   },
   "researcher": {

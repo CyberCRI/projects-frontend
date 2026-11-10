@@ -2971,7 +2971,8 @@
       "research-areas-tab": "Uurimissuunad",
       "research-areas-skills": "Uurimissuunad ja oskused",
       "platform": "Jagatud tööriistad ja meetodid ({count})",
-      "platform-tab": "Platvorm"
+      "platform-tab": "Platvorm",
+      "subgroups": "Alarühmad"
     }
   },
   "researcher": {

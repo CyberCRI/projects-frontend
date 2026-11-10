@@ -2919,7 +2919,8 @@
       "research-areas-tab": "Research areas",
       "research-areas-skills": "Research areas & skills",
       "platform": "Shared tools and methods ({count})",
-      "platform-tab": "Platform"
+      "platform-tab": "Platform",
+      "subgroups": "Sub-groups"
     }
   },
   "researcher": {

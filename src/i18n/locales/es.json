@@ -2971,7 +2971,8 @@
       "research-areas-tab": "Líneas de investigación",
       "research-areas-skills": "Líneas de investigación y competencias",
       "platform": "Herramientas y métodos compartidos ({count})",
-      "platform-tab": "Plataforma"
+      "platform-tab": "Plataforma",
+      "subgroups": "Subgrupos"
     }
   },
   "researcher": {

@@ -2971,7 +2971,8 @@
       "research-areas-tab": "Forschungsgebiete",
       "research-areas-skills": "Forschungsgebiete und Kompetenzen",
       "platform": "Gemeinsame Werkzeuge und Methoden ({count})",
-      "platform-tab": "Plattform"
+      "platform-tab": "Plattform",
+      "subgroups": "Untergruppen"
     }
   },
   "researcher": {

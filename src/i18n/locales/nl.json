@@ -2971,7 +2971,8 @@
       "research-areas-tab": "Onderzoeksgebieden",
       "research-areas-skills": "Onderzoeksgebieden en vaardigheden",
       "platform": "Gedeelde tools en methoden ({count})",
-      "platform-tab": "Platform"
+      "platform-tab": "Platform",
+      "subgroups": "Subgroepen"
     }
   },
   "researcher": {
