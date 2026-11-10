@@ -31,7 +31,7 @@ export const usePermissionInstruction = (
 
   const canCreateInstruction = computed(() => {
     return (
-      permissions.value &&
+      userStore.isConnected &&
       globalCanCreateInstruction(userStore.rights, organizationStore.current.id)
     )
   })
