@@ -19,7 +19,7 @@ import useUsersStore from '~/stores/useUsers'
  * @returns {{ canCreateNews: globalThis.ComputedRef<boolean>; canEditNews: globalThis.ComputedRef<boolean>; canDeleteNews: globalThis.ComputedRef<boolean>; }}
  * @exports
  */
-export const usePermissionNews = (newsId: RefOrRaw<NewsModel['id'] | null>) => {
+export const usePermissionNews = (newsId: RefOrRaw<NewsModel['id'] | null> | null = null) => {
   const organizationStore = useOrganizationsStore()
   const userStore = useUsersStore()
 

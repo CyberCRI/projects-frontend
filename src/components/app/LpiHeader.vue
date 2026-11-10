@@ -201,6 +201,9 @@ import BadgeItem from '~/components/base/BadgeItem.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useUsersStore from '~/stores/useUsers'
 
+import { usePermissionInstruction } from '~/composables/usePermissions/useInstructionPermissions'
+import { usePermissionEvent } from '~/composables/usePermissions/useEventPermissions'
+import { usePermissionNews } from '~/composables/usePermissions/useNewsPermissions'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 
 export default {
@@ -226,6 +229,10 @@ export default {
     const { locale, setLocale } = useNuxtI18n()
     const { isAutoTranslateActivated } = useAutoTranslate()
     const organizationCode = useOrganizationCode()
+
+    const { canCreateEvent } = usePermissionEvent()
+    const { canCreateNews } = usePermissionNews()
+    const { canCreateInstruction } = usePermissionInstruction()
     return {
       appHasChatbotPromptDb,
       organizationsStore,
@@ -237,6 +244,10 @@ export default {
       isAutoTranslateActivated,
       setLocale,
       organizationCode,
+
+      canCreateEvent,
+      canCreateNews,
+      canCreateInstruction,
     }
   },
 
@@ -289,7 +300,7 @@ export default {
 
     showDocumentsLink() {
       // admin should always access to documents, so they can add the first one...
-      return this.isAdmin || (this.isConnected && this.organization?.attachment_files_count > 0)
+      return this.isAdmin || (this.isConnected && this.organization?.modules?.files > 0)
     },
 
     userMenu() {
@@ -364,21 +375,21 @@ export default {
           label: this.$t('home.calendar').toUpperCase(),
           to: { name: 'CalendarPage' },
           leftIcon: 'Calendar',
-          condition: !!this.organisation?.modules?.events,
+          condition: !!this.organisation?.modules?.events || this.canCreateEvent,
           dataTest: 'more-calendar',
         },
         {
           label: this.$t('home.instructions').toUpperCase(),
           to: { name: 'InstructionListPage' },
           leftIcon: 'BookmarkBoxOutline',
-          condition: !!this.organisation?.modules?.instructions,
+          condition: !!this.organisation?.modules?.instructions || this.canCreateInstruction,
           dataTest: 'more-instructions',
         },
         {
           label: this.$t('home.news').toUpperCase(),
           to: { name: 'NewsListPage' },
           leftIcon: 'Article',
-          condition: !!this.organisation?.modules?.news,
+          condition: !!this.organisation?.modules?.news || this.canCreateNews,
           dataTest: 'more-instructions',
         },
         {

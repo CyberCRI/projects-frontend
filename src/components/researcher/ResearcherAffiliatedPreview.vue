@@ -13,7 +13,7 @@
     :see-more-label="$t('researcher.view.all-researchers')"
   >
     <template #content>
-      <BaseResearcherAffiliated :user="user" />
+      <BaseResearcherAffiliated :user="user" preview :limit="3" />
     </template>
   </BaseModulePreview>
 </template>

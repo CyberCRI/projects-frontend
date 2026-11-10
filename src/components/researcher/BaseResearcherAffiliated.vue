@@ -2,7 +2,11 @@
   <div v-if="user.researcher">
     <FetchLoader :status="status" only-error skeleton>
       <div class="affiliates">
-        <UserRow v-for="researcher in affiliated" :key="researcher.id" :user="researcher.user" />
+        <ResearcherRow
+          v-for="researcher in affiliated"
+          :key="researcher.id"
+          :researcher="researcher"
+        />
       </div>
     </FetchLoader>
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
@@ -12,11 +16,12 @@
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { researcherSkeleton } from '~/skeletons/crisalid.skeletons'
+import ResearcherRow from '~/components/people/ResearcherRow.vue'
 import { getResearchAffiliated } from '~/api/v2/crisalid.service'
 
 const props = withDefaults(
   defineProps<{ user: TranslatedUserModel; preview?: boolean; limit?: number }>(),
-  { limit: 12, preview: false }
+  { limit: null, preview: false }
 )
 
 const researcherId = computed(() => props.user.researcher?.id)

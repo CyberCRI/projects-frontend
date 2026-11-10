@@ -1,41 +1,46 @@
 <template>
-  <RouterLink class="user-row" :to="toLink" :data-test="`project-row-${user.id}`">
+  <RouterLink
+    class="user-row"
+    :to="toLink"
+    :title="researcher.display_name"
+    :data-test="`project-row-${researcher.user.id}`"
+  >
     <!-- picture -->
     <div class="card-image">
       <CroppedApiImage
-        :alt="`${user.given_name} ${user.family_name} image`"
+        :alt="`${researcher.display_name} image`"
         class="picture picture-user skeletons-background"
-        :picture-data="user.profile_picture"
+        :picture-data="researcher.user.profile_picture"
         picture-size="medium"
         :default-picture="DEFAULT_USER_PATATOID"
       />
     </div>
     <!-- header row -->
-    <h2 class="card-title skeletons-text">{{ user.given_name }} {{ user.family_name }}</h2>
+    <h2 class="card-title skeletons-text">{{ researcher.display_name }}</h2>
     <p class="card-job skeletons-text">
-      {{ user.$t.job }}
+      {{ researcher.user.$t.job }}
     </p>
     <p class="card-bio skeletons-text">
-      {{ user.$t.short_description }}
+      {{ researcher.$t.short_bio || researcher.user.$t.short_description }}
     </p>
   </RouterLink>
 </template>
 
 <script setup lang="ts">
-import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+import type CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+import type { TranslatedResearcher } from 'shared-projects-frontend/models'
 
-import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
 const props = defineProps<{
-  user: TranslatedUserModel
+  researcher: TranslatedResearcher
 }>()
 
 const toLink = computed(() => {
   return {
     name: 'ProfileUser',
     params: {
-      userIdOrSlug: props.user.slug || props.user.id,
+      userIdOrSlug: props.researcher.user.slug || props.researcher.user.id,
     },
   }
 })

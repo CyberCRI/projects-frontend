@@ -90,10 +90,10 @@ export const researcherSkeleton = (def?: Partial<Researcher>): Researcher => ({
 
 export const structureSkeleton = (def?: Partial<Structure>): Structure => ({
   id: -1,
-  organization: '',
-  generic_type: '',
+  organization: null,
+  generic_type: 'institution',
   national_type: '',
-  main_mission: '',
+  main_mission: 'research',
   name: '',
   acronym: '',
   description: '',
@@ -101,7 +101,19 @@ export const structureSkeleton = (def?: Partial<Structure>): Structure => ({
   identifiers: [],
   related_structures: [],
   researchers: [],
-  people_group: [],
+  people_group: null,
+  modules: {
+    citations: 0,
+    collaborations: 0,
+    conferences: 0,
+    parent_structures: 0,
+    publications: 0,
+    research_domains: 0,
+    researchers: 0,
+    sub_structures: 0,
+    supervised_structures: 0,
+    supervising_structures: 0,
+  },
   ...(def || {}),
 })
 

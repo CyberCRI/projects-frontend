@@ -20,7 +20,7 @@ import useUsersStore from '~/stores/useUsers'
  * @exports
  */
 export const usePermissionInstruction = (
-  instructionId: RefOrRaw<InstructionModel['id'] | null>
+  instructionId: RefOrRaw<InstructionModel['id'] | null> | null = null
 ) => {
   const organizationStore = useOrganizationsStore()
   const userStore = useUsersStore()

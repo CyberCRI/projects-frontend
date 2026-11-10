@@ -13,20 +13,15 @@
 </template>
 
 <script setup lang="ts">
-import type { HarvesterType, ResearcherIdentifier } from 'shared-projects-frontend/models'
+import type { HarvesterType, Identifier } from 'shared-projects-frontend/models'
 
 import { documentHarvesterToUrl, researcherHarvesterToUrl } from '~/functs/researcher'
-import googlescholarIcon from '~/assets/svg/googlescholar.svg'
 import openalexIcon from '~/assets/svg/openalex.svg'
-import biorxivIcon from '~/assets/svg/biorxiv.svg'
 import scopusIcon from '~/assets/svg/scopus.svg'
-import irsteaIcon from '~/assets/svg/irstea.svg'
 import scanrIcon from '~/assets/svg/scanr.svg'
 import orcidIcon from '~/assets/svg/orcid.svg'
 import idrefIcon from '~/assets/svg/idref.svg'
-import arxivIcon from '~/assets/svg/arxiv.svg'
 import viafIcon from '~/assets/svg/viaf.svg'
-import pmidIcon from '~/assets/svg/pmid.svg'
 import halIcon from '~/assets/svg/hal.svg'
 import doiIcon from '~/assets/svg/doi.svg'
 
@@ -39,18 +34,12 @@ const ICONS: Partial<Record<HarvesterType, string>> = {
   openalex: openalexIcon,
   scanr: scanrIcon,
   doi: doiIcon,
-  irstea: irsteaIcon,
-  pmid: pmidIcon,
-  pmcid: pmidIcon,
-  biorxiv: biorxivIcon,
-  arxiv: arxivIcon,
   viaf: viafIcon,
-  googlescholar: googlescholarIcon,
 } as const
 
 const props = withDefaults(
   defineProps<{
-    identifier: ResearcherIdentifier
+    identifier: Identifier
     type: 'researcher' | 'document'
     height?: string
     title?: string
