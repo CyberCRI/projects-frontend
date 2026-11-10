@@ -6,11 +6,21 @@
 <script lang="ts" setup>
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
-const props = withDefaults(defineProps<{ user: TranslatedUserModel; preview?: boolean }>(), {
-  preview: false,
-})
+const props = withDefaults(
+  defineProps<{ user: TranslatedUserModel; preview?: boolean; limit?: number }>(),
+  {
+    preview: false,
+    limit: null,
+  }
+)
 
-const domainsPreview = computed(() => props.user.researcher?.domains || [])
+const domainsPreview = computed(() => {
+  const doms = props.user.researcher?.domains || []
+  if (props.limit) {
+    return doms.slice(0, props.limit)
+  }
+  return doms
+})
 
 const domains = computed(() => (props.preview ? domainsPreview.value : domainsPreview.value))
 </script>
