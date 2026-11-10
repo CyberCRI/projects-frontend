@@ -1573,7 +1573,7 @@
     "research-output-year": "Research output year",
     "publications-similars": "Similar Publications",
     "publications-empty": "No Publications.",
-    "conferences-similars": "Conferences similars",
+    "conferences-similars": "Similar Conferences",
     "conferences-empty": "No conferences."
   },
   "profile-completed-modal": {
@@ -1932,7 +1932,7 @@
       "help": "He has no edit rights, but appears as member of the team."
     },
     "leaders": {
-      "label": "Leader group | Leaders group",
+      "label": "Leader | Leaders ",
       "help": "Is an Editor who will appear with a “Group Leader” tag."
     },
     "owner_groups": {
