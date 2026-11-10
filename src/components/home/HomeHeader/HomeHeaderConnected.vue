@@ -21,7 +21,7 @@
     <div v-if="!isLoading" class="summary-cards" data-test="home-user-header">
       <div v-if="!isEmptyDashboard" class="summary-container page-section-wide">
         <ProjectSummaryBlock
-          v-if="canCreateProject"
+          v-if="canCreateProject && displayableProjects.length"
           :projects="displayableProjects"
           :inlined="numberOfSummaryBlock < 2"
         />

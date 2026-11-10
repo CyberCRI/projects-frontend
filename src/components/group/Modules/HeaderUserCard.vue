@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
-// import { roleI18n } from '~/functs/rolesUtils'
+import { roleI18n } from '~/functs/rolesUtils'
 
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 import type { UserModel } from 'shared-projects-frontend/models'
@@ -38,9 +38,7 @@ const roleLabel = computed(() => {
   if (props.roleLabel !== undefined) {
     return props.roleLabel
   }
-  // TODO:
-  // return roleI18n(props.member.role) || prop.member.$t.job
-  return props.member.$t.job
+  return roleI18n(props.member.role) || prop.member.$t.job
 })
 </script>
 

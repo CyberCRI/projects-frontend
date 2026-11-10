@@ -31,6 +31,7 @@
               :to="teaching.link"
               :label="$t('common.see-more')"
               btn-icon="ExternalLink"
+              target="_blank"
             />
             <!-- <LinkButton
               :to="teaching.similars.link"

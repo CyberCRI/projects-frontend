@@ -1037,8 +1037,10 @@
     "location": "Adresse | Adresses",
     "subgroups": "Sous-groupes",
     "locations": "Carte | Lieux",
-    "news": "Actualité | Actualités",
-    "event": "Évènement | Évènements"
+    "news": "{count} actualité | {count} actualités",
+    "news-tab": "Actualités",
+    "event": "{count} évènement | {count} évènements",
+    "event-tab": "Évènements"
   },
   "header": {
     "private": "Privée: visible uniquement par les membres de l’équipe",
@@ -3334,7 +3336,8 @@
       "presentation": "Présentation | Exposés",
       "team": "Équipe | Équipes",
       "similar-researchers": "Chercheur similaire | Chercheurs similaires",
-      "affiliations": "Affiliation | Affiliations",
+      "affiliations": "{count} affiliations | {count} affiliations",
+      "affiliations-tab": "Affiliations",
       "awards": "Prix | Prix",
       "trade": "Besoin / disponibilité | Besoins / disponibilités",
       "teaching": "Enseignement | Enseignements",

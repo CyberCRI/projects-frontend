@@ -1,5 +1,12 @@
 <template>
-  <component :is="is" :to="to" :class="{ 'icon-only': iconOnly }" type="button" class="link-button">
+  <component
+    :is="is"
+    :to="to"
+    :target="target"
+    :class="{ 'icon-only': iconOnly }"
+    type="button"
+    class="link-button"
+  >
     <ButtonContent :label="label" :btn-icon="btnIcon" :no-text-transform="noTextTransform" />
     <!-- <IconImage name="" /> -->
   </component>
@@ -15,12 +22,14 @@ const props = withDefaults(
     to?: RouteLocationRaw
     btnIcon?: IconImageChoice | 'LoaderSimple'
     noTextTransform?: boolean
+    target?: string
   }>(),
   {
     label: null,
     to: null,
     btnIcon: null,
     noTextTransform: false,
+    target: undefined,
   }
 )
 

@@ -124,7 +124,8 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
       },
       {
         key: 'profile-affiliations',
-        label: t(USER_MODULE_TITLE.affiliated, modulesResearcher.value.affiliated),
+        label: t(USER_MODULE_TITLE.affiliations, modulesResearcher.value.affiliated),
+        tabLabel: t(USER_MODULE_TITLE.affiliationsTab),
         view: `/profile/${userSlugOrId.value}/affiliations`,
         altView: `/profile/${userSlugOrId.value}/affiliations/edit`,
         condition: !!modulesResearcher.value.affiliated,

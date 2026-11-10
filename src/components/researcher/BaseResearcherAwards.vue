@@ -11,9 +11,14 @@
           <p class="skeletons-text">
             {{ award.$t.description || award.award.$t.description }}
           </p>
-          <a v-if="award.link" :href="award.link" class="skeletons-background">
-            {{ $t('common.see-more') }}
-          </a>
+          <LinkButton
+            v-if="award.link"
+            :to="award.link"
+            :label="$t('common.see-more')"
+            btn-icon="ExternalLink"
+            class="award-link skeletons-background"
+            target="_blank"
+          />
         </div>
       </template>
       <NothingHere v-if="!isLoading && awards.length === 0" />
@@ -66,6 +71,12 @@ const {
   display: none;
   background-color: variables.$light-gray;
   height: 1px;
+}
+
+.award-link {
+  margin-top: 1rem;
+  width: fit-content;
+  justify-self: flex-start;
 }
 
 .award ~ .separator {

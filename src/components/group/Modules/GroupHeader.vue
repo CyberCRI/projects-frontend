@@ -26,16 +26,12 @@
           {{ groupVisibilityLabel }}
         </span>
       </div>
-      <div class="subsection">
-        <p
-          v-if="short_description"
-          class="short-description skeletons-text"
-          v-html="short_description"
-        />
+      <div v-if="short_description" class="subsection">
+        <p class="short-description skeletons-text" v-html="short_description" />
         <AIGeneratedMark v-if="group.structure" />
       </div>
-      <div class="subsection">
-        <FetchLoader v-if="leaders.length" :status="status" only-error skeleton>
+      <div v-if="leaders.length" class="subsection">
+        <FetchLoader :status="status" only-error skeleton>
           <div class="group-leaders">
             <HeaderUserCard
               v-for="member in leaders"
@@ -64,7 +60,7 @@
       />
     </div>
 
-    <div class="group-footer">
+    <div v-if="hasFooter" class="group-footer">
       <div class="contacts">
         <!-- locations -->
         <button
@@ -100,23 +96,22 @@
           class="main-sdgs"
         />
       </template>
-
-      <!-- drawer views -->
-      <div>
-        <LocationDrawer
-          v-if="group.locations.length"
-          :is-opened="stateModal"
-          :locations="group.locations"
-          class="emptyable"
-          @close="closeModal()"
-        />
-        <UserProfileDrawer
-          :is-opened="!!leaderIdDrawer"
-          :user-id="leaderIdDrawer"
-          class="emptyable"
-          @close="closeProfile"
-        />
-      </div>
+    </div>
+    <!-- drawer views -->
+    <div>
+      <LocationDrawer
+        v-if="group.locations.length"
+        :is-opened="stateModal"
+        :locations="group.locations"
+        class="emptyable"
+        @close="closeModal()"
+      />
+      <UserProfileDrawer
+        :is-opened="!!leaderIdDrawer"
+        :user-id="leaderIdDrawer"
+        class="emptyable"
+        @close="closeProfile"
+      />
     </div>
   </div>
 </template>
@@ -352,6 +347,14 @@ const contacts = computed(() => {
 
   return res
 })
+
+const hasFooter = computed(
+  () =>
+    props.group?.locations.length ||
+    props.group?.email ||
+    contacts.value?.length ||
+    props.group?.sdgs?.length
+)
 </script>
 
 <style lang="scss" scoped>
