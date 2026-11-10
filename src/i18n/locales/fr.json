@@ -3408,7 +3408,7 @@
       "help": "Il n'a aucun droit d'édition, mais apparaît comme membre de l'équipe."
     },
     "leaders": {
-      "label": "Groupe dirigeant | Groupe des dirigeants",
+      "label": "Leader | Leaders",
       "help": "Est un éditeur qui va apparaître avec un tag «Group Leader»."
     },
     "owner_groups": {
