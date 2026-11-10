@@ -149,12 +149,7 @@ const { data: members, status } = getGroupMember(organizationCode, groupId, {
     limit: 5,
   },
 })
-const leaders = computed(
-  () =>
-    members.value?.filter((item, idx) =>
-      props.group.structure ? idx < 2 : item.role === 'leaders'
-    ) ?? []
-)
+const leaders = computed(() => members.value?.filter((item) => item.role === 'leaders') ?? [])
 
 const groupVisibilityLabel = computed(() => {
   if (props.group.publication_status === 'public') {
