@@ -89,7 +89,7 @@ $picture-size: 6rem;
     'pict footer footer';
   gap: 1rem;
   align-items: stretch;
-  border: 1px solid variables.$primary;
+  border: 1px solid var(--primary);
   border-radius: 1rem;
   padding: 1rem;
 
@@ -116,7 +116,7 @@ $picture-size: 6rem;
   width: $picture-size;
   height: $picture-size;
   border-radius: 100%;
-  border: 1px solid variables.$light-gray;
+  border: 1px solid var(--light-gray);
 }
 
 .card-type {

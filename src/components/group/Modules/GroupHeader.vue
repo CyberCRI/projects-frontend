@@ -72,10 +72,6 @@
           <span class="group-recap-title text-ellipsis">{{ locationTitle }}</span>
         </button>
         <!-- contact -->
-        <a v-if="group.email" :href="`mailto:${group.email}`" class="group-recap-element reset-btn">
-          <IconImage name="EmailOutline" />
-          <span class="group-recap-title">{{ $t('group.contact') }}</span>
-        </a>
         <BaseModuleButton
           v-for="(contact, idx) in contacts"
           :key="idx"
@@ -336,14 +332,8 @@ const contacts = computed(() => {
   const res = []
 
   if (props.group.email) {
-    res.push({ icon: 'ExternalLink', label: 'Contact', link: props.group.email })
+    res.push({ icon: 'ExternalLink', label: 'Contact', link: `mailto:${props.group.email}` })
   }
-  if (props.group.website) {
-    // TODO: does exists ?
-    res.push({ icon: 'ExternalLink', label: 'Website', link: props.group.website })
-  }
-
-  // TODO: social networks and other
 
   return res
 })

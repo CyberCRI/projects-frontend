@@ -59,7 +59,7 @@ const badges = computed(() => {
       link: `/group/${props.group.slug || props.group.id}/teaching`,
     })
   }
-  if (props.group.structurer?.modules.awards) {
+  if (props.group.structure?.modules.awards) {
     res.push({
       label: t(GROUP_MODULE_TITLE.awards, props.group.structure.modules.awards),
       icon: GROUP_MODULE_ICON.awards,

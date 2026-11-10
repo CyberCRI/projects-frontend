@@ -1,18 +1,20 @@
 <template>
-  <div class="similar-researcher-preview">
-    <div class="similar-list">
-      <FetchLoader :status="status" only-error skeleton>
+  <FetchLoader :status="status" only-error skeleton>
+    <div class="researchers-similars">
+      <div class="researchers-similars-list">
         <SimilarResearcherCard
           v-for="researcher in similars"
           :key="researcher.id"
+          class="researchers-similars-card"
           :researcher="researcher"
         />
         <NothingHere v-if="similars.length === 0" />
-      </FetchLoader>
+      </div>
+      <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
     </div>
-    <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
-  </div>
+  </FetchLoader>
 </template>
+
 <script lang="ts" setup>
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
@@ -42,27 +44,22 @@ const {
   default: () => factoryPagination(researcherSkeleton, limitSkeletons.value),
 })
 </script>
+
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 
-.similar-researcher-preview {
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 1rem;
-  justify-content: center;
-}
+.researchers-similars {
+  .researchers-similars-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
 
-.similar-title {
-  font-weight: 700;
-  font-size: 1rem;
-  text-align: center;
-  margin-bottom: 1rem;
-  color: variables.$primary-dark;
-}
-
-.similar-list {
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 1rem;
+    .researchers-similars-card {
+      width: 100%;
+    }
+  }
 }
 </style>

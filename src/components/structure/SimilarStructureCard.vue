@@ -3,7 +3,7 @@
     <CroppedApiImage
       :alt="`${structure.name} image`"
       class="picture picture-user skeletons-background"
-      :picture-data="structure.people_group.profile_picture"
+      :picture-data="structure.people_group.header_image"
       picture-size="medium"
       :default-picture="DEFAULT_USER_PATATOID"
     />
@@ -11,7 +11,7 @@
       {{ structure.name }}
     </div>
     <div class="card-description skeletons-text cropped">
-      {{ structure.$t.main_mission }}
+      {{ structure.main_mission }}
     </div>
   </div>
 </template>

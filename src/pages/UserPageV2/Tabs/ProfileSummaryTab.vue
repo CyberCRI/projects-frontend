@@ -24,13 +24,9 @@ const bioEmpty = computed(() => textIsEmpty(props.user.$t.description))
 
     <ResearcherBadgesPreview v-if="user.researcher" :user="user" />
 
-    <div v-if="user.researcher?.$t.bio" class="profile-row">
-      <ResearcherPresentationPreview class="resarcher-presentaion" :user="user" />
-      <ResearcherSimilarPreview
-        v-if="user.researcher?.modules?.similars"
-        class="resarcher-similar"
-        :user="user"
-      />
+    <div class="profile-presentations">
+      <ResearcherPresentationPreview v-if="user.researcher?.$t.bio" :user="user" />
+      <ResearcherSimilarPreview v-if="user.researcher?.modules?.similars" :user="user" />
     </div>
     <ProfileBioPreview v-if="!bioEmpty && !user.researcher" :user="user" />
 
@@ -110,18 +106,21 @@ $layout-gap: 1rem;
   gap: $layout-gap;
 }
 
-.profile-row {
+.profile-presentations {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  gap: $layout-gap;
+  grid-template-columns: 3fr 1fr;
+  gap: 1rem;
 }
 
-.resarcher-presentaion {
-  grid-column: 1/6;
+// merge all cols if only one child
+.profile-presentations:has(> :only-child) {
+  grid-template-columns: 1fr;
 }
 
-.resarcher-simalar {
-  grid-column: 6;
+@media screen and (max-width: variables.$min-desktop) {
+  .profile-presentations {
+    grid-template-columns: 1fr;
+  }
 }
 
 .researcher-domain {

@@ -13,10 +13,10 @@
       picture-size="medium"
       :default-picture="DEFAULT_USER_PATATOID"
     />
-    <div class="card-title skeletons-text cropped">
+    <div class="card-title skeletons-text text-ellipsis">
       {{ researcher.display_name }}
     </div>
-    <div class="card-description skeletons-text cropped">
+    <div class="card-description skeletons-text text-ellipsis">
       {{ researcher.user.$t.job }}
     </div>
   </NuxtLink>
@@ -50,12 +50,5 @@ defineProps<{ researcher: TranslatedResearcher }>()
   border-radius: 100%;
   height: variables.pxtorem(60px);
   width: variables.pxtorem(60px);
-}
-
-.cropped {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: center;
 }
 </style>

@@ -286,7 +286,7 @@ const { status, data: researcherStructures } = getResearcherStructures(
   width: 12rem;
 
   .researcher-aside-block {
-    border: 1px solid variables.$lighter-gray;
+    border: 1px solid var(--lighter-gray);
     padding: 1rem;
   }
 
@@ -340,7 +340,7 @@ const { status, data: researcherStructures } = getResearcherStructures(
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  border: variables.$border-width-s solid variables.$primary;
+  border: variables.$border-width-s solid var(--primary);
   border-radius: 4px;
   padding: 0.2rem 1rem;
 

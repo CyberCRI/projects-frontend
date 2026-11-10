@@ -38,7 +38,7 @@ const roleLabel = computed(() => {
   if (props.roleLabel !== undefined) {
     return props.roleLabel
   }
-  return roleI18n(props.member.role) || prop.member.$t.job
+  return roleI18n(props.member.role) || props.member.$t.job
 })
 </script>
 

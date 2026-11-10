@@ -45,7 +45,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type { TranslatedPeopleModel } from 'shared-projects-frontend/models'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import { fundingSkeleton } from '~/skeletons/crisalid.skeletons'
 import { getStructureFundings } from '~/api/v2/crisalid.service'
@@ -53,7 +53,7 @@ import FetchLoader from '~/components/base/FetchLoader.vue'
 import { ICON_CURRENCY } from '~/functs/constants'
 
 const props = withDefaults(
-  defineProps<{ group: TranslatedPeopleModel; preview?: boolean; limit?: number }>(),
+  defineProps<{ group: TranslatedPeopleGroupModel; preview?: boolean; limit?: number }>(),
   {
     limit: null,
     preview: false,
