@@ -1,8 +1,10 @@
 // npm i @modelcontextprotocol/sdk
-import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js'
-import { SSEClientTransport } from '@modelcontextprotocol/sdk/client/sse.js'
+import {
+  Client,
+  SSEClientTransport,
+  StreamableHTTPClientTransport,
+} from '@modelcontextprotocol/client'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
-import { Client } from '@modelcontextprotocol/sdk/client/index.js'
 
 function makeTransport(url, transport, headers) {
   const u = new URL(url)
