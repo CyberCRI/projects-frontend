@@ -2,6 +2,7 @@ import toolMonitoringMiddleware from '@/server/projects-agent/middlewares/tool-m
 import getRetrieverTool from '@/server/projects-agent/tools/get-retriever-tool-new'
 import traceLangchain from '@/server/projects-agent/tracers/trace-langchain'
 import loggingMiddleware from '@/server/projects-agent/middlewares/logging'
+import { checkpointer } from '@/server/projects-agent/memory/checkpointer'
 import getMcpTools from '@/server/projects-agent/tools/get-mcp-tools'
 import getLlmModel from '@/server/projects-agent/model/get-llm-model'
 import getSkills from '@/server/projects-agent/tools/get-skills'
@@ -53,8 +54,8 @@ export default async function getAgent(agentData, event, userToken) {
   const agent = createAgent({
     model,
     tools,
-    // TODO reanble checkpoint after tests
-    // checkpointer,
+    // minimal in-memory checkpointer, only used to pause/resume on MCP elicitation
+    checkpointer,
     systemPrompt: new SystemMessage(agentData.promptContent.content + skillSystemPromptExtra),
     // stateSchema: AgentState as StateSchema<any>,
     middleware: [

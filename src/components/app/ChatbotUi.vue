@@ -61,6 +61,40 @@ const liveMessages = ref([]) // new message e.g not in history yet
 
 const chatBox = useTemplateRef('deep-chat')
 
+// elicitations
+const pendingElicitation = ref(null)
+const pendingElicitationAnswer = ref(null)
+const answerElicitation = () => {
+  /*
+{
+    "conversationId": "…",
+    "elicitationResponses": {
+      "<interruptId>": {
+        "<requestKey>": { "action": "accept", "content": { "projectId": "42" } }
+      }
+    }
+  }
+*/
+
+  const elicitationResponses = {
+    // TODO maybe multiple
+    [pendingElicitation.value.elicitations[0].id]: {
+      approval: {
+        action: 'decline', // decline | accept | cancel
+        content: {
+          confirm: false,
+          releaseNote: 'Foobaroo 421',
+        },
+      },
+    },
+  }
+
+  console.log('answering elicitaion', elicitationResponses)
+  pendingElicitationAnswer.value = elicitationResponses
+  pendingElicitation.value = null
+  chatBox.value.submitUserMessage({ text: '…' }) // placeholder, ignored by the interceptor
+}
+
 // const CONVERSATION_LIMIT = 50
 const addToConversation = (...args) => {
   liveMessages.value.push(...args)
@@ -93,7 +127,18 @@ if (!conversationStarted.value) {
 }
 
 const requestInterceptor = (requestDetails) => {
-  // console.log('requestInterceptor', requestDetails)
+  console.log('requestInterceptor', requestDetails)
+  // Elicitation answer: send it as-is, without touching history/conversation state
+  if (pendingElicitationAnswer.value) {
+    requestDetails.body = {
+      conversationId: conversationId.value,
+      elicitationResponses: pendingElicitationAnswer.value,
+    }
+    pendingElicitationAnswer.value = null
+    return requestDetails
+  }
+
+  // Normal message
   const requestMessage = [requestDetails.body.messages[requestDetails.body.messages.length - 1]]
   const allMessages = conversationStarted.value
     ? requestMessage
@@ -169,6 +214,13 @@ const responseInterceptor = (response) => {
       overwrite: true,
     }
   }
+
+  // elicititation
+  if (response.role === 'elicitations') {
+    console.log('ELICITEUPLAIT', response)
+    pendingElicitation.value = response
+  }
+
   if (!IS_STREAMED.value || response.is_done) {
     // only add complete response, not individual chunks, to live messages
     const text = IS_STREAMED.value ? response.done_text || responseMessageAcc : response.text
@@ -481,6 +533,16 @@ async function exportConversation() {
       <slot />
     </div>
   </deep-chat>
+
+  <div v-if="pendingElicitation" class="eliciation-form">
+    <form>
+      <pre>
+         {{ JSON.stringify(pendingElicitation, null, 2) }}
+      </pre>
+
+      <button @click="answerElicitation">Submit</button>
+    </form>
+  </div>
   <div class="action-bar">
     <LpiButton
       v-if="agentSlug && isAdmin"

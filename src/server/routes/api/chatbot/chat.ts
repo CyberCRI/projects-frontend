@@ -1,4 +1,5 @@
 // import { StateSchema, ReducedValue /*, MemorySaver */ } from '@langchain/langgraph'
+import { clearThread, expireThreadLater } from '@/server/projects-agent/memory/checkpointer'
 import createConversationPersistenceHandler from '@/server/projects-agent/memory/factory'
 import { traceAgentMemory } from '@/server/projects-agent/tracers/trace-agent-memory'
 import checkAdminRights, { getUser } from '@/server/utils/check-admin-rights.js'
@@ -7,9 +8,11 @@ import checkAdminRights, { getUser } from '@/server/utils/check-admin-rights.js'
 import traceLangchain from '@/server/projects-agent/tracers/trace-langchain'
 import getAgentData from '@/server/projects-agent/agent/get-agent-data'
 import getMetadata from '@/server/projects-agent/agent/get-metadata'
+import { createMCPElicitationResume } from '@langchain/mcp-adapters'
 // import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import getAgent from '@/server/projects-agent/agent/get-agent'
 import { tokenMap } from '@/server/routes/api/chat-stream'
+import { Command } from '@langchain/langgraph'
 import { v4 as uuidv4 } from 'uuid'
 
 import filterSpecialTagFactory from '~/server/utils/filter-special-tag'
@@ -103,6 +106,8 @@ export default defineLazyEventHandler(() => {
     const body = await readBody<{
       messages: Array<{ role: string; text: string }>
       conversationId?: string
+      // answer to a pending MCP elicitation: { [interruptId]: { [requestKey]: { action, content } } }
+      elicitationResponses?: Record<string, Record<string, any>>
     }>(event)
 
     const messages = body.messages || []
@@ -162,24 +167,49 @@ export default defineLazyEventHandler(() => {
     // TODO: fix typescript mess with agent.stream return type
     // TODO rethrow interrupt exception when chepointis enabled
     try {
-      const transmitedMessages = await persistenceHandler.handleIncomingMessages(messages)
+      const elicitationResponses = body.elicitationResponses
+      let streamInput: any
 
-      traceAgentMemory('==========  MEMORIES  =======', persistenceHandler.messages?.length)
-      traceAgentMemory(persistenceHandler.messages)
-      traceAgentMemory('========== /MEMORIES =======')
+      if (elicitationResponses) {
+        // Resume a paused run: checkpoint is still in the in-memory checkpointer
+        traceLangchain(
+          'Elicitation response from client:',
+          JSON.stringify(elicitationResponses, null, 2)
+        )
+        const state = await agent.getState(config)
+        const pending = state.tasks.flatMap((t: any) => t.interrupts || [])
+        if (!pending.length) {
+          throw new Error('No pending elicitation for this conversation (expired?)')
+        }
+        const resume = {}
+        for (const interrupt of pending) {
+          const responses = elicitationResponses[interrupt.id]
+          if (responses) Object.assign(resume, createMCPElicitationResume(interrupt, responses))
+        }
+        traceLangchain('Elicitation response command:', JSON.stringify(resume, null, 2))
+        streamInput = new Command({ resume })
+      } else {
+        const transmitedMessages = await persistenceHandler.handleIncomingMessages(messages)
 
-      traceLangchain('==========  MESSAGES  =======', transmitedMessages?.length)
-      traceLangchain(transmitedMessages)
-      traceLangchain('========== /MESSAGES =======')
+        traceAgentMemory('==========  MEMORIES  =======', persistenceHandler.messages?.length)
+        traceAgentMemory(persistenceHandler.messages)
+        traceAgentMemory('========== /MEMORIES =======')
+
+        traceLangchain('==========  MESSAGES  =======', transmitedMessages?.length)
+        traceLangchain(transmitedMessages)
+        traceLangchain('========== /MESSAGES =======')
+
+        // History comes from the custom memory: drop any stale checkpoint (abandoned
+        // elicitation) so messages are not appended twice
+        await clearThread(conversationId)
+        streamInput = { messages: transmitedMessages, ...customMetadata }
+      }
 
       let last_role = 'ai'
-      for await (const [mode, chunk] of (await agent.stream(
-        {
-          messages: transmitedMessages,
-          ...customMetadata,
-        } as any,
-        { ...config, streamMode: ['messages', 'tools' /*, 'updates' */] }
-      )) as AsyncIterableIterator<[string, any]>) {
+      for await (const [mode, chunk] of (await agent.stream(streamInput, {
+        ...config,
+        streamMode: ['messages', 'tools' /*, 'updates' */],
+      })) as AsyncIterableIterator<[string, any]>) {
         ///
         // if (mode != 'messages')
         //   console.log('XXXXXXXXXXXXXXXXXX', JSON.stringify(mode, null, 2), chunk.constructor.name)
@@ -297,6 +327,22 @@ export default defineLazyEventHandler(() => {
           }
         }
       }
+      // Paused on an MCP elicitation? Keep the checkpoint (briefly) and ask the client.
+      const finalState = await agent.getState(config)
+      const interrupts = finalState.tasks.flatMap((t: any) => t.interrupts || [])
+      if (interrupts.length) {
+        expireThreadLater(conversationId)
+        respond({
+          text: '',
+          role: 'elicitations',
+          is_done: true,
+          conversationId,
+          elicitations: interrupts.map((i: any) => ({ id: i.id, ...i.value })),
+        })
+        return
+      }
+      await clearThread(conversationId)
+
       // This is the authoritative "agent is done" signal
       // (openai had 'is_done:true' on last chunk but other providers don't)
       respond({ text: '', role: last_role, is_done: true, conversationId })
