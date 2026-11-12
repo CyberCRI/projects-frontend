@@ -34,6 +34,9 @@ export default defineLazyEventHandler(() => {
     const documents = body.documents || []
     delete body.documents
 
+    const mcps = body.mcps || []
+    delete body.mcps
+
     const { agent, oldAgent } = await chatbotPrisma.$transaction(async (tx) => {
       const homonymous = await tx.agent.findFirst({
         where: {
@@ -88,6 +91,9 @@ export default defineLazyEventHandler(() => {
           documents: {
             deleteMany: { agentId: id }, // wipe existing join rows
             create: documents,
+          },
+          mcps: {
+            set: mcps,
           },
         },
       })

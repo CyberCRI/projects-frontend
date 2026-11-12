@@ -27,11 +27,10 @@ const deleteEntity = async () => {
   const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
   if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
   try {
-    const response = await $fetch(`/api/agent/${entityToDelete.value.id}`, {
+    await $fetch(`/api/agent/${entityToDelete.value.id}`, {
       headers,
       method: 'DELETE',
     })
-    console.log('delete', response)
     refreshEntityList()
     toaster.pushSuccess(t('agents.deleted'))
   } catch (e) {
