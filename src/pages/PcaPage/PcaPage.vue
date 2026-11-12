@@ -81,9 +81,7 @@ useLpiHead2({
               Coupure totale du service, perte de donnée, perte de crédibilité de la plateforme
             </td>
             <td style="text-align: left">Faible</td>
-            <td style="text-align: left">
-              Migration en cours vers des outils souverains
-            </td>
+            <td style="text-align: left">Migration en cours vers des outils souverains</td>
           </tr>
           <tr class="odd">
             <td style="text-align: left">Cyber attaque - intrusion</td>
