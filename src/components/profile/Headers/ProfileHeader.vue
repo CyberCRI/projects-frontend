@@ -163,30 +163,11 @@ const contacts = computed(() => {
     return res
   }
 
-  const googleScholar = (researcher.identifiers || []).find(
-    (iden) => iden.harvester === 'googlescholar'
-  )
   const orcid = (researcher.identifiers || []).find((iden) => iden.harvester === 'orcid')
-  const scopus = (researcher.identifiers || []).find((iden) => iden.harvester === 'googlescholar')
-  const hal = (researcher.identifiers || []).find((iden) => iden.harvester === 'hal')
   const idref = (researcher.identifiers || []).find((iden) => iden.harvester === 'idref')
 
-  if (googleScholar) {
-    res.push({
-      icon: 'ExternalLink',
-      label: 'Google Scholar',
-      link: researcherHarvesterToUrl(googleScholar),
-    })
-  }
   if (orcid) {
     res.push({ icon: 'ExternalLink', label: 'ORCID', link: researcherHarvesterToUrl(orcid) })
-  }
-
-  if (scopus) {
-    res.push({ icon: 'ExternalLink', label: 'Scopus', link: researcherHarvesterToUrl(scopus) })
-  }
-  if (hal) {
-    res.push({ icon: 'ExternalLink', label: 'Hal', link: researcherHarvesterToUrl(hal) })
   }
 
   if (idref) {

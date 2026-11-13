@@ -30,21 +30,8 @@ export const documentHarvesterToUrl = (identifier: Identifier): string | null =>
   const value = encodeURIComponent(newIdentifier.value)
 
   switch (newIdentifier.harvester) {
-    case 'irstea':
-      return `https://www.iamm.ciheam.org/ress_doc/opac_css/index.php?lvl=notice_display&id=${value}`
-    case 'pmid':
-      return `https://pubmed.ncbi.nlm.nih.gov/${value}/`
-    case 'pmcid':
-      return `https://pmc.ncbi.nlm.nih.gov/articles/${value}/`
-    case 'biorxiv':
-      // TODO check slash
-      return `https://www.biorxiv.org/content/${value}`
-    case 'arxiv':
-      return `https://arxiv.org/abs/${value}`
     case 'viaf':
       return `https://viaf.org/fr/viaf/${value}`
-    case 'googlescholar':
-      return `https://scholar.google.com/citations?view_op=view_citation&citation_for_view=${value}`
     case 'scopus':
       return `https://www.scopus.com/authid/detail.uri?authorId=${value}`
     case 'hal':
@@ -55,8 +42,6 @@ export const documentHarvesterToUrl = (identifier: Identifier): string | null =>
       return `https://www.idref.fr/${value}`
     case 'doi':
       return `https://doi.org/${value}`
-    case 'uri':
-      return identifier.value
     default:
       return null
   }
@@ -82,8 +67,6 @@ export const researcherHarvesterToUrl = (identifier: Identifier): string | null 
   switch (newIdentifier.harvester) {
     case 'viaf':
       return `https://viaf.org/fr/viaf/${value}`
-    case 'googlescholar':
-      return `https://scholar.google.com/citations?user=${value}`
     case 'scopus':
       return `https://www.scopus.com/authid/detail.uri?authorId=${value}`
     case 'hal':

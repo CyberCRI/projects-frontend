@@ -11,6 +11,7 @@ import type {
   QueryFilterFunding,
   QueryFilterTeaching,
   Structure,
+  QueryFilterResearcherStructure,
 } from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
@@ -332,7 +333,7 @@ export const getResearcherTeachings = (
 export const getResearcherStructures = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   researcherId: RefOrRaw<UserModel['id']>,
-  config: UseAsyncPaginationApiConfig = {}
+  config: UseAsyncPaginationApiConfig<QueryFilterResearcherStructure> = {}
 ) => {
   const { translateResearcherStructures } = useAutoTranslate()
   const key = computed(

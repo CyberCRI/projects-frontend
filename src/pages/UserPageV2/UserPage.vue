@@ -5,6 +5,7 @@ import { useUserFullName } from '~/composables/user/useUserFullName'
 import type { UserSlugOrId } from 'shared-projects-frontend/models'
 import { useUserTabs } from '~/composables/user/useUserTabs'
 import { userSkeleton } from '~/skeletons/user.skeletons'
+import type { RouteLocationRaw } from 'vue-router'
 import { getUser } from '~/api/v2/user.service'
 
 const props = withDefaults(
@@ -65,7 +66,7 @@ const propsTab = computed(() => ({
 }))
 
 const breadcrumbs = computed(() => {
-  const res = [
+  const res: { name: string; route: RouteLocationRaw }[] = [
     // {
     //   name: t('home.home'),
     //   route: { name: 'HomeRoot' },
@@ -121,7 +122,7 @@ const hasSubPageTitle = computed(
       :with-data="!!user?.id"
     >
       <NavPanelLayout
-        :is-loading="isLOading"
+        :is-loading="isLoading"
         :is-nav-collapsed="isNavCollapsed"
         :breadcrumbs="[
           {

@@ -125,29 +125,20 @@ const onAdd = () => {
       class="skills"
       :class="{ 'list-divider': !preview && !researcherMode, 'researcher-mode': researcherMode }"
     >
-      <template v-if="researcherMode">
-        <ResearcherDomain
-          v-for="skill in skills"
-          :key="skill.id"
-          :domain="{ domain: { title: skill.tag.title }, level: (100 * skill.level) / 4 }"
-        />
-      </template>
-      <template v-else>
-        <SkillItem
-          v-for="skill in skills"
-          :key="skill.id"
-          :user="user"
-          :skill="skill"
-          :can-delete="editable"
-          :can-edit="editable"
-          :mode="preview ? 'minimal' : editable ? 'medium' : 'full'"
-          :show-extras="!editable"
-          :user-mentoring="mentorShip[skill.id]"
-          @delete="onDelete(skill)"
-          @edit="onEdit(skill)"
-          @mentorship-send="$emit('mentorship-send')"
-        />
-      </template>
+      <SkillItem
+        v-for="skill in skills"
+        :key="skill.id"
+        :user="user"
+        :skill="skill"
+        :can-delete="editable"
+        :can-edit="editable"
+        :mode="preview ? 'minimal' : editable ? 'medium' : 'full'"
+        :show-extras="!editable"
+        :user-mentoring="mentorShip[skill.id]"
+        @delete="onDelete(skill)"
+        @edit="onEdit(skill)"
+        @mentorship-send="$emit('mentorship-send')"
+      />
     </div>
     <EmptyLabel v-if="skills.length === 0" />
 

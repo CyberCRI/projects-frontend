@@ -98,14 +98,7 @@ const collabs = ref([
 <template>
   <BaseModuleTab :title="$t(USER_MODULE_TITLE.network)">
     <div class="network-map">
-      <GeneralMap
-        ref="map"
-        class="map-recap"
-        :locations="locations"
-        :editable="isEdit"
-        @edit="onEdit"
-        @expand="onExpand"
-      />
+      <GeneralMap ref="map" class="map-recap" :locations="[]" />
     </div>
     <div class="network-lists">
       <div>

@@ -114,15 +114,6 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         icon: USER_MODULE_ICON.conferences,
       },
       {
-        key: 'profile-network',
-        label: t(USER_MODULE_TITLE.network, modulesResearcher.value.network),
-        view: `/profile/${userSlugOrId.value}/network`,
-        altView: `/profile/${userSlugOrId.value}/network/edit`,
-        condition: !!modulesResearcher.value.network,
-        dataTest: 'profile-resources',
-        icon: USER_MODULE_ICON.network,
-      },
-      {
         key: 'profile-affiliations',
         label: t(USER_MODULE_TITLE.affiliations, modulesResearcher.value.affiliated),
         tabLabel: t(USER_MODULE_TITLE.affiliationsTab),
@@ -169,27 +160,6 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
         condition: !!modulesResearcher.value.teachings,
         dataTest: 'profile-teaching',
         icon: USER_MODULE_ICON.teachings,
-      },
-
-      {
-        key: 'profile-positions',
-        label: t(USER_MODULE_TITLE.positions, modulesResearcher.value.positons),
-        view: `/profile/${userSlugOrId.value}/positions`,
-        altView: `/profile/${userSlugOrId.value}/positions/edit`,
-        condition: !!modulesResearcher.value.positions,
-        dataTest: 'profile-positions',
-        icon: USER_MODULE_ICON.positions,
-      },
-      {
-        key: 'profile-trade',
-        label: t(USER_MODULE_TITLE.trade, {
-          count: modulesResearcher.value.needs + modulesResearcher.value.availabilitie,
-        }),
-        view: `/profile/${userSlugOrId.value}/trade`,
-        altView: `/profile/${userSlugOrId.value}/trade/edit`,
-        condition: modulesResearcher.value.needs || modulesResearcher.value.availabilities,
-        dataTest: 'profile-trade',
-        icon: USER_MODULE_ICON.trade,
       },
       {
         key: 'profile-resources',
