@@ -58,6 +58,7 @@ import type {
 } from 'shared-projects-frontend/models'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { defaultProjectMessageForm, useProjectMessageForm } from '~/form/messages'
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import { getTemplateType } from '~/functs/tabs'
@@ -93,6 +94,7 @@ const refreshEditor = () => (editorKey.value = uuidv4())
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
 const { canCreateComment } = usePermissionProject(computed(() => props.project.id))
+const { isAtLeastUser } = usePermissions()
 
 const { t } = useNuxtI18n()
 
@@ -132,7 +134,9 @@ const isFormEqual = useBlockNavigation(() =>
     html: ['content'],
   })
 )
-const canSubmitComment = computed(() => !isFormEqual.value && canCreateComment.value)
+const canSubmitComment = computed(
+  () => !isFormEqual.value && (isAtLeastUser.value || canCreateComment.value)
+)
 
 const scrollToNewComment = (comment) => {
   document.getElementById(comment.id)?.scrollIntoView({
