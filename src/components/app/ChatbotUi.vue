@@ -64,7 +64,7 @@ const chatBox = useTemplateRef('deep-chat')
 // elicitations
 const pendingElicitation = ref(null)
 const pendingElicitationAnswer = ref(null)
-const answerElicitation = () => {
+const answerElicitation = (payload) => {
   /*
 {
     "conversationId": "…",
@@ -81,10 +81,7 @@ const answerElicitation = () => {
     [pendingElicitation.value.elicitations[0].id]: {
       approval: {
         action: 'decline', // decline | accept | cancel
-        content: {
-          confirm: false,
-          releaseNote: 'Foobaroo 421',
-        },
+        content: payload,
       },
     },
   }
@@ -93,6 +90,10 @@ const answerElicitation = () => {
   pendingElicitationAnswer.value = elicitationResponses
   pendingElicitation.value = null
   chatBox.value.submitUserMessage({ text: '…' }) // placeholder, ignored by the interceptor
+}
+
+const cancelElicitation = () => {
+  console.log('cancel eleicitiation todo')
 }
 
 // const CONVERSATION_LIMIT = 50
@@ -495,6 +496,8 @@ async function exportConversation() {
     isExporting.value = false
   }
 }
+
+const inputAreaStyle = computed(() => (pendingElicitation.value ? { display: 'none' } : {}))
 </script>
 
 <template>
@@ -528,6 +531,7 @@ async function exportConversation() {
           line-height: 1.3;
         }
       "
+    :inputAreaStyle="inputAreaStyle"
   >
     <div style="display: none">
       <slot />
@@ -535,13 +539,11 @@ async function exportConversation() {
   </deep-chat>
 
   <div v-if="pendingElicitation" class="eliciation-form">
-    <form>
-      <pre>
-         {{ JSON.stringify(pendingElicitation, null, 2) }}
-      </pre>
-
-      <button @click="answerElicitation">Submit</button>
-    </form>
+    <ElicitationForm
+      :elicitation="pendingElicitation"
+      @elicitation-canceled="answerElicitation"
+      @elicitation-answered="answerElicitation"
+    />
   </div>
   <div class="action-bar">
     <LpiButton
