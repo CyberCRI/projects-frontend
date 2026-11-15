@@ -6,15 +6,15 @@
       <label class="field-widget">
         <span class="field-label">{{ properties[propertyKey]?.title }}</span>
         <input
+          v-if="properties[propertyKey]?.type == 'boolean'"
           class="filed-input"
           type="checkbox"
-          v-if="properties[propertyKey]?.type == 'boolean'"
           :name="fieldName(propertyKey)"
         />
         <input
+          v-if="properties[propertyKey]?.type == 'string'"
           class="filed-input"
           type="text"
-          v-if="properties[propertyKey]?.type == 'string'"
           :name="fieldName(propertyKey)"
         />
       </label>
@@ -24,8 +24,10 @@
 </template>
 
 <script setup>
-const props = defineProps({ requestKey: String, requestBody: Object })
-const model = defineModel()
+const props = defineProps({
+  requestKey: { type: String, required: true },
+  requestBody: { type: Object, required: true },
+})
 
 const message = computed(() => props.requestBody?.message || '')
 
@@ -39,11 +41,11 @@ const fieldName = (propertyKey) => `${props.requestKey}[${propertyKey}]`
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 
-$form-guuter: 0.6rem;
+$form-gutter: 0.6rem;
 
 .subform-message {
   background-color: variables.$primary-lighter;
-  padding: $form-guuter;
+  padding: $form-gutter;
   border-radius: 0.4rem;
   margin-block: 1rem;
   font-weight: 600;
@@ -51,7 +53,7 @@ $form-guuter: 0.6rem;
 }
 
 .field {
-  margin-inline: $form-guuter;
+  margin-inline: $form-gutter;
 }
 
 .field ~ .field {
@@ -70,7 +72,7 @@ $form-guuter: 0.6rem;
 }
 
 .field-notice {
-  font-variant: italic;
-  forn-size: 0.8rem;
+  font-style: italic;
+  font-size: 0.8rem;
 }
 </style>

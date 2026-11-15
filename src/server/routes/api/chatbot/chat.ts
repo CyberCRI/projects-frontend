@@ -237,12 +237,21 @@ export default defineLazyEventHandler(() => {
               text_extra = '✅' // chunk.output
               // is_done = true
               break
-            case 'on_tool_error':
+            case 'on_tool_error': {
               // const { name, error, toolCallId } = chunk
+              // An MCP elicitation pauses the run by throwing an interrupt: not a real error
+              const err = chunk.error
+              const isInterrupt =
+                err?.name === 'GraphInterrupt' ||
+                err?.name === 'NodeInterrupt' ||
+                err?.lc_error_code === 'GRAPH_INTERRUPT' ||
+                /interrupt/i.test(err?.constructor?.name || '')
+              if (isInterrupt) break
               text = 'fetching_data'
               text_extra = '❌'
               // is_done = true
               break
+            }
             default:
               console.error('Unknown tool event', chunk.event)
           }

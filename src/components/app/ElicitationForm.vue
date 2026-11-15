@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submit" @reset="reset" class="elicitation-form">
+  <form class="elicitation-form" @submit.prevent="submit" @reset="reset">
     <!--pre>
          {{ JSON.stringify(elicitation, null, 2) }}
       </pre-->
@@ -8,9 +8,9 @@
       <!--pre>{{ JSON.stringify(requests[requestKey], null, 2) }}</pre-->
 
       <ElicitationSubForm
+        v-model="response"
         :request-key="requestKey"
         :request-body="requests[requestKey]"
-        v-model="response"
       />
     </div>
 
@@ -21,7 +21,7 @@
   </form>
 </template>
 <script setup>
-const props = defineProps({ elicitation: Object })
+const props = defineProps({ elicitation: { type: Object, required: true } })
 const emit = defineEmits(['elicitation-answered', 'elicitation-canceled'])
 
 // TODO multiple elicitaitons

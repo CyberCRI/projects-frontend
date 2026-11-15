@@ -62,6 +62,7 @@ const liveMessages = ref([]) // new message e.g not in history yet
 const chatBox = useTemplateRef('deep-chat')
 
 // elicitations
+const ELICITATION_PLACEHOLDER = '…'
 const pendingElicitation = ref(null)
 const pendingElicitationAnswer = ref(null)
 
@@ -78,11 +79,7 @@ const answerElicitation = async (responses) => {
 
   // Re-read the ref at call time. Don't hold a reference taken before the
   // flush, because deep-chat replaces `submitUserMessage` on re-render.
-  chatBox.value?.submitUserMessage({ text: '…' }) // placeholder, ignored by the interceptor
-}
-
-const cancelElicitation = () => {
-  console.log('cancel eleicitiation todo')
+  chatBox.value?.submitUserMessage({ text: ELICITATION_PLACEHOLDER }) // ignored by the interceptor, bubble hidden in onMessage
 }
 
 // const CONVERSATION_LIMIT = 50
@@ -207,8 +204,21 @@ const responseInterceptor = (response) => {
 
   // elicititation
   if (response.role === 'elicitations') {
-    console.log('ELICITEUPLAIT', response)
     pendingElicitation.value = response
+    // the "fetching data" meta bubble is stale now: the run is paused, hide it
+    if (replacedByNext) {
+      nextTick(() => {
+        const bubbles = chatBox.value?.shadowRoot?.querySelectorAll('.outer-message-container')
+        const last = bubbles?.[bubbles.length - 1]
+        if (last) last.style.display = 'none'
+      })
+    }
+    // Not a real message: don't store it, and don't let it overwrite/keep
+    // the previous meta bubble state for the resumed stream
+    replacedByNext = false
+    responseMessageAcc = ''
+    conversationId.value = response.conversationId
+    return { ...response, overwrite: false }
   }
 
   if (!IS_STREAMED.value || response.is_done) {
@@ -382,6 +392,14 @@ function scrollToBottom() {
 }
 
 function onMessage(event) {
+  // hide the technical placeholder user bubble sent to answer an elicitation
+  if (event?.message?.role === 'user' && event.message.text === ELICITATION_PLACEHOLDER) {
+    nextTick(() => {
+      const bubbles = chatBox.value?.shadowRoot?.querySelectorAll('.outer-message-container')
+      const last = bubbles?.[bubbles.length - 1]
+      if (last) last.style.display = 'none'
+    })
+  }
   emit('new-message', event)
   nextTick(scrollToBottom)
 }
