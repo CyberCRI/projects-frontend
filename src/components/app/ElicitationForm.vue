@@ -28,24 +28,32 @@ const emit = defineEmits(['elicitation-answered', 'elicitation-canceled'])
 const requests = computed(() => props.elicitation?.elicitations?.[0].requests || {})
 const requestKeys = computed(() => Object.keys(requests.value))
 
-const response = ref(() => {})
-
-const submit = (evt) => {
-  const form = evt.target
-  const formData = new FormData(form)
-  var payload = {}
-  formData.forEach((value, key) => {
-    const [reqKey, fieldKey] = key.replace(']', '').split('[')
-    if (!payload[reqKey]) payload[reqKey] = {}
-    payload[reqKey][fieldKey] = value
-  })
-  console.log('payload', payload)
-  emit('elicitation-answered', payload)
+const coerce = (type, raw) => {
+  if (type === 'boolean') return raw === 'on' || raw === true
+  if (type === 'number' || type === 'integer')
+    return raw === '' || raw == null ? undefined : Number(raw)
+  return raw === '' || raw == null ? undefined : raw
 }
 
-const reset = (evt) => {
-  console.log('reset')
-  emit('elicitation-canceled')
+const submit = (evt) => {
+  const formData = new FormData(evt.target)
+  const responses = {}
+  for (const requestKey of requestKeys.value) {
+    const props = requests.value[requestKey]?.requestedSchema?.properties || {}
+    const content = {}
+    for (const [field, def] of Object.entries(props)) {
+      const value = coerce(def.type, formData.get(`${requestKey}[${field}]`))
+      if (value !== undefined) content[field] = value
+    }
+    responses[requestKey] = { action: 'accept', content }
+  }
+  emit('elicitation-answered', responses)
+}
+
+const reset = () => {
+  const responses = {}
+  for (const requestKey of requestKeys.value) responses[requestKey] = { action: 'cancel' }
+  emit('elicitation-canceled', responses)
 }
 </script>
 <style lang="scss" scoped>

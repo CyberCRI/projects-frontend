@@ -64,32 +64,21 @@ const chatBox = useTemplateRef('deep-chat')
 // elicitations
 const pendingElicitation = ref(null)
 const pendingElicitationAnswer = ref(null)
-const answerElicitation = (payload) => {
-  /*
-{
-    "conversationId": "…",
-    "elicitationResponses": {
-      "<interruptId>": {
-        "<requestKey>": { "action": "accept", "content": { "projectId": "42" } }
-      }
-    }
-  }
-*/
 
-  const elicitationResponses = {
-    // TODO maybe multiple
-    [pendingElicitation.value.elicitations[0].id]: {
-      approval: {
-        action: 'decline', // decline | accept | cancel
-        content: payload,
-      },
-    },
-  }
-
-  console.log('answering elicitaion', elicitationResponses)
-  pendingElicitationAnswer.value = elicitationResponses
+const answerElicitation = async (responses) => {
+  // responses = { [requestKey]: { action, content? } }
+  const interruptId = pendingElicitation.value.elicitations[0].id // TODO multiple
+  pendingElicitationAnswer.value = { [interruptId]: responses }
   pendingElicitation.value = null
-  chatBox.value.submitUserMessage({ text: '…' }) // placeholder, ignored by the interceptor
+
+  // Let Vue flush the DOM update caused by pendingElicitation = null before
+  // deep-chat submits. Otherwise a deep-chat re-render can swap the view
+  // between the submit and the streamed reply.
+  await nextTick()
+
+  // Re-read the ref at call time. Don't hold a reference taken before the
+  // flush, because deep-chat replaces `submitUserMessage` on re-render.
+  chatBox.value?.submitUserMessage({ text: '…' }) // placeholder, ignored by the interceptor
 }
 
 const cancelElicitation = () => {
@@ -237,7 +226,7 @@ const responseInterceptor = (response) => {
   conversationId.value = response.conversationId
 
   // reset accumulator is last message is replaceable (tool message), else accumulate tokens
-  if (replacedByNext) responseMessageAcc = ''
+  if (replacedByNext) responseMessageAcc = response.text || ''
   else responseMessageAcc += response.text
 
   // no way to know when a true message begin, so just assume next is not overwrite
@@ -497,7 +486,11 @@ async function exportConversation() {
   }
 }
 
-const inputAreaStyle = computed(() => (pendingElicitation.value ? { display: 'none' } : {}))
+watch(pendingElicitation, (pending) => {
+  const root = chatBox.value?.shadowRoot
+  const input = root?.querySelector('#input')
+  if (input) input.style.display = pending ? 'none' : ''
+})
 </script>
 
 <template>
@@ -531,7 +524,6 @@ const inputAreaStyle = computed(() => (pendingElicitation.value ? { display: 'no
           line-height: 1.3;
         }
       "
-    :inputAreaStyle="inputAreaStyle"
   >
     <div style="display: none">
       <slot />
