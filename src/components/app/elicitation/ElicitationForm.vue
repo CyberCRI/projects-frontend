@@ -7,11 +7,7 @@
     <div v-for="requestKey in requestKeys" :key="requestKey">
       <!--pre>{{ JSON.stringify(requests[requestKey], null, 2) }}</pre-->
 
-      <ElicitationSubForm
-        v-model="response"
-        :request-key="requestKey"
-        :request-body="requests[requestKey]"
-      />
+      <ElicitationSubForm :request-key="requestKey" :request-body="requests[requestKey]" />
     </div>
 
     <div class="actions">

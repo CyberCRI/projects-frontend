@@ -1,0 +1,31 @@
+@use '~/design/scss/variables';
+
+.field ~ .field {
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid variables.$light-gray;
+}
+
+.field-label {
+  font-weight: 600;
+}
+
+.field-widget {
+  display: flex;
+  gap: 1rem;
+}
+
+.field-multi-valued-widget {
+  .options {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding-left: 0.5rem;
+  }
+}
+
+.field-notice {
+  font-style: italic;
+  font-size: 0.8rem;
+}
