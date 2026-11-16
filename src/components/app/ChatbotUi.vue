@@ -553,6 +553,7 @@ watch(pendingElicitation, (pending) => {
       :elicitation="pendingElicitation"
       @elicitation-canceled="answerElicitation"
       @elicitation-answered="answerElicitation"
+      @elicitation-declined="answerElicitation"
     />
   </div>
   <div class="action-bar">

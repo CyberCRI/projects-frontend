@@ -22,13 +22,14 @@
 
     <div class="actions">
       <LpiButton type="reset" :label="$t('common.cancel')" secondary />
+      <LpiButton type="button" :label="$t('common.decline')" secondary @click.prevent="decline" />
       <LpiButton type="submit" :label="$t('common.submit')" />
     </div>
   </form>
 </template>
 <script setup>
 const props = defineProps({ elicitation: { type: Object, required: true } })
-const emit = defineEmits(['elicitation-answered', 'elicitation-canceled'])
+const emit = defineEmits(['elicitation-answered', 'elicitation-canceled', 'elicitation-declined'])
 
 // TODO multiple elicitaitons
 const requests = computed(() => props.elicitation?.elicitations?.[0].requests || {})
@@ -82,6 +83,12 @@ const reset = () => {
   for (const requestKey of requestKeys.value) responses[requestKey] = { action: 'cancel' }
   emit('elicitation-canceled', responses)
 }
+
+const decline = () => {
+  const responses = {}
+  for (const requestKey of requestKeys.value) responses[requestKey] = { action: 'decline' }
+  emit('elicitation-declined', responses)
+}
 </script>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
@@ -90,7 +97,7 @@ const reset = () => {
   border: 1px solid variables.$primary-dark;
   border-radius: 0.4rem;
   padding: 0.6rem;
-  margin-bottom: 1rem;
+  margin-block: 1rem;
 }
 
 .form-error {
