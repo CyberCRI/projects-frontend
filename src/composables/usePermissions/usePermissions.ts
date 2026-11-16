@@ -6,6 +6,7 @@ import {
   isViewer as globalIsViewer,
   isAdmin as globalIsAdmin,
   isAdminOrFacilitator as globalIsAdminOrFacilitator,
+  isUser as globalIsUser,
 } from 'shared-projects-frontend/lib'
 import useUsersStore from '~/stores/useUsers'
 
@@ -39,6 +40,12 @@ export const usePermissions = () => {
       userStore.isConnected &&
       globalIsAdminOrFacilitator(userStore.rights, organizationStore.current?.id)
   )
+  const isUser = computed(
+    () => userStore.isConnected && globalIsUser(userStore.rights, organizationStore.current?.id)
+  )
+  const isAtLeastUser = computed(
+    () => isUser.value || isFacilitator.value || isAdmin.value || isSuperAdmin.value
+  )
 
   return {
     isSuperAdmin,
@@ -46,5 +53,7 @@ export const usePermissions = () => {
     isViewer,
     isAdmin,
     isAdminOrFacilitator,
+    isUser,
+    isAtLeastUser,
   }
 }

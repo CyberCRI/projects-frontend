@@ -57,7 +57,7 @@ const selectedSection = ref(props.section)
 
 const { query, setQuerys, setQuery, search } = useSearchV2(
   props.section && props.section !== 'all'
-    ? { types: [props.section], ...(props.defaultQuery || {}) }
+    ? { ...(props.defaultQuery || {}), types: [props.section] }
     : props.defaultQuery
 )
 

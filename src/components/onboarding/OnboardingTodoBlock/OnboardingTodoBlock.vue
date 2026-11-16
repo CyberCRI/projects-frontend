@@ -159,9 +159,11 @@ export default {
 
     async completeProfile() {
       if (this.anyAsyncing) return
-      // TODO check with and remove eventually
-      // await this.updateStatus('complete_profile', false)
-      this.$router.push({ name: 'ProfileEditGeneral' })
+      await this.updateStatus('complete_profile', false)
+      this.$router.push({
+        name: 'ProfileEditUser',
+        params: { userIdOrSlug: this.user?.slug || this.user?.id },
+      })
     },
 
     async exploreProjects() {

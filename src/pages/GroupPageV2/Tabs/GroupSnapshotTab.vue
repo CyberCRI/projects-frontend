@@ -33,7 +33,7 @@
 
     <div class="profile-row">
       <StructureDomainPreview
-        v-if="group.structure?.modules?.domains"
+        v-if="group.structure?.modules?.research_domains"
         class="researcher-domain"
         :group="group"
       />
@@ -44,13 +44,8 @@
       /> -->
     </div>
 
-    <!-- <StructurePositionsPreview v-if="group.structure?.modules?.positions"  :group="group" /> -->
-
-    <StructureAwardPreview v-if="group.structure?.modules?.awards" :group="group" />
-
-    <StructureFundingsPreview v-if="group.structure?.modules?.fundings" :group="group" />
-
     <!-- TODO -->
+    <!-- <StructurePositionsPreview v-if="group.structure?.modules?.positions"  :group="group" /> -->
     <!-- <StructurePlatformPreview v-if="group.structure?.modules?.tools" :group="group" /> -->
   </div>
 </template>

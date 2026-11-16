@@ -1,14 +1,13 @@
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
-import { MultiServerMCPClient } from '@langchain/mcp-adapters'
-
-const runtimeConfig = useRuntimeConfig()
-const { appMcpServerUrl } = runtimeConfig
+import { MCPAdapter } from '@langchain/mcp-adapters'
 
 export default async function getMcpTools(
   agentData: any,
   event: any,
   userToken: string
 ): Promise<any[]> {
+  const runtimeConfig = useRuntimeConfig()
+  const { appMcpServerUrl } = runtimeConfig
   const mcpConfigs = {}
 
   if (agentData.useProjectsMcp) {
@@ -33,8 +32,20 @@ export default async function getMcpTools(
       traceMcp('Adding MCP tool with command:', mcp.command, mcp.args)
     } else {
       aConfig['url'] = mcp.url
-      traceMcp('Adding MCP tool with server URL:', mcp.url)
-      // TODO: auth
+      if (mcp.apiKey) {
+        if (mcp.authHeader === 'bearer') {
+          aConfig['headers'] = {
+            Authorization: `Bearer ${mcp.apiKey}`,
+          }
+        } else {
+          aConfig['headers'] = {
+            'x-api-key': mcp.apiKey,
+          }
+        }
+      }
+      traceMcp(
+        `Adding MCP tool with ${mcp.apikey ? 'authorization api key and' : ''} server URL: ${mcp.url}`
+      )
     }
 
     const slug = mcp.title.replace(/\s+/gim, '_')
@@ -42,10 +53,10 @@ export default async function getMcpTools(
     mcpConfigs[slug] = aConfig
   })
 
-  const client = new MultiServerMCPClient(mcpConfigs)
+  const client = new MCPAdapter({ servers: mcpConfigs })
 
   // TODO: add middlkewrae to select tools
-  const mcpTools = await client.getTools()
+  const mcpTools = await client.listTools()
   traceMcp('mcp tool', JSON.stringify(mcpTools, null, 2))
   event.node.res.on('close', () => {
     client.close().catch(() => {})

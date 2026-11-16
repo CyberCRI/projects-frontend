@@ -212,6 +212,8 @@ export default defineNuxtConfig({
     appChatbotPromptDb: '',
     appAgentMemoryTrace: '',
     appAgentMemorySlidingWindowSize: '',
+    appAgentSecretKeys: '',
+    appAgentSecretKeyCurrentVersion: '',
     public: {
       appVersion: '',
       appApiOrgCode: '',

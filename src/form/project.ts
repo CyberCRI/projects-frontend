@@ -79,19 +79,18 @@ export const useProjectDescriptionForm = (options = {}) => {
   })
 }
 
+export type ProjectSettingsForm = Pick<
+  ProjectForm,
+  | 'publication_status'
+  | 'life_status'
+  | 'is_locked'
+  | 'organizations_codes'
+  | 'categories'
+  | 'categorie'
+  | 'template'
+>
 export const useProjectSettingForm = (options = {}) => {
-  return useForm<
-    Pick<
-      ProjectForm,
-      | 'publication_status'
-      | 'life_status'
-      | 'is_locked'
-      | 'organizations_codes'
-      | 'categories'
-      | 'categorie'
-      | 'template'
-    >
-  >({
+  return useForm<ProjectSettingsForm>({
     onClean: onCleanProjectForm,
     ...options,
   })

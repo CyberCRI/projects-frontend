@@ -1,9 +1,8 @@
-// import { getOAuthProtectedResourceMetadataUrl } from '@modelcontextprotocol/sdk/server/auth/router.js'
 import {
   requireBearerAuth,
   getOAuthProtectedResourceMetadataUrl,
 } from '@modelcontextprotocol/server'
-import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
+import { NodeStreamableHTTPServerTransport } from '@modelcontextprotocol/node'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import { verifierFactory } from '@/server/utils/token-verifier'
 import { exchangeToken } from '@/server/utils/token-exchange'
@@ -90,7 +89,7 @@ export default defineEventHandler(async (event) => {
 
   //   const eventStream = createEventStream(event)
   // Create a new transport for each request to prevent request ID collisions
-  const transport = new StreamableHTTPServerTransport({
+  const transport = new NodeStreamableHTTPServerTransport({
     sessionIdGenerator: undefined,
     enableJsonResponse: false,
     allowedOrigins: ['*'],

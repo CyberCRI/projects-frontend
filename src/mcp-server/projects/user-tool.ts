@@ -1,8 +1,8 @@
 import type { UserModel, SkillModel, PeopleGroupModel } from 'shared-projects-frontend/models'
 import { getUser as fetchUser, getGroup } from 'shared-projects-frontend/apis'
 import { addIfExists, tagMapPreview } from '~/mcp-server/projects/utils'
+import type { McpServer } from '@modelcontextprotocol/server'
 import { mcpOptions, orgCode, resultFromTool } from './base'
-import type { TypeMcpServer } from '~/interfaces/mcp'
 import { mapSDG } from './sdg-tool'
 import N from './zod-schema-utils'
 import { pick } from 'es-toolkit'
@@ -85,19 +85,19 @@ export const mapPeopleGroupPreview = (group: PeopleGroupModel) => ({
   ),
 })
 
-export default (server: TypeMcpServer) => {
+export default (server: McpServer) => {
   // Add an search tool
   server.registerTool(
     'people-general-data',
     {
       title: 'People general data',
       description: `Get main general data (job or title, biography, skills, hobbies, and projects) about a person / people / profile / user / member given its id or slug. ${FETCH_USER_SLUG_OR_ID}`,
-      inputSchema: {
+      inputSchema: z.object({
         idOrSlug: z.string().describe('The id or slug of the user / profile / person / member'),
-      },
+      }),
     },
-    resultFromTool(({ idOrSlug }, extras) => {
-      const opts = mcpOptions(extras)
+    resultFromTool(({ idOrSlug }, ctx) => {
+      const opts = mcpOptions(ctx)
       return fetchUser(orgCode, idOrSlug, opts).then(mapUserPreview)
     })
   )
@@ -108,15 +108,16 @@ export default (server: TypeMcpServer) => {
     {
       title: 'People group data',
       description: `Get main general data about a people group (or member group, or user group) given its id or slug. ${FETCH_GROUP_SLUG_OR_ID}.`,
-      inputSchema: {
+      inputSchema: z.object({
         idOrSlug: z.string().describe('The id or slug of the people group'),
-      },
-      outputSchema: {
-        people_group_data: PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA,
-      },
+      }),
+      // outputSchema disabled: MCP SDK v2 errors when it is set without structuredContent (see resultFromTool)
+      // outputSchema: z.object({
+      //   people_group_data: PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA,
+      // }),
     },
-    resultFromTool(async ({ idOrSlug }, extras) => {
-      const opts = mcpOptions(extras)
+    resultFromTool(async ({ idOrSlug }, ctx) => {
+      const opts = mcpOptions(ctx)
       return getGroup(orgCode, idOrSlug, opts).then((group) => ({
         people_group_data: mapPeopleGroupPreview(group),
       }))

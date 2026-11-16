@@ -13,9 +13,22 @@ import { useOrganizationCode } from '#imports'
 const { t } = useNuxtI18n()
 const organizationCode = useOrganizationCode()
 
+const { translateCategory } = useAutoTranslate()
+
+const props = withDefaults(
+  defineProps<{ forcedCategory?: TranslatedProjectCategory['id'] | null }>(),
+  {
+    forcedCategory: null,
+  }
+)
+
 const projectCategoriesStore = useProjectCategories()
 onMounted(async () => {
   await projectCategoriesStore.getAllProjectCategories()
+  if (props.forcedCategory) {
+    const theCategory = projectCategoriesStore.allByIds[props.forcedCategory]
+    if (theCategory) await onChangeCategories(translateCategory(theCategory).value)
+  }
 })
 
 type ProjectTemplateForm = Pick<ProjectForm, 'categories' | 'template'>

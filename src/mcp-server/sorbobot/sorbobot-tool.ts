@@ -1,9 +1,9 @@
 import type { SorbobotAuthor, SorbobotResponseData } from '~/mcp-server/sorbobot/sorbobot-api'
+import type { McpServer, ServerContext } from '@modelcontextprotocol/server'
 import type { HarvesterType } from 'shared-projects-frontend/models'
 import { searchResearcher } from 'shared-projects-frontend/apis'
 import { mcpOptions, resultFromTool } from '../projects/base'
 import SorbobotAPI from '~/mcp-server/sorbobot/sorbobot-api'
-import type { TypeMcpServer } from '~/interfaces/mcp'
 import { z } from 'zod'
 
 const runtimeConfig = useRuntimeConfig()
@@ -27,7 +27,7 @@ export const SORBOBOT_EXTRA =
 
 async function resolveResearcherProfile(
   sorbobotResults: SorbobotResponseData['data']['authors'],
-  extras
+  ctx: ServerContext
 ): Promise<SorbobotAuthor[]> {
   // map researchers to their profile in Projects
   traceSorbobot('Resolving researcher profiles from Sorbobot results')
@@ -39,7 +39,7 @@ async function resolveResearcherProfile(
 
   const idSource: HarvesterType = 'local' // 'eppn'
 
-  const opts = mcpOptions(extras)
+  const opts = mcpOptions(ctx)
   return searchResearcher(orgCode, {
     ...opts,
     query: {
@@ -86,7 +86,7 @@ const sorbobotRewriteTopics = (topics: string[]) => {
   return Array.from(topicSet)
 }
 
-export default (server: TypeMcpServer) => {
+export default (server: McpServer) => {
   if (!sorbobotIsEnabled) {
     console.log('Sorbobot API not configured, skipping Sorbobot tool registration')
     return
@@ -101,21 +101,22 @@ export default (server: TypeMcpServer) => {
       title: 'Research, researchers, experts and science topics and publication finder',
       description:
         'Get a list of researchers and their research papers based on a query. Also get a list of research topics. Use this tool in priority if it is relevant to the user question.',
-      inputSchema: {
+      inputSchema: z.object({
         queryPrompt: z.string().describe('The research query prompt'),
-      },
-      outputSchema: {
-        researchers: z.array(z.object({}).describe('A researcher object')),
-        research_topics: z.array(z.string().describe('A research topic')),
-      },
+      }),
+      // outputSchema disabled: MCP SDK v2 errors when it is set without structuredContent (see resultFromTool)
+      // outputSchema: z.object({
+      //   researchers: z.array(z.object({}).describe('A researcher object')),
+      //   research_topics: z.array(z.string().describe('A research topic')),
+      // }),
     },
-    resultFromTool(async ({ queryPrompt }, extras) => {
+    resultFromTool(async ({ queryPrompt }, ctx) => {
       const sorbobotApi = new SorbobotAPI(sorbobotApiToken, sorbobotApiUrl)
 
       try {
         await sorbobotApi.init()
         const sorbobotResults = await sorbobotApi.query(queryPrompt)
-        const researchers = await resolveResearcherProfile(sorbobotResults?.authors || {}, extras)
+        const researchers = await resolveResearcherProfile(sorbobotResults?.authors || {}, ctx)
         return {
           researchers: researchers,
           research_topics: sorbobotRewriteTopics(sorbobotResults.search_results),

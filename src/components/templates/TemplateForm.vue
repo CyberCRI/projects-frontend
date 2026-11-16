@@ -207,18 +207,19 @@ const localeDefaultForm = () => {
   )
 
   const blogsTemplate = getTab(localForm.tabs, 'blogs')
-  blogsTemplate.title_item = localForm.blogentry_title
-  blogsTemplate.content_item = localForm.blogentry_content
+  if (!blogsTemplate.title_item) blogsTemplate.title_item = localForm.blogentry_title
+  if (!blogsTemplate.content_item) blogsTemplate.content_item = localForm.blogentry_content
 
   const commentTemplate = getTab(localForm.tabs, 'comments')
-  commentTemplate.content_item = localForm.comment_content
+  if (!commentTemplate.content_item) commentTemplate.content_item = localForm.comment_content
 
   const goalsTemplate = getTab(localForm.tabs, 'goals')
-  goalsTemplate.content_item = localForm.goal_description
-  goalsTemplate.title_item = localForm.goal_title
+  if (!goalsTemplate.content_item) goalsTemplate.content_item = localForm.goal_description
+  if (!goalsTemplate.title_item) goalsTemplate.title_item = localForm.goal_title
 
   const descriptionTemplate = getTab(localForm.tabs, 'description')
-  descriptionTemplate.content_item = localForm.project_description
+  if (!descriptionTemplate.content_item)
+    descriptionTemplate.content_item = localForm.project_description
 
   return structuredClone(deepToRaw(localForm))
 }

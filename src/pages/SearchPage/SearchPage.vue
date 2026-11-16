@@ -13,7 +13,13 @@ onMounted(async () => {
 useLpiHead2({
   title: computed(() => t('browse.page-title')),
 })
-const query = ref<QueryFilterSearch>({})
+
+let initialQuery = {}
+if (import.meta.client) {
+  initialQuery = route?.query
+}
+
+const query = ref<QueryFilterSearch>(initialQuery)
 const search = ref('')
 const section = computed(() => (query.value?.types || route?.query?.types || 'all').toString())
 </script>
@@ -21,6 +27,7 @@ const section = computed(() => (query.value?.types || route?.query?.types || 'al
 <template>
   <div :key="$route.name" class="page-section-extra-wide browse-layout">
     <SearchBlock
+      :default-query="query"
       show-section-filter
       :section="section"
       @on-query="query = $event"

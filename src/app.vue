@@ -116,12 +116,14 @@ const onFocus = () => {
 
 onResize(fixTiptapTableHeight)
 
+let loaderTimeout: ReturnType<typeof setTimeout> | undefined
+
 onClientMounted(() => {
   // handle multiple tabs browsing for auth
   window.addEventListener('focus', onFocus)
 
   document.querySelector('.app-loader')?.classList.add('fade-out')
-  setTimeout(() => {
+  loaderTimeout = setTimeout(() => {
     document.querySelector('.app-loader')?.remove()
   }, 200)
 
@@ -147,6 +149,7 @@ onClientMounted(() => {
 onClientBeforeUnmounted(() => {
   // this.$refs.scrollview.removeEventListener('scroll', this.setDarkTopbar)
   window.removeEventListener('focus', onFocus)
+  clearTimeout(loaderTimeout)
   if (window?.lpiSharedWorker) {
     window?.lpiSharedWorker.port.close()
   }

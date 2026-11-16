@@ -355,35 +355,23 @@ export const getResearcherStructures = (
   )
 }
 
-// structures
-
-const mockPaginated = (v) =>
-  Promise.resolve({
-    count: 0,
-    total_page: 0,
-    current_page: 1,
-    next: null,
-    next_page: 2,
-    previous: null,
-    previous_page: null,
-    results: v || [],
-  })
-
 export const getStructureAwards = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   structureId: RefOrRaw<Structure['id']>,
   config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
 ) => {
+  const { translateAwards } = useAutoTranslate()
+
   const key = computed(() => `${unref(organizationCode)}::structure::${unref(structureId)}::awards`)
+
   return useAsyncPaginationAPI(
     key,
     ({ config }) => {
       console.log('TODO: getStructureAwards', organizationCode, structureId, config)
-      return mockPaginated()
+      return null
     },
-
     {
-      //      translate: (data) => translateTeachings(data),
+      translate: (data) => translateAwards(data),
       watch: onlyRefs([organizationCode, structureId]),
       ...config,
     }
@@ -395,18 +383,20 @@ export const getStructureFundings = (
   structureId: RefOrRaw<Structure['id']>,
   config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
 ) => {
+  const { translateFundings } = useAutoTranslate()
+
   const key = computed(
     () => `${unref(organizationCode)}::structure::${unref(structureId)}::fundings`
   )
+
   return useAsyncPaginationAPI(
     key,
     ({ config }) => {
       console.log('TODO: getStructureFundings', organizationCode, structureId, config)
-      return mockPaginated()
+      return null
     },
-
     {
-      //      translate: (data) => translateTeachings(data),
+      translate: (data) => translateFundings(data),
       watch: onlyRefs([organizationCode, structureId]),
       ...config,
     }
@@ -418,18 +408,21 @@ export const getStructureSimilars = (
   structureId: RefOrRaw<Structure['id']>,
   config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
 ) => {
+  const { translateStructures } = useAutoTranslate()
+
   const key = computed(
-    () => `${unref(organizationCode)}::structure::${unref(structureId)}::similar`
+    () => `${unref(organizationCode)}::structure::${unref(structureId)}::similars`
   )
+
   return useAsyncPaginationAPI(
     key,
     ({ config }) => {
       console.log('TODO: getStructureSimilars', organizationCode, structureId, config)
-      return mockPaginated()
+      return null
     },
 
     {
-      //      translate: (data) => translateTeachings(data),
+      translate: (data) => translateStructures(data),
       watch: onlyRefs([organizationCode, structureId]),
       ...config,
     }
@@ -441,6 +434,8 @@ export const getStructureTeachings = (
   structureId: RefOrRaw<Structure['id']>,
   config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
 ) => {
+  const { translateTeachings } = useAutoTranslate()
+
   const key = computed(
     () => `${unref(organizationCode)}::structure::${unref(structureId)}::teachings`
   )
@@ -448,11 +443,10 @@ export const getStructureTeachings = (
     key,
     ({ config }) => {
       console.log('TODO: getStructureTeachings', organizationCode, structureId, config)
-      return mockPaginated()
+      return null
     },
-
     {
-      //      translate: (data) => translateTeachings(data),
+      translate: (data) => translateTeachings(data),
       watch: onlyRefs([organizationCode, structureId]),
       ...config,
     }
@@ -464,6 +458,8 @@ export const getStructureDomains = (
   structureId: RefOrRaw<Structure['id']>,
   config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
 ) => {
+  const { translateTags } = useAutoTranslate()
+
   const key = computed(
     () => `${unref(organizationCode)}::structure::${unref(structureId)}::domains`
   )
@@ -476,7 +472,7 @@ export const getStructureDomains = (
       }),
 
     {
-      //      translate: (data) => translateTeachings(data),
+      translate: (data) => translateTags(data),
       watch: onlyRefs([organizationCode, structureId]),
       ...config,
     }

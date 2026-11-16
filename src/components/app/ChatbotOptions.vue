@@ -4,7 +4,7 @@ const props = defineProps({
   hasPageContext: { type: Boolean, default: false },
 })
 const { allowProfile, updateAllowProfile, allowCurrentPage, updateAllowCurrentPage } =
-  useChatbotContext(props)
+  await useChatbotContext(props)
 </script>
 <template>
   <div
@@ -33,7 +33,7 @@ const { allowProfile, updateAllowProfile, allowCurrentPage, updateAllowCurrentPa
           style="accent-color: #1d727c"
           @click="updateAllowCurrentPage"
         />
-        {{ $t('chatbot.allow-current-page') }}
+        {{ $t('chatbot.allow-current-page') }} {{ allowCurrentPage ? 'yes' : 'no' }}
       </label>
     </p>
   </div>

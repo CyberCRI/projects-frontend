@@ -58,6 +58,14 @@ const tabs = computed((): MenuEntry[] => {
         condition: true,
       },
       {
+        key: 'admin-agent-mcp',
+        label: t('admin.tabs.agent-mcp'),
+        view: { name: 'McpsAdminTab' },
+        props: {},
+        icon: 'Wrench', // TODO: use a bulb or db icon
+        condition: true,
+      },
+      {
         key: 'admin-agents',
         label: t('admin.tabs.agents'),
         view: { name: 'AgentsAdminTab' },

@@ -5,6 +5,7 @@ import type {
   ProjectMemberRoleType,
   ProjectTabType,
   PeopleGroupModulesKeys,
+  StructureModulesKeys,
   ProjectModuleExtra,
   Currency,
   // UserModuleExtra,
@@ -300,7 +301,9 @@ export const GROUP_MODULE_ICON: Record<string, IconImageChoice> = {
   platform: 'Flask',
 }
 
-export const GROUP_MODULE_TITLE: { [key in PeopleGroupModulesKeys]: string } = {
+export type GroupsModulesKeys = PeopleGroupModulesKeys | StructureModulesKeys
+
+export const GROUP_MODULE_TITLE: { [key: string]: string } = {
   featured_projects: 'group.projects',
   members: 'structure.title.members',
   membersTab: 'structure.title.members-tab',
