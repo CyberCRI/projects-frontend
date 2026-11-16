@@ -62,7 +62,14 @@ const submit = (evt) => {
     const props = requests.value[requestKey]?.requestedSchema?.properties || {}
     const content = {}
     for (const [field, def] of Object.entries(props)) {
-      const value = coerce(def.type, formData.get(`${requestKey}[${field}]`))
+      const name = `${requestKey}[${field}]`
+      if (def.type === 'array') {
+        // multi-select: collect every checked box, omit when none
+        const values = formData.getAll(name)
+        if (values.length) content[field] = values
+        continue
+      }
+      const value = coerce(def.type, formData.get(name))
       if (value !== undefined) content[field] = value
     }
     responses[requestKey] = { action: 'accept', content }
