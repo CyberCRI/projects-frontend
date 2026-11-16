@@ -2802,6 +2802,7 @@
     "reasoning": "Denken...",
     "restart": "Konversation neu starten",
     "export": "Exportkonversation",
+    "elicitation-invalid": "Bitte korrigieren Sie die markierten Felder, bevor Sie das Formular absenden.",
     "before-we-start": "Bevor wir beginnen, würden Sie:",
     "allow-profile": "Erlauben Sie mir, Ihr Profil zu sehen - damit ich meine Antworten besser anpassen kann",
     "allow-current-page": "Erlauben Sie mir, die Seite zu sehen, auf der Sie sich befinden - damit ich den Kontext besser verstehe",

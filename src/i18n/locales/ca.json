@@ -2802,6 +2802,7 @@
     "reasoning": "Pensant...",
     "restart": "Reinicia la conversa",
     "export": "Exporta la conversa",
+    "elicitation-invalid": "Corregiu els camps assenyalats abans d'enviar.",
     "before-we-start": "Abans de començar, voldríeu:",
     "allow-profile": "Permeteu-me veure el vostre perfil - perquè pugui adaptar millor les meves respostes",
     "allow-current-page": "Permeteu-me veure la pàgina en què esteu - perquè tingui una millor comprensió del context",

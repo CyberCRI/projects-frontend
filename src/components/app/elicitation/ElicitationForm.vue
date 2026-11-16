@@ -1,5 +1,13 @@
 <template>
-  <form class="elicitation-form" @submit.prevent="submit" @reset="reset">
+  <form
+    ref="formEl"
+    class="elicitation-form"
+    @submit.prevent="submit"
+    @reset="reset"
+    @invalid.capture="formError = $t('chatbot.elicitation-invalid')"
+    @input="clearErrorIfValid"
+    @change="clearErrorIfValid"
+  >
     <!--pre>
          {{ JSON.stringify(elicitation, null, 2) }}
       </pre-->
@@ -9,6 +17,8 @@
 
       <ElicitationSubForm :request-key="requestKey" :request-body="requests[requestKey]" />
     </div>
+
+    <p v-if="formError" class="form-error" role="alert">{{ formError }}</p>
 
     <div class="actions">
       <LpiButton type="reset" :label="$t('common.cancel')" secondary />
@@ -31,7 +41,21 @@ const coerce = (type, raw) => {
   return raw === '' || raw == null ? undefined : raw
 }
 
+const { t } = useI18n()
+const formEl = useTemplateRef('formEl')
+const formError = ref('')
+
+const clearErrorIfValid = () => {
+  if (formError.value && formEl.value?.checkValidity()) formError.value = ''
+}
+
 const submit = (evt) => {
+  // safety net: never send the payload while the form is invalid
+  if (!evt.target.checkValidity()) {
+    formError.value = t('chatbot.elicitation-invalid')
+    return
+  }
+  formError.value = ''
   const formData = new FormData(evt.target)
   const responses = {}
   for (const requestKey of requestKeys.value) {
@@ -60,6 +84,13 @@ const reset = () => {
   border-radius: 0.4rem;
   padding: 0.6rem;
   margin-bottom: 1rem;
+}
+
+.form-error {
+  margin-top: 1rem;
+  color: variables.$salmon;
+  font-weight: 600;
+  text-align: right;
 }
 
 .actions {
