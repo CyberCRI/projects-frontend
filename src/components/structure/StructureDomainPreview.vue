@@ -1,9 +1,8 @@
 <template>
   <BaseModulePreview
-    v-if="group.structure"
-    :title="$t(GROUP_MODULE_TITLE.domain, group.structure.modules.domains)"
+    :title="$t(GROUP_MODULE_TITLE.domain, group.structure.modules.research_domains)"
     :icon="GROUP_MODULE_ICON.domain"
-    :total="group.structure.modules.domains"
+    :total="group.structure.modules.research_domains"
   >
     <template #top-row>
       <div class="top-buttons">

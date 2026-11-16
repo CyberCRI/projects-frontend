@@ -20,12 +20,12 @@
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import { roleI18n } from '~/functs/rolesUtils'
 
+import type { TranslatedGroupMember } from 'shared-projects-frontend/models'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
-import type { UserModel } from 'shared-projects-frontend/models'
 
 const props = withDefaults(
   defineProps<{
-    member: UserModel
+    member: TranslatedGroupMember
     roleLabel?: string
   }>(),
   {

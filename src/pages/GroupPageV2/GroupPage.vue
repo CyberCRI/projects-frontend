@@ -58,6 +58,8 @@ import { getGroup } from '~/api/v2/group.service'
 import { useLpiHead2 } from '~/composables/useLpiHead'
 
 import { usePermissionGroup } from '~/composables/usePermissions/useGroupPermissions'
+import type { PeopleGroupModel, Structure } from 'shared-projects-frontend/models'
+import { structureSkeleton } from '~/skeletons/crisalid.skeletons'
 import { groupSkeleton } from '~/skeletons/group.skeletons'
 import { onClient } from '~/composables/onClient'
 
@@ -117,11 +119,14 @@ const groupHierarchy = computed(() => {
   return res
 })
 
-const groupModules = computed(() => group.value?.modules ?? groupSkeleton()['modules'])
+const groupModules = computed<PeopleGroupModel['modules']>(() => ({
+  ...groupSkeleton()['modules'],
+  ...(group.value?.modules || {}),
+}))
 
-const modulesStructure = computed<Researcher['modules']>(() => {
+const modulesStructure = computed<Structure['modules']>(() => {
   return {
-    ...groupSkeleton()['modules'],
+    ...structureSkeleton()['modules'],
     ...(group.value?.structure?.modules ?? {}),
   }
 })
@@ -134,10 +139,7 @@ const defaultProps = computed(() => {
   }
 })
 
-// TODO:
-const isTeam = computed(() => true)
-// TODO:
-const isStructure = computed(() => true)
+const isStructure = computed(() => !!group.value?.structure?.id)
 
 const groupTabsDisplay = computed(() => {
   return [
@@ -155,12 +157,11 @@ const groupTabsDisplay = computed(() => {
     {
       isEditing: false,
       key: 'group-teams',
-      label: t(GROUP_MODULE_TITLE.team, groupModules.value.teams),
+      label: t(GROUP_MODULE_TITLE.team, groupModules.value.subgroups),
       tabLabel: t(GROUP_MODULE_TITLE.teamTab),
-      label: t('group.teams'),
       view: `/group/${route.params.groupIdOrSlug}/teams`,
       altView: `/group/${route.params.groupIdOrSlug}/teams/edit`,
-      condition: isStructure.value && modulesStructure.value.sub_structures,
+      condition: !!(isStructure.value && modulesStructure.value.sub_structures),
       noTitle: true,
       icon: GROUP_MODULE_ICON.members,
     },
@@ -249,11 +250,11 @@ const groupTabsDisplay = computed(() => {
       isEditing: false,
       key: 'group-domains',
       dataTest: 'group-domains',
-      label: t(GROUP_MODULE_TITLE.domain, groupModules.value.domains),
+      label: t(GROUP_MODULE_TITLE.domain, modulesStructure.value.research_domains),
       tabLabel: t(GROUP_MODULE_TITLE.domainTab),
       view: `/group/${route.params.groupIdOrSlug}/domains`,
       altView: `/group/${route.params.groupIdOrSlug}/domains/edit`,
-      condition: isStructure.value && modulesStructure.value.research_domains,
+      condition: !!(isStructure.value && modulesStructure.value.research_domains),
       noTitle: false,
       icon: GROUP_MODULE_ICON.domain,
     },
@@ -278,66 +279,66 @@ const groupTabsDisplay = computed(() => {
       condition: !!groupModules.value.gallery,
       icon: GROUP_MODULE_ICON.gallery,
     },
-    {
-      isEditing: false,
-      key: 'group-positions',
-      dataTest: 'group-positions',
-      label: t(GROUP_MODULE_TITLE.positions, groupModules.value.positions),
-      tabLabel: t(GROUP_MODULE_TITLE.positionsTab),
-      view: `/group/${route.params.groupIdOrSlug}/positions`,
-      altView: `/group/${route.params.groupIdOrSlug}/positions/edit`,
-      condition: (isStructure.value || isTeam.value) && modulesStructure.value.positions,
-      noTitle: false,
-      icon: GROUP_MODULE_ICON.positions,
-    },
-    {
-      isEditing: false,
-      key: 'group-awards',
-      dataTest: 'group-awards',
-      label: t(GROUP_MODULE_TITLE.awards, groupModules.value.awards),
-      tabLabel: t(GROUP_MODULE_TITLE.awardsTab),
-      view: `/group/${route.params.groupIdOrSlug}/awards`,
-      altView: `/group/${route.params.groupIdOrSlug}/awards/edit`,
-      condition: isStructure.value && modulesStructure.value.awards,
-      noTitle: false,
-      icon: GROUP_MODULE_ICON.awards,
-    },
-    {
-      isEditing: false,
-      key: 'group-funding',
-      dataTest: 'group-funding',
-      label: t(GROUP_MODULE_TITLE.fundings, groupModules.value.funding),
-      tabLabel: t(GROUP_MODULE_TITLE.fundingsTab),
-      view: `/group/${route.params.groupIdOrSlug}/funding`,
-      altView: `/group/${route.params.groupIdOrSlug}/funding/edit`,
-      condition: isStructure.value && modulesStructure.value.fundings,
-      noTitle: false,
-      icon: GROUP_MODULE_ICON.fundings,
-    },
-    {
-      isEditing: false,
-      key: 'group-teaching',
-      dataTest: 'group-teaching',
-      label: t(GROUP_MODULE_TITLE.teaching, groupModules.value.teaching),
-      tabLabel: t(GROUP_MODULE_TITLE.teachingTab),
-      view: `/group/${route.params.groupIdOrSlug}/teaching`,
-      altView: `/group/${route.params.groupIdOrSlug}/teaching/edit`,
-      condition: isStructure.value && modulesStructure.value.teachings,
-      noTitle: false,
-      icon: GROUP_MODULE_ICON.teachings,
-    },
-    {
-      isEditing: false,
-      key: 'group-platform',
-      dataTest: 'group-platform',
-      label: t(GROUP_MODULE_TITLE.platform, groupModules.value.tools),
-      tabLabel: t(GROUP_MODULE_TITLE.platformTab),
-      view: `/group/${route.params.groupIdOrSlug}/platform`,
-      altView: `/group/${route.params.groupIdOrSlug}/funding/platform`,
-      condition: isStructure.value && modulesStructure.value.platform, // TODO: use real key when available
-      noTitle: false,
-      icon: GROUP_MODULE_ICON.platform,
-    },
+    // {
+    //   isEditing: false,
+    //   key: 'group-positions',
+    //   dataTest: 'group-positions',
+    //   label: t(GROUP_MODULE_TITLE.positions, groupModules.value.positions),
+    //   tabLabel: t(GROUP_MODULE_TITLE.positionsTab),
+    //   view: `/group/${route.params.groupIdOrSlug}/positions`,
+    //   altView: `/group/${route.params.groupIdOrSlug}/positions/edit`,
+    //   condition: (isStructure.value || isTeam.value) && modulesStructure.value.positions,
+    //   noTitle: false,
+    //   icon: GROUP_MODULE_ICON.positions,
+    // },
+    // {
+    //   isEditing: false,
+    //   key: 'group-awards',
+    //   dataTest: 'group-awards',
+    //   label: t(GROUP_MODULE_TITLE.awards, groupModules.value.awards),
+    //   tabLabel: t(GROUP_MODULE_TITLE.awardsTab),
+    //   view: `/group/${route.params.groupIdOrSlug}/awards`,
+    //   altView: `/group/${route.params.groupIdOrSlug}/awards/edit`,
+    //   condition: isStructure.value && modulesStructure.value.awards,
+    //   noTitle: false,
+    //   icon: GROUP_MODULE_ICON.awards,
+    // },
+    // {
+    //   isEditing: false,
+    //   key: 'group-funding',
+    //   dataTest: 'group-funding',
+    //   label: t(GROUP_MODULE_TITLE.fundings, groupModules.value.funding),
+    //   tabLabel: t(GROUP_MODULE_TITLE.fundingsTab),
+    //   view: `/group/${route.params.groupIdOrSlug}/funding`,
+    //   altView: `/group/${route.params.groupIdOrSlug}/funding/edit`,
+    //   condition: isStructure.value && modulesStructure.value.fundings,
+    //   noTitle: false,
+    //   icon: GROUP_MODULE_ICON.fundings,
+    // },
+    // {
+    //   isEditing: false,
+    //   key: 'group-teaching',
+    //   dataTest: 'group-teaching',
+    //   label: t(GROUP_MODULE_TITLE.teaching, groupModules.value.teaching),
+    //   tabLabel: t(GROUP_MODULE_TITLE.teachingTab),
+    //   view: `/group/${route.params.groupIdOrSlug}/teaching`,
+    //   altView: `/group/${route.params.groupIdOrSlug}/teaching/edit`,
+    //   condition: isStructure.value && modulesStructure.value.teachings,
+    //   noTitle: false,
+    //   icon: GROUP_MODULE_ICON.teachings,
+    // },
+    // {
+    //   isEditing: false,
+    //   key: 'group-platform',
+    //   dataTest: 'group-platform',
+    //   label: t(GROUP_MODULE_TITLE.platform, groupModules.value.tools),
+    //   tabLabel: t(GROUP_MODULE_TITLE.platformTab),
+    //   view: `/group/${route.params.groupIdOrSlug}/platform`,
+    //   altView: `/group/${route.params.groupIdOrSlug}/funding/platform`,
+    //   condition: isStructure.value && modulesStructure.value.platform, // TODO: use real key when available
+    //   noTitle: false,
+    //   icon: GROUP_MODULE_ICON.platform,
+    // },
   ] satisfies MenuEntry[]
 })
 

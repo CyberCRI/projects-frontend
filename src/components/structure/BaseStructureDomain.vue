@@ -15,7 +15,7 @@ const props = withDefaults(
   }
 )
 
-const domainsPreview = computed(() => props.group.structure?.domains || [])
+const domainsPreview = computed(() => props.group.structure || [])
 
 const domains = computed(() => (props.preview ? domainsPreview.value : domainsPreview.value))
 </script>

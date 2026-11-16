@@ -42,7 +42,7 @@ export function createId() {
 
 export async function getMcpById(
   appApiOrgCode: string,
-  id: number,
+  id: string,
   dontRedact = false
 ): Promise<Mcp & { apiKey?: string }> {
   const mcp = await chatbotPrisma.mcp.findUnique({

@@ -25,7 +25,6 @@
 <script setup lang="ts">
 import type {
   TranslatedPeopleGroupModel,
-  HierarchyGroupModel,
   TrasnlatedHierarchyGroupModel,
 } from 'shared-projects-frontend/models'
 import PickGroup from '~/components/group/PickGroup/PickGroup.vue'
@@ -42,7 +41,7 @@ const props = withDefaults(
     // groups hierarchy
     groups?: (TrasnlatedHierarchyGroupModel | TranslatedPeopleGroupModel)[]
     // initially selected group
-    initialGroup?: HierarchyGroupModel
+    initialGroup?: TrasnlatedHierarchyGroupModel | TranslatedPeopleGroupModel
     isOpened?: boolean
     // array of unselectable group ids
     forbiddenIds?: any[]

@@ -44,13 +44,18 @@
         </FetchLoader>
       </div>
 
-      <div v-if="group.structure && sortedDomains.length" class="subsection domain-list">
-        <ResearcherDomain
-          v-for="domain in sortedDomains"
-          :key="domain.domain.id"
-          :domain="domain"
+      <FetchLoader v-if="group.structure" :status="statusDomains" only-error skeleton>
+        <TagsList
+          :tags="domains"
+          :to="{
+            name: 'GroupSearch',
+            query: {
+              section: 'groups',
+            },
+          }"
+          class="subsection"
         />
-      </div>
+      </FetchLoader>
       <TagsList
         v-if="!group.structure && group.tags.length"
         :tags="group.tags"
@@ -117,14 +122,16 @@
 </template>
 
 <script setup lang="ts">
-import type { ResearcherDomain, TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 import UserProfileDrawer from '~/components/drawer/User/UserProfileDrawer.vue'
+import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import HeaderUserCard from '@/components/group/Modules/HeaderUserCard.vue'
 import { DEFAULT_GROUP_PATATOID } from '@/composables/usePatatoids'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'
-import { factoryPagination } from '@/skeletons/base.skeletons'
+import { getStructureDomains } from '~/api/v2/crisalid.service'
 import { memberSkeleton } from '@/skeletons/group.skeletons'
 import FetchLoader from '@/components/base/FetchLoader.vue'
+import { tagSkeleton } from '~/skeletons/project.skeletons'
 import { getGroupMember } from '@/api/v2/group.service'
 import TagsList from '@/components/tags/TagsList.vue'
 import SdgList from '@/components/sdgs/SdgList.vue'
@@ -137,6 +144,7 @@ const { t } = useNuxtI18n()
 const { openModal, closeModal, stateModal } = useModal()
 const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group.id)
+const structureId = computed(() => props.group.structure?.id)
 
 const { data: members, status } = getGroupMember(organizationCode, groupId, {
   default: () => factoryPagination(() => memberSkeleton({ role: 'leaders' }), 1),
@@ -190,141 +198,15 @@ const short_description = computed(
       : '')
 )
 
-const sortedDomains = computed(
-  () =>
-    [
-      {
-        domain: {
-          description: '',
-          title_fr: 'Artificial Intelligence',
-          id: 430,
-          type: 'Wikipedia',
-          title_en: 'Artificial Intelligence',
-          secondary_type: 'tag',
-          title: 'Artificial Intelligence',
-          $t: {
-            description: '',
-            title: 'Artificial Intelligence',
-          },
-        },
-        level: 90,
-        tag: {
-          title_nl: null,
-          description: '',
-          description_et: null,
-          description_nl: null,
-          title_fr: 'Artificial Intelligence',
-          title_ca: null,
-          description_de: null,
-          description_ca: null,
-          description_en: null,
-          title_es: null,
-          id: 430,
-          type: 'Wikipedia',
-          title_de: null,
-          title_en: 'Artificial Intelligence',
-          secondary_type: 'tag',
-          title: 'Artificial Intelligence',
-          description_es: null,
-          title_et: null,
-          description_fr: null,
-          $t: { title: 'Artificial Intelligence', description: '' },
-        },
-      },
-      {
-        domain: {
-          description: '',
-          description_et: null,
-          description_nl: null,
-          title_fr: 'Cognitive science',
-          title_ca: null,
-          description_de: null,
-          description_ca: null,
-          description_en: null,
-          title_es: null,
-          id: 430,
-          type: 'Wikipedia',
-          title_de: null,
-          title_en: 'Cognitive science',
-          secondary_type: 'tag',
-          title: 'Cognitive science',
-          description_es: null,
-          title_et: null,
-          description_fr: null,
-          $t: { title: 'Artificial Intelligence', description: '' },
-        },
-        level: 80,
-        tag: {
-          title_nl: null,
-          description: '',
-          description_et: null,
-          description_nl: null,
-          title_fr: 'Cognitive science',
-          title_ca: null,
-          description_de: null,
-          description_ca: null,
-          description_en: null,
-          title_es: null,
-          id: 430,
-          type: 'Wikipedia',
-          title_de: null,
-          title_en: 'Cognitive science',
-          secondary_type: 'tag',
-          title: 'Cognitive science',
-          description_es: null,
-          title_et: null,
-          description_fr: null,
-          $t: { title: 'Cognitive science', description: '' },
-        },
-      },
-
-      {
-        domain: {
-          description: '',
-          description_et: null,
-          description_nl: null,
-          title_fr: 'Robotics',
-          title_ca: null,
-          description_de: null,
-          description_ca: null,
-          description_en: null,
-          title_es: null,
-          id: 430,
-          type: 'Wikipedia',
-          title_de: null,
-          title_en: 'Robotics',
-          secondary_type: 'tag',
-          title: 'Robotics',
-          description_es: null,
-          title_et: null,
-          description_fr: null,
-          $t: { title: 'Artificial Intelligence', description: '' },
-        },
-        level: 60,
-        tag: {
-          title_nl: null,
-          description: '',
-          description_et: null,
-          description_nl: null,
-          title_fr: 'Robotics',
-          title_ca: null,
-          description_de: null,
-          description_ca: null,
-          description_en: null,
-          title_es: null,
-          id: 430,
-          type: 'Wikipedia',
-          title_de: null,
-          title_en: 'Robotics',
-          secondary_type: 'tag',
-          title: 'Robotics',
-          description_es: null,
-          title_et: null,
-          description_fr: null,
-          $t: { title: 'Robotics', description: '' },
-        },
-      },
-    ] satisfies ResearcherDomain[]
+const limitSkeleton = computed(() =>
+  maxSkeleton(props.group.structure?.modules?.research_domains, 10)
+)
+const { data: domains, status: statusDomains } = getStructureDomains(
+  organizationCode,
+  structureId,
+  {
+    default: () => factoryPagination(tagSkeleton, limitSkeleton.value),
+  }
 )
 
 const contacts = computed(() => {

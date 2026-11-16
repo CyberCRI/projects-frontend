@@ -36,11 +36,13 @@ import BadgeItem from '~/components/base/BadgeItem.vue'
 import type { IconImageChoice } from '~/functs/IconImage'
 import type { RouteLocationRaw } from 'vue-router'
 
-type Item = {
+export type Item = {
   leftIcon?: IconImageChoice
   label: string
   badge?: string
   to?: RouteLocationRaw
+  condition?: boolean
+  dataTest?: string
   action?: () => void
   childItems?: Item[]
 }

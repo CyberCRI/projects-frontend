@@ -44,11 +44,11 @@ export default function useGroupPagesRoutes() {
           component: () => import('../pages/GroupPageV2/Tabs/Locations/GroupLocationsTab.vue'),
         },
 
-        {
-          path: 'network',
-          name: 'groupNetwork',
-          component: () => import('../pages/GroupPageV2/Tabs/Network/GroupNetworkTab.vue'),
-        },
+        // {
+        //   path: 'network',
+        //   name: 'groupNetwork',
+        //   component: () => import('../pages/GroupPageV2/Tabs/Network/GroupNetworkTab.vue'),
+        // },
         {
           path: 'gallery',
           name: 'groupGallery',
@@ -91,21 +91,21 @@ export default function useGroupPagesRoutes() {
           name: 'groupAwards',
           component: () => import('../pages/GroupPageV2/Tabs/Positions/GroupPositionsTab.vue'),
         },
-        {
-          path: 'funding',
-          name: 'groupFunding',
-          component: () => import('../pages/GroupPageV2/Tabs/Funding/GroupFundingsTab.vue'),
-        },
-        {
-          path: 'teaching',
-          name: 'groupTeaching',
-          component: () => import('../pages/GroupPageV2/Tabs/Teaching/GroupTeachingTab.vue'),
-        },
-        {
-          path: 'plateform',
-          name: 'groupPlatform',
-          component: () => import('../pages/GroupPageV2/Tabs/Platform/GroupPlatformTab.vue'),
-        },
+        // {
+        //   path: 'funding',
+        //   name: 'groupFunding',
+        //   component: () => import('../pages/GroupPageV2/Tabs/Funding/GroupFundingsTab.vue'),
+        // },
+        // {
+        //   path: 'teaching',
+        //   name: 'groupTeaching',
+        //   component: () => import('../pages/GroupPageV2/Tabs/Teaching/GroupTeachingTab.vue'),
+        // },
+        // {
+        //   path: 'plateform',
+        //   name: 'groupPlatform',
+        //   component: () => import('../pages/GroupPageV2/Tabs/Platform/GroupPlatformTab.vue'),
+        // },
 
         // retro compat
         {

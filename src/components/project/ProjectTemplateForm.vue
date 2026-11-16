@@ -3,6 +3,7 @@ import type {
   TranslatedProjectCategory,
   TemplateModel,
   ProjectForm,
+  TranslatedTemplate,
 } from 'shared-projects-frontend/models'
 import { getTemplate } from 'shared-projects-frontend/apis'
 import { useProjectTemplatesForm } from '~/form/project'
@@ -52,7 +53,7 @@ watchEffect(() => {
 
 const haveMultipleTemplates = computed(() => form.value.categorie?.templates?.length > 1)
 
-const onSelectTemplate = (template: TemplateModel) => {
+const onSelectTemplate = (template: TemplateModel | TranslatedTemplate) => {
   return getTemplate(organizationCode, template.id)
     .then((template) => (form.value.template = unref(translateTemplate(template))))
     .catch(() => toaster.pushError(t('template-get.error')))

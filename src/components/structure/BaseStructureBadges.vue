@@ -20,11 +20,11 @@ const props = defineProps<{ group: TranslatedPeopleGroupModel }>()
 
 const badges = computed(() => {
   const res = []
-  if (props.group.modules.projects)
+  if (props.group.modules.featured_projects)
     res.push({
-      label: t(GROUP_MODULE_TITLE.projects, props.group.modules.projects),
+      label: t(GROUP_MODULE_TITLE.projects, props.group.modules.featured_projects),
       icon: GROUP_MODULE_ICON.projects,
-      count: props.group.modules.projects,
+      count: props.group.modules.featured_projects,
       link: `/group/${props.group.slug || props.group.id}/projects`,
     })
   if (props.group.structure?.modules.conferences) {
@@ -43,39 +43,31 @@ const badges = computed(() => {
       link: `/group/${props.group.slug || props.group.id}/documents/publication`,
     })
   }
-  if (props.group.structure?.modules.affiliated) {
-    res.push({
-      label: t(GROUP_MODULE_TITLE.affiliated, props.group.structure.modules.affiliated),
-      icon: GROUP_MODULE_ICON.affiliated,
-      count: props.group.structure?.modules.affiliated,
-      link: `/group/${props.group.slug || props.group.id}/affiliate`,
-    })
-  }
-  if (props.group.structure?.modules.teachings) {
-    res.push({
-      label: t(GROUP_MODULE_TITLE.teachings, props.group.structure.modules.teachings),
-      icon: GROUP_MODULE_ICON.teachings,
-      count: props.group.structure?.modules.teachings,
-      link: `/group/${props.group.slug || props.group.id}/teaching`,
-    })
-  }
-  if (props.group.structure?.modules.awards) {
-    res.push({
-      label: t(GROUP_MODULE_TITLE.awards, props.group.structure.modules.awards),
-      icon: GROUP_MODULE_ICON.awards,
-      count: props.group.structure?.modules.awards,
-      link: `/group/${props.group.slug || props.group.id}/awards`,
-    })
-  }
+  // if (props.group.structure?.modules.teachings) {
+  //   res.push({
+  //     label: t(GROUP_MODULE_TITLE.teachings, props.group.structure.modules.teachings),
+  //     icon: GROUP_MODULE_ICON.teachings,
+  //     count: props.group.structure?.modules.teachings,
+  //     link: `/group/${props.group.slug || props.group.id}/teaching`,
+  //   })
+  // }
+  // if (props.group.structure?.modules.awards) {
+  //   res.push({
+  //     label: t(GROUP_MODULE_TITLE.awards, props.group.structure.modules.awards),
+  //     icon: GROUP_MODULE_ICON.awards,
+  //     count: props.group.structure?.modules.awards,
+  //     link: `/group/${props.group.slug || props.group.id}/awards`,
+  //   })
+  // }
 
-  if (props.group.structure?.modules.patents) {
-    res.push({
-      label: t(GROUP_MODULE_TITLE.patents, props.group.structure.modules.patents),
-      icon: GROUP_MODULE_ICON.patents,
-      count: props.group.structure?.modules.patents,
-      link: `/group/${props.group.slug || props.group.id}/patents`,
-    })
-  }
+  // if (props.group.structure?.modules.patents) {
+  //   res.push({
+  //     label: t(GROUP_MODULE_TITLE.patents, props.group.structure.modules.patents),
+  //     icon: GROUP_MODULE_ICON.patents,
+  //     count: props.group.structure?.modules.patents,
+  //     link: `/group/${props.group.slug || props.group.id}/patents`,
+  //   })
+  // }
 
   return res
 })

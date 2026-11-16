@@ -79,11 +79,11 @@ export default function useProfilePagesRoutes() {
       name: 'ProfilePositions',
       component: () => import('../pages/UserPageV2/Tabs/ProfilePositionsTab.vue'),
     },
-    {
-      path: 'trade',
-      name: 'ProfileTrade',
-      component: () => import('../pages/UserPageV2/Tabs/ProfileTradeTab.vue'),
-    },
+    // {
+    //   path: 'trade',
+    //   name: 'ProfileTrade',
+    //   component: () => import('../pages/UserPageV2/Tabs/ProfileTradeTab.vue'),
+    // },
   ]
 
   const profileEditTabs = [

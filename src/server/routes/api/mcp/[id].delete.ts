@@ -4,7 +4,7 @@ export default defineLazyEventHandler(() => {
   const { appApiOrgCode } = useRuntimeConfig().public
   return defineEventHandler(async (event) => {
     await checkAdminRights(event)
-    const _id = parseInt(getRouterParam(event, 'id'), 10)
+    const _id = getRouterParam(event, 'id')
     if (!_id) {
       setResponseStatus(event, 400)
       return {
