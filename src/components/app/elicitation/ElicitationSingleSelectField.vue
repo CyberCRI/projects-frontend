@@ -23,20 +23,27 @@
     <p class="field-notice">{{ fieldProperty.description }}</p>
   </div>
 </template>
-<script setup>
-const props = defineProps({
-  fieldProperty: { type: Object, required: true },
-  fieldName: { type: String, required: true },
-  isRequired: { type: Boolean, default: false },
-})
+<script setup lang="ts">
+import type { ElicitationOption, SingleSelectEnumSchema } from './elicitation-types'
 
-const items = computed(() =>
-  props.fieldProperty.oneOf
-    ? props.fieldProperty.oneOf
-    : props.fieldProperty.enum.map((item) => ({ const: item, title: item }))
+const props = withDefaults(
+  defineProps<{
+    fieldProperty: SingleSelectEnumSchema
+    fieldName: string
+    isRequired?: boolean
+  }>(),
+  { isRequired: false }
 )
 
-const isDefault = (item) => props.fieldProperty.default === item.const
+const items = computed<ElicitationOption[]>(() => {
+  const property = props.fieldProperty
+  if ('oneOf' in property && property.oneOf) return property.oneOf
+  if ('enum' in property && property.enum)
+    return property.enum.map((item: string) => ({ const: item, title: item }))
+  return []
+})
+
+const isDefault = (item: ElicitationOption) => props.fieldProperty.default === item.const
 </script>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';

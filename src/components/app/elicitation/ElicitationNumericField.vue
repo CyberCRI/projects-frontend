@@ -11,7 +11,6 @@
         type="number"
         :name="fieldName"
         :value="fieldProperty.default"
-        :checked="fieldProperty.default"
         :required="isRequired"
         :step="step"
         :min="minimum"
@@ -21,12 +20,17 @@
     <p class="field-notice">{{ fieldProperty.description }}</p>
   </div>
 </template>
-<script setup>
-const props = defineProps({
-  fieldProperty: { type: Object, required: true },
-  fieldName: { type: String, required: true },
-  isRequired: { type: Boolean, default: false },
-})
+<script setup lang="ts">
+import type { NumberSchema } from './elicitation-types'
+
+const props = withDefaults(
+  defineProps<{
+    fieldProperty: NumberSchema
+    fieldName: string
+    isRequired?: boolean
+  }>(),
+  { isRequired: false }
+)
 
 const step = computed(() => (props.fieldProperty.type == 'integer' ? 1 : undefined))
 const minimum = computed(() => props.fieldProperty.minimum)

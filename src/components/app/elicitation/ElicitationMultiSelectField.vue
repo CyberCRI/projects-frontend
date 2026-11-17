@@ -22,26 +22,36 @@
     <p class="field-notice">{{ fieldProperty.description }}</p>
   </div>
 </template>
-<script setup>
-const { t } = useI18n()
-const props = defineProps({
-  fieldProperty: { type: Object, required: true },
-  fieldName: { type: String, required: true },
-  isRequired: { type: Boolean, default: false },
-})
+<script setup lang="ts">
+import type { ElicitationOption, MultiSelectEnumSchema } from './elicitation-types'
 
-const items = computed(() =>
-  props.fieldProperty.items.anyOf
-    ? props.fieldProperty.items.anyOf
-    : props.fieldProperty.items.enum.map((item) => ({ const: item, title: item }))
+const { t } = useI18n()
+const props = withDefaults(
+  defineProps<{
+    fieldProperty: MultiSelectEnumSchema
+    fieldName: string
+    isRequired?: boolean
+  }>(),
+  { isRequired: false }
 )
 
-const isDefault = (item) => (props.fieldProperty.default || []).includes(item.const)
+const items = computed<ElicitationOption[]>(() => {
+  const itemsDef = props.fieldProperty.items
+  if ('anyOf' in itemsDef && itemsDef.anyOf) return itemsDef.anyOf
+  if ('enum' in itemsDef && itemsDef.enum)
+    return itemsDef.enum.map((item: string) => ({ const: item, title: item }))
+  return []
+})
+
+const isDefault = (item: ElicitationOption) =>
+  (props.fieldProperty.default || []).includes(item.const)
 
 // native checkboxes can't express required / minItems / maxItems: use custom validity
-const optionsEl = useTemplateRef('options')
+const optionsEl = useTemplateRef<HTMLDivElement>('options')
 const validate = () => {
-  const boxes = [...(optionsEl.value?.querySelectorAll('input[type=checkbox]') || [])]
+  const boxes = [
+    ...(optionsEl.value?.querySelectorAll<HTMLInputElement>('input[type=checkbox]') || []),
+  ]
   if (!boxes.length) return
   const count = boxes.filter((b) => b.checked).length
   const min = Math.max(props.fieldProperty.minItems || 0, props.isRequired ? 1 : 0)

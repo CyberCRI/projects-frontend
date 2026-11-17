@@ -17,12 +17,17 @@
     <p class="field-notice">{{ fieldProperty.description }}</p>
   </div>
 </template>
-<script setup>
-defineProps({
-  fieldProperty: { type: Object, required: true },
-  fieldName: { type: String, required: true },
-  isRequired: { type: Boolean, default: false },
-})
+<script setup lang="ts">
+import type { BooleanSchema } from './elicitation-types'
+
+withDefaults(
+  defineProps<{
+    fieldProperty: BooleanSchema
+    fieldName: string
+    isRequired?: boolean
+  }>(),
+  { isRequired: false }
+)
 </script>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';

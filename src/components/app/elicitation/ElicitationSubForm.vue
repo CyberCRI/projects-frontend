@@ -2,87 +2,83 @@
   <div class="subform">
     <p class="subform-message">{{ message }}</p>
 
-    <div v-for="propertyKey in propertyKeys" :key="propertyKey" class="field">
+    <div v-for="{ key, def } in fields" :key="key" class="field">
       <!-- string -->
       <ElicitationStringField
-        v-if="isStringField(propertyKey)"
-        :field-name="fieldName(propertyKey)"
-        :field-property="properties[propertyKey]"
-        :is-required="isRequired(propertyKey)"
+        v-if="isStringField(def)"
+        :field-name="fieldName(key)"
+        :field-property="def"
+        :is-required="isRequired(key)"
       />
       <!-- number and integer -->
       <ElicitationNumericField
-        v-else-if="isNumericField(propertyKey)"
-        :field-name="fieldName(propertyKey)"
-        :field-property="properties[propertyKey]"
-        :is-required="isRequired(propertyKey)"
+        v-else-if="isNumericField(def)"
+        :field-name="fieldName(key)"
+        :field-property="def"
+        :is-required="isRequired(key)"
       />
       <!-- boolean -->
       <ElicitationBooleanField
-        v-else-if="isBooleanField(propertyKey)"
-        :field-name="fieldName(propertyKey)"
-        :field-property="properties[propertyKey]"
-        :is-required="isRequired(propertyKey)"
+        v-else-if="isBooleanField(def)"
+        :field-name="fieldName(key)"
+        :field-property="def"
+        :is-required="isRequired(key)"
       />
       <!-- single select enum -->
       <ElicitationSingleSelectField
-        v-else-if="isSingleSelectField(propertyKey)"
-        :field-name="fieldName(propertyKey)"
-        :field-property="properties[propertyKey]"
-        :is-required="isRequired(propertyKey)"
+        v-else-if="isSingleSelectField(def)"
+        :field-name="fieldName(key)"
+        :field-property="def"
+        :is-required="isRequired(key)"
       />
       <!-- multi select enum -->
       <ElicitationMultiSelectField
-        v-else-if="isMultiSelectField(propertyKey)"
-        :field-name="fieldName(propertyKey)"
-        :field-property="properties[propertyKey]"
-        :is-required="isRequired(propertyKey)"
+        v-else-if="isMultiSelectField(def)"
+        :field-name="fieldName(key)"
+        :field-property="def"
+        :is-required="isRequired(key)"
       />
       <!-- unknown -->
       <ElicitationUnknownField
         v-else
-        :field-name="fieldName(propertyKey)"
-        :field-property="properties[propertyKey]"
-        :is-required="isRequired(propertyKey)"
+        :field-name="fieldName(key)"
+        :field-property="def"
+        :is-required="isRequired(key)"
       />
     </div>
   </div>
 </template>
 
-<script setup>
-const props = defineProps({
-  requestKey: { type: String, required: true },
-  requestBody: { type: Object, required: true },
-})
+<script setup lang="ts">
+import {
+  isBooleanField,
+  isMultiSelectField,
+  isNumericField,
+  isSingleSelectField,
+  isStringField,
+  type ElicitationRequestBody,
+  type PrimitiveSchemaDefinition,
+} from './elicitation-types'
+
+const props = defineProps<{
+  requestKey: string
+  requestBody: ElicitationRequestBody
+}>()
 
 const message = computed(() => props.requestBody?.message || '')
 
-const requestedSchema = computed(() => props.requestBody?.requestedSchema || {})
+const requestedSchema = computed(() => props.requestBody?.requestedSchema)
 
-const properties = computed(() => requestedSchema.value?.properties || {})
-const propertyKeys = computed(() => Object.keys(properties.value))
+const fields = computed(() =>
+  Object.entries(
+    (requestedSchema.value?.properties || {}) as Record<string, PrimitiveSchemaDefinition>
+  ).map(([key, def]) => ({ key, def }))
+)
 
-const fieldName = (propertyKey) => `${props.requestKey}[${propertyKey}]`
+const fieldName = (propertyKey: string) => `${props.requestKey}[${propertyKey}]`
 
-const isRequired = (propertyKey) => (requestedSchema.value.required || []).includes(propertyKey)
-
-const isStringField = (propertyKey) =>
-  properties.value[propertyKey]?.type == 'string' &&
-  !properties.value[propertyKey].enum &&
-  !properties.value[propertyKey].oneOf
-
-const isNumberField = (propertyKey) => properties.value[propertyKey]?.type == 'number'
-const isIntegerField = (propertyKey) => properties.value[propertyKey]?.type == 'integer'
-const isNumericField = (propertyKey) => isNumberField(propertyKey) || isIntegerField(propertyKey)
-
-const isBooleanField = (propertyKey) => properties.value[propertyKey]?.type == 'boolean'
-
-const isSingleSelectField = (propertyKey) =>
-  properties.value[propertyKey]?.type == 'string' &&
-  (properties.value[propertyKey].oneOf || properties.value[propertyKey].enum)
-
-const isMultiSelectField = (propertyKey) =>
-  properties.value[propertyKey]?.type == 'array' && properties.value[propertyKey].items
+const isRequired = (propertyKey: string) =>
+  (requestedSchema.value?.required || []).includes(propertyKey)
 </script>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
@@ -102,6 +98,7 @@ $form-gutter: 0.6rem;
   margin-inline: $form-gutter;
   padding-inline: 0.5rem;
   border-left: 3px solid variables.$primary;
+
   &:has(input:invalid) {
     border-color: variables.$salmon;
   }

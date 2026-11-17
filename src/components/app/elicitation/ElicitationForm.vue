@@ -27,47 +27,66 @@
     </div>
   </form>
 </template>
-<script setup>
-const props = defineProps({ elicitation: { type: Object, required: true } })
-const emit = defineEmits(['elicitation-answered', 'elicitation-canceled', 'elicitation-declined'])
+<script setup lang="ts">
+import type {
+  ElicitationFieldValue,
+  ElicitationPayload,
+  ElicitationResponse,
+  ElicitationResponses,
+  PrimitiveSchemaDefinition,
+} from './elicitation-types'
+
+const props = defineProps<{ elicitation: ElicitationPayload }>()
+const emit = defineEmits<{
+  'elicitation-answered': [responses: ElicitationResponses]
+  'elicitation-canceled': [responses: ElicitationResponses]
+  'elicitation-declined': [responses: ElicitationResponses]
+}>()
 
 // TODO multiple elicitaitons
-const requests = computed(() => props.elicitation?.elicitations?.[0].requests || {})
+const requests = computed(() => props.elicitation?.elicitations?.[0]?.requests || {})
 const requestKeys = computed(() => Object.keys(requests.value))
 
-const coerce = (type, raw) => {
+const coerce = (
+  type: PrimitiveSchemaDefinition['type'],
+  raw: FormDataEntryValue | boolean | null
+): string | number | boolean | undefined => {
   if (type === 'boolean') return raw === 'on' || raw === true
   if (type === 'number' || type === 'integer')
     return raw === '' || raw == null ? undefined : Number(raw)
-  return raw === '' || raw == null ? undefined : raw
+  return raw === '' || raw == null ? undefined : (raw as string)
 }
 
 const { t } = useI18n()
-const formEl = useTemplateRef('formEl')
+const formEl = useTemplateRef<HTMLFormElement>('formEl')
 const formError = ref('')
 
 const clearErrorIfValid = () => {
   if (formError.value && formEl.value?.checkValidity()) formError.value = ''
 }
 
-const submit = (evt) => {
+const submit = (evt: SubmitEvent) => {
+  const form = evt.target as HTMLFormElement
   // safety net: never send the payload while the form is invalid
-  if (!evt.target.checkValidity()) {
+  if (!form.checkValidity()) {
     formError.value = t('chatbot.elicitation-invalid')
     return
   }
   formError.value = ''
-  const formData = new FormData(evt.target)
-  const responses = {}
+  const formData = new FormData(form)
+  const responses: ElicitationResponses = {}
   for (const requestKey of requestKeys.value) {
-    const props = requests.value[requestKey]?.requestedSchema?.properties || {}
-    const content = {}
-    for (const [field, def] of Object.entries(props)) {
+    const schemaProps = (requests.value[requestKey]?.requestedSchema?.properties || {}) as Record<
+      string,
+      PrimitiveSchemaDefinition
+    >
+    const content: Record<string, ElicitationFieldValue> = {}
+    for (const [field, def] of Object.entries(schemaProps)) {
       const name = `${requestKey}[${field}]`
       if (def.type === 'array') {
         // multi-select: collect every checked box, omit when none
         const values = formData.getAll(name)
-        if (values.length) content[field] = values
+        if (values.length) content[field] = values as string[]
         continue
       }
       const value = coerce(def.type, formData.get(name))
@@ -78,17 +97,12 @@ const submit = (evt) => {
   emit('elicitation-answered', responses)
 }
 
-const reset = () => {
-  const responses = {}
-  for (const requestKey of requestKeys.value) responses[requestKey] = { action: 'cancel' }
-  emit('elicitation-canceled', responses)
-}
+const respondToAll = (action: ElicitationResponse['action']): ElicitationResponses =>
+  Object.fromEntries(requestKeys.value.map((requestKey) => [requestKey, { action }]))
 
-const decline = () => {
-  const responses = {}
-  for (const requestKey of requestKeys.value) responses[requestKey] = { action: 'decline' }
-  emit('elicitation-declined', responses)
-}
+const reset = () => emit('elicitation-canceled', respondToAll('cancel'))
+
+const decline = () => emit('elicitation-declined', respondToAll('decline'))
 </script>
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
