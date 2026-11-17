@@ -1,8 +1,8 @@
 <template>
   <BaseModulePreview
-    :title="$t(GROUP_MODULE_TITLE.domain, group.structure.modules.research_domains)"
+    :title="$t(GROUP_MODULE_TITLE.domain, group.structure.modules.domains)"
     :icon="GROUP_MODULE_ICON.domain"
-    :total="group.structure.modules.research_domains"
+    :total="group.structure.modules.domains"
   >
     <template #top-row>
       <div class="top-buttons">

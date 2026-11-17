@@ -9,8 +9,8 @@ defineProps<{ group: TranslatedPeopleGroupModel }>()
 
 <template>
   <BaseModuleTab
-    :title="$t(GROUP_MODULE_TITLE.domain, group.structure?.modules?.research_domains)"
-    :count="group.structure?.modules?.research_domains"
+    :title="$t(GROUP_MODULE_TITLE.domain, group.structure?.modules?.domains)"
+    :count="group.structure?.modules?.domains"
   >
     <BaseStructureDomain :group="group" />
   </BaseModuleTab>

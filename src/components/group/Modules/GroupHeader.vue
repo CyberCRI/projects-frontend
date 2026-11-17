@@ -45,16 +45,7 @@
       </div>
 
       <FetchLoader v-if="group.structure" :status="statusDomains" only-error skeleton>
-        <TagsList
-          :tags="domains"
-          :to="{
-            name: 'GroupSearch',
-            query: {
-              section: 'groups',
-            },
-          }"
-          class="subsection"
-        />
+        <ResearcherDomain v-for="domain in domains" :key="domain.domain.id" :domain="domain" />
       </FetchLoader>
       <TagsList
         v-if="!group.structure && group.tags.length"
@@ -128,10 +119,10 @@ import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import HeaderUserCard from '@/components/group/Modules/HeaderUserCard.vue'
 import { DEFAULT_GROUP_PATATOID } from '@/composables/usePatatoids'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'
+import { domainSkeleton } from '~/skeletons/structure.skeletons'
 import { getStructureDomains } from '~/api/v2/crisalid.service'
 import { memberSkeleton } from '@/skeletons/group.skeletons'
 import FetchLoader from '@/components/base/FetchLoader.vue'
-import { tagSkeleton } from '~/skeletons/project.skeletons'
 import { getGroupMember } from '@/api/v2/group.service'
 import TagsList from '@/components/tags/TagsList.vue'
 import SdgList from '@/components/sdgs/SdgList.vue'
@@ -198,14 +189,12 @@ const short_description = computed(
       : '')
 )
 
-const limitSkeleton = computed(() =>
-  maxSkeleton(props.group.structure?.modules?.research_domains, 10)
-)
+const limitSkeleton = computed(() => maxSkeleton(props.group.structure?.modules?.domains, 10))
 const { data: domains, status: statusDomains } = getStructureDomains(
   organizationCode,
   structureId,
   {
-    default: () => factoryPagination(tagSkeleton, limitSkeleton.value),
+    default: () => factoryPagination(domainSkeleton, limitSkeleton.value),
   }
 )
 

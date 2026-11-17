@@ -42,6 +42,7 @@ import {
   translateStructureResearcher as $translateStructureResearcher,
   translateStructureRelation as $translateStructureRelation,
   translateResearcherStructure as $translateResearcherStructure,
+  translateStructureDomain as $translateStructureDomain,
 } from 'shared-projects-frontend/translate'
 import type {
   GeneralLocationPeopleGroup,
@@ -84,6 +85,7 @@ import type {
   StructureResearcher,
   StructureRelation,
   ResearcherStructure,
+  StructureDomain,
 } from 'shared-projects-frontend/models'
 import type { Agent } from '~~/prisma-chatbot-db/generated/prisma/browser'
 import type { TranslatedAgent } from '~/models/agent.model'
@@ -282,6 +284,12 @@ export default function useAutoTranslate() {
     computed(() => $translateResearcherStructure(unref(data), language.value))
   const translateResearcherStructures = (data: RefOrRaw<ResearcherStructure[]>) =>
     computed(() => translateMany($translateResearcherStructure, unref(data), language.value))
+
+  const translateStructureDomain = (data: RefOrRaw<StructureDomain>) =>
+    computed(() => $translateStructureDomain(unref(data), language.value))
+  const translateStructureDomains = (data: RefOrRaw<StructureDomain[]>) =>
+    computed(() => translateMany($translateStructureDomain, unref(data), language.value))
+
   return {
     isAutoTranslateActivated,
     getTranslatableField,
@@ -395,6 +403,8 @@ export default function useAutoTranslate() {
 
     translateStructure,
     translateStructures,
+    translateStructureDomain,
+    translateStructureDomains,
     translateStructureResearcher,
     translateStructureResearchers,
     translateStructureRelation,

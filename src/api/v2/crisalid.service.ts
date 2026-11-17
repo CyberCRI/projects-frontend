@@ -29,7 +29,7 @@ import {
   getResearcherTeachings as fetchResearcherTeachings,
   getResearcherFundings as fetchResearcherFundings,
   getResearcherStructures as fetchResearcherStructures,
-  getStructureResearcherDomains as fetchStructureResearcherDomains,
+  getStructureDomains as fetchStructureDomains,
 } from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
@@ -458,7 +458,7 @@ export const getStructureDomains = (
   structureId: RefOrRaw<Structure['id']>,
   config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
 ) => {
-  const { translateTags } = useAutoTranslate()
+  const { translateStructureDomains } = useAutoTranslate()
 
   const key = computed(
     () => `${unref(organizationCode)}::structure::${unref(structureId)}::domains`
@@ -466,13 +466,13 @@ export const getStructureDomains = (
   return useAsyncPaginationAPI(
     key,
     ({ config }) =>
-      fetchStructureResearcherDomains(unref(organizationCode), unref(structureId), {
+      fetchStructureDomains(unref(organizationCode), unref(structureId), {
         ...DEFAULT_CONFIG,
         ...config,
       }),
 
     {
-      translate: (data) => translateTags(data),
+      translate: (data) => translateStructureDomains(data),
       watch: onlyRefs([organizationCode, structureId]),
       ...config,
     }
