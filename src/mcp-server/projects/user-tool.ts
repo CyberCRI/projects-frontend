@@ -56,6 +56,10 @@ export const mapUserPreview = (user: UserModel) => ({
   ...addIfExists('people_groups', user, (groups: PeopleGroupModel[]) =>
     groups.map(mapPeopleGroupPreview)
   ),
+  // researcher id is needed by the researcher-* tools
+  ...addIfExists('researcher', user, (researcher: UserModel['researcher']) =>
+    pick(researcher, ['id', 'display_name'])
+  ),
 })
 
 export const PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA = N.object({
@@ -77,6 +81,10 @@ export const mapPeopleGroupPreview = (group: PeopleGroupModel) => ({
   ...pick(group, ['id', 'slug', 'name', 'short_description', 'description', 'email']),
   item_image: group.header_image?.variations?.small,
   member_count: group.modules?.members || 0,
+  // structure id is needed by the structure-* tools (null for regular groups)
+  ...addIfExists('structure', group, (structure: PeopleGroupModel['structure']) =>
+    pick(structure, ['id', 'name', 'acronym'])
+  ),
   ...addIfExists('children', group, (data: PeopleGroupModel['children']) =>
     data.map(mapPeopleGroupPreview)
   ),
@@ -91,7 +99,7 @@ export default (server: McpServer) => {
     'people-general-data',
     {
       title: 'People general data',
-      description: `Get main general data (job or title, biography, skills, hobbies, and projects) about a person / people / profile / user / member given its id or slug. ${FETCH_USER_SLUG_OR_ID}`,
+      description: `Get main general data (job or title, biography, skills, hobbies, and projects) about a person / people / profile / user / member given its id or slug. The result "researcher.id" key (missing/null for regular users who are not researchers) is the researcher id required by the researcher-* tools; it is NOT the user id. ${FETCH_USER_SLUG_OR_ID}`,
       inputSchema: z.object({
         idOrSlug: z.string().describe('The id or slug of the user / profile / person / member'),
       }),
@@ -107,7 +115,7 @@ export default (server: McpServer) => {
     'people-group-data',
     {
       title: 'People group data',
-      description: `Get main general data about a people group (or member group, or user group) given its id or slug. ${FETCH_GROUP_SLUG_OR_ID}.`,
+      description: `Get main general data about a people group (or member group, or user group) given its id or slug. The result "structure.id" key (missing/null for regular groups) is the structure id required by the structure-* tools; it is NOT the group id. ${FETCH_GROUP_SLUG_OR_ID}.`,
       inputSchema: z.object({
         idOrSlug: z.string().describe('The id or slug of the people group'),
       }),
