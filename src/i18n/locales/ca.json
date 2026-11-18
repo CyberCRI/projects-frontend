@@ -230,7 +230,8 @@
       "assistants": "Assistents",
       "people": "Persones",
       "projects": "Projectes",
-      "organization": "Organització"
+      "organization": "Organització",
+      "agent-mcp": "MCP"
     },
     "page-title": "Administrador",
     "portal": {

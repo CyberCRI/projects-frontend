@@ -237,7 +237,8 @@
       "assistants": "Assistants",
       "people": "Personnes",
       "projects": "Projets",
-      "organization": "Organisation"
+      "organization": "Organisation",
+      "agent-mcp": "MCP"
     },
     "page-title": "Admin",
     "portal": {
