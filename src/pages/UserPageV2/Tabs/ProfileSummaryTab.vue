@@ -87,11 +87,6 @@ const bioEmpty = computed(() => textIsEmpty(props.user.$t.description))
     <ResearcherFundingsPreview v-if="user.researcher?.modules?.fundings" :user="user" />
     <ResearcherAwardPreview v-if="user.researcher?.modules?.awards" :user="user" />
     <ResearcherTeachingsPreview v-if="user.researcher?.modules?.teachings" :user="user" />
-
-    <!-- <ResearcherPositionsPreview v-if="user.researcher?.modules?.positions"  :user="user" /> -->
-
-    <!-- <ResearcherNeedsPreview v-if="user.researcher?.modules?.needs" :user="user" /> -->
-    <!-- <ResearcherAvailabilitiesPreview v-if="user.researcher?.modules?.availabilities" :user="user" /> -->
   </div>
 </template>
 

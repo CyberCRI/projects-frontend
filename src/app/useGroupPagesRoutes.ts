@@ -89,7 +89,7 @@ export default function useGroupPagesRoutes() {
         {
           path: 'awards',
           name: 'groupAwards',
-          component: () => import('../pages/GroupPageV2/Tabs/Positions/GroupPositionsTab.vue'),
+          component: () => import('../pages/GroupPageV2/Tabs/Awards/GroupAwardsTab.vue'),
         },
         {
           path: 'funding',
