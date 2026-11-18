@@ -30,6 +30,9 @@ import {
   getResearcherFundings as fetchResearcherFundings,
   getResearcherStructures as fetchResearcherStructures,
   getStructureDomains as fetchStructureDomains,
+  getStructureAwards as fetchStructureAwards,
+  getStructureTeachings as fetchStructureTeachings,
+  getStructureFundings as fetchStructureFundings,
 } from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
@@ -366,10 +369,11 @@ export const getStructureAwards = (
 
   return useAsyncPaginationAPI(
     key,
-    ({ config }) => {
-      console.log('TODO: getStructureAwards', organizationCode, structureId, config)
-      return null
-    },
+    ({ config }) =>
+      fetchStructureAwards(unref(organizationCode), unref(structureId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
     {
       translate: (data) => translateAwards(data),
       watch: onlyRefs([organizationCode, structureId]),
@@ -391,38 +395,13 @@ export const getStructureFundings = (
 
   return useAsyncPaginationAPI(
     key,
-    ({ config }) => {
-      console.log('TODO: getStructureFundings', organizationCode, structureId, config)
-      return null
-    },
+    ({ config }) =>
+      fetchStructureFundings(unref(organizationCode), unref(structureId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
     {
       translate: (data) => translateFundings(data),
-      watch: onlyRefs([organizationCode, structureId]),
-      ...config,
-    }
-  )
-}
-
-export const getStructureSimilars = (
-  organizationCode: RefOrRaw<OrganizationModel['code']>,
-  structureId: RefOrRaw<Structure['id']>,
-  config: UseAsyncPaginationApiConfig<QueryFilterAward> = {}
-) => {
-  const { translateStructures } = useAutoTranslate()
-
-  const key = computed(
-    () => `${unref(organizationCode)}::structure::${unref(structureId)}::similars`
-  )
-
-  return useAsyncPaginationAPI(
-    key,
-    ({ config }) => {
-      console.log('TODO: getStructureSimilars', organizationCode, structureId, config)
-      return null
-    },
-
-    {
-      translate: (data) => translateStructures(data),
       watch: onlyRefs([organizationCode, structureId]),
       ...config,
     }
@@ -441,10 +420,11 @@ export const getStructureTeachings = (
   )
   return useAsyncPaginationAPI(
     key,
-    ({ config }) => {
-      console.log('TODO: getStructureTeachings', organizationCode, structureId, config)
-      return null
-    },
+    ({ config }) =>
+      fetchStructureTeachings(unref(organizationCode), unref(structureId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
     {
       translate: (data) => translateTeachings(data),
       watch: onlyRefs([organizationCode, structureId]),

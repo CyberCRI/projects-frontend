@@ -27,6 +27,7 @@ export const structureSkeleton = (def?: Partial<Structure>): Structure => ({
     supervising_structures: 0,
     awards: 0,
     teachings: 0,
+    fundings: 0,
   },
   national_type: '',
   organization: null,

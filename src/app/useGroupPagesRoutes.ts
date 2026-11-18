@@ -91,16 +91,16 @@ export default function useGroupPagesRoutes() {
           name: 'groupAwards',
           component: () => import('../pages/GroupPageV2/Tabs/Positions/GroupPositionsTab.vue'),
         },
-        // {
-        //   path: 'funding',
-        //   name: 'groupFunding',
-        //   component: () => import('../pages/GroupPageV2/Tabs/Funding/GroupFundingsTab.vue'),
-        // },
-        // {
-        //   path: 'teaching',
-        //   name: 'groupTeaching',
-        //   component: () => import('../pages/GroupPageV2/Tabs/Teaching/GroupTeachingTab.vue'),
-        // },
+        {
+          path: 'funding',
+          name: 'groupFunding',
+          component: () => import('../pages/GroupPageV2/Tabs/Fundings/GroupFundingsTab.vue'),
+        },
+        {
+          path: 'teaching',
+          name: 'groupTeaching',
+          component: () => import('../pages/GroupPageV2/Tabs/Teachings/GroupTeachingsTab.vue'),
+        },
         // {
         //   path: 'plateform',
         //   name: 'groupPlatform',

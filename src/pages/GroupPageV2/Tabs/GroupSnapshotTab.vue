@@ -44,9 +44,9 @@
       /> -->
     </div>
 
-    <!-- TODO -->
-    <!-- <StructurePositionsPreview v-if="group.structure?.modules?.positions"  :group="group" /> -->
-    <!-- <StructurePlatformPreview v-if="group.structure?.modules?.tools" :group="group" /> -->
+    <StructureAwardsPreview v-if="group.structure?.modules?.awards" :group="group" />
+    <StructureTeachingsPreview v-if="group.structure?.modules?.awards" :group="group" />
+    <StructureFundingsPreview v-if="group.structure?.modules?.awards" :group="group" />
   </div>
 </template>
 
@@ -68,6 +68,9 @@ import GroupSubPreview from '~/components/group/Modules/GroupSub/GroupSubPreview
 import GroupNewsPreview from '~/components/group/Modules/News/GroupNewsPreview.vue'
 import GroupHeader from '~/components/group/Modules/GroupHeader.vue'
 
+import StructureTeachingsPreview from '~/components/structure/StructureTeachingsPreview.vue'
+import StructureFundingsPreview from '~/components/structure/StructureFundingsPreview.vue'
+import StructureAwardsPreview from '~/components/structure/StructureAwardsPreview.vue'
 import { difference } from 'es-toolkit'
 
 const props = withDefaults(

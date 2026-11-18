@@ -1,39 +1,18 @@
 <template>
-  <div v-if="user.researcher" class="awards-list">
-    <FetchLoader :status="status" only-error skeleton>
-      <template v-for="award in awards" :key="award.award.id">
-        <div class="separator"></div>
-        <div class="award">
-          <h2 class="award-title skeletons-text">
-            <span v-if="award.date">{{ formatDate(award.date, locale) }} -</span>
-            {{ award.award.$t.name }}
-          </h2>
-          <p class="skeletons-text">
-            {{ award.$t.description || award.award.$t.description }}
-          </p>
-          <LinkButton
-            v-if="award.link"
-            :to="award.link"
-            :label="$t('common.see-more')"
-            btn-icon="ExternalLink"
-            class="award-link skeletons-background"
-            target="_blank"
-          />
-        </div>
-      </template>
+  <FetchLoader :status="status" only-error skeleton>
+    <div class="awards-list">
+      <AwardContributor v-for="award in awards" :key="award.award.id" :award="award" />
       <NothingHere v-if="!isLoading && awards.length === 0" />
       <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
-    </FetchLoader>
-  </div>
+    </div>
+  </FetchLoader>
 </template>
 <script lang="ts" setup>
+import AwardContributor from '~/components/crisalid/modules/AwardContributor.vue'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { researcherAwardSkeleton } from '~/skeletons/crisalid.skeletons'
 import { getResearcherAwards } from '~/api/v2/crisalid.service'
-import { formatDate } from '~/functs/date'
-
-const { locale } = useNuxtI18n()
 
 const props = withDefaults(
   defineProps<{ user: TranslatedUserModel; preview?: boolean; limit?: number }>(),
@@ -58,28 +37,3 @@ const {
   default: () => factoryPagination(researcherAwardSkeleton, limitSkeletons.value),
 })
 </script>
-<style lang="scss" scoped>
-@use '~/design/scss/variables';
-
-.associate-link {
-  color: variables.$primary-dark;
-  font-weight: 600;
-}
-
-.separator {
-  margin-block: 1rem;
-  display: none;
-  background-color: variables.$light-gray;
-  height: 1px;
-}
-
-.award-link {
-  margin-top: 1rem;
-  width: fit-content;
-  justify-self: flex-start;
-}
-
-.award ~ .separator {
-  display: block;
-}
-</style>
