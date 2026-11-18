@@ -1,5 +1,7 @@
 import registerOrganizationTool from './projects/organization-tool'
 import registerInstructionTool from './projects/instruction-tool'
+import registerResearcherTool from './projects/researcher-tool'
+import registerStructureTool from './projects/structure-tool'
 import registerSorbobotTool from './sorbobot/sorbobot-tool'
 import registerProjectTool from './projects/project-tool'
 import { McpServer } from '@modelcontextprotocol/server'
@@ -40,6 +42,10 @@ function createMCPServer() {
   registerProjectTool(server)
 
   registerPeopleTool(server)
+
+  registerResearcherTool(server)
+
+  registerStructureTool(server)
 
   registerOrganizationTool(server)
 
