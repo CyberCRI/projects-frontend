@@ -1,6 +1,6 @@
 <template>
   <FetchLoader :status="status" only-error skeleton>
-    <BaseModuleHeader :editable="false" :pagination="pagination" />
+    <BaseModuleHeader v-if="!preview" :editable="false" :pagination="pagination" />
 
     <div class="domain-list" :class="{ 'as-column': preview }">
       <ResearcherDomain v-for="domain in domains" :key="domain.domain.id" :domain="domain" />
