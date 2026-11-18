@@ -1,6 +1,6 @@
 import type { UserModel, SkillModel, PeopleGroupModel } from 'shared-projects-frontend/models'
+import { addIfExists, domainMapPreview, tagMapPreview } from '~/mcp-server/projects/utils'
 import { getUser as fetchUser, getGroup } from 'shared-projects-frontend/apis'
-import { addIfExists, tagMapPreview } from '~/mcp-server/projects/utils'
 import type { McpServer } from '@modelcontextprotocol/server'
 import { mcpOptions, orgCode, resultFromTool } from './base'
 import { mapSDG } from './sdg-tool'
@@ -57,9 +57,15 @@ export const mapUserPreview = (user: UserModel) => ({
     groups.map(mapPeopleGroupPreview)
   ),
   // researcher id is needed by the researcher-* tools
-  ...addIfExists('researcher', user, (researcher: UserModel['researcher']) =>
-    pick(researcher, ['id', 'display_name'])
-  ),
+  ...addIfExists('researcher', user, (researcher: UserModel['researcher']) => ({
+    ...pick(researcher, ['id', 'display_name']),
+    // research domains of the researcher are only available here
+    ...addIfExists(
+      'domains',
+      researcher,
+      (domains: NonNullable<UserModel['researcher']>['domains']) => domains.map(domainMapPreview)
+    ),
+  })),
 })
 
 export const PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA = N.object({
@@ -99,7 +105,7 @@ export default (server: McpServer) => {
     'people-general-data',
     {
       title: 'People general data',
-      description: `Get main general data (job or title, biography, skills, hobbies, and projects) about a person / people / profile / user / member given its id or slug. The result "researcher.id" key (missing/null for regular users who are not researchers) is the researcher id required by the researcher-* tools; it is NOT the user id. ${FETCH_USER_SLUG_OR_ID}`,
+      description: `Get main general data (job or title, biography, skills, hobbies, and projects) about a person / people / profile / user / member given its id or slug. The result "researcher.id" key (missing/null for regular users who are not researchers) is the researcher id required by the researcher-* tools; it is NOT the user id. The "researcher.domains" key contains the research domains of the person: this is the only way to get the research domains of a person / researcher (the structure-research-domains tool only applies to research structures, not to people). ${FETCH_USER_SLUG_OR_ID}`,
       inputSchema: z.object({
         idOrSlug: z.string().describe('The id or slug of the user / profile / person / member'),
       }),

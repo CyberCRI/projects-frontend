@@ -24,7 +24,13 @@ import type {
   Teaching,
   ResearcherStructure,
 } from 'shared-projects-frontend/models'
-import { addIfExists, buildQuery, domainMapPreview, PAGINATION_INPUT } from './utils'
+import {
+  addIfExists,
+  buildPaginationQuery,
+  buildQuery,
+  domainMapPreview,
+  PAGINATION_INPUT,
+} from './utils'
 import type { McpServer } from '@modelcontextprotocol/server'
 import { mcpOptions, orgCode, resultFromTool } from './base'
 import { mapStructurePreview } from './structure-tool'
@@ -52,6 +58,10 @@ const DATE_RANGE_INPUT = {
   date_after: N.string().describe('Only items after this date (ISO 8601)'),
   date_before: N.string().describe('Only items before this date (ISO 8601)'),
 }
+
+// shared-projects-frontend types the config of getResearcher{Affiliated,Similars,Citations}
+// as ClientAPIOptions<PaginationResult> instead of PaginationQuery: cast until fixed upstream
+const PAGINATION_QUERY_CAST = (query: ReturnType<typeof buildPaginationQuery>) => query as any
 
 export const mapResearcher = (researcher: Researcher) => ({
   item_type: 'researcher',
@@ -210,7 +220,7 @@ export default (server: McpServer) => {
     resultFromTool(({ documentId, ...args }, ctx) =>
       getResearchDocumentSimilars(orgCode, documentId, {
         ...mcpOptions(ctx),
-        query: buildQuery(args),
+        query: buildPaginationQuery(args),
       }).then((response) => response.results.map(mapResearchDocument))
     )
   )
@@ -225,7 +235,7 @@ export default (server: McpServer) => {
     resultFromTool(({ documentId, ...args }, ctx) =>
       getResearchDocumentCitations(orgCode, documentId, {
         ...mcpOptions(ctx),
-        query: buildQuery(args),
+        query: buildPaginationQuery(args),
       }).then((response) => response.results.map(mapJournalCitation))
     )
   )
@@ -242,7 +252,7 @@ export default (server: McpServer) => {
     resultFromTool(({ researcherId, ...args }, ctx) =>
       getResearcherAffiliated(orgCode, researcherId, {
         ...mcpOptions(ctx),
-        query: buildQuery(args),
+        query: PAGINATION_QUERY_CAST(buildPaginationQuery(args)),
       }).then((response) => response.results.map(mapResearcher))
     )
   )
@@ -257,7 +267,7 @@ export default (server: McpServer) => {
     resultFromTool(({ researcherId, ...args }, ctx) =>
       getResearcherSimilars(orgCode, researcherId, {
         ...mcpOptions(ctx),
-        query: buildQuery(args),
+        query: PAGINATION_QUERY_CAST(buildPaginationQuery(args)),
       }).then((response) => response.results.map(mapResearcher))
     )
   )
@@ -272,7 +282,7 @@ export default (server: McpServer) => {
     resultFromTool(({ researcherId, ...args }, ctx) =>
       getResearcherCitations(orgCode, researcherId, {
         ...mcpOptions(ctx),
-        query: buildQuery(args),
+        query: PAGINATION_QUERY_CAST(buildPaginationQuery(args)),
       }).then((response) => response.results.map(mapJournalCitation))
     )
   )

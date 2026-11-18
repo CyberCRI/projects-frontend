@@ -3,13 +3,13 @@ import {
   getStructure,
   getStructureChildren,
   getStructureSupervisingStructures,
-  getStructureResearcherDomains,
+  getStructureDomains,
   getStructureCollaborations,
   getStructureResearchers,
   getStructureCitations,
 } from 'shared-projects-frontend/apis'
+import { buildPaginationQuery, buildQuery, domainMapPreview, PAGINATION_INPUT } from './utils'
 import type { Structure, StructureResearcher } from 'shared-projects-frontend/models'
-import { buildQuery, domainMapPreview, PAGINATION_INPUT } from './utils'
 import type { McpServer } from '@modelcontextprotocol/server'
 import { mcpOptions, orgCode, resultFromTool } from './base'
 import N from './zod-schema-utils'
@@ -140,9 +140,9 @@ export default (server: McpServer) => {
       inputSchema: z.object({ structureId: STRUCTURE_ID, ...PAGINATION_INPUT }),
     },
     resultFromTool(({ structureId, ...args }, ctx) =>
-      getStructureResearcherDomains(orgCode, structureId, {
+      getStructureDomains(orgCode, structureId, {
         ...mcpOptions(ctx),
-        query: buildQuery(args),
+        query: buildPaginationQuery(args),
       }).then((response) => response.results.map(domainMapPreview))
     )
   )
@@ -157,7 +157,7 @@ export default (server: McpServer) => {
     resultFromTool(({ structureId, ...args }, ctx) =>
       getStructureCollaborations(orgCode, structureId, {
         ...mcpOptions(ctx),
-        query: buildQuery(args),
+        query: buildPaginationQuery(args),
       }).then((response) => response.results)
     )
   )

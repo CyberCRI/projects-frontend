@@ -30,6 +30,14 @@ export const buildQuery = <T extends Record<string, any>>(
 ) =>
   omitBy({ ...args, limit: args.limit ?? 10, offset: args.offset ?? 0 }, (value) => value == null)
 
+/**
+ * Build a pagination-only query (limit and offset always defined)
+ */
+export const buildPaginationQuery = (args: { limit?: number | null; offset?: number | null }) => ({
+  limit: args.limit ?? 10,
+  offset: args.offset ?? 0,
+})
+
 export const domainMapPreview = (domain: { id: number; level: number; domain: TagModel }) => ({
   item_type: 'research_domain',
   id: domain.id,
