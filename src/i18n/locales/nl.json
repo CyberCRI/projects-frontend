@@ -230,7 +230,8 @@
       "assistants": "Assistenten",
       "people": "Mensen",
       "projects": "Projecten",
-      "organization": "Organisatie"
+      "organization": "Organisatie",
+      "agent-mcp": "MCP"
     },
     "page-title": "Beheerder",
     "portal": {

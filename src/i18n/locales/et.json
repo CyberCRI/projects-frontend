@@ -230,7 +230,8 @@
       "assistants": "Assistentid",
       "people": "Inimesed",
       "projects": "Projektid",
-      "organization": "Organisatsioon"
+      "organization": "Organisatsioon",
+      "agent-mcp": "MCP"
     },
     "page-title": "Admin",
     "portal": {
