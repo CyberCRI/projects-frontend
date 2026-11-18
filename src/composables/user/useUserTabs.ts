@@ -155,8 +155,8 @@ export const useUserTabs = (user: ComputedRef<TranslatedUserModel>) => {
       {
         key: 'profile-teaching',
         label: t(USER_MODULE_TITLE.teachings, modulesResearcher.value.teachings),
-        view: `/profile/${userSlugOrId.value}/teaching`,
-        altView: `/profile/${userSlugOrId.value}/teaching/edit`,
+        view: `/profile/${userSlugOrId.value}/teachings`,
+        altView: `/profile/${userSlugOrId.value}/teachings/edit`,
         condition: !!modulesResearcher.value.teachings,
         dataTest: 'profile-teaching',
         icon: USER_MODULE_ICON.teachings,

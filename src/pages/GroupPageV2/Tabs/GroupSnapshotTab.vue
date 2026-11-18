@@ -45,8 +45,8 @@
     </div>
 
     <StructureAwardsPreview v-if="group.structure?.modules?.awards" :group="group" />
-    <StructureTeachingsPreview v-if="group.structure?.modules?.awards" :group="group" />
-    <StructureFundingsPreview v-if="group.structure?.modules?.awards" :group="group" />
+    <StructureTeachingsPreview v-if="group.structure?.modules?.teachings" :group="group" />
+    <StructureFundingsPreview v-if="group.structure?.modules?.fundings" :group="group" />
   </div>
 </template>
 

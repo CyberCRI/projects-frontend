@@ -1,16 +1,16 @@
 <template>
-  <div v-if="user.researcher">
-    <FetchLoader :status="status" only-error skeleton>
-      <div class="affiliates">
-        <ResearcherRow
-          v-for="researcher in affiliated"
-          :key="researcher.id"
-          :researcher="researcher"
-        />
-      </div>
-    </FetchLoader>
-    <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
-  </div>
+  <FetchLoader :status="status" only-error skeleton>
+    <BaseModuleHeader v-if="!preview" :editable="false" :pagination="pagination" />
+
+    <div class="affiliates">
+      <ResearcherRow
+        v-for="researcher in affiliated"
+        :key="researcher.id"
+        :researcher="researcher"
+      />
+    </div>
+  </FetchLoader>
+  <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
 </template>
 <script lang="ts" setup>
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'

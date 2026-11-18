@@ -3,6 +3,12 @@
     :title="$t(USER_MODULE_TITLE.teachings, user.researcher.modules.teachings)"
     :icon="USER_MODULE_ICON.teachings"
     :total="user.researcher.modules.teachings"
+    :see-more="{
+      name: 'ProfileTeachings',
+      params: {
+        userIdOrSlug: user.slug || user.id,
+      },
+    }"
   >
     <template #content>
       <BaseResearcherTeaching :user="user" preview :limit="3" />

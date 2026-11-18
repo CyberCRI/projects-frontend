@@ -54,7 +54,7 @@ const badges = computed(() => {
       label: t(USER_MODULE_TITLE.teachings, props.user.researcher.modules.teachings),
       icon: USER_MODULE_ICON.teachings,
       count: props.user.researcher?.modules.teachings,
-      link: `/profile/${props.user.slug || props.user.id}/teaching`,
+      link: `/profile/${props.user.slug || props.user.id}/teachings`,
     })
   }
   if (props.user.researcher?.modules.awards) {

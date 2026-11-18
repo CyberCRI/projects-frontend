@@ -11,6 +11,12 @@ defineProps<{ group: TranslatedPeopleGroupModel }>()
   <BaseModulePreview
     :title="$t(GROUP_MODULE_TITLE.awards, group.structure.modules.awards)"
     :icon="GROUP_MODULE_ICON.awards"
+    :see-more="{
+      name: 'groupAwards',
+      params: {
+        groupIdOrSlug: group.slug || group.id,
+      },
+    }"
   >
     <template #content>
       <BaseStructureAwards :group="group" preview :limit="3" />

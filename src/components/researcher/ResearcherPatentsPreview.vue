@@ -1,9 +1,14 @@
 <template>
   <BaseModulePreview
-    v-if="user.researcher"
     :title="$t(USER_MODULE_TITLE.patents, user.researcher.modules.patents)"
     :icon="USER_MODULE_ICON.patents"
     :total="user.researcher.modules.patents"
+    :see-more="{
+      name: 'ProfilePatents',
+      params: {
+        userIdOrSlug: user.slug || user.id,
+      },
+    }"
   >
     <template #content>
       <BaseResearcherPatents :user="user" preview :limit="3" />

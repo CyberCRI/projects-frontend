@@ -1,7 +1,13 @@
 <template>
   <FetchLoader :status="status" only-error skeleton>
+    <BaseModuleHeader :editable="false" :pagination="pagination" />
     <div class="awards-list">
-      <Award v-for="award in awards" :key="award.id" :award="award" />
+      <Award
+        v-for="award in awards"
+        :key="award.id"
+        :award="award"
+        :researcher="award.researchers?.[0]"
+      />
       <NothingHere v-if="!isLoading && awards.length === 0" />
       <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
     </div>

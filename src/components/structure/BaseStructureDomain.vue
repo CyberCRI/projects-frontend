@@ -1,11 +1,13 @@
 <template>
-  <div class="domain-list" :class="{ 'as-column': preview }">
-    <FetchLoader :status="status" only-error skeleton>
+  <FetchLoader :status="status" only-error skeleton>
+    <BaseModuleHeader :editable="false" :pagination="pagination" />
+
+    <div class="domain-list" :class="{ 'as-column': preview }">
       <ResearcherDomain v-for="domain in domains" :key="domain.domain.id" :domain="domain" />
       <EmptyCard v-if="!preview && domains.length === 0" />
       <PaginationButtonsV2 :pagination="pagination" />
-    </FetchLoader>
-  </div>
+    </div>
+  </FetchLoader>
 </template>
 
 <script lang="ts" setup>

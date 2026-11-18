@@ -70,8 +70,8 @@ export default function useProfilePagesRoutes() {
       component: () => import('../pages/UserPageV2/Tabs/ProfileFundingsTab.vue'),
     },
     {
-      path: 'teaching',
-      name: 'ProfileTeaching',
+      path: 'teachings',
+      name: 'ProfileTeachings',
       component: () => import('../pages/UserPageV2/Tabs/ProfileTeachingTab.vue'),
     },
     {

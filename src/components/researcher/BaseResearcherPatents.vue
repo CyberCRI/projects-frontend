@@ -1,6 +1,8 @@
 <template>
-  <div v-if="user.researcher" class="patent-list">
-    <FetchLoader :status="status" only-error skeleton>
+  <FetchLoader :status="status" only-error skeleton>
+    <BaseModuleHeader v-if="!preview" :editable="false" :pagination="pagination" />
+
+    <div class="patent-list">
       <template v-for="patent in patents" :key="patent.id">
         <div class="separator"></div>
         <div class="patent-card">
@@ -12,8 +14,8 @@
         </div>
       </template>
       <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
-    </FetchLoader>
-  </div>
+    </div>
+  </FetchLoader>
 </template>
 <script lang="ts" setup>
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'

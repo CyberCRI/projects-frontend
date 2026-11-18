@@ -1,5 +1,7 @@
 <template>
   <FetchLoader :status="status" only-error skeleton>
+    <BaseModuleHeader v-if="!preview" :editable="false" :pagination="pagination" />
+
     <div class="teaching-list">
       <Teaching v-for="teaching in teachings" :key="teaching.id" :teaching="teaching" />
       <NothingHere v-if="!preview && teachings.length === 0" />

@@ -1,6 +1,20 @@
 <template>
   <div class="separator"></div>
   <div class="teaching">
+    <div v-if="researcher" class="image-div">
+      <CroppedApiImage
+        :alt="`${researcher.user.given_name} ${researcher.user.family_name} image`"
+        class="img-container skeletons-background"
+        :picture-data="researcher.user.profile_picture"
+        picture-size="medium"
+        :default-picture="DEFAULT_USER_PATATOID"
+      />
+      <div class="text text-limit">
+        <div class="name skeletons-text">
+          {{ researcher.user.given_name }} {{ researcher.user.family_name }}
+        </div>
+      </div>
+    </div>
     <h2 class="teaching-title skeletons-text">{{ teaching.$t.name }}</h2>
     <div class="teaching-header">
       <span class="teaching-header-item skeletons-background">
@@ -39,10 +53,11 @@
 </template>
 
 <script lang="ts" setup>
-import type { TranslatedTeaching } from 'shared-projects-frontend/models'
+import type { TranslatedResearcher, TranslatedTeaching } from 'shared-projects-frontend/models'
 
 defineProps<{
   teaching: TranslatedTeaching
+  researcher?: TranslatedResearcher
 }>()
 </script>
 
@@ -88,5 +103,20 @@ defineProps<{
 
 .teaching ~ .separator {
   display: block;
+}
+
+.img-container {
+  border-radius: 50%;
+  background-size: cover;
+  background-position: top center;
+  width: variables.pxtorem(48px);
+  height: variables.pxtorem(48px);
+  flex-shrink: 0;
+}
+
+.image-div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 </style>

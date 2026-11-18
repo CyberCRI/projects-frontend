@@ -10,7 +10,7 @@ withDefaults(defineProps<{ group: TranslatedPeopleGroupModel; editable?: boolean
 
 <template>
   <BaseModuleTab
-    :title="$t(GROUP_MODULE_TITLE.teachingTab, group.structure?.modules?.teachings)"
+    :title="$t(GROUP_MODULE_TITLE.teachingsTab, group.structure?.modules?.teachings)"
     :count="group.structure?.modules?.teachings"
   >
     <BaseStructureTeaching :editable="editable" :group="group" />

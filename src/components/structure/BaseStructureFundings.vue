@@ -1,10 +1,12 @@
 <template>
-  <div class="funding-list">
-    <FetchLoader :status="status" only-error skeleton>
+  <FetchLoader :status="status" only-error skeleton>
+    <BaseModuleHeader :editable="false" :pagination="pagination" />
+
+    <div class="funding-list">
       <Funding v-for="funding in fundings" :key="funding.id" :funding="funding" />
       <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
-    </FetchLoader>
-  </div>
+    </div>
+  </FetchLoader>
 </template>
 
 <script lang="ts" setup>

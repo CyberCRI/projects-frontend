@@ -125,6 +125,7 @@ export const awardSkeleton = (def?: Partial<Award>): Award => ({
   id: -1,
   name: 'name',
   description: 'Ipsum nostrud offciia dolor esse execitation mollit',
+  researchers: [],
   ...(def || {}),
 })
 

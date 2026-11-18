@@ -25,15 +25,32 @@
       </div>
     </div>
     <div v-if="funding.researchers?.length" class="funding-aside">
-      <div class="funding-team">
-        <div class="funding-team-head skeletons-background">
-          <IconImage class="funding-team-icon" name="Link" />
-          <span class="researcher-count">{{ funding.researchers.length }}</span>
+      <template v-if="funding.researchers.length > 1">
+        <div class="funding-team">
+          <div class="funding-team-head skeletons-background">
+            <IconImage class="funding-team-icon" name="Link" />
+            <span class="researcher-count">{{ funding.researchers.length }}</span>
+          </div>
+          <div class="funding-team-label skeletons-text">
+            {{ $t('researcher.researchers') }}
+          </div>
         </div>
-        <div class="funding-team-label skeletons-text">
-          {{ $t('researcher.researchers') }}
+      </template>
+      <template v-else>
+        <CroppedApiImage
+          :alt="`${funding.researchers[0].user.given_name} ${funding.researchers[0].user.family_name} image`"
+          class="img-container skeletons-background"
+          :picture-data="funding.researchers[0].user.profile_picture"
+          picture-size="medium"
+          :default-picture="DEFAULT_USER_PATATOID"
+        />
+        <div class="text text-limit">
+          <div class="name skeletons-text">
+            {{ funding.researchers[0].user.given_name }}
+            {{ funding.researchers[0].user.family_name }}
+          </div>
         </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>
@@ -135,5 +152,20 @@ defineProps<{
 
 .funding-card ~ .separator {
   display: block;
+}
+
+.img-container {
+  border-radius: 50%;
+  background-size: cover;
+  background-position: top center;
+  width: variables.pxtorem(48px);
+  height: variables.pxtorem(48px);
+  flex-shrink: 0;
+}
+
+.image-div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 </style>

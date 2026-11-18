@@ -11,6 +11,12 @@ defineProps<{ user: TranslatedUserModel }>()
     :title="$t(USER_MODULE_TITLE.awards, user?.researcher?.modules?.awards)"
     :icon="USER_MODULE_ICON.awards"
     :total="user?.researcher?.modules?.awards"
+    :see-more="{
+      name: 'ProfileAwards',
+      params: {
+        userIdOrSlug: user.slug || user.id,
+      },
+    }"
   >
     <template #content>
       <BaseResearcherAwards :user="user" preview :limit="3" />

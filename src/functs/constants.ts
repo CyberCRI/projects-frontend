@@ -303,7 +303,7 @@ export const GROUP_MODULE_ICON: Record<string, IconImageChoice> = {
 
 export type GroupsModulesKeys = PeopleGroupModulesKeys | StructureModulesKeys
 
-export const GROUP_MODULE_TITLE: { [key: string]: string } = {
+export const GROUP_MODULE_TITLE = {
   featured_projects: 'group.projects',
   members: 'structure.title.members',
   membersTab: 'structure.title.members-tab',
@@ -341,8 +341,8 @@ export const GROUP_MODULE_TITLE: { [key: string]: string } = {
   teamTab: 'structure.title.team-tab',
   awards: 'structure.title.awards',
   awardsTab: 'structure.title.awards-tab',
-  teaching: 'structure.title.teaching',
-  teachingTab: 'structure.title.teaching-tab',
+  teachings: 'structure.title.teaching',
+  teachingsTab: 'structure.title.teaching-tab',
   trade: 'structure.title.trade',
   tradeTab: 'structure.title.trade-tab',
   researchAreas: 'structure.title.research-areas',
