@@ -29,6 +29,7 @@ import {
   buildPaginationQuery,
   buildQuery,
   domainMapPreview,
+  mapResultsWithHint,
   PAGINATION_INPUT,
 } from './utils'
 import type { McpServer } from '@modelcontextprotocol/server'
@@ -44,6 +45,15 @@ export const FETCH_RESEARCHER_ID =
 
 const FETCH_DOCUMENT_ID =
   'If you dont have the id of the document, get it from the "id" key of the results of the researcher-documents or group-documents tools. Note that contributor ids of documents are researcher ids, not user ids.'
+
+const EMPTY_RESEARCHER_HINT =
+  'No result found. Check that researcherId is the "researcher.id" of the user (not the user id) and that the filters are not too restrictive.'
+
+const EMPTY_DOCUMENT_HINT =
+  'No result found. Check that documentId is the "id" of a document returned by the researcher-documents or group-documents tools.'
+
+const EMPTY_GROUP_DOCUMENTS_HINT =
+  'No documents found. Check that idOrSlug is a people group with researchers and that the year filter is not too restrictive.'
 
 const DOCUMENT_TYPE = z
   .enum(['publications', 'conferences'])
@@ -156,7 +166,9 @@ export default (server: McpServer) => {
       getUserResearchDocument(orgCode, researcherId, documentType, {
         ...mcpOptions(ctx),
         query: buildQuery({ ...args, modules: 'none' }),
-      }).then((response) => response.results.map(mapResearchDocument))
+      }).then((response) =>
+        mapResultsWithHint(response, mapResearchDocument, EMPTY_RESEARCHER_HINT)
+      )
     )
   )
 
@@ -191,7 +203,9 @@ export default (server: McpServer) => {
       getGroupResearchDocument(orgCode, idOrSlug, documentType, {
         ...mcpOptions(ctx),
         query: buildQuery({ ...args, modules: 'none' }),
-      }).then((response) => response.results.map(mapResearchDocument))
+      }).then((response) =>
+        mapResultsWithHint(response, mapResearchDocument, EMPTY_GROUP_DOCUMENTS_HINT)
+      )
     )
   )
 
@@ -221,7 +235,7 @@ export default (server: McpServer) => {
       getResearchDocumentSimilars(orgCode, documentId, {
         ...mcpOptions(ctx),
         query: buildPaginationQuery(args),
-      }).then((response) => response.results.map(mapResearchDocument))
+      }).then((response) => mapResultsWithHint(response, mapResearchDocument, EMPTY_DOCUMENT_HINT))
     )
   )
 
@@ -236,7 +250,7 @@ export default (server: McpServer) => {
       getResearchDocumentCitations(orgCode, documentId, {
         ...mcpOptions(ctx),
         query: buildPaginationQuery(args),
-      }).then((response) => response.results.map(mapJournalCitation))
+      }).then((response) => mapResultsWithHint(response, mapJournalCitation, EMPTY_DOCUMENT_HINT))
     )
   )
 
@@ -253,7 +267,7 @@ export default (server: McpServer) => {
       getResearcherAffiliated(orgCode, researcherId, {
         ...mcpOptions(ctx),
         query: PAGINATION_QUERY_CAST(buildPaginationQuery(args)),
-      }).then((response) => response.results.map(mapResearcher))
+      }).then((response) => mapResultsWithHint(response, mapResearcher, EMPTY_RESEARCHER_HINT))
     )
   )
 
@@ -268,7 +282,7 @@ export default (server: McpServer) => {
       getResearcherSimilars(orgCode, researcherId, {
         ...mcpOptions(ctx),
         query: PAGINATION_QUERY_CAST(buildPaginationQuery(args)),
-      }).then((response) => response.results.map(mapResearcher))
+      }).then((response) => mapResultsWithHint(response, mapResearcher, EMPTY_RESEARCHER_HINT))
     )
   )
 
@@ -283,7 +297,7 @@ export default (server: McpServer) => {
       getResearcherCitations(orgCode, researcherId, {
         ...mcpOptions(ctx),
         query: PAGINATION_QUERY_CAST(buildPaginationQuery(args)),
-      }).then((response) => response.results.map(mapJournalCitation))
+      }).then((response) => mapResultsWithHint(response, mapJournalCitation, EMPTY_RESEARCHER_HINT))
     )
   )
 
@@ -302,7 +316,9 @@ export default (server: McpServer) => {
       getResearcherStructures(orgCode, researcherId, {
         ...mcpOptions(ctx),
         query: buildQuery(args),
-      }).then((response) => response.results.map(mapResearcherStructure))
+      }).then((response) =>
+        mapResultsWithHint(response, mapResearcherStructure, EMPTY_RESEARCHER_HINT)
+      )
     )
   )
 
@@ -324,7 +340,7 @@ export default (server: McpServer) => {
       getResearcherAwards(orgCode, researcherId, {
         ...mcpOptions(ctx),
         query: buildQuery(args),
-      }).then((response) => response.results.map(mapAward))
+      }).then((response) => mapResultsWithHint(response, mapAward, EMPTY_RESEARCHER_HINT))
     )
   )
 
@@ -344,7 +360,7 @@ export default (server: McpServer) => {
       getResearcherPatents(orgCode, researcherId, {
         ...mcpOptions(ctx),
         query: buildQuery(args),
-      }).then((response) => response.results.map(mapPatent))
+      }).then((response) => mapResultsWithHint(response, mapPatent, EMPTY_RESEARCHER_HINT))
     )
   )
 
@@ -365,7 +381,7 @@ export default (server: McpServer) => {
       getResearcherFundings(orgCode, researcherId, {
         ...mcpOptions(ctx),
         query: buildQuery(args),
-      }).then((response) => response.results.map(mapFunding))
+      }).then((response) => mapResultsWithHint(response, mapFunding, EMPTY_RESEARCHER_HINT))
     )
   )
 
@@ -385,7 +401,7 @@ export default (server: McpServer) => {
       getResearcherTeachings(orgCode, researcherId, {
         ...mcpOptions(ctx),
         query: buildQuery(args),
-      }).then((response) => response.results.map(mapTeaching))
+      }).then((response) => mapResultsWithHint(response, mapTeaching, EMPTY_RESEARCHER_HINT))
     )
   )
 }

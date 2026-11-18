@@ -8,7 +8,13 @@ import {
   getStructureResearchers,
   getStructureCitations,
 } from 'shared-projects-frontend/apis'
-import { buildPaginationQuery, buildQuery, domainMapPreview, PAGINATION_INPUT } from './utils'
+import {
+  buildPaginationQuery,
+  buildQuery,
+  domainMapPreview,
+  mapResultsWithHint,
+  PAGINATION_INPUT,
+} from './utils'
 import type { Structure, StructureResearcher } from 'shared-projects-frontend/models'
 import type { McpServer } from '@modelcontextprotocol/server'
 import { mcpOptions, orgCode, resultFromTool } from './base'
@@ -18,6 +24,12 @@ import { z } from 'zod'
 
 export const FETCH_STRUCTURE_ID =
   'The structure id is NOT the group id. It is the "structure.id" key of the people group payload returned by the people-group-data tool (use the search tool first to find the group slug or id if needed), or the "id" of a result of the structure-list tool (search it by name or acronym). The "structure" key is missing/null for regular groups: in that case there is no structure data and this tool must not be called.'
+
+const EMPTY_STRUCTURE_HINT =
+  'No result found. Check that structureId is the "structure.id" of the people group (not the group id) and that the filters are not too restrictive.'
+
+const EMPTY_STRUCTURE_LIST_HINT =
+  'No structure found. The name, acronym, type, mission or researcher filters may be too restrictive; try fewer or broader filters.'
 
 const STRUCTURE_ID = z
   .number()
@@ -86,7 +98,9 @@ export default (server: McpServer) => {
       getAllStructures(orgCode, {
         ...mcpOptions(ctx),
         query: buildQuery({ ...args, modules: 'none' }),
-      }).then((response) => response.results.map(mapStructurePreview))
+      }).then((response) =>
+        mapResultsWithHint(response, mapStructurePreview, EMPTY_STRUCTURE_LIST_HINT)
+      )
     )
   )
 
@@ -116,7 +130,7 @@ export default (server: McpServer) => {
       getStructureChildren(orgCode, structureId, {
         ...mcpOptions(ctx),
         query: buildQuery({ ...args, modules: 'none' }),
-      }).then((response) => response.results.map(mapStructurePreview))
+      }).then((response) => mapResultsWithHint(response, mapStructurePreview, EMPTY_STRUCTURE_HINT))
     )
   )
 
@@ -131,7 +145,7 @@ export default (server: McpServer) => {
       getStructureSupervisingStructures(orgCode, structureId, {
         ...mcpOptions(ctx),
         query: buildQuery({ ...args, modules: 'none' }),
-      }).then((response) => response.results.map(mapStructurePreview))
+      }).then((response) => mapResultsWithHint(response, mapStructurePreview, EMPTY_STRUCTURE_HINT))
     )
   )
 
@@ -146,7 +160,7 @@ export default (server: McpServer) => {
       getStructureDomains(orgCode, structureId, {
         ...mcpOptions(ctx),
         query: buildPaginationQuery(args),
-      }).then((response) => response.results.map(domainMapPreview))
+      }).then((response) => mapResultsWithHint(response, domainMapPreview, EMPTY_STRUCTURE_HINT))
     )
   )
 
@@ -161,7 +175,7 @@ export default (server: McpServer) => {
       getStructureCollaborations(orgCode, structureId, {
         ...mcpOptions(ctx),
         query: buildPaginationQuery(args),
-      }).then((response) => response.results)
+      }).then((response) => mapResultsWithHint(response, (item) => item, EMPTY_STRUCTURE_HINT))
     )
   )
 
@@ -181,7 +195,9 @@ export default (server: McpServer) => {
       getStructureResearchers(orgCode, structureId, {
         ...mcpOptions(ctx),
         query: buildQuery({ ...args, modules: 'none' }),
-      }).then((response) => response.results.map(mapStructureResearcher))
+      }).then((response) =>
+        mapResultsWithHint(response, mapStructureResearcher, EMPTY_STRUCTURE_HINT)
+      )
     )
   )
 
@@ -201,13 +217,17 @@ export default (server: McpServer) => {
         ...mcpOptions(ctx),
         query: buildQuery(args),
       }).then((response) =>
-        response.results.map((citation) => ({
-          item_type: 'document_journal',
-          ...pick(citation, ['id', 'pages', 'volume', 'issue']),
-          journal: citation.journal && pick(citation.journal, ['id', 'title', 'acronym']),
-          document:
-            citation.document && pick(citation.document, ['id', 'title', 'publication_date']),
-        }))
+        mapResultsWithHint(
+          response,
+          (citation) => ({
+            item_type: 'document_journal',
+            ...pick(citation, ['id', 'pages', 'volume', 'issue']),
+            journal: citation.journal && pick(citation.journal, ['id', 'title', 'acronym']),
+            document:
+              citation.document && pick(citation.document, ['id', 'title', 'publication_date']),
+          }),
+          EMPTY_STRUCTURE_HINT
+        )
       )
     )
   )
