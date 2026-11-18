@@ -98,7 +98,10 @@ export default (server: McpServer) => {
       inputSchema: z.object({ structureId: STRUCTURE_ID }),
     },
     resultFromTool(({ structureId }, ctx) =>
-      getStructure(orgCode, structureId, mcpOptions(ctx)).then(mapStructurePreview)
+      getStructure(orgCode, structureId, {
+        ...mcpOptions(ctx),
+        query: { modules: 'all' },
+      }).then(mapStructurePreview)
     )
   )
 
