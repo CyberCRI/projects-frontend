@@ -6,6 +6,7 @@ import { onResize } from '~/composables/onResize'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import CategoryFollowIcon from '~/components/category/CategoryFollowIcon.vue'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import NothingHere from '~/components/base/NothingHere.vue'
 import { resetScroll } from '~/composables/useScrollToTab'
 
 const { t } = useNuxtI18n()
@@ -164,6 +165,7 @@ const search = ref('')
       </ClientOnly>
     </div>
   </div>
+  <NothingHere v-else />
 </template>
 
 <style lang="scss" scoped>

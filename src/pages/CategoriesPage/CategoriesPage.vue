@@ -41,10 +41,16 @@ const hasSearch = computed(() => {
     )
   )
 })
+
+watchEffect(() => {
+  if (projectCategoriesStore.all?.length === 0) {
+    forceSearch.value = true
+  }
+})
 </script>
 
 <template>
-  <div v-if="categories.length > 0" class="categories-layout page-top">
+  <div class="categories-layout page-top">
     <div class="page-section-extra-wide">
       <h1 class="page-title">
         {{ $t('projects') }}
@@ -97,7 +103,6 @@ const hasSearch = computed(() => {
       </div>
     </template>
   </div>
-  <NothingHere v-else />
 </template>
 
 <style lang="scss" scoped>
