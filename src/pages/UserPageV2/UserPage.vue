@@ -34,6 +34,9 @@ const {
   isLoading,
 } = getUser(organizationCode, userIdOrSlug, {
   default: userSkeleton,
+  query: {
+    modules: 'all',
+  },
 })
 
 const userFullName = useUserFullName(user)

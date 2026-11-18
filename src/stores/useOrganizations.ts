@@ -69,19 +69,7 @@ const useOrganizationsStore = defineStore('organizations', () => {
     // foo
     const organization = await getOrganizationByCode(code, {
       query: {
-        modules: [
-          'projects',
-          'groups',
-          'announcements',
-          'events',
-          'news',
-          'instructions',
-          'structures',
-          'users',
-          'researchers',
-          'files',
-          'categories',
-        ],
+        modules: 'all',
       },
     })
     // TODO: temp fix while API is not setup
@@ -111,19 +99,7 @@ const useOrganizationsStore = defineStore('organizations', () => {
   async function updateCurrentOrganization(organization: OrganizationPatchInput | FormData) {
     const result = await patchOrganization(current.value.code, organization, {
       query: {
-        modules: [
-          'projects',
-          'groups',
-          'announcements',
-          'events',
-          'news',
-          'instructions',
-          'structures',
-          'users',
-          'researchers',
-          'files',
-          'categories',
-        ],
+        modules: 'all',
       },
     })
     const currentOrganization = {

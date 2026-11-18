@@ -73,7 +73,16 @@ const route = useRoute()
 const { t } = useNuxtI18n()
 const groupIdOrSlug = computed(() => route.params.groupIdOrSlug.toString())
 
-const { data: group, isLoading, status, error } = getGroup(organizationCode, groupIdOrSlug)
+const {
+  data: group,
+  isLoading,
+  status,
+  error,
+} = getGroup(organizationCode, groupIdOrSlug, {
+  query: {
+    modules: 'all',
+  },
+})
 
 const { canEditGroup } = usePermissionGroup(computed(() => group.value?.id))
 

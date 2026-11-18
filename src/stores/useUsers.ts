@@ -231,7 +231,11 @@ const useUsersStore = defineStore('users', () => {
     // id is keycloak_id OR django user id OR slug
     try {
       // TODO: except for permissions, useless props that are on userFromApi anyway (to check)
-      const user = await _getUser(organizatonCode, id)
+      const user = await _getUser(organizatonCode, id, {
+        query: {
+          modules: 'all',
+        },
+      })
       forceSetUser(user)
       return user
     } catch (err) {
