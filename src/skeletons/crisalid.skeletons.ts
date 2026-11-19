@@ -126,6 +126,7 @@ export const awardSkeleton = (def?: Partial<Award>): Award => ({
   name: 'name',
   description: 'Ipsum nostrud offciia dolor esse execitation mollit',
   researchers: [],
+  contributors: [],
   ...(def || {}),
 })
 
@@ -136,6 +137,12 @@ export const researcherAwardSkeleton = (def?: Partial<ResearcherAward>): Researc
   link: 'http://dev.local',
   ...(def || {}),
 })
+
+export const structureAwardSkeleton = (): Award => {
+  return awardSkeleton({
+    contributors: [researcherAwardSkeleton({ award: null, researcher: researcherSkeleton() })],
+  })
+}
 
 export const patentSkeleton = (def?: Partial<Patent>): Patent => ({
   date: new Date().toISOString(),

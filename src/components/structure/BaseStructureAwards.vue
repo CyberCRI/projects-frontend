@@ -18,7 +18,7 @@
 import AwardContributor from '~/components/crisalid/modules/AwardContributor.vue'
 import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
-import { researcherAwardSkeleton } from '~/skeletons/crisalid.skeletons'
+import { structureAwardSkeleton } from '~/skeletons/crisalid.skeletons'
 import { getStructureAwards } from '~/api/v2/crisalid.service'
 
 const props = withDefaults(
@@ -41,6 +41,6 @@ const {
   paginationConfig: {
     limit: props.limit,
   },
-  default: () => factoryPagination(researcherAwardSkeleton, limitSkeletons.value),
+  default: () => factoryPagination(structureAwardSkeleton, limitSkeletons.value),
 })
 </script>
