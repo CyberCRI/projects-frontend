@@ -40,11 +40,23 @@ export const resultFromTool = <Args, Output>(
   callback: (args: Args, ctx: ServerContext) => Output | Promise<Output>
 ) => {
   return async (args: Args, ctx: ServerContext): Promise<CallToolResult> => {
-    let output: Output | null = null
+    let output: Output
     try {
       output = await callback(args, ctx)
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching search results:', error)
+      // surface the failure instead of returning "null", which looks like an empty result
+      const status = error?.statusCode ?? error?.status ?? error?.response?.status
+      const detail = error?.statusMessage ?? error?.message ?? 'Unknown error'
+      return {
+        isError: true,
+        content: [
+          {
+            type: 'text',
+            text: `Tool call failed${status ? ` (HTTP ${status})` : ''}: ${detail}`,
+          },
+        ],
+      }
     }
 
     return {
