@@ -23,7 +23,7 @@ watch(tagSearchIsOpened, (value) => {
   }
 })
 const organizationSkills = computed(() => {
-  return organizationsStore.current.default_skills_tags
+  return organizationsStore.current?.default_skills_tags
 })
 
 const saveOrganizationTags = async () => {

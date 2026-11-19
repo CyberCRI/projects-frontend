@@ -1,13 +1,14 @@
 import addLinkedProjectSectionFactory from '~/composables/project-pdf-components/addLinkedProjectSectionFactory'
-import type { TranslatedProject } from 'shared-projects-frontend/models'
+import type { TranslatedProject, TranslatedProjectTab } from 'shared-projects-frontend/models'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
 import { getLinkedProject } from 'shared-projects-frontend/apis'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
 
-export default async function addPageLinkedProjectsFactory(project: TranslatedProject) {
-  const { t } = useNuxtI18n()
-
+export default async function addPageLinkedProjectsFactory(
+  project: TranslatedProject,
+  tab: TranslatedProjectTab
+) {
   const { translatedProjectLinkeds } = useAutoTranslate()
 
   const linkedProjects = unref(
@@ -21,7 +22,7 @@ export default async function addPageLinkedProjectsFactory(project: TranslatedPr
     this.addContainer(Page)
       .addContainer(PageTitle)
       .add(function (this: PageTitle) {
-        this.content.push(t('project.linked-projects'))
+        this.content.push(tab.$t.title)
       })
       .render()
       .add(addLinkedProjectSection)

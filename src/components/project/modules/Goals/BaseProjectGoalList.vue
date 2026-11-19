@@ -161,9 +161,13 @@ const onDeleteConfirm = () => {
 }
 
 const onUpdateSdgs = (sdgs: number[]) => {
-  patchProject(props.project.id, {
-    sdgs,
-  })
+  patchProject(
+    props.project.id,
+    {
+      sdgs,
+    },
+    { query: { modules: 'none' } }
+  )
     .then(() => {
       toaster.pushSuccess(t('toasts.sdgs-update.success'))
       fullRefresh()

@@ -226,7 +226,12 @@
       "agents": "Agenten",
       "conversations": "Gespräche",
       "checkpoints": "Checkpoints",
-      "side-assistant": "Nebenassistent"
+      "side-assistant": "Nebenassistent",
+      "assistants": "Assistenten",
+      "people": "Personen",
+      "projects": "Projekte",
+      "organization": "Organisation",
+      "agent-mcp": "MCP"
     },
     "page-title": "Admin",
     "portal": {
@@ -486,6 +491,7 @@
     "add-comment": "Fügen Sie Ihren Kommentar hinzu!",
     "comment-verb": "Kommentare",
     "comments": "Kommentare",
+    "temp-deactivated-notice": "Neue Kommentare sind vorübergehend deaktiviert. Sie sind bald wieder verfügbar!",
     "deleted": "Kommentar gelöscht",
     "discard-comment": "Kommentieren?",
     "discard-changes": "Änderungen deaktivieren?",
@@ -810,7 +816,6 @@
     }
   },
   "drawer": {
-    "clear": "Alle ausgewählten löschen",
     "select-all": "Alles auswählen",
     "member": {
       "add": "Mitglied hinzufügen | Mitglieder hinzufügen",
@@ -826,7 +831,8 @@
       "add": "Projekt hinzufügen | Projekte hinzufügen",
       "edit": "Projekt bearbeiten | Projekte bearbeiten",
       "delete": "Projekt löschen | Projekte löschen"
-    }
+    },
+    "clear": "Ausgewählt | Alle ausgewählten löschen"
   },
   "faq": {
     "delete-confirm-content": "Sind Sie sicher, dass Sie das für Ihr Portal personalisierte Help Tab löschen möchten. Alle Inhalte werden gelöscht.",
@@ -890,7 +896,8 @@
     },
     "blog": {
       "title": "Das Titelfeld ist erforderlich",
-      "description": "Das Beschreibungsfeld ist erforderlich"
+      "description": "Das Beschreibungsfeld ist erforderlich",
+      "created_at": "Das Datumsfeld ist erforderlich"
     },
     "resources": {
       "title": "Das Titelfeld ist erforderlich",
@@ -917,7 +924,9 @@
     "quit-without-saving-title": "Nicht zu retten?",
     "recaptcha": {
       "required": "Recaptcha ist erforderlich."
-    }
+    },
+    "invalid-phone": "Invalide Telefonnummer",
+    "is-unmodified": "Das Formular wird nicht geändert"
   },
   "footer": {
     "contact": "Kontaktieren Sie uns",
@@ -1331,7 +1340,8 @@
         },
         "long-bio": {
           "label": "Lange bio",
-          "placeholder": "Präsentieren Sie sich professionell. Präsentieren Sie Ihren Karriereweg und Ihre aktuelle Besetzung."
+          "placeholder": "Präsentieren Sie sich professionell. Präsentieren Sie Ihren Karriereweg und Ihre aktuelle Besetzung.",
+          "required": "Dieses Feld ist erforderlich"
         },
         "personal-bio": {
           "label": "Persönliches Bio",
@@ -1377,9 +1387,9 @@
         "already-added": "(bereits hinzugefügt)",
         "skills": {
           "nothing-yet": "Sie haben noch keine Fähigkeiten hinzugefügt.",
-          "add-success": "Skill '{name}' hinzugefügt.",
-          "edit-success": "Skill '{name}' bearbeitet.",
-          "delete-success": "Die Skill '{name}' entfernt.",
+          "add-success": "Skill hinzugefügt.",
+          "edit-success": "Skill bearbeitet.",
+          "delete-success": "Die Skill entfernt.",
           "add": "Fügen Sie professionelle Fähigkeiten",
           "add-item": "Fügen Sie eine Fähigkeit hinzu",
           "edit-levels": "Ebenen bearbeiten",
@@ -1392,13 +1402,16 @@
             "notice-levels": "Geben Sie Ihr Niveau der Meisterschaft.",
             "help-levels": "Mehr über Fähigkeiten Ebenen"
           },
-          "selection": "Ausgewählte Fähigkeiten"
+          "selection": "Ausgewählte Fähigkeiten",
+          "add-error": "Können nicht hinzugefügt werden.",
+          "edit-error": "Können nicht bearbeitet werden.",
+          "delete-error": "Geschicklichkeit kann nicht entfernt werden."
         },
         "hobbies": {
           "nothing-yet": "Sie haben noch keine Hobbys hinzugefügt.",
-          "add-success": "Hobby '{name}' hinzugefügt.",
-          "edit-success": "Hobby '{name}' bearbeitet.",
-          "delete-success": "Hobby '{name}' entfernt.",
+          "add-success": "Hobby hinzugefügt.",
+          "edit-success": "Hobby bearbeitet.",
+          "delete-success": "Hobby entfernt.",
           "add": "Hobbys hinzufügen",
           "add-item": "Ein Hobby hinzufügen",
           "already-added": "Hobby bereits hinzugefügt",
@@ -1411,7 +1424,10 @@
             "notice-levels": "Geben Sie Ihr Niveau der Meisterschaft.",
             "help-levels": "Mehr über die Hobbystufen"
           },
-          "selection": "Ausgewählte Hobbys"
+          "selection": "Ausgewählte Hobbys",
+          "add-error": "Hobby kann nicht hinzugefügt werden.",
+          "edit-error": "Hobby kann nicht bearbeitet werden.",
+          "delete-error": "Hobby kann nicht entfernt werden."
         },
         "mentorship": {
           "contact": {
@@ -1480,7 +1496,14 @@
             "description": "PhD-Level oder hat ein großes Projekt, oder kann Meister-Level lehren"
           }
         },
-        "nothing-yet": "Du hast noch keine Fähigkeiten hinzugefügt."
+        "nothing-yet": "Du hast noch keine Fähigkeiten hinzugefügt.",
+        "delete": "Sind Sie sicher, dass Sie diese Fähigkeit löschen möchten?",
+        "form": {
+          "level": {
+            "label": "Ebene",
+            "help": "Wählen Sie die Ebenen Ihrer Fähigkeiten"
+          }
+        }
       },
       "privacy": {
         "tab": "Datenschutz",
@@ -1518,11 +1541,11 @@
       },
       "publications": {
         "tab": "Veröffentlichungen",
-        "no-editable": "Redaktionen werden Anfang Januar 2026 verfügbar sein."
+        "no-editable": "Redaktionen werden bald verfügbar sein"
       },
       "conferences": {
         "tab": "Konferenzen",
-        "no-editable": "Editing Konferenzen werden Anfang Januar 2026 verfügbar sein"
+        "no-editable": "Editing Konferenzen werden bald verfügbar sein"
       }
     },
     "go-to-page": "Profilseite anzeigen",
@@ -2094,8 +2117,8 @@
     "placeholder-title": "Titel Vor Ort",
     "edit-category": "Kategorie bearbeiten.",
     "enable-tab": {
-      "label": "Neue Tab-Erstellung ermöglichen",
-      "help": "Ermöglicht Benutzern, neue Registerkarten in diesem Projekt zu erstellen"
+      "label": "Erlauben Sie neue Tab-Erstellung/Erstellung",
+      "help": "Ermöglicht Benutzern, innerhalb dieses Projekts Registerkarten zu erstellen/erarbeiten"
     }
   },
   "tips": {
@@ -2370,8 +2393,8 @@
       "error": "Bei der Generierung des PDF wurde ein Fehler aufgetreten. Bitte kontaktieren Sie einen Administrator."
     },
     "template-update": {
-      "success": "Template wurde erfolgreich aktualisiert",
-      "error": "Fehler beim Template-Update"
+      "error": "Fehler beim Template-Update",
+      "success": "Template wurde erfolgreich aktualisiert, alle Projekte verknüpft werden bald aktualisiert."
     },
     "template-create": {
       "success": "Template wurde erfolgreich erstellt",
@@ -2489,7 +2512,8 @@
       "access_request": "Antwort auf {access_request_nb} anhängige Zugangsanfrage(n)!",
       "pending_access_requests": "Antwort auf {requests_count} anhängige Zugangsanfrage(n)!"
     },
-    "empty": "Sie haben keine Benachrichtigungen"
+    "empty": "Sie haben keine Benachrichtigungen",
+    "error": "Ein Fehler trat beim Speichern von Benachrichtigungen Einstellungen auf."
   },
   "recommendations": {
     "empty": "Sie haben keine Empfehlungen",
@@ -2803,7 +2827,7 @@
   },
   "pdf": {
     "blog-entries-limited-warning": "Nur die ersten {max} Blogeinträge sind im PDF-Export enthalten (von {total} insgesamt).",
-    "download-pdf": "PDF",
+    "download-pdf": "Als PDF herunterladen",
     "generated-on": "Erstellt am {date}",
     "confirm": "Möchten Sie pdf für diesen {type} generieren?",
     "choices": "Wählen Sie die Elemente aus, die Sie dem PDF hinzufügen möchten."
@@ -3257,13 +3281,39 @@
     "unfollow": "Unfollow"
   },
   "role": {
-    "owners": {
-      "label": "Herausgeber | Herausgeber",
-      "help": "Hat alle Bearbeitungsrechte für diese Gruppe."
+    "none": {
+      "label": "Aucun",
+      "help": "Benutzer kein Recht.",
+      "notice": "Kann nur öffentliche Projekte sehen, aber Kommentare hinterlassen."
+    },
+    "viewers": {
+      "label": "Blick | Sichter",
+      "help": "Viewer: Er hat keine Bearbeitungsrechte.",
+      "notice": "Kann Projekte mit öffentlicher Sichtbarkeit oder Portal-Sichtbarkeit sehen, aber keine neuen erstellen."
+    },
+    "users": {
+      "label": "Benutzer | Benutzer",
+      "help": "Benutzer: Ein Benutzer ist Teil Ihrer Community. Sie können Projekte erstellen, ihre Projekte bearbeiten und Kommentare zu jedem Projekt schreiben. Sie sehen ein privates Projekt, wenn sie Teil des Teams dieser Projekte sind, sehen alle Projekte mit der Gemeinschaftssicht und alle öffentlichen Projekte.",
+      "notice": "Kann alle Projekte mit der Sichtbarkeit „öffentlich“ oder „Portal“ sehen und neue Projekte erstellen."
     },
     "reviewers": {
       "label": "Rückblick | Bewertungen",
-      "help": "Wenn das Projekt als \"ready for review\" gekennzeichnet wurde, kann der Reviewer Feedback geben und ein Projekt sperren, um weitere Bearbeitungen im Projekt zu verhindern. Ein Reviewer hat auch Bearbeitungsrechte."
+      "help": "Wenn das Projekt als \"ready for review\" gekennzeichnet wurde, kann der Reviewer Feedback geben und ein Projekt sperren, um weitere Bearbeitungen im Projekt zu verhindern. Ein Reviewer hat auch Bearbeitungsrechte.",
+      "notice": "Kann Projekte bearbeiten, für die er als Gutachter benannt wurde, und eine Bewertung verfassen."
+    },
+    "facilitators": {
+      "label": "Fazit | Fazit",
+      "help": "Fazit: Diese Rolle ist für Lehrer oder Tutoren: Sie sehen alle privaten Projekte im Portal und können sie bearbeiten. Sie haben auch alle Rechte der Nutzer.",
+      "notice": "Kann alle Projekte einsehen und bearbeiten, hat jedoch keinen Zugriff auf Verwaltungsfunktionen."
+    },
+    "admins": {
+      "label": "Admin | Administratoren",
+      "help": "Org admin: Diese Rolle ermöglicht es, Ihr Portal zu konfigurieren und Benutzer in Ihrem Portal zu verwalten. Org Admins haben Zugriff auf das Admin-Menü des Portals, um das Portal einzurichten und seine Benutzer zu verwalten. Sie haben auch alle Rechte der Facilitatoren.",
+      "notice": "Kann jedes Projekt einsehen und bearbeiten sowie Verwaltungsfunktionen nutzen."
+    },
+    "owners": {
+      "label": "Herausgeber | Herausgeber",
+      "help": "Hat alle Bearbeitungsrechte für diese Gruppe."
     },
     "members": {
       "label": "Teilnehmer | Teilnehmer",
@@ -3285,18 +3335,6 @@
       "label": "Teilnehmergruppe | Teilnehmergruppe",
       "help": "Erscheint als Gruppenmitglied. Ihre Projekte erscheinen unter den Projekten der Gruppe."
     },
-    "facilitators": {
-      "label": "Fazit | Fazit",
-      "help": "Fazit: Diese Rolle ist für Lehrer oder Tutoren: Sie sehen alle privaten Projekte im Portal und können sie bearbeiten. Sie haben auch alle Rechte der Nutzer."
-    },
-    "admins": {
-      "label": "Admin Gruppe | Admins Gruppe",
-      "help": "Org admin: Diese Rolle ermöglicht es, Ihr Portal zu konfigurieren und Benutzer in Ihrem Portal zu verwalten. Org Admins haben Zugriff auf das Admin-Menü des Portals, um das Portal einzurichten und seine Benutzer zu verwalten. Sie haben auch alle Rechte der Facilitatoren."
-    },
-    "users": {
-      "label": "Benutzer | Benutzer",
-      "help": "Benutzer: Ein Benutzer ist Teil Ihrer Community. Sie können Projekte erstellen, ihre Projekte bearbeiten und Kommentare zu jedem Projekt schreiben. Sie sehen ein privates Projekt, wenn sie Teil des Teams dieser Projekte sind, sehen alle Projekte mit der Gemeinschaftssicht und alle öffentlichen Projekte."
-    },
     "managers": {
       "label": "Verlag | Verlag",
       "help": ""
@@ -3304,15 +3342,7 @@
     "label": "Laufsohle | Roggen",
     "edit": "Modifier les rôles",
     "select": "Wählen Sie die Rechte",
-    "help": "Informationen zu Rollen.",
-    "viewers": {
-      "label": "Blick | Sichter",
-      "help": "Viewer: Er hat keine Bearbeitungsrechte."
-    },
-    "none": {
-      "label": "Aucun",
-      "help": "Benutzer kein Recht."
-    }
+    "help": "Informationen zu Rollen."
   },
   "prompts": {
     "create-prompt": "Prompt erstellen",
@@ -3430,7 +3460,8 @@
       "label": "Register | Tabs",
       "not-enabled": {
         "admin": "Die Tab-Erstellung ist nicht standardmäßig aktiviert. Als Administrator haben Sie jedoch die erforderlichen Berechtigungen, um auf diese Funktion zuzugreifen und neue Registerkarten zu erstellen."
-      }
+      },
+      "settings": "Tab Einstellungen"
     },
     "item": {
       "delete-confirm": "Sind Sie sicher, dass Sie diesen Artikel löschen möchten.",
@@ -3477,6 +3508,11 @@
       "title-content": {
         "label": "Vollständiger Titel",
         "required": "Der Titel ist erforderlich."
+      },
+      "show_tab": {
+        "label": "Tab im Projekt anzeigen.",
+        "hide": "Hirse",
+        "show": "Show"
       }
     },
     "toasts": {
@@ -3503,6 +3539,14 @@
       "item-create": {
         "success": "Der Artikel wurde erfolgreich erstellt.",
         "error": "Versäumt, den Artikel zu erstellen. Bitte versuchen Sie es noch mal."
+      },
+      "tab-visibility": {
+        "success": "Die Registerkarte änderte die Sichtbarkeit erfolgreich.",
+        "error": "Nicht zu ändern Tab Sichtbarkeit. Bitte versuchen Sie es noch mal."
+      },
+      "tab-order": {
+        "success": "Die Registerkarte wurde erfolgreich bestellt.",
+        "error": "Die Registerkarte wurde nicht bestellt. Bitte versuchen Sie es noch mal."
       }
     }
   }

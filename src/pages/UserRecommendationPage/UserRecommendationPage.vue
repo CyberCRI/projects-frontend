@@ -30,9 +30,9 @@ useLpiHead2({
           :key="user.id"
           :user="user"
           :to-link="{
-            name: 'ProfileOtherUser',
+            name: 'ProfileUser',
             params: {
-              userId: user.slug || user.id,
+              userIdOrSlug: user.slug || user.id,
             },
           }"
         />

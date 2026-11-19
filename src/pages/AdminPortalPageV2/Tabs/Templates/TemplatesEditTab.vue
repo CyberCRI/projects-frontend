@@ -3,11 +3,13 @@
     <FetchLoader :status="status">
       <FormPanel
         :asyncing="asyncing"
-        :confirm-action-disabled="!stateModals.isValid || stateModals.isFormEqual"
+        :confirm-action-disabled="!stateModals.isValid"
+        :is-form-equal="stateModals.isFormEqual"
         @confirm="submit"
         @close="redirect"
       >
         <TemplateForm
+          ref="refForm"
           v-model="form"
           :template="templateRaw"
           :save-image-callback="saveImageTemplate"

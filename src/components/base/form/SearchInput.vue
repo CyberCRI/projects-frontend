@@ -72,7 +72,7 @@ watch(
   () => (hideSuggestions.value = false)
 )
 
-const deleteValue = () => emit('delete-query')
+const deleteValue = () => (tempModel.value = '')
 const onEnter = () => emit('enter')
 
 const acceptSuggestion = (suggestion: string) => {

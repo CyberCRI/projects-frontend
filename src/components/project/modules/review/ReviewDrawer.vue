@@ -98,7 +98,7 @@ const onSuccess = (body: ReviewForm, review: ReviewModel) => {
     projectForm.life_status = 'completed'
   }
 
-  patchProject(props.project.id, projectForm).then(() => {
+  patchProject(props.project.id, projectForm, { query: { modules: 'none' } }).then(() => {
     emit('reload', review)
     close()
   })

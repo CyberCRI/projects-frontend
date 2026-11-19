@@ -18,7 +18,7 @@ describe('TemplatesTab.vue', () => {
     )
     const wrapper = await lpiMountSuspended(TemplatesTab)
     await flushPromises()
-    expect(wrapper.findAll('li').length).toEqual(2)
+    expect(wrapper.findAll('.list-templates li').length).toEqual(2)
   })
   it('DeleteTemplate', async () => {
     const organizationCode = useOrganizationCode()

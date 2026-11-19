@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { ENABLE_TAB_TYPE_PDF, type PDFChoies } from '~/composables/useProjectToPdf'
 import type { TranslatedProject } from 'shared-projects-frontend/models'
-import { DEFAULT_PDF_OPTIONS } from '~/composables/useProjectToPdf'
-import { PROJECT_MODULE_TITLE } from '~/functs/constants'
+import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
+import { getAllProjectTab } from '~/api/v2/project-tabs.service'
+import { factoryPagination } from '~/skeletons/base.skeletons'
+import { sanitizeTabs } from '~/functs/tabs'
 
 const props = defineProps<{
   project: TranslatedProject
@@ -10,10 +13,35 @@ const emit = defineEmits<{
   close: []
 }>()
 
+const { t, locale } = useNuxtI18n()
 const toaster = useToaster()
-const { t } = useNuxtI18n()
 const asyncing = ref(false)
-const form = ref(structuredClone(DEFAULT_PDF_OPTIONS))
+
+const organizationCode = useOrganizationCode()
+const {
+  data: tabs,
+  isLoading,
+  status,
+} = getAllProjectTab(
+  organizationCode,
+  computed(() => props.project.id),
+  {
+    default: () => factoryPagination(projectTabSkeleton, props.project.modules.tabs),
+    uniqueKey: 'pdf',
+    paginationConfig: {
+      limit: 999,
+    },
+  }
+)
+
+const allTabs = computed(() =>
+  sanitizeTabs(tabs.value, props.project.modules, locale.value, props.project.$t.description)
+    // remove not show tab and no items availible
+    .filter((tab) => tab.show_tab && tab.modules.items > 0)
+    .filter((tab) => ENABLE_TAB_TYPE_PDF.includes(tab.type))
+)
+
+const form = ref<PDFChoies>([])
 
 // generate PDF
 const onGeneratePDF = () => {
@@ -30,38 +58,54 @@ const onGeneratePDF = () => {
     })
 }
 
-// add resources in modules (concat links/files)
-const modules = computed(() => ({
-  ...props.project.modules,
-  resources: props.project.modules.files + props.project.modules.links,
-}))
+watch(
+  () => [allTabs.value, isLoading.value],
+  () => {
+    if (!isLoading.value) {
+      const newForm: PDFChoies = []
+      allTabs.value.forEach((tab) => {
+        newForm.push({
+          visibility: true,
+          tab,
+        })
+      })
+      form.value = newForm
+      // if not new tabs is enabled, auto confirm generate pdf
+      if (newForm.length === 0) {
+        onGeneratePDF()
+      }
+    }
+  },
+  { immediate: true, deep: true }
+)
 </script>
 
 <template>
   <ConfirmModal
-    :asyncing="asyncing"
-    title="PDF"
+    :asyncing="asyncing || isLoading"
     is-small
     @cancel="$emit('close')"
     @confirm="onGeneratePDF"
   >
-    <div :class="{ 'asyncing pointer-events-none': asyncing }">
-      <h3 class="description">
-        {{ $t('pdf.choices') }}
-      </h3>
-      <ul class="list-options-pdf">
-        <template v-for="(value, name) in form">
+    <FetchLoader :status="status" skeleton only-error>
+      <div :class="{ 'asyncing pointer-events-none': asyncing }">
+        <h3 class="description skeletons-text">
+          {{ $t('pdf.choices') }}
+        </h3>
+        <ul class="list-options-pdf">
           <!-- hide choices if project a empty modules values -->
-          <li v-if="modules[name] > 0" :key="name">
-            <LpiCheckbox
-              v-model="form[name]"
-              :label="$t(PROJECT_MODULE_TITLE[name], 10)"
-              as-button
-            />
-          </li>
-        </template>
-      </ul>
-    </div>
+          <TemplateFormSection
+            v-for="(info, id) in form"
+            :key="id"
+            v-model:visibility="info.visibility"
+            :icon="info.tab.icon"
+            :title="info.tab.$t.title"
+            can-visibility
+            :content-expandable="false"
+          />
+        </ul>
+      </div>
+    </FetchLoader>
   </ConfirmModal>
 </template>
 

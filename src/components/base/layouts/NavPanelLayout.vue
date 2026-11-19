@@ -1,5 +1,5 @@
 <script setup lang="ts">
-withDefaults(
+const props = withDefaults(
   defineProps<{
     breadcrumbs?: any[]
     isNavCollapsed?: boolean
@@ -21,7 +21,21 @@ const toggleNavPanel = () => emit('toggle-nav-panel')
 
 const collapseNavPanel = () => emit('collapse-nav-panel')
 
-const { isMobile } = useViewportWidth()
+const { isDesktop } = useViewportWidth()
+
+watch(
+  () => isDesktop.value,
+  (neo) => {
+    if (neo && props.isNavCollapsed) emit('toggle-nav-panel')
+  }
+)
+
+const closePanelIfMobile = () => {
+  if (!isDesktop.value) {
+    emit('collapse-nav-panel')
+  }
+}
+onBeforeRouteUpdate(closePanelIfMobile)
 </script>
 <template>
   <div class="nav-panel-layout" :class="{ 'no-nav': isNavCollapsed }">
@@ -37,7 +51,7 @@ const { isMobile } = useViewportWidth()
         <div v-if="!isNavCollapsed" class="nav-panel">
           <div class="breadcrumbs-ctn">
             <LpiButton
-              v-if="!isMobile && !isNavCollapsed"
+              v-if="!isDesktop && !isNavCollapsed"
               btn-icon="MenuFoldLine"
               class="toggle-button nav-panel-toggle-button skeletons-background"
               secondary
@@ -50,8 +64,8 @@ const { isMobile } = useViewportWidth()
       <div class="content-panel">
         <div class="breadcrumbs-ctn">
           <LpiButton
-            v-if="isMobile || isNavCollapsed"
-            btn-icon="MenuUnfoldLine"
+            v-if="!isDesktop && isNavCollapsed"
+            :btn-icon="isNavCollapsed ? 'MenuUnfoldLine' : 'MenuFoldLine'"
             class="toggle-button nav-panel-toggle-button nav-panel-toggle-button-collapsed skeletons-background"
             secondary
             @click="toggleNavPanel"
@@ -106,6 +120,7 @@ const { isMobile } = useViewportWidth()
       position: fixed;
       z-index: 110;
       left: 1rem;
+      background-color: #fff;
     }
   }
 }

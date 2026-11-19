@@ -27,7 +27,7 @@ export const getAllProjectCategories = (
         ...config,
       }),
     {
-      translate: translateCategories,
+      translate: (data) => translateCategories(data),
       watch: onlyRefs([organizationCode]),
       ...config,
     }

@@ -22,6 +22,7 @@ import TabItemFormRaw from '~/components/tabs/TabItemFormRaw.vue'
 import { roomKeyFromParams } from 'shared-projects-frontend/lib'
 import FormPanel from '~/components/base/FormPanel.vue'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'
+import { getTemplateUUID } from '~/functs/tabs'
 import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
 
@@ -52,33 +53,23 @@ const providerParams = computed<ProviderParams>(() => ({
 const room = computed(() => roomKeyFromParams(providerParams.value))
 
 const defaultLocalForm = () => {
-  const baseForm = defaultProjectTabItemForm()
-  const newForm = {
-    ...baseForm,
+  const newForm = { ...defaultProjectTabItemForm() }
+
+  if (props.item) {
+    newForm.id = props.item.id
   }
 
+  const template = getTemplateUUID(props.tab.uuid, props.project.template)
   // find tab templates if exists
-  if (props.project.template) {
-    const templateTab = props.project.template.tabs.find((t) => t.uuid === props.tab.uuid)
-
-    if (templateTab) {
-      newForm.title = templateTab.title_item || newForm.title
-      newForm.content = getFirstTextNotEmpty([templateTab.content_item]) || newForm.content
-    }
-  }
-
-  const item = props.item
-  if (item) {
-    newForm.id = item.id
-    newForm.title = item.title || newForm.title
-    newForm.content = getFirstTextNotEmpty([item.content]) || newForm.content
-  }
+  newForm.title = props.item?.title || template.title_item || newForm.title
+  newForm.content =
+    getFirstTextNotEmpty([props.item?.content, template.content_item]) || newForm.content
 
   return newForm
 }
 
 const { t } = useNuxtI18n()
-const { stateModals, closeModals, closeAllModals, openModals } = useModals({
+const { stateModals, closeModals, closeAllModals } = useModals({
   saveSolo: false,
   saveChange: false,
 })
@@ -89,7 +80,7 @@ const close = () => {
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
-const { form, isValid, cleanedData, reset } = useProjectTabItemForm({
+const { form, isValid, cleanedData, reset, resetToInitialValue } = useProjectTabItemForm({
   default: defaultLocalForm(),
 })
 watch(
@@ -154,10 +145,6 @@ const postTabItem = (body: ProjectTabItemForm) => {
 }
 
 const save = () => {
-  if (!isValid.value) {
-    return
-  }
-
   asyncing.value = true
   const body = cleanedData.value
 
@@ -167,21 +154,14 @@ const save = () => {
     postTabItem(body)
   }
 }
-
-const checkClose = () => {
-  if (isFormEqual.value) {
-    close()
-  } else {
-    openModals('saveChange')
-  }
-}
 </script>
 
 <template>
   <FormPanel
-    :confirm-action-disabled="!isValid || isFormEqual"
+    :is-form-equal="isFormEqual"
+    :confirm-action-disabled="!isValid"
     :asyncing="asyncing"
-    @close="checkClose"
+    @close="resetToInitialValue"
     @confirm="save"
   >
     <TabItemFormRaw

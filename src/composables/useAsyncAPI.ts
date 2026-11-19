@@ -1,6 +1,7 @@
 import useLoadingFromStatus from '~/composables/useLoadingFromStatus'
 
 import type { ClientAPIOptions } from 'shared-projects-frontend/apis'
+import type { RefOrRaw } from '~/interfaces/utils'
 import { withQuery } from '~/functs/query'
 import { isNil } from 'es-toolkit'
 
@@ -23,7 +24,10 @@ export type AsyncConfig<ResDataT, DataT, Result> = Parameters<
   checkArgs?: boolean
   // force fixed key (no add query params in key)
   // like "group::55::members" (no pagination query like 'offset' / 'limit') are added
-  keyFixed?: boolean
+  keyFixed?: RefOrRaw<boolean>
+
+  // add a prefix in anyKeys
+  uniqueKey?: RefOrRaw<string>
 }
 
 export type AsyncParameters<ResDataT, DataT, Result> = [
@@ -43,6 +47,7 @@ type AsyncReturn<ResDataT, DataT, Result> = Omit<
       >['data']
     : Result
   isLoading: ComputedRef<boolean>
+  isSkeleton: ComputedRef<boolean>
   key: ComputedRef<string>
 }
 
@@ -93,8 +98,11 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   // like "organization::CRI::group::55::members" (if query is empty)
   // or "organization::CRI::group::55::members::limit=3::offset=10"
   const key = computed(() => {
-    let parentKey = unref(params[0]).toString()
-    if (params[2].keyFixed) {
+    const uniqueKey = (unref(params[2].uniqueKey) || '').toString()
+    let parentKey = `${unref(params[0])}${uniqueKey ? `+${uniqueKey}` : ''}`
+
+    const fixed = unref(params[2].keyFixed)
+    if (fixed) {
       return parentKey
     }
     withQuery(unref(params[2].query)).forEach(([key, value]) => {
@@ -102,6 +110,8 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     })
     return parentKey
   })
+
+  const isSkeleton = ref(false)
 
   const { status, data, ...res } = useAsyncData<ResDataT, unknown, DataT>(
     key,
@@ -117,10 +127,17 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
         conf.query ??= {}
       }
 
-      return params[1]({ config: conf })
+      return params[1]({ config: conf }).then((val) => {
+        isSkeleton.value = false
+        return val
+      })
     },
     {
       ...params[2],
+      default: () => {
+        isSkeleton.value = true
+        return params[2]?.default?.() ?? null
+      },
     }
   )
   const isLoading = useLoadingFromStatus(status)
@@ -134,6 +151,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     ...res,
     status,
     isLoading,
+    isSkeleton: computed(() => isLoading.value && isSkeleton.value),
     data: dataWrapped,
     key,
   }

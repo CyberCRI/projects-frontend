@@ -1,9 +1,7 @@
 <template>
   <div class="other-org-account-card">
     <CroppedApiImage
-      :alt="
-        user?.keycloack_id ? `${user.given_name} ${user.family_name} image` : `${user.name} image`
-      "
+      :alt="`${user.given_name} ${user.family_name} image`"
       class="img-container"
       :picture-data="user.profile_picture"
       picture-size="small"
@@ -49,26 +47,29 @@ const props = defineProps<{
 const isLoadingOrgRoles = ref(false)
 const orgRoles = ref([])
 const { t } = useNuxtI18n()
+const organizationCode = useOrganizationCode()
 
 const loadRoles = async () => {
   isLoadingOrgRoles.value = true
   // TODO: getOrganizations might be paginated if more than 100, we'll need to handle the case some day
-  await Promise.all([getUser(props.user.id), getOrganizations()]).then(([user, orgs]) => {
-    const orgIndex = orgs.results.reduce((acc, org) => {
-      acc['#' + org.id] = org // the # is prefixed to org id in role code
-      return acc
-    }, {})
-    orgRoles.value =
-      user?.roles
-        .filter((role) => role.match(/^organization:[^:]+:[^:]+$/))
-        .map((role) => {
-          const roleParts = role.split(':')
-          return {
-            role: roleParts[2],
-            orgName: orgIndex[roleParts[1]]?.name || t('account.another-organization'),
-          }
-        }) || []
-  })
+  await Promise.all([getUser(organizationCode, props.user.id), getOrganizations()]).then(
+    ([user, orgs]) => {
+      const orgIndex = orgs.results.reduce((acc, org) => {
+        acc['#' + org.id] = org // the # is prefixed to org id in role code
+        return acc
+      }, {})
+      orgRoles.value =
+        user?.roles
+          .filter((role) => role.match(/^organization:[^:]+:[^:]+$/))
+          .map((role) => {
+            const roleParts = role.split(':')
+            return {
+              role: roleParts[2],
+              orgName: orgIndex[roleParts[1]]?.name || t('account.another-organization'),
+            }
+          }) || []
+    }
+  )
   isLoadingOrgRoles.value = false
 }
 

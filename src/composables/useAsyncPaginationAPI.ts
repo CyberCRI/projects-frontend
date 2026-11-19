@@ -1,6 +1,7 @@
 import type { Pagination, PaginationResult, paginationConfig } from '~/composables/usePagination'
 import { usePagination } from '~/composables/usePagination'
 
+import type { RefOrRaw } from '~/interfaces/utils'
 import type { AsyncConfig } from './useAsyncAPI'
 import useAsyncAPI from './useAsyncAPI'
 import { omit } from 'es-toolkit'
@@ -12,7 +13,7 @@ type AsyncPaginationConfig<ResDataT, DataT extends PaginationResult, Result> = O
   'transform'
 > & {
   // default configuration of paginations
-  paginationConfig?: paginationConfig
+  paginationConfig?: RefOrRaw<paginationConfig>
   // method to transform data
   transform?: (data: DataT) => DataT
   translate?: (data: DataT['results']) => Result

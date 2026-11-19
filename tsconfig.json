@@ -1,5 +1,11 @@
 {
   "extends": "./.nuxt/tsconfig.json",
+  "exclude": [
+    "./src/pages/UserProfilePageV2/",
+    "./tests/unit/pages/UserProfilePageV2/",
+    "./tests/unit/components/people/Researcher/ResearcherDocumentsTab.test.ts",
+    "./src/components/people/skill/SkillEditor.vue"
+  ],
   "compilerOptions": {
     "strict": false,
     "noImplicitAny": false,

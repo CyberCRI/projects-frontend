@@ -1,10 +1,5 @@
 <template>
-  <SearchResults
-    :search="search"
-    :mode="search.section || 'global'"
-    :freeze-search="freezeSearch"
-    @pagination-changed="onPaginationChange"
-  >
+  <SearchResults class="list-container" v-bind="$attrs">
     <template #default="SearchResultsSlotProps">
       <CardList
         :is-loading="SearchResultsSlotProps.isLoading"
@@ -28,9 +23,10 @@
             :user="projectListSlotProps.item.user"
             :mode="projectListSlotProps.mode"
             :to-link="{
-              name: 'ProfileOtherUser',
+              name: 'ProfileUser',
               params: {
-                userId: projectListSlotProps.item.user.slug || projectListSlotProps.item.user.id,
+                userIdOrSlug:
+                  projectListSlotProps.item.user.slug || projectListSlotProps.item.user.id,
               },
             }"
           />
@@ -46,38 +42,12 @@ import ProjectCard from '~/components/project/ProjectCard.vue'
 import GroupCard from '~/components/group/GroupCard.vue'
 import UserCard from '~/components/people/UserCard.vue'
 import CardList from '~/components/base/CardList.vue'
-
-withDefaults(
-  defineProps<{
-    search?: any
-    freezeSearch?: boolean
-  }>(),
-  {
-    search: null,
-    freezeSearch: false,
-  }
-)
-
-const route = useRoute()
-const router = useRouter()
-
-const onPaginationChange = (pagination) => {
-  if (
-    route.query.page === pagination.currentPage ||
-    (!route.query.page && pagination.currentPage === 1)
-  )
-    return
-  router.push({
-    path: route.path,
-    query: { ...route.query, page: pagination.currentPage },
-  })
-}
 </script>
 
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 
 .list-container {
-  margin-top: variables.$space-l;
+  margin: variables.$space-l;
 }
 </style>

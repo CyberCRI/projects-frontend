@@ -32,7 +32,7 @@ export const getAnnouncements = (
         ...config,
       }),
     {
-      translate: translateAnnouncements,
+      translate: (data) => translateAnnouncements(data),
       watch: onlyRefs([organization]),
       ...config,
     }
@@ -59,7 +59,7 @@ export const getProjectAnnouncements = (
         ...config,
       }),
     {
-      translate: translateAnnouncements,
+      translate: (data) => translateAnnouncements(data),
       watch: onlyRefs([organization, projectSlugOrId]),
       ...config,
     }

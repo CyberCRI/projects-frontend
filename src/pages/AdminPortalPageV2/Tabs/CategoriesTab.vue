@@ -1,5 +1,5 @@
 <template>
-  <LayoutTab :title="$t('category.info-organize')" :notice="$t('category.info-limit')">
+  <LayoutTab :notice="pageNotices">
     <template #actions>
       <LpiButton
         btn-icon="Plus"
@@ -156,6 +156,9 @@ export default {
         disabled: false,
         ghostClass: 'category-ghost',
       }
+    },
+    pageNotices() {
+      return [this.$t('category.info-organize'), this.$t('category.info-limit')].join('<br/><br/>')
     },
   },
   watch: {

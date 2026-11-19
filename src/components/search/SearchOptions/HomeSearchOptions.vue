@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 import SearchOptionDropDown from '~/components/search/SearchOptionDropDown/SearchOptionDropDown.vue'
+import type { AllSearchSections } from '~/components/search/Filters/useSectionFilters'
 import { ALL_SECTION_KEY } from '~/components/search/Filters/useSectionFilters'
 import SearchInput from '~/components/base/form/SearchInput.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
@@ -32,17 +33,17 @@ const emit = defineEmits<{
   search: [
     {
       search: string
-      section: string
+      types: string
     },
   ]
 }>()
 const selectedQuery = ref('')
-const selectedSection = ref(ALL_SECTION_KEY)
+const selectedSection = ref<AllSearchSections>(ALL_SECTION_KEY)
 
 const search = () => {
   emit('search', {
     search: selectedQuery.value,
-    section: selectedSection.value,
+    types: selectedSection.value && selectedSection.value !== 'all' ? selectedSection.value : null,
   })
 }
 </script>
@@ -89,7 +90,7 @@ const search = () => {
   }
 
   @media (min-width: variables.$min-tablet) {
-    margin-bottom: 0;
+    margin-block: 0;
 
     &.has-sections :deep(.search-input) {
       border-top-left-radius: 0 !important;

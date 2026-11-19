@@ -23,6 +23,9 @@ const props = withDefaults(
   }
 )
 
+const runtimeConfig = useRuntimeConfig()
+const newCommentEnabled = ref(props.isPrivate || !runtimeConfig.public.appNewCommentDisabled)
+
 const limitSkeletons = computed(() => maxSkeleton(props.project.modules.comments, props.limit))
 
 const organizationCode = useOrganizationCode()
@@ -53,15 +56,21 @@ const throttlefullRefresh = throttle(() => {
 <template>
   <FetchLoader :status="status" only-error skeleton>
     <div>
-      <MakeComment
-        v-if="!preview"
-        :project="project"
-        :is-private="isPrivate"
-        @comment-posted="throttlefullRefresh"
-        @project-message-posted="throttlefullRefresh"
-        @comment-edited="throttleRefresh"
-        @project-message-edited="throttleRefresh"
-      />
+      <template v-if="!preview">
+        <MakeComment
+          v-if="newCommentEnabled"
+          :project="project"
+          :is-private="isPrivate"
+          @comment-posted="throttlefullRefresh"
+          @project-message-posted="throttlefullRefresh"
+          @comment-edited="throttleRefresh"
+          @project-message-edited="throttleRefresh"
+        />
+        <p v-else class="comment-deactivated-notice">
+          <IconImage class="icon" name="AlertOutline" />
+          {{ $t('comment.temp-deactivated-notice') }}
+        </p>
+      </template>
       <CommentItem
         v-for="comment in comments"
         :key="comment.id"
@@ -80,3 +89,22 @@ const throttlefullRefresh = throttle(() => {
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>
 </template>
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
+.comment-deactivated-notice {
+  display: flex;
+  gap: 1rem;
+  padding: 0.8rem;
+  color: variables.$yellow;
+  border: 1px solid currentcolor;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.4em;
+
+  .icon {
+    fill: currentcolor;
+    flex-basis: 1.2em;
+  }
+}
+</style>

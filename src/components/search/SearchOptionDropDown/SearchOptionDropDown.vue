@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import useSectionFilters, { ALL_SECTION_KEY } from '~/components/search/Filters/useSectionFilters'
+import type { AllSearchSections } from '~/components/search/Filters/useSectionFilters'
 import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
-const selectedSection = defineModel<string>('selectedSection', {
+const selectedSection = defineModel<AllSearchSections>('selectedSection', {
   default: ALL_SECTION_KEY,
 })
 

@@ -6,8 +6,10 @@ import type {
   ProjectTabType,
   PeopleGroupModulesKeys,
   ProjectModuleExtra,
+  UserModuleExtra,
 } from 'shared-projects-frontend/models'
 import type { IconImageChoice, IconTabImageChoice } from '~/functs/IconImage'
+import { omit, pick } from 'es-toolkit'
 
 export const RESOURCE_PROJECT_CATEGORY = [
   'inspired-by',
@@ -148,6 +150,7 @@ export const CHART_COLORS = [
   '#AE47FF',
   '#D6A2FF',
 ]
+
 // all unicode letters, marks (for diacriticals), numbers, spaces, and the following characters: - _ . '
 export const VALID_NAME_REGEX = /^[\p{Letter}\p{Mark}\p{Number} \-_.']+$/giu
 
@@ -204,17 +207,10 @@ export const DEFAULT_COLOR_TIPTAP = [
 ]
 
 // tabs
-
-export const DEFAULT_ICONS_TABS: {
-  [key in ProjectTabType]: IconTabImageChoice
-} = {
-  blog: 'NewsLine',
-  text: 'Briefcase',
-}
-
 export const PROJECT_MODULE_ICON: {
-  [key in ProjectModuleExtra]: IconImageChoice
+  [key in ProjectModuleExtra]: IconTabImageChoice
 } = {
+  description: 'Article',
   announcements: 'BullhornOutline',
   blogs: 'NewsLine',
   goals: 'TimerLine',
@@ -233,6 +229,7 @@ export const PROJECT_MODULE_ICON: {
 }
 
 export const PROJECT_MODULE_TITLE: { [key in ProjectModuleExtra]: string } = {
+  description: 'project.description',
   announcements: 'home.announcements',
   blogs: 'blog.title',
   goals: 'goal.goals',
@@ -250,6 +247,31 @@ export const PROJECT_MODULE_TITLE: { [key in ProjectModuleExtra]: string } = {
   reviews: 'project.reviews',
   messages: 'comment.private-exchange.tab',
   tabs: 'tab.tab.label',
+}
+
+export const PROJECT_TABS = omit(PROJECT_MODULE_TITLE, ['links', 'files', 'tabs', 'similars'])
+
+export const DEFAULT_PROJECT_TABS_ORDER: (keyof typeof PROJECT_TABS)[] = [
+  'description',
+  'members',
+  'groups',
+  'linked_projects',
+  'locations',
+  'goals',
+  'blogs',
+  'resources',
+  'announcements',
+  'comments',
+  'messages',
+  'reviews',
+]
+
+export const DEFAULT_ICONS_TABS: {
+  [key in ProjectTabType]: IconTabImageChoice
+} = {
+  blog: 'NewsLine',
+  text: 'Briefcase',
+  ...pick(PROJECT_MODULE_ICON, Object.keys(PROJECT_TABS) as ProjectModuleExtra[]),
 }
 
 // groups
@@ -297,3 +319,46 @@ export const LOCATION_TYPE_TITLE: { [key in LocationType]: string } = {
   news: 'location.news',
   event: 'location.event',
 }
+
+// user
+
+export const USER_MODULE_ICON: {
+  [key in UserModuleExtra]: IconImageChoice
+} = {
+  conferences: 'Article',
+  publications: 'Article',
+  reviews_projects: 'Briefcase',
+  follows_categories: 'BookmarkLine',
+  follows_projects: 'BookmarkLine',
+  notifications: 'Bell',
+  projects: 'Briefcase',
+  skills: 'VipCrownLine',
+  mentor: 'Alert',
+  mentoree: 'Alert',
+  links: 'Paperclip',
+  files: 'Globe',
+  resources: 'Globe',
+  groups: 'PeopleGroup',
+  privacy: 'Eye',
+}
+
+export const USER_MODULE_TITLE: { [key in UserModuleExtra]: string } = {
+  conferences: 'profile.conferences',
+  publications: 'profile.publications',
+  reviews_projects: 'me.projects-reviewing',
+  follows_categories: 'me.follow-category',
+  follows_projects: 'me.follow',
+  notifications: '',
+  projects: 'profile.projects',
+  skills: 'profile.skills',
+  mentor: '',
+  mentoree: '',
+  links: '',
+  files: '',
+  resources: 'resource.resources',
+  groups: 'profile.groups',
+  privacy: 'profile.edit.privacy.tab',
+}
+
+// max skill steps
+export const DEFAULT_SKILL_STEPS = 4

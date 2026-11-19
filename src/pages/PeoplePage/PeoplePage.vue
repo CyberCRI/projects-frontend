@@ -1,23 +1,14 @@
 <script setup lang="ts">
-const { searchFromQuery } = useSearch('people')
+import type { QueryFilterSearch } from 'shared-projects-frontend/models'
+
 const { t } = useNuxtI18n()
-
-const fixedSearch = computed(() => {
-  return {
-    ...searchFromQuery.value,
-    section: 'people',
-  }
-})
-
-const isNavigating = ref(false)
-onBeforeRouteLeave((to, from, next) => {
-  isNavigating.value = true
-  next()
-})
 
 useLpiHead2({
   title: computed(() => t('common.people')),
 })
+
+const query = ref<QueryFilterSearch>({})
+const search = ref('')
 </script>
 
 <template>
@@ -26,9 +17,9 @@ useLpiHead2({
       {{ $t('common.people') }}
     </h1>
     <div class="main-ctn">
-      <SearchBlock :limit="30" section="people" :freeze-search="isNavigating" />
+      <SearchBlock section="user" @on-query="query = $event" @on-search="search = $event" />
 
-      <GlobalSearchTab :search="fixedSearch" :freeze-search="isNavigating" />
+      <GlobalSearchTab :search="search" :query="query" mode="user" />
     </div>
   </div>
 </template>

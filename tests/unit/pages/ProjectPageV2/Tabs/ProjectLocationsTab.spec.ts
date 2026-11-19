@@ -6,6 +6,7 @@ import LocationFactory from '~~/tests/factories/location.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { flushPromises } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
+import { defaultTab } from '~/functs/tabs'
 
 describe('ProjectLocationsTab.vue', () => {
   it('should render component', async () => {
@@ -13,7 +14,7 @@ describe('ProjectLocationsTab.vue', () => {
 
     registerEndpoint(`project/${project.id}/location/`, () => LocationFactory.generateMany(10))
 
-    const props = { project }
+    const props = { project, tab: defaultTab('locations') }
 
     const wrapper = await lpiMountSuspended(ProjectLocationsTab, {
       props,

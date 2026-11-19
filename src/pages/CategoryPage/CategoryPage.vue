@@ -4,6 +4,7 @@ import useProjectCategories from '~/stores/useProjectCategories'
 import { onResize } from '~/composables/onResize'
 
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
+import CategoryFollowIcon from '~/components/category/CategoryFollowIcon.vue'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { resetScroll } from '~/composables/useScrollToTab'
 
@@ -11,7 +12,6 @@ const { t } = useNuxtI18n()
 const route = useRoute()
 const { canCreateProject } = usePermissionProject(null)
 const projectCategoriesStore = useProjectCategories()
-const { searchFromQuery } = useSearch('projects')
 
 if (!projectCategoriesStore.all || !projectCategoriesStore.all.length) {
   await projectCategoriesStore.getAllProjectCategories()
@@ -64,19 +64,6 @@ const categoryHierarchy = computed(() => {
   ]
 })
 
-const fixedSearch = computed(() => {
-  return {
-    ...searchFromQuery.value,
-    categories: [category.value?.id],
-    section: 'projects',
-  }
-})
-const isNavigating = ref(false)
-onBeforeRouteLeave((to, from, next) => {
-  isNavigating.value = true
-  next()
-})
-
 const bannerRatio = ref(16 / 9)
 onResize(
   () => {
@@ -95,6 +82,9 @@ watchEffect(() => {
     image: category.value?.background_image,
   })
 })
+
+const query = ref({})
+const search = ref('')
 </script>
 <template>
   <div v-if="category" id="type" :key="category.id" class="category-layout">
@@ -115,7 +105,7 @@ watchEffect(() => {
 
       <div class="banner-title-ctn">
         <div class="banner-title">
-          <CategoryFollowButton class="follow-button" :category-id="category?.id" />
+          <CategoryFollowIcon class="follow-button" :category="category" />
 
           <h1 class="category-name">
             {{ category?.$t?.name }}
@@ -125,9 +115,13 @@ watchEffect(() => {
             <SearchOptions
               ref="searchOptions"
               class="container inline stretch"
-              section="projects"
+              section="project"
               :filter-black-list="['categories']"
-              :freeze-search="isNavigating"
+              :default-query="{
+                categories: category ? [category.id] : [],
+              }"
+              @on-query="query = $event"
+              @on-search="search = $event"
             />
           </div>
         </div>
@@ -148,7 +142,7 @@ watchEffect(() => {
           <h3 class="child-title">
             {{ child?.$t?.name }}
           </h3>
-          <CategoryFollowButton :category-id="child.id" @click.stop.prevent="" />
+          <CategoryFollowIcon :category="child" />
         </NuxtLink>
       </div>
       <div class="category-search-header">
@@ -166,7 +160,7 @@ watchEffect(() => {
         />
       </div>
       <ClientOnly>
-        <GlobalSearchTab :search="fixedSearch" :freeze-search="isNavigating" />
+        <GlobalSearchTab :search="search" :query="query" mode="project" />
       </ClientOnly>
     </div>
   </div>

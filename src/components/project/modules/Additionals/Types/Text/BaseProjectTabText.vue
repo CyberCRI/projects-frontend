@@ -54,7 +54,7 @@ const item = computed(() => data.value[0])
 
 <template>
   <FetchLoader :status="status" only-error :error="error" skeleton>
-    <BaseAdditionalsTab :project="project" :tab="tab" :editable="editable" :preview="preview">
+    <BaseAdditionalsTab :tab="tab" :editable="editable" :preview="preview">
       <Title v-if="item" :title="item.$t.title" />
       <ContentExpandable
         v-if="item && preview"

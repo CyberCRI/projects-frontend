@@ -7,17 +7,24 @@
       class="navpanel-menu-entry"
       :class="{ active: isCurrentTab(entry) }"
     >
+      <NavPanelSubmenu
+        v-if="entry.submenu"
+        :entry="entry"
+        :current-tab="currentTab"
+        class="submenu-container"
+      />
       <component
         :is="entry.isNotLink ? 'span' : NuxtLink"
-        v-if="entry.condition"
+        v-else-if="entry.condition"
         class="navpanel-menu-link"
         :data-test="entry.dataTest"
+        :title="entry.label"
         :to="entry.view"
         @click="onMenuEntryClicked(entry)"
       >
         <IconImage class="icon skeletons-background" :name="entry.icon || 'Article'" />
 
-        <span class="skeletons-text">
+        <span class="skeletons-text text-ellipsis">
           {{ entry.label }}
         </span>
 
@@ -32,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import type { IconImageChoice } from '@/functs/IconImage'
+import type { IconImageChoice, IconTabImageChoice } from '@/functs/IconImage'
 import type { RouteLocationRaw } from 'vue-router'
 import useGlobals from '@/stores/useGlobals'
 import { NuxtLink } from '#components'
@@ -42,7 +49,7 @@ export type MenuEntry = {
   condition: boolean
   label: string
   icon: IconImageChoice
-  actionIcon?: IconImageChoice
+  actionIcon?: IconImageChoice | IconTabImageChoice
   key: string
   view?: RouteLocationRaw
   altView?: RouteLocationRaw
@@ -54,6 +61,9 @@ export type MenuEntry = {
   noTitle?: boolean
   isAddAction?: boolean
   ignoreUnsavedEdit?: boolean
+  submenu?: MenuEntry[]
+
+  [key: string]: any
 }
 const props = withDefaults(
   defineProps<{

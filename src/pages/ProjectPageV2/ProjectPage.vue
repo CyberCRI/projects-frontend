@@ -23,10 +23,10 @@ const {
   error,
   isLoading,
 } = getProject(organizationCode, projectIdOrSlug, {
-  default: projectSkeleton,
+  default: () => projectSkeleton(),
 })
 
-const { canEditProject } = usePermissionProject(computed(() => project.value?.id))
+const { canEditProject } = usePermissionProject(projectIdOrSlug, project)
 
 const { tabs, currentTab, isEditing, toggleEditing } = useProjectTabs(projectIdOrSlug, project)
 

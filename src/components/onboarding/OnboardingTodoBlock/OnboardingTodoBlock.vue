@@ -88,10 +88,12 @@ export default {
 
   setup() {
     const usersStore = useUsersStore()
+    const organizationCode = useOrganizationCode()
     const { canCreateProject } = usePermissionProject(null)
     return {
       usersStore,
       canCreateProject,
+      organizationCode,
     }
   },
 
@@ -146,8 +148,8 @@ export default {
       this.asyncing[key] = true
       const payload = { onboarding_status: { ...this.status, [key]: val } }
       try {
-        await patchUser(this.user.id, payload)
-        await this.usersStore.getUser(this.user.id)
+        await patchUser(this.organizationCode, this.user.id, payload)
+        await this.usersStore.refreshUser()
       } catch (err) {
         console.error(err)
       } finally {
@@ -157,9 +159,11 @@ export default {
 
     async completeProfile() {
       if (this.anyAsyncing) return
-      // TODO check with and remove eventually
-      // await this.updateStatus('complete_profile', false)
-      this.$router.push({ name: 'ProfileEditGeneral' })
+      await this.updateStatus('complete_profile', false)
+      this.$router.push({
+        name: 'ProfileEditUser',
+        params: { userIdOrSlug: this.user?.slug || this.user?.id },
+      })
     },
 
     async exploreProjects() {

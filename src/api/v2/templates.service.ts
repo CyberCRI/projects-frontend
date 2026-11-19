@@ -25,7 +25,7 @@ export const getTemplates = (
         ...config,
       }),
     {
-      translate: translateTemplates,
+      translate: (data) => translateTemplates(data),
       watch: onlyRefs([organization]),
       ...config,
     }

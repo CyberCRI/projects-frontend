@@ -12,6 +12,8 @@ import getAgent from '@/server/projects-agent/agent/get-agent'
 import { tokenMap } from '@/server/routes/api/chat-stream'
 import { v4 as uuidv4 } from 'uuid'
 
+import filterSpecialTagFactory from '~/server/utils/filter-special-tag'
+
 const runtimeConfig = useRuntimeConfig()
 const { appLangchainModelName, appLangchainModelApiKey } = runtimeConfig
 const { appApiOrgCode, appChatbotEnabled } = runtimeConfig.public
@@ -156,6 +158,7 @@ export default defineLazyEventHandler(() => {
       handleFlush(event)
     }
 
+    const filterSpecialTag = filterSpecialTagFactory()
     // TODO: fix typescript mess with agent.stream return type
     // TODO rethrow interrupt exception when chepointis enabled
     try {
@@ -283,7 +286,7 @@ export default defineLazyEventHandler(() => {
               // const is_done = metadata.status === 'completed'
               const role = 'ai'
               const output = {
-                text,
+                text: filterSpecialTag(text),
                 role,
                 is_done: false,
                 conversationId,

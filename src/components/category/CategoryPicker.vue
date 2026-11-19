@@ -7,7 +7,7 @@ import type {
 import IconImage from '~/components/base/media/IconImage.vue'
 
 const emit = defineEmits<{
-  'pick-category': [ProjectCategoryModel]
+  'pick-category': [TranslatedProjectCategory]
 }>()
 
 const props = withDefaults(

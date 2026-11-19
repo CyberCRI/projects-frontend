@@ -1,5 +1,5 @@
 <template>
-  <div class="s-switch-input-ctn">
+  <div class="s-switch-input-ctn skeletons-background">
     <span v-if="label" class="s-label">{{ label }}</span>
 
     <div class="s-switch" :class="{ active: modelValue }" @click="toggleValue">

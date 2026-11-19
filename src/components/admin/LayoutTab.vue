@@ -9,6 +9,7 @@
         <slot name="actions" />
       </div>
     </div>
+    <slot name="filters" />
     <div class="layout-container">
       <slot />
     </div>

@@ -8,6 +8,7 @@ export const useProjectFollow = (project: ComputedRef<AnyProject>) => {
     return
   }
 
+  const organizationCode = useOrganizationCode()
   const usersStore = useUsersStore()
 
   const followed = ref()
@@ -31,7 +32,7 @@ export const useProjectFollow = (project: ComputedRef<AnyProject>) => {
 
     if (isFollowing.value) {
       return followUtils
-        .unfollow({
+        .unfollow(organizationCode, {
           follower_id: followed.value.follow_id,
           project_id: project.value.id,
         })
@@ -39,9 +40,10 @@ export const useProjectFollow = (project: ComputedRef<AnyProject>) => {
           followed.value = null
         })
         .finally(() => nextTick(() => (asyncing.value = false)))
+        .then(() => followed.value)
     } else {
       return followUtils
-        .follow({
+        .follow(organizationCode, {
           follower_id: usersStore.user.id,
           project_id: project.value.id,
         })
@@ -50,9 +52,9 @@ export const useProjectFollow = (project: ComputedRef<AnyProject>) => {
             is_followed: true,
             follow_id: follow.id,
           }
-          return follow
         })
         .finally(() => nextTick(() => (asyncing.value = false)))
+        .then(() => followed.value)
     }
   }
 

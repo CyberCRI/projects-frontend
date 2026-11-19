@@ -1,4 +1,4 @@
-import type { OrganizationModel, TranslatedLocationGeneral } from 'shared-projects-frontend/models'
+import type { LocationModel, OrganizationModel } from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
@@ -26,7 +26,7 @@ export const getLocations = (
       }),
     {
       watch: onlyRefs([organizationCode]),
-      translate: (data) => translateLocations<TranslatedLocationGeneral>(data),
+      translate: (data) => translateLocations(data as unknown as LocationModel[]),
       ...config,
     }
   )

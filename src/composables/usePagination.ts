@@ -1,3 +1,5 @@
+import type { RefOrRaw } from '~/interfaces/utils'
+
 export type PaginationResult<T = any> = {
   /** @example 123 */
   count: number
@@ -66,13 +68,18 @@ export type Pagination = {
  */
 export const usePagination = (
   results: Ref<PaginationResult>,
-  paginationConfig: paginationConfig = {}
+  paginationConfig: RefOrRaw<paginationConfig> = {}
 ): Pagination => {
   const current = ref(1)
   const total = ref(0)
   const count = ref(0)
-  const limit = ref(paginationConfig.limit ?? DEFAULT_PAGINATION_LIMIT)
+  const limit = ref(DEFAULT_PAGINATION_LIMIT)
   const offset = computed(() => Math.max((current.value - 1) * limit.value, 0))
+
+  watchEffect(() => {
+    const config = unref(paginationConfig)
+    limit.value = config.limit ?? limit.value
+  })
 
   watch(
     results,

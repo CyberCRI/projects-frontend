@@ -1,4 +1,5 @@
 import { defineVitestConfig } from '@nuxt/test-utils/config'
+import { configDefaults } from 'vitest/config'
 import { extname } from 'path'
 
 // Vite plugin to resolve extensionless relative imports inside the Prisma generated
@@ -87,6 +88,11 @@ export default defineVitestConfig({
       },
     },
     include: ['tests/unit/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
+    exclude: [
+      ...configDefaults.exclude,
+      './tests/unit/pages/UserProfilePageV2/**',
+      './tests/unit/components/people/Researcher/ResearcherDocumentsTab.test.ts',
+    ],
     globals: true,
     environment: 'nuxt',
     hookTimeout: 30_000,

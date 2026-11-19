@@ -46,7 +46,7 @@
           <div v-if="isConnected" class="actions">
             <div class="reply-action skeletons-background">
               <LpiButton
-                v-if="!isReply"
+                v-if="newCommentEnabled && !isReply"
                 :label="$t('common.reply')"
                 btn-icon="Reply"
                 @click="toggleModals('replying')"
@@ -55,8 +55,8 @@
 
             <div class="author-action skeletons-background">
               <ContextActionMenuInline
-                :can-edit="canEdit"
-                :can-delete="canEdit"
+                :can-edit="newCommentEnabled && canEdit"
+                :can-delete="newCommentEnabled && canEdit"
                 @delete="openModals('delete')"
                 @edit="toggleModals('edit')"
               />
@@ -162,6 +162,9 @@ const props = withDefaults(
   }
 )
 
+const runtimeConfig = useRuntimeConfig()
+const newCommentEnabled = ref(props.isPrivate || !runtimeConfig.public.appNewCommentDisabled)
+
 const { t, locale } = useNuxtI18n()
 
 const emit = defineEmits<{
@@ -198,6 +201,11 @@ const showEditDate = computed(() => {
   )
 })
 
+const clean = () => {
+  asyncing.value = false
+  closeModals('delete')
+}
+
 const onDeleteComment = async () => {
   asyncing.value = true
 
@@ -214,7 +222,7 @@ const onDeleteComment = async () => {
         emit('project-message-deleted', props.comment)
       })
       .catch(() => toaster.pushError(t('toasts.project-message-delete.error')))
-      .finally(() => (asyncing.value = false))
+      .finally(() => clean())
   } else {
     deleteComment(props.project.id, props.comment.id)
       .then(() => {
@@ -229,7 +237,7 @@ const onDeleteComment = async () => {
         emit('comment-deleted', props.comment)
       })
       .catch(() => toaster.pushError(t('toasts.comment-delete.error')))
-      .finally(() => (asyncing.value = false))
+      .finally(() => clean())
   }
 }
 </script>

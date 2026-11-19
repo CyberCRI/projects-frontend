@@ -33,7 +33,7 @@ export default function useProjectPagesRoutes() {
           redirect: 'blog-entries',
         },
         {
-          path: 'blog-entries',
+          path: 'blogs',
           name: 'projectBlog',
           component: () =>
             import('../pages/ProjectPageV2/Tabs/BlogEntries/ProjectBlogEntriesTab.vue'),
@@ -59,6 +59,12 @@ export default function useProjectPagesRoutes() {
           component: () => import('../pages/ProjectPageV2/Tabs/Resources/ProjectResourcesTab.vue'),
         },
         {
+          path: 'linked_projects',
+          redirect: {
+            name: 'projectLinkedProjects',
+          },
+        },
+        {
           path: 'linked-projects',
           name: 'projectLinkedProjects',
           component: () =>
@@ -70,7 +76,7 @@ export default function useProjectPagesRoutes() {
           component: () => import('../pages/ProjectPageV2/Tabs/Comments/ProjectCommentsTab.vue'),
         },
         {
-          path: 'private-exchange',
+          path: 'messages',
           name: 'projectPrivateExchange',
           component: () =>
             import('../pages/ProjectPageV2/Tabs/PrivateExchange/ProjectPrivateExchangeTab.vue'),
@@ -80,6 +86,12 @@ export default function useProjectPagesRoutes() {
           name: 'projectAnnouncements',
           component: () =>
             import('../pages/ProjectPageV2/Tabs/Announcements/ProjectAnnouncementsTab.vue'),
+        },
+        {
+          path: 'project-tabs-settings',
+          name: 'ProjectTabsSettings',
+          // component: () => import('../pages/ProjectPageV2/Tabs/ProjectSettingsTab.vue'),
+          redirect: { name: 'ProjectSnapshot' },
         },
         {
           path: 'project-settings',
@@ -140,7 +152,7 @@ export default function useProjectPagesRoutes() {
         //   },
         // },
         {
-          path: 'blog-entries/edit',
+          path: 'blogs/edit',
           name: 'projectBlogEdit',
           component: () =>
             import('../pages/ProjectPageV2/Tabs/BlogEntries/ProjectBlogEntriesTab.vue'),
@@ -181,6 +193,12 @@ export default function useProjectPagesRoutes() {
           },
         },
         {
+          path: 'linked_projects/edit',
+          redirect: {
+            name: 'projectLinkedProjectsEdit',
+          },
+        },
+        {
           path: 'linked-projects/edit',
           name: 'projectLinkedProjectsEdit',
           component: () =>
@@ -194,6 +212,15 @@ export default function useProjectPagesRoutes() {
           name: 'projectAnnouncementsEdit',
           component: () =>
             import('../pages/ProjectPageV2/Tabs/Announcements/ProjectAnnouncementsTab.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: 'settings-tabs/edit',
+          name: 'ProjectTabsSettingsEdit',
+          component: () =>
+            import('../pages/ProjectPageV2/Tabs/Settings/ProjectTabsSettingsTab.vue'),
           meta: {
             requiresAuth: true,
           },
@@ -227,12 +254,6 @@ export default function useProjectPagesRoutes() {
           name: 'projectAdditionalsEdit',
           component: () =>
             import('../pages/ProjectPageV2/Tabs/Additionals/ProjectAddiionalsTab.vue'),
-        },
-        {
-          path: 'additionals/create',
-          name: 'projectAdditionalsCreate',
-          component: () =>
-            import('../pages/ProjectPageV2/Tabs/Additionals/ProjectAddiionalsCreateTab.vue'),
         },
       ],
     },

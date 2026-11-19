@@ -67,6 +67,7 @@ const {
   destroyEditor,
   initialContent,
   resetContent,
+  resetContentTo,
   onBlur,
   onDrop,
   onPaste,
@@ -104,6 +105,13 @@ const accessToken = computed(() => usersStore.accessToken)
 const onlineAndConnected = computed(() => online.value && status.value === 'connected')
 
 const socketReady = computed(() => !cnxTimedout.value && onlineAndConnected.value)
+
+onMounted(() => {
+  if (props.resetSignal)
+    props.resetSignal((data) => {
+      resetContentTo(data)
+    })
+})
 
 const onUpdate = ({ editor }) => {
   if (!updateIsBlocked.value) emit('update:modelValue', editor.getHTML())
@@ -284,6 +292,7 @@ onClientUnmounted(() => {
 defineExpose({
   editor,
   resetContent,
+  resetContentTo,
 })
 </script>
 <template>

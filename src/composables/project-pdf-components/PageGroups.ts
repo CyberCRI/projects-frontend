@@ -1,5 +1,5 @@
 import addGroupSectionFactory from '~/composables/project-pdf-components/addGroupSectionFactory'
-import type { TranslatedProject } from 'shared-projects-frontend/models'
+import type { TranslatedProject, TranslatedProjectTab } from 'shared-projects-frontend/models'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
 import { getProjectGroups } from 'shared-projects-frontend/apis'
@@ -7,8 +7,10 @@ import { Page } from '~/composables/pdf-helpers/doc-builder'
 import { roleI18n } from '~/functs/rolesUtils'
 import { groupBy } from 'es-toolkit'
 
-export default async function addPageGroupsFactory(project: TranslatedProject) {
-  const { t } = useNuxtI18n()
+export default async function addPageGroupsFactory(
+  project: TranslatedProject,
+  tab: TranslatedProjectTab
+) {
   const { translateGroups } = useAutoTranslate()
 
   const groups = unref(
@@ -37,7 +39,7 @@ export default async function addPageGroupsFactory(project: TranslatedProject) {
     this.addContainer(Page)
       .addContainer(PageTitle)
       .add(function (this: PageTitle) {
-        this.content.push(t('project.groups'))
+        this.content.push(tab.$t.title)
       })
       .render()
       .add(addOwnerGroupSection)

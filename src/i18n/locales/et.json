@@ -226,7 +226,12 @@
       "agents": "Agendid",
       "conversations": "Vestlused",
       "checkpoints": "Checkpoints",
-      "side-assistant": "Külgne assistent"
+      "side-assistant": "Külgne assistent",
+      "assistants": "Assistentid",
+      "people": "Inimesed",
+      "projects": "Projektid",
+      "organization": "Organisatsioon",
+      "agent-mcp": "MCP"
     },
     "page-title": "Admin",
     "portal": {
@@ -486,6 +491,7 @@
     "add-comment": "Lisa oma kommentaar!",
     "comment-verb": "Kommentaar",
     "comments": "Märkused",
+    "temp-deactivated-notice": "Uued kommentaarid on ajutiselt peatatud. Need on peagi taas saadaval!",
     "deleted": "Kommentaar välja jäetud",
     "discard-comment": "Kõrvalda kommentaar?",
     "discard-changes": "Kõrvaldamismuudatused?",
@@ -810,7 +816,6 @@
     }
   },
   "drawer": {
-    "clear": "Puhasta kõik valitud",
     "select-all": "Valige kõik",
     "member": {
       "add": "Lisa liige | Lisa liikmeid",
@@ -826,7 +831,8 @@
       "add": "Lisa projekt | Lisa projekte",
       "edit": "Muuda projekti | Muuda projekte",
       "delete": "Kustuta projekt | Kustuta projektid"
-    }
+    },
+    "clear": "Puhasta valitud | Puhasta kõik valitud"
   },
   "faq": {
     "delete-confirm-content": "Kas oled kindel, et soovid kustutada portaali jaoks isikupärastatud abikaardi. Kogu selle sisu kustutatakse.",
@@ -890,7 +896,8 @@
     },
     "blog": {
       "title": "Tiitliväli on nõutav",
-      "description": "Kirjeldusväli on nõutav"
+      "description": "Kirjeldusväli on nõutav",
+      "created_at": "Kuupäevaväli on nõutav"
     },
     "resources": {
       "title": "Tiitliväli on nõutav",
@@ -917,7 +924,9 @@
     "quit-without-saving-title": "Lõpetad säästmata?",
     "recaptcha": {
       "required": "Recaptcha on vajalik."
-    }
+    },
+    "invalid-phone": "Vigane telefoninumber",
+    "is-unmodified": "Vormi ei ole muudetud"
   },
   "footer": {
     "contact": "Võta meiega ühendust",
@@ -1331,7 +1340,8 @@
         },
         "long-bio": {
           "label": "Pikk biograafia",
-          "placeholder": "Esitle ennast professionaalselt. Esitage oma karjääri ja oma praegust ametit."
+          "placeholder": "Esitle ennast professionaalselt. Esitage oma karjääri ja oma praegust ametit.",
+          "required": "See väli on kohustuslik."
         },
         "personal-bio": {
           "label": "Isiklik biobioloogia",
@@ -1377,8 +1387,8 @@
         "already-added": "(juba lisatud)",
         "skills": {
           "nothing-yet": "Teie profiilil pole veel oskusi.",
-          "add-success": "Oskus '{name}' lisatud.",
-          "edit-success": "Oskus '{name}' redigeeritud.",
+          "add-success": "Oskus lisatud.",
+          "edit-success": "Oskus redigeeritud.",
           "delete-success": "Oskus \"{name}\" eemaldatud.",
           "add": "Lisa kutseoskusi",
           "add-item": "Lisa oskus",
@@ -1392,12 +1402,15 @@
             "notice-levels": "Näidake oma meisterlikkuse taset.",
             "help-levels": "Lisateave oskuste taseme kohta"
           },
-          "selection": "Valitud oskused"
+          "selection": "Valitud oskused",
+          "add-error": "Oskusi ei saa lisada.",
+          "edit-error": "Oskust ei saa redigeerida.",
+          "delete-error": "Oskust ei saa eemaldada."
         },
         "hobbies": {
           "nothing-yet": "Teie profiilil pole veel oskusi.",
           "add-success": "Lisatud on hobi \"{name}\".",
-          "edit-success": "Hobby '{name}' toimetatud.",
+          "edit-success": "Hobby toimetatud.",
           "delete-success": "Hobby \"{name}\" eemaldatud.",
           "add": "Lisa hobid",
           "add-item": "Lisa hobi",
@@ -1411,7 +1424,10 @@
             "notice-levels": "Näidake oma meisterlikkuse taset.",
             "help-levels": "Rohkem hobide taseme kohta"
           },
-          "selection": "Valitud hobid"
+          "selection": "Valitud hobid",
+          "add-error": "Hobi ei saa lisada.",
+          "edit-error": "Hobi ei saa redigeerida.",
+          "delete-error": "Hobi ei saa eemaldada."
         },
         "mentorship": {
           "contact": {
@@ -1480,7 +1496,14 @@
             "description": "PhD tasemel või tegi suure projekti või võib õpetada magistri tasemel"
           }
         },
-        "nothing-yet": "Sa pole veel oskusi lisanud."
+        "nothing-yet": "Sa pole veel oskusi lisanud.",
+        "delete": "Oled kindel, et soovid selle oskuse kustutada?",
+        "form": {
+          "level": {
+            "label": "Tase",
+            "help": "Vali oma oskuste tase"
+          }
+        }
       },
       "privacy": {
         "tab": "Privaatsus",
@@ -1518,11 +1541,11 @@
       },
       "publications": {
         "tab": "Trükised",
-        "no-editable": "Väljaannete toimetamine on saadaval 2026. aasta jaanuari alguses"
+        "no-editable": "Peagi ilmuvad trükised"
       },
       "conferences": {
         "tab": "Konverentsid",
-        "no-editable": "Toimetuskonverentsid on saadaval 2026. aasta jaanuari alguses"
+        "no-editable": "Peatselt on kättesaadavad konverentsid"
       }
     },
     "go-to-page": "Vaata profiili lehekülge",
@@ -2094,8 +2117,8 @@
     "project-title": "Projekti nimetuse vorm",
     "edit-category": "Kategooria muutmine.",
     "enable-tab": {
-      "label": "Uue kaardi loomise lubamine",
-      "help": "Võimaldab kasutajatel luua projektis uusi kaarte"
+      "label": "Uue kaardi loomise/ redigeerimise lubamine",
+      "help": "Võimaldab kasutajatel projektis kaarte luua/ muuta"
     }
   },
   "tips": {
@@ -2370,8 +2393,8 @@
       "error": "PDF-i genereerimisel tekkis viga. Palun võtke ühendust administraatoriga."
     },
     "template-update": {
-      "success": "malli uuendati edukalt",
-      "error": "Viga malli uuendamisel"
+      "error": "Viga malli uuendamisel",
+      "success": "Mall on edukalt uuendatud, kõik seotud projektid uuendatakse varsti."
     },
     "template-create": {
       "success": "mall on edukalt loodud",
@@ -2489,7 +2512,8 @@
       "access_request": "Vastake {access_request_nb} ootel juurdepääsutaotluse(te)le!",
       "pending_access_requests": "Vastake {requests_count} ootel juurdepääsutaotluse(te)le!"
     },
-    "empty": "Sul pole teateid"
+    "empty": "Sul pole teateid",
+    "error": "Märguannete seadistuste salvestamisel tekkis viga."
   },
   "recommendations": {
     "empty": "Sul pole soovitusi",
@@ -2803,7 +2827,7 @@
   },
   "pdf": {
     "blog-entries-limited-warning": "PDF-i ekspordi hulka kuuluvad ainult esimesed {max} blogikirjed (kokku {total}).",
-    "download-pdf": "PDF",
+    "download-pdf": "Laadi alla PDF-ina",
     "generated-on": "Geneeritud {date}",
     "confirm": "Kas soovite luua pdf selle {type} jaoks?",
     "choices": "Valige elemendid, mida soovite PDF-i lisada."
@@ -3257,13 +3281,39 @@
     "unfollow": "Unfollow"
   },
   "role": {
-    "owners": {
-      "label": "Toimetaja | Toimetajad",
-      "help": "Sellel grupil on kõik redigeerimisõigused."
+    "none": {
+      "label": "Aucuni",
+      "help": "Kasuta õigust.",
+      "notice": "Saab vaadata ainult avalikke projekte, kuid saab jätta kommentaare."
+    },
+    "viewers": {
+      "label": "Vaataja | Vaatajad",
+      "help": "Vaataja: tal ei ole redigeerimisõigusi.",
+      "notice": "Saab vaadata avaliku või portaali nähtavusega projekte, kuid ei saa luua uusi."
+    },
+    "users": {
+      "label": "Kasutaja | Kasutajad",
+      "help": "Kasutaja: kasutaja on osa teie kogukonnast. Nad saavad luua projekte, redigeerida oma projekte ja kirjutada kommentaare mis tahes projekti kohta. Nad näevad eraprojekti, kui nad on osa selle projekti meeskonnast, nad näevad kõiki projekte kogukonna nähtavusega ja kõiki avalikke projekte.",
+      "notice": "Saab vaadata kõiki avaliku või portaali nähtavusega projekte ning luua uusi projekte."
     },
     "reviewers": {
       "label": "Hindaja | Hindajad",
-      "help": "Kui projekt on märgitud kui \"läbivaatamiseks valmis\", saab hindaja anda tagasisidet ja lukustada projekti, et vältida projekti edasisi muudatusi. Retsensendil on ka redigeerimisõigused."
+      "help": "Kui projekt on märgitud kui \"läbivaatamiseks valmis\", saab hindaja anda tagasisidet ja lukustada projekti, et vältida projekti edasisi muudatusi. Retsensendil on ka redigeerimisõigused.",
+      "notice": "Saab muuta projekte, mille puhul on määratud hindajaks, ja koostada hinnangu; samuti saab luua uusi projekte."
+    },
+    "facilitators": {
+      "label": "Vahendaja | Vahendajad",
+      "help": "Korraldaja: See roll on õpetajatele või juhendajatele: Nad näevad portaalis kõiki eraprojekte ja saavad neid redigeerida. Neil on ka kõik kasutajate õigused.",
+      "notice": "Saab vaadata ja muuta kõiki projekte, kuid tal puudub juurdepääs haldusfunktsioonidele."
+    },
+    "admins": {
+      "label": "Administraator | Administraatorid",
+      "help": "Org admin: See funktsioon võimaldab seadistada oma portaali ja hallata kasutajaid oma portaalis. Orgi administraatoritel on portaali seadistamiseks ja selle kasutajate haldamiseks juurdepääs portaali administraatori menüüle. Neil on ka kõik vahendajate õigused.",
+      "notice": "Saab vaadata ja muuta mis tahes projekti ning kasutada haldusfunktsioone."
+    },
+    "owners": {
+      "label": "Toimetaja | Toimetajad",
+      "help": "Sellel grupil on kõik redigeerimisõigused."
     },
     "members": {
       "label": "Osaleja | Osalejad",
@@ -3285,18 +3335,6 @@
       "label": "Osalejate rühm | Osalejate rühm",
       "help": "Ilmub grupi liikmena. Nende projektid kuuluvad rühma projektide hulka."
     },
-    "facilitators": {
-      "label": "Vahendaja | Vahendajad",
-      "help": "Korraldaja: See roll on õpetajatele või juhendajatele: Nad näevad portaalis kõiki eraprojekte ja saavad neid redigeerida. Neil on ka kõik kasutajate õigused."
-    },
-    "admins": {
-      "label": "Admin grupp | Haldusrühm",
-      "help": "Org admin: See funktsioon võimaldab seadistada oma portaali ja hallata kasutajaid oma portaalis. Orgi administraatoritel on portaali seadistamiseks ja selle kasutajate haldamiseks juurdepääs portaali administraatori menüüle. Neil on ka kõik vahendajate õigused."
-    },
-    "users": {
-      "label": "Kasutaja | Kasutajad",
-      "help": "Kasutaja: kasutaja on osa teie kogukonnast. Nad saavad luua projekte, redigeerida oma projekte ja kirjutada kommentaare mis tahes projekti kohta. Nad näevad eraprojekti, kui nad on osa selle projekti meeskonnast, nad näevad kõiki projekte kogukonna nähtavusega ja kõiki avalikke projekte."
-    },
     "managers": {
       "label": "Kirjastaja | Kirjastus",
       "help": ""
@@ -3304,15 +3342,7 @@
     "label": "Roll | Rollid",
     "edit": "Modifier les rôles",
     "select": "Õiguste valimine",
-    "help": "Teave rollide kohta.",
-    "viewers": {
-      "label": "Vaataja | Vaatajad",
-      "help": "Vaataja: tal ei ole redigeerimisõigusi."
-    },
-    "none": {
-      "label": "Aucuni",
-      "help": "Kasuta õigust."
-    }
+    "help": "Teave rollide kohta."
   },
   "prompts": {
     "create-prompt": "Loo käsk",
@@ -3430,7 +3460,8 @@
       "label": "Tab | Tabs",
       "not-enabled": {
         "admin": "Kaardi loomine ei ole vaikimisi lubatud. Kuid administraatorina on teil vajalikud õigused selle funktsiooni kasutamiseks ja uute vahekaartide loomiseks."
-      }
+      },
+      "settings": "Kaardi seadistused"
     },
     "item": {
       "delete-confirm": "Kas tõesti kustutada see element?",
@@ -3477,6 +3508,11 @@
       "title-content": {
         "label": "Pealkiri",
         "required": "Pealkiri on vajalik."
+      },
+      "show_tab": {
+        "label": "Kaardi näitamine projektis.",
+        "hide": "Peida",
+        "show": "Näita"
       }
     },
     "toasts": {
@@ -3503,6 +3539,14 @@
       "item-create": {
         "success": "Ese on edukalt loodud.",
         "error": "Elemendi loomine nurjus. Palun proovi uuesti."
+      },
+      "tab-visibility": {
+        "success": "Vahekaart muutis nähtavust edukalt.",
+        "error": "Kaardi nähtavuse muutmine nurjus. Palun proovi uuesti."
+      },
+      "tab-order": {
+        "success": "Kaart on tellitud edukalt.",
+        "error": "Kaardi tellimine nurjus. Palun proovi uuesti."
       }
     }
   }

@@ -7,6 +7,7 @@ import BlogEntryFactory from '~~/tests/factories/blog-entry.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { flushPromises } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
+import { defaultTab } from '~/functs/tabs'
 
 describe('ProjectBlogEntriesTab.vue', () => {
   it('should render component', async () => {
@@ -18,7 +19,7 @@ describe('ProjectBlogEntriesTab.vue', () => {
       })
     })
 
-    const props = { project }
+    const props = { project, tab: defaultTab('blogs') }
 
     const wrapper = await lpiMountSuspended(ProjectBlogEntriesTab, {
       props,
