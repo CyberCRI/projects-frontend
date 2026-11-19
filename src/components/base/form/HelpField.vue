@@ -13,7 +13,9 @@ withDefaults(
 <template>
   <p class="content-visibility skeletons-background">
     <IconImage :name="icon" class="icon" />
-    <slot>{{ description }}</slot>
+    <slot>
+      <span class="p2">{{ description }}</span>
+    </slot>
   </p>
 </template>
 

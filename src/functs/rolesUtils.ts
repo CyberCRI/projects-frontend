@@ -11,7 +11,7 @@ import type { Roles } from 'shared-projects-frontend/models'
  * @returns {string}
  * @exports
  */
-export const roleI18n = (role: Roles, ...args: any[]): string => {
+export const roleI18n = (role: Roles | 'none', ...args: any[]): string => {
   const { t } = useNuxtI18n()
 
   const key = `role.${role}.label`

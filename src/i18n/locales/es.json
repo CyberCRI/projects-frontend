@@ -226,7 +226,12 @@
       "agents": "Agentes",
       "conversations": "Conversaciones",
       "checkpoints": "Checkpoints",
-      "side-assistant": "Asistente lateral"
+      "side-assistant": "Asistente lateral",
+      "assistants": "Asistentes",
+      "people": "Personas",
+      "projects": "Proyectos",
+      "organization": "Organización",
+      "agent-mcp": "MCP"
     },
     "page-title": "Admin",
     "portal": {
@@ -486,6 +491,7 @@
     "add-comment": "¡Añada su comentario!",
     "comment-verb": "comentario",
     "comments": "Comentarios",
+    "temp-deactivated-notice": "Los nuevos comentarios están desactivados temporalmente. ¡Volverán pronto!",
     "deleted": "Comentario eliminado sobre",
     "discard-comment": "¿Discutir comentario?",
     "discard-changes": "¿Cambios discretos?",
@@ -586,7 +592,9 @@
     "empty": "Nada aquí...",
     "file": "archivo | archivos",
     "image": "imagen",
-    "select-placeholder": "Seleccione..."
+    "select-placeholder": "Seleccione...",
+    "error": "error",
+    "expand": "Ampliación"
   },
   "complete-profile": {
     "bio": {
@@ -808,7 +816,6 @@
     }
   },
   "drawer": {
-    "clear": "Limpiar todo seleccionado",
     "select-all": "Seleccione todo",
     "member": {
       "add": "Añadir miembro | Añadir miembros",
@@ -824,7 +831,8 @@
       "add": "Agregar proyecto | Agregar proyectos",
       "edit": "Editar proyecto | Editar proyectos",
       "delete": "Eliminar el proyecto | Eliminar proyectos"
-    }
+    },
+    "clear": "Limpiar seleccionado | Limpiar todo seleccionado"
   },
   "faq": {
     "delete-confirm-content": "¿Estás seguro de que quieres eliminar la pestaña Ayuda personalizada para tu portal. Todo su contenido será eliminado.",
@@ -888,7 +896,8 @@
     },
     "blog": {
       "title": "Se requiere el campo de título",
-      "description": "El campo de descripción es necesario"
+      "description": "El campo de descripción es necesario",
+      "created_at": "El campo de la fecha es necesario"
     },
     "resources": {
       "title": "Se requiere el campo de título",
@@ -915,7 +924,9 @@
     "quit-without-saving-title": "¿Dejar de salvar?",
     "recaptcha": {
       "required": "Recaptcha es necesaria."
-    }
+    },
+    "invalid-phone": "Número de teléfono inválido",
+    "is-unmodified": "El formulario no se modifica"
   },
   "footer": {
     "contact": "Contacta con nosotros",
@@ -1329,7 +1340,8 @@
         },
         "long-bio": {
           "label": "Bio larga",
-          "placeholder": "Prepárate profesionalmente. Presenta tu trayectoria profesional y tu ocupación actual."
+          "placeholder": "Prepárate profesionalmente. Presenta tu trayectoria profesional y tu ocupación actual.",
+          "required": "Este campo es obligatorio"
         },
         "personal-bio": {
           "label": "Bio personal",
@@ -1375,9 +1387,9 @@
         "already-added": "(ya añadido)",
         "skills": {
           "nothing-yet": "Aún no has añadido ninguna habilidad.",
-          "add-success": "Habilidad '{name}' añadido.",
-          "edit-success": "Habilidad '{name}' editada.",
-          "delete-success": "Skill '{name}' eliminado.",
+          "add-success": "Habilidad añadido.",
+          "edit-success": "Habilidad editada.",
+          "delete-success": "Skill eliminado.",
           "add": "Agregar habilidades profesionales",
           "add-item": "Añadir una habilidad",
           "edit-levels": "Modificar los niveles",
@@ -1390,13 +1402,16 @@
             "notice-levels": "Indica tu nivel de dominio.",
             "help-levels": "Más sobre los niveles de habilidad"
           },
-          "selection": "habilidades seleccionadas"
+          "selection": "habilidades seleccionadas",
+          "add-error": "La habilidad no se puede añadir.",
+          "edit-error": "La habilidad no puede ser editada.",
+          "delete-error": "La habilidad no se puede quitar."
         },
         "hobbies": {
           "nothing-yet": "Aún no has añadido hobbies.",
-          "add-success": "Hobby '{name}' añadido.",
-          "edit-success": "Hobby '{name}' editado.",
-          "delete-success": "Hobby '{name}' eliminado.",
+          "add-success": "Hobby añadido.",
+          "edit-success": "Hobby editado.",
+          "delete-success": "Hobby eliminado.",
           "add": "Añadir pasatiempos",
           "add-item": "Añadir un pasatiempo",
           "already-added": "Hobby ya ha añadido",
@@ -1409,7 +1424,10 @@
             "notice-levels": "Indica tu nivel de dominio.",
             "help-levels": "Más sobre los niveles de hobbies"
           },
-          "selection": "Hobbies seleccionados"
+          "selection": "Hobbies seleccionados",
+          "add-error": "Hobby no puede ser añadido.",
+          "edit-error": "Hobby no puede ser editado.",
+          "delete-error": "Hobby no puede ser eliminado."
         },
         "mentorship": {
           "contact": {
@@ -1478,7 +1496,14 @@
             "description": "Nivel de doctorado o hizo un gran proyecto, o puede enseñar a nivel maestro"
           }
         },
-        "nothing-yet": "Aún no has añadido habilidades."
+        "nothing-yet": "Aún no has añadido habilidades.",
+        "delete": "¿Seguro que quieres eliminar esta habilidad?",
+        "form": {
+          "level": {
+            "label": "Nivel",
+            "help": "Elija los niveles de su habilidad"
+          }
+        }
       },
       "privacy": {
         "tab": "Privacidad",
@@ -1516,11 +1541,11 @@
       },
       "publications": {
         "tab": "Publicaciones",
-        "no-editable": "Las publicaciones de edición estarán disponibles a principios de enero de 2026"
+        "no-editable": "Las publicaciones de edición estarán disponibles pronto"
       },
       "conferences": {
         "tab": "Conferencias",
-        "no-editable": "Las conferencias de edición estarán disponibles a principios de enero de 2026"
+        "no-editable": "Las conferencias de edición estarán disponibles pronto"
       }
     },
     "go-to-page": "Ver página del perfil",
@@ -2090,7 +2115,11 @@
     "no-templates-set": "Sin plantilla.",
     "placeholder-purpose": "Finalidad del proyecto",
     "placeholder-title": "Título In situ",
-    "edit-category": "Edición de categoría."
+    "edit-category": "Edición de categoría.",
+    "enable-tab": {
+      "label": "Permitir la creación de nuevas pestañas / edición",
+      "help": "Permite a los usuarios crear/editar pestañas de reordenamiento dentro de este proyecto"
+    }
   },
   "tips": {
     "background-color": "Este color se mostrará detrás del texto.",
@@ -2362,6 +2391,18 @@
     "pdf": {
       "success": "El PDF se ha generado con éxito; un enlace se enviará a usted por correo electrónico.",
       "error": "Se produjo un error al generar el PDF. Por favor contacte con un administrador."
+    },
+    "template-update": {
+      "error": "Error durante la actualización de plantilla",
+      "success": "plantilla se ha actualizado con éxito, todos los proyectos vinculados se actualizarán pronto."
+    },
+    "template-create": {
+      "success": "plantilla se ha creado con éxito",
+      "error": "Error durante la creación de plantilla"
+    },
+    "template-delete": {
+      "success": "plantilla se ha eliminado con éxito",
+      "error": "Error durante la eliminación de plantilla"
     }
   },
   "success": {
@@ -2471,7 +2512,8 @@
       "access_request": "Responder a {access_request_nb} solicitudes de acceso pendientes!",
       "pending_access_requests": "Responder a {requests_count} solicitudes de acceso pendientes!"
     },
-    "empty": "Usted no tiene notificaciones"
+    "empty": "Usted no tiene notificaciones",
+    "error": "Se produjo un error al guardar la configuración de notificaciones."
   },
   "recommendations": {
     "empty": "No tiene recomendaciones.",
@@ -2785,7 +2827,7 @@
   },
   "pdf": {
     "blog-entries-limited-warning": "Sólo las primeras {max} entradas del blog se incluyen en la exportación de PDF (del total {total}).",
-    "download-pdf": "PDF",
+    "download-pdf": "Descargar como PDF",
     "generated-on": "Generado en {date}",
     "confirm": "¿Quieres generar pdf para este {type} ?",
     "choices": "Seleccione los elementos que desea agregar al PDF."
@@ -3239,13 +3281,39 @@
     "unfollow": "Unfollow"
   },
   "role": {
-    "owners": {
-      "label": "Editor | Editores",
-      "help": "Tiene todos los derechos de edición para este grupo."
+    "none": {
+      "label": "Aucun",
+      "help": "Usuario no derecho.",
+      "notice": "Solo puede ver los proyectos públicos, pero puede dejar comentarios."
+    },
+    "viewers": {
+      "label": "Viewer | Viewers",
+      "help": "Viewer: No tiene derechos de edición.",
+      "notice": "Puede ver los proyectos con visibilidad pública o de portal, pero no crear otros nuevos."
+    },
+    "users": {
+      "label": "Usuario | Usuarios",
+      "help": "Usuario: un usuario es parte de su comunidad. Pueden crear proyectos, editar sus proyectos y escribir comentarios sobre cualquier proyecto. Ellos ven un proyecto privado cuando son parte del equipo de estos proyectos, ven todos los proyectos con visibilidad comunitaria, y todos los proyectos públicos.",
+      "notice": "Puede ver todos los proyectos con visibilidad pública o de portal y puede crear nuevos proyectos."
     },
     "reviewers": {
       "label": "Reviewer | Revisores",
-      "help": "Cuando el proyecto ha sido marcado como 'listo para revisión', el revisor puede dar retroalimentación, y puede bloquear un proyecto para evitar nuevas ediciones en el proyecto. Un revisor también tiene derechos de edición."
+      "help": "Cuando el proyecto ha sido marcado como 'listo para revisión', el revisor puede dar retroalimentación, y puede bloquear un proyecto para evitar nuevas ediciones en el proyecto. Un revisor también tiene derechos de edición.",
+      "notice": "Puede editar los proyectos para los que ha sido designado evaluador y redactar una evaluación."
+    },
+    "facilitators": {
+      "label": "Facilitador | Facilitadores",
+      "help": "Facilitador: Este papel es para profesores o tutores: Ellos ven todos los proyectos privados en el portal y pueden editarlos. También tienen todos los derechos de los Usuarios.",
+      "notice": "Puede ver y editar todos los proyectos, pero no tiene acceso a las funciones administrativas."
+    },
+    "admins": {
+      "label": "Administrador | Administradores",
+      "help": "Org admin: Este papel permite configurar su portal y gestionar usuarios en su portal. Los administradores de org tienen acceso al menú de administración del portal para configurar el portal y administrar sus usuarios. También tienen todos los derechos de los facilitadores.",
+      "notice": "Puede ver y modificar cualquier proyecto, y utilizar las funciones administrativas."
+    },
+    "owners": {
+      "label": "Editor | Editores",
+      "help": "Tiene todos los derechos de edición para este grupo."
     },
     "members": {
       "label": "Participante | Participantes",
@@ -3267,18 +3335,6 @@
       "label": "Grupo participante | Grupo de participantes",
       "help": "Parece miembro del grupo. Sus proyectos aparecen entre los proyectos del grupo."
     },
-    "facilitators": {
-      "label": "Facilitador | Facilitadores",
-      "help": "Facilitador: Este papel es para profesores o tutores: Ellos ven todos los proyectos privados en el portal y pueden editarlos. También tienen todos los derechos de los Usuarios."
-    },
-    "admins": {
-      "label": "Grupo admin | Grupo de administradores",
-      "help": "Org admin: Este papel permite configurar su portal y gestionar usuarios en su portal. Los administradores de org tienen acceso al menú de administración del portal para configurar el portal y administrar sus usuarios. También tienen todos los derechos de los facilitadores."
-    },
-    "users": {
-      "label": "Usuario | Usuarios",
-      "help": "Usuario: un usuario es parte de su comunidad. Pueden crear proyectos, editar sus proyectos y escribir comentarios sobre cualquier proyecto. Ellos ven un proyecto privado cuando son parte del equipo de estos proyectos, ven todos los proyectos con visibilidad comunitaria, y todos los proyectos públicos."
-    },
     "managers": {
       "label": "Editorial | Editores",
       "help": ""
@@ -3286,15 +3342,7 @@
     "label": "Función | Funciones",
     "edit": "Modifier les rôles",
     "select": "Seleccione los derechos",
-    "help": "Información sobre roles.",
-    "viewers": {
-      "label": "Viewer | Viewers",
-      "help": "Viewer: No tiene derechos de edición."
-    },
-    "none": {
-      "label": "Aucun",
-      "help": "Usuario no derecho."
-    }
+    "help": "Información sobre roles."
   },
   "prompts": {
     "create-prompt": "Crear indicación",
@@ -3409,19 +3457,24 @@
       "add": "Añadir un nuevo Tab.",
       "edit": "Editar Tab",
       "title": "Creación de pestañas",
-      "label": "Tab | Tabs"
+      "label": "Tab | Tabs",
+      "not-enabled": {
+        "admin": "La creación de pestañas no está activada por defecto. Sin embargo, como administrador, tiene los permisos necesarios para acceder a esta función y crear nuevas pestañas."
+      },
+      "settings": "Ajustes de pestañas"
     },
     "item": {
       "delete-confirm": "¿Estás seguro de que quieres eliminar este artículo.",
       "delete": "Suprimir el tema",
       "add": "Añadir un nuevo elemento",
       "edit": "Editar el tema",
-      "title": "Forma del artículo"
+      "title": "Forma del artículo",
+      "create": "Crear nuevo contenido"
     },
     "form": {
       "title": {
-        "label": "Título",
-        "required": "Se requiere el título."
+        "required": "Se requiere el título.",
+        "label": "Título (menú del lado)"
       },
       "description": {
         "label": "Descripción"
@@ -3448,6 +3501,18 @@
       "content": {
         "label": "Índice",
         "required": "El contenido es necesario."
+      },
+      "template": {
+        "title": "Índice"
+      },
+      "title-content": {
+        "label": "Título completo",
+        "required": "Se requiere el título."
+      },
+      "show_tab": {
+        "label": "Mostrar ficha en proyecto.",
+        "hide": "Oculto",
+        "show": "Show"
       }
     },
     "toasts": {
@@ -3474,6 +3539,14 @@
       "item-create": {
         "success": "El artículo ha sido creado con éxito.",
         "error": "Failed to create the item. Por favor, inténtalo de nuevo."
+      },
+      "tab-visibility": {
+        "success": "La pestaña cambió de visibilidad con éxito.",
+        "error": "Falló para cambiar la visibilidad de la ficha. Por favor, inténtalo de nuevo."
+      },
+      "tab-order": {
+        "success": "La ficha ha sido ordenada con éxito.",
+        "error": "Failed to ordered the tab. Por favor, inténtalo de nuevo."
       }
     }
   }

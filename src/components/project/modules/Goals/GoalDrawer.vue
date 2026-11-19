@@ -12,6 +12,7 @@ import { defaultGoalForm, useGoalForm } from '@/form/goal'
 import { getFirstTextNotEmpty } from '@/functs/tiptap'
 import { fullYearDateFormat } from '@/functs/date'
 import useToasterStore from '@/stores/useToaster'
+import { getTemplateType } from '~/functs/tabs'
 import { formEqual } from '~/form/base'
 import analytics from '@/analytics'
 
@@ -40,7 +41,6 @@ const defaultLocalForm = () => {
   const newForm = { ...baseForm }
 
   const goal = props.goal
-  const template = props.project.template
   if (goal) {
     newForm.id = goal.id
     newForm.status = goal.status
@@ -49,15 +49,10 @@ const defaultLocalForm = () => {
 
   newForm.project_id = props.project.id
 
-  newForm.title =
-    getFirstTextNotEmpty([goal?.title, template?.$t?.goal_title, template?.goal_title]) ||
-    newForm.title
+  const template = getTemplateType('goals', props.project.template)
+  newForm.title = getFirstTextNotEmpty([goal?.title, template.title_item]) || newForm.title
   newForm.description =
-    getFirstTextNotEmpty([
-      goal?.description,
-      template?.$t?.goal_description,
-      template?.goal_description,
-    ]) || newForm.description
+    getFirstTextNotEmpty([goal?.description, template.content_item]) || newForm.description
 
   return newForm
 }

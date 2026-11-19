@@ -27,11 +27,13 @@ const props = withDefaults(
     openImageModal: () => void
     saveIconVisible?: boolean
     disableSave?: boolean
+    disableImage?: boolean
   }>(),
   {
     mode: 'simple',
     saveIconVisible: true,
     disableSave: false,
+    disableImage: false,
   }
 )
 
@@ -200,13 +202,15 @@ const items = computed(() => {
   )
 
   if (props.mode === 'full') {
-    items.push(
-      {
+    if (!props.disableImage) {
+      items.push({
         icon: 'Gallery' satisfies IconImageChoice as IconImageChoice,
         title: t('multieditor.image.image'),
         action: () => props.openImageModal(),
         isDisabled: false,
-      },
+      })
+    }
+    items.push(
       {
         icon: 'Movie' satisfies IconImageChoice as IconImageChoice,
         title: t('multieditor.video.label'),

@@ -27,7 +27,7 @@
   </ul>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'DescriptionSummaryBlock',
 
@@ -109,7 +109,7 @@ export default {
         this.summary = []
         document
           .querySelectorAll(`${this.summaryTextContainer} > h1,${this.summaryTextContainer} > h2`)
-          .forEach((element, i) => {
+          .forEach((element: HTMLElement, i) => {
             if (document.getElementById(`anchor-${i}`))
               document.getElementById(`anchor-${i}`).remove()
             const anchor = document.createElement('span')

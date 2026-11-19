@@ -3,10 +3,9 @@ import { createRetrieverTool } from '@langchain/classic/tools/retriever'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import type { BaseMessageChunk } from '@langchain/core/messages'
 import { initChatModel } from 'langchain/chat_models/universal'
-import { MultiServerMCPClient } from '@langchain/mcp-adapters'
-import { tokenMap } from '~/server/routes/api/chat-stream'
 import getVectorStore from '~/server/utils/vector-db-new'
 import { createAgent, createMiddleware } from 'langchain'
+import { MCPAdapter } from '@langchain/mcp-adapters'
 import { MemorySaver } from '@langchain/langgraph'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -21,10 +20,6 @@ const {
   appVectorToolPrompt,
 } = runtimeConfig
 const { appChatbotEnabled } = runtimeConfig.public
-
-// TODO use own token map instead chat-stream one when refactoed
-// Map conversationId to token and date for authed api requests in MCP
-// export const tokenMap = new Map<string, { date: Date; token: string }>()
 
 export const checkpointer = new MemorySaver()
 
@@ -59,15 +54,6 @@ export default defineLazyEventHandler(() => {
       })
     }
 
-    // clean up token map as a bonus
-    const now = new Date()
-    for (const [key, value] of tokenMap.entries()) {
-      const diff = now.getTime() - value.date.getTime()
-      if (diff > 60 * 60 * 1000) {
-        tokenMap.delete(key)
-      }
-    }
-
     const tokenHeader = getRequestHeader(event, 'authorization') || ''
     if (tokenHeader) {
       traceMcp('chat-stream: got Authorization header provided')
@@ -98,27 +84,23 @@ export default defineLazyEventHandler(() => {
       traceLangchain('Starting new conversation with id:', conversationId)
     }
 
-    traceMcp('set token map ', conversationId)
-    tokenMap.set(conversationId, {
-      date: new Date(),
-      token: ('' + tokenHeader).replace('Bearer ', ''),
-    })
-
     const tools = []
 
     if (appMcpServerUrl) {
       traceMcp('Adding MCP tool with server URL:', appMcpServerUrl)
-      const client = new MultiServerMCPClient({
-        mcp: {
-          transport: 'http', // HTTP-based remote server
-          url: appMcpServerUrl,
-          headers: {
-            Authorization: `${conversationId}`,
+      const client = new MCPAdapter({
+        servers: {
+          mcp: {
+            transport: 'http', // HTTP-based remote server
+            url: appMcpServerUrl,
+            headers: {
+              Authorization: `${tokenHeader}`,
+            },
           },
         },
       })
 
-      const mcpTools = await client.getTools()
+      const mcpTools = await client.listTools()
       traceMcp('mcp tool', JSON.stringify(mcpTools, null, 2))
       tools.unshift(...mcpTools)
     }

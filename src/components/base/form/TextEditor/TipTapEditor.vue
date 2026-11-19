@@ -13,22 +13,34 @@ const emit = defineEmits(emitsDefinitions)
 // props
 const props = withDefaults(defineProps<PropsDefinitions>(), PropsDefault)
 
-const { editor, onDrop, onBlur, resetContent, appendTranslationsStyle, initEditor, destroyEditor } =
-  useTipTap({
-    props,
-    emit,
-    t,
-    extraOptions: {
-      onBlur: (...args) => {
-        emit('blur', ...args)
-      },
+const {
+  editor,
+  onDrop,
+  onBlur,
+  resetContent,
+  resetContentTo,
+  appendTranslationsStyle,
+  initEditor,
+  destroyEditor,
+} = useTipTap({
+  props,
+  emit,
+  t,
+  extraOptions: {
+    onBlur: (...args) => {
+      emit('blur', ...args)
     },
-  })
+  },
+})
 
 // lifecycle
 onMounted(() => {
   appendTranslationsStyle()
   initEditor()
+  if (props.resetSignal)
+    props.resetSignal((data) => {
+      resetContentTo(data)
+    })
 })
 
 onBeforeUnmount(() => {
@@ -39,6 +51,7 @@ onBeforeUnmount(() => {
 defineExpose({
   editor,
   resetContent,
+  resetContentTo,
 })
 </script>
 

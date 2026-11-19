@@ -28,7 +28,7 @@ export const useInstructionForm = (options) => {
 
   const onClean = (data: InstructionForm) => {
     const newData: InstructionInput = {
-      ...structuredClone(data),
+      ...data,
       people_groups_ids: [],
     }
     if (newData.people_groups) {

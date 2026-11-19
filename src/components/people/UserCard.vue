@@ -59,7 +59,10 @@ const props = withDefaults(
 
 const emit = defineEmits(['click'])
 const { getTranslatableField } = useAutoTranslate()
-const translatedJob = getTranslatableField(props.user, 'job')
+const translatedJob = getTranslatableField(
+  computed(() => props.user),
+  'job'
+)
 
 const isPrivateUser = computed(() => {
   // Private users do not return an iD from API call

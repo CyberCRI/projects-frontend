@@ -28,7 +28,7 @@ export const getProjectGoals = (
         ...config,
       }),
     {
-      translate: translateGoals,
+      translate: (data) => translateGoals(data),
       watch: onlyRefs([organization, projectSlugOrId]),
       ...config,
     }

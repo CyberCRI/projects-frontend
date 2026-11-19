@@ -53,16 +53,6 @@
           params: { slugOrId: project.slug || project.id },
         }"
       />
-      <template v-if="appGotenbergEnabled && usersStore.isConnected">
-        <ExternalLabelButton
-          class="space-button"
-          :label="$t('pdf.download-pdf')"
-          btn-icon="FilePdfLine"
-          vertical-layout
-          label-on-hover
-          @click="openModals('pdf')"
-        />
-      </template>
       <SocialShareButton :shared-url="sharedUrl" />
     </div>
 
@@ -105,7 +95,12 @@
     </FetchLoader>
 
     <!-- drawer/modal -->
-    <ProjectPDFModal v-if="stateModals.pdf" :project="project" @close="closeModals('pdf')" />
+    <ProjectPDFModal
+      v-if="stateModals.pdf"
+      :project="project"
+      :tabs="projectTabs"
+      @close="closeModals('pdf')"
+    />
 
     <ConfirmModal
       v-if="stateModals.duplicate"
@@ -201,6 +196,15 @@ const actionMenu = computed(
   () =>
     [
       {
+        icon: 'FilePdfLine' as IconImageChoice,
+        key: 'dowload-pdf',
+        condition: appGotenbergEnabled && usersStore.isConnected,
+        label: t('pdf.download-pdf'),
+        isAddAction: true,
+        addModal: 'pdf',
+        dataTest: 'dowload-pdf',
+      },
+      {
         icon: 'Copy' as IconImageChoice,
         key: 'duplicate',
         condition: canEditProject.value,
@@ -247,9 +251,13 @@ const onDuplicate = () => {
     .then((project) => {
       // update projects title (to add copy)
       // TODO add this in backend ?
-      return patchProject(project.id, {
-        title: `${project.title} ${t('project.copy')}`,
-      })
+      return patchProject(
+        project.id,
+        {
+          title: `${project.title} ${t('project.copy')}`,
+        },
+        { query: { modules: 'none' } }
+      )
     })
     .then((project) => {
       return usersStore.refreshUser().then(() => {

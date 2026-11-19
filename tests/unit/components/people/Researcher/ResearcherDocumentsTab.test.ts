@@ -16,7 +16,7 @@ describe('ResearcherDocumentsTab.vue', () => {
     orgaCode = useOrganizationCode()
     defaultProps = {
       user: UserFactory.generate(),
-      docType: 'publications',
+      documentType: 'publications',
     }
   })
 

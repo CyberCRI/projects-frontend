@@ -9,6 +9,7 @@ import type {
   TranslatedSearchResultProject,
   TranslatedSearchResultUser,
   OrganizationModel,
+  TagClassificationModel,
 } from 'shared-projects-frontend/models'
 import {
   searchAll,
@@ -31,7 +32,7 @@ export const getSearchAll = (
   search: RefOrRaw<string>,
   config: ConfigPagination = {}
 ) => {
-  const key = computed(() => `${unref(organization)}::search::all`)
+  const key = computed(() => `${unref(organization)}::search::all::${unref(search)}`)
   const { translateUser, translateGroup, translateProject } = useAutoTranslate()
 
   const translatedSearch = (datas: SearchResultAll[]) => {
@@ -87,7 +88,7 @@ export const getSearchProjects = (
   search: RefOrRaw<string>,
   config: ConfigPagination = {}
 ) => {
-  const key = computed(() => `${unref(organization)}::search::projects`)
+  const key = computed(() => `${unref(organization)}::search::projects::${unref(search)}`)
   const { translateProject } = useAutoTranslate()
 
   const translatedSearch = (datas: SearchResultProject[]) => {
@@ -133,7 +134,7 @@ export const getSearchUser = (
   search: RefOrRaw<string>,
   config: ConfigPagination = {}
 ) => {
-  const key = computed(() => `${unref(organization)}::search::user`)
+  const key = computed(() => `${unref(organization)}::search::user::${unref(search)}`)
   const { translateUser } = useAutoTranslate()
 
   const translatedSearch = (datas: SearchResultUser[]) => {
@@ -179,7 +180,7 @@ export const getSearchGroup = (
   search: RefOrRaw<string>,
   config: ConfigPagination = {}
 ) => {
-  const key = computed(() => `${unref(organization)}::search::group`)
+  const key = computed(() => `${unref(organization)}::search::group::${unref(search)}`)
   const { translateGroup } = useAutoTranslate()
 
   const translatedSearch = (datas: SearchResultGroup[]) => {
@@ -222,22 +223,26 @@ export const getSearchGroup = (
 // TODO change backend with prefix organization code in url
 export const getSearchTag = (
   organization: RefOrRaw<OrganizationModel['code']>,
-  classificationType: RefOrRaw<'enabled-for-projects' | 'enabled-for-skills'>,
+  classificationId: RefOrRaw<
+    TagClassificationModel['id'] | 'enabled-for-projects' | 'enabled-for-skills'
+  >,
   config: ConfigPagination = {}
 ) => {
-  const key = computed(() => `${unref(organization)}::search::project::tags`)
+  const key = computed(
+    () => `${unref(organization)}::search::classifications::${unref(classificationId)}::tags`
+  )
   const { translateTags } = useAutoTranslate()
 
   return useAsyncPaginationAPI(
     key,
     ({ config }) =>
-      getOrgClassificationTags(unref(organization), unref(classificationType), {
+      getOrgClassificationTags(unref(organization), unref(classificationId), {
         ...DEFAULT_CONFIG,
         ...config,
       }),
     {
       translate: (data) => translateTags(data),
-      watch: onlyRefs([classificationType, organization]),
+      watch: onlyRefs([classificationId, organization]),
       ...config,
     }
   )

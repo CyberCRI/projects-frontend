@@ -3,6 +3,7 @@
     <Component :is="'vue:' + tag" ref="inner" class="inner" v-html="croppedHtml" />
   </div>
 </template>
+
 <script>
 import fixEditorContent from '~/composables/tiptap/editorUtils'
 import { debounce } from 'es-toolkit'

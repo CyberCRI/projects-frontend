@@ -62,26 +62,20 @@
           :label="$t('common.people')"
           :routes="[
             'People',
-            'Profile',
-            'ProfileSummary',
+            'ProfileUser',
             'ProfileBio',
             'ProfileProjects',
             'ProfileGroups',
             'ProfileSkills',
-            'ProfileEdit',
-            'ProfileEditOther',
-            'ProfileOtherUser',
-            'ProfileEditOtherUser',
-            'ProfileSummaryOther',
-            'ProfileBioOther',
-            'ProfileProjectsOther',
-            'ProfileGroupsOther',
-            'ProfileSkillsOther',
-            'ProfileEditGeneralOther',
-            'ProfileEditBioOther',
-            'ProfileEditProjectsOther',
-            'ProfileEditGroupsOther',
-            'ProfileEditSkillsOther',
+            'ProfileDocuments',
+            'ProfileResources',
+            'ProfileEditUser',
+            'ProfileEditBio',
+            'ProfileEditProjects',
+            'ProfileEditGroups',
+            'ProfileEditSkills',
+            'ProfileEditDocuments',
+            'ProfileEditResources',
           ]"
           :to="{ name: 'People' }"
         />
@@ -184,7 +178,7 @@
       </aside>
     </Transition>
 
-    <NotificationList :is-opened="showNotificationDrawer" @close="closeDrawer" />
+    <NotificationList v-if="isConnected" :is-opened="showNotificationDrawer" @close="closeDrawer" />
 
     <ContactDrawer :is-opened="showContactUsDrawer" @close="closeDrawer" />
   </div>
@@ -234,6 +228,7 @@ export default {
     const { isAdmin, isFacilitator, isSuperAdmin } = usePermissions()
     const { locale, setLocale } = useNuxtI18n()
     const { isAutoTranslateActivated } = useAutoTranslate()
+    const organizationCode = useOrganizationCode()
     return {
       appHasChatbotPromptDb,
       projectCategoriesStore,
@@ -245,6 +240,7 @@ export default {
       locale,
       isAutoTranslateActivated,
       setLocale,
+      organizationCode,
     }
   },
 
@@ -304,14 +300,24 @@ export default {
       return [
         {
           label: this.$t('me.page-title').toUpperCase(),
-          to: { name: 'ProfileSummary' },
+          to: {
+            name: 'ProfileUser',
+            params: {
+              userIdOrSlug: this.usersStore.slugOrId,
+            },
+          },
           leftIcon: 'Account',
           condition: true,
           dataTest: 'my-profile',
         },
         {
           label: this.$t('me.my-projects').toUpperCase(),
-          to: { name: 'ProfileProjects' },
+          to: {
+            name: 'ProfileProjects',
+            params: {
+              userIdOrSlug: this.usersStore.slugOrId,
+            },
+          },
           leftIcon: 'Briefcase',
           condition: this.isConnected,
           dataTest: 'my-projects',
@@ -493,7 +499,7 @@ export default {
 
     loginName() {
       if (!this.isConnected) return ''
-      return this.usersStore.user.name.firstname.toUpperCase()
+      return this.usersStore.user.given_name.toUpperCase()
     },
 
     AdminLabel() {
@@ -514,7 +520,7 @@ export default {
       return this.usersStore.userFromApi?.language
     },
   },
-
+  // TODO: this seem to crash i18n reactivity on rest of page... keep for further investigation
   watch: {
     langFromUser: {
       handler: function (neo, old) {
@@ -583,7 +589,7 @@ export default {
         }
         // dont wait for termination, user update take a while
         // and we dont want the UI to freeze meanwhile
-        patchUser(this.usersStore.id, body)
+        patchUser(this.organizationCode, this.usersStore.id, body)
       }
 
       this.setLocale(lang)

@@ -1,7 +1,7 @@
 import { usePublicURL } from '~/composables/usePublic'
 
+import type { McpServer } from '@modelcontextprotocol/server'
 import { resultFromTool } from '~/mcp-server/projects/base'
-import type { TypeMcpServer } from '~/interfaces/mcp'
 import { SDGS } from '~/functs/constants'
 import N from './zod-schema-utils'
 import { z } from 'zod'
@@ -23,7 +23,7 @@ export const SDG_OUTPUT_SCHEMA = z.object({
   item_type: N.literal('sdg').describe('The type of the item, always sdg'),
 })
 
-export default (server: TypeMcpServer) => {
+export default (server: McpServer) => {
   // Add an search tool
   server.registerTool(
     'all-sdgs',
@@ -40,11 +40,11 @@ export default (server: TypeMcpServer) => {
     {
       title: 'List of all SDGs Sustainable Development Goals',
       description: 'Get name, description and id of all SDGs Sustainable Development Goals.',
-      inputSchema: {
+      inputSchema: z.object({
         sdgId: N.number().describe(
           'The ID of the Sustainable Development Goal (SDG) between 1 and 17'
         ),
-      },
+      }),
     },
 
     resultFromTool(({ sdgId }) => {

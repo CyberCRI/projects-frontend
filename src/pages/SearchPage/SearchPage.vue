@@ -1,29 +1,40 @@
 <script setup lang="ts">
-const { searchFromQuery } = useSearch(null)
+import type { QueryFilterSearch } from 'shared-projects-frontend/models'
 
 const { onboardingTrap } = useOnboardingStatus()
 const { t } = useNuxtI18n()
+
+const route = useRoute()
 
 onMounted(async () => {
   onboardingTrap('explore_projects', false)
 })
 
-const isNavigating = ref(false)
-onBeforeRouteLeave((to, from, next) => {
-  isNavigating.value = true
-  next()
-})
-
 useLpiHead2({
   title: computed(() => t('browse.page-title')),
 })
+
+let initialQuery = {}
+if (import.meta.client) {
+  initialQuery = route?.query
+}
+
+const query = ref<QueryFilterSearch>(initialQuery)
+const search = ref('')
+const section = computed(() => (query.value?.types || route?.query?.types || 'all').toString())
 </script>
 
 <template>
   <div :key="$route.name" class="page-section-extra-wide browse-layout">
-    <SearchBlock :limit="30" show-section-filter :freeze-search="isNavigating" />
+    <SearchBlock
+      :default-query="query"
+      show-section-filter
+      :section="section"
+      @on-query="query = $event"
+      @on-search="search = $event"
+    />
 
-    <GlobalSearchTab :search="searchFromQuery" :freeze-search="isNavigating" />
+    <GlobalSearchTab :search="search" :query="query" :mode="section" />
   </div>
 </template>
 

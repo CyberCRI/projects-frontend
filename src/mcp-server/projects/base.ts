@@ -1,26 +1,22 @@
+import type { CallToolResult, ServerContext } from '@modelcontextprotocol/server'
 import type { ClientAPIOptions } from 'shared-projects-frontend/apis'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
-import type { InferSchema, ToolCallback } from '~/interfaces/mcp'
-import { tokenMap } from '~/server/routes/api/chat-stream'
 
 const runtimeConfig = useRuntimeConfig()
 export const orgCode = runtimeConfig.public.appApiOrgCode
 
-export function getUserToken(extras) {
-  const convesrationId = (extras.requestInfo.headers['authorization'] || '').replace('Bearer ', '')
-  traceMcp('Tool Getting user token for conversationId', convesrationId)
-  const tokenEntry = tokenMap.get(convesrationId)
-  if (tokenEntry) {
-    traceMcp('MCP tool found token for conversationId', tokenEntry.token.substring(0, 6) + '...')
-    return tokenEntry.token
-  } else {
-    traceMcp('MCP tool no token found for conversationId', convesrationId)
+export function getUserToken(ctx: ServerContext) {
+  const token = (ctx.http?.req?.headers.get('authorization') || '').replace('Bearer ', '')
+  if (token) {
+    traceMcp('MCP tool user token has token ', token.substring(0, 6) + '...')
+    return token
   }
+  traceMcp('MCP tool user has no token')
   return null
 }
 
-export function mcpOptions(extras: any = {}): ClientAPIOptions {
-  const accessToken = getUserToken(extras)
+export function mcpOptions(ctx: ServerContext): ClientAPIOptions {
+  const accessToken = getUserToken(ctx)
   if (!accessToken) {
     return {}
   }
@@ -40,15 +36,13 @@ export function mcpOptions(extras: any = {}): ClientAPIOptions {
  * @kind variable
  * @exports
  */
-export const resultFromTool = <InputSchema, OutputSchema>(
-  callback: (
-    ...args: Parameters<ToolCallback<InputSchema, OutputSchema>>
-  ) => InferSchema<OutputSchema> | Promise<InferSchema<OutputSchema>>
-): ToolCallback<InputSchema, OutputSchema> => {
-  return async (args, extra) => {
-    let output = null
+export const resultFromTool = <Args, Output>(
+  callback: (args: Args, ctx: ServerContext) => Output | Promise<Output>
+) => {
+  return async (args: Args, ctx: ServerContext): Promise<CallToolResult> => {
+    let output: Output | null = null
     try {
-      output = await callback(args, extra)
+      output = await callback(args, ctx)
     } catch (error) {
       console.error('Error fetching search results:', error)
     }

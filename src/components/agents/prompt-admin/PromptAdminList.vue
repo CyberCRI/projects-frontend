@@ -10,7 +10,6 @@ const refresh = () => entityList.value?.refresh()
 defineExpose({ refresh })
 
 const cannotDeletePrompt = (p) => {
-  console.log('cannot', p)
   return p.promptContents.some((pc) => pc.agents.length)
 }
 const countAgents = (p) => p.promptContents.reduce((acc, pc) => acc + pc.agents.length, 0)

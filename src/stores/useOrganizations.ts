@@ -62,7 +62,7 @@ const useOrganizationsStore = defineStore('organizations', () => {
   const termsVersion = computed((): number | null => tos?.value?.displayed_version || null)
   const termsUpdatedAt = computed(() => tos?.value?.displayed_updated_at || null)
   const termsContent = computed((): string | null => tos?.value?.displayed_content || null)
-  const termsContentTranslated = getTranslatableField(tos, 'displayed_content', termsContent)
+  const termsContentTranslated = getTranslatableField(tos, 'displayed_content')
   const hasTerms = computed((): boolean => !!(termsId.value && termsContent.value))
 
   async function getCurrentOrganization(code: string): Promise<OrganizationModel> {

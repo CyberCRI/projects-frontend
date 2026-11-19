@@ -1,0 +1,164 @@
+<script setup lang="ts">
+import type {
+  TranslatedProject,
+  ProjectTabForm,
+  TranslatedProjectTab,
+  ProjectTab,
+} from 'shared-projects-frontend/models'
+import { refreshProjectData, refreshProjectTabs } from '~/composables/project/refreshProject'
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
+import { createProjectTab, updateProjectTab } from 'shared-projects-frontend/apis'
+import { defaultProjectTabForm, useProjectTabForm } from '~/form/project-tabs'
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
+import TabForm from '~/components/tabs/TabForm.vue'
+import analytics from '~/analytics'
+import { isNil } from 'es-toolkit'
+
+const props = defineProps<{
+  project: TranslatedProject
+  tab?: TranslatedProjectTab | ProjectTab
+  isOpened?: boolean
+  asyncing?: boolean
+}>()
+
+const emit = defineEmits<{
+  refresh: []
+  close: []
+}>()
+
+const toaster = useToaster()
+const { t } = useNuxtI18n()
+const router = useRouter()
+
+const localAsyncing = ref(false)
+const gobals = useGlobals()
+
+const defaultLocalForm = () => {
+  const local = defaultProjectTabForm()
+  if (props.tab) {
+    local.id = props.tab.id || local.id
+    local.type = props.tab.type || local.type
+    local.uuid = props.tab.uuid || local.uuid
+    local.title = props.tab.title || local.title
+    local.description = props.tab.description || local.description
+    local.icon = props.tab.icon || local.icon
+    local.order = props.tab.order || local.order
+    local.project = props.tab.project || local.project
+    local.show_preview = props.tab.show_preview ?? local.show_preview
+    local.show_tab = props.tab.show_tab ?? local.show_tab
+  }
+  return local
+}
+
+const {
+  form: formTab,
+  validate: validateTab,
+  reset,
+} = useProjectTabForm({ default: defaultLocalForm() })
+
+watch(
+  () => [props.tab, props.isOpened],
+  () => reset(defaultLocalForm()),
+  { immediate: true, deep: true }
+)
+
+const createOrUpdate = (form: ProjectTabForm): Promise<ProjectTab> => {
+  if (isNil(form.id)) {
+    return createProjectTab(props.project.id, form).then((projectTab) => {
+      analytics.track('create_project_tab', {
+        project: props.project.id,
+        tab: projectTab.id,
+      })
+      return projectTab
+    })
+  } else {
+    return updateProjectTab(props.project.id, form.id, form).then((projectTab) => {
+      analytics.track('update_project_tab', {
+        project: props.project.id,
+        tab: projectTab.id,
+      })
+      return projectTab
+    })
+  }
+}
+
+const onSubmit = async (form: ProjectTabForm) => {
+  // TODO:  !(await validatTabItem())
+  if (!(await validateTab())) {
+    return
+  }
+
+  localAsyncing.value = true
+  createOrUpdate(form)
+    .then(() => {
+      if (isNil(form.id)) {
+        toaster.pushSuccess(t('tab.toasts.tab-create.success'))
+      } else {
+        toaster.pushSuccess(t('tab.toasts.tab-update.success'))
+      }
+      refreshProjectData(props.project)
+        .then(() => refreshProjectTabs(props.project))
+        .then(() => {
+          gobals.uiIsLocked = false
+          router.push({
+            name: 'ProjectTabsSettingsEdit',
+            params: {
+              slugOrId: props.project.slug || props.project.id,
+            },
+          })
+        })
+        .then(() => emit('refresh'))
+    })
+    .catch(() => {
+      if (isNil(form.id)) {
+        toaster.pushError(t('tab.toasts.tab-create.error'))
+      } else {
+        toaster.pushError(t('tab.toasts.tab-update.error'))
+      }
+    })
+    .then(() => {
+      localAsyncing.value = false
+    })
+}
+
+const { isAdmin } = usePermissions()
+const { canCreateTab } = usePermissionProject(
+  computed(() => props.project.id),
+  computed(() => props.project)
+)
+
+watchEffect(() => {
+  if (!canCreateTab.value && !isAdmin.value) {
+    toaster.pushError(t('message.error.unauthorized'))
+    router.push({
+      name: 'ProjectSnapshot',
+      params: {
+        slugOrId: props.project.slug || props.project.id,
+      },
+    })
+  }
+})
+</script>
+
+<template>
+  <BaseDrawer
+    :title="formTab.id ? $t('tab.tab.edit') : $t('tab.tab.add')"
+    :is-opened="isOpened"
+    no-footer
+    class="medium"
+    @close="emit('close')"
+  >
+    <!-- show message when creation is only enable when you are admin -->
+    <LpiSnackbar v-if="!canCreateTab && isAdmin" icon="AlertOutline" type="warning">
+      {{ $t('tab.tab.not-enabled.admin') }}
+    </LpiSnackbar>
+
+    <TabForm
+      v-model="formTab"
+      :asyncing="asyncing || localAsyncing"
+      :project="project"
+      :tab="tab"
+      @submit="onSubmit"
+    />
+  </BaseDrawer>
+</template>

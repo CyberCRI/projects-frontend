@@ -12,7 +12,7 @@ import {
   isOwner as globalIsOwner,
   isViewer,
 } from 'shared-projects-frontend/lib'
-import type { ProjectModel } from 'shared-projects-frontend/models'
+import type { ProjectModel, TranslatedProject } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import type { RefOrRaw } from '~/interfaces/utils'
 
@@ -28,11 +28,15 @@ import useUsersStore from '~/stores/useUsers'
  * @returns {{ canCreateProject: globalThis.ComputedRef<boolean>; canEditProject: globalThis.ComputedRef<boolean>; canDeleteProject: globalThis.ComputedRef<boolean>; canCreateComment: globalThis.ComputedRef<boolean>; canEditComment: globalThis.ComputedRef<boolean>; canDeleteComment: globalThis.ComputedRef<boolean>; canCreateReview: globalThis.ComputedRef<boolean>; canEditReview: globalThis.ComputedRef<boolean>; canDeleteReview: globalThis.ComputedRef<...>; }}
  * @exports
  */
-export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | null>) => {
+export const usePermissionProject = (
+  projectId: RefOrRaw<ProjectModel['id'] | null>,
+  project: RefOrRaw<ProjectModel | TranslatedProject | null> = null
+) => {
   const organizationStore = useOrganizationsStore()
   const userStore = useUsersStore()
 
-  const internalProjectId = computed(() => unref(projectId))
+  // if project is defined, return project.id or projectId (porjectId can be null)
+  const internalProjectId = computed(() => unref(project)?.id || unref(projectId))
 
   const permissions = computed(() => internalProjectId.value && userStore.isConnected)
 
@@ -129,6 +133,18 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
     )
   })
 
+  const canCreateTab = computed(() => {
+    const proj = unref(project)
+    if (!proj) {
+      return false
+    }
+    // no template, return true
+    if (!proj.template) {
+      return true
+    }
+    return proj.template.enable_tab
+  })
+
   return {
     canCreateProject,
     canEditProject,
@@ -143,6 +159,9 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
     canCreateReview,
     canEditReview,
     canDeleteReview,
+
+    // tab
+    canCreateTab,
 
     // members
     isMember,

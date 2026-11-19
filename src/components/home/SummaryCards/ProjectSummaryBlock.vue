@@ -11,20 +11,18 @@
     <template #action>
       <SummaryAction
         v-if="projects.length > 2"
-        :to="{ name: 'ProfileProjects' }"
+        :to="{
+          name: 'ProfileProjects',
+          params: {
+            userIdOrSlug: user.slug || user.id,
+          },
+        }"
         action-icon="ArrowRight"
         :action-label="$t('feed.see-all')"
       />
       <SummaryAction
-        v-else-if="projects.length"
         :to="{ name: 'createProject' }"
-        action-icon="ArrowRight"
-        :action-label="$t('home.create-project')"
-      />
-      <SummaryAction
-        v-else
-        :to="{ name: 'createProject' }"
-        action-icon="Plus"
+        :action-icon="projects.length ? 'ArrowRight' : 'Plus'"
         :action-label="$t('home.create-project')"
       />
     </template>
@@ -37,6 +35,7 @@ import type { TranslatedProject } from 'shared-projects-frontend/models'
 import BaseListSummaryBlock from '~/components/home/SummaryCards/BaseListSummaryBlock.vue'
 import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
 import ProjectLine from '~/components/home/SummaryCards/ProjectLine.vue'
+import useUsersStore from '~/stores/useUsers'
 
 withDefaults(
   defineProps<{
@@ -48,4 +47,8 @@ withDefaults(
     inlined: false,
   }
 )
+
+const userStore = useUsersStore()
+
+const user = computed(() => userStore.userFromApi)
 </script>

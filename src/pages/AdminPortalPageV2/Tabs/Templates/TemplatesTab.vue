@@ -1,0 +1,117 @@
+<template>
+  <LayoutTab :title="t('template.list')" :notice="t('template.info')">
+    <template #actions>
+      <LpiButton
+        btn-icon="Plus"
+        :label="t('admin.portal.templates.add')"
+        :to="{ name: 'templatesCreate' }"
+      />
+    </template>
+
+    <template #filters>
+      <ListFilter v-model="query.search" :pagination="pagination" />
+    </template>
+
+    <FetchLoader :status="status" only-error skeleton :with-data="!!templates">
+      <div class="list-templates">
+        <ul>
+          <AdminList
+            v-for="template in templates"
+            :key="template.id"
+            :label="template.name"
+            :action-see="false"
+            :action-add="false"
+            :data-test="`template-list-${template.id}`"
+            @edit="redirectEditTemplate(template)"
+            @delete="setDeleted(template)"
+          />
+        </ul>
+        <PaginationButtonsV2 :pagination="pagination" />
+      </div>
+
+      <NothingHere v-if="templates.length === 0" />
+
+      <ConfirmModal
+        v-if="templateToDelete"
+        :content="
+          t('admin.portal.templates.delete-templates-description', {
+            templateName: templateToDelete.name,
+          })
+        "
+        :data-test="`template-modal-delete-${templateToDelete.id}`"
+        :title="$t('admin.portal.templates.delete-templates')"
+        @cancel="cancelDelete"
+        @confirm="confirmDelete"
+      />
+    </FetchLoader>
+  </LayoutTab>
+</template>
+
+<script setup lang="ts">
+import type { QueryFilterTemplate } from 'shared-projects-frontend/models'
+import { deleteTemplate } from 'shared-projects-frontend/apis'
+
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import AdminList from '~/components/admin/AdminListItem.vue'
+import FetchLoader from '~/components/base/FetchLoader.vue'
+import LayoutTab from '~/components/admin/LayoutTab.vue'
+
+import { templateSkeleton } from '~/skeletons/template.skeletons'
+import { factoryPagination } from '~/skeletons/base.skeletons'
+import NothingHere from '~/components/base/NothingHere.vue'
+import ListFilter from '~/components/base/ListFilter.vue'
+import { getTemplates } from '~/api/v2/templates.service'
+import useNuxtI18n from '~/composables/useNuxtI18n'
+
+const { t } = useNuxtI18n()
+const organizationCode = useOrganizationCode()
+
+const { query } = useQuery<QueryFilterTemplate>({
+  ordering: '-updated_at',
+  search: '',
+})
+
+const {
+  data: templates,
+  status,
+  refresh,
+  pagination,
+} = getTemplates(organizationCode, {
+  default: () => factoryPagination(templateSkeleton),
+  query,
+})
+
+const toaster = useToaster()
+const router = useRouter()
+const redirectEditTemplate = (template) =>
+  router.push({ name: 'templatesEdit', params: { id: template.id } })
+
+// link template to deleted
+const templateToDelete = ref(null)
+const setDeleted = (template) => (templateToDelete.value = template)
+const cancelDelete = () => (templateToDelete.value = null)
+const confirmDelete = () => {
+  deleteTemplate(organizationCode, templateToDelete.value.id)
+    .then(() => {
+      toaster.pushSuccess(t('toasts.template-delete.success'))
+      refresh()
+    })
+    .catch((error) => {
+      toaster.pushError(t('toasts.template-delete.error'))
+      console.error(error)
+    })
+    .finally(() => {
+      templateToDelete.value = null
+    })
+}
+</script>
+
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
+.list-templates {
+  ul {
+    flex-grow: 1;
+  }
+}
+</style>

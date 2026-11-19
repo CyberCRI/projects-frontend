@@ -161,6 +161,10 @@ textarea {
   background: variables.$white;
   border: variables.$border-width-s solid variables.$light-gray;
   color: variables.$black;
+
+  &:disabled {
+    color: variables.$light-gray;
+  }
 }
 
 textarea {

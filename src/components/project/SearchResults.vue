@@ -1,184 +1,62 @@
 <template>
   <div>
-    <slot :is-loading="isLoading" :limit="searchLimit" :items="items" :total-count="totalCount" />
+    <slot
+      :is-loading="isLoading"
+      :limit="pagination.limit.value"
+      :items="items"
+      :total-count="pagination.count.value"
+    />
 
-    <div v-if="pagination?.total > 1 && !isLoading" class="project-list-pagination">
-      <PaginationButtons
-        v-if="pagination"
-        :current="pagination.currentPage"
-        :pagination="pagination"
-        :total="pagination.total"
-        @update-pagination="onClickPagination"
-      />
-    </div>
+    <PaginationButtonsV2 :pagination="pagination" />
   </div>
 </template>
 
-<script lang="ts">
-import {
-  clientAPI,
-  searchAll,
-  searchGroups,
-  searchProjects,
-  searchUser,
-} from 'shared-projects-frontend/apis'
+<script setup lang="ts">
+import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
 
-import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
-
-import useOrganizationsStore from '~/stores/useOrganizations'
-
+import type { AllSearchSections } from '~/components/search/Filters/useSectionFilters'
 import type { QueryFilterSearch } from 'shared-projects-frontend/models'
-import { searchEquals } from '~/functs/search'
-import { debounce, omit } from 'es-toolkit'
+import { getSearchAll } from '~/api/v2/search.service'
+import { deepToRaw } from '~/functs/utils'
 
-export default {
-  name: 'SearchResults',
+const props = withDefaults(
+  defineProps<{
+    search?: string
+    query?: QueryFilterSearch
+    mode?: AllSearchSections
+  }>(),
+  {
+    search: '',
+    query: () => ({}),
+    mode: 'all',
+  }
+)
 
-  components: {
-    PaginationButtons,
-  },
+const organizationCode = useOrganizationCode()
+const search = computed<string>(() => props.search)
 
-  props: {
-    search: {
-      type: Object,
-      default: () => {},
-    },
-    mode: {
-      // global, projects, groups, people
-      type: String,
-      default: 'global',
-    },
-    freezeSearch: {
-      type: Boolean,
-      default: false,
-    },
-  },
+const query = computed(() => {
+  const q: QueryFilterSearch = deepToRaw(props.query)
+  q.organizations = [organizationCode]
 
-  emits: ['loading'],
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    return {
-      organizationsStore,
-    }
-  },
+  // if not all add mode
+  if (props.mode !== 'all') {
+    q.types = [props.mode]
+  }
 
-  data() {
-    return {
-      pagination: {
-        currentPage: this.search?.page || 1,
-        total: 1,
-        previous: undefined,
-        next: undefined,
-        first: undefined,
-        last: undefined,
-      },
-      items: [],
-      isLoading: true,
-      lastRequest: 0,
-      totalCount: 0,
-    }
-  },
+  return q
+})
 
-  computed: {
-    searchLimit() {
-      return this.search?.limit || 12
-    },
-  },
-
-  watch: {
-    search: {
-      handler(neo, old) {
-        if (this.freezeSearch) return
-        // avoid call to api if search has not changed
-        let proceed = false
-        if (neo && old) {
-          proceed = !searchEquals(toRaw(neo), toRaw(old))
-        } else {
-          // don't proceed if search is null
-          proceed = !!neo
-        }
-        if (proceed) this.loadProjects()
-      },
-      immediate: true,
-    },
-  },
-
-  methods: {
-    onClickPagination(requestedPage) {
-      this.loadProjects(requestedPage)
-      this.$el.scrollIntoView({ behavior: 'smooth' })
-    },
-
-    initProjectLoading() {
-      this.items = []
-      this.isLoading = true
-      this.$emit('loading', true)
-    },
-
-    privateLoadProjects: async function (specificPageIndex = null) {
-      if (!import.meta.client) return
-
-      const query: QueryFilterSearch = {
-        ...omit(this.search, ['search', 'page']),
-        organizations: [this.organizationsStore.current.code],
-      }
-      const search = this.search.search
-
-      // if we forced a page (on page load only)
-      // manually compute offset
-      const page = parseInt(this.search.page || 1)
-      if (page > 1) {
-        query['offset'] = (page - 1) * query.limit
-      }
-
-      // memoize request order
-      // to only update with response to the last one
-      this.lastRequest++
-      const localRequest = this.lastRequest
-
-      this.initProjectLoading()
-      // Get projects and update project list
-      let response
-      if (specificPageIndex) {
-        response = await clientAPI(specificPageIndex, {})
-      } else if (this.mode === 'projects') {
-        response = await searchProjects(search, { query })
-      } else if (this.mode === 'groups') {
-        response = await searchGroups(search, { query })
-      } else if (this.mode === 'people') {
-        response = await searchUser(search, { query })
-      } else {
-        response = await searchAll(search, { query })
-      }
-      // update with the ltest request result
-      // to fix concurrency issue when multiple request fired
-      if (response && localRequest === this.lastRequest) this.updateProjectList(response)
-    },
-
-    loadProjects: debounce(function (this: any, specificPageIndex = null) {
-      return this.privateLoadProjects(specificPageIndex)
-    }, 500),
-
-    updateProjectList(response) {
-      this.updatePagination(response)
-      const maxResults = response.max_results || this.searchLimit
-      this.totalCount = response.count
-      this.items.push(...response.results.slice(0, maxResults))
-      this.isLoading = false
-      this.$emit('loading', false)
-    },
-
-    updatePagination(response) {
-      const maxResults = response.max_results || this.searchLimit
-      this.pagination.total = response.total_page || Math.ceil(response.count / maxResults)
-      this.pagination.previous = response.previous
-      this.pagination.next = response.next
-      this.pagination.first = response.first
-      this.pagination.last = response.last
-      this.pagination.currentPage = response.current_page
-    },
-  },
-}
+const {
+  isLoading,
+  data: items,
+  pagination,
+} = getSearchAll(organizationCode, search, {
+  query,
+  paginationConfig: computed(() => ({ limit: props.query.limit, offset: props.query.offset })),
+  uniqueKey: computed(() => props.mode),
+  keyFixed: true,
+})
 </script>
 
 <style lang="scss" scoped>

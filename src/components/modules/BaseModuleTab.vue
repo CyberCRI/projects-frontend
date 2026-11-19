@@ -2,10 +2,7 @@
   <div class="basemodule-card">
     <div class="basemodule">
       <div v-if="header" class="basemodule-header">
-        <h2 class="title skeletons-text">
-          {{ title }}
-          <span v-show="count">( {{ count }} )</span>
-        </h2>
+        <Title :title="title" :count="count" />
       </div>
       <div class="basemodule-container">
         <slot />
@@ -40,13 +37,6 @@ withDefaults(
       align-items: center;
       width: 100%;
       gap: variables.$space-l;
-
-      .title {
-        font-weight: 700;
-        font-size: variables.$font-size-l;
-        color: var(--primary-dark);
-        margin-bottom: 1rem;
-      }
     }
 
     &-container {

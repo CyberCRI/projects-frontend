@@ -1,5 +1,10 @@
 <template>
-  <button class="reset-btn" type="button" rel="noopener" :aria-label="$t('pagination.next')">
+  <button
+    class="reset-btn skeletons-background"
+    type="button"
+    rel="noopener"
+    :aria-label="$t('pagination.next')"
+  >
     <slot />
   </button>
 </template>

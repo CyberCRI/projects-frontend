@@ -1,3 +1,4 @@
+import { getUserSkills as fetchUserSkills } from 'shared-projects-frontend/apis'
 import useUsersStore from '@/stores/useUsers'
 
 import { SDGS } from '~/functs/constants'
@@ -5,13 +6,22 @@ import { SDGS } from '~/functs/constants'
 const _allowProfile = ref(false)
 const _allowCurrentPage = ref(false)
 
-export default function useChatbotContext({ hasUserContext, hasPageContext, contextMessageRole }) {
+export default async function useChatbotContext({
+  hasUserContext,
+  hasPageContext,
+  contextMessageRole,
+}) {
   const usersStore = useUsersStore()
 
-  const allowProfile = computed(() => unref(hasUserContext) && _allowProfile.value)
   if (import.meta.client) {
-    _allowProfile.value = !!localStorage?.getItem('lpi-chatbot-allow-profile')
+    const val = localStorage?.getItem('lpi-chatbot-allow-profile')
+    if (val === null) {
+      _allowProfile.value = true
+    } else {
+      _allowProfile.value = !!val
+    }
   }
+  const allowProfile = computed(() => unref(hasUserContext) && _allowProfile.value)
   const updateAllowProfile = () => {
     _allowProfile.value = !_allowProfile.value
     if (import.meta.client) {
@@ -19,6 +29,15 @@ export default function useChatbotContext({ hasUserContext, hasPageContext, cont
     }
   }
 
+  let skills = []
+  if (import.meta.client) {
+    try {
+      const skillsRequest = await fetchUserSkills(unref(usersStore.userFromApi?.id))
+      skills = skillsRequest.results || []
+    } catch (err) {
+      console.error(err)
+    }
+  }
   const userContextPrefix =
     '# Use the following information about the user to tailor your response toward the user interests'
   const userContext = computed(() => {
@@ -39,21 +58,28 @@ export default function useChatbotContext({ hasUserContext, hasPageContext, cont
       .filter((s) => !!s)
       .map((s) => s.title + ' - ' + s.description)
       .join('; ')}
-    - Skills:  ${user.skills
+    - Skills:  ${skills
       .filter((s) => !!s && s.type === 'skill')
       .map((s) => s.tag?.title + ' - ' + s.tag?.description + ' (Level ' + s.level + ')')
       .join('; ')}
-    - Hobbies:  ${user.skills
+    - Hobbies:  ${skills
       .filter((s) => !!s && s.type === 'hobby')
       .map((s) => s.tag?.title + ' - ' + s.tag?.description + ' (Level ' + s.level + ')')
       .join('; ')}
     `
   })
 
-  const allowCurrentPage = computed(() => unref(hasPageContext) && _allowCurrentPage.value)
   if (import.meta.client) {
-    _allowCurrentPage.value = !!localStorage?.getItem('lpi-chatbot-allow-current-page')
+    const val = localStorage?.getItem('lpi-chatbot-allow-current-page')
+    if (val === null) {
+      _allowCurrentPage.value = true
+    } else {
+      _allowCurrentPage.value = !!val
+    }
   }
+  const allowCurrentPage = computed(() => {
+    return unref(hasPageContext) && _allowCurrentPage.value
+  })
   const updateAllowCurrentPage = () => {
     _allowCurrentPage.value = !_allowCurrentPage.value
     if (import.meta.client) {

@@ -233,7 +233,12 @@
       "agents": "Agents",
       "conversations": "Conversations",
       "checkpoints": "Checkpoints",
-      "side-assistant": "Assistant latéral"
+      "side-assistant": "Assistant latéral",
+      "assistants": "Assistants",
+      "people": "Personnes",
+      "projects": "Projets",
+      "organization": "Organisation",
+      "agent-mcp": "MCP"
     },
     "page-title": "Admin",
     "portal": {
@@ -273,8 +278,8 @@
         "no-child": "Pas de sous-catégorie",
         "description-limit": "300 caractères maximum.",
         "edit": "Modifier une catégorie",
-        "is-reviewable": "Autoriser les révisions",
-        "limit-publication-to-reviewers": "Limiter la publication aux correcteurs",
+        "is-reviewable": "Autoriser les évaluations",
+        "limit-publication-to-reviewers": "Limiter la publication aux évaluateurs",
         "preview-categories": "Pré-visualiser",
         "display-projects": "Afficher les projets",
         "hide-projects": "Masquer les projets",
@@ -486,6 +491,7 @@
     "add-comment": "Ajoutez votre commentaire !",
     "comment-verb": "Commenter",
     "comments": "Commentaires",
+    "temp-deactivated-notice": "Les nouveaux commentaires sont temporairement désactivés. Ils seront bientôt de retour !",
     "deleted": "commentaire effacé le",
     "discard-comment": "Annuler le commentaire ?",
     "discard-changes": "Annuler les modifications ?",
@@ -586,7 +592,9 @@
     "empty": "Rien ici...",
     "file": "fichier | fichiers",
     "image": "image",
-    "select-placeholder": "Sélectionner..."
+    "select-placeholder": "Sélectionner...",
+    "error": "erreur",
+    "expand": "élargir"
   },
   "complete-profile": {
     "bio": {
@@ -808,7 +816,6 @@
     }
   },
   "drawer": {
-    "clear": "Effacer la sélection",
     "select-all": "Tout sélectionner",
     "member": {
       "add": "Ajouter un membre | Ajouter des membres",
@@ -824,7 +831,8 @@
       "add": "Ajouter un projet | Ajouter des projets",
       "edit": "Modifier le projet | Modifier les projets",
       "delete": "Supprimer le projet | Supprimer les projets"
-    }
+    },
+    "clear": "Effacer la sélection | Effacer tout sélectionné"
   },
   "faq": {
     "delete-confirm-content": "Etes-vous bien sûr de vouloir supprimer l'onglet d'aide personnalisée pour votre portail? Tout son contenu sera effacé.",
@@ -888,7 +896,8 @@
     },
     "blog": {
       "title": "Le champ titre est obligatoire",
-      "description": "Le champ description est obligatoire"
+      "description": "Le champ description est obligatoire",
+      "created_at": "Le champ de date est requis"
     },
     "resources": {
       "title": "Le champ titre est obligatoire",
@@ -915,7 +924,9 @@
     "quit-without-saving-title": "Quitter sans enregistrer ?",
     "recaptcha": {
       "required": "Recaptcha est nécessaire."
-    }
+    },
+    "invalid-phone": "Numéro de téléphone non valide",
+    "is-unmodified": "Le formulaire n'est pas modifié"
   },
   "footer": {
     "contact": "Contactez-nous",
@@ -1414,7 +1425,8 @@
         },
         "long-bio": {
           "label": "Bio longue",
-          "placeholder": "Présentez-vous professionnellement. Présentez votre parcours professionnel et votre occupation actuelle."
+          "placeholder": "Présentez-vous professionnellement. Présentez votre parcours professionnel et votre occupation actuelle.",
+          "required": "Ce champ est obligatoire"
         },
         "personal-bio": {
           "label": "Bio personnelle",
@@ -1460,9 +1472,9 @@
         "already-added": "(déjà ajouté)",
         "skills": {
           "nothing-yet": "Vous n'avez pas encore ajouté de compétences.",
-          "add-success": "Compétence '{name}' ajoutée.",
-          "edit-success": "Compétence '{name}' éditée.",
-          "delete-success": "Compétence '{name}' supprimée.",
+          "add-success": "Compétence ajoutée.",
+          "edit-success": "Compétence éditée.",
+          "delete-success": "Compétence supprimée.",
           "add": "Ajouter des compétences professionnelles",
           "add-item": "Ajouter une compétence",
           "edit-levels": "Éditer les niveaux",
@@ -1475,13 +1487,16 @@
             "notice-levels": "Indiquez votre niveau de maîtrise.",
             "help-levels": "Plus à propos des niveaux de compétences"
           },
-          "selection": "Compétences"
+          "selection": "Compétences",
+          "add-error": "La compétence ne peut pas être ajoutée.",
+          "edit-error": "Les compétences ne peuvent pas être modifiées.",
+          "delete-error": "Les compétences ne peuvent pas être retirées."
         },
         "hobbies": {
           "nothing-yet": "Vous n'avez pas encore ajouté de loisirs.",
-          "add-success": "Loisir '{name}' ajouté.",
-          "edit-success": "Loisir '{name}' édité.",
-          "delete-success": "Loisir '{name}' supprimé.",
+          "add-success": "Loisir ajouté.",
+          "edit-success": "Loisir édité.",
+          "delete-success": "Loisir supprimé.",
           "add": "Ajouter des loisirs",
           "add-item": "Ajouter un loisir",
           "edit-levels": "Éditer les niveaux",
@@ -1494,7 +1509,10 @@
             "notice-levels": "Indiquer votre niveau pour chaque loisir",
             "help-levels": "En savoir plus sur les niveaux de loisir"
           },
-          "selection": "Loisirs"
+          "selection": "Loisirs",
+          "add-error": "Hobby ne peut pas être ajouté.",
+          "edit-error": "Hobby ne peut pas être édité.",
+          "delete-error": "Hobby ne peut pas être enlevé."
         },
         "levels": {
           "curious": "Curieux",
@@ -1563,7 +1581,14 @@
             "description": "Niveau doctorat ou fait un grand projet, ou peut enseigner au niveau master"
           }
         },
-        "nothing-yet": "Tu n'as pas encore ajouté de compétences."
+        "nothing-yet": "Tu n'as pas encore ajouté de compétences.",
+        "delete": "Voulez-vous vraiment supprimer cette compétence?",
+        "form": {
+          "level": {
+            "label": "Niveau",
+            "help": "Choisissez les niveaux de vos compétences"
+          }
+        }
       },
       "privacy": {
         "tab": "Confidentialité",
@@ -1601,11 +1626,11 @@
       },
       "publications": {
         "tab": "Publications",
-        "no-editable": "Les publications d'édition seront disponibles début janvier 2026"
+        "no-editable": "L'édition des publications sera bientôt disponible"
       },
       "conferences": {
         "tab": "Conférences",
-        "no-editable": "Des conférences d'édition seront disponibles début janvier 2026"
+        "no-editable": "L'édition des conférences sera bientôt disponible"
       }
     },
     "go-to-page": "Voir la page du profil",
@@ -1645,7 +1670,7 @@
   "project": {
     "infos": "Infos",
     "add-linked-project": "Ajouter un projet lié",
-    "add-review": "Ajouter une révision",
+    "add-review": "Ajouter une évaluation",
     "add-to-project": {
       "title": "Ajouter au projet",
       "blog-entry": "Article de blog",
@@ -1675,7 +1700,7 @@
     "edit": "Modifier le projet",
     "edit-linked-project": "Modifier le projet lié",
     "edit-location-point": "Modifier ce point de localisation",
-    "edit-review": "Modifier la révision",
+    "edit-review": "Modifier l'évaluation",
     "edit-map": "Modifier les emplacements",
     "files": "Fichier du projet | fichier du projet | fichiers du projet",
     "follow": "Suivre",
@@ -1732,9 +1757,9 @@
     "remove-user": "Supprimer",
     "resource": "Ressource | Ressources",
     "review": "Réviser",
-    "reviews": "Révisions",
-    "review-confirm-delete": "Êtes-vous sûr de vouloir supprimer cette révision ?",
-    "reviewable": "Prêt pour révision",
+    "reviews": "Évaluations",
+    "review-confirm-delete": "Êtes-vous sûr de vouloir supprimer cette évaluation ?",
+    "reviewable": "Prêt pour évaluation",
     "reviewed-on-the": "a évalué ce projet le",
     "remove-group": "Supprimer le groupe",
     "show-n-projects": "Afficher les {count} projets",
@@ -1766,7 +1791,7 @@
     "groups": "Groupe | Groupes",
     "label": "projet | projets",
     "actions": "Action dangereuse",
-    "review-not-editable": "Vous ne pouvez pas ajouter d'avis à ce projet; le projet n'est pas actuellement ouvert à l'examen."
+    "review-not-editable": "Vous ne pouvez pas ajouter d'évaluation à ce projet; le projet n'est pas actuellement ouvert à l'examen."
   },
   "project_list": {
     "updated_at": "Dernier actif",
@@ -2175,13 +2200,17 @@
     "no-templates-set": "Pas de template.",
     "placeholder-purpose": "Objet du projet",
     "placeholder-title": "Titre Sur place",
-    "edit-category": "Modifier la catégorie."
+    "edit-category": "Modifier la catégorie.",
+    "enable-tab": {
+      "label": "Permettre la création/édition de nouveaux onglets",
+      "help": "Permet aux utilisateurs de créer/éditer des onglets de ré-commande dans ce projet"
+    }
   },
   "tips": {
     "background-color": "Cette couleur sera affichée derrière le texte.",
     "category-image": "Image affichée pour illustrer la catégorie. Elle n’est pas nécessaire si vous préférez plutôt afficher une couleur. Largeur minimale : 1024px, Hauteur minimale : 400px",
     "category-delete": "Vous pouvez supprimer une catégorie que si la catégorie ne contient aucun projet. Veuillez transférer tous les projets de la catégorie vers d'autres catégories.",
-    "limit-publication-to-reviewers": "Souhaitez-vous limiter la publication des projets aux correcteurs ?",
+    "limit-publication-to-reviewers": "Souhaitez-vous limiter la publication des projets aux évaluateurs ?",
     "organization-name": "Ce nom servira à identifier votre communauté dans les pages communautés-spécifiques (ex : page de statistiques)",
     "organization-title": "Le titre de votre portail apparaît sur la bannière de la page d'accueil. Aperçu ci-dessus.",
     "organization-email": "Email de contact de votre portail.",
@@ -2406,16 +2435,16 @@
       "success": "La visibilité du projet a bien été mise à jour"
     },
     "review-create": {
-      "success": "La révision a bien été ajoutée",
-      "error": "Erreur lors de l'ajout de la révision"
+      "success": "L'évaluation a bien été ajoutée",
+      "error": "Erreur lors de l'ajout de l'évaluation"
     },
     "review-delete": {
-      "success": "La révision a bien été supprimée",
-      "error": "Erreur lors de la suppression de la révision"
+      "success": "L'évaluation a bien été supprimée",
+      "error": "Erreur lors de la suppression de l'évaluation"
     },
     "review-update": {
-      "success": "La révision a bien été modifiée",
-      "error": "Erreur lors de la modification de la révision"
+      "success": "L'évaluation a bien été modifiée",
+      "error": "Erreur lors de la modification de la évaluation"
     },
     "sdgs-update": {
       "success": "Les ODDs ont bien été modifiés",
@@ -2447,6 +2476,18 @@
     "pdf": {
       "success": "Le PDF a été généré avec succès; un lien vous sera envoyé par courriel.",
       "error": "Une erreur s'est produite lors de la génération du PDF. Veuillez contacter un administrateur."
+    },
+    "template-update": {
+      "error": "Erreur lors de la mise à jour du modèle",
+      "success": "Le modèle a été mis à jour avec succès, tous les projets liés seront mis à jour prochainement."
+    },
+    "template-create": {
+      "success": "modèle a été créé avec succès",
+      "error": "Erreur lors de la création du modèle"
+    },
+    "template-delete": {
+      "success": "modèle a été supprimé avec succès",
+      "error": "Erreur lors de la suppression du modèle"
     }
   },
   "success": {
@@ -2503,10 +2544,10 @@
       "project-sub": "Être notifié si d'autres membres modifient vos projets",
       "announcement": "Annonces",
       "announcement-sub": "Être notifié quand une annonce est publiée sur le site",
-      "review": "Prêt pour révision",
+      "review": "Prêt pour évaluation",
       "review-sub": "Être notifié quand un projet est pret à être revisé par vous",
-      "reviewed": "Révision faite",
-      "reviewed-sub": "Être notifié quand une révision est envoyée sur votre projet",
+      "reviewed": "Évaluation faite",
+      "reviewed-sub": "Être notifié quand une évaluation est envoyée sur votre projet",
       "reply": "Réponse aux commentaires",
       "reply-sub": "Être notifié quand une réponse à votre commentaire est faite",
       "announcement-has-new-application": "Annonces Demande",
@@ -2556,7 +2597,8 @@
       "access_request": "Répondez à {access_request_nb} demande(s) d'accès en attente!",
       "pending_access_requests": "Répondez à {requests_count} demande(s) d'accès en attente!"
     },
-    "empty": "Vous n’avez aucune notification"
+    "empty": "Vous n’avez aucune notification",
+    "error": "Une erreur s'est produite lors de l'enregistrement des paramètres des notifications."
   },
   "recommendations": {
     "empty": "Vous n'avez aucune recommandation",
@@ -2862,7 +2904,7 @@
   },
   "pdf": {
     "blog-entries-limited-warning": "Seuls les {max} premiers articles de blog sont inclus dans l'export PDF (sur un total de {total}).",
-    "download-pdf": "PDF",
+    "download-pdf": "Télécharger au format PDF",
     "generated-on": "Généré le {date}",
     "confirm": "Voulez-vous générer des pdf pour ce {type} ?",
     "choices": "Sélectionnez les éléments que vous voulez ajouter au PDF."
@@ -3239,13 +3281,39 @@
     "unfollow": "Ne pas suivre"
   },
   "role": {
+    "none": {
+      "label": "Aucun",
+      "help": "L'utilisateur n'a pas le droit.",
+      "notice": "Ne peut voir que les projets publiques, mais peut laisser des commentaires."
+    },
+    "viewers": {
+      "label": "Affichage | Affichages",
+      "help": "Il n'a aucun droit d'édition.",
+      "notice": "Peut voir les projets ayant la visibilité publique ou portail, mais pas en créer de nouveau."
+    },
+    "users": {
+      "label": "Utilisateur | Utilisateur",
+      "help": "Utilisateur : un utilisateur fait partie de votre communauté. Ils peuvent créer des projets, modifier leurs projets et écrire des commentaires sur tout projet. Ils voient un projet privé quand ils font partie de l'équipe de ces projets, ils voient tous les projets avec la visibilité communautaire, et tous les projets publics.",
+      "notice": "Peut voir tous les projets ayant la visibilité publique ou portail et peut créer de nouveaux projets."
+    },
+    "reviewers": {
+      "label": "Évaluateur | Les évaluateurs",
+      "help": "Lorsque le projet a été marqué « prêt à faire l'objet d'un examen », l'évaluateur peut donner son avis et verrouiller un projet afin d'éviter d'autres modifications dans le projet. Un évaluateur a également des droits de modification.",
+      "notice": "Peut éditer les projets dont il a été designé évaluateur, et rédiger une évaluation."
+    },
+    "facilitators": {
+      "label": "Facilitateur | Facilitateurs",
+      "help": "Facilitateur : Ce rôle s'adresse aux enseignants ou aux tuteurs: Ils voient tous les projets privés dans le portail et ils peuvent les modifier. Ils ont également tous les droits des Utilisateurs.",
+      "notice": "Peut voir et éditer tous les projets, mais n'a pas accès aux fonctions admnistratives."
+    },
+    "admins": {
+      "label": "Admin | Admins",
+      "help": "Org administrateur: Ce rôle permet de configurer votre portail et de gérer les utilisateurs de votre portail. Org admins ont accès au menu admin du portail pour configurer le portail et gérer ses utilisateurs. Ils ont également tous les droits des facilitateurs.",
+      "notice": "Peut voir et modifier n'importe quel projet, et utiliser les fonctions administratives."
+    },
     "owners": {
       "label": "Éditeur | Éditeurs",
       "help": "A tous les droits d'édition pour ce groupe."
-    },
-    "reviewers": {
-      "label": "Examinateur | Les évaluateurs",
-      "help": "Lorsque le projet a été marqué « prêt à faire l'objet d'un examen », l'examinateur peut donner son avis et verrouiller un projet afin d'éviter d'autres modifications dans le projet. Un examinateur a également des droits de modification."
     },
     "members": {
       "label": "Participant | Participants",
@@ -3267,34 +3335,14 @@
       "label": "Groupe de participants | Groupe des participants",
       "help": "Il apparaît comme membre du groupe. Leurs projets figurent parmi les projets du groupe."
     },
-    "facilitators": {
-      "label": "Facilitateur | Facilitateurs",
-      "help": "Facilitateur : Ce rôle s'adresse aux enseignants ou aux tuteurs: Ils voient tous les projets privés dans le portail et ils peuvent les modifier. Ils ont également tous les droits des Utilisateurs."
-    },
-    "admins": {
-      "label": "Groupe administratif | Groupe des administrateurs",
-      "help": "Org administrateur: Ce rôle permet de configurer votre portail et de gérer les utilisateurs de votre portail. Org admins ont accès au menu admin du portail pour configurer le portail et gérer ses utilisateurs. Ils ont également tous les droits des facilitateurs."
-    },
-    "users": {
-      "label": "Utilisateur | Utilisateur",
-      "help": "Utilisateur : un utilisateur fait partie de votre communauté. Ils peuvent créer des projets, modifier leurs projets et écrire des commentaires sur tout projet. Ils voient un projet privé quand ils font partie de l'équipe de ces projets, ils voient tous les projets avec la visibilité communautaire, et tous les projets publics."
-    },
     "managers": {
       "label": "Éditeur | Éditeurs",
       "help": ""
     },
     "label": "Rôle | Rôles",
     "edit": "Modifier les rôles",
-    "select": "Sélectionnez les droits",
-    "help": "Informations sur les rôles.",
-    "viewers": {
-      "label": "Affichage | Affichages",
-      "help": "Il n'a aucun droit d'édition."
-    },
-    "none": {
-      "label": "Aucun",
-      "help": "L'utilisateur n'a pas le droit."
-    }
+    "select": "Sélectionnez le(s) rôle(s)",
+    "help": "Informations sur les rôles."
   },
   "prompts": {
     "create-prompt": "Créer une invite",
@@ -3409,19 +3457,24 @@
       "add": "Nouvel onglet",
       "edit": "Modifier l'onglet",
       "title": "Création d'onglets",
-      "label": "onglet | Tables"
+      "label": "onglet | Tables",
+      "not-enabled": {
+        "admin": "La création d'onglets n'est pas activée par défaut. Cependant, en tant qu'administrateur, vous avez les autorisations requises pour accéder à cette fonctionnalité et créer de nouveaux onglets."
+      },
+      "settings": "Paramètres des onglets"
     },
     "item": {
       "delete-confirm": "Voulez-vous vraiment supprimer cet élément.",
       "delete": "Supprimer l' élément",
       "add": "Ajouter un nouvel élément",
       "edit": "Modifier l'élément",
-      "title": "Formulaire"
+      "title": "Formulaire",
+      "create": "Créer un nouveau contenu"
     },
     "form": {
       "title": {
-        "label": "Titre",
-        "required": "Le titre est requis."
+        "required": "Le titre est requis.",
+        "label": "Titre (menu latéral)"
       },
       "description": {
         "label": "Description"
@@ -3448,6 +3501,18 @@
       "content": {
         "label": "Contenu",
         "required": "Le contenu est requis."
+      },
+      "template": {
+        "title": "Contenu du modèle"
+      },
+      "title-content": {
+        "label": "Titre complet",
+        "required": "Le titre est requis."
+      },
+      "show_tab": {
+        "label": "Afficher l'onglet dans le projet.",
+        "hide": "Masquer",
+        "show": "Afficher"
       }
     },
     "toasts": {
@@ -3474,6 +3539,14 @@
       "item-create": {
         "success": "L'article a été créé avec succès.",
         "error": "Impossible de créer l'élément. Veuillez réessayer."
+      },
+      "tab-visibility": {
+        "success": "L'onglet a changé la visibilité avec succès.",
+        "error": "Impossible de modifier la visibilité de l'onglet. Veuillez réessayer."
+      },
+      "tab-order": {
+        "success": "L'onglet a été commandé avec succès.",
+        "error": "Il a échoué à commander l'onglet. Veuillez réessayer."
       }
     }
   }

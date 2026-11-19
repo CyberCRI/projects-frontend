@@ -1,11 +1,16 @@
-import { minLength, required } from '@vuelidate/validators'
+import { helpers, required } from '@vuelidate/validators'
 
 import useForm from '~/composables/useForm'
 
+import {
+  defaultProjectTabForm,
+  defaultProjectTabItemForm,
+  useProjectTabItemForm,
+} from '~/form/project-tabs'
+import type { TemplateForm, TemplateTabForm } from 'shared-projects-frontend/models'
 import { NULL_CONTENT } from '~/functs/constants'
-import { clone } from 'es-toolkit'
 
-const DEFAULT_FORM = {
+export const defaultTemplateForm = (): TemplateForm => ({
   name: '',
   description: '',
 
@@ -13,6 +18,7 @@ const DEFAULT_FORM = {
   project_description: NULL_CONTENT,
   project_purpose: '',
   project_tags: [],
+  project_categories_ids: [],
 
   blogentry_title: '',
   blogentry_content: NULL_CONTENT,
@@ -22,16 +28,31 @@ const DEFAULT_FORM = {
 
   comment_content: '',
   categories: [],
-}
 
-const RULES = {
-  name: {
-    required,
-    minLengthValue: minLength(1),
-  },
+  tabs: [],
+
+  enable_tab: true,
+})
+
+export const defaultTemplateTabForm = (): TemplateTabForm => {
+  const item = defaultProjectTabItemForm()
+  return {
+    ...defaultProjectTabForm(),
+    title_item: item.title,
+    content_item: item.content,
+  }
 }
 
 export const useTemplateForm = (options = {}) => {
+  const rules = computed(() => ({
+    name: {
+      required,
+    },
+    tabs: {
+      $each: helpers.forEach(unref(useProjectTabItemForm().rules)),
+    },
+  }))
+
   const onClean = (data) => {
     // convert categories element to ids
     data.categories_ids = data.categories.map((el) => el.id)
@@ -41,9 +62,9 @@ export const useTemplateForm = (options = {}) => {
 
     return data
   }
-  return useForm({
-    default: clone(DEFAULT_FORM),
-    rules: clone(RULES),
+  return useForm<TemplateForm>({
+    default: defaultTemplateForm(),
+    rules: rules,
     onClean,
     ...options,
   })

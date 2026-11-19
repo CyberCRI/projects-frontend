@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import TipTapCollaborativeEditor from '~/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
-import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
-import TextInput from '~/components/base/form/TextInput.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
@@ -12,7 +9,6 @@ import type {
   TranslatedProjectTab,
   TranslatedProjectTabItem,
   TranslatedProject,
-  ImageModel,
 } from 'shared-projects-frontend/models'
 import {
   createProjectTabItem,
@@ -22,12 +18,13 @@ import {
 import { defaultProjectTabItemForm, useProjectTabItemForm } from '~/form/project-tabs'
 import type { ProviderParams } from 'shared-projects-frontend/interfaces'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
+import TabItemFormRaw from '~/components/tabs/TabItemFormRaw.vue'
 import { roomKeyFromParams } from 'shared-projects-frontend/lib'
 import FormPanel from '~/components/base/FormPanel.vue'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'
+import { getTemplateUUID } from '~/functs/tabs'
 import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
-import { isNil } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
@@ -53,30 +50,26 @@ const providerParams = computed<ProviderParams>(() => ({
   tabItemId: props.item?.id,
 }))
 
-const inOfflineMode = ref(false)
-
-const isCreated = computed(() => isNil(props.item?.id) || inOfflineMode.value)
-
 const room = computed(() => roomKeyFromParams(providerParams.value))
 
 const defaultLocalForm = () => {
-  const baseForm = defaultProjectTabItemForm()
-  const newForm = {
-    ...baseForm,
+  const newForm = { ...defaultProjectTabItemForm() }
+
+  if (props.item) {
+    newForm.id = props.item.id
   }
 
-  const item = props.item
-  if (item) {
-    newForm.id = item.id
-    newForm.title = item.title || newForm.title
-    newForm.content = getFirstTextNotEmpty([item.content]) || newForm.content
-  }
+  const template = getTemplateUUID(props.tab.uuid, props.project.template)
+  // find tab templates if exists
+  newForm.title = props.item?.title || template.title_item || newForm.title
+  newForm.content =
+    getFirstTextNotEmpty([props.item?.content, template.content_item]) || newForm.content
 
   return newForm
 }
 
 const { t } = useNuxtI18n()
-const { stateModals, closeModals, closeAllModals, openModals } = useModals({
+const { stateModals, closeModals, closeAllModals } = useModals({
   saveSolo: false,
   saveChange: false,
 })
@@ -87,7 +80,7 @@ const close = () => {
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
-const { form, isValid, errors, cleanedData, reset } = useProjectTabItemForm({
+const { form, isValid, cleanedData, reset, resetToInitialValue } = useProjectTabItemForm({
   default: defaultLocalForm(),
 })
 watch(
@@ -100,10 +93,6 @@ const isFormEqual = useBlockNavigation(() =>
 )
 
 const asyncing = ref(false)
-
-const handleImage = (img: ImageModel) => {
-  form.value.images_ids.push(img.id)
-}
 
 const saveItemImage = (file: File) => {
   const body = new FormData()
@@ -156,10 +145,6 @@ const postTabItem = (body: ProjectTabItemForm) => {
 }
 
 const save = () => {
-  if (!isValid.value) {
-    return
-  }
-
   asyncing.value = true
   const body = cleanedData.value
 
@@ -169,62 +154,25 @@ const save = () => {
     postTabItem(body)
   }
 }
-
-const checkClose = () => {
-  if (isFormEqual.value) {
-    close()
-  } else {
-    openModals('saveChange')
-  }
-}
 </script>
 
 <template>
   <FormPanel
-    :confirm-action-disabled="!isValid || isFormEqual"
+    :is-form-equal="isFormEqual"
+    :confirm-action-disabled="!isValid"
     :asyncing="asyncing"
-    @close="checkClose"
+    @close="resetToInitialValue"
     @confirm="save"
   >
-    <div class="list-container">
-      <TextInput
-        v-model="form.title"
-        :label="$t('tab.form.title.label')"
-        :placeholder="$t('tab.form.title.label')"
-        class="input-field"
-        required
-        :errors="errors.title"
-      />
-      <Field :label="$t('tab.form.description.label')" required class="editor-section">
-        <TipTapEditor
-          v-if="isCreated"
-          ref="tiptapEditor"
-          v-model="form.content"
-          class="input-field content-editor w-full"
-          mode="full"
-          :save-image-callback="saveItemImage"
-          :errors="errors.content"
-          @image="handleImage"
-        />
-        <TipTapCollaborativeEditor
-          v-else-if="room"
-          ref="tiptapEditor"
-          v-model="form.content"
-          class="w-full"
-          :room="room"
-          :provider-params="providerParams"
-          mode="full"
-          save-icon-visible
-          :save-image-callback="saveItemImage"
-          :disable-save="asyncing"
-          :errors="errors.content"
-          @unauthorized="close"
-          @image="handleImage"
-          @saved="save"
-          @falled-back-to-solo-edit="inOfflineMode = true"
-        />
-      </Field>
-    </div>
+    <TabItemFormRaw
+      v-model="form"
+      :asyncing="asyncing"
+      :room="room"
+      :provider-params="providerParams"
+      :save-image-callback="saveItemImage"
+      @unauthorized="close"
+      @save="save"
+    />
 
     <!-- drawer/modal -->
     <ConfirmModal

@@ -14,6 +14,9 @@ export type DrawerSearchProps<Item2> = {
   maxSelected?: number
   // when selected elements is lenght of maxSelected, "autoConfirm" (like user submited)
   maxAutoConfirm?: boolean
+  classContainer?: string
+  // active search components
+  activeSearch?: boolean
 }
 
 const props = withDefaults(defineProps<DrawerSearchProps<Item>>(), {
@@ -24,6 +27,8 @@ const props = withDefaults(defineProps<DrawerSearchProps<Item>>(), {
   pagination: null,
   maxSelected: null,
   maxAutoConfirm: false,
+  classContainer: null,
+  activeSearch: true,
 })
 
 const emit = defineEmits<{
@@ -98,7 +103,7 @@ const isSelectedMax = computed(() => {
 })
 
 const labelMaxSelected = computed(() => {
-  if (isNil(props.maxSelected)) {
+  if (isNil(props.maxSelected) || props.maxSelected === 1) {
     return ''
   }
   return `(${selectedItems.value.length}/${props.maxSelected})`
@@ -135,7 +140,9 @@ watch(
     @close="checkClose"
     @confirm="onConfirm"
   >
+    <slot name="top" />
     <BaseSearch
+      v-if="activeSearch"
       v-model="search"
       :count-result="results.length"
       :count-selected="selectedItems.length"
@@ -149,6 +156,7 @@ watch(
             <slot
               v-for="item in selectedItems"
               name="select-item"
+              :class="classContainer"
               :item="item"
               @click="toggleItem(item)"
             />
@@ -156,12 +164,13 @@ watch(
         </div>
       </template>
       <template #results>
-        <div class="list-flow-container">
+        <div class="list-flow-container w-full">
           <div
             v-for="result in results"
             :key="result.id"
             :class="{
               'pointer-events-none opacity-50': isSelectedMax && !isSelected(result),
+              [classContainer]: !!classContainer,
             }"
           >
             <slot
@@ -175,6 +184,7 @@ watch(
         <PaginationButtonsV2 v-if="pagination" class="pagination" :pagination="pagination" />
       </template>
     </BaseSearch>
+    <slot name="bottom" />
   </BaseDrawer>
 
   <ConfirmModal

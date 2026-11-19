@@ -32,7 +32,7 @@ export const getBlogEntries = (
         ...config,
       }),
     {
-      translate: translateBlogEntries,
+      translate: (data) => translateBlogEntries(data),
       watch: onlyRefs([organization, projectSlugOrId]),
       ...config,
     }

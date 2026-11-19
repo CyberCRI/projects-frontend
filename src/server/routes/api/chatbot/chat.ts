@@ -7,10 +7,12 @@ import checkAdminRights, { getUser } from '@/server/utils/check-admin-rights.js'
 import traceLangchain from '@/server/projects-agent/tracers/trace-langchain'
 import getAgentData from '@/server/projects-agent/agent/get-agent-data'
 import getMetadata from '@/server/projects-agent/agent/get-metadata'
-import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
+// import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import getAgent from '@/server/projects-agent/agent/get-agent'
 import { tokenMap } from '@/server/routes/api/chat-stream'
 import { v4 as uuidv4 } from 'uuid'
+
+import filterSpecialTagFactory from '~/server/utils/filter-special-tag'
 
 const runtimeConfig = useRuntimeConfig()
 const { appLangchainModelName, appLangchainModelApiKey } = runtimeConfig
@@ -114,13 +116,13 @@ export default defineLazyEventHandler(() => {
       traceLangchain('Starting new conversation with id:', conversationId)
     }
 
-    traceMcp('set token map ', conversationId)
-    tokenMap.set(conversationId, {
-      date: new Date(),
-      token: ('' + tokenHeader).replace('Bearer ', ''),
-    })
+    // traceMcp('set token map ', conversationId)
+    // tokenMap.set(conversationId, {
+    //   date: new Date(),
+    //   token: ('' + tokenHeader).replace('Bearer ', ''),
+    // })
 
-    const agent = await getAgent(agentData, event, conversationId)
+    const agent = await getAgent(agentData, event, tokenHeader)
 
     /* --------- Start coversation  --------- */
 
@@ -156,6 +158,7 @@ export default defineLazyEventHandler(() => {
       handleFlush(event)
     }
 
+    const filterSpecialTag = filterSpecialTagFactory()
     // TODO: fix typescript mess with agent.stream return type
     // TODO rethrow interrupt exception when chepointis enabled
     try {
@@ -283,7 +286,7 @@ export default defineLazyEventHandler(() => {
               // const is_done = metadata.status === 'completed'
               const role = 'ai'
               const output = {
-                text,
+                text: filterSpecialTag(text),
                 role,
                 is_done: false,
                 conversationId,

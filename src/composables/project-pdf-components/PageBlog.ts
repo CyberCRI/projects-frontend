@@ -1,14 +1,15 @@
 import addBlogLimitWarningFactory from '~/composables/project-pdf-components/addBlogLimitWarningFactory'
 import addBlogSectionFactory from '~/composables/project-pdf-components/addBlogSectionFactory'
-import type { TranslatedProject } from 'shared-projects-frontend/models'
+import type { TranslatedProject, TranslatedProjectTab } from 'shared-projects-frontend/models'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
 import { getBlogEntries } from 'shared-projects-frontend/apis'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
 
-export default async function addPageBlogFactory(project: TranslatedProject) {
-  const { t } = useNuxtI18n()
-
+export default async function addPageBlogFactory(
+  project: TranslatedProject,
+  tab: TranslatedProjectTab
+) {
   const { translateBlogEntries } = useAutoTranslate()
 
   const rsp = await getBlogEntries(project.id, { query: { limit: 10 } })
@@ -22,7 +23,7 @@ export default async function addPageBlogFactory(project: TranslatedProject) {
     this.addContainer(Page)
       .addContainer(PageTitle)
       .add(function (this: PageTitle) {
-        this.content.push(t('blog.title'))
+        this.content.push(tab.$t.title)
       })
       .render()
       .add(addBlogLimitWarning)

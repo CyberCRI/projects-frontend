@@ -226,7 +226,12 @@
       "agents": "Agenten",
       "conversations": "Gesprekken",
       "checkpoints": "Checkpoints",
-      "side-assistant": "Zij-assistent"
+      "side-assistant": "Zij-assistent",
+      "assistants": "Assistenten",
+      "people": "Mensen",
+      "projects": "Projecten",
+      "organization": "Organisatie",
+      "agent-mcp": "MCP"
     },
     "page-title": "Beheerder",
     "portal": {
@@ -486,6 +491,7 @@
     "add-comment": "Voeg je commentaar toe!",
     "comment-verb": "Opmerking",
     "comments": "Opmerkingen",
+    "temp-deactivated-notice": "Nieuwe reacties zijn tijdelijk uitgeschakeld. Ze zijn binnenkort weer beschikbaar!",
     "deleted": "Commentaar geschrapt op de",
     "discard-comment": "Commentaar negeren?",
     "discard-changes": "Veranderingen weggooien?",
@@ -586,7 +592,9 @@
     "empty": "Niets hier...",
     "file": "bestand | bestanden",
     "image": "afbeelding",
-    "select-placeholder": "Selecteren..."
+    "select-placeholder": "Selecteren...",
+    "error": "fout",
+    "expand": "uitzetten"
   },
   "complete-profile": {
     "bio": {
@@ -808,7 +816,6 @@
     }
   },
   "drawer": {
-    "clear": "Alles wissen",
     "select-all": "Alles selecteren",
     "member": {
       "add": "Lid toevoegen | Leden toevoegen",
@@ -824,7 +831,8 @@
       "add": "Project toevoegen | Projecten toevoegen",
       "edit": "Project bewerken | Projecten bewerken",
       "delete": "Project verwijderen | Projecten verwijderen"
-    }
+    },
+    "clear": "Geselecteerd wissen | Alles wissen"
   },
   "faq": {
     "delete-confirm-content": "Weet u zeker dat u de Help Tab wilt verwijderen die voor uw portal is gepersonaliseerd. Alle inhoud wordt verwijderd.",
@@ -888,7 +896,8 @@
     },
     "blog": {
       "title": "Het titelveld is vereist",
-      "description": "Het beschrijvingsveld is vereist"
+      "description": "Het beschrijvingsveld is vereist",
+      "created_at": "Het datumveld is vereist"
     },
     "resources": {
       "title": "Het titelveld is vereist",
@@ -915,7 +924,9 @@
     "quit-without-saving-title": "Stoppen zonder te redden?",
     "recaptcha": {
       "required": "Recaptcha is vereist."
-    }
+    },
+    "invalid-phone": "Ongeldig telefoonnummer",
+    "is-unmodified": "Het formulier is niet gewijzigd"
   },
   "footer": {
     "contact": "Contacteer ons",
@@ -1329,7 +1340,8 @@
         },
         "long-bio": {
           "label": "Lange bio",
-          "placeholder": "Jezelf professioneel presenteren. Presenteer je carrièrepad en je huidige beroep."
+          "placeholder": "Jezelf professioneel presenteren. Presenteer je carrièrepad en je huidige beroep.",
+          "required": "Dit veld is verplicht."
         },
         "personal-bio": {
           "label": "Persoonlijke bio",
@@ -1375,9 +1387,9 @@
         "suggested-skills": "Of kies een aanbevolen vaardigheid",
         "already-added": "(reeds toegevoegd)",
         "skills": {
-          "add-success": "Skill '{name}' toegevoegd.",
-          "edit-success": "Skill '{name}' bewerkt.",
-          "delete-success": "Skill '{name}' verwijderd.",
+          "add-success": "Skill toegevoegd.",
+          "edit-success": "Skill bewerkt.",
+          "delete-success": "Skill verwijderd.",
           "add": "Beroepsvaardigheden toevoegen",
           "add-item": "Een vaardigheid toevoegen",
           "edit-levels": "Niveaus bewerken",
@@ -1391,13 +1403,16 @@
             "help-levels": "Meer over vaardigheden"
           },
           "selection": "Geselecteerde vaardigheden",
-          "nothing-yet": "Je hebt nog geen vaardigheden toegevoegd."
+          "nothing-yet": "Je hebt nog geen vaardigheden toegevoegd.",
+          "add-error": "Skill kan niet toegevoegd worden.",
+          "edit-error": "Skill kan niet bewerkt worden.",
+          "delete-error": "Skill kan niet verwijderd worden."
         },
         "hobbies": {
           "nothing-yet": "Je hebt nog geen hobby's toegevoegd.",
-          "add-success": "Hobby '{name}' toegevoegd.",
-          "edit-success": "Hobby '{name}' bewerkt.",
-          "delete-success": "Hobby '{name}' verwijderd.",
+          "add-success": "Hobby toegevoegd.",
+          "edit-success": "Hobby bewerkt.",
+          "delete-success": "Hobby verwijderd.",
           "add": "Hobby's toevoegen",
           "add-item": "Een hobby toevoegen",
           "already-added": "Hobby is al toegevoegd",
@@ -1410,7 +1425,10 @@
             "notice-levels": "Geef je niveau van meesterschap aan.",
             "help-levels": "Meer over de hobby's"
           },
-          "selection": "Geselecteerde hobby's"
+          "selection": "Geselecteerde hobby's",
+          "add-error": "Hobby kan niet toegevoegd worden.",
+          "edit-error": "Hobby kan niet bewerkt worden.",
+          "delete-error": "Hobby kan niet verwijderd worden."
         },
         "mentorship": {
           "contact": {
@@ -1478,6 +1496,13 @@
             "title": "Niveau 4: Expert",
             "description": "PhD-niveau of deed een groot project, of kan leren om masterniveau"
           }
+        },
+        "delete": "Weet u zeker dat u deze vaardigheid wilt verwijderen?",
+        "form": {
+          "level": {
+            "label": "Niveau",
+            "help": "Kies de niveaus van uw vaardigheden"
+          }
         }
       },
       "privacy": {
@@ -1516,11 +1541,11 @@
       },
       "publications": {
         "tab": "Publicaties",
-        "no-editable": "Publicaties worden begin januari 2026 bewerkt."
+        "no-editable": "Het bewerken van publicaties zal binnenkort beschikbaar zijn"
       },
       "conferences": {
         "tab": "Conferenties",
-        "no-editable": "Begin januari 2026 zullen er conferenties worden gehouden over de uitvoering van de projecten."
+        "no-editable": "Conferenties worden binnenkort bewerkt."
       }
     },
     "go-to-page": "De pagina van het profiel weergeven",
@@ -2090,7 +2115,11 @@
     "no-templates-set": "Geen sjabloon ingesteld.",
     "placeholder-purpose": "Doel van het project",
     "placeholder-title": "Titel ter plaatse",
-    "edit-category": "Categorie bewerken."
+    "edit-category": "Categorie bewerken.",
+    "enable-tab": {
+      "label": "Nieuw tabblad aanmaken/editie toestaan",
+      "help": "Laat gebruikers toe om tabbladen te maken/bewerken binnen dit project"
+    }
   },
   "tips": {
     "background-color": "Deze kleur wordt achter de tekst weergegeven.",
@@ -2362,6 +2391,18 @@
     "pdf": {
       "success": "De PDF is met succes gegenereerd; een link wordt u per e-mail toegestuurd.",
       "error": "Er is een fout opgetreden bij het aanmaken van de PDF. Neem contact op met een beheerder."
+    },
+    "template-update": {
+      "error": "Fout tijdens sjabloon-update",
+      "success": "template is succesvol bijgewerkt, alle gekoppelde projecten zullen binnenkort worden bijgewerkt."
+    },
+    "template-create": {
+      "success": "template is succesvol aangemaakt",
+      "error": "Fout tijdens aanmaken van sjabloon"
+    },
+    "template-delete": {
+      "success": "template is succesvol verwijderd",
+      "error": "Fout tijdens het verwijderen van sjabloon"
     }
   },
   "success": {
@@ -2471,7 +2512,8 @@
       "access_request": "Reageer op {access_request_nb} in afwachting van toegangsverzoek(s)!",
       "pending_access_requests": "Reageer op {requests_count} in afwachting van toegangsverzoek(s)!"
     },
-    "empty": "U heeft geen meldingen"
+    "empty": "U heeft geen meldingen",
+    "error": "Er is een fout opgetreden bij het opslaan van meldingeninstellingen."
   },
   "recommendations": {
     "empty": "U heeft geen aanbevelingen",
@@ -2785,7 +2827,7 @@
   },
   "pdf": {
     "blog-entries-limited-warning": "Alleen de eerste {max} blogvermeldingen zijn opgenomen in de PDF-export (van {total} totaal).",
-    "download-pdf": "PDF",
+    "download-pdf": "Downloaden als pdf",
     "generated-on": "Gegenereerd op {date}",
     "confirm": "Wilt u pdf genereren voor deze {type} ?",
     "choices": "Selecteer de items die u wilt toevoegen aan de PDF."
@@ -3239,13 +3281,39 @@
     "unfollow": "Onvolgbaar"
   },
   "role": {
-    "owners": {
-      "label": "Editor | Editors",
-      "help": "Heeft alle bewerken rechten voor deze groep."
+    "none": {
+      "label": "Aucun",
+      "help": "Gebruiker geen recht.",
+      "notice": "Kan alleen openbare projecten bekijken, maar kan wel reacties achterlaten."
+    },
+    "viewers": {
+      "label": "Viewer | Viewers",
+      "help": "Kijker: Hij heeft geen bewerkingsrechten.",
+      "notice": "Kan projecten met openbare of portaalzichtbaarheid bekijken, maar kan geen nieuwe aanmaken."
+    },
+    "users": {
+      "label": "Gebruiker | Gebruikers",
+      "help": "Gebruiker: een gebruiker maakt deel uit van uw community. Ze kunnen projecten maken, hun projecten bewerken en commentaar schrijven op elk project. Ze zien een privé project als ze deel uitmaken van het team van deze projecten, ze zien alle projecten met de zichtbaarheid van de gemeenschap, en alle openbare projecten.",
+      "notice": "Kan alle projecten met openbare zichtbaarheid of zichtbaarheid via de portal bekijken en nieuwe projecten aanmaken."
     },
     "reviewers": {
       "label": "Reviewer | Reviewers",
-      "help": "Wanneer het project is gemarkeerd als 'ready for review', kan de beoordelaar feedback geven en een project vergrendelen om verdere bewerkingen in het project te voorkomen. Een recensent heeft ook edit rechten."
+      "help": "Wanneer het project is gemarkeerd als 'ready for review', kan de beoordelaar feedback geven en een project vergrendelen om verdere bewerkingen in het project te voorkomen. Een recensent heeft ook edit rechten.",
+      "notice": "Kan projecten bewerken waarvoor de gebruiker als beoordelaar is aangewezen, en een beoordeling schrijven."
+    },
+    "facilitators": {
+      "label": "Vergemakkelijking | Bevorderaars",
+      "help": "Facilitator: Deze rol is weggelegd voor docenten of docenten: Ze zien alle particuliere projecten in het portaal en ze kunnen ze bewerken. Ze hebben ook alle rechten van gebruikers.",
+      "notice": "Kan alle projecten bekijken en bewerken, maar heeft geen toegang tot administratieve functies."
+    },
+    "admins": {
+      "label": "Beheerder | Beheerders",
+      "help": "org admin: Deze rol maakt het mogelijk om uw portal te configureren en gebruikers in uw portal te beheren. Org admins hebben toegang tot het admin menu van het portaal om het portaal op te zetten en de gebruikers ervan te beheren. Zij hebben ook alle rechten van facilitatoren.",
+      "notice": "Kan elk project bekijken en bewerken, en administratieve functies gebruiken."
+    },
+    "owners": {
+      "label": "Editor | Editors",
+      "help": "Heeft alle bewerken rechten voor deze groep."
     },
     "members": {
       "label": "Deelnemer | Deelnemers",
@@ -3267,18 +3335,6 @@
       "label": "Deelnemersgroep | Deelnemersgroep",
       "help": "Verschijnt als groepslid. Hun projecten worden tot de projecten van de groep gerekend."
     },
-    "facilitators": {
-      "label": "Vergemakkelijking | Bevorderaars",
-      "help": "Facilitator: Deze rol is weggelegd voor docenten of docenten: Ze zien alle particuliere projecten in het portaal en ze kunnen ze bewerken. Ze hebben ook alle rechten van gebruikers."
-    },
-    "admins": {
-      "label": "Beheerdersgroep | Beheerdersgroep",
-      "help": "org admin: Deze rol maakt het mogelijk om uw portal te configureren en gebruikers in uw portal te beheren. Org admins hebben toegang tot het admin menu van het portaal om het portaal op te zetten en de gebruikers ervan te beheren. Zij hebben ook alle rechten van facilitatoren."
-    },
-    "users": {
-      "label": "Gebruiker | Gebruikers",
-      "help": "Gebruiker: een gebruiker maakt deel uit van uw community. Ze kunnen projecten maken, hun projecten bewerken en commentaar schrijven op elk project. Ze zien een privé project als ze deel uitmaken van het team van deze projecten, ze zien alle projecten met de zichtbaarheid van de gemeenschap, en alle openbare projecten."
-    },
     "managers": {
       "label": "Uitgever | Uitgevers",
       "help": ""
@@ -3286,15 +3342,7 @@
     "label": "Rol | Rol",
     "edit": "Modifier les roles",
     "select": "De rechten selecteren",
-    "help": "Informatie over rollen.",
-    "viewers": {
-      "label": "Viewer | Viewers",
-      "help": "Kijker: Hij heeft geen bewerkingsrechten."
-    },
-    "none": {
-      "label": "Aucun",
-      "help": "Gebruiker geen recht."
-    }
+    "help": "Informatie over rollen."
   },
   "prompts": {
     "create-prompt": "Prompt aanmaken",
@@ -3409,19 +3457,24 @@
       "add": "Een nieuw tabblad toevoegen.",
       "edit": "Tabblad bewerken",
       "title": "Tab aanmaken",
-      "label": "Tab | Tabbladen"
+      "label": "Tab | Tabbladen",
+      "not-enabled": {
+        "admin": "Tabblad aanmaken is standaard niet ingeschakeld. Als beheerder hebt u echter de benodigde toegangsrechten om toegang te krijgen tot deze functie en nieuwe tabbladen aan te maken."
+      },
+      "settings": "Tabbladinstellingen"
     },
     "item": {
       "delete-confirm": "Weet u zeker dat u dit item wilt verwijderen.",
       "delete": "Item verwijderen",
       "add": "Een nieuw item toevoegen",
       "edit": "Item bewerken",
-      "title": "Postformulier"
+      "title": "Postformulier",
+      "create": "Nieuwe inhoud aanmaken"
     },
     "form": {
       "title": {
-        "label": "Titel",
-        "required": "De titel is vereist."
+        "required": "De titel is vereist.",
+        "label": "Titel (zijmenu)"
       },
       "description": {
         "label": "Omschrijving"
@@ -3448,6 +3501,18 @@
       "content": {
         "label": "Inhoud",
         "required": "De inhoud is vereist."
+      },
+      "template": {
+        "title": "Sjablooninhoud"
+      },
+      "title-content": {
+        "label": "Volledige titel",
+        "required": "De titel is vereist."
+      },
+      "show_tab": {
+        "label": "Tabblad tonen in project.",
+        "hide": "Verbergen",
+        "show": "Tonen"
       }
     },
     "toasts": {
@@ -3474,6 +3539,14 @@
       "item-create": {
         "success": "Het item is succesvol aangemaakt.",
         "error": "Aanmaken van het item is mislukt. Probeer het nog eens."
+      },
+      "tab-visibility": {
+        "success": "Het tabblad veranderde de zichtbaarheid succesvol.",
+        "error": "Tabbladzicht wijzigen is mislukt. Probeer het nog eens."
+      },
+      "tab-order": {
+        "success": "Het tabblad is succesvol besteld.",
+        "error": "Kon het tabblad niet bestellen. Probeer het nog eens."
       }
     }
   }

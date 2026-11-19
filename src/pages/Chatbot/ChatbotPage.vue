@@ -142,7 +142,6 @@ const { data: conversationData, status: conversationStatus } = useFetch(
 const isLoadingConversation = computed(() => conversationStatus.value == 'pending')
 
 watch(conversationData, (cData) => {
-  // console.log('cData', cData)
   if (!cData) return
   if (conversationId.value) {
     if (cData?.conversation) {
@@ -169,7 +168,7 @@ watch(conversationData, (cData) => {
 const hasUserContext = computed(() => !!agent.value?.useProfileData)
 const hasPageContext = ref(false)
 const contextMessageRole = 'retriever'
-const { contextMessages, filterContextMesssages } = useChatbotContext({
+const { contextMessages, filterContextMesssages } = await useChatbotContext({
   hasUserContext,
   hasPageContext,
   contextMessageRole,
@@ -182,7 +181,6 @@ const displayableMessages = computed(() =>
 const history = computed(() => {
   const h = displayableMessages.value || []
   return h.map((message) => {
-    // console.log(message)
     return {
       role: message.role,
       text: message.content,

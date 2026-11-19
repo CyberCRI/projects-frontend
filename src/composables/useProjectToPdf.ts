@@ -2,8 +2,13 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 
 // TODO: blog are disabled for now (as per client request) keep code for later use
 
+import type {
+  ProjectTabType,
+  TranslatedProject,
+  TranslatedProjectTab,
+} from 'shared-projects-frontend/models'
 import addPageLinkedProjectsFactory from '~/composables/project-pdf-components/addPageLinkedProjects'
-import type { ProjectModulesKeys, TranslatedProject } from 'shared-projects-frontend/models'
+import addAdditionalPage from '~/composables/project-pdf-components/addPageAdditional'
 import addPageResourceFactory from '~/composables/project-pdf-components/PageResource'
 import addGoalsSection from '~/composables/project-pdf-components/addGoalsSection.ts'
 import addPageMembersFactory from '~/composables/project-pdf-components/PageMembers'
@@ -14,25 +19,25 @@ import addPageOneFactory from '~/composables/project-pdf-components/PageOne'
 import { fetchPdf } from '~/composables/pdf-helpers/usePdfHelpers'
 import { Doc } from '~/composables/pdf-helpers/doc-builder'
 
-export const DEFAULT_PDF_OPTIONS = Object.freeze({
-  members: true,
-  groups: true,
-  blogs: true,
-  goals: true,
-  resources: true,
-  linked_projects: true,
-}) satisfies { [key in ProjectModulesKeys]?: boolean }
+// list of enabled tabs to generate in pdf
+export const ENABLE_TAB_TYPE_PDF: ProjectTabType[] = [
+  'description',
+  'members',
+  'groups',
+  'blogs',
+  'resources',
+  'linked_projects',
+  'goals',
+  'blog',
+  'text',
+]
 
-export type ProjectPDFOptions = typeof DEFAULT_PDF_OPTIONS
+export type PDFChoies = {
+  visibility: boolean
+  tab: TranslatedProjectTab
+}[]
 
-export const useProjectToPdf = async (
-  project: TranslatedProject,
-  options: Partial<ProjectPDFOptions> = {}
-) => {
-  options = {
-    ...DEFAULT_PDF_OPTIONS,
-    ...options,
-  }
+export const useProjectToPdf = async (project: TranslatedProject, options: PDFChoies) => {
   const organizationsStore = useOrganizationsStore()
   const organisation = organizationsStore.current
 
@@ -46,26 +51,51 @@ export const useProjectToPdf = async (
       margin-bottom: 2cm;
     }`)
 
+  // project info
   mainDoc.add(await addPageOneFactory(project))
-  mainDoc.add(await addPageDescriptionFactory(project))
 
-  if (options.members) {
-    mainDoc.add(await addPageMembersFactory(project))
-  }
-  if (options.groups) {
-    mainDoc.add(await addPageGroupsFactory(project))
-  }
-  if (options.blogs) {
-    mainDoc.add(await addPageBlogFactory(project))
-  }
-  if (options.resources) {
-    mainDoc.add(await addPageResourceFactory(project))
-  }
-  if (options.linked_projects) {
-    mainDoc.add(await addPageLinkedProjectsFactory(project))
-  }
-  if (options.goals) {
-    mainDoc.add(await addGoalsSection(project))
+  // tab info
+  for (const option of options) {
+    if (!option.visibility) {
+      continue
+    }
+    switch (option.tab.type) {
+      case 'description': {
+        mainDoc.add(await addPageDescriptionFactory(project, option.tab))
+        break
+      }
+      case 'members': {
+        mainDoc.add(await addPageMembersFactory(project, option.tab))
+        break
+      }
+      case 'groups': {
+        mainDoc.add(await addPageGroupsFactory(project, option.tab))
+        break
+      }
+      case 'blogs': {
+        mainDoc.add(await addPageBlogFactory(project, option.tab))
+        break
+      }
+      case 'resources': {
+        mainDoc.add(await addPageResourceFactory(project, option.tab))
+        break
+      }
+      case 'linked_projects': {
+        mainDoc.add(await addPageLinkedProjectsFactory(project, option.tab))
+        break
+      }
+      case 'goals': {
+        mainDoc.add(await addGoalsSection(project, option.tab))
+        break
+      }
+      case 'blog':
+      case 'text': {
+        mainDoc.add(await addAdditionalPage(project, option.tab))
+        break
+      }
+      default:
+        console.error(`type ${option.tab.type} is not enabled in pdf generator`)
+    }
   }
 
   // FINALIZE AND DOWNLOAD PDF

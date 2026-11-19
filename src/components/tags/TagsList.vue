@@ -84,6 +84,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import BadgeItem from '~/components/base/BadgeItem.vue'
 

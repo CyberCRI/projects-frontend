@@ -2,6 +2,7 @@
   <div class="make-comment skeletons-background">
     <div v-if="usersStore.isConnected">
       <TipTapEditor
+        :key="editorKey"
         v-model="form.content"
         :errors="errors.content"
         :save-image-callback="saveCommentImage"
@@ -11,7 +12,7 @@
       />
 
       <div class="action">
-        <LpiButton :label="$t('common.cancel')" :secondary="true" @click="emit('canceled')" />
+        <LpiButton :label="$t('common.cancel')" :secondary="true" @click="cancel" />
         <LpiButton
           :disabled="!canSubmitComment || asyncing || !isValid || isFormEqual"
           :btn-icon="asyncing ? 'LoaderSimple' : null"
@@ -47,6 +48,8 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
+import { v4 as uuidv4 } from 'uuid'
+
 import type {
   ProjectMessageModel,
   TranslatedProject,
@@ -55,8 +58,10 @@ import type {
 } from 'shared-projects-frontend/models'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { defaultProjectMessageForm, useProjectMessageForm } from '~/form/messages'
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'
+import { getTemplateType } from '~/functs/tabs'
 import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
 
@@ -83,9 +88,13 @@ const emit = defineEmits<{
   'project-message-edited': [ProjectMessageModel]
 }>()
 
+const editorKey = ref(uuidv4())
+const refreshEditor = () => (editorKey.value = uuidv4())
+
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
 const { canCreateComment } = usePermissionProject(computed(() => props.project.id))
+const { isAtLeastUser } = usePermissions()
 
 const { t } = useNuxtI18n()
 
@@ -101,8 +110,7 @@ const defaultLocalForm = () => {
   newForm.content =
     getFirstTextNotEmpty([
       props.originalComment?.content,
-      props.project.template?.$t?.comment_content,
-      props.project.template?.comment_content,
+      getTemplateType('comments', props.project.template)?.content_item,
     ]) || newForm.content
 
   return newForm
@@ -126,7 +134,9 @@ const isFormEqual = useBlockNavigation(() =>
     html: ['content'],
   })
 )
-const canSubmitComment = computed(() => !isFormEqual.value && canCreateComment.value)
+const canSubmitComment = computed(
+  () => !isFormEqual.value && (isAtLeastUser.value || canCreateComment.value)
+)
 
 const scrollToNewComment = (comment) => {
   document.getElementById(comment.id)?.scrollIntoView({
@@ -135,6 +145,16 @@ const scrollToNewComment = (comment) => {
 }
 
 const addImage = (image: ImageModel) => form.value.images_ids.push(image.id)
+
+const resetForm = () => {
+  reset(defaultLocalForm())
+  nextTick(() => refreshEditor())
+}
+
+const cancel = () => {
+  resetForm()
+  emit('canceled')
+}
 
 const submit = async () => {
   if (props.originalComment) {
@@ -159,7 +179,10 @@ const createComment = () => {
         nextTick(() => scrollToNewComment(message))
       })
       .catch(() => toaster.pushError(t('toasts.project-message-create.error')))
-      .finally(() => (asyncing.value = false))
+      .finally(() => {
+        resetForm()
+        asyncing.value = false
+      })
   } else {
     return postComment(props.project.id, form.value)
       .then((comment) => {
@@ -168,11 +191,14 @@ const createComment = () => {
           comment,
         })
         toaster.pushSuccess(t('toasts.comment-create.success'))
+        resetForm()
         emit('comment-posted', comment)
         nextTick(() => scrollToNewComment(comment))
       })
       .catch(() => toaster.pushError(t('toasts.comment-create.error')))
-      .finally(() => (asyncing.value = false))
+      .finally(() => {
+        asyncing.value = false
+      })
   }
 }
 

@@ -10,12 +10,18 @@ export default defineLazyEventHandler(() => {
     await checkAdminRights(event)
     const limit = safeParseInt(getQuery(event)?.limit, 10)
     const offset = safeParseInt(getQuery(event)?.offset, 0)
+    const agentId = safeParseInt(getQuery(event)?.agentId, 0)
+
+    const messages = !!getQuery(event)?.withMessages
+    let selectAgent = {}
+    if (agentId) selectAgent = { agentId }
 
     const conversations = await paginate(chatbotPrisma.conversation, {
       offset,
       limit,
       where: {
         organizationCode: runtimeConfig.public.appApiOrgCode,
+        ...selectAgent,
       },
       include: {
         agent: {
@@ -24,6 +30,7 @@ export default defineLazyEventHandler(() => {
             agentTranslations: { where: { fieldName: 'title' } },
           },
         },
+        messages,
       },
       orderBy: { lastActiveAt: 'desc' },
     })

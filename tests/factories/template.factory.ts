@@ -25,12 +25,14 @@ export const TemplateFactory = createFactory<TemplateModel>((faker) => ({
   goal_title: faker.datatype.string(),
   project_description: faker.datatype.string(),
   project_title: faker.datatype.string(),
+  tabs: [],
+  enable_tab: true,
 }))
 
-export const TemplateInputFactory = createFactory<TemplateForm>((faker) => ({
+export const TemplateInputFactory = createFactory<TemplateForm>(() => ({
   ...BaseFactory.generate(),
   ...TemplateFactory.generate(),
-  project_categories_ids: [faker.datatype.number()],
+  project_categories_ids: [],
 }))
 
 export default TemplateFactory

@@ -22,6 +22,9 @@ export const useBlogEntryForm = (options = {}) => {
     content: {
       required: helpers.withMessage(t('form.blog.description'), requiredContent),
     },
+    created_at: {
+      required: helpers.withMessage(t('form.blog.created_at'), requiredContent),
+    },
   }))
 
   return useForm<BlogEntryForm>({

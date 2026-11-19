@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import ProjectLocationBase from '@/components/project/modules/Locations/ProjectLocationBase.vue'
-import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
-import type { TranslatedProject } from 'shared-projects-frontend/models'
+import type { TranslatedProject, TranslatedProjectTab } from 'shared-projects-frontend/models'
 
-defineProps<{ project: TranslatedProject }>()
+defineProps<{ project: TranslatedProject; tab: TranslatedProjectTab }>()
 </script>
 
 <template>
   <BaseModulePreview
-    :title="$t(PROJECT_MODULE_TITLE.locations)"
-    :icon="PROJECT_MODULE_ICON.locations"
-    :total="project.modules.locations"
+    :title="tab.$t.title"
+    :icon="tab.icon"
+    :total="tab.modules.items"
     :see-more="{
       name: 'ProjectLocations',
       params: { slugOrId: project.slug || project.id },

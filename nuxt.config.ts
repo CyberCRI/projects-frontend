@@ -48,7 +48,10 @@ try {
 
 export default defineNuxtConfig({
   ssr: true,
+  // let Nuxt add matching paths to .nuxt/tsconfig.json (used by `nuxt typecheck`, i.e. `yarn lint`)
+  alias,
   // compatibilityDate: '2024-11-01',
+  debug: !!import.meta.env.NUXT_DEBUG, // fullstack backend use a DEBUG env that interfere with nuwt and cause log pollution
   devtools: {
     enabled: import.meta.dev,
 
@@ -209,6 +212,8 @@ export default defineNuxtConfig({
     appChatbotPromptDb: '',
     appAgentMemoryTrace: '',
     appAgentMemorySlidingWindowSize: '',
+    appAgentSecretKeys: '',
+    appAgentSecretKeyCurrentVersion: '',
     public: {
       appVersion: '',
       appApiOrgCode: '',
@@ -246,6 +251,8 @@ export default defineNuxtConfig({
       appHasVectorDb: 0,
       appHasChatbotPromptDb: 0,
       appLlmModelSuggestions: '',
+      appMapRendererApiKey: '',
+      appNewCommentDisabled: 0,
     },
   },
   i18n: {
@@ -257,6 +264,11 @@ export default defineNuxtConfig({
     //   cookieKey: 'i18n_redirected',
     //   alwaysRedirect: true,
     // },
+  },
+  stylelint: {
+    // only in dev ignore error
+    emitError: false,
+    emitWarning: true,
   },
 
   nitro: {

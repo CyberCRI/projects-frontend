@@ -34,6 +34,7 @@ import type {
   TranslatedPeopleGroupModel,
   TrasnlatedHierarchyGroupModel,
 } from 'shared-projects-frontend/models'
+import { groupSkeleton } from '~/skeletons/group.skeletons'
 import { getHierarchyGroups } from '~/api/v2/group.service'
 
 const props = defineProps<{
@@ -48,6 +49,7 @@ const { data: group, status } = getHierarchyGroups(props.organizationCode, {
   query: {
     modules: 'none',
   },
+  default: () => groupSkeleton(),
 })
 // TODO fix types in shared-projects
 const children = computed(() => group.value.children as TranslatedPeopleGroupModel[])

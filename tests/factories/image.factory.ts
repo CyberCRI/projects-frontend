@@ -42,7 +42,7 @@ export const ImageOrganizationInputFactory = createFactory<ImageOrganizationInpu
   organization_code: faker.datatype.string(),
 }))
 
-export const ImageTemplateInputFactory = createFactory<ImageTemplateInput>((faker) => ({
+export const ImageTemplateFormFactory = createFactory<ImageTemplateInput>((faker) => ({
   ...ImageFactory.generate(),
   template_id: faker.datatype.number(),
 }))

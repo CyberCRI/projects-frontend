@@ -122,9 +122,9 @@
                       <dt>{{ $t('admin.accounts.table.groups') }}</dt>
                       <dd>
                         <ul>
-                          <li v-for="group in user.people_groups || []" :key="group.id">
-                            {{ group.name }}
-                          </li>
+                          {{
+                            `${$t('common.groups')} : ${user.modules.groups}`
+                          }}
                         </ul>
                       </dd>
                     </dl>
@@ -157,16 +157,15 @@
 </template>
 
 <script setup lang="ts">
-import type { Ordering } from 'shared-projects-frontend/interfaces'
-
-import { searchPeopleAdmin } from '~/api/v2/people.service'
+import { searchUserAdmin } from '~/api/v2/user.service'
 
 import FetchLoader from '~/components/base/FetchLoader.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 
+import type { QueryFilterUser } from 'shared-projects-frontend/models'
 import { factoriesSkeleton } from '~/skeletons/base.skeletons'
-import { peopleSkeleton } from '~/skeletons/people.skeletons'
+import { userSkeleton } from '~/skeletons/user.skeletons'
 import { roleI18n } from '~/functs/rolesUtils'
 import { capitalize } from '~/functs/string'
 
@@ -218,25 +217,21 @@ const LIMIT_OPTIONS = [
 const LIMIT = LIMIT_OPTIONS[0].value
 
 type OrderAdmin = 'family_name' | 'created_at' | 'email_verified'
-type QuerySearchAdmin = {
-  current_org_role: string
-  search: string
-  ordering: Ordering<OrderAdmin>
-}
 
 const search = ref('')
-const { query, setQuery } = useQuery<QuerySearchAdmin>({
+const { query, setQuery } = useQuery<QueryFilterUser>({
   current_org_role: 'admins,facilitators,users,viewers',
   ordering: '-created_at',
   search: search.value,
+  modules: ['groups'],
 })
 
 // TODO change to organizationCode
 // TODO add translate for user/group
-const organizationId = computed(() => organizationsStore.current.id)
-const { status, data, refresh, pagination } = searchPeopleAdmin(organizationId, {
+const organizationId = computed(() => organizationsStore.current?.id)
+const { status, data, refresh, pagination } = searchUserAdmin(organizationId, {
   query,
-  default: () => factoriesSkeleton(peopleSkeleton, LIMIT),
+  default: () => factoriesSkeleton(userSkeleton, LIMIT),
   paginationConfig: {
     limit: LIMIT,
   },

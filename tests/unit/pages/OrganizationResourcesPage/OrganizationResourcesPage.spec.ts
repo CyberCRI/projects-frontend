@@ -3,14 +3,20 @@ import OrganizationResourcesPage from '~/pages/OrganizationResourcesPage/Organiz
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
 import { AttachmentFileFactory } from '~~/tests/factories/attachment-file.factory'
+import { OrganizationFactory } from '~~/tests/factories/organization.factory'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
+import useOrganizationsStore from '~/stores/useOrganizations'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { flushPromises } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
+import pinia from '~/stores'
 
 describe('OrganizationResourcesPage.vue', () => {
   it('should render component', async () => {
+    const organizationStore = useOrganizationsStore(pinia)
+    organizationStore._current = OrganizationFactory.generate()
     const organizationCode = useOrganizationCode()
+
     registerEndpoint(`organization/${organizationCode}/file/`, () => {
       return PaginationsFactory.generate({
         results: AttachmentFileFactory.generateMany(10),

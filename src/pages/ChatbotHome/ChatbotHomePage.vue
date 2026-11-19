@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Agent } from '~~/prisma-chatbot-db/generated/prisma/browser'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 // import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
 import useUsersStore from '@/stores/useUsers'
@@ -31,7 +32,7 @@ const { /*status,*/ isLoading, data: agents /*error,*/ /*refresh*/ } = useAsyncA
   key,
   () => $fetch('/api/chatbot', options),
   {
-    translate: (data) => translateAgents(data),
+    translate: (data) => translateAgents(data as unknown as Agent[]),
   }
 )
 

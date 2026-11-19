@@ -4,11 +4,11 @@ import {
   deleteProject,
   patchProject,
 } from 'shared-projects-frontend/apis'
+import { refreshProjectData, refreshProjectTabs } from '~/composables/project/refreshProject'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
-import { refreshProjectData } from '~/composables/project/refreshProject'
 import type { TranslatedProject } from 'shared-projects-frontend/models'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
@@ -67,10 +67,11 @@ const defaultLocalForm = () => {
     template: props.project.template,
   }
 }
-const { form, reset, cleanedData, isValid } = useProjectSettingForm({
-  default: defaultLocalForm(),
-  lazy: true,
-})
+const { form, reset, cleanedData, isValid, jumpToFirstError, formFieldTargetIds } =
+  useProjectSettingForm({
+    default: defaultLocalForm(),
+    lazy: true,
+  })
 
 const updateFormTemplates = (templateForm) => {
   form.value = {
@@ -201,7 +202,9 @@ const selectedOrgLinks = computed(() => {
 })
 
 // callback
-const refresh = () => refreshProjectData(props.project)
+const refresh = () => {
+  return refreshProjectData(props.project).then(() => refreshProjectTabs(props.project))
+}
 
 const redirect = () => {
   closeAllModals()
@@ -214,10 +217,14 @@ const redirect = () => {
 }
 
 const onUpdate = () => {
+  if (!isValid.value) {
+    jumpToFirstError()
+    return
+  }
   asyncing.value = true
   const body = { ...cleanedData.value }
 
-  patchProject(props.project.id, body)
+  patchProject(props.project.id, body, { query: { modules: 'none' } })
     .then(() => {
       toaster.pushSuccess(t('toasts.project-edit.success'))
       refresh()
@@ -277,13 +284,18 @@ const checkClose = () => {
     <!-- actions -->
     <FormPanel
       :asyncing="asyncing"
-      :confirm-action-disabled="!isValid || isFormEqual"
+      :is-form-equal="isFormEqual"
+      :is-valid="isValid"
       @confirm="onUpdate"
       @close="checkClose"
     >
       <div class="list-container">
         <template v-if="canEditProject">
-          <Section class="skeletons-background" :title="$t('project.visibility')">
+          <Section
+            class="skeletons-background"
+            :title="$t('project.visibility')"
+            :data-field-target="formFieldTargetIds.publication_status"
+          >
             <GroupButton
               v-model="form.publication_status"
               :has-icon="true"
@@ -296,7 +308,11 @@ const checkClose = () => {
               {{ selectedPublicationDescription }}
             </p>
           </Section>
-          <Section class="skeletons-background" :title="$t('project.life-status')">
+          <Section
+            class="skeletons-background"
+            :title="$t('project.life-status')"
+            :data-field-target="formFieldTargetIds.life_status"
+          >
             <GroupButton
               v-model="form.life_status"
               :has-icon="true"
@@ -321,6 +337,7 @@ const checkClose = () => {
             v-if="organizations?.length && isAdmin"
             class="skeletons-background"
             :title="$t('project.org-settings.title')"
+            :data-field-target="formFieldTargetIds.organizations_codes"
           >
             <p class="org-description">
               {{ $t('project.org-settings.description') }}

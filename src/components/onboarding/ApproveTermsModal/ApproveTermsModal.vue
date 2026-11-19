@@ -6,23 +6,22 @@ import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
 const organizationsStore = useOrganizations()
+const organizationCode = useOrganizationCode()
 const usersStore = useUsersStore()
 const toaster = useToasterStore()
 
 const { t } = useNuxtI18n()
 
-const orgCode = computed(() => organizationsStore?.current?.code || '')
-
 const signedTerms = computed(() => usersStore.user?.signed_terms_and_conditions || {})
 
 const lastApprovedVersion = computed(() => {
   if (!usersStore.isConnected) return null
-  return signedTerms.value?.[orgCode.value]?.version || null
+  return signedTerms.value?.[organizationCode]?.version || null
 })
 
 const lastApprovedDate = computed(() => {
   if (!usersStore.isConnected) return null
-  return signedTerms.value?.[orgCode.value]?.date || null
+  return signedTerms.value?.[organizationCode]?.date || null
 })
 
 const needsAproval = computed(() => {
@@ -70,15 +69,15 @@ const onTermApproved = async () => {
   const payload = {
     signed_terms_and_conditions: {
       ...signedTerms?.value,
-      [orgCode.value]: {
+      [organizationCode]: {
         version: organizationsStore.termsVersion,
         date: new Date().toISOString(),
       },
     },
   }
   try {
-    await patchUser(user.id, payload)
-    await usersStore.getUser(user.id)
+    await patchUser(organizationCode, user.id, payload)
+    await usersStore.refreshUser()
     if (window?.lpiSharedWorker) {
       window?.lpiSharedWorker.port.postMessage({
         type: 'TOS_ACCEPTED',

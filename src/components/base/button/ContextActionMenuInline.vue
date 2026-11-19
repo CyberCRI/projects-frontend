@@ -6,15 +6,19 @@
       btn-icon="Pen"
       :aria-label="$t('common.edit')"
       class="skeletons-background"
+      data-test="action-edit"
       @click.prevent="$emit('edit')"
     />
+    <div v-else-if="showEmpty" />
     <LpiButton
       v-if="canDelete"
       btn-icon="TrashCanOutline"
       :aria-label="$t('common.delete')"
       class="skeletons-background"
+      data-test="action-delete"
       @click.prevent="$emit('delete')"
     />
+    <div v-else-if="showEmpty" />
   </div>
 </template>
 <script setup lang="ts">
@@ -22,10 +26,12 @@ withDefaults(
   defineProps<{
     canEdit?: boolean
     canDelete?: boolean
+    showEmpty?: boolean
   }>(),
   {
     canEdit: false,
     canDelete: false,
+    showEmpty: false,
   }
 )
 defineEmits<{

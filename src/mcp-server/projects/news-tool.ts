@@ -1,7 +1,7 @@
 import { getAllNews, getNews } from 'shared-projects-frontend/apis'
 import type { NewsModel } from 'shared-projects-frontend/models'
+import type { McpServer } from '@modelcontextprotocol/server'
 import { mcpOptions, orgCode, resultFromTool } from './base'
-import type { TypeMcpServer } from '~/interfaces/mcp'
 import { pick } from 'es-toolkit'
 import { z } from 'zod'
 
@@ -10,7 +10,7 @@ const mapNewsArticle = (news: NewsModel) => ({
   ...pick(news, ['id', 'title', 'content', 'publication_date']),
 })
 
-export default (server: TypeMcpServer) => {
+export default (server: McpServer) => {
   // Add an search tool
   server.registerTool(
     'news-list',
@@ -18,8 +18,8 @@ export default (server: TypeMcpServer) => {
       title: 'News list',
       description: 'Get a list of recent news articles.',
     },
-    resultFromTool((_, extras) => {
-      const opts = mcpOptions(extras)
+    resultFromTool((_, ctx) => {
+      const opts = mcpOptions(ctx)
       return getAllNews(orgCode, {
         ...opts,
         query: {
@@ -37,12 +37,12 @@ export default (server: TypeMcpServer) => {
     {
       title: 'News data',
       description: 'Get a news article. Use the news-list tool to get news ids.',
-      inputSchema: {
+      inputSchema: z.object({
         slugOrId: z.number().describe('The id of the news article'),
-      },
+      }),
     },
-    resultFromTool(({ slugOrId }, extras) => {
-      const opts = mcpOptions(extras)
+    resultFromTool(({ slugOrId }, ctx) => {
+      const opts = mcpOptions(ctx)
       return getNews(orgCode, slugOrId, {
         ...opts,
         query: {

@@ -1,18 +1,25 @@
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
 import ProjectEditDescriptionTab from '~/pages/ProjectPageV2/Tabs/Description/ProjectEditDescriptionTab.vue'
+import { TranslatedProjectTabFactory } from '~~/tests/factories/projects-tabs.factory'
+import { OrganizationFactory } from '~~/tests/factories/organization.factory'
 import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { UserFactory } from '~~/tests/factories/user.factory'
+import useOrganizationsStore from '~/stores/useOrganizations'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { flushPromises } from '@vue/test-utils'
 import useUsersStore from '~/stores/useUsers'
 import { describe, expect, it } from 'vitest'
+import pinia from '~/stores'
 
 describe('ProjectEditDescriptionTab.vue', () => {
   it('should render component', async () => {
+    const organizationStore = useOrganizationsStore(pinia)
+    organizationStore._current = OrganizationFactory.generate()
+
     const project = TranslatedProjectFactory.generate()
-    const props = { project }
+    const props = { project, tab: TranslatedProjectTabFactory.generate({ type: 'description' }) }
 
     const user = UserFactory.generate()
     const userStore = useUsersStore()

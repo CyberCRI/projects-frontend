@@ -1,140 +1,137 @@
 <template>
-  <div class="block-container form">
-    <div class="block-container">
-      <h4 class="title">
-        {{ $t('template.template') }}
-      </h4>
-      <span class="description">{{ $t('template.tips-template') }}</span>
+  <div class="list-container template-form">
+    <div class="list-container m4">
       <TextInput
         v-model="form.name"
         data-test="name"
+        required
+        :label="$t('template.template')"
+        :help="$t('template.tips-template')"
         :placeholder="$t('project.form.project-templates')"
+        :errors="errors.name"
+        :data-field-target="formFieldTargetIds.name"
       />
-      <FieldErrors :errors="errors.name" />
-    </div>
 
-    <div class="block-container">
-      <h4 class="title">
-        {{ $t('template.description') }}
-      </h4>
-      <span class="description">{{ $t('template.tips-template') }}</span>
-      <TipTapEditor
-        :key="`description-${editorKey}`"
-        v-model="form.description"
-        :save-image-callback="saveImageCallback"
-        mode="full"
-      />
-    </div>
-
-    <div class="block-container">
-      <div class="title-button-ctn">
-        <h4 class="title">
-          {{ $t('template.category') }}
-        </h4>
-        <LpiButton :label="$t('category.edit')" @click="categorySearchIsOpened = true" />
-      </div>
-
-      <div v-if="form.categories.length" class="tag-grid">
-        <FilterValue
-          v-for="category in form.categories"
-          :key="category.id"
-          :label="category.name"
-        />
-      </div>
-
-      <span v-if="form.categories.length === 0" class="description">
-        {{ $t('template.no-category-set') }}
-      </span>
-      <BaseDrawer
-        :confirm-action-name="$t('common.confirm')"
-        :is-opened="categorySearchIsOpened"
-        :title="$t('template.edit-category')"
-        class="small"
-        @close="closeCategory"
-        @confirm="confirmCategory"
+      <Field
+        :label="$t('template.description')"
+        :help="$t('template.tips-template')"
+        :data-field-target="formFieldTargetIds.description"
       >
-        <CategoriesFilterEditor v-model="tmpCategories" />
-      </BaseDrawer>
+        <TipTapEditor
+          v-model="form.description"
+          class="w-full"
+          :save-image-callback="saveImageCallback"
+          mode="full"
+        />
+      </Field>
+
+      <Field :label="$t('template.category')" :data-field-target="formFieldTargetIds.categories">
+        <template #in-label>
+          <LpiButton :label="$t('category.edit')" @click="openModals('category')" />
+        </template>
+        <div v-if="form.categories.length" class="tag-grid">
+          <FilterValue
+            v-for="category in form.categories"
+            :key="category.id"
+            :label="category.name"
+          />
+        </div>
+        <span v-else class="description">
+          {{ $t('template.no-category-set') }}
+        </span>
+      </Field>
+
+      <Field
+        :label="$t('template.enable-tab.label')"
+        :help="$t('template.enable-tab.help')"
+        :data-field-target="formFieldTargetIds.enable_tab"
+      >
+        <SwitchInput v-model="form.enable_tab" />
+      </Field>
     </div>
 
-    <h4 class="divider-title">
-      {{ t('template.title-project') }}
-    </h4>
-    <div>
-      <TextInput v-model="form.project_title" :label="t('template.project-title')" />
-    </div>
-
-    <div>
-      <TextInput v-model="form.project_purpose" :label="t('template.project-purpose')" />
-    </div>
-
-    <div>
-      <label class="label">{{ capitalize(t('template.project-description')) }}</label>
-      <TipTapEditor
-        :key="`project-description-${editorKey}`"
-        v-model="form.project_description"
-        :save-image-callback="saveImageCallback"
-        mode="full"
+    <TemplateFormSection
+      :title="$t('template.title-project')"
+      :errors="haveError(errors.project_title, errors.project_purpose)"
+    >
+      <TextInput
+        v-model="form.project_title"
+        :label="$t('template.project-title')"
+        :errors="errors.project_title"
+        :data-field-target="formFieldTargetIds.project_title"
       />
-    </div>
-
-    <h4 class="divider-title">
-      {{ t('template.title-blog') }}
-    </h4>
-
-    <div>
-      <TextInput v-model="form.blogentry_title" :label="capitalize(t('template.blog-title'))" />
-    </div>
-
-    <div>
-      <label class="label">{{ capitalize(t('template.blog-content')) }}</label>
-      <TipTapEditor
-        :key="`blog-${editorKey}`"
-        v-model="form.blogentry_content"
-        :save-image-callback="saveImageCallback"
-        mode="full"
+      <TextInput
+        v-model="form.project_purpose"
+        :label="$t('template.project-purpose')"
+        :errors="errors.project_purpose"
+        :data-field-target="formFieldTargetIds.project_purpose"
       />
-    </div>
+    </TemplateFormSection>
 
-    <h4 class="divider-title">
-      {{ t('template.title-goal') }}
-    </h4>
+    <Sortable
+      :key="sortableKeys"
+      :list="form.tabs || []"
+      :options="DRAG_OPTIONS"
+      group="category-children"
+      tag="transition-group"
+      :item-key="(tab) => `${tab.id || tab.uuid}-${tab.order}`"
+      @end="onDrag"
+    >
+      <template #item="{ element: tab, index }">
+        <TemplateFormSection
+          v-model:visibility="tab.show_tab"
+          :can-delete="isCustomTab(tab.type)"
+          :can-visibility="true"
+          :title="tab.title"
+          :errors="!!errors.tabs[0]?.$message?.[index]?.length"
+          :icon="tab.icon"
+          class="sortable"
+          :class="{
+            'visibility-hide': !tab.show_tab,
+          }"
+          @delete="onDeleteTab(index)"
+        >
+          <template #left>
+            <IconImage class="icon skeletons-background sortable-icon" name="DotsGrid" />
+          </template>
+          <TabFormRaw
+            show-type
+            :model-value="form.tabs[index]"
+            :errors="errors.tabs[0]?.$message?.[index]"
+            :data-field-target="formFieldTargetIds.tabs[index]"
+            @update:model-value="updateTab(index, $event)"
+          />
+          <template v-if="tabHaveTemplate(form.tabs[index].type)">
+            <br />
+            <h2 class="title-template">
+              {{ $t('tab.form.template.title') }}
+            </h2>
+            <TabItemFormRaw
+              :show-title="tabHaveTemplateTitle(form.tabs[index].type)"
+              :model-value="{
+                title: form.tabs[index].title_item,
+                content: form.tabs[index].content_item,
+              }"
+              @update:model-value="onUpdateTemplate(index, $event)"
+            />
+          </template>
+        </TemplateFormSection>
+      </template>
+    </Sortable>
 
-    <div>
-      <TextInput v-model="form.goal_title" :label="t('template.advancement-goal-title')" />
-    </div>
+    <LpiButton btn-icon="Plus" class="my4 tab-add" :label="$t('tab.tab.add')" @click="addNewTab" />
 
-    <div>
-      <label class="label">
-        {{ t('template.advancement-goal-content') }}
-      </label>
-      <TipTapEditor
-        :key="`advancement-goal-${editorKey}`"
-        v-model="form.goal_description"
-        :save-image-callback="saveImageCallback"
-        data-test="template-advancement-goal-content-editor"
-        mode="full"
-      />
-    </div>
-
-    <h4 class="divider-title">
-      {{ t('template.title-comment') }}
-    </h4>
-
-    <div>
-      <label class="label">
-        {{ t('template.comment') }}
-      </label>
-
-      <TipTapEditor
-        :key="`comment-${editorKey}`"
-        v-model="form.comment_content"
-        :save-image-callback="saveImageCallback"
-        class="comment-description"
-        mode="full"
-        data-test="template-comment-editor"
-      />
-    </div>
+    <!-- drawer / modal -->
+    <BaseDrawer
+      :confirm-action-name="$t('common.confirm')"
+      :is-opened="stateModals.category"
+      :title="$t('template.edit-category')"
+      class="small"
+      @close="closeModals('category')"
+      @confirm="confirmCategory"
+    >
+      <CategoriesFilterEditor v-model="tmpCategories" />
+    </BaseDrawer>
   </div>
 </template>
 
@@ -143,60 +140,180 @@ import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import { Sortable } from 'sortablejs-vue3'
 
-import useNuxtI18n from '~/composables/useNuxtI18n'
-
+import {
+  getTab,
+  isCustomTab,
+  sanitizeTabsTemplate,
+  tabHaveTemplate,
+  tabHaveTemplateTitle,
+} from '~/functs/tabs'
+import type {
+  ProjectTabItemForm,
+  TemplateForm,
+  TemplateTabForm,
+} from 'shared-projects-frontend/models'
+import { defaultTemplateForm, defaultTemplateTabForm, useTemplateForm } from '~/form/template'
+import TemplateFormSection from '~/components/templates/TemplateFormSection.vue'
+import TabItemFormRaw from '~/components/tabs/TabItemFormRaw.vue'
+import SwitchInput from '~/components/base/form/SwitchInput.vue'
 import type { PropsDefinitions } from '~/composables/tiptap'
+import TabFormRaw from '~/components/tabs/TabFormRaw.vue'
+import { isEqual, isNil, omit, sortBy } from 'es-toolkit'
+import Field from '~/components/base/form/Field.vue'
 import type { ErrorObject } from '@vuelidate/core'
-import { capitalize } from '~/functs/string'
+import { deepToRaw } from '~/functs/utils'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
-    errors?: {
-      [key: string]: ErrorObject[]
-    }
+    template?: TemplateForm
     saveImageCallback: PropsDefinitions['saveImageCallback']
   }>(),
   {
-    errors: () => ({
-      name: [],
-    }),
+    template: null,
   }
 )
 
-const { t } = useNuxtI18n()
+const emit = defineEmits<{
+  isValid: [boolean]
+  isFormEqual: [boolean]
+}>()
 
-const form = defineModel({ type: Object })
-const editorKey = ref(0)
-const categorySearchIsOpened = ref(false)
+// sortable
+const DRAG_OPTIONS = {
+  animation: 200,
+  disabled: false,
+  ghostClass: 'child-ghost',
+}
+
+const { stateModals, openModals, closeModals } = useModals({ category: false })
+
+const { locale } = useNuxtI18n()
+
+// form utils
+const localeDefaultForm = () => {
+  const localForm = {
+    ...defaultTemplateForm(),
+    ...(props.template || {}),
+    tabs: [...(props?.template?.tabs || [])],
+  }
+
+  localForm.tabs = sortBy(
+    sanitizeTabsTemplate(localForm.tabs, locale.value).map((tab) =>
+      isNil(tab.id) ? omit(tab, ['id']) : tab
+    ),
+    ['order']
+  )
+
+  const blogsTemplate = getTab(localForm.tabs, 'blogs')
+  if (!blogsTemplate.title_item) blogsTemplate.title_item = localForm.blogentry_title
+  if (!blogsTemplate.content_item) blogsTemplate.content_item = localForm.blogentry_content
+
+  const commentTemplate = getTab(localForm.tabs, 'comments')
+  if (!commentTemplate.content_item) commentTemplate.content_item = localForm.comment_content
+
+  const goalsTemplate = getTab(localForm.tabs, 'goals')
+  if (!goalsTemplate.content_item) goalsTemplate.content_item = localForm.goal_description
+  if (!goalsTemplate.title_item) goalsTemplate.title_item = localForm.goal_title
+
+  const descriptionTemplate = getTab(localForm.tabs, 'description')
+  if (!descriptionTemplate.content_item)
+    descriptionTemplate.content_item = localForm.project_description
+
+  return structuredClone(deepToRaw(localForm))
+}
+const model = defineModel<TemplateForm>()
+const { form, errors, isValid, validate, cleanedData, reset, formFieldTargetIds } = useTemplateForm(
+  { $scope: true }
+)
+
+const isFormEqual = useBlockNavigation(() => isEqual(form.value, localeDefaultForm()))
+
+watch(
+  () => props.template,
+  () => reset(localeDefaultForm()),
+  { deep: true, immediate: true }
+)
+watchEffect(() => emit('isValid', isValid.value))
+watchEffect(() => (model.value = cleanedData.value))
+watchEffect(() => emit('isFormEqual', isFormEqual.value))
+defineExpose({
+  validate,
+})
 
 // temp categories select in drawer
 const tmpCategories = ref([])
-watch(categorySearchIsOpened, () => {
-  tmpCategories.value = [...form.value.categories]
-})
-const closeCategory = () => {
-  categorySearchIsOpened.value = false
-}
+watch(
+  () => stateModals.value.category,
+  () => (tmpCategories.value = [...form.value.categories])
+)
 const confirmCategory = () => {
   form.value.categories = [...tmpCategories.value]
-  closeCategory()
+  closeModals('category')
 }
+
+const haveError = (...errors: ErrorObject[][]): boolean => {
+  return errors.filter((err) => err.length !== 0).length !== 0
+}
+
+const addNewTab = () => {
+  const tab = defaultTemplateTabForm()
+  form.value.tabs.push(tab)
+}
+
+const updateTab = (idx: number, tab: TemplateTabForm) => {
+  const orginalTab = form.value.tabs[idx]
+
+  if (tab) {
+    form.value.tabs[idx] = {
+      uuid: orginalTab.uuid,
+      ...tab,
+    }
+  }
+}
+
+const onUpdateTemplate = <Item extends ProjectTabItemForm>(idx: number, item: Item | null) => {
+  if (item) {
+    form.value.tabs[idx] = {
+      ...form.value.tabs[idx],
+      title_item: item.title,
+      content_item: item.content,
+    }
+  }
+}
+
+const onDeleteTab = (idx: number) => {
+  const tabs = [...form.value.tabs]
+  tabs.splice(idx, 1)
+  form.value.tabs = tabs
+}
+
+const onDrag = (ev) => {
+  const { oldIndex, newIndex } = ev
+
+  // // move old index element to new positions
+  const localForm: TemplateForm = deepToRaw(form.value)
+  const tabs = localForm.tabs
+  const [element] = tabs.splice(oldIndex, 1)
+  tabs.splice(newIndex, 0, element)
+
+  tabs.forEach((tab, idx) => (tab.order = idx))
+
+  reset(localForm)
+}
+
+// need to force sortable to reload list
+const sortableKeys = computed(() =>
+  form.value.tabs.map((tab) => `${tab.id || tab.uuid}-${tab.order}`).join('::')
+)
 </script>
 
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 
-.title-button-ctn {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: variables.$space-l;
-
-  .title {
-    margin: unset;
-    font-size: variables.$font-size-l;
-  }
+.template-form {
+  gap: 1.5rem;
 }
 
 .tag-grid {
@@ -205,25 +322,23 @@ const confirmCategory = () => {
   gap: variables.$space-s;
 }
 
-.block-container {
-  margin-bottom: 1rem;
+.title-template {
+  font-size: 2rem;
 }
 
-.divider-title {
-  text-align: center;
-  margin-top: 2rem;
-  font-size: 2.5rem;
-  color: variables.$primary-dark;
+.tab-add {
+  width: fit-content;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    transform: translateY(-0.7rem);
-    display: inline-block;
-    width: 3rem;
-    height: 0.2rem;
-    background-color: variables.$primary-dark;
-    border-radius: 40px;
+.sortable {
+  margin: 1rem 0;
+
+  &.visibility-hide {
+    opacity: 0.7;
+  }
+
+  .sortable-icon {
+    cursor: grab !important;
   }
 }
 </style>

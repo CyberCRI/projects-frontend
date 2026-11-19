@@ -9,13 +9,13 @@ import getVectorStore from '@/server/utils/vector-db-new.js'
 import { SystemMessage } from '@langchain/core/messages'
 import { createAgent } from 'langchain'
 
-export default async function getAgent(agentData, event, conversationId) {
+export default async function getAgent(agentData, event, userToken) {
   const tools = []
 
   /* --------- MCPs  --------- */
 
   if (agentData.useProjectsMcp || agentData.mcps.length) {
-    const mcpTools = await getMcpTools(agentData, event, conversationId)
+    const mcpTools = await getMcpTools(agentData, event, userToken)
     tools.unshift(...mcpTools)
   }
 
