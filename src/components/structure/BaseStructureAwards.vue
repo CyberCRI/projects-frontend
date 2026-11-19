@@ -6,7 +6,7 @@
         v-for="award in awards"
         :key="award.id"
         :award="award"
-        :researcher="award.researchers?.[0]"
+        :contributors="award.contributors?.[0]"
       />
       <NothingHere v-if="!isLoading && awards.length === 0" />
       <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />

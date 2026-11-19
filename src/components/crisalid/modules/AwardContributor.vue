@@ -1,16 +1,30 @@
 <template>
   <div class="separator"></div>
   <div class="award">
+    <div v-if="contributor.researcher" class="image-div">
+      <CroppedApiImage
+        :alt="`${contributor.researcher.user.given_name} ${contributor.researcher.user.family_name} image`"
+        class="img-container skeletons-background"
+        :picture-data="contributor.researcher.user.profile_picture"
+        picture-size="medium"
+        :default-picture="DEFAULT_USER_PATATOID"
+      />
+      <div class="text text-limit">
+        <div class="name skeletons-text">
+          {{ contributor.researcher.user.given_name }} {{ contributor.researcher.user.family_name }}
+        </div>
+      </div>
+    </div>
     <h2 class="award-title skeletons-text">
-      <span v-if="award.date">{{ formatDate(award.date, locale) }} -</span>
-      {{ award.award.$t.name }}
+      <span v-if="contributor.date">{{ formatDate(contributor.date, locale) }} -</span>
+      {{ award.$t.name }}
     </h2>
     <p class="skeletons-text">
-      {{ award.$t.description || award.award.$t.description }}
+      {{ contributor.$t.description || award.$t.description }}
     </p>
     <LinkButton
-      v-if="award.link"
-      :to="award.link"
+      v-if="contributor.link"
+      :to="contributor.link"
       :label="$t('common.see-more')"
       btn-icon="ExternalLink"
       class="award-link skeletons-background"
@@ -20,13 +34,14 @@
 </template>
 
 <script lang="ts" setup>
-import type { TranslatedResearcherAward } from 'shared-projects-frontend/models'
+import type { TranslatedAward, TranslatedResearcherAward } from 'shared-projects-frontend/models'
 import { formatDate } from '~/functs/date'
 
 const { locale } = useNuxtI18n()
 
 defineProps<{
-  award: TranslatedResearcherAward
+  award: TranslatedAward
+  contributor: TranslatedResearcherAward
 }>()
 </script>
 
@@ -53,5 +68,20 @@ defineProps<{
 
 .award ~ .separator {
   display: block;
+}
+
+.img-container {
+  border-radius: 50%;
+  background-size: cover;
+  background-position: top center;
+  width: variables.pxtorem(48px);
+  height: variables.pxtorem(48px);
+  flex-shrink: 0;
+}
+
+.image-div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 </style>

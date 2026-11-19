@@ -1,22 +1,22 @@
 <template>
   <div class="separator"></div>
   <div class="teaching">
-    <div v-if="researcher" class="image-div">
-      <CroppedApiImage
-        :alt="`${researcher.user.given_name} ${researcher.user.family_name} image`"
-        class="img-container skeletons-background"
-        :picture-data="researcher.user.profile_picture"
-        picture-size="medium"
-        :default-picture="DEFAULT_USER_PATATOID"
-      />
-      <div class="text text-limit">
-        <div class="name skeletons-text">
-          {{ researcher.user.given_name }} {{ researcher.user.family_name }}
-        </div>
-      </div>
-    </div>
     <h2 class="teaching-title skeletons-text">{{ teaching.$t.name }}</h2>
     <div class="teaching-header">
+      <div v-if="researcher" class="image-div">
+        <CroppedApiImage
+          :alt="`${researcher.user.given_name} ${researcher.user.family_name} image`"
+          class="img-container skeletons-background"
+          :picture-data="researcher.user.profile_picture"
+          picture-size="medium"
+          :default-picture="DEFAULT_USER_PATATOID"
+        />
+        <div class="text text-limit">
+          <div class="name skeletons-text">
+            {{ researcher.user.given_name }} {{ researcher.user.family_name }}
+          </div>
+        </div>
+      </div>
       <span class="teaching-header-item skeletons-background">
         <IconImage name="SchoolOutline" class="teaching-header-icon" />
         <span class="teaching-header-label">{{ teaching.level }}</span>
@@ -74,12 +74,12 @@ defineProps<{
   font-size: 1.2rem;
 }
 
-.teaching-header,
 .teaching-domains,
 .teaching-footer {
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .teaching-header-item {

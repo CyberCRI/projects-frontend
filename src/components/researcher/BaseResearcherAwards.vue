@@ -3,7 +3,12 @@
     <BaseModuleHeader v-if="!preview" :editable="false" :pagination="pagination" />
 
     <div class="awards-list">
-      <AwardContributor v-for="award in awards" :key="award.award.id" :award="award" />
+      <AwardContributor
+        v-for="award in awards"
+        :key="award.award.id"
+        :award="award.award"
+        :contributor="award"
+      />
       <NothingHere v-if="!isLoading && awards.length === 0" />
       <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
     </div>
