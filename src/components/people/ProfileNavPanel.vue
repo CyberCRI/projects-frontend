@@ -17,10 +17,10 @@
 
     <NavPanelMenu :menu-entries="profileTabs" :current-tab="currentTab" @navigated="navigated" />
 
-    <div class="user-actions-ctn">
+    <!-- <div class="user-actions-ctn">
       <BaseModuleButton btn-icon="BookmarkLine" />
       <BaseModuleButton btn-icon="ShareLink" />
-    </div>
+    </div> -->
   </NavPanelAside>
 </template>
 

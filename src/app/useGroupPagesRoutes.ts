@@ -97,7 +97,7 @@ export default function useGroupPagesRoutes() {
           component: () => import('../pages/GroupPageV2/Tabs/Fundings/GroupFundingsTab.vue'),
         },
         {
-          path: 'teaching',
+          path: 'teachings',
           name: 'groupTeaching',
           component: () => import('../pages/GroupPageV2/Tabs/Teachings/GroupTeachingsTab.vue'),
         },

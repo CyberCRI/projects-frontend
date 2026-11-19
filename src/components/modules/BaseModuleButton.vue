@@ -45,7 +45,7 @@ const iconOnly = computed(() => (!props.label || !props.label.length) && props.b
   will-change: transform;
   border: none;
   background: transparent;
-  color: variables.$primary-dark;
+  color: var(--primary-dark);
   padding: 0;
   gap: variables.$space-m;
   font-size: 1rem;
@@ -62,6 +62,6 @@ const iconOnly = computed(() => (!props.label || !props.label.length) && props.b
   transition: 0.15s fill ease-in-out;
   width: 1.4em;
   height: 1.4em;
-  fill: variables.$primary;
+  fill: var(--primary);
 }
 </style>
