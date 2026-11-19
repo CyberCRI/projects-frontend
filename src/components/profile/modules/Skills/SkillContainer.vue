@@ -21,10 +21,12 @@ const props = withDefaults(
     skillType: SkillType
     user: TranslatedUserModel
     mentorShip: MentorShip
+    researcherMode?: boolean
   }>(),
   {
     editable: false,
     preview: false,
+    researcherMode: false,
   }
 )
 
@@ -119,7 +121,10 @@ const onAdd = () => {
   <div>
     <BaseModuleHeader v-if="!preview" :editable="editable" :add-label="addLabel" @add="onAdd" />
     <Title v-if="!preview" :title="title" :count="skills.length" />
-    <div class="skills" :class="{ 'list-divider': !preview }">
+    <div
+      class="skills"
+      :class="{ 'list-divider': !preview && !researcherMode, 'researcher-mode': researcherMode }"
+    >
       <SkillItem
         v-for="skill in skills"
         :key="skill.id"
@@ -170,5 +175,11 @@ const onAdd = () => {
 <style lang="scss" scoped>
 .list-divider > :deep(*:not(:last-child)::after) {
   margin: 1rem;
+}
+
+.researcher-mode {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
 }
 </style>

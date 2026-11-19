@@ -7,7 +7,7 @@ withDefaults(defineProps<{ user: TranslatedUserModel; editable?: boolean }>(), {
 </script>
 
 <template>
-  <BaseModuleTab :title="$t(USER_MODULE_TITLE.privacy)" :count="0">
+  <BaseModuleTab :title="$t(USER_MODULE_TITLE.privacy)">
     <BaseUserPrivacy :profile="user" :editable="editable" />
   </BaseModuleTab>
 </template>

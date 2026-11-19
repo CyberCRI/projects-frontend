@@ -105,7 +105,7 @@ watchEffect(() => emit('expanded', !showLess.value))
   overflow: hidden;
   position: relative;
   transition: height 0.2s;
-  height: calc(v-bind('actualHeight') * 1px);
+  height: calc(v-bind('actualHeight') * 1px + 1rem);
 
   .description-limited-transparancy {
     display: none;

@@ -30,6 +30,23 @@
       :group="group"
       :is-loading="isLoading"
     />
+
+    <div class="profile-row">
+      <StructureDomainPreview
+        v-if="group.structure?.modules?.domains"
+        class="researcher-domain"
+        :group="group"
+      />
+      <!-- <StructureNetworkPreview
+        v-if="group.structure?.modules?.preview"
+        class="researcher-network"
+        :group="group"
+      /> -->
+    </div>
+
+    <StructureAwardsPreview v-if="group.structure?.modules?.awards" :group="group" />
+    <StructureTeachingsPreview v-if="group.structure?.modules?.teachings" :group="group" />
+    <StructureFundingsPreview v-if="group.structure?.modules?.fundings" :group="group" />
   </div>
 </template>
 
@@ -51,6 +68,9 @@ import GroupSubPreview from '~/components/group/Modules/GroupSub/GroupSubPreview
 import GroupNewsPreview from '~/components/group/Modules/News/GroupNewsPreview.vue'
 import GroupHeader from '~/components/group/Modules/GroupHeader.vue'
 
+import StructureTeachingsPreview from '~/components/structure/StructureTeachingsPreview.vue'
+import StructureFundingsPreview from '~/components/structure/StructureFundingsPreview.vue'
+import StructureAwardsPreview from '~/components/structure/StructureAwardsPreview.vue'
 import { difference } from 'es-toolkit'
 
 const props = withDefaults(
@@ -65,6 +85,13 @@ const props = withDefaults(
 const IGNORED_KEYS: PeopleGroupModulesKeys[] = ['similars']
 const GROUPS_KEYS = Object.keys(props.group.modules) as PeopleGroupModulesKeys[]
 const modulesRecap = difference(GROUPS_KEYS, IGNORED_KEYS)
+
+// TODO:
+// const isTeam = computed(() => true)
+// TODO:
+// const isStructure = computed(() => true)
+// TODO:
+// const isPlainGroup = computed(() => !isTeam.value && !isStructure.value)
 </script>
 
 <style lang="scss" scoped>

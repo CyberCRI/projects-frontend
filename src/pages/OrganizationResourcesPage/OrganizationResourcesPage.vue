@@ -7,9 +7,9 @@ import {
 import type { AttachmentFileModel, AttachmentForm } from 'shared-projects-frontend/models'
 import { attachementFileSkeletons } from '~/skeletons/attachements.skeletons'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
+import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import ResourceDrawerV2 from '~/components/resources/ResourceDrawerV2.vue'
 import { getOrganizationFiles } from '~/api/v2/organization-files.service'
-import { factoryPagination } from '~/skeletons/base.skeletons'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
@@ -33,13 +33,15 @@ const selectedItem = ref<AttachmentFileModel | null>(null)
 
 const isEditionEnabled = computed(() => isAdmin.value)
 
+const limitSkeleton = computed(() => maxSkeleton(organization.value?.modules?.files, 10))
+
 const {
   status,
   data: resources,
   refresh,
   pagination,
 } = getOrganizationFiles(organizationCode, {
-  default: () => factoryPagination(attachementFileSkeletons),
+  default: () => factoryPagination(attachementFileSkeletons, limitSkeleton.value),
 })
 
 const onEdit = (resource?: AttachmentFileModel) => {

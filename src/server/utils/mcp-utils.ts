@@ -47,7 +47,7 @@ export async function getMcpById(
 ): Promise<Mcp & { apiKey?: string }> {
   const mcp = await chatbotPrisma.mcp.findUnique({
     where: {
-      id: id,
+      id,
       orgCode: appApiOrgCode,
     },
   })

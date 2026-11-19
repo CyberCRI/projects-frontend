@@ -5,7 +5,6 @@ export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
     await checkAdminRights(event)
     const body = await readBody(event)
-    // console.log(JSON.stringify(body, null, 2))
 
     const prompt = await chatbotPrisma.prompt.create({
       data: {
@@ -16,7 +15,6 @@ export default defineLazyEventHandler(() => {
         },
       },
     })
-    // console.log(prompt)
     return prompt
   })
 })

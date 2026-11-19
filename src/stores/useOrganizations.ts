@@ -67,7 +67,11 @@ const useOrganizationsStore = defineStore('organizations', () => {
 
   async function getCurrentOrganization(code: string): Promise<OrganizationModel> {
     // foo
-    const organization = await getOrganizationByCode(code)
+    const organization = await getOrganizationByCode(code, {
+      query: {
+        modules: 'all',
+      },
+    })
     // TODO: temp fix while API is not setup
     organization.languages = organization.languages || ['en', 'fr']
 
@@ -93,7 +97,11 @@ const useOrganizationsStore = defineStore('organizations', () => {
   }
 
   async function updateCurrentOrganization(organization: OrganizationPatchInput | FormData) {
-    const result = await patchOrganization(current.value.code, organization)
+    const result = await patchOrganization(current.value.code, organization, {
+      query: {
+        modules: 'all',
+      },
+    })
     const currentOrganization = {
       ...current.value,
       ...organization,

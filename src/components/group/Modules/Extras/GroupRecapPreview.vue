@@ -12,7 +12,6 @@
     >
       <IconImage :name="module.icon" />
       <span class="group-recap-title">
-        {{ module.count }}
         {{ module.name }}
       </span>
     </component>
@@ -56,7 +55,7 @@ const modulesArray = computed(() => {
         .map(([name, count]) => {
           const obj = {
             key: name,
-            name: props.noTitle ? '' : t(GROUP_MODULE_TITLE[name], count),
+            name: props.noTitle ? '' : t(GROUP_MODULE_TITLE[name], { count }),
             count,
             icon: GROUP_MODULE_ICON[name],
           }

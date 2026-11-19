@@ -146,6 +146,10 @@ body[class*='has-open-modal-'] {
   overflow: hidden;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .narrow-body {
   width: 100%;
   max-width: variables.pxtorem(1200px);

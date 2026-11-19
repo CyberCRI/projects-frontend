@@ -1,6 +1,6 @@
-import type { HarvesterType, ResearcherIdentifier } from 'shared-projects-frontend/models'
+import type { HarvesterType, Identifier } from 'shared-projects-frontend/models'
 
-const cleanIdentifier = (identifier: ResearcherIdentifier): ResearcherIdentifier => {
+const cleanIdentifier = (identifier: Identifier): Identifier => {
   const newIdentifier = { ...identifier }
   newIdentifier.harvester = newIdentifier.harvester.toLocaleLowerCase() as HarvesterType
   // some value starts with http or start with harvester name like
@@ -18,11 +18,11 @@ const cleanIdentifier = (identifier: ResearcherIdentifier): ResearcherIdentifier
  * @function
  * @name documentHarvesterToUrl
  * @kind variable
- * @param {ResearcherIdentifier} identifier
+ * @param {Identifier} identifier
  * @returns {String}
  * @exports
  */
-export const documentHarvesterToUrl = (identifier: ResearcherIdentifier): string | null => {
+export const documentHarvesterToUrl = (identifier: Identifier): string | null => {
   const newIdentifier = cleanIdentifier(identifier)
   if (newIdentifier.value.startsWith('http')) {
     return newIdentifier.value
@@ -30,21 +30,8 @@ export const documentHarvesterToUrl = (identifier: ResearcherIdentifier): string
   const value = encodeURIComponent(newIdentifier.value)
 
   switch (newIdentifier.harvester) {
-    case 'irstea':
-      return `https://www.iamm.ciheam.org/ress_doc/opac_css/index.php?lvl=notice_display&id=${value}`
-    case 'pmid':
-      return `https://pubmed.ncbi.nlm.nih.gov/${value}/`
-    case 'pmcid':
-      return `https://pmc.ncbi.nlm.nih.gov/articles/${value}/`
-    case 'biorxiv':
-      // TODO check slash
-      return `https://www.biorxiv.org/content/${value}`
-    case 'arxiv':
-      return `https://arxiv.org/abs/${value}`
     case 'viaf':
       return `https://viaf.org/fr/viaf/${value}`
-    case 'googlescholar':
-      return `https://scholar.google.com/citations?view_op=view_citation&citation_for_view=${value}`
     case 'scopus':
       return `https://www.scopus.com/authid/detail.uri?authorId=${value}`
     case 'hal':
@@ -55,8 +42,6 @@ export const documentHarvesterToUrl = (identifier: ResearcherIdentifier): string
       return `https://www.idref.fr/${value}`
     case 'doi':
       return `https://doi.org/${value}`
-    case 'uri':
-      return identifier.value
     default:
       return null
   }
@@ -72,7 +57,7 @@ export const documentHarvesterToUrl = (identifier: ResearcherIdentifier): string
  * @returns {string}
  * @exports
  */
-export const researcherHarvesterToUrl = (identifier: ResearcherIdentifier): string | null => {
+export const researcherHarvesterToUrl = (identifier: Identifier): string | null => {
   const newIdentifier = cleanIdentifier(identifier)
   if (newIdentifier.value.startsWith('http')) {
     return newIdentifier.value
@@ -82,8 +67,6 @@ export const researcherHarvesterToUrl = (identifier: ResearcherIdentifier): stri
   switch (newIdentifier.harvester) {
     case 'viaf':
       return `https://viaf.org/fr/viaf/${value}`
-    case 'googlescholar':
-      return `https://scholar.google.com/citations?user=${value}`
     case 'scopus':
       return `https://www.scopus.com/authid/detail.uri?authorId=${value}`
     case 'hal':

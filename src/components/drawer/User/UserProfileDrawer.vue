@@ -28,6 +28,9 @@ const {
   computed(() => props.userId),
   {
     default: userSkeleton,
+    query: {
+      modules: 'all',
+    },
   }
 )
 </script>

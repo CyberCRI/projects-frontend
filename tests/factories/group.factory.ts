@@ -61,4 +61,5 @@ export const groupTranslatedFactory = createFactory<TranslatedPeopleGroupModel>(
     description: faker.lorem.text(100),
     short_description: faker.lorem.text(20),
   },
+  structure: null,
 }))

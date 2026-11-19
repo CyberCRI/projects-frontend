@@ -1,0 +1,28 @@
+<template>
+  <BaseModulePreview
+    id="preview-teachings"
+    :title="$t(USER_MODULE_TITLE.teachings, user.researcher.modules.teachings)"
+    :icon="USER_MODULE_ICON.teachings"
+    :total="user.researcher.modules.teachings"
+    :see-more="{
+      name: 'ProfileTeachings',
+      params: {
+        userIdOrSlug: user.slug || user.id,
+      },
+    }"
+  >
+    <template #content>
+      <BaseResearcherTeaching :user="user" preview :limit="3" />
+    </template>
+  </BaseModulePreview>
+</template>
+<script lang="ts" setup>
+import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
+import { USER_MODULE_ICON, USER_MODULE_TITLE } from '~/functs/constants'
+
+defineProps<{ user: TranslatedUserModel }>()
+</script>
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+</style>

@@ -267,7 +267,7 @@ const updateGroup = async () => {
         : { name: 'Group', params: { groupIdOrSlug: props.groupIdOrSlug } }
     )
   } catch (error) {
-    toaster.pushError(`${t('toasts.group-edit.error')} (${error})`)
+    toaster.pushError(t('toasts.group-edit.error'))
     console.error(error)
   } finally {
     isSaving.value = false

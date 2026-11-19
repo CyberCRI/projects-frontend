@@ -26,7 +26,6 @@ export default defineLazyEventHandler(() => {
       include: { promptContents: { orderBy: { version: 'desc' } } },
     })
 
-    // console.log(agent)
     if (!prompt) {
       setResponseStatus(event, 400)
       return {

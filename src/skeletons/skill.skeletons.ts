@@ -9,7 +9,6 @@ export const skillSkeleton = (def?: Partial<SkillModel>): SkillModel => ({
   level: 4,
   level_to_reach: 5,
   type: 'skill',
-  // @ts-expect-error
   tag: tagSkeleton(),
   category: 'lorem',
   ...(def || {}),

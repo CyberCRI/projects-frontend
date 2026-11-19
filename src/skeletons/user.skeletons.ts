@@ -24,7 +24,6 @@ export const userSkeleton = (def?: Partial<UserModel>): UserModel => ({
   mobile_phone: null,
   modules: {
     reviews_projects: 0,
-    conferences: 0,
     files: 0,
     follows_categories: 0,
     follows_projects: 0,
@@ -33,7 +32,6 @@ export const userSkeleton = (def?: Partial<UserModel>): UserModel => ({
     mentor: 0,
     mentoree: 0,
     projects: 0,
-    publications: 0,
     skills: 0,
     notifications: 0,
   },

@@ -17,12 +17,14 @@ const props = withDefaults(
     preview?: boolean
     limit?: number
     editable?: boolean
+    researcherMode?: boolean
   }>(),
   {
     preview: false,
     // add max limit for non preview
     limit: null,
     editable: false,
+    researcherMode: false,
   }
 )
 
@@ -96,6 +98,7 @@ const mentorShip = computed<MentorShip>(() => {
       :preview="preview"
       :skills="groupedSkills.skill || []"
       :mentor-ship="mentorShip"
+      :researcher-mode="researcherMode"
       @refresh="refreshAll()"
       @mentorship-send="refreshMentorship()"
     />
@@ -107,6 +110,7 @@ const mentorShip = computed<MentorShip>(() => {
       :editable="editable"
       :preview="preview"
       :skills="groupedSkills.hobby || []"
+      :researcher-mode="researcherMode"
       :mentor-ship="mentorShip"
       @refresh="refreshAll()"
       @mentorship-send="refreshMentorship()"

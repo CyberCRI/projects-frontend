@@ -18,6 +18,7 @@ defineProps<{
 
 <template>
   <BaseModulePreview
+    id="preview-projects"
     :title="$t(USER_MODULE_TITLE[type], user.modules[type])"
     :icon="USER_MODULE_ICON[type]"
     :total="user.modules[type]"

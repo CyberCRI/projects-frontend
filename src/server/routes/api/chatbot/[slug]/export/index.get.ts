@@ -40,7 +40,6 @@ export default defineLazyEventHandler(() => {
       mcps: true,
     })
 
-    // console.log(agent)
     if (!agent) {
       setResponseStatus(event, 400)
       return {

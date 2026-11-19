@@ -8,7 +8,8 @@ import { factoriesSkeleton } from '@/skeletons/base.skeletons'
 import { userSkeleton } from '~/skeletons/user.skeletons'
 import { randomInt } from 'es-toolkit'
 
-export const tagSkeleton = (def?: Partial<ProjectModel>): Omit<TagModel, 'id'> => ({
+export const tagSkeleton = (def?: Partial<TagModel>): TagModel => ({
+  id: -1,
   title: 'Occaecat',
   title_fr: 'Occaecat',
   title_en: 'Occaecat',
@@ -27,25 +28,16 @@ export const projectSkeleton = (def?: Partial<ProjectModel>): ProjectModel => ({
   is_shareable: false,
   purpose: 'Elit veniam consectetur sunt officia.',
   language: 'fr',
-  locations: [],
   categories: [],
   organizations: [],
   publication_status: 'public',
   life_status: 'completed',
-  reviews: [],
-  // @ts-expect-error no id in tags
   tags: factoriesSkeleton(tagSkeleton, randomInt(3)),
   is_followed: {
     is_followed: false,
     follow_id: null,
   },
-  follows: [],
-  links: [],
-  files: [],
   sdgs: [],
-  announcements: [],
-  blog_entries: [],
-  goals: [],
   slug: 'slug',
   updated_at: '',
   modules: {
@@ -64,6 +56,8 @@ export const projectSkeleton = (def?: Partial<ProjectModel>): ProjectModel => ({
     messages: 0,
     tabs: 0,
   },
+  created_at: null,
+  id: '',
   ...(def || {}),
 })
 

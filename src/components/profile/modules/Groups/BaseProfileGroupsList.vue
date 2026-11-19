@@ -5,7 +5,7 @@ import SectionHeader from '~/components/base/SectionHeader.vue'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { groupSkeleton } from '~/skeletons/group.skeletons'
-import GroupCard from '~/components/group/GroupCard.vue'
+import GroupRow from '~/components/group/GroupRow.vue'
 import { USER_MODULE_TITLE } from '~/functs/constants'
 import { getUserGroups } from '~/api/v2/user.service'
 
@@ -51,7 +51,7 @@ const {
         :quantity="groups.length"
       />
       <div class="team-groups">
-        <GroupCard v-for="group in groups" :key="group.id" :group="group" />
+        <GroupRow v-for="group in groups" :key="group.id" :group="group" />
       </div>
       <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
       <NothingHere v-if="!isLoading && groups.length === 0" />
@@ -68,21 +68,13 @@ const {
   gap: 1rem;
 }
 
-.team-card {
-  display: grid;
-  grid-template-rows: 1fr auto;
-  gap: 1rem;
-}
-
 .team-groups {
-  display: flex;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  flex-wrap: wrap;
 
-  .project-group {
-    width: 100%;
-    max-width: 200px;
+  @media screen and (max-width: variables.$min-desktop) {
+    grid-template-columns: 1fr;
   }
 }
 </style>

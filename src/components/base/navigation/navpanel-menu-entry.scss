@@ -7,6 +7,10 @@
   &:hover,
   &.active {
     background-color: var(--primary-light);
+
+    .navpanel-menu-link .icon {
+      fill: var(--primary-dark);
+    }
   }
 
   .navpanel-menu-link {
@@ -19,9 +23,9 @@
 
     .icon {
       display: inline-block;
-      width: 1em;
-      height: 1em;
-      fill: var(--primary-dark);
+      width: 1.4em;
+      height: 1.4em;
+      fill: var(--primary);
     }
 
     .action-icon {

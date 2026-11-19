@@ -7,16 +7,14 @@
       @add="onCreate"
     />
     <div class="list-container">
-      <div class="list-divider">
-        <NewsItem
-          v-for="news in data"
-          :key="news.title"
-          :news="news"
-          :editable="editable"
-          @edit="onEditNews"
-          @delete="onDeleteNews"
-        />
-      </div>
+      <NewsItem
+        v-for="news in data"
+        :key="news.title"
+        :news="news"
+        :editable="editable"
+        @edit="onEditNews"
+        @delete="onDeleteNews"
+      />
       <NothingHere v-if="data.length === 0" />
       <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
     </div>
@@ -140,3 +138,8 @@ const onConfirmDeleteNews = () => {
     .finally(() => onCancel())
 }
 </script>
+<style lang="scss" scoped>
+.news-item ~ .news-item {
+  margin-top: 1rem;
+}
+</style>

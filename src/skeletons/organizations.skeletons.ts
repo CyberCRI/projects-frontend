@@ -25,5 +25,18 @@ export const organizationSkeleton = (def?: OrganizationModel): OrganizationModel
   onboarding_enabled: false,
   terms_and_conditions: null,
   website_url: '#',
+  modules: {
+    projects: 0,
+    groups: 0,
+    announcements: 0,
+    events: 0,
+    news: 0,
+    instructions: 0,
+    structures: 0,
+    users: 0,
+    researchers: 0,
+    files: 0,
+    categories: 0,
+  },
   ...(def ?? {}),
 })

@@ -10,13 +10,7 @@
     }"
   >
     <template #content>
-      <BaseGroupMembersList
-        :group="group"
-        :is-loading="isLoading"
-        :with-pagination="false"
-        focus-leader
-        preview
-      />
+      <BaseGroupMembersList :group="group" :with-pagination="false" focus-leader preview />
     </template>
   </BaseGroupPreview>
 </template>
@@ -29,6 +23,5 @@ import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 
 defineProps<{
   group: TranslatedPeopleGroupModel
-  isLoading: boolean
 }>()
 </script>

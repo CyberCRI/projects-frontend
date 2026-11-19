@@ -1,5 +1,6 @@
 import type { TagModel } from 'shared-projects-frontend/models'
-import { pick } from 'es-toolkit'
+import { omitBy, pick } from 'es-toolkit'
+import N from './zod-schema-utils'
 
 export const addIfExists = <T, Res>(key: string, obj: any, func: (data: T) => Res) => {
   if (obj[key]) {
@@ -13,4 +14,46 @@ export const addIfExists = <T, Res>(key: string, obj: any, func: (data: T) => Re
 export const tagMapPreview = (tag: TagModel) => ({
   item_type: 'tag',
   ...pick(tag, ['id', 'title', 'description']),
+})
+
+export const PAGINATION_INPUT = {
+  limit: N.number().describe('Max number of results to return (default 10)'),
+  offset: N.number().describe('Number of results to skip, for pagination (default 0)'),
+}
+
+/**
+ * Build a query object from tool args: removes null / undefined values
+ * and applies pagination defaults
+ */
+export const buildQuery = <T extends Record<string, any>>(
+  args: T & { limit?: number | null; offset?: number | null }
+) =>
+  omitBy({ ...args, limit: args.limit ?? 10, offset: args.offset ?? 0 }, (value) => value == null)
+
+/**
+ * Map the results of a paginated response. When there is none, return an explicit
+ * empty payload with a hint instead of a bare [] so the caller knows what to check.
+ */
+export const mapResultsWithHint = <T, R>(
+  response: { results?: T[]; count?: number },
+  mapper: (item: T) => R,
+  hint: string
+) => {
+  const results = (response.results || []).map(mapper)
+  return results.length ? results : { results, total: response.count, hint }
+}
+
+/**
+ * Build a pagination-only query (limit and offset always defined)
+ */
+export const buildPaginationQuery = (args: { limit?: number | null; offset?: number | null }) => ({
+  limit: args.limit ?? 10,
+  offset: args.offset ?? 0,
+})
+
+export const domainMapPreview = (domain: { id: number; level: number; domain: TagModel }) => ({
+  item_type: 'research_domain',
+  id: domain.id,
+  level: domain.level,
+  tag: tagMapPreview(domain.domain),
 })

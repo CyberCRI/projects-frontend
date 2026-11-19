@@ -16,7 +16,7 @@ export default defineLazyEventHandler(() => {
       },
       orderBy: { title: 'asc' },
     })
-    // console.log(agent)
+
     return skill
   })
 })
