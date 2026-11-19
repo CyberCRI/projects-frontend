@@ -26,7 +26,6 @@ export default defineLazyEventHandler(() => {
       include: { skillContents: { orderBy: { version: 'desc' } } },
     })
 
-    // console.log(agent)
     if (!skill) {
       setResponseStatus(event, 400)
       return {

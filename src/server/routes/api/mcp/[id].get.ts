@@ -15,7 +15,6 @@ export default defineLazyEventHandler(() => {
 
     const mcp = await getMcpById(appApiOrgCode, id)
 
-    // console.log(agent)
     if (!mcp) {
       setResponseStatus(event, 400)
       return {

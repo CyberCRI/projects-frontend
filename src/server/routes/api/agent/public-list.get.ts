@@ -28,7 +28,7 @@ export default defineLazyEventHandler(() => {
       },
       orderBy: { title: 'asc' },
     })
-    // console.log(agent)
+
     return agents.map((agent) => ({
       ...agent,
       ...formatAgentWithTranslation(agent, agent.agentTranslations),

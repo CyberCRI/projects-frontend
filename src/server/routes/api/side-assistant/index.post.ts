@@ -38,7 +38,7 @@ export default defineLazyEventHandler(() => {
       }
       return sideAssistant
     })
-    // console.log(agent)
+
     return result
   })
 })

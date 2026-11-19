@@ -46,7 +46,7 @@ export default defineLazyEventHandler(() => {
     })
 
     const translations = await translateAgentFields(agent)
-    // console.log(agent)
+
     return formatAgentWithTranslation(agent, translations)
   })
 })

@@ -36,7 +36,6 @@ export default defineLazyEventHandler(() => {
       },
     })
 
-    // console.log(agent)
     if (!agent) {
       setResponseStatus(event, 400)
       return {

@@ -7,7 +7,6 @@ export default defineLazyEventHandler(() => {
     await checkAdminRights(event)
 
     const body = await readBody(event)
-    // console.log(JSON.stringify(body, null, 2))
 
     const data = updateApikey({
       id: createId(),
@@ -26,7 +25,6 @@ export default defineLazyEventHandler(() => {
     const mcp = await chatbotPrisma.mcp.create({
       data,
     })
-    // console.log(prompt)
     return redactApiKey(mcp)
   })
 })

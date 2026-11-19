@@ -6,7 +6,7 @@ export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
     await checkAdminRights(event)
     const mcp = await getAllMcp(appApiOrgCode)
-    // console.log(agent)
+
     return mcp
   })
 })
