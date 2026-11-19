@@ -1,5 +1,6 @@
 <template>
   <BaseModulePreview
+    id="preview-network"
     :title="$t(USER_MODULE_TITLE.network)"
     :icon="USER_MODULE_ICON.network"
     :see-more="{

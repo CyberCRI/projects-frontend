@@ -9,6 +9,7 @@ defineProps<{ user: TranslatedUserModel }>()
 
 <template>
   <BaseModulePreview
+    id="preview-resources"
     :title="$t(USER_MODULE_TITLE.resources, user.modules.files + user.modules.links)"
     :icon="USER_MODULE_ICON.resources"
     :total="user.modules.files + user.modules.links"

@@ -1,5 +1,6 @@
 <template>
   <BaseModulePreview
+    id="preview-teachings"
     :title="$t(USER_MODULE_TITLE.teachings, user.researcher.modules.teachings)"
     :icon="USER_MODULE_ICON.teachings"
     :total="user.researcher.modules.teachings"

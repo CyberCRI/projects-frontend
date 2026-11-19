@@ -23,14 +23,14 @@ const badges = computed(() => {
       label: t(USER_MODULE_TITLE.projects, props.user.modules.projects),
       icon: USER_MODULE_ICON.projects,
       count: props.user.modules.projects,
-      link: `/profile/${props.user.slug || props.user.id}/projects`,
+      link: `#preview-projects`,
     })
   if (props.user.researcher?.modules.conferences) {
     res.push({
       label: t(USER_MODULE_TITLE.conferences, props.user.researcher.modules.conferences),
       icon: USER_MODULE_ICON.conferences,
       count: props.user.researcher?.modules.conferences,
-      link: `/profile/${props.user.slug || props.user.id}/documents/conferences`,
+      link: `#preview-conferences`,
     })
   }
   if (props.user.researcher?.modules.publications) {
@@ -38,7 +38,7 @@ const badges = computed(() => {
       label: t(USER_MODULE_TITLE.publications, props.user.researcher.modules.publications),
       icon: USER_MODULE_ICON.publications,
       count: props.user.researcher?.modules.publications,
-      link: `/profile/${props.user.slug || props.user.id}/documents/publication`,
+      link: `#preview-publications`,
     })
   }
   if (props.user.researcher?.modules.affiliated) {
@@ -46,7 +46,7 @@ const badges = computed(() => {
       label: t(USER_MODULE_TITLE.affiliated, props.user.researcher.modules.affiliated),
       icon: USER_MODULE_ICON.affiliated,
       count: props.user.researcher?.modules.affiliated,
-      link: `/profile/${props.user.slug || props.user.id}/affiliate`,
+      link: `#preview-affiliate`,
     })
   }
   if (props.user.researcher?.modules.teachings) {
@@ -54,7 +54,7 @@ const badges = computed(() => {
       label: t(USER_MODULE_TITLE.teachings, props.user.researcher.modules.teachings),
       icon: USER_MODULE_ICON.teachings,
       count: props.user.researcher?.modules.teachings,
-      link: `/profile/${props.user.slug || props.user.id}/teachings`,
+      link: `#preview-teachings`,
     })
   }
   if (props.user.researcher?.modules.awards) {
@@ -62,7 +62,7 @@ const badges = computed(() => {
       label: t(USER_MODULE_TITLE.awards, props.user.researcher.modules.awards),
       icon: USER_MODULE_ICON.awards,
       count: props.user.researcher?.modules.awards,
-      link: `/profile/${props.user.slug || props.user.id}/awards`,
+      link: `#preview-awards`,
     })
   }
 
@@ -71,7 +71,7 @@ const badges = computed(() => {
       label: t(USER_MODULE_TITLE.patents, props.user.researcher.modules.patents),
       icon: USER_MODULE_ICON.patents,
       count: props.user.researcher?.modules.patents,
-      link: `/profile/${props.user.slug || props.user.id}/patents`,
+      link: `#preview-patents`,
     })
   }
 

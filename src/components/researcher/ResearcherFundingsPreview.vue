@@ -1,5 +1,6 @@
 <template>
   <BaseModulePreview
+    id="preview-fundings"
     :title="$t(USER_MODULE_TITLE.fundings, user.researcher.modules.fundings)"
     :icon="USER_MODULE_ICON.fundings"
     :total="user?.researcher.modules.fundings"

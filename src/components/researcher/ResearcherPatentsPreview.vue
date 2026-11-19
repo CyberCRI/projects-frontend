@@ -1,5 +1,6 @@
 <template>
   <BaseModulePreview
+    id="preview-patents"
     :title="$t(USER_MODULE_TITLE.patents, user.researcher.modules.patents)"
     :icon="USER_MODULE_ICON.patents"
     :total="user.researcher.modules.patents"

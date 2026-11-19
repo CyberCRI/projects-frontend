@@ -1,6 +1,6 @@
 <template>
   <BaseModulePreview
-    v-if="user.researcher"
+    id="preview-positions"
     :title="$t(USER_MODULE_TITLE.positions)"
     :icon="USER_MODULE_ICON.positions"
     :see-more="{

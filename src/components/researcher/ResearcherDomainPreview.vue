@@ -1,6 +1,6 @@
 <template>
   <BaseModulePreview
-    v-if="user.researcher"
+    id="preview-domains"
     :title="$t(USER_MODULE_TITLE.domain, user.researcher.modules.domains)"
     :icon="USER_MODULE_ICON.domain"
     :total="user.researcher.modules.domains"

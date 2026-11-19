@@ -11,6 +11,7 @@ const DOCUMENTS_LIMIT = 3
 
 <template>
   <BaseModulePreview
+    :id="`preview-${documentType}`"
     :title="$t(USER_MODULE_TITLE[documentType], user.researcher.modules[documentType])"
     :icon="USER_MODULE_ICON[documentType]"
     :total="user.researcher.modules[documentType]"

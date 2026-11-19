@@ -8,6 +8,7 @@ defineProps<{ user: TranslatedUserModel }>()
 
 <template>
   <BaseModulePreview
+    id="preview-awards"
     :title="$t(USER_MODULE_TITLE.awards, user?.researcher?.modules?.awards)"
     :icon="USER_MODULE_ICON.awards"
     :total="user?.researcher?.modules?.awards"

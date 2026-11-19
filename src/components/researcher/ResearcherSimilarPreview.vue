@@ -1,5 +1,6 @@
 <template>
   <BaseModulePreview
+    id="preview-similars"
     :title="$t(USER_MODULE_TITLE.similarResearchers, user.researcher.modules.similars)"
     :total="user.researcher.modules.similars"
   >
