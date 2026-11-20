@@ -1,15 +1,18 @@
 import type { ProjectModel, TranslatedProject } from 'shared-projects-frontend/models'
+import { findedAsyncKeys } from '~/composables/refreshNuxtDataKeys'
 
 export const refreshProjectData = <T extends ProjectModel | TranslatedProject>(project: T) => {
   const route = useRoute()
 
   const organizationCode = useOrganizationCode()
 
-  return refreshNuxtData([
-    `${organizationCode}::project::${project.id}`,
-    `${organizationCode}::project::${project.slug}`,
-    `${organizationCode}::project::${route.params?.slugOrId}`,
-  ])
+  return refreshNuxtData(
+    findedAsyncKeys([
+      `${organizationCode}::project::${project.id}`,
+      `${organizationCode}::project::${project.slug}`,
+      `${organizationCode}::project::${route.params?.slugOrId}`,
+    ])
+  )
 }
 
 export const refreshProjectTabs = <T extends ProjectModel | TranslatedProject>(project: T) => {
@@ -31,5 +34,5 @@ export const refreshProjectTabs = <T extends ProjectModel | TranslatedProject>(p
     })
   })
 
-  return refreshNuxtData(finalsTabs)
+  return refreshNuxtData(findedAsyncKeys(finalsTabs))
 }

@@ -1,4 +1,5 @@
 import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
+import { findedAsyncKeys } from '~/composables/refreshNuxtDataKeys'
 
 export const refreshGroupData = <T extends TranslatedPeopleGroupModel | TranslatedPeopleGroupModel>(
   group: T
@@ -7,9 +8,11 @@ export const refreshGroupData = <T extends TranslatedPeopleGroupModel | Translat
 
   const organizationCode = useOrganizationCode()
 
-  refreshNuxtData([
-    `${organizationCode}::group::${group.id}`,
-    `${organizationCode}::group::${group.slug}`,
-    `${organizationCode}::group::${route.params?.slugOrId}`,
-  ])
+  refreshNuxtData(
+    findedAsyncKeys([
+      `${organizationCode}::group::${group.id}`,
+      `${organizationCode}::group::${group.slug}`,
+      `${organizationCode}::group::${route.params?.slugOrId}`,
+    ])
+  )
 }

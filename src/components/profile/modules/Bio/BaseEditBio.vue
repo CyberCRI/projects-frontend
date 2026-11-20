@@ -63,6 +63,7 @@ const onConfirm = async () => {
     jumpToFirstError()
     return
   }
+  asyncing.value = true
   patchUser(organizationCode, props.user.id, form.value)
     .then((newUser) => {
       toaster.pushSuccess(t('profile.edit.bio.save-success'))

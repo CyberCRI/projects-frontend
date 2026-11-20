@@ -94,7 +94,6 @@
 
     <div class="profile-footer">
       <div class="contacts">
-        <BaseModuleButton btn-icon="BookmarkLine" label="follow" />
         <BaseModuleButton
           v-for="(contact, idx) in contacts"
           :key="idx"
@@ -152,7 +151,7 @@ const contacts = computed(() => {
   const res = []
 
   if (props.user.email) {
-    res.push({ icon: 'ExternalLink', label: 'Contact', link: props.user.email })
+    res.push({ icon: 'ExternalLink', label: 'Contact', link: `mailto:${props.user.email}` })
   }
   if (props.user.website) {
     res.push({ icon: 'ExternalLink', label: 'Website', link: props.user.website })
