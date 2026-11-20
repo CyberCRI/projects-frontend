@@ -57,7 +57,7 @@ export const projectSkeleton = (def?: Partial<ProjectModel>): ProjectModel => ({
     tabs: 0,
   },
   created_at: null,
-  id: '',
+  id: null,
   ...(def || {}),
 })
 
