@@ -35,7 +35,7 @@ export default function useProfilePagesRoutes() {
       name: 'ProfileDocuments',
       component: () => import('../pages/UserPageV2/Tabs/ProfileDocumentsTab.vue'),
       props: (route) => ({
-        documentType: route.params.documentType.toString(),
+        documentType: route.params.documentType?.toString(),
       }),
     },
     {
@@ -127,7 +127,7 @@ export default function useProfilePagesRoutes() {
       name: 'ProfileEditDocuments',
       component: () => import('../pages/UserPageV2/Tabs/ProfileDocumentsTab.vue'),
       props: (route) => ({
-        documentType: route.params.documentType.toString(),
+        documentType: route.params.documentType?.toString(),
         editable: true,
       }),
     },

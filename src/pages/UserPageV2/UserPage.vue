@@ -25,7 +25,7 @@ const uniqueId = 'user-nav-panel'
 const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
   useToggleableNavPanel(uniqueId)
 
-const userIdOrSlug = computed<UserSlugOrId>(() => route.params.userIdOrSlug.toString())
+const userIdOrSlug = computed<UserSlugOrId>(() => route.params.userIdOrSlug?.toString())
 const organizationCode = useOrganizationCode()
 const {
   status,

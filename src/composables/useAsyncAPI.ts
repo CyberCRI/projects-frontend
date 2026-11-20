@@ -87,7 +87,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
 
   const neededArgs = params[2].watch
   const checkArgs = computed(() => {
-    return neededArgs.map((v) => unref(v)).filter((v) => isNil(v)).length === 0
+    return neededArgs.map((v) => unref(v)).filter((v) => !v).length === 0
   })
 
   if (immediate === false) {
@@ -117,7 +117,8 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     key,
     (_, { signal }) => {
       if (!checkArgs.value) {
-        return null
+        // args not ready (null/undefined/empty): no fetch, keep default value
+        return params[2]?.default?.() ?? null
       }
 
       const conf: AsyncHandler['config'] = { signal }
@@ -173,7 +174,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     watch(
       () => JSON.stringify(params[2].watch.map((e) => unref(e))),
       () => {
-        results.refresh()
+        if (checkArgs.value) results.refresh()
       }
     )
   }

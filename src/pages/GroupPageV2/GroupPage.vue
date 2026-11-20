@@ -71,7 +71,7 @@ const organizationCode = useOrganizationCode()
 const router = useRouter()
 const route = useRoute()
 const { t } = useNuxtI18n()
-const groupIdOrSlug = computed(() => route.params.groupIdOrSlug.toString())
+const groupIdOrSlug = computed(() => route.params.groupIdOrSlug?.toString())
 
 const {
   data: group,

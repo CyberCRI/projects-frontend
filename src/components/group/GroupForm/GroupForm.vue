@@ -377,7 +377,7 @@ export default {
     async removeGroup() {
       this.loading = true
       const organization = this.organizationsStore.current.code
-      await deleteGroup(organization, this.$route.params.groupIdOrSlug.toString())
+      await deleteGroup(organization, this.$route.params.groupIdOrSlug?.toString())
       this.loading = false
       this.$router.push({
         name: 'Groups',
@@ -388,7 +388,7 @@ export default {
       if (location.id) {
         await removeGroupLocation(
           this.organizationsStore.current.code,
-          this.$route.params.groupIdOrSlug.toString(),
+          this.$route.params.groupIdOrSlug?.toString(),
           location.id
         )
         this.form.locations = this.form.locations.filter((el) => el.id !== location.id)
@@ -406,14 +406,14 @@ export default {
           this.form.locations = this.form.locations.filter((el) => el.id !== location.id)
           locationElement = await patchGroupLocation(
             this.organizationsStore.current.code,
-            this.$route.params.groupIdOrSlug.toString(),
+            this.$route.params.groupIdOrSlug?.toString(),
             location.id,
             location
           )
         } else {
           locationElement = await postGroupLocation(
             this.organizationsStore.current.code,
-            this.$route.params.groupIdOrSlug.toString(),
+            this.$route.params.groupIdOrSlug?.toString(),
             location
           )
         }

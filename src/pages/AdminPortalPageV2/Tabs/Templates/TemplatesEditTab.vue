@@ -45,7 +45,8 @@ const route = useRoute()
 const router = useRouter()
 const asyncing = ref(false)
 const organizationCode = useOrganizationCode()
-const templateId = computed(() => parseInt(route.params.id.toString(), 10))
+const templateId =
+  computed(() => route.params.id && parseInt(route.params.id.toString(), 10)) || null
 const { data: template, status, refresh } = getTemplate(organizationCode, templateId)
 
 const templateRaw = computed<TemplateFormType>(() => ({

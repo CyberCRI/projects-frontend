@@ -19,7 +19,7 @@ if (!projectCategoriesStore.all || !projectCategoriesStore.all.length) {
 }
 
 const category = computed(() => {
-  const slugOrId = route.params.slugOrId.toString()
+  const slugOrId = route.params.slugOrId?.toString()
   if (slugOrId) {
     resetScroll()
     return projectCategoriesStore.allBySlugs[slugOrId] || projectCategoriesStore.allByIds[slugOrId]
