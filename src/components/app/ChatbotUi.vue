@@ -152,19 +152,37 @@ const spinnerMD = `![](data:image/svg+xml;base64,${btoa(spinner)}) `
 let replacedByNext = false
 // last token contain whole message ONLY with opeanai, let's manually fix this
 let responseMessageAcc = ''
+// "mcp_projects_search" -> "projects search"
+const humanizeToolName = (name = '') =>
+  name
+    .replace(/^mcp[_-]/i, '')
+    .replace(/[_-]+/g, ' ')
+    .trim()
+
+const statusLabel = (response) => {
+  // legacy events (no phase): translated key
+  if (!response.phase) return t(`chatbot.${response.text}`)
+  if (response.status === 'error') return t('chatbot.status.tool_error')
+  switch (response.phase) {
+    case 'retrieval':
+      return t('chatbot.status.searching_docs')
+    case 'skill':
+      return t('chatbot.status.loading_skill')
+    case 'tool':
+      return t('chatbot.status.using_tool', { tool: humanizeToolName(response.toolName) })
+    default:
+      return t('chatbot.status.thinking')
+  }
+}
+
 const responseInterceptor = (response) => {
   // console.log('ChatBotDrawer responseInterceptor', response)
   if (response.role === 'meta') {
-    let text = spinnerMD + '*' + t(`chatbot.${response.text}`) + '*'
-    if (response.text_extra) {
-      text += ` ${response.text_extra}`
-    }
-    // if (response.is_done) {
-    //   text = ''
-    // }
+    let text = spinnerMD + '*' + statusLabel(response) + '*'
+    if (!response.phase && response.text_extra) text += ` ${response.text_extra}`
     replacedByNext = true
     return {
-      text: text,
+      text,
       role: 'meta',
       overwrite: true,
     }

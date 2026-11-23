@@ -2890,6 +2890,13 @@
     "fetching_tools": "Récupération des outils...",
     "fetching_data": "Récupération des données...",
     "reasoning": "Réflexion en cours...",
+    "status": {
+      "thinking": "Réflexion en cours...",
+      "searching_docs": "Recherche dans les documents...",
+      "loading_skill": "Chargement des instructions...",
+      "using_tool": "Utilisation de l'outil : {tool}...",
+      "tool_error": "Un outil a échoué, tentative de poursuite..."
+    },
     "restart": "Redémarrer la conversation",
     "export": "Exporter la conversation",
     "before-we-start": "Avant de commencer, voudriez-vous :",

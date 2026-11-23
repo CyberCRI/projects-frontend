@@ -2874,6 +2874,13 @@
     "fetching_tools": "Fetching tools...",
     "fetching_data": "Fetching data...",
     "reasoning": "Thinking...",
+    "status": {
+      "thinking": "Thinking...",
+      "searching_docs": "Searching documents...",
+      "loading_skill": "Loading instructions...",
+      "using_tool": "Using tool: {tool}...",
+      "tool_error": "A tool failed, trying to continue..."
+    },
     "restart": "Restart conversation",
     "export": "Export conversation",
     "before-we-start": "Before we start, would you:",

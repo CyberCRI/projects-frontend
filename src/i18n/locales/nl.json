@@ -2803,6 +2803,13 @@
     "fetching_tools": "Hulpmiddelen ophalen...",
     "fetching_data": "Gegevens ophalen...",
     "reasoning": "Bezig met nadenken...",
+    "status": {
+      "thinking": "Bezig met nadenken...",
+      "searching_docs": "Documenten doorzoeken...",
+      "loading_skill": "Instructies laden...",
+      "using_tool": "Tool gebruiken: {tool}...",
+      "tool_error": "Een tool is mislukt, we proberen verder te gaan..."
+    },
     "restart": "Gesprek opnieuw starten",
     "export": "Exporteer gesprek",
     "before-we-start": "Voordat we beginnen, zou u:",

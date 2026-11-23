@@ -2803,6 +2803,13 @@
     "fetching_tools": "Obtenció d'eines...",
     "fetching_data": "Obtenció de dades...",
     "reasoning": "Pensant...",
+    "status": {
+      "thinking": "Pensant...",
+      "searching_docs": "Cercant als documents...",
+      "loading_skill": "Carregant instruccions...",
+      "using_tool": "Utilitzant l'eina: {tool}...",
+      "tool_error": "Una eina ha fallat, intentant continuar..."
+    },
     "restart": "Reinicia la conversa",
     "export": "Exporta la conversa",
     "before-we-start": "Abans de començar, voldríeu:",

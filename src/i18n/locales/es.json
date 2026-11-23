@@ -2803,6 +2803,13 @@
     "fetching_tools": "Obteniendo herramientas...",
     "fetching_data": "Obteniendo datos...",
     "reasoning": "Pensando...",
+    "status": {
+      "thinking": "Pensando...",
+      "searching_docs": "Buscando en los documentos...",
+      "loading_skill": "Cargando instrucciones...",
+      "using_tool": "Usando la herramienta: {tool}...",
+      "tool_error": "Una herramienta falló, intentando continuar..."
+    },
     "restart": "Reiniciar conversación",
     "export": "Exportar conversación",
     "before-we-start": "Antes de comenzar, ¿le gustaría:",
