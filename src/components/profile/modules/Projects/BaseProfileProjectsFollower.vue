@@ -43,6 +43,7 @@ const {
     :pagination="pagination"
     :is-loading="isLoading"
     :preview="preview"
+    :title="$t('me.projects-follow', pagination.count.value)"
     :empty-label="$t('me.no-follow')"
   />
 </template>

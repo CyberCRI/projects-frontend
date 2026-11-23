@@ -44,6 +44,7 @@ const {
     :pagination="pagination"
     :is-loading="isLoading"
     :preview="preview"
+    :title="$t('me.projects-reviewing', pagination.count.value)"
     :empty-label="$t('me.no-project-reviewing')"
   />
 </template>

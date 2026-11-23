@@ -9,10 +9,10 @@ withDefaults(
   defineProps<{
     status: any
     projects: TranslatedProject[]
-    isLoading: boolean
     pagination: Pagination
     preview?: boolean
     emptyLabel: string
+    title: string
   }>(),
   {
     preview: false,
@@ -27,11 +27,7 @@ withDefaults(
       :pagination="pagination"
       :editable="false"
     >
-      <SectionHeader
-        :title="$t('me.projects-reviewing', pagination.count.value)"
-        :quantity="pagination.count.value"
-        :has-button="false"
-      />
+      <SectionHeader :title="title" :quantity="pagination.count.value" :has-button="false" />
     </BaseModuleHeader>
 
     <ul class="project-list list-divider">
@@ -39,11 +35,7 @@ withDefaults(
         <ProjectPreview :project="project" />
       </li>
     </ul>
-    <EmptyCard
-      v-if="!isLoading && projects.length === 0 && !preview"
-      class="empty-card"
-      :label="emptyLabel"
-    />
+    <EmptyCard v-if="projects.length === 0 && !preview" class="empty-card" :label="emptyLabel" />
 
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>

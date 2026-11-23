@@ -41,6 +41,7 @@ const {
     :pagination="pagination"
     :is-loading="isLoading"
     :preview="preview"
+    :title="$t('me.projects-participate', pagination.count.value)"
     :empty-label="$t('me.no-project-participate')"
   />
 </template>
