@@ -28,7 +28,7 @@ const bioEmpty = computed(() => textIsEmpty(props.user.$t.description))
       <ResearcherPresentationPreview v-if="user.researcher?.$t.bio" :user="user" />
       <ResearcherSimilarPreview v-if="user.researcher?.modules?.similars" :user="user" />
     </div>
-    <ProfileBioPreview v-if="!bioEmpty && !user.researcher" :user="user" />
+    <ProfileBioPreview v-if="!bioEmpty" :user="user" />
 
     <!-- team -->
     <!--ResearcherTeamPreview :user="user" /-->

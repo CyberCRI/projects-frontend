@@ -31,18 +31,18 @@ defineProps<{
     }"
   >
     <template #content>
-      <BaseProfileProjectsMember v-if="type === 'projects'" :profile="user" preview :limit="5" />
+      <BaseProfileProjectsMember v-if="type === 'projects'" :profile="user" preview :limit="3" />
       <BaseProfileProjectsReviewer
         v-else-if="type === 'reviews_projects'"
         :profile="user"
         preview
-        :limit="5"
+        :limit="3"
       />
       <BaseProfileProjectsFollower
         v-else-if="type === 'follows_projects'"
         :profile="user"
         preview
-        :limit="5"
+        :limit="3"
       />
       <BaseProfileCategoriesFollower
         v-else-if="type === 'follows_categories'"

@@ -92,7 +92,7 @@
       </div>
     </div>
 
-    <div class="profile-footer">
+    <div v-if="hasFooter" class="profile-footer">
       <div class="contacts">
         <BaseModuleButton
           v-for="(contact, idx) in contacts"
@@ -195,6 +195,8 @@ const { status, data: researcherStructures } = getResearcherStructures(
     default: () => factoryPagination(researcherStructuresSkeleton, limitSkeletons.value),
   }
 )
+
+const hasFooter = computed(() => !!(contacts.value.length || props.user.sdgs?.length))
 </script>
 
 <style lang="scss" scoped>

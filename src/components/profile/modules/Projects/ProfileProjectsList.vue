@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import type { TranslatedProject } from 'shared-projects-frontend/models'
+import ProjectPreview from '~/components/project/ProjectPreview.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
-import ProjectRow from '~/components/project/ProjectRow.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 
 withDefaults(
   defineProps<{
     status: any
-    projects: Array<TranslatedProject>
+    projects: TranslatedProject[]
     isLoading: boolean
-    pagination: any
+    pagination: Pagination
     preview?: boolean
     emptyLabel: string
   }>(),
@@ -33,14 +33,12 @@ withDefaults(
         :has-button="false"
       />
     </BaseModuleHeader>
-    <div class="projects-container">
-      <ProjectRow
-        v-for="item in projects"
-        :key="item.id"
-        :horizontal-display="true"
-        :project="item"
-      />
-    </div>
+
+    <ul class="project-list list-divider">
+      <li v-for="project in projects" :key="project.id">
+        <ProjectPreview :project="project" />
+      </li>
+    </ul>
     <EmptyCard
       v-if="!isLoading && projects.length === 0 && !preview"
       class="empty-card"
@@ -50,17 +48,3 @@ withDefaults(
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>
 </template>
-
-<style lang="scss" scoped>
-@use '~/design/scss/variables';
-
-.projects-container {
-  display: flex;
-  flex-flow: column nowrap;
-  flex-wrap: wrap;
-  gap: variables.$space-m;
-  padding: variables.$space-m 0;
-  align-items: stretch;
-  max-width: 100%;
-}
-</style>
