@@ -230,7 +230,8 @@ summary {
 
   pre {
     white-space: pre-wrap;
-    word-break: break-word;
+    word-break: normal;
+    overflow-wrap: break-word;
     overflow-x: auto;
   }
 }
@@ -253,8 +254,8 @@ summary {
       flex-shrink: 0;
       width: 0.45em;
       height: 0.45em;
-      border-right: 2px solid currentColor;
-      border-bottom: 2px solid currentColor;
+      border-right: 2px solid currentcolor;
+      border-bottom: 2px solid currentcolor;
       transform: rotate(-45deg); // collapsed: points right
       transition: transform 0.15s;
     }
