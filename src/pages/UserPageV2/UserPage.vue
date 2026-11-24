@@ -116,7 +116,6 @@ const hasSubPageTitle = computed(
       'project-display-layout': !isEditing,
     }"
   >
-    lalalal
     <FetchLoader
       :status="status"
       only-error
