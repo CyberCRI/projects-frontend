@@ -1,3 +1,4 @@
+import getReasoningOptions from '@/server/projects-agent/model/reasoning-options'
 import traceLangchain from '@/server/projects-agent/tracers/trace-langchain'
 import { initChatModel } from 'langchain/chat_models/universal'
 import { safeParseFloat } from '@/functs/string'
@@ -52,6 +53,8 @@ async function getLlmModel(agentData?: any) {
   const model = await initChatModel(modelName, {
     temperature,
     apiKey: modelApiKey,
+    // only for models known to support reasoning (may override temperature)
+    ...getReasoningOptions(modelName),
   })
   // }
   return model

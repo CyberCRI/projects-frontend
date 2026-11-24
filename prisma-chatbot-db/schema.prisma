@@ -239,6 +239,8 @@ model ConversationMessage {
   content    String
   toolCalls  Json?
   toolCallId String?
+  // model reasoning / thinking text (admin tracing only, never sent back to the model)
+  reasoning  String?
   createdAt  DateTime                @default(now())
   position   Int
 

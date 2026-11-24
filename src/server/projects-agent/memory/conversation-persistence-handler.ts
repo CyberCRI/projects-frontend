@@ -109,6 +109,7 @@ export default class ConversationPersistenceHandler extends BaseCallbackHandler 
           role: 'assistant',
           content: message.content || message.text,
           toolCalls: message.tool_call_chunks ?? null,
+          reasoning: message.reasoning ?? null,
           position,
         },
       })
@@ -128,6 +129,7 @@ export default class ConversationPersistenceHandler extends BaseCallbackHandler 
     await this.handleAssistantMessage({
       text: message?.text,
       tool_call_chunks: message?.message?.tool_call_chunks,
+      reasoning: helpers.extractReasoning(message?.message),
     })
   }
 
