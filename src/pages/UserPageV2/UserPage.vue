@@ -63,7 +63,7 @@ const editable = computed(() => isEditing.value && canEditUser.value)
 const propsTab = computed(() => ({
   editable: editable.value,
   user: user.value,
-  ...(currentTab.value.props || {}),
+  ...(currentTab.value?.props || {}),
   // only add loading when project is not set or is skeleton
   loading: !user.value?.id && isLoading.value,
 }))
@@ -116,6 +116,7 @@ const hasSubPageTitle = computed(
       'project-display-layout': !isEditing,
     }"
   >
+    lalalal
     <FetchLoader
       :status="status"
       only-error
@@ -151,13 +152,8 @@ const hasSubPageTitle = computed(
         </template>
         <template #content>
           <BreadCrumbs :breadcrumbs="breadcrumbs" :is-loading="isLoading" />
-          <SubPageTitle v-if="hasSubPageTitle" class="skeletons-text" :current-tab="currentTab">
-            <AIGeneratedMark
-              v-if="!!user.researcher && currentTab.key == 'profile-bio'"
-              class="ai-mark"
-            />
-          </SubPageTitle>
-          <NuxtPage v-if="currentTab" v-bind="propsTab" />
+          <SubPageTitle v-if="hasSubPageTitle" class="skeletons-text" :current-tab="currentTab" />
+          <NuxtPage v-bind="propsTab" />
         </template>
       </NavPanelLayout>
     </FetchLoader>
