@@ -1,4 +1,5 @@
 import formatAgentWithTranslation from '@/server/utils/format-agent-with-translation'
+import { anonymizeConversation } from '@/server/utils/anonymize-conversation'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
 import { safeParseInt } from '@/functs/string'
 // import useCheckpointerDb from '@/server/utils/checkpointer-db'
@@ -6,7 +7,7 @@ import { safeParseInt } from '@/functs/string'
 
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
-    await checkAdminRights(event)
+    const { user } = await checkAdminRights(event)
 
     const id = getRouterParam(event, 'id')
     if (!id) {
@@ -45,17 +46,43 @@ export default defineLazyEventHandler(() => {
         },
       },
     })
+    if (!conversation) {
+      setResponseStatus(event, 404)
+      return { error: 'Conversation not found' }
+    }
     let more = null
     if (limit && conversation.messages.length && conversation.messages.length > limit) {
       more = conversation.messages[limit].id
       conversation.messages = conversation.messages.slice(0, limit)
     }
 
+    // the user-context message is the oldest one: it may not be in the requested page
+    // several of them, of which only some hold the name: collect them all
+    const userContextContent =
+      conversation.userId === user.id
+        ? undefined
+        : (
+            await chatbotPrisma.conversationMessage.findMany({
+              where: {
+                conversationId: conversation.id,
+                toolCallId: { startsWith: 'retriever_user_context' },
+              },
+              select: { content: true },
+            })
+          ).map((m) => m.content)
+
     return {
-      conversation: {
-        ...conversation,
-        agent: formatAgentWithTranslation(conversation.agent, conversation.agent.agentTranslations),
-      },
+      conversation: anonymizeConversation(
+        {
+          ...conversation,
+          agent: formatAgentWithTranslation(
+            conversation.agent,
+            conversation.agent.agentTranslations
+          ),
+        },
+        user.id,
+        { userContextContent, salt: runtimeConfig.appConversationAliasSalt as string }
+      ),
       more,
     }
   })

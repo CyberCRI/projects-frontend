@@ -213,6 +213,7 @@ export default defineNuxtConfig({
     appAgentMemoryTrace: '',
     appAgentMemorySlidingWindowSize: '',
     appAgentSecretKeys: '',
+    appConversationAliasSalt: '', // HMAC salt for admin conversation user aliases
     appAgentSecretKeyCurrentVersion: '',
     public: {
       appVersion: '',

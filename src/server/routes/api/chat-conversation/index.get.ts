@@ -1,4 +1,5 @@
 import formatAgentWithTranslation from '@/server/utils/format-agent-with-translation'
+import { anonymizeConversation } from '@/server/utils/anonymize-conversation'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
 import paginate from '@/server/utils/prisma-paginate'
 import { safeParseInt } from '@/functs/string'
@@ -7,7 +8,8 @@ import { safeParseInt } from '@/functs/string'
 export default defineLazyEventHandler(() => {
   const runtimeConfig = useRuntimeConfig()
   return defineEventHandler(async (event) => {
-    await checkAdminRights(event)
+    const { user } = await checkAdminRights(event)
+    const salt = runtimeConfig.appConversationAliasSalt as string
     const limit = safeParseInt(getQuery(event)?.limit, 10)
     const offset = safeParseInt(getQuery(event)?.offset, 0)
     const agentId = safeParseInt(getQuery(event)?.agentId, 0)
@@ -35,12 +37,38 @@ export default defineLazyEventHandler(() => {
       orderBy: { lastActiveAt: 'desc' },
     })
 
+    // user-context messages (holding the author's name) for other users' conversations, so
+    // titles get name redaction even when messages are not requested
+    const otherIds = conversations.results.filter((c) => c.userId !== user.id).map((c) => c.id)
+    const contextMessages = otherIds.length
+      ? await chatbotPrisma.conversationMessage.findMany({
+          where: {
+            conversationId: { in: otherIds },
+            toolCallId: { startsWith: 'retriever_user_context' },
+          },
+          select: { conversationId: true, content: true },
+        })
+      : []
+    const contextByConversation = new Map<string, string[]>()
+    for (const m of contextMessages) {
+      contextByConversation.set(m.conversationId, [
+        ...(contextByConversation.get(m.conversationId) ?? []),
+        m.content,
+      ])
+    }
+
     return {
       ...conversations,
-      results: conversations.results.map((c) => ({
-        ...c,
-        agent: formatAgentWithTranslation(c.agent, c.agent.agentTranslations),
-      })),
+      results: conversations.results.map((c) =>
+        anonymizeConversation(
+          {
+            ...c,
+            agent: formatAgentWithTranslation(c.agent, c.agent.agentTranslations),
+          },
+          user.id,
+          { userContextContent: contextByConversation.get(c.id), salt }
+        )
+      ),
     }
   })
 })
