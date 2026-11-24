@@ -26,3 +26,31 @@ export function messageMapper(msg) {
     ? new AIMessage(msg.text) // langchaine (and memory) use "content", deep-chat uses "text"
     : new HumanMessage(msg.text) // langchaine (and memory) use "content", deep-chat uses "text"
 }
+
+/**
+ * Extract reasoning / thinking text from an AI message (LangChain standard
+ * `contentBlocks` first, then raw provider `content` blocks).
+ * Returns null when the model produced none.
+ */
+export function extractReasoning(message: any): string | null {
+  const blocks = message?.contentBlocks ?? message?.content
+  if (!Array.isArray(blocks)) return null
+
+  const parts: string[] = []
+  for (const block of blocks) {
+    if (!block || typeof block !== 'object') continue
+    if (block.type === 'reasoning') {
+      if (typeof block.reasoning === 'string') parts.push(block.reasoning)
+      // OpenAI raw format: summary: [{ type: 'summary_text', text }]
+      else if (Array.isArray(block.summary))
+        parts.push(block.summary.map((s: any) => s?.text ?? '').join('\n'))
+    } else if (block.type === 'thinking' && typeof block.thinking === 'string') {
+      parts.push(block.thinking)
+    }
+  }
+  const reasoning = parts
+    .map((p) => p.trim())
+    .filter(Boolean)
+    .join('\n\n')
+  return reasoning || null
+}

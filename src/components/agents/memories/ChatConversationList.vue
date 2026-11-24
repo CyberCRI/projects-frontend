@@ -86,7 +86,7 @@ const exportCoversations = async () => {
   }
 }
 
-// const isAsyncing = computed(() => status.value === 'pending')
+const isLoading = computed(() => status.value === 'pending')
 
 const documentList = computed(() => data.value || [])
 
@@ -94,13 +94,17 @@ const prettyDate = (s) => formatDateTime(new Date(s), locale.value)
 
 defineExpose({ refresh })
 refresh()
-
-refresh()
 </script>
 <template>
   <div class="export">
     <label>With agent</label>
     <LpiSelect v-model="selectedAgent" :options="agentOptions" />
+    <LpiButton
+      secondary
+      :disabled="isLoading"
+      :btn-icon="isLoading ? 'LoaderSimple' : 'RotateRight'"
+      @click="refresh"
+    />
     <LpiButton
       :disabled="isExporting"
       label="Export"

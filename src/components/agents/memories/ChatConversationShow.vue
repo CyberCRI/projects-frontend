@@ -74,14 +74,33 @@ const prettyTitle = computed(() =>
     : 'Loading...'
 )
 
-function showToolContent(s) {
-  // console.log(s)
+function tryParse(x) {
   try {
-    const o = JSON.parse(s)
-    return JSON.stringify(JSON.parse(o.text), null, 2)
+    return JSON.parse(x)
   } catch {
-    return renderMd(s)
+    return undefined
   }
+}
+
+// tool results come in several shapes: plain JSON, `{ text: "<json>" }`,
+// or an array of `{ type: 'text', text }` blocks. Always returns plain text.
+function showToolContent(s) {
+  let value = s
+  // unwrap (bounded, in case of nested wrappers)
+  for (let i = 0; i < 5; i++) {
+    if (typeof value === 'string') {
+      const parsed = tryParse(value)
+      if (parsed === undefined) break
+      value = parsed
+    } else if (Array.isArray(value) && value.length && value.every((b) => b?.type === 'text')) {
+      value = value.map((b) => b.text).join('\n')
+    } else if (value && typeof value.text === 'string' && Object.keys(value).length <= 2) {
+      value = value.text
+    } else {
+      break
+    }
+  }
+  return typeof value === 'string' ? value : JSON.stringify(value, null, 2)
 }
 
 function evaluationToDetails(markdown) {
@@ -136,9 +155,13 @@ refresh()
           <em>{{ prettyDate(message.createdAt) }}</em>
         </summary>
         <div class="message-content">
-          <pre v-if="message.role == 'tool' && !message.toolCallId?.startsWith('retriever_')">
-            {{ showToolContent(message.content) }}
-          </pre>
+          <details v-if="message.reasoning" class="reasoning">
+            <summary>Reasoning</summary>
+            <div v-html="renderMd(message.reasoning)" />
+          </details>
+          <pre v-if="message.role == 'tool' && !message.toolCallId?.startsWith('retriever_')">{{
+            showToolContent(message.content)
+          }}</pre>
           <div v-else v-html="renderMd(evaluationToDetails(message.content))" />
           <ul v-if="message.toolCalls">
             <li v-for="tool_call in message.toolCalls" :key="tool_call.id">
@@ -194,6 +217,7 @@ summary {
   color: variables.$primary-dark;
   background-color: variables.$primary-lighter;
   font-size: 1.16em;
+  cursor: pointer;
 
   em {
     font-size: 0.8em;
@@ -203,6 +227,43 @@ summary {
 
 .message-content {
   margin-left: 1rem;
+
+  pre {
+    white-space: pre-wrap;
+    word-break: normal;
+    overflow-wrap: break-word;
+    overflow-x: auto;
+  }
+}
+
+.reasoning {
+  margin-bottom: 0.5rem;
+  color: #666;
+  font-style: italic;
+
+  summary {
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1em;
+    font-style: normal;
+    background-color: transparent;
+
+    // the native marker is hidden by display:flex, so draw a chevron
+    &::before {
+      content: '';
+      flex-shrink: 0;
+      width: 0.45em;
+      height: 0.45em;
+      border-right: 2px solid currentcolor;
+      border-bottom: 2px solid currentcolor;
+      transform: rotate(-45deg); // collapsed: points right
+      transition: transform 0.15s;
+    }
+  }
+
+  &[open] > summary::before {
+    transform: rotate(45deg); // expanded: points down
+  }
 }
 
 .more-button {

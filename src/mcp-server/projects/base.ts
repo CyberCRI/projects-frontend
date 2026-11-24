@@ -6,7 +6,7 @@ const runtimeConfig = useRuntimeConfig()
 export const orgCode = runtimeConfig.public.appApiOrgCode
 
 export function getUserToken(ctx: ServerContext) {
-  const token = (ctx.http?.req?.headers.get('authorization') || '').replace('Bearer ', '')
+  const token = (ctx?.http?.req?.headers.get('authorization') || '').replace('Bearer ', '')
   if (token) {
     traceMcp('MCP tool user token has token ', token.substring(0, 6) + '...')
     return token
@@ -39,7 +39,12 @@ export function mcpOptions(ctx: ServerContext): ClientAPIOptions {
 export const resultFromTool = <Args, Output>(
   callback: (args: Args, ctx: ServerContext) => Output | Promise<Output>
 ) => {
-  return async (args: Args, ctx: ServerContext): Promise<CallToolResult> => {
+  return async (...params: [Args, ServerContext] | [ServerContext]): Promise<CallToolResult> => {
+    // tools registered without an inputSchema are called with (ctx) only
+    const [args, ctx] = (params.length === 1 ? [undefined, params[0]] : params) as [
+      Args,
+      ServerContext,
+    ]
     let output: Output
     try {
       output = await callback(args, ctx)

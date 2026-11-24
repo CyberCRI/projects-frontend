@@ -2803,6 +2803,13 @@
     "fetching_tools": "Abrufwerkzeuge...",
     "fetching_data": "Daten werden abgerufen...",
     "reasoning": "Denken...",
+    "status": {
+      "thinking": "Denken...",
+      "searching_docs": "Dokumente werden durchsucht...",
+      "loading_skill": "Anweisungen werden geladen...",
+      "using_tool": "Tool wird verwendet: {tool}...",
+      "tool_error": "Ein Tool ist fehlgeschlagen, es wird weitergemacht..."
+    },
     "restart": "Konversation neu starten",
     "export": "Exportkonversation",
     "before-we-start": "Bevor wir beginnen, würden Sie:",

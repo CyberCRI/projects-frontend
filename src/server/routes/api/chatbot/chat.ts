@@ -1,4 +1,10 @@
 // import { StateSchema, ReducedValue /*, MemorySaver */ } from '@langchain/langgraph'
+import {
+  statusKey,
+  thinkingEvent,
+  toolChunkToStatusEvent,
+  type StatusEvent,
+} from '@/server/projects-agent/utils/status-event'
 import createConversationPersistenceHandler from '@/server/projects-agent/memory/factory'
 import { traceAgentMemory } from '@/server/projects-agent/tracers/trace-agent-memory'
 import checkAdminRights, { getUser } from '@/server/utils/check-admin-rights.js'
@@ -173,6 +179,21 @@ export default defineLazyEventHandler(() => {
       traceLangchain('========== /MESSAGES =======')
 
       let last_role = 'ai'
+      let lastStatus = ''
+
+      // send a status ("meta") event, skipping consecutive duplicates
+      const sendStatus = (statusEvent: StatusEvent | null) => {
+        if (!statusEvent) return
+        const key = statusKey(statusEvent)
+        if (key === lastStatus) return
+        lastStatus = key
+        last_role = 'meta'
+        respond(statusEvent)
+      }
+
+      // fill the dead air before the first token
+      sendStatus(thinkingEvent(conversationId))
+
       for await (const [mode, chunk] of (await agent.stream(
         {
           messages: transmitedMessages,
@@ -180,121 +201,52 @@ export default defineLazyEventHandler(() => {
         } as any,
         { ...config, streamMode: ['messages', 'tools' /*, 'updates' */] }
       )) as AsyncIterableIterator<[string, any]>) {
-        ///
-        // if (mode != 'messages')
-        //   console.log('XXXXXXXXXXXXXXXXXX', JSON.stringify(mode, null, 2), chunk.constructor.name)
-        // console.log('MODE', mode)
         if (mode == 'tools') {
-          /* HANDLE TOOLS */
-
-          let text = ''
-          const is_done = false
-          let text_extra = ''
-          switch (chunk.event) {
-            case 'on_tool_start':
-              // const { name, input, toolCallId } = chunk
-              text = 'fetching_data' // 'fetching_tools' 'reasoning'
-              text_extra = '👀' // chunk.input.query || ''
-              break
-            case 'on_tool_event':
-              // const { name, data, toolCallId } = chunk
-              text = 'fetching_data'
-              text_extra = '✨' //''
-              break
-            case 'on_tool_end':
-              // const { name, output, toolCallId } = chunk
-              text = 'fetching_data'
-              text_extra = '✅' // chunk.output
-              // is_done = true
-              break
-            case 'on_tool_error':
-              // const { name, error, toolCallId } = chunk
-              text = 'fetching_data'
-              text_extra = '❌'
-              // is_done = true
-              break
-            default:
-              console.error('Unknown tool event', chunk.event)
-          }
-          if (text) {
-            // "fetching_tools": "Fetching tools...",
-            // "fetching_data": "Fetching data...",
-            // "reasoning": "Thinking...",
-            // const is_done = metadata.status === 'completed'
-            const role = 'meta'
-            const output = {
-              text,
-              text_extra,
-              role,
-              is_done,
-              conversationId,
+          /* HANDLE TOOLS (single source of truth for tool status) */
+          const statusEvent = toolChunkToStatusEvent(chunk, conversationId)
+          if (!statusEvent) {
+            if (!['on_tool_event'].includes(chunk?.event)) {
+              console.error('Unknown tool event', chunk?.event)
             }
-            last_role = role
-            respond(output)
+            continue
+          }
+          sendStatus(statusEvent)
+          // once a tool is over, the model reads its result: back to "thinking"
+          if (statusEvent.status !== 'start') {
+            lastStatus = ''
+            sendStatus(thinkingEvent(conversationId))
           }
         } else if (mode == 'messages') {
           /* HANDLE LLM INFERENCE */
-          const [token, _metadata] = chunk
+          const [token] = chunk
 
           const tokenClass = token.lc_id?.[token.lc_id.length - 1]
-          /*
-         AIMessageChunk with text The actual AI response
-         AIMessageChunk with tool_call_chunks AI deciding to call a tool (no text)
-         ToolMessageChunkTool result being added to state
-         HumanMessageChunkRare, but possible - skip
-          */
-
+          // Only AIMessageChunk matter here: tool calls and tool results are
+          // reported by the 'tools' stream mode.
           if (tokenClass !== 'AIMessageChunk') continue
-          const hasTool = token.tool_call_chunks?.length > 0
+          // AI is deciding to call a tool (no text): handled by 'tools' mode
+          if (token.tool_call_chunks?.length > 0) continue
 
-          if (tokenClass === 'ToolMessageChunkTool') {
-            // tool results being added to state
-            const role = 'meta'
-            const text = 'fetching_data'
-            const text_extra = '✨' //''
-            const output = {
-              text,
-              text_extra,
-              role,
-              is_done: false,
-              conversationId,
-            }
-            last_role = role
-            respond(output)
-          } else if (tokenClass === 'AIMessageChunk') {
-            if (hasTool) {
-              // AI deciding to call
-              const role = 'meta'
-              const text = 'fetching_data' // 'fetching_tools' 'reasoning'
-              const text_extra = '👀' // chunk.input.query || ''
-              const output = {
-                text,
-                text_extra,
-                role,
-                is_done: false,
-                conversationId,
-              }
-              last_role = role
-              respond(output)
-            } else {
-              // The actual AI response
-              const content = token.contentBlocks || []
-              const text = content
-                .filter((part) => part.type == 'text')
-                .map((part) => part.text)
-                .join('')
-              // const is_done = metadata.status === 'completed'
-              const role = 'ai'
-              const output = {
-                text: filterSpecialTag(text),
-                role,
-                is_done: false,
-                conversationId,
-              }
-              last_role = role
-              respond(output)
-            }
+          const content = token.contentBlocks || []
+
+          // reasoning / thinking blocks are never shown, but tell the user
+          if (content.some((part) => part.type === 'reasoning' || part.type === 'thinking')) {
+            sendStatus(thinkingEvent(conversationId))
           }
+
+          const text = filterSpecialTag(
+            content
+              .filter((part) => part.type == 'text')
+              .map((part) => part.text)
+              .join('')
+          )
+          // no empty chunks (they would reset the status bubble for nothing)
+          if (!text) continue
+
+          const role = 'ai'
+          last_role = role
+          lastStatus = ''
+          respond({ text, role, is_done: false, conversationId })
         }
       }
       // This is the authoritative "agent is done" signal

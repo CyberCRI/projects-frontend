@@ -2803,6 +2803,13 @@
     "fetching_tools": "Tööriistade hankimine...",
     "fetching_data": "Andmete hankimine...",
     "reasoning": "Mõtlemine...",
+    "status": {
+      "thinking": "Mõtlemine...",
+      "searching_docs": "Dokumentidest otsimine...",
+      "loading_skill": "Juhiste laadimine...",
+      "using_tool": "Tööriista kasutamine: {tool}...",
+      "tool_error": "Tööriist ebaõnnestus, proovin jätkata..."
+    },
     "restart": "Vestluse taaskäivitamine",
     "export": "Ekspordi vestlus",
     "before-we-start": "Enne alustamist, kas sooviksite:",
