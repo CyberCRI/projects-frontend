@@ -1,3 +1,4 @@
+import shimToSorted from './src/legacy/shim.tosroted'
 import * as dotenv from 'dotenv'
 import path from 'node:path'
 import fs from 'node:fs'
@@ -67,6 +68,7 @@ export default defineNuxtConfig({
     'nuxt-svgo',
     '@nuxt/eslint',
     '@nuxtjs/stylelint-module',
+    shimToSorted,
   ],
   // disable caching
   routeRules: {

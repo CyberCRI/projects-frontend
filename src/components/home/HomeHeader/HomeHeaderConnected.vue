@@ -2,7 +2,7 @@
   <div class="home-header-connected">
     <div class="page-section-medium title-container">
       <h1 class="main-title">
-        {{ organization.dashboard_title }}
+        {{ organization.$t.dashboard_title }}
       </h1>
     </div>
     <!-- TODO keepin for testing purpose to remove when all is set -->
@@ -39,7 +39,7 @@
           @reload-instructions="loadInstructions"
         />
       </div>
-      <div v-if="isEmptyDashboard" class="empty-dashboard">
+      <div v-if="isEmptyDashboard && canCreateProject" class="empty-dashboard">
         <LpiButton
           :label="$t('home.create-project')"
           secondary
