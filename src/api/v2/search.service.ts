@@ -28,11 +28,11 @@ type ConfigPagination = UseAsyncPaginationApiConfig<QueryFilterSearch>
 
 // TODO change backend with prefix organization code in url
 export const getSearchAll = (
-  organization: RefOrRaw<OrganizationModel['code']>,
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
   search: RefOrRaw<string>,
   config: ConfigPagination = {}
 ) => {
-  const key = computed(() => `${unref(organization)}::search::all::${unref(search)}`)
+  const key = computed(() => `${unref(organizationCode)}::search::all::${unref(search)}`)
   const { translateUser, translateGroup, translateProject } = useAutoTranslate()
 
   const translatedSearch = (datas: SearchResultAll[]) => {
@@ -70,13 +70,13 @@ export const getSearchAll = (
   return useAsyncPaginationAPI(
     key,
     ({ config }) =>
-      searchAll(unref(search), {
+      searchAll(unref(organizationCode), unref(search), {
         ...DEFAULT_CONFIG,
         ...config,
       }),
     {
       translate: (data) => translatedSearch(data),
-      watch: onlyRefs([search, organization]),
+      watch: onlyRefs([search, organizationCode]),
       ...config,
     }
   )
@@ -84,11 +84,11 @@ export const getSearchAll = (
 
 // TODO change backend with prefix organization code in url
 export const getSearchProjects = (
-  organization: RefOrRaw<OrganizationModel['code']>,
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
   search: RefOrRaw<string>,
   config: ConfigPagination = {}
 ) => {
-  const key = computed(() => `${unref(organization)}::search::projects::${unref(search)}`)
+  const key = computed(() => `${unref(organizationCode)}::search::projects::${unref(search)}`)
   const { translateProject } = useAutoTranslate()
 
   const translatedSearch = (datas: SearchResultProject[]) => {
@@ -116,13 +116,13 @@ export const getSearchProjects = (
   return useAsyncPaginationAPI(
     key,
     ({ config }) =>
-      searchProjects(unref(search), {
+      searchProjects(unref(organizationCode), unref(search), {
         ...DEFAULT_CONFIG,
         ...config,
       }),
     {
       translate: (data) => translatedSearch(data),
-      watch: onlyRefs([search, organization]),
+      watch: onlyRefs([search, organizationCode]),
       ...config,
     }
   )
@@ -130,11 +130,11 @@ export const getSearchProjects = (
 
 // TODO change backend with prefix organization code in url
 export const getSearchUser = (
-  organization: RefOrRaw<OrganizationModel['code']>,
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
   search: RefOrRaw<string>,
   config: ConfigPagination = {}
 ) => {
-  const key = computed(() => `${unref(organization)}::search::user::${unref(search)}`)
+  const key = computed(() => `${unref(organizationCode)}::search::user::${unref(search)}`)
   const { translateUser } = useAutoTranslate()
 
   const translatedSearch = (datas: SearchResultUser[]) => {
@@ -162,13 +162,13 @@ export const getSearchUser = (
   return useAsyncPaginationAPI(
     key,
     ({ config }) =>
-      searchUser(unref(search), {
+      searchUser(unref(organizationCode), unref(search), {
         ...DEFAULT_CONFIG,
         ...config,
       }),
     {
       translate: (data) => translatedSearch(data),
-      watch: onlyRefs([search, organization]),
+      watch: onlyRefs([search, organizationCode]),
       ...config,
     }
   )
@@ -176,11 +176,11 @@ export const getSearchUser = (
 
 // TODO change backend with prefix organization code in url
 export const getSearchGroup = (
-  organization: RefOrRaw<OrganizationModel['code']>,
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
   search: RefOrRaw<string>,
   config: ConfigPagination = {}
 ) => {
-  const key = computed(() => `${unref(organization)}::search::group::${unref(search)}`)
+  const key = computed(() => `${unref(organizationCode)}::search::group::${unref(search)}`)
   const { translateGroup } = useAutoTranslate()
 
   const translatedSearch = (datas: SearchResultGroup[]) => {
@@ -208,13 +208,13 @@ export const getSearchGroup = (
   return useAsyncPaginationAPI(
     key,
     ({ config }) =>
-      searchGroups(unref(search), {
+      searchGroups(unref(organizationCode), unref(search), {
         ...DEFAULT_CONFIG,
         ...config,
       }),
     {
       translate: (data) => translatedSearch(data),
-      watch: onlyRefs([search, organization]),
+      watch: onlyRefs([search, organizationCode]),
       ...config,
     }
   )

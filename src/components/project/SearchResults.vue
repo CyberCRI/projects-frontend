@@ -37,7 +37,6 @@ const search = computed<string>(() => props.search)
 
 const query = computed(() => {
   const q: QueryFilterSearch = deepToRaw(props.query)
-  q.organizations = [organizationCode]
 
   // if not all add mode
   if (props.mode !== 'all') {
