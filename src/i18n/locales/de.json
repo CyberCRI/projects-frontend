@@ -3635,5 +3635,37 @@
         "error": "Die Registerkarte wurde nicht bestellt. Bitte versuchen Sie es noch mal."
       }
     }
+  },
+  "agent-mcps": {
+    "form": {
+      "title-required": "Das Feld „Titel“ ist erforderlich",
+      "description-required": "Das Feld „Beschreibung“ ist erforderlich",
+      "transport-required": "Das Feld „Transport“ ist erforderlich",
+      "url-required": "Das Feld „URL“ ist erforderlich"
+    },
+    "edit-success": "Das MCP wurde aktualisiert.",
+    "create-success": "Das MCP wurde erstellt.",
+    "edit-error": "Fehler beim Aktualisieren des MCP.",
+    "create-error": "Fehler beim Erstellen des MCP.",
+    "edit-mcp": "MCP bearbeiten",
+    "create-mcp": "Neues MCP hinzufügen",
+    "title": "Titel",
+    "title-exists": "Dieser Titel existiert bereits",
+    "description": "Beschreibung",
+    "url": "URL",
+    "auth-header": "Typ des Authorization-Headers",
+    "transport": "Transport",
+    "deleted": "Das MCP wurde gelöscht.",
+    "delete-error": "Fehler beim Löschen des MCP",
+    "add-mcp": "Neues MCP hinzufügen",
+    "confirm-deletion": "Sie sind dabei, ein MCP zu löschen",
+    "confirm-deletion-of": "Möchten Sie das MCP „{title}“ wirklich löschen?",
+    "api-key": "API-Schlüssel (falls erforderlich)",
+    "empty-list": "Noch kein MCP konfiguriert.",
+    "test-config": {
+      "button": "Konfiguration testen",
+      "success": "Es funktioniert :)",
+      "fail": "Test fehlgeschlagen"
+    }
   }
 }

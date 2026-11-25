@@ -3635,5 +3635,37 @@
         "error": "Failed to ordered the tab. Por favor, inténtalo de nuevo."
       }
     }
+  },
+  "agent-mcps": {
+    "form": {
+      "title-required": "El campo «título» es obligatorio",
+      "description-required": "El campo «descripción» es obligatorio",
+      "transport-required": "El campo «transporte» es obligatorio",
+      "url-required": "El campo «URL» es obligatorio"
+    },
+    "edit-success": "El MCP se ha actualizado.",
+    "create-success": "El MCP se ha creado.",
+    "edit-error": "Error al actualizar el MCP.",
+    "create-error": "Error al crear el MCP.",
+    "edit-mcp": "Editar MCP",
+    "create-mcp": "Añadir un nuevo MCP",
+    "title": "Título",
+    "title-exists": "Este título ya existe",
+    "description": "Descripción",
+    "url": "URL",
+    "auth-header": "Tipo de encabezado de autorización",
+    "transport": "Transporte",
+    "deleted": "El MCP se ha eliminado.",
+    "delete-error": "Error al eliminar el MCP",
+    "add-mcp": "Añadir un nuevo MCP",
+    "confirm-deletion": "Está a punto de eliminar un MCP",
+    "confirm-deletion-of": "¿Confirma que desea eliminar el MCP «{title}»?",
+    "api-key": "Clave de API (si es necesaria)",
+    "empty-list": "Aún no hay ningún MCP configurado.",
+    "test-config": {
+      "button": "Probar la configuración",
+      "success": "Funciona :)",
+      "fail": "La prueba ha fallado"
+    }
   }
 }

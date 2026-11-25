@@ -3635,5 +3635,37 @@
         "error": "Kaardi tellimine nurjus. Palun proovi uuesti."
       }
     }
+  },
+  "agent-mcps": {
+    "form": {
+      "title-required": "Väli „pealkiri“ on kohustuslik",
+      "description-required": "Väli „kirjeldus“ on kohustuslik",
+      "transport-required": "Väli „transport“ on kohustuslik",
+      "url-required": "Väli „URL“ on kohustuslik"
+    },
+    "edit-success": "MCP on uuendatud.",
+    "create-success": "MCP on loodud.",
+    "edit-error": "Viga MCP uuendamisel.",
+    "create-error": "Viga MCP loomisel.",
+    "edit-mcp": "Muuda MCP-d",
+    "create-mcp": "Lisa uus MCP",
+    "title": "Pealkiri",
+    "title-exists": "See pealkiri on juba olemas",
+    "description": "Kirjeldus",
+    "url": "URL",
+    "auth-header": "Autoriseerimispäise tüüp",
+    "transport": "Transport",
+    "deleted": "MCP on kustutatud.",
+    "delete-error": "Viga MCP kustutamisel",
+    "add-mcp": "Lisa uus MCP",
+    "confirm-deletion": "Olete kustutamas MCP-d",
+    "confirm-deletion-of": "Kas kinnitate, et soovite MCP „{title}“ kustutada?",
+    "api-key": "API võti (vajaduse korral)",
+    "empty-list": "MCP-sid pole veel seadistatud.",
+    "test-config": {
+      "button": "Testi seadistust",
+      "success": "Töötab :)",
+      "fail": "Test ebaõnnestus"
+    }
   }
 }
