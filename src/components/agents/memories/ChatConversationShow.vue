@@ -54,7 +54,6 @@ const { data, status /* , error */, refresh } = fetchAll()
 const isAsyncing = computed(() => status.value === 'pending')
 
 watch(data, (d) => {
-  console.log('watch data', d)
   if (!d) return
   if (more.value && conversation.value)
     conversation.value.messages.push(...(d.conversation.messages || []))
@@ -68,9 +67,12 @@ function isOpen(message) {
   return message.role != 'tool' && message.content != ''
 }
 
+const prettyUser = computed(() =>
+  conversation.value?.isOwn ? 'You' : `User ${conversation.value?.userAlias}`
+)
 const prettyTitle = computed(() =>
   conversation.value
-    ? `${conversation.value?.agent?.title} - ${conversation.value?.title} - User #${conversation.value?.userId} - ${prettyDate(conversation.value?.lastActiveAt)}`
+    ? `${conversation.value?.agent?.title} - ${conversation.value?.title} - ${prettyUser.value} - ${prettyDate(conversation.value?.lastActiveAt)}`
     : 'Loading...'
 )
 

@@ -1,12 +1,15 @@
 import formatAgentWithTranslation from '@/server/utils/format-agent-with-translation'
+import { anonymizeConversation } from '@/server/utils/anonymize-conversation'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
 import { safeParseInt } from '@/functs/string'
+
+import { getUser as fetchUser } from 'shared-projects-frontend/apis'
 // import useCheckpointerDb from '@/server/utils/checkpointer-db'
 // import format from 'pg-format'
 
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
-    await checkAdminRights(event)
+    const { user } = await checkAdminRights(event)
 
     const id = getRouterParam(event, 'id')
     if (!id) {
@@ -45,17 +48,36 @@ export default defineLazyEventHandler(() => {
         },
       },
     })
+    if (!conversation) {
+      setResponseStatus(event, 404)
+      return { error: 'Conversation not found' }
+    }
     let more = null
     if (limit && conversation.messages.length && conversation.messages.length > limit) {
       more = conversation.messages[limit].id
       conversation.messages = conversation.messages.slice(0, limit)
     }
 
+    const userContextContent = await fetchUser(
+      runtimeConfig.public.appApiOrgCode,
+      conversation.userId,
+      { headers: { Authorization: getRequestHeader(event, 'authorization') } }
+    )
+
+    //    console.log('userContext', userContextContent)
+
     return {
-      conversation: {
-        ...conversation,
-        agent: formatAgentWithTranslation(conversation.agent, conversation.agent.agentTranslations),
-      },
+      conversation: anonymizeConversation(
+        {
+          ...conversation,
+          agent: formatAgentWithTranslation(
+            conversation.agent,
+            conversation.agent.agentTranslations
+          ),
+        },
+        user.id,
+        { userContextContent, salt: runtimeConfig.appConversationAliasSalt as string }
+      ),
       more,
     }
   })

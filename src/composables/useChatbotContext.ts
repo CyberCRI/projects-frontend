@@ -44,6 +44,8 @@ export default async function useChatbotContext({
     const user = usersStore.userFromApi
     if (!user || !allowProfile.value) return ''
     // TODO: groups and projects
+    // NOTE: the "- Name:" line of this template is parsed by extractUserNames in
+    // src/server/utils/anonymize-conversation.ts (admin conversation anonymization). Keep both in sync.
     return `
     ${userContextPrefix}
     - Name: ${user.family_name} ${user.given_name}

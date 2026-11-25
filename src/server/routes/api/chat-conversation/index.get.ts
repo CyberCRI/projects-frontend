@@ -1,4 +1,5 @@
 import formatAgentWithTranslation from '@/server/utils/format-agent-with-translation'
+import { anonymizeConversation } from '@/server/utils/anonymize-conversation'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
 import paginate from '@/server/utils/prisma-paginate'
 import { safeParseInt } from '@/functs/string'
@@ -7,7 +8,8 @@ import { safeParseInt } from '@/functs/string'
 export default defineLazyEventHandler(() => {
   const runtimeConfig = useRuntimeConfig()
   return defineEventHandler(async (event) => {
-    await checkAdminRights(event)
+    const { user } = await checkAdminRights(event)
+    const salt = runtimeConfig.appConversationAliasSalt as string
     const limit = safeParseInt(getQuery(event)?.limit, 10)
     const offset = safeParseInt(getQuery(event)?.offset, 0)
     const agentId = safeParseInt(getQuery(event)?.agentId, 0)

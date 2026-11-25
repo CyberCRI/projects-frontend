@@ -19,7 +19,8 @@ const conversationSkeleton = () => ({
     title: 'Lorem Ipsum',
   },
   title: 'Dolore sit amet',
-  userId: -1,
+  userAlias: 'XXXXXXXX',
+  isOwn: false,
   lastActiveAt: '1970-01-01T00:00:00',
 })
 
@@ -130,7 +131,9 @@ refresh()
 
           <span class="chunk-count">Agent: {{ document.agent.title?.substring(0, 16) }}</span>
           -
-          <span class="chunk-count">User #{{ document.userId }}</span>
+          <span class="chunk-count">
+            {{ document.isOwn ? 'You' : `User ${document.userAlias}` }}
+          </span>
           -
           <span class="chunk-count">{{ prettyDate(document.lastActiveAt) }}</span>
         </div>
