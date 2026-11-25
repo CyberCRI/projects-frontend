@@ -3635,5 +3635,37 @@
         "error": "No s' ha pogut ordenar la pestanya. Torneu-ho a provar."
       }
     }
+  },
+  "agent-mcps": {
+    "form": {
+      "title-required": "El camp «títol» és obligatori",
+      "description-required": "El camp «descripció» és obligatori",
+      "transport-required": "El camp «transport» és obligatori",
+      "url-required": "El camp «URL» és obligatori"
+    },
+    "edit-success": "L'MCP s'ha actualitzat.",
+    "create-success": "L'MCP s'ha creat.",
+    "edit-error": "Error en actualitzar l'MCP.",
+    "create-error": "Error en crear l'MCP.",
+    "edit-mcp": "Edita l'MCP",
+    "create-mcp": "Afegeix un nou MCP",
+    "title": "Títol",
+    "title-exists": "Aquest títol ja existeix",
+    "description": "Descripció",
+    "url": "URL",
+    "auth-header": "Tipus de capçalera d'autorització",
+    "transport": "Transport",
+    "deleted": "L'MCP s'ha eliminat.",
+    "delete-error": "Error en eliminar l'MCP",
+    "add-mcp": "Afegeix un nou MCP",
+    "confirm-deletion": "Esteu a punt d'eliminar un MCP",
+    "confirm-deletion-of": "Confirmeu que voleu eliminar l'MCP «{title}»?",
+    "api-key": "Clau d'API (si cal)",
+    "empty-list": "Encara no hi ha cap MCP configurat.",
+    "test-config": {
+      "button": "Prova la configuració",
+      "success": "Funciona :)",
+      "fail": "La prova ha fallat"
+    }
   }
 }

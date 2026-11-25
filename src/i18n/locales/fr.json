@@ -3638,5 +3638,37 @@
         "error": "Il a échoué à commander l'onglet. Veuillez réessayer."
       }
     }
+  },
+  "agent-mcps": {
+    "form": {
+      "title-required": "Le champ « titre » est requis",
+      "description-required": "Le champ « description » est requis",
+      "transport-required": "Le champ « transport » est requis",
+      "url-required": "Le champ « URL » est requis"
+    },
+    "edit-success": "Le MCP a été mis à jour.",
+    "create-success": "Le MCP a été créé.",
+    "edit-error": "Erreur lors de la mise à jour du MCP.",
+    "create-error": "Erreur lors de la création du MCP.",
+    "edit-mcp": "Modifier le MCP",
+    "create-mcp": "Ajouter un nouveau MCP",
+    "title": "Titre",
+    "title-exists": "Ce titre existe déjà",
+    "description": "Description",
+    "url": "URL",
+    "auth-header": "Type d'en-tête d'autorisation",
+    "transport": "Transport",
+    "deleted": "Le MCP a été supprimé.",
+    "delete-error": "Erreur lors de la suppression du MCP",
+    "add-mcp": "Ajouter un nouveau MCP",
+    "confirm-deletion": "Vous êtes sur le point de supprimer un MCP",
+    "confirm-deletion-of": "Confirmez-vous vouloir supprimer le MCP « {title} » ?",
+    "api-key": "Clé d'API (si nécessaire)",
+    "empty-list": "Aucun MCP configuré pour le moment.",
+    "test-config": {
+      "button": "Tester la configuration",
+      "success": "Ça fonctionne :)",
+      "fail": "Échec du test"
+    }
   }
 }

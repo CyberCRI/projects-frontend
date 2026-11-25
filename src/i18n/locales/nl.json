@@ -3635,5 +3635,37 @@
         "error": "Kon het tabblad niet bestellen. Probeer het nog eens."
       }
     }
+  },
+  "agent-mcps": {
+    "form": {
+      "title-required": "Het veld \"titel\" is verplicht",
+      "description-required": "Het veld \"beschrijving\" is verplicht",
+      "transport-required": "Het veld \"transport\" is verplicht",
+      "url-required": "Het veld \"URL\" is verplicht"
+    },
+    "edit-success": "De MCP is bijgewerkt.",
+    "create-success": "De MCP is aangemaakt.",
+    "edit-error": "Fout bij het bijwerken van de MCP.",
+    "create-error": "Fout bij het aanmaken van de MCP.",
+    "edit-mcp": "MCP bewerken",
+    "create-mcp": "Een nieuwe MCP toevoegen",
+    "title": "Titel",
+    "title-exists": "Deze titel bestaat al",
+    "description": "Beschrijving",
+    "url": "URL",
+    "auth-header": "Type autorisatieheader",
+    "transport": "Transport",
+    "deleted": "De MCP is verwijderd.",
+    "delete-error": "Fout bij het verwijderen van de MCP",
+    "add-mcp": "Een nieuwe MCP toevoegen",
+    "confirm-deletion": "U staat op het punt een MCP te verwijderen",
+    "confirm-deletion-of": "Bevestigt u dat u de MCP \"{title}\" wilt verwijderen?",
+    "api-key": "API-sleutel (indien nodig)",
+    "empty-list": "Nog geen MCP geconfigureerd.",
+    "test-config": {
+      "button": "Test de configuratie",
+      "success": "Het werkt :)",
+      "fail": "Test mislukt"
+    }
   }
 }
