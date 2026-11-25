@@ -55,19 +55,25 @@ export function userAlias(userId: number, salt?: string) {
  * matching, no names are extracted and name redaction is SILENTLY disabled
  * (only the regex-based `redactPii` remains).
  */
-export function extractUserNames(contextContent?: string | null): string[] {
-  const match = /^\s*-\s*Name:\s*(.+)$/m.exec(contextContent ?? '')
-  if (!match) return []
-  // every word is a name part (particles like "de"/"van" included), matched on its own
-  const words = match[1]
-    .split(/[\s-]+/)
-    .map((w) => w.trim())
-    .filter((w) => w.length >= 2 && !['undefined', 'null'].includes(w.toLowerCase()))
-  return [...new Set(words)]
-}
+export function extractUserNamesAndId(userContextContent: object | null): string[] {
+  let words = []
+  if (userContextContent?.given_name && userContextContent?.family_name)
+    words.push(userContextContent.given_name + ' ' + userContextContent.family_name)
+  if (userContextContent?.family_name) words.push(userContextContent.family_name)
+  if (userContextContent?.given_name) words.push(userContextContent.given_name)
 
-export function extractUserNamesFromAll(contents: (string | null | undefined)[]): string[] {
-  return [...new Set(contents.flatMap((c) => extractUserNames(c)))]
+  if (words.length) {
+    // every word is a name part (particles like "de"/"van" included), matched on its own
+    words = [
+      ...words,
+      ...words[0]
+        .split(/[\s-]+/)
+        .map((w) => w.trim())
+        .filter((w) => w.length >= 2 && !['undefined', 'null'].includes(w.toLowerCase())),
+    ]
+  }
+  console.log('extracted name token', words.sort((a, b) => a.length - b.length).join())
+  return [...new Set(words)].sort((a, b) => a.length - b.length)
 }
 
 const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
@@ -80,6 +86,12 @@ export function redactNames(text: string, names: string[]) {
     .map(escapeRegExp)
     .join('|')
   return text.replace(new RegExp(pattern, 'giu'), '[NAME]')
+}
+
+export function redactId(text: string, id: number | null) {
+  console.log('redactid', id)
+  if (!text || !id) return text
+  return text.replace(new RegExp(`\\b${id}\\b`, 'giu'), '[ID]')
 }
 
 const PII_PATTERNS: [RegExp, string][] = [
@@ -102,7 +114,8 @@ export function redactPii(text: string) {
 }
 
 // PII regexes first so e.g. an email containing the name is masked as a whole
-const redactText = (text: string, names: string[]) => redactNames(redactPii(text), names)
+const redactText = (text: string, names: string[], id: number | null) =>
+  redactId(redactNames(redactPii(text), names), id)
 
 function redactJson(value: unknown, names: string[]): unknown {
   if (typeof value === 'string') return redactText(value, names)
@@ -113,19 +126,21 @@ function redactJson(value: unknown, names: string[]): unknown {
   return value
 }
 
-export function anonymizeMessage(message: Message, names: string[]): Message {
+export function anonymizeMessage(message: Message, names: string[], id: number | null): Message {
   if (isUserContextMessage(message)) {
     return { ...message, content: REDACTED_USER_DATA, reasoning: null, toolCalls: null }
   }
   return {
     ...message,
     content:
-      typeof message.content === 'string' ? redactText(message.content, names) : message.content,
+      typeof message.content === 'string'
+        ? redactText(message.content, names, id)
+        : message.content,
     reasoning:
       typeof message.reasoning === 'string'
         ? redactText(message.reasoning, names)
         : message.reasoning,
-    toolCalls: message.toolCalls ? redactJson(message.toolCalls, names) : message.toolCalls,
+    toolCalls: message.toolCalls ? redactJson(message.toolCalls, names, id) : message.toolCalls,
   }
 }
 
@@ -141,15 +156,14 @@ export function anonymizeConversation<T extends Conversation>(
   {
     userContextContent,
     salt,
-  }: { userContextContent?: (string | null)[] | string | null; salt?: string } = {}
+  }: { userContextContent?: (object | null)[] | string | null; salt?: string } = {}
 ) {
   if (conversation.userId === requesterId) return { ...conversation, isOwn: true }
 
   const contents = [
-    ...[userContextContent ?? []].flat(),
     ...(conversation.messages?.filter(isUserContextMessage).map((m) => m.content) ?? []),
   ]
-  const names = extractUserNamesFromAll(contents)
+  const names = extractUserNamesAndId(userContextContent)
 
   const { userId, ...rest } = conversation
   return {
@@ -157,6 +171,6 @@ export function anonymizeConversation<T extends Conversation>(
     isOwn: false,
     userAlias: userAlias(userId, salt),
     title: typeof rest.title === 'string' ? redactText(rest.title, names) : rest.title,
-    messages: rest.messages?.map((m) => anonymizeMessage(m, names)),
+    messages: rest.messages?.map((m) => anonymizeMessage(m, names, userContextContent?.id || null)),
   }
 }

@@ -2,6 +2,8 @@ import formatAgentWithTranslation from '@/server/utils/format-agent-with-transla
 import { anonymizeConversation } from '@/server/utils/anonymize-conversation'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
 import { safeParseInt } from '@/functs/string'
+
+import { getUser as fetchUser } from 'shared-projects-frontend/apis'
 // import useCheckpointerDb from '@/server/utils/checkpointer-db'
 // import format from 'pg-format'
 
@@ -56,20 +58,13 @@ export default defineLazyEventHandler(() => {
       conversation.messages = conversation.messages.slice(0, limit)
     }
 
-    // the user-context message is the oldest one: it may not be in the requested page
-    // several of them, of which only some hold the name: collect them all
-    const userContextContent =
-      conversation.userId === user.id
-        ? undefined
-        : (
-            await chatbotPrisma.conversationMessage.findMany({
-              where: {
-                conversationId: conversation.id,
-                toolCallId: { startsWith: 'retriever_user_context' },
-              },
-              select: { content: true },
-            })
-          ).map((m) => m.content)
+    const userContextContent = await fetchUser(
+      runtimeConfig.public.appApiOrgCode,
+      conversation.userId,
+      { headers: { Authorization: getRequestHeader(event, 'authorization') } }
+    )
+
+    //    console.log('userContext', userContextContent)
 
     return {
       conversation: anonymizeConversation(
