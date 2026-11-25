@@ -141,6 +141,7 @@
     "@vuepic/vue-datepicker": "12.1.0",
     "ai": "5.0.68",
     "chart.js": "4.5.0",
+    "core-js": "^3.51.0",
     "croppr": "2.3.1",
     "deep-chat": "2.3.0",
     "es-toolkit": "^1.49.0",
