@@ -149,9 +149,8 @@ export default {
         this.isLoading = true
 
         const listGroups = (
-          await searchGroups(this.queryString, {
+          await searchGroups(this.organizationsStore.current.code, this.queryString, {
             query: {
-              organizations: [this.organizationsStore.current.code],
               limit: 12,
             },
           })

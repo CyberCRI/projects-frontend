@@ -41,7 +41,6 @@ const {
 } = getSearchGroup(organizationCode, search, {
   query: {
     ...props.query,
-    organizations: [organizationCode],
     modules: 'none',
   },
   paginationConfig: {

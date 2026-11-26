@@ -37,7 +37,6 @@ const search = computed<string>(() => props.search)
 
 const query = computed(() => {
   const q: QueryFilterSearch = deepToRaw(props.query)
-  q.organizations = [organizationCode]
 
   // if not all add mode
   if (props.mode !== 'all') {
@@ -55,7 +54,6 @@ const {
   query,
   paginationConfig: computed(() => ({ limit: props.query.limit, offset: props.query.offset })),
   uniqueKey: computed(() => props.mode),
-  keyFixed: true,
 })
 </script>
 

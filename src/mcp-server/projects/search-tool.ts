@@ -36,11 +36,10 @@ export default (server: McpServer) => {
     },
     resultFromTool(({ queryTerms }, ctx) => {
       const opts = mcpOptions(ctx)
-      return searchAll(queryTerms, {
+      return searchAll(orgCode, queryTerms, {
         ...opts,
         query: {
           limit: 12,
-          organizations: [orgCode],
         },
       }).then((page) =>
         page.results.map((item) => {
@@ -74,11 +73,10 @@ export default (server: McpServer) => {
       return getAllTags(tags, ctx)
         .then((tagsId) => {
           const opts = mcpOptions(ctx)
-          return searchProjects(queryTerms, {
+          return searchProjects(orgCode, queryTerms, {
             ...opts,
             query: {
               limit: 12,
-              organizations: [orgCode],
               tags: tagsId || [],
               sdgs: sdgs || [],
             },
@@ -105,11 +103,10 @@ export default (server: McpServer) => {
       return getAllTags(skills, ctx)
         .then((tagsId) => {
           const opts = mcpOptions(ctx)
-          return searchUser(queryTerms, {
+          return searchUser(orgCode, queryTerms, {
             ...opts,
             query: {
               limit: 12,
-              organizations: [orgCode],
               skills: tagsId || [],
               sdgs: sdgs || [],
             },

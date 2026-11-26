@@ -1,7 +1,7 @@
 <template>
   <BaseGroupPreview
     id="news"
-    :title="$t(GROUP_MODULE_TITLE.news, group.modules.news)"
+    :title="$t(GROUP_MODULE_TITLE.newsTab, group.modules.news)"
     :total="group.modules.news"
     :icon="GROUP_MODULE_ICON.news"
     :see-more="{

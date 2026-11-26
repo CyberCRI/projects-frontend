@@ -2975,7 +2975,11 @@
       "research-areas-skills": "Axes de recherche et compétences",
       "platform": "Outils et méthodes partagés ({count})",
       "platform-tab": "Plateforme",
-      "subgroups": "Sous-groupes"
+      "subgroups": "{count} Sous-groupe | {count} Sous-groupes",
+      "locations-tab": "lieu | lieu",
+      "subgroups-tab": "Sous-groupe | Sous-groupes",
+      "projects": "Projet {count} | {count} projets",
+      "projects-tab": "projet | projets"
     }
   },
   "researcher": {

@@ -41,7 +41,6 @@ const {
 } = getSearchUser(organizationCode, search, {
   query: {
     ...props.query,
-    organizations: [organizationCode],
   },
   paginationConfig: {
     limit: LIMIT,

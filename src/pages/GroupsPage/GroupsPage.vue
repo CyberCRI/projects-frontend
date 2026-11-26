@@ -3,16 +3,35 @@ import { getHierarchyGroups } from '~/api/v2/group.service'
 
 import { useLpiHead2 } from '~/composables/useLpiHead'
 
+import type {
+  PeopleGroupIdOrSlug,
+  PeopleGroupModulesKeys,
+  QueryFilterGroupHierarchy,
+  QueryFilterSearch,
+} from 'shared-projects-frontend/models'
+import type { ModulesQuery } from 'shared-projects-frontend/interfaces'
 import { factoriesSkeleton } from '~/skeletons/base.skeletons'
 import { groupSkeleton } from '~/skeletons/group.skeletons'
+import { deepToRaw } from '~/functs/utils'
 
-const props = withDefaults(defineProps<{ groupIdOrSlug?: string }>(), {
-  groupIdOrSlug: '',
-})
+const route = useRoute()
+const groupIdOrSlug = computed(() => route.params.groupIdOrSlug?.toString() as PeopleGroupIdOrSlug)
 
 const organizationCode = useOrganizationCode()
 
 const { t } = useNuxtI18n()
+
+const modulesGroup: ModulesQuery<PeopleGroupModulesKeys> = [
+  'members',
+  'subgroups',
+  'featured_projects',
+]
+
+const queryHierarchy = computed<QueryFilterGroupHierarchy>(() => ({
+  modules: modulesGroup,
+  depth: 1,
+  parent: groupIdOrSlug.value,
+}))
 
 const {
   data: currentGroup,
@@ -20,11 +39,7 @@ const {
   status,
   error,
 } = getHierarchyGroups(organizationCode, {
-  query: {
-    modules: ['members', 'subgroups'],
-    depth: 1,
-    parent: props.groupIdOrSlug || undefined,
-  },
+  query: queryHierarchy,
   default: () => groupSkeleton({ children: factoriesSkeleton(groupSkeleton, 10) }),
 })
 
@@ -49,6 +64,17 @@ useLpiHead2({
 })
 const query = ref({})
 const search = ref('')
+
+const fullQuery = computed(() => {
+  const q: QueryFilterSearch = deepToRaw(query.value)
+
+  if (groupIdOrSlug.value) {
+    q.group_childs = groupIdOrSlug.value
+  } else if (search.value === '') {
+    q.only_group_parent_child = true
+  }
+  return q
+})
 </script>
 
 <template>
@@ -57,11 +83,7 @@ const search = ref('')
       {{ $t('common.groups') }}
     </h1>
 
-    <div v-if="!groupIdOrSlug" class="search-input-container">
-      <SearchBlock section="people_group" @on-query="query = $event" @on-search="search = $event" />
-      <GlobalSearchTab :search="search" :query="query" mode="people_group" />
-    </div>
-    <template v-else>
+    <FetchLoader :status="status" :error="error" :error404="{ name: 'Groups' }" only-error skeleton>
       <div class="current-group-ctn">
         <div class="breadcrumb">
           <BreadCrumbs
@@ -71,33 +93,39 @@ const search = ref('')
             :is-loading="isLoading"
           />
         </div>
-        <div class="current-group">
-          <h3 v-if="!isLoading && currentGroup">
-            {{ currentGroup.name }} ({{ currentGroup.children.length }})
-          </h3>
-          <template v-if="isLoading">
-            <SkeletonComponent width="110px" class="current-group-skeleton" />
-            <SkeletonComponent width="40px" class="current-group-skeleton" />
-          </template>
-        </div>
-
-        <div class="groups-list">
-          <FetchLoader
-            :status="status"
-            :error="error"
-            :error404="{ name: 'Groups' }"
-            only-error
-            skeleton
-          >
-            <CardList :limit="12" :items="currentGroup.children" switchable-display>
-              <template #default="cardListSlotProps">
-                <GroupCard :group="cardListSlotProps.item" :mode="cardListSlotProps.mode" />
-              </template>
-            </CardList>
-          </FetchLoader>
-        </div>
+        <NuxtLink
+          v-if="groupIdOrSlug"
+          class="current-group"
+          :to="{
+            name: 'Group',
+            params: { groupIdOrSlug },
+          }"
+        >
+          <div class="img-ctn">
+            <CroppedApiImage
+              :alt="`${currentGroup.$t.name} image`"
+              class="group-image skeletons-background"
+              :picture-data="currentGroup.header_image"
+              :default-picture="DEFAULT_GROUP_PATATOID"
+            />
+          </div>
+          <div class="current-group-info">
+            <h3 class="skeletons-text">
+              {{ currentGroup.name }} ({{ currentGroup.children.length }})
+            </h3>
+            <GroupRecapPreview :group="currentGroup" :modules="modulesGroup" is-link />
+          </div>
+        </NuxtLink>
       </div>
-    </template>
+      <div class="search-input-container">
+        <SearchBlock
+          section="people_group"
+          @on-query="query = $event"
+          @on-search="search = $event"
+        />
+        <GlobalSearchTab :search="search" :query="fullQuery" mode="people_group" />
+      </div>
+    </FetchLoader>
   </div>
 </template>
 
@@ -131,15 +159,35 @@ const search = ref('')
 }
 
 .current-group {
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
   font-weight: 700;
   font-size: variables.$font-size-l;
   color: variables.$primary-dark;
   display: inline-flex;
 
-  .current-group-skeleton {
-    height: variables.$layout-size-l;
-    border-radius: variables.$border-radius-m;
-    margin-right: variables.$layout-size-s;
+  .current-group-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+$pic-size: variables.pxtorem(169px);
+
+.img-ctn {
+  width: $pic-size;
+  height: $pic-size;
+  border-radius: 100%;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  .cropped-image {
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

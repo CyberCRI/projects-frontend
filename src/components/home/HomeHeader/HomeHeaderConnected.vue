@@ -175,9 +175,8 @@ export default {
         ordering: '-last_update',
         members: [this.usersStore.id],
         // member_role: ['owners', 'members', 'reviewers'].join(','),
-        organizations: [this.organizationsStore.current.code],
       } satisfies QueryFilterSearch
-      const response = await searchProjects('', { query })
+      const response = await searchProjects(this.organizationsStore.current.code, '', { query })
       this.originalProject = response.results.map((result) => result.project)
     },
 

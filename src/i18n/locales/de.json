@@ -2917,7 +2917,9 @@
     "locations": "Landkarte | Karten",
     "location": "Adresse | Adressen",
     "news": "Nachrichten | Nachrichten",
-    "event": "Veranstaltung | Veranstaltungen"
+    "event": "Veranstaltung | Veranstaltungen",
+    "news-tab": "Nachrichten",
+    "event-tab": "Veranstaltungen"
   },
   "gallery": {
     "title": "Galerie",
@@ -2973,7 +2975,11 @@
       "research-areas-skills": "Forschungsgebiete und Kompetenzen",
       "platform": "Gemeinsame Werkzeuge und Methoden ({count})",
       "platform-tab": "Plattform",
-      "subgroups": "Untergruppen"
+      "subgroups": "{count} Untergruppe | {count} Untergruppen",
+      "locations-tab": "Standort | Standort",
+      "subgroups-tab": "Untergruppe | Untergruppen",
+      "projects": "{count} Projekt | {count} Projekte",
+      "projects-tab": "Projekt | Projekte"
     }
   },
   "researcher": {
@@ -3340,7 +3346,8 @@
       "trade": "Brauchen / Availabilitie | Bedürfnisse / Verfügbarkeiten",
       "teaching": "Lehren | Lehren",
       "research-areas": "Forschungsgebiet | Forschungsgebiete",
-      "research-areas-skills": "Forschungsbereiche und Kompetenzen"
+      "research-areas-skills": "Forschungsbereiche und Kompetenzen",
+      "affiliations-tab": "Zugehörigkeiten"
     }
   },
   "vector-store": {

@@ -2890,6 +2890,7 @@
       "members": "{count} member | {count} members",
       "members-tab": "Members",
       "locations": "{count} location | {count} locations",
+      "locations-tab": "location | locations",
       "conferences": "{count} conference | {count} conferences",
       "conferences-tab": "Conferences",
       "availabilities": "{count} availability | {count} availabilities",
@@ -2920,7 +2921,11 @@
       "research-areas-skills": "Research areas & skills",
       "platform": "Shared tools and methods ({count})",
       "platform-tab": "Platform",
-      "subgroups": "Sub-groups"
+      "subgroups": "{count} Sub-group | {count} Sub-groups",
+      "subgroups-tab": "Sub-group | Sub-groups",
+      "projects": "{count} project | {count} projects",
+      "projects-tab": "project | projects",
+      "affiliations": "Affiliates"
     }
   },
   "researcher": {

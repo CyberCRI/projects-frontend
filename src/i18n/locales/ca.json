@@ -2917,7 +2917,9 @@
     "locations": "Mapa | Mapes",
     "location": "Adreça | Adreces",
     "news": "Notícies | Notícies",
-    "event": "Esdeveniment | Esdeveniments"
+    "event": "Esdeveniment | Esdeveniments",
+    "news-tab": "Notícies",
+    "event-tab": "Esdeveniments"
   },
   "gallery": {
     "title": "Galeria",
@@ -2973,7 +2975,11 @@
       "research-areas-skills": "Línies de recerca i competències",
       "platform": "Eines i mètodes compartits ({count})",
       "platform-tab": "Plataforma",
-      "subgroups": "Subgrups"
+      "subgroups": "Subgrup de {count} | {count} subgrups",
+      "locations-tab": "emplaçament | ubicacions",
+      "subgroups-tab": "Subgrup | Subgrups",
+      "projects": "Projecte {count} | {count} projectes",
+      "projects-tab": "projecte | projectes"
     }
   },
   "researcher": {
@@ -3340,7 +3346,8 @@
       "trade": "Necessita / Availabilitie | Necessita / Availalitats",
       "teaching": "Ensenyació | ensenyaments",
       "research-areas": "Àrea de recerca | Àrees de recerca",
-      "research-areas-skills": "Estadístiques de la recerca"
+      "research-areas-skills": "Estadístiques de la recerca",
+      "affiliations-tab": "Afiliacions"
     }
   },
   "vector-store": {
