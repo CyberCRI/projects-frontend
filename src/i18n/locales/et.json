@@ -3674,5 +3674,9 @@
       "success": "Töötab :)",
       "fail": "Test ebaõnnestus"
     }
+  },
+  "eu-funded": {
+    "text": "Rahastatud Euroopa Liidu poolt. Avaldatud seisukohad ja arvamused on ainult autori(te) omad ega pruugi kajastada Euroopa Liidu või Euroopa Hariduse ja Kultuuri Rakendusameti (EACEA) seisukohti ja arvamusi. Euroopa Liit ega EACEA nende eest ei vastuta.",
+    "image": "/eu-funded/ET_Co-fundedbytheEU_RGB_POS.png"
   }
 }

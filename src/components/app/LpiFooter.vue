@@ -127,18 +127,29 @@
         </ul>
       </div>
 
-      <div class="creators">
-        <div>
-          <p class="projects">
-            {{ $t('footer.projects') }}
+      <div class="creators-ctn">
+        <div v-if="isEuFunded" class="eu-funded">
+          <div class="eu-funded-logo">
+            <img :src="euFundedImage" />
+          </div>
+          <p class="eu-funded-text">
+            {{ $t('eu-funded.text') }}
           </p>
-          <p v-if="appVersion">
-            {{ appVersion }}
-          </p>
-          <p>{{ $t('footer.madeBy') }}</p>
         </div>
 
-        <LpiLogo class="lpi-logo" />
+        <div class="creators">
+          <div>
+            <p class="projects">
+              {{ $t('footer.projects') }}
+            </p>
+            <p v-if="appVersion">
+              {{ appVersion }}
+            </p>
+            <p>{{ $t('footer.madeBy') }}</p>
+          </div>
+
+          <LpiLogo class="lpi-logo" />
+        </div>
       </div>
     </div>
 
@@ -171,7 +182,7 @@ const FOOTER_SRC = usePublicURL('/source.png')
 const organizationsStore = useOrganizationsStore()
 const usersStore = useUsersStore()
 const runtimeConfig = useRuntimeConfig()
-const { locale } = useNuxtI18n()
+const { locale, t } = useNuxtI18n()
 const reportBugOpen = ref(false)
 const showContactUsDrawer = ref(false)
 
@@ -185,6 +196,11 @@ const showOnboardingScreen = computed(() => organizationsStore.current?.onboardi
 const aboutProjectsLink = computed(
   () => `https://discover.projects.learningplanetinstitute.org/${locale.value === 'fr' ? '' : 'en'}`
 )
+
+const euFundedImage = computed(
+  () => runtimeConfig.public.appPublicBinariesPrefix + t('eu-funded.image')
+)
+const isEuFunded = computed(() => !!runtimeConfig.public.appIsEuFunded)
 </script>
 
 <style lang="scss" scoped>
@@ -243,6 +259,34 @@ footer {
     a:hover {
       text-decoration: underline;
     }
+  }
+
+  .creators-ctn {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+
+  .eu-funded {
+    max-width: 14rem;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.6rem;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+
+  .eu-funded-logo {
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .eu-funded-text {
+    font-size: 0.8rem;
   }
 
   .creators {

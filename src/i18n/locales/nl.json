@@ -3674,5 +3674,9 @@
       "success": "Het werkt :)",
       "fail": "Test mislukt"
     }
+  },
+  "eu-funded": {
+    "text": "Gefinancierd door de Europese Unie. De hier geuite ideeën en meningen komen echter uitsluitend voor rekening van de auteur(s) en geven niet noodzakelijkerwijs die van de Europese Unie of het Europese Uitvoerende Agentschap onderwijs en cultuur (EACEA) weer. Noch de Europese Unie, noch het EACEA kan ervoor aansprakelijk worden gesteld.",
+    "image": "/eu-funded/NL_Co-fundedbytheEU_RGB_POS.png"
   }
 }
