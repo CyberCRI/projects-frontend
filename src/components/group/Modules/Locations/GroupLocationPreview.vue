@@ -1,7 +1,7 @@
 <template>
   <BaseGroupPreview
     id="locations"
-    :title="$t(GROUP_MODULE_TITLE.locations, group.modules.locations)"
+    :title="$t(GROUP_MODULE_TITLE.locationsTab, group.modules.locations)"
     :total="group.modules.locations"
     :icon="GROUP_MODULE_ICON.locations"
     :see-more="{

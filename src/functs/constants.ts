@@ -304,12 +304,15 @@ export const GROUP_MODULE_ICON: Record<string, IconImageChoice> = {
 export type GroupsModulesKeys = PeopleGroupModulesKeys | StructureModulesKeys
 
 export const GROUP_MODULE_TITLE = {
-  featured_projects: 'group.projects',
+  featured_projects: 'structure.title.projects',
+  featured_projectsTab: 'structure.title.projects-tab',
   members: 'structure.title.members',
   membersTab: 'structure.title.members-tab',
   similars: 'group.similars',
   subgroups: 'structure.title.subgroups',
+  subgroupsTab: 'structure.title.subgroups-tab',
   locations: 'structure.title.locations',
+  locationsTab: 'structure.title.locations-tab',
   gallery: 'gallery.pictures',
   news: 'group.news',
   newsTab: 'group.news-tab',

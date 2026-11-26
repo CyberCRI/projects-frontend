@@ -2917,7 +2917,9 @@
     "locations": "Kaart | Kaardid",
     "location": "Aadress | Aadressid",
     "news": "Uudised | Uudised",
-    "event": "Sündmus | Sündmused"
+    "event": "Sündmus | Sündmused",
+    "news-tab": "Uudised",
+    "event-tab": "Sündmused"
   },
   "gallery": {
     "title": "galeriis",
@@ -2973,7 +2975,11 @@
       "research-areas-skills": "Uurimissuunad ja oskused",
       "platform": "Jagatud tööriistad ja meetodid ({count})",
       "platform-tab": "Platvorm",
-      "subgroups": "Alarühmad"
+      "subgroups": "{count} Alarühm | {count} Alarühmad",
+      "locations-tab": "asukoht | asukohad",
+      "subgroups-tab": "Alarühm | Alarühmad",
+      "projects": "{count} projekt | {count} projekti",
+      "projects-tab": "projekti | projekte"
     }
   },
   "researcher": {
@@ -3340,7 +3346,8 @@
       "trade": "Vajadus / Availabilitie | Vajadused / kättesaadavus",
       "teaching": "Õpetamine | Õpetamine",
       "research-areas": "Uurimisvaldkond | Uurimisvaldkonnad",
-      "research-areas-skills": "Uurimisvaldkonnad ja -oskused"
+      "research-areas-skills": "Uurimisvaldkonnad ja -oskused",
+      "affiliations-tab": "Seosed"
     }
   },
   "vector-store": {

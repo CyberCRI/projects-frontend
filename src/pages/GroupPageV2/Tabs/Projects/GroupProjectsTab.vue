@@ -1,5 +1,8 @@
 <template>
-  <BaseModuleTab :title="$t(GROUP_MODULE_TITLE.featured_projects)" :count="countElement">
+  <BaseModuleTab
+    :title="$t(GROUP_MODULE_TITLE.featured_projectsTab, countElement)"
+    :count="countElement"
+  >
     <BaseGroupProjectsList :group="group" :editable="editable" />
   </BaseModuleTab>
 </template>

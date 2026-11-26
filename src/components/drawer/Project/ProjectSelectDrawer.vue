@@ -32,16 +32,25 @@ const search = ref('')
 const LIMIT = 30
 
 const organizationCode = useOrganizationCode()
+
+const fullQuery = computed(() => {
+  const q: QueryFilterSearch = {
+    ...props.query,
+    modules: 'none',
+  }
+  if (search.value === '') {
+    q.only_group_parent_child = true
+  }
+
+  return q
+})
 const {
   status,
   data: searchProjects,
   pagination,
   refresh,
 } = getSearchProjects(organizationCode, search, {
-  query: {
-    ...props.query,
-    modules: 'none',
-  },
+  query: fullQuery,
   paginationConfig: {
     limit: LIMIT,
   },

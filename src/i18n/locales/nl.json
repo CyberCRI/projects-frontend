@@ -2917,7 +2917,9 @@
     "locations": "Kaart | Kaarten",
     "location": "Adres | Adressaten",
     "news": "Nieuws | Nieuws",
-    "event": "Gebeurtenis | Gebeurtenissen"
+    "event": "Gebeurtenis | Gebeurtenissen",
+    "news-tab": "Nieuws",
+    "event-tab": "Gebeurtenissen"
   },
   "gallery": {
     "title": "Galerij",
@@ -2973,7 +2975,11 @@
       "research-areas-skills": "Onderzoeksgebieden en vaardigheden",
       "platform": "Gedeelde tools en methoden ({count})",
       "platform-tab": "Platform",
-      "subgroups": "Subgroepen"
+      "subgroups": "{count} Subgroep | {count} Subgroepen",
+      "locations-tab": "locatie | locaties",
+      "subgroups-tab": "Subgroep | Subgroepen",
+      "projects": "{count} project | {count} projecten",
+      "projects-tab": "project | projecten"
     }
   },
   "researcher": {
@@ -3340,7 +3346,8 @@
       "trade": "Behoefte / Availabilitie | Behoeften / Beschikbaarheden",
       "teaching": "Onderwijs | Onderwijs",
       "research-areas": "Onderzoekgebied | Onderzoeksgebieden",
-      "research-areas-skills": "Onderzoeksgebieden en vaardigheden"
+      "research-areas-skills": "Onderzoeksgebieden en vaardigheden",
+      "affiliations-tab": "Affiliaties"
     }
   },
   "vector-store": {

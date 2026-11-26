@@ -8,7 +8,15 @@
       :class="{
         'reset-btn shadow-box': isLink,
       }"
-      @click="isLink && scrollToHash(module.key)"
+      :to="
+        isLink && {
+          name: 'groupSnapshot',
+          params: {
+            groupIdOrSlug: group.slug || group.id,
+          },
+          hash: `#${module.key}`,
+        }
+      "
     >
       <IconImage :name="module.icon" />
       <span class="group-recap-title">
@@ -24,8 +32,7 @@ import type {
   TranslatedPeopleGroupModel,
 } from 'shared-projects-frontend/models'
 import { GROUP_MODULE_ICON, GROUP_MODULE_TITLE } from '~/functs/constants'
-
-import { scrollToHash } from '~/composables/useScrollToTab'
+import { NuxtLink } from '#components'
 
 const props = withDefaults(
   defineProps<{
@@ -39,7 +46,7 @@ const props = withDefaults(
 
 const { t } = useNuxtI18n()
 
-const is = computed(() => (props.isLink ? 'button' : 'div'))
+const is = computed(() => (props.isLink ? NuxtLink : 'div'))
 
 const modulesArray = computed(() => {
   try {

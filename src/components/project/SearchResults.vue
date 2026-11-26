@@ -54,7 +54,6 @@ const {
   query,
   paginationConfig: computed(() => ({ limit: props.query.limit, offset: props.query.offset })),
   uniqueKey: computed(() => props.mode),
-  keyFixed: true,
 })
 </script>
 
