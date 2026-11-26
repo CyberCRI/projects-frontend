@@ -3674,5 +3674,9 @@
       "success": "Ça fonctionne :)",
       "fail": "Échec du test"
     }
+  },
+  "eu-funded": {
+    "text": "Financé par l’Union européenne. Les points de vue et avis exprimés n’engagent toutefois que leur(s) auteur(s) et ne reflètent pas nécessairement ceux de l’Union européenne ou de l’Agence exécutive européenne pour l’éducation et la culture (EACEA). Ni l’Union européenne ni l’EACEA ne sauraient en être tenues pour responsables.",
+    "image": "/eu-funded/FR_Co-fundedbytheEU_RGB_POS.png"
   }
 }

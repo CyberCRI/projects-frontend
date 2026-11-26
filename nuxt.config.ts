@@ -255,6 +255,7 @@ export default defineNuxtConfig({
       appLlmModelSuggestions: '',
       appMapRendererApiKey: '',
       appNewCommentDisabled: 0,
+      appIsEuFunded: '',
     },
   },
   i18n: {
